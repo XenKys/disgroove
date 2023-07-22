@@ -13,7 +13,7 @@ npm install disgroove
 - Import the package
 
 ```js
-const { Client, GatewayIntents } = require("discord.js");
+const { Client, GatewayIntents } = require("disgroove");
 ```
 
 - Create the client
@@ -29,7 +29,7 @@ const client = new Client("token", {
 ```js
 const { Client, GatewayIntents, GatewayEvents } = require("disgroove");
 const client = new Client("token", {
-  intents: GatewayIntents.AllNonPrivileged,
+  intents: GatewayIntents.All,
 });
 
 client.on(GatewayEvents.Ready, async () => {
