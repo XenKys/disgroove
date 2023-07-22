@@ -1,0 +1,73 @@
+import type { Client } from "../class";
+import { Endpoints } from "../rest";
+import type { JSONStageInstance, RawStageInstance } from "../types";
+import type { PrivacyLevel } from "../utils";
+
+export class StageInstance {
+  private client!: Client;
+  public id: string;
+  public guildId: string;
+  public channelId: string;
+  public topic: string;
+  public privacyLevel: number;
+  public discoverableDisabled: boolean;
+  public guildScheduledEventId: string | null;
+
+  constructor(data: RawStageInstance, client: Client) {
+    this.client = client;
+    this.id = data.id;
+    this.guildId = data.guild_id;
+    this.channelId = data.channel_id;
+    this.topic = data.topic;
+    this.privacyLevel = data.privacy_level;
+    this.discoverableDisabled = data.discoverable_disabled;
+    this.guildScheduledEventId = data.guild_scheduled_event_id;
+  }
+
+  /* https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
+  public async modify(
+    options: {
+      topic?: string;
+      privacyLevel?: PrivacyLevel;
+    },
+    reason?: string
+  ): Promise<StageInstance> {
+    return new StageInstance(
+      await this.client.rest.request(
+        "PATCH",
+        Endpoints.stageInstance(this.channelId),
+        {
+          json: {
+            topic: options?.topic,
+            privacy_level: options?.privacyLevel,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
+  }
+
+  /* https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
+  public async delete(reason?: string): Promise<void> {
+    this.client.rest.request(
+      "DELETE",
+      Endpoints.stageInstance(this.channelId),
+      {
+        reason,
+      }
+    );
+  }
+
+  public toJSON(): JSONStageInstance {
+    return {
+      id: this.id,
+      guildId: this.guildId,
+      channelId: this.channelId,
+      topic: this.topic,
+      privacyLevel: this.privacyLevel,
+      discoverableDisabled: this.discoverableDisabled,
+      guildScheduledEventId: this.guildScheduledEventId,
+    };
+  }
+}
