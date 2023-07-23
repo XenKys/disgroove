@@ -174,8 +174,8 @@ export declare interface Client extends EventEmitter {
         joinedAt: number;
         large: boolean;
         unavailable?: boolean;
-        member_count: number;
-        voice_states: Array<JSONVoiceState>;
+        memberCount: number;
+        voiceStates: Array<JSONVoiceState>;
         members: Array<GuildMember>;
         channels: Array<Channel>;
         threads: Array<Channel>;
