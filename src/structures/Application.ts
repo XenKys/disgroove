@@ -6,7 +6,6 @@ import type {
   RawGuildApplicationCommandPermissions,
   RawApplicationCommand,
   RawApplicationCommandPermission,
-  JSONTeam,
   JSONApplication,
 } from "../types";
 import type { Client } from "../class";
@@ -18,7 +17,7 @@ import {
   type ChannelTypes,
   type Locale,
 } from "../utils";
-import { Base } from "./Base";
+import { Base } from ".";
 
 export class Application extends Base {
   public name: string;
