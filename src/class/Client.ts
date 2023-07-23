@@ -5,6 +5,7 @@ import {
   GatewayEvents,
   GatewayIntents,
   GatewayOPCodes,
+  GuildFeatures,
   InviteTargetTypes,
   PrivacyLevel,
   SystemChannelFlags,
@@ -35,7 +36,6 @@ import type {
   JSONAutoModerationRule,
   JSONChannel,
   JSONEmoji,
-  JSONGuild,
   JSONGuildApplicationCommandPermissions,
   JSONGuildScheduledEvent,
   JSONInvite,
@@ -50,10 +50,8 @@ import type {
   RawApplicationCommandPermission,
   RawChannel,
   RawEmoji,
-  RawGuild,
   RawGuildMember,
   RawGuildScheduledEvent,
-  RawInvite,
   RawStageInstance,
   RawSticker,
   RawStickerPack,
@@ -671,7 +669,18 @@ export class Client extends EventEmitter {
     after?: string;
     limit?: number;
     withCounts?: boolean;
-  }): Promise<Array<Guild>> {
+  }): Promise<
+    Array<{
+      id: string;
+      name: string;
+      icon: string;
+      owner: boolean;
+      permissions: string;
+      features: Array<GuildFeatures>;
+      approximate_member_count: number;
+      approximate_presence_count: number;
+    }>
+  > {
     return this.rest
       .request("GET", Endpoints.userGuilds(), {
         query: {
@@ -682,7 +691,27 @@ export class Client extends EventEmitter {
         },
       })
       .then((response) =>
-        response.map((data: RawGuild) => new Guild(data, this))
+        response.map(
+          (data: {
+            id: string;
+            name: string;
+            icon: string;
+            owner: boolean;
+            permissions: string;
+            features: Array<GuildFeatures>;
+            approximate_member_count: number;
+            approximate_presence_count: number;
+          }) => ({
+            id: data.id,
+            name: data.name,
+            icon: data.icon,
+            owner: data.owner,
+            permissions: data.permissions,
+            features: data.features,
+            approximate_member_count: data.approximate_member_count,
+            approximate_presence_count: data.approximate_presence_count,
+          })
+        )
       );
   }
 
