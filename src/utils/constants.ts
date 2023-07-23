@@ -85,7 +85,7 @@ export enum InteractionType {
 export enum ComponentTypes {
   ActionRow = 1,
   Button = 2,
-  SelectMenu = 3,
+  StringSelect = 3,
   TextInput = 4,
   UserSelect = 5,
   RoleSelect = 6,

@@ -277,7 +277,7 @@ export class Message extends Base {
           }
         | {
             type:
-              | ComponentTypes.SelectMenu
+              | ComponentTypes.StringSelect
               | ComponentTypes.ChannelSelect
               | ComponentTypes.MentionableSelect
               | ComponentTypes.RoleSelect

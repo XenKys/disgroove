@@ -98,7 +98,7 @@ export function messageComponentToJSON(
         }
       | {
           type:
-            | ComponentTypes.SelectMenu
+            | ComponentTypes.StringSelect
             | ComponentTypes.ChannelSelect
             | ComponentTypes.MentionableSelect
             | ComponentTypes.RoleSelect
@@ -166,7 +166,7 @@ export function messageComponentToJSON(
             disabled: c.disabled,
           };
         }
-        case ComponentTypes.SelectMenu: {
+        case ComponentTypes.StringSelect: {
           return {
             type: c.type,
             customId: c.custom_id,

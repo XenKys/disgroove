@@ -8,11 +8,10 @@ import type {
   RawRole,
   JSONAttachment,
   JSONSelectOption,
-  RawEmoji,
 } from ".";
 import type { Channel, GuildMember, Message, Role, User } from "../structures";
 import type {
-  ChannelTypes,
+  ApplicationCommandTypes,
   ComponentTypes,
   InteractionType,
 } from "../utils/constants";
@@ -41,7 +40,7 @@ export interface RawInteraction {
 export interface RawApplicationCommandData {
   id: string;
   name: string;
-  type: number;
+  type: ApplicationCommandTypes;
   resolved?: RawResolvedData;
   options?: Array<RawApplicationCommandInteractionDataOption>;
   guild_id?: string;
@@ -106,9 +105,10 @@ export interface JSONInteraction {
   id: string;
   applicationId: string;
   type: InteractionType;
-  data?: JSONApplicationCommandData &
-    JSONMessageComponentData &
-    JSONModalSubmitData;
+  data?:
+    | JSONApplicationCommandData
+    | JSONMessageComponentData
+    | JSONModalSubmitData;
   guildId?: string;
   channelId?: string;
   member?: GuildMember;
@@ -124,7 +124,7 @@ export interface JSONInteraction {
 export interface JSONApplicationCommandData {
   id: string;
   name: string;
-  type: number;
+  type: ApplicationCommandTypes;
   resolved?: JSONResolvedData;
   options?: Array<JSONApplicationCommandInteractionDataOption>;
   guildId?: string;

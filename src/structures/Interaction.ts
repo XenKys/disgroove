@@ -20,52 +20,10 @@ import {
   InteractionCallbackType,
   InteractionType,
   MessageFlags,
+  embedToRaw,
   emojiToJSON,
   messageComponentToRaw,
 } from "../utils";
-
-interface ActionRow {
-  type: ComponentTypes.ActionRow;
-  components: Array<Button | SelectMenu | TextInput>;
-}
-
-interface Button {
-  type: ComponentTypes.Button;
-  style: number;
-  label?: string;
-  emoji?: JSONEmoji;
-  customId?: string;
-  url?: string;
-  disabled?: boolean;
-}
-
-interface SelectMenu {
-  type:
-    | ComponentTypes.SelectMenu
-    | ComponentTypes.ChannelSelect
-    | ComponentTypes.MentionableSelect
-    | ComponentTypes.RoleSelect
-    | ComponentTypes.UserSelect;
-  customId: string;
-  options?: Array<JSONSelectOption>;
-  channelTypes?: Array<ChannelTypes>;
-  placeholder?: string;
-  minValues?: number;
-  maxValues?: number;
-  disabled?: boolean;
-}
-
-interface TextInput {
-  type: ComponentTypes.TextInput;
-  customId: string;
-  style: number;
-  label: string;
-  minLength?: number;
-  maxLength?: number;
-  required?: boolean;
-  value?: string;
-  placeholder?: string;
-}
 
 export class Interaction extends Base {
   public applicationId: string;
@@ -193,7 +151,46 @@ export class Interaction extends Base {
       embeds?: Array<JSONEmbed>;
       allowedMentions?: JSONAllowedMentions;
       flags?: MessageFlags;
-      components?: Array<ActionRow>;
+      components?: Array<{
+        type: ComponentTypes.ActionRow;
+        components: Array<
+          | {
+              type: ComponentTypes.Button;
+              style: number;
+              label?: string;
+              emoji?: JSONEmoji;
+              customId?: string;
+              url?: string;
+              disabled?: boolean;
+            }
+          | {
+              type:
+                | ComponentTypes.StringSelect
+                | ComponentTypes.ChannelSelect
+                | ComponentTypes.MentionableSelect
+                | ComponentTypes.RoleSelect
+                | ComponentTypes.UserSelect;
+              customId: string;
+              options?: Array<JSONSelectOption>;
+              channelTypes?: Array<ChannelTypes>;
+              placeholder?: string;
+              minValues?: number;
+              maxValues?: number;
+              disabled?: boolean;
+            }
+          | {
+              type: ComponentTypes.TextInput;
+              customId: string;
+              style: number;
+              label: string;
+              minLength?: number;
+              maxLength?: number;
+              required?: boolean;
+              value?: string;
+              placeholder?: string;
+            }
+        >;
+      }>;
       attachments?: Array<JSONAttachment>;
       choices?: Array<JSONApplicationCommandOptionChoice>;
       customId?: string;
@@ -375,7 +372,7 @@ export class Interaction extends Base {
           }
         | {
             type:
-              | ComponentTypes.SelectMenu
+              | ComponentTypes.StringSelect
               | ComponentTypes.ChannelSelect
               | ComponentTypes.MentionableSelect
               | ComponentTypes.RoleSelect
@@ -414,7 +411,12 @@ export class Interaction extends Base {
           },
           json: {
             content: options?.content,
-            embeds: options?.embeds,
+            embeds:
+              options?.embeds !== undefined
+                ? options?.embeds !== null
+                  ? embedToRaw(options.embeds)
+                  : null
+                : undefined,
             allowed_mentions: {
               parse: options?.allowedMentions?.parse,
               roles: options?.allowedMentions?.roles,
@@ -465,7 +467,7 @@ export class Interaction extends Base {
           }
         | {
             type:
-              | ComponentTypes.SelectMenu
+              | ComponentTypes.StringSelect
               | ComponentTypes.ChannelSelect
               | ComponentTypes.MentionableSelect
               | ComponentTypes.RoleSelect
@@ -503,7 +505,12 @@ export class Interaction extends Base {
         json: {
           content: options?.content,
           tts: options?.tts,
-          embeds: options?.embeds,
+          embeds:
+            options?.embeds !== undefined
+              ? options?.embeds !== null
+                ? embedToRaw(options.embeds)
+                : null
+              : undefined,
           allowed_mentions: {
             parse: options?.allowedMentions?.parse,
             roles: options?.allowedMentions?.roles,
@@ -569,7 +576,7 @@ export class Interaction extends Base {
             }
           | {
               type:
-                | ComponentTypes.SelectMenu
+                | ComponentTypes.StringSelect
                 | ComponentTypes.ChannelSelect
                 | ComponentTypes.MentionableSelect
                 | ComponentTypes.RoleSelect
@@ -609,7 +616,12 @@ export class Interaction extends Base {
           },
           json: {
             content: options?.content,
-            embeds: options?.embeds,
+            embeds:
+              options?.embeds !== undefined
+                ? options?.embeds !== null
+                  ? embedToRaw(options.embeds)
+                  : null
+                : undefined,
             allowed_mentions: {
               parse: options?.allowedMentions?.parse,
               roles: options?.allowedMentions?.roles,

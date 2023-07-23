@@ -141,7 +141,7 @@ export class Webhook extends Base {
             }
           | {
               type:
-                | ComponentTypes.SelectMenu
+                | ComponentTypes.StringSelect
                 | ComponentTypes.ChannelSelect
                 | ComponentTypes.MentionableSelect
                 | ComponentTypes.RoleSelect
@@ -302,7 +302,7 @@ export class Webhook extends Base {
             }
           | {
               type:
-                | ComponentTypes.SelectMenu
+                | ComponentTypes.StringSelect
                 | ComponentTypes.ChannelSelect
                 | ComponentTypes.MentionableSelect
                 | ComponentTypes.RoleSelect

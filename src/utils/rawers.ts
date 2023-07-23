@@ -108,7 +108,7 @@ export function messageComponentToRaw(
         }
       | {
           type:
-            | ComponentTypes.SelectMenu
+            | ComponentTypes.StringSelect
             | ComponentTypes.ChannelSelect
             | ComponentTypes.MentionableSelect
             | ComponentTypes.RoleSelect
@@ -174,7 +174,7 @@ export function messageComponentToRaw(
             disabled: c.disabled,
           };
         }
-        case ComponentTypes.SelectMenu: {
+        case ComponentTypes.StringSelect: {
           return {
             type: c.type,
             custom_id: c.customId,
