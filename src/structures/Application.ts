@@ -11,7 +11,7 @@ import type {
 import type { Client } from "../class";
 import { Endpoints } from "../rest";
 import {
-  rawApplicationCommand,
+  applicationCommandToRaw,
   type ApplicationCommandOptionType,
   type ApplicationCommandTypes,
   type ChannelTypes,
@@ -140,7 +140,7 @@ export class Application extends Base {
         "POST",
         Endpoints.applicationCommands(this.id),
         {
-          json: rawApplicationCommand(options),
+          json: applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -209,7 +209,7 @@ export class Application extends Base {
         "PATCH",
         Endpoints.applicationCommand(this.id, commandId),
         {
-          json: rawApplicationCommand(options),
+          json: applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -311,7 +311,7 @@ export class Application extends Base {
         "POST",
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
-          json: rawApplicationCommand(options),
+          json: applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -382,7 +382,7 @@ export class Application extends Base {
         "PATCH",
         Endpoints.applicationGuildCommand(this.id, guildId, commandId),
         {
-          json: rawApplicationCommand(options),
+          json: applicationCommandToRaw(options),
         }
       ),
       this.client

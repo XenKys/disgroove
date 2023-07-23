@@ -15,7 +15,7 @@ import {
   ComponentTypes,
   MessageFlags,
   WebhookTypes,
-  rawMessageComponent,
+  messageComponentToRaw,
 } from "../utils";
 
 export class Webhook extends Base {
@@ -197,7 +197,7 @@ export class Webhook extends Base {
             components:
               options?.components !== undefined
                 ? options.components !== null
-                  ? rawMessageComponent(options.components)
+                  ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options?.attachments,
@@ -354,7 +354,7 @@ export class Webhook extends Base {
             components:
               options?.components !== undefined
                 ? options.components !== null
-                  ? rawMessageComponent(options.components)
+                  ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options?.attachments,

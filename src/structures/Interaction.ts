@@ -20,7 +20,8 @@ import {
   InteractionCallbackType,
   InteractionType,
   MessageFlags,
-  rawMessageComponent,
+  emojiToJSON,
+  messageComponentToRaw,
 } from "../utils";
 
 interface ActionRow {
@@ -151,19 +152,7 @@ export class Interaction extends Base {
           description: value.description,
           emoji:
             value.emoji !== undefined
-              ? {
-                  id: value.emoji.id,
-                  name: value.emoji.name,
-                  roles: value.emoji.roles,
-                  user:
-                    value.emoji.user !== undefined
-                      ? new User(value.emoji.user, this.client)
-                      : undefined,
-                  requireColons: value.emoji.require_colons,
-                  managed: value.emoji.managed,
-                  animated: value.emoji.animated,
-                  available: value.emoji.available,
-                }
+              ? emojiToJSON(value.emoji, this.client)
               : undefined,
           default: value.default,
         })),
@@ -276,7 +265,7 @@ export class Interaction extends Base {
                   flags: options.data.flags,
                   components:
                     options.data.components !== undefined
-                      ? rawMessageComponent(options.data.components)
+                      ? messageComponentToRaw(options.data.components)
                       : undefined,
                   attachments: options.data.attachments,
                 },
@@ -435,7 +424,7 @@ export class Interaction extends Base {
             components:
               options?.components !== undefined
                 ? options.components !== null
-                  ? rawMessageComponent(options.components)
+                  ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options?.attachments,
@@ -524,7 +513,7 @@ export class Interaction extends Base {
           components:
             options?.components !== undefined
               ? options.components !== null
-                ? rawMessageComponent(options.components)
+                ? messageComponentToRaw(options.components)
                 : null
               : undefined,
           attachments: options?.attachments,
@@ -630,7 +619,7 @@ export class Interaction extends Base {
             components:
               options?.components !== undefined
                 ? options.components !== null
-                  ? rawMessageComponent(options.components)
+                  ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options?.attachments,

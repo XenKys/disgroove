@@ -13,7 +13,7 @@ import {
   type ApplicationCommandTypes,
   type ChannelTypes,
   type Locale,
-  rawApplicationCommand,
+  applicationCommandToRaw,
 } from "../utils";
 import { Base } from ".";
 
@@ -106,14 +106,14 @@ export class ApplicationCommand extends Base {
             "PATCH",
             Endpoints.applicationGuildCommand(this.id, this.guildId, this.id),
             {
-              json: rawApplicationCommand(options),
+              json: applicationCommandToRaw(options),
             }
           )
         : await this.client.rest.request(
             "PATCH",
             Endpoints.applicationCommand(this.applicationId, this.id),
             {
-              json: rawApplicationCommand(options),
+              json: applicationCommandToRaw(options),
             }
           ),
       this.client

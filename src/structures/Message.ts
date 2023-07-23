@@ -23,7 +23,9 @@ import {
   ChannelTypes,
   ComponentTypes,
   MessageFlags,
-  rawMessageComponent,
+  embedToJSON,
+  emojiToJSON,
+  messageComponentToRaw,
 } from "../utils";
 
 export class Message extends Base {
@@ -101,78 +103,12 @@ export class Message extends Base {
         width: attachment?.width,
         ephemeral: attachment?.ephemeral,
       }));
-    if (data.embeds !== undefined)
-      this.embeds = data.embeds.map((embed) => ({
-        title: embed?.title,
-        type: embed?.type,
-        description: embed?.description,
-        url: embed?.url,
-        timestamp: embed?.timestamp,
-        color: embed?.color,
-        footer: embed?.footer
-          ? {
-              text: embed?.footer.text,
-              iconUrl: embed?.footer?.icon_url,
-              proxyIconUrl: embed?.footer?.proxy_icon_url,
-            }
-          : undefined,
-        image: embed?.image
-          ? {
-              url: embed?.image.url,
-              proxyUrl: embed?.image?.proxy_url,
-              height: embed?.image?.height,
-              width: embed?.image?.width,
-            }
-          : undefined,
-        thumbnail: embed?.thumbnail
-          ? {
-              url: embed?.thumbnail.url,
-              proxyUrl: embed?.thumbnail?.proxy_url,
-              height: embed?.thumbnail?.height,
-              width: embed?.thumbnail?.width,
-            }
-          : undefined,
-        video: {
-          url: embed?.video?.url,
-          proxyUrl: embed?.video?.proxy_url,
-          height: embed?.video?.height,
-          width: embed?.video?.width,
-        },
-        provider: {
-          name: embed?.provider?.name,
-          url: embed?.provider?.url,
-        },
-        author: embed?.author
-          ? {
-              name: embed?.author.name,
-              url: embed?.author?.url,
-              iconUrl: embed?.author?.icon_url,
-              proxyIconUrl: embed?.author?.proxy_icon_url,
-            }
-          : undefined,
-        fields: embed?.fields?.map((field) => ({
-          name: field.name,
-          value: field.value,
-          inline: field?.inline,
-        })),
-      }));
+    if (data.embeds !== undefined) this.embeds = embedToJSON(data.embeds);
     if (data.reactions !== undefined)
       this.reactions = data.reactions.map((reaction) => ({
         count: reaction.count,
         me: reaction.me,
-        emoji: {
-          id: reaction.emoji.id,
-          name: reaction.emoji.name,
-          roles: reaction.emoji?.roles,
-          user:
-            reaction.emoji.user !== undefined
-              ? new User(reaction.emoji.user, this.client)
-              : undefined,
-          requireColons: reaction.emoji?.require_colons,
-          managed: reaction.emoji?.managed,
-          animated: reaction.emoji?.animated,
-          available: reaction.emoji?.available,
-        },
+        emoji: emojiToJSON(reaction.emoji, this.client),
       }));
     if (data.nonce !== undefined) this.nonce = data.nonce;
     if (data.webhook_id !== undefined) this.webhookId = data.webhook_id;
@@ -382,7 +318,7 @@ export class Message extends Base {
             components:
               options?.components !== undefined
                 ? options.components !== null
-                  ? rawMessageComponent(options.components)
+                  ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options?.attachments,

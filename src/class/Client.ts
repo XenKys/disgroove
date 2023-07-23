@@ -11,8 +11,9 @@ import {
   SystemChannelFlags,
   TriggerTypes,
   VerificationLevel,
-  rawChannel,
-  rawRole,
+  channelToRaw,
+  emojiToJSON,
+  roleToRaw,
 } from "../utils";
 import { Endpoints, REST } from "../rest";
 import {
@@ -515,8 +516,8 @@ export class Client extends EventEmitter {
           verification_level: options.verificationLevel,
           default_message_notifications: options.defaultMessageNotifications,
           explicit_content_filter: options.explicitContentFilter,
-          roles: options.roles?.map((role) => rawRole(role)),
-          channels: options.channels?.map((channel) => rawChannel(channel)),
+          roles: options.roles?.map((role) => roleToRaw(role)),
+          channels: options.channels?.map((channel) => channelToRaw(channel)),
           afk_channel_id: options.afkChannelId,
           afk_timeout: options.afkTimeout,
           system_channel_id: options.systemChannelId,
@@ -1026,16 +1027,7 @@ export class Client extends EventEmitter {
         case "GUILD_EMOJIS_UPDATE":
           super.emit(GatewayEvents.GuildEmojisUpdate, {
             guildId: d.guild_id,
-            emojis: d.emojis.map((emoji: RawEmoji) => ({
-              id: emoji.id,
-              name: emoji.name,
-              roles: emoji.roles,
-              user: emoji.roles,
-              requireColons: emoji.require_colons,
-              managed: emoji.managed,
-              animated: emoji.animated,
-              available: emoji.available,
-            })),
+            emojis: d.emojis.map((emoji: RawEmoji) => emojiToJSON(emoji, this)),
           });
           break;
         case "GUILD_STICKERS_UPDATE":
@@ -1239,19 +1231,7 @@ export class Client extends EventEmitter {
               d.member !== undefined
                 ? new GuildMember(d.member, this)
                 : undefined,
-            emoji: {
-              id: d.emoji.id,
-              name: d.emoji.name,
-              roles: d.emoji.roles,
-              user:
-                d.emoji.user !== undefined
-                  ? new User(d.emoji.user, this)
-                  : undefined,
-              requireColons: d.emoji.require_colons,
-              managed: d.emoji.managed,
-              animated: d.emoji.animated,
-              available: d.emoji.available,
-            },
+            emoji: emojiToJSON(d.emoji, this),
             messageAuthorId: d.message_author_id,
           });
           break;
@@ -1261,19 +1241,7 @@ export class Client extends EventEmitter {
             channelId: d.channel_id,
             messageId: d.message_id,
             guildId: d.guild_id,
-            emoji: {
-              id: d.emoji.id,
-              name: d.emoji.name,
-              roles: d.emoji.roles,
-              user:
-                d.emoji.user !== undefined
-                  ? new User(d.emoji.user, this)
-                  : undefined,
-              requireColons: d.emoji.require_colons,
-              managed: d.emoji.managed,
-              animated: d.emoji.animated,
-              available: d.emoji.available,
-            },
+            emoji: emojiToJSON(d.emoji, this),
           });
           break;
         case "MESSAGE_REACTION_REMOVE_ALL":
@@ -1288,19 +1256,7 @@ export class Client extends EventEmitter {
             channelId: d.channel_id,
             guildId: d.guild_id,
             messageId: d.message_id,
-            emoji: {
-              id: d.emoji.id,
-              name: d.emoji.name,
-              roles: d.emoji.roles,
-              user:
-                d.emoji.user !== undefined
-                  ? new User(d.emoji.user, this)
-                  : undefined,
-              requireColons: d.emoji.require_colons,
-              managed: d.emoji.managed,
-              animated: d.emoji.animated,
-              available: d.emoji.available,
-            },
+            emoji: emojiToJSON(d.emoji, this),
           });
           break;
         case "PRESENCE_UPDATE":

@@ -27,7 +27,7 @@ import {
   ComponentTypes,
   InviteTargetTypes,
   MessageFlags,
-  rawMessageComponent,
+  messageComponentToRaw,
 } from "../utils";
 
 export class Channel extends Base {
@@ -315,7 +315,7 @@ export class Channel extends Base {
             message_reference: options?.messageReference,
             components:
               options?.components !== undefined
-                ? rawMessageComponent(options.components)
+                ? messageComponentToRaw(options.components)
                 : undefined,
             stickers_ids: options?.stickersIds,
             attachments: options?.attachments,
@@ -478,7 +478,7 @@ export class Channel extends Base {
             components:
               options?.components !== undefined
                 ? options.components !== null
-                  ? rawMessageComponent(options.components)
+                  ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options?.attachments,
@@ -805,7 +805,7 @@ export class Channel extends Base {
             components:
               options?.message.components !== undefined
                 ? options.message.components !== null
-                  ? rawMessageComponent(options.message.components)
+                  ? messageComponentToRaw(options.message.components)
                   : null
                 : undefined,
             attachments: options.message?.attachments,

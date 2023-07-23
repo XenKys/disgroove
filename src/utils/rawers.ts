@@ -1,6 +1,7 @@
 import type { User } from "../structures";
 import type {
   JSONDefaultReaction,
+  JSONEmbed,
   JSONEmoji,
   JSONForumTag,
   JSONOverwrite,
@@ -17,7 +18,7 @@ import {
   UserFlags,
 } from "./constants";
 
-export function rawApplicationCommand(command: {
+export function applicationCommandToRaw(command: {
   name?: string;
   nameLocalizations?: Partial<Record<Locale, string>> | null;
   description?: string;
@@ -58,41 +59,41 @@ export function rawApplicationCommand(command: {
   nsfw?: boolean;
 }) {
   return {
-    name: command?.name,
-    name_localizations: command?.nameLocalizations,
-    description: command?.description,
-    description_localizations: command?.descriptionLocalizations,
-    options: command?.options?.map((option) => ({
+    name: command.name,
+    name_localizations: command.nameLocalizations,
+    description: command.description,
+    description_localizations: command.descriptionLocalizations,
+    options: command.options?.map((option) => ({
       type: option.type,
       name: option.name,
-      name_localizations: option?.nameLocalizations,
+      name_localizations: option.nameLocalizations,
       description: option.description,
-      description_localizations: option?.descriptionLocalizations,
-      required: option?.required,
-      choices: option?.choices,
-      command: option?.options?.map((o) => ({
+      description_localizations: option.descriptionLocalizations,
+      required: option.required,
+      choices: option.choices,
+      command: option.options?.map((o) => ({
         type: o.type,
         name: o.name,
-        name_localizations: o?.nameLocalizations,
+        name_localizations: o.nameLocalizations,
         description: o.description,
-        description_localizations: o?.descriptionLocalizations,
-        required: o?.required,
-        choices: o?.choices,
-        channel_types: o?.channelTypes,
-        min_value: o?.minValue,
-        max_value: o?.maxValue,
-        min_length: o?.minLength,
-        max_length: o?.maxLength,
-        autocomplete: o?.autocomplete,
+        description_localizations: o.descriptionLocalizations,
+        required: o.required,
+        choices: o.choices,
+        channel_types: o.channelTypes,
+        min_value: o.minValue,
+        max_value: o.maxValue,
+        min_length: o.minLength,
+        max_length: o.maxLength,
+        autocomplete: o.autocomplete,
       })),
     })),
-    default_member_permissions: command?.defaultMemberPermissions,
-    default_permission: command?.defaultPermission,
-    nsfw: command?.nsfw,
+    default_member_permissions: command.defaultMemberPermissions,
+    default_permission: command.defaultPermission,
+    nsfw: command.nsfw,
   };
 }
 
-export function rawMessageComponent(
+export function messageComponentToRaw(
   components: Array<{
     type: ComponentTypes.ActionRow;
     components: Array<
@@ -137,129 +138,80 @@ export function rawMessageComponent(
   return components.map((component) => ({
     type: component.type,
     components: component.components.map((c) => {
-      if (c.type === ComponentTypes.Button) {
-        return {
-          type: c.type,
-          style: c.style,
-          label: c?.label,
-          emoji:
-            c?.emoji !== undefined
-              ? {
-                  id: c?.emoji.id,
-                  name: c?.emoji.name,
-                  roles: c?.emoji?.roles,
-                  user: {
-                    id: c?.emoji?.user?.id,
-                    username: c?.emoji?.user?.username,
-                    discriminator: c?.emoji?.user?.discriminator,
-                    avatar: c?.emoji?.user?.avatar,
-                    bot: c?.emoji?.user?.bot,
-                    system: c?.emoji?.user?.system,
-                    mfa_enabled: c?.emoji?.user?.mfaEnabled,
-                    banner: c?.emoji?.user?.banner,
-                    accent_color: c?.emoji?.user?.accentColor,
-                    locale: c?.emoji?.user?.locale,
-                    verified: c?.emoji?.user?.verified,
-                    email: c?.emoji?.user?.email,
-                    flags: c?.emoji?.user?.flags,
-                    premium_type: c?.emoji?.user?.premiumType,
-                    public_flags: c?.emoji?.user?.publicFlags,
-                  },
-                  require_colons: c?.emoji?.requireColons,
-                  managed: c?.emoji?.managed,
-                  animated: c?.emoji?.animated,
-                  available: c?.emoji?.available,
-                }
-              : undefined,
-          custom_id: c?.customId,
-          url: c?.url,
-          disabled: c?.disabled,
-        };
-      } else if (c.type === ComponentTypes.TextInput) {
-        return {
-          type: c.type,
-          custom_id: c.customId,
-          style: c.style,
-          label: c.label,
-          min_length: c.minLength,
-          max_length: c.maxLength,
-          required: c.required,
-          value: c.value,
-          placeholder: c.placeholder,
-        };
-      } else if (c.type === ComponentTypes.ChannelSelect) {
-        return {
-          type: c.type,
-          custom_id: c.customId,
-          channel_types: c.channelTypes,
-          placeholder: c.placeholder,
-          min_values: c.minValues,
-          max_values: c.maxValues,
-          disabled: c.disabled,
-        };
-      } else if (c.type === ComponentTypes.SelectMenu) {
-        return {
-          type: c.type,
-          custom_id: c.customId,
-          placeholder: c.placeholder,
-          options: c.options?.map((option) => ({
-            label: option.label,
-            value: option.value,
-            description: option?.description,
-            emoji:
-              option?.emoji !== undefined
-                ? {
-                    id: option?.emoji.id,
-                    name: option?.emoji.name,
-                    roles: option?.emoji?.roles,
-                    user: {
-                      id: option?.emoji?.user?.id,
-                      username: option?.emoji?.user?.username,
-                      discriminator: option?.emoji?.user?.discriminator,
-                      avatar: option?.emoji?.user?.avatar,
-                      bot: option?.emoji?.user?.bot,
-                      system: option?.emoji?.user?.system,
-                      mfa_enabled: option?.emoji?.user?.mfaEnabled,
-                      banner: option?.emoji?.user?.banner,
-                      accent_color: option?.emoji?.user?.accentColor,
-                      locale: option?.emoji?.user?.locale,
-                      verified: option?.emoji?.user?.verified,
-                      email: option?.emoji?.user?.email,
-                      flags: option?.emoji?.user?.flags,
-                      premium_type: option?.emoji?.user?.premiumType,
-                      public_flags: option?.emoji?.user?.publicFlags,
-                    },
-                    require_colons: option?.emoji?.requireColons,
-                    managed: option?.emoji?.managed,
-                    animated: option?.emoji?.animated,
-                    available: option?.emoji?.available,
-                  }
-                : undefined,
-            default: option?.default,
-          })),
-          min_values: c.minValues,
-          max_values: c.maxValues,
-          disabled: c.disabled,
-        };
-      } else if (
-        c.type === ComponentTypes.MentionableSelect ||
-        c.type === ComponentTypes.RoleSelect ||
-        c.type === ComponentTypes.UserSelect
-      ) {
-        return {
-          type: c.type,
-          custom_id: c.customId,
-          placeholder: c.placeholder,
-          min_values: c.minValues,
-          max_values: c.maxValues,
-          disabled: c.disabled,
-        };
+      switch (c.type) {
+        case ComponentTypes.Button: {
+          return {
+            type: c.type,
+            style: c.style,
+            label: c.label,
+            emoji: c.emoji !== undefined ? emojiToRaw(c.emoji) : undefined,
+            custom_id: c.customId,
+            url: c.url,
+            disabled: c.disabled,
+          };
+        }
+        case ComponentTypes.TextInput: {
+          return {
+            type: c.type,
+            custom_id: c.customId,
+            style: c.style,
+            label: c.label,
+            min_length: c.minLength,
+            max_length: c.maxLength,
+            required: c.required,
+            value: c.value,
+            placeholder: c.placeholder,
+          };
+        }
+        case ComponentTypes.ChannelSelect: {
+          return {
+            type: c.type,
+            custom_id: c.customId,
+            channel_types: c.channelTypes,
+            placeholder: c.placeholder,
+            min_values: c.minValues,
+            max_values: c.maxValues,
+            disabled: c.disabled,
+          };
+        }
+        case ComponentTypes.SelectMenu: {
+          return {
+            type: c.type,
+            custom_id: c.customId,
+            placeholder: c.placeholder,
+            options: c.options?.map((option) => ({
+              label: option.label,
+              value: option.value,
+              description: option.description,
+              emoji:
+                option.emoji !== undefined
+                  ? emojiToRaw(option.emoji)
+                  : undefined,
+              default: option.default,
+            })),
+            min_values: c.minValues,
+            max_values: c.maxValues,
+            disabled: c.disabled,
+          };
+        }
+        case ComponentTypes.MentionableSelect:
+        case ComponentTypes.RoleSelect:
+        case ComponentTypes.UserSelect: {
+          return {
+            type: c.type,
+            custom_id: c.customId,
+            placeholder: c.placeholder,
+            min_values: c.minValues,
+            max_values: c.maxValues,
+            disabled: c.disabled,
+          };
+        }
       }
     }),
   }));
 }
 
-export function rawRole(role: {
+export function roleToRaw(role: {
   guildId?: string;
   id?: string;
   name?: string;
@@ -296,7 +248,7 @@ export function rawRole(role: {
   };
 }
 
-export function rawUser(user: {
+export function userToRaw(user: {
   id?: string;
   username?: string;
   discriminator?: string;
@@ -334,7 +286,7 @@ export function rawUser(user: {
   };
 }
 
-export function rawChannel(channel: {
+export function channelToRaw(channel: {
   id?: string;
   type?: ChannelTypes;
   guildId?: string;
@@ -389,7 +341,7 @@ export function rawChannel(channel: {
     bitrate: channel.bitrate,
     user_limit: channel.userLimit,
     rate_limit_per_user: channel.rateLimitPerUser,
-    recipients: channel.recipients?.map((recipient) => rawUser(recipient)),
+    recipients: channel.recipients?.map((recipient) => userToRaw(recipient)),
     icon: channel.icon,
     owner_id: channel.ownerId,
     application_id: channel.applicationId,
@@ -417,7 +369,7 @@ export function rawChannel(channel: {
         guild_id: channel.member?.member?.guildId,
         user:
           channel.member?.member?.user !== undefined
-            ? rawUser(channel.member?.member?.user)
+            ? userToRaw(channel.member?.member?.user)
             : undefined,
         nick: channel.member?.member?.nick,
         avatar: channel.member?.member?.avatar,
@@ -452,5 +404,75 @@ export function rawChannel(channel: {
     default_thread_rate_limit_per_user: channel.defaultThreadRateLimitPerUser,
     default_sort_order: channel.defaultSortOrder,
     default_forum_layout: channel.defaultForumLayout,
+  };
+}
+
+export function embedToRaw(embeds: Array<JSONEmbed>) {
+  embeds.map((embed) => ({
+    title: embed.title,
+    type: embed.type,
+    description: embed.description,
+    url: embed.url,
+    timestamp: embed.timestamp,
+    color: embed.color,
+    footer: embed.footer
+      ? {
+          text: embed.footer.text,
+          icon_url: embed.footer.iconUrl,
+          proxy_icon_url: embed.footer.proxyIconUrl,
+        }
+      : undefined,
+    image: embed.image
+      ? {
+          url: embed.image.url,
+          proxy_url: embed.image.proxyUrl,
+          height: embed.image.height,
+          width: embed.image.width,
+        }
+      : undefined,
+    thumbnail: embed.thumbnail
+      ? {
+          url: embed.thumbnail.url,
+          proxy_url: embed.thumbnail.proxyUrl,
+          height: embed.thumbnail.height,
+          width: embed.thumbnail.width,
+        }
+      : undefined,
+    video: {
+      url: embed.video?.url,
+      proxy_url: embed.video?.proxyUrl,
+      height: embed.video?.height,
+      width: embed.video?.width,
+    },
+    provider: {
+      name: embed.provider?.name,
+      url: embed.provider?.url,
+    },
+    author: embed.author
+      ? {
+          name: embed.author.name,
+          url: embed.author.url,
+          icon_url: embed.author.iconUrl,
+          proxy_icon_url: embed.author.proxyIconUrl,
+        }
+      : undefined,
+    fields: embed.fields?.map((field) => ({
+      name: field.name,
+      value: field.value,
+      inline: field?.inline,
+    })),
+  }));
+}
+
+export function emojiToRaw(emoji: JSONEmoji) {
+  return {
+    id: emoji.id,
+    name: emoji.name,
+    roles: emoji.roles,
+    user: emoji.user !== undefined ? userToRaw(emoji.user) : undefined,
+    require_colons: emoji.requireColons,
+    managed: emoji.managed,
+    animated: emoji.animated,
+    available: emoji.available,
   };
 }

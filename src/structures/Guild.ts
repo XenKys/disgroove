@@ -84,7 +84,8 @@ import {
   PremiumTier,
   SystemChannelFlags,
   VerificationLevel,
-  rawApplicationCommand,
+  applicationCommandToRaw,
+  emojiToJSON,
 } from "../utils";
 
 export class Guild extends Base {
@@ -144,16 +145,7 @@ export class Guild extends Base {
     this.defaultMessageNotifications = data.default_message_notifications;
     this.explicitContentFilter = data.explicit_content_filter;
     this.roles = data.roles.map((role) => new Role(role, client));
-    this.emojis = data.emojis.map((data) => ({
-      id: data.id,
-      name: data.name,
-      roles: data?.roles,
-      user: data.user !== undefined ? new User(data.user, client) : undefined,
-      requireColons: data?.require_colons,
-      managed: data?.managed,
-      animated: data?.animated,
-      available: data?.available,
-    }));
+    this.emojis = data.emojis.map((emoji) => emojiToJSON(emoji, client));
     this.features = data.features;
     this.mfaLevel = data.mfa_level;
     this.applicationId = data.application_id;
@@ -298,7 +290,7 @@ export class Guild extends Base {
         "POST",
         Endpoints.applicationGuildCommands(applicationId, this.id),
         {
-          json: rawApplicationCommand(options),
+          json: applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -369,7 +361,7 @@ export class Guild extends Base {
         "PATCH",
         Endpoints.applicationGuildCommand(applicationId, this.id, commandId),
         {
-          json: rawApplicationCommand(options),
+          json: applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -438,7 +430,7 @@ export class Guild extends Base {
         "PUT",
         Endpoints.applicationGuildCommands(applicationId, this.id),
         {
-          json: rawApplicationCommand(options),
+          json: applicationCommandToRaw(options),
         }
       )
       .then((response) =>
@@ -654,40 +646,19 @@ export class Guild extends Base {
     return this.client.rest
       .request("GET", Endpoints.guildEmojis(this.id))
       .then((response) =>
-        response.map((data: RawEmoji) => ({
-          id: data.id,
-          name: data.name,
-          roles: data.roles,
-          user:
-            data.user !== undefined
-              ? new User(data.user, this.client)
-              : undefined,
-          requireColons: data.require_colons,
-          managed: data.managed,
-          animated: data.animated,
-          available: data.available,
-        }))
+        response.map((data: RawEmoji) => emojiToJSON(data, this.client))
       );
   }
 
   /* https://discord.com/developers/docs/resources/emoji#get-guild-emoji */
   public async getEmoji(emojiId: string): Promise<JSONEmoji> {
-    const data: RawEmoji = await this.client.rest.request(
-      "GET",
-      Endpoints.guildEmoji(this.id, emojiId)
+    return emojiToJSON(
+      await this.client.rest.request(
+        "GET",
+        Endpoints.guildEmoji(this.id, emojiId)
+      ),
+      this.client
     );
-
-    return {
-      id: data.id,
-      name: data.name,
-      roles: data.roles,
-      user:
-        data.user !== undefined ? new User(data.user, this.client) : undefined,
-      requireColons: data.require_colons,
-      managed: data.managed,
-      animated: data.animated,
-      available: data.available,
-    };
   }
 
   /* https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
@@ -699,30 +670,17 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONEmoji> {
-    const data: RawEmoji = await this.client.rest.request(
-      "POST",
-      Endpoints.guildEmojis(this.id),
-      {
+    return emojiToJSON(
+      await this.client.rest.request("POST", Endpoints.guildEmojis(this.id), {
         json: {
           name: options.name,
           image: options.image,
           roles: options.roles,
         },
         reason,
-      }
+      }),
+      this.client
     );
-
-    return {
-      id: data.id,
-      name: data.name,
-      roles: data.roles,
-      user:
-        data.user !== undefined ? new User(data.user, this.client) : undefined,
-      requireColons: data.require_colons,
-      managed: data.managed,
-      animated: data.animated,
-      available: data.available,
-    };
   }
 
   /* https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
@@ -734,29 +692,20 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONEmoji> {
-    const data: RawEmoji = await this.client.rest.request(
-      "PATCH",
-      Endpoints.guildEmoji(this.id, emojiId),
-      {
-        json: {
-          name: options.name,
-          roles: options.roles,
-        },
-        reason,
-      }
+    return emojiToJSON(
+      await this.client.rest.request(
+        "PATCH",
+        Endpoints.guildEmoji(this.id, emojiId),
+        {
+          json: {
+            name: options.name,
+            roles: options.roles,
+          },
+          reason,
+        }
+      ),
+      this.client
     );
-
-    return {
-      id: data.id,
-      name: data.name,
-      roles: data.roles,
-      user:
-        data.user !== undefined ? new User(data.user, this.client) : undefined,
-      requireColons: data.require_colons,
-      managed: data.managed,
-      animated: data.animated,
-      available: data.available,
-    };
   }
 
   /* https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
@@ -779,19 +728,7 @@ export class Guild extends Base {
       icon: data.icon,
       splash: data.splash,
       discoverySplash: data.discovery_splash,
-      emojis: data.emojis.map((emoji) => ({
-        id: emoji.id,
-        name: emoji.name,
-        roles: emoji?.roles,
-        user:
-          emoji.user !== undefined
-            ? new User(emoji.user, this.client)
-            : undefined,
-        requireColons: emoji?.require_colons,
-        managed: emoji?.managed,
-        animated: emoji?.animated,
-        available: emoji?.available,
-      })),
+      emojis: data.emojis.map((emoji) => emojiToJSON(emoji, this.client)),
       features: data.features,
       approximateMemberCount: data?.approximate_member_count,
       approximatePresenceCount: data?.approximate_presence_count,
@@ -1553,19 +1490,7 @@ export class Guild extends Base {
           id: option.id,
           channelIds: option.channel_ids,
           roleIds: option.role_ids,
-          emoji: {
-            id: option.emoji.id,
-            name: option.emoji.name,
-            roles: option.emoji?.roles,
-            user:
-              option.emoji.user !== undefined
-                ? new User(option.emoji.user, this.client)
-                : undefined,
-            requireColons: option.emoji?.require_colons,
-            managed: option.emoji?.managed,
-            animated: option.emoji?.animated,
-            available: option.emoji?.available,
-          },
+          emoji: emojiToJSON(option.emoji, this.client),
           title: option.title,
           description: option.description,
         })),
