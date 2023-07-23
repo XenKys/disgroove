@@ -26,15 +26,19 @@ export class REST {
     let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
     if (data?.query) {
-      let urlSearchParams = new URLSearchParams(url.searchParams);
+      for (const value of Object.values(data.query)) {
+        if (value !== undefined) {
+          let urlSearchParams = new URLSearchParams(url.searchParams);
 
-      for (const [key, value] of Object.entries(data?.query)) {
-        if (value === undefined) return;
+          for (const [key, value] of Object.entries(data?.query)) {
+            if (value === undefined) return;
 
-        urlSearchParams.append(key, value);
-        url = new URL(
-          `https://discord.com/api/v10/${endpoint}?${urlSearchParams.toString()}`
-        );
+            urlSearchParams.append(key, value);
+            url = new URL(
+              `https://discord.com/api/v10/${endpoint}?${urlSearchParams.toString()}`
+            );
+          }
+        }
       }
     }
 
