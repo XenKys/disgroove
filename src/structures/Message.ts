@@ -1,4 +1,4 @@
-import { Application, Channel, GuildMember, User } from ".";
+import { Application, Base, Channel, GuildMember, User } from ".";
 import type { Client } from "../class";
 import { Endpoints, File } from "../rest";
 import type {
@@ -26,9 +26,7 @@ import {
   rawMessageComponent,
 } from "../utils";
 
-export class Message {
-  private client!: Client;
-  public id: string;
+export class Message extends Base {
   public channelId: string;
   public author?: User;
   public content?: string;
@@ -61,8 +59,8 @@ export class Message {
   public roleSubscriptionData?: JSONRoleSubscriptionData;
 
   constructor(data: RawMessage, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.channelId = data.channel_id;
     this.timestamp = data.timestamp;
     this.tts = data.tts;
@@ -73,7 +71,7 @@ export class Message {
     this.update(data);
   }
 
-  protected update(data: RawMessage): void {
+  protected override update(data: RawMessage): void {
     if (data.author !== undefined)
       this.author = new User(data.author, this.client);
     if (data.content !== undefined) this.content = data.content;
@@ -434,7 +432,7 @@ export class Message {
     );
   }
 
-  public toJSON(): JSONMessage {
+  public override toJSON(): JSONMessage {
     return {
       id: this.id,
       channelId: this.channelId,

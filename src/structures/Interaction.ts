@@ -1,4 +1,4 @@
-import { Channel, GuildMember, Message, Role, User } from ".";
+import { Base, Channel, GuildMember, Message, Role, User } from ".";
 import type { Client } from "../class";
 import { Endpoints, File } from "../rest";
 import type {
@@ -66,9 +66,7 @@ interface TextInput {
   placeholder?: string;
 }
 
-export class Interaction {
-  private client!: Client;
-  public id: string;
+export class Interaction extends Base {
   public applicationId: string;
   public type: InteractionType;
   public data?: JSONApplicationCommandData &
@@ -86,8 +84,8 @@ export class Interaction {
   public guildLocale?: string;
 
   constructor(data: RawInteraction, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.applicationId = data.application_id;
     this.type = data.type;
     this.token = data.token;
@@ -96,7 +94,7 @@ export class Interaction {
     this.update(data);
   }
 
-  protected update(data: RawInteraction): void {
+  protected override update(data: RawInteraction): void {
     if (data.data !== undefined)
       this.data = {
         id: data.data.id,
@@ -653,7 +651,7 @@ export class Interaction {
     );
   }
 
-  public toJSON(): JSONInteraction {
+  public override toJSON(): JSONInteraction {
     return {
       id: this.id,
       applicationId: this.applicationId,

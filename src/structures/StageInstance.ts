@@ -2,10 +2,9 @@ import type { Client } from "../class";
 import { Endpoints } from "../rest";
 import type { JSONStageInstance, RawStageInstance } from "../types";
 import type { PrivacyLevel } from "../utils";
+import { Base } from ".";
 
-export class StageInstance {
-  private client!: Client;
-  public id: string;
+export class StageInstance extends Base {
   public guildId: string;
   public channelId: string;
   public topic: string;
@@ -14,8 +13,8 @@ export class StageInstance {
   public guildScheduledEventId: string | null;
 
   constructor(data: RawStageInstance, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.guildId = data.guild_id;
     this.channelId = data.channel_id;
     this.topic = data.topic;
@@ -59,7 +58,7 @@ export class StageInstance {
     );
   }
 
-  public toJSON(): JSONStageInstance {
+  public override toJSON(): JSONStageInstance {
     return {
       id: this.id,
       guildId: this.guildId,

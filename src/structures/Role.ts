@@ -1,10 +1,9 @@
 import type { Client } from "../class";
 import { Endpoints } from "../rest";
 import type { JSONRole, JSONRoleTags, RawRole } from "../types";
+import { Base } from ".";
 
-export class Role {
-  private client!: Client;
-  public id: string;
+export class Role extends Base {
   public name: string;
   public color: number;
   public hoist: boolean;
@@ -18,8 +17,8 @@ export class Role {
   public guildId?: string;
 
   constructor(data: RawRole & { guild_id?: string }, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.name = data.name;
     this.color = data.color;
     this.hoist = data.hoist;
@@ -31,7 +30,7 @@ export class Role {
     this.update(data);
   }
 
-  protected update(data: RawRole & { guild_id?: string }): void {
+  protected override update(data: RawRole & { guild_id?: string }): void {
     if (data.icon !== undefined) this.icon = data.icon;
     if (data.unicode_emoji !== undefined)
       this.unicodeEmoji = data.unicode_emoji;
@@ -81,7 +80,7 @@ export class Role {
     );
   }
 
-  public toJSON(): JSONRole & { guildId?: string } {
+  public override toJSON(): JSONRole & { guildId?: string } {
     return {
       id: this.id,
       name: this.name,

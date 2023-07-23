@@ -2,6 +2,7 @@ export * from "./Application";
 export * from "./ApplicationCommand";
 export * from "./AuditLogEntry";
 export * from "./AutoModerationRule";
+export * from "./Base";
 export * from "./Channel";
 export * from "./Guild";
 export * from "./GuildMember";

@@ -2,6 +2,7 @@ import {
   ApplicationCommand,
   AuditLogEntry,
   AutoModerationRule,
+  Base,
   Channel,
   GuildMember,
   GuildScheduledEvent,
@@ -86,9 +87,7 @@ import {
   rawApplicationCommand,
 } from "../utils";
 
-export class Guild {
-  private client!: Client;
-  public id: string;
+export class Guild extends Base {
   public name: string;
   public icon: string | null;
   public iconHash?: string | null;
@@ -132,8 +131,8 @@ export class Guild {
   public safetyAlertsChannelId: string | null;
 
   constructor(data: RawGuild, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.name = data.name;
     this.icon = data.icon;
     this.splash = data.splash;
@@ -174,7 +173,7 @@ export class Guild {
     this.update(data);
   }
 
-  protected update(data: RawGuild): void {
+  protected override update(data: RawGuild): void {
     if (data.icon_hash !== undefined) this.iconHash = data.icon_hash;
     if (data.owner !== undefined) this.owner = data.owner;
     if (data.permissions !== undefined) this.permissions = data.permissions;
@@ -2054,7 +2053,7 @@ export class Guild {
       );
   }
 
-  public toJSON(): JSONGuild {
+  public override toJSON(): JSONGuild {
     return {
       id: this.id,
       name: this.name,

@@ -1,4 +1,4 @@
-import { GuildMember, Invite, Message, User, Webhook } from ".";
+import { Base, GuildMember, Invite, Message, User, Webhook } from ".";
 import type { Client } from "../class";
 import { Endpoints, File } from "../rest";
 import type {
@@ -30,9 +30,7 @@ import {
   rawMessageComponent,
 } from "../utils";
 
-export class Channel {
-  private client!: Client;
-  public id: string;
+export class Channel extends Base {
   public type: ChannelTypes;
   public guildId?: string;
   public position?: number;
@@ -69,14 +67,14 @@ export class Channel {
   public defaultForumLayout?: number;
 
   constructor(data: RawChannel, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.type = data.type;
 
     this.update(data);
   }
 
-  protected update(data: RawChannel): void {
+  protected override update(data: RawChannel): void {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.position !== undefined) this.position = data.position;
     if (data.permission_overwrites !== undefined)
@@ -1048,7 +1046,7 @@ export class Channel {
       );
   }
 
-  public toJSON(): JSONChannel {
+  public override toJSON(): JSONChannel {
     return {
       id: this.id,
       type: this.type,

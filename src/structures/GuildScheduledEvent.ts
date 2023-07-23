@@ -1,4 +1,4 @@
-import { GuildMember, User } from ".";
+import { Base, GuildMember, User } from ".";
 import type { Client } from "../class";
 import { Endpoints } from "../rest";
 import type {
@@ -13,9 +13,7 @@ import type {
   GuildScheduledEventStatus,
 } from "../utils";
 
-export class GuildScheduledEvent {
-  private client!: Client;
-  public id: string;
+export class GuildScheduledEvent extends Base {
   public guildId: string;
   public channelId: string | null;
   public creatorId?: string | null;
@@ -33,8 +31,8 @@ export class GuildScheduledEvent {
   public image?: string;
 
   constructor(data: RawGuildScheduledEvent, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.guildId = data.guild_id;
     this.channelId = data.channel_id;
     this.name = data.name;
@@ -48,7 +46,7 @@ export class GuildScheduledEvent {
     this.update(data);
   }
 
-  protected update(data: RawGuildScheduledEvent): void {
+  protected override update(data: RawGuildScheduledEvent): void {
     if (data.creator_id !== undefined) this.creatorId = data.creator_id;
     if (data.description !== undefined) this.description = data.description;
     if (data.entity_id !== undefined) this.entityId = data.entity_id;
@@ -134,7 +132,7 @@ export class GuildScheduledEvent {
       );
   }
 
-  public toJSON(): JSONGuildScheduledEvent {
+  public override toJSON(): JSONGuildScheduledEvent {
     return {
       id: this.id,
       guildId: this.guildId,

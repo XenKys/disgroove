@@ -1,4 +1,4 @@
-import { Channel, GuildMember, Integration } from ".";
+import { Base, Channel, GuildMember, Integration } from ".";
 import type { Client } from "../class";
 import { Endpoints } from "../rest";
 import type {
@@ -15,9 +15,7 @@ import type {
   UserFlags,
 } from "../utils";
 
-export class User {
-  private client!: Client;
-  public id: string;
+export class User extends Base {
   public username: string;
   public discriminator: string;
   public avatar: string;
@@ -35,8 +33,8 @@ export class User {
   public publicFlags?: UserFlags;
 
   constructor(data: RawUser, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.username = data.username;
     this.discriminator = data.discriminator;
     this.globalName = data.global_name;
@@ -45,7 +43,7 @@ export class User {
     this.update(data);
   }
 
-  protected update(data: RawUser): void {
+  protected override update(data: RawUser): void {
     if (data.bot !== undefined) this.bot = data.bot;
     if (data.system !== undefined) this.system = data.system;
     if (data.mfa_enabled !== undefined) this.mfaEnabled = data.mfa_enabled;

@@ -6,10 +6,9 @@ import type {
   RawAuditLogEntry,
 } from "../types";
 import type { AuditLogEvents } from "../utils";
+import { Base } from ".";
 
-export class AuditLogEntry {
-  private client!: Client;
-  public id: string;
+export class AuditLogEntry extends Base {
   public targetId: string | null;
   public changes?: Array<JSONAuditLogChange>;
   public userId: string | null;
@@ -18,8 +17,8 @@ export class AuditLogEntry {
   public reason?: string;
 
   constructor(data: RawAuditLogEntry, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.targetId = data.target_id;
     this.userId = data.user_id;
     this.actionType = data.action_type;
@@ -27,7 +26,7 @@ export class AuditLogEntry {
     this.update(data);
   }
 
-  protected update(data: RawAuditLogEntry): void {
+  protected override update(data: RawAuditLogEntry): void {
     if (data.changes !== undefined) this.changes = data.changes;
     if (data.options !== undefined)
       this.options = {
@@ -47,7 +46,7 @@ export class AuditLogEntry {
     if (data.reason !== undefined) this.reason = data.reason;
   }
 
-  public toJSON(): JSONAuditLogEntry {
+  public override toJSON(): JSONAuditLogEntry {
     return {
       targetId: this.targetId,
       changes: this.changes,

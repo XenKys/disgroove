@@ -18,10 +18,9 @@ import {
   type ChannelTypes,
   type Locale,
 } from "../utils";
+import { Base } from "./Base";
 
-export class Application {
-  private client!: Client;
-  public id: string;
+export class Application extends Base {
   public name: string;
   public icon: string | null;
   public description: string;
@@ -43,8 +42,8 @@ export class Application {
   public roleConnectionsVerificationURL?: string;
 
   constructor(data: RawApplication, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.name = data.name;
     this.icon = data.icon;
     this.description = data.description;
@@ -55,7 +54,7 @@ export class Application {
     this.update(data);
   }
 
-  protected update(data: RawApplication) {
+  protected override update(data: RawApplication) {
     if (data.rpc_origins !== undefined) this.rpcOrigins = data.rpc_origins;
     if (data.terms_of_service_url !== undefined)
       this.termsOfServiceURL = data.terms_of_service_url;
@@ -587,7 +586,7 @@ export class Application {
       );
   }
 
-  public toJSON(): JSONApplication {
+  public override toJSON(): JSONApplication {
     return {
       id: this.id,
       name: this.name,

@@ -1,4 +1,4 @@
-import { Channel, Guild, Message, User } from ".";
+import { Base, Channel, Guild, Message, User } from ".";
 import type { Client } from "../class";
 import { Endpoints, File } from "../rest";
 import type {
@@ -18,9 +18,7 @@ import {
   rawMessageComponent,
 } from "../utils";
 
-export class Webhook {
-  private client!: Client;
-  public id: string;
+export class Webhook extends Base {
   public type: WebhookTypes;
   public guildId?: string | null;
   public channelId: string | null;
@@ -34,8 +32,8 @@ export class Webhook {
   public url?: string;
 
   constructor(data: RawWebhook, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.type = data.type;
     this.channelId = data.channel_id;
     this.name = data.name;
@@ -45,7 +43,7 @@ export class Webhook {
     this.update(data);
   }
 
-  protected update(data: RawWebhook): void {
+  protected override update(data: RawWebhook): void {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.user !== undefined) this.user = new User(data.user, this.client);
     if (data.token !== undefined) this.token = data.token;
@@ -388,7 +386,7 @@ export class Webhook {
     );
   }
 
-  public toJSON(): JSONWebhook {
+  public override toJSON(): JSONWebhook {
     return {
       id: this.id,
       type: this.type,

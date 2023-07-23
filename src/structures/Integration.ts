@@ -1,4 +1,4 @@
-import { User } from ".";
+import { Base, User } from ".";
 import type { Client } from "../class";
 import { Endpoints } from "../rest";
 import type {
@@ -9,9 +9,7 @@ import type {
 } from "../types";
 import type { IntegrationExpireBehaviors, OAuth2Scopes } from "../utils";
 
-export class Integration {
-  private client!: Client;
-  public id: string;
+export class Integration extends Base {
   public guildId: string;
   public name: string;
   public type: string;
@@ -30,8 +28,8 @@ export class Integration {
   public scopes?: Array<OAuth2Scopes>;
 
   constructor(data: RawIntegration, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.guildId = data.guild_id;
     this.name = data.name;
     this.type = data.type;
@@ -41,7 +39,7 @@ export class Integration {
     this.update(data);
   }
 
-  protected update(data: RawIntegration): void {
+  protected override update(data: RawIntegration): void {
     if (data.syncing !== undefined) this.syncing = data.syncing;
     if (data.role_id !== undefined) this.roleId = data.role_id;
     if (data.enable_emoticons !== undefined)
@@ -80,7 +78,7 @@ export class Integration {
     );
   }
 
-  public toJSON(): JSONIntegration {
+  public override toJSON(): JSONIntegration {
     return {
       guildId: this.guildId,
       id: this.id,

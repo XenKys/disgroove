@@ -8,17 +8,16 @@ import type {
   RawApplicationCommandPermission,
   RawGuildApplicationCommandPermissions,
 } from "../types";
-import { rawApplicationCommand } from "../utils";
-import type {
-  ApplicationCommandOptionType,
-  ApplicationCommandTypes,
-  ChannelTypes,
-  Locale,
-} from "../utils/constants";
+import {
+  type ApplicationCommandOptionType,
+  type ApplicationCommandTypes,
+  type ChannelTypes,
+  type Locale,
+  rawApplicationCommand,
+} from "../utils";
+import { Base } from ".";
 
-export class ApplicationCommand {
-  private client!: Client;
-  public id: string;
+export class ApplicationCommand extends Base {
   public type?: ApplicationCommandTypes;
   public applicationId: string;
   public guildId?: string;
@@ -34,8 +33,8 @@ export class ApplicationCommand {
   public version: string;
 
   constructor(data: RawApplicationCommand, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.applicationId = data.application_id;
     this.name = data.name;
     this.description = data.description;
@@ -45,7 +44,7 @@ export class ApplicationCommand {
     this.update(data);
   }
 
-  protected update(data: RawApplicationCommand): void {
+  protected override update(data: RawApplicationCommand): void {
     if (data.type !== undefined) this.type = data.type;
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.name_localizations !== undefined)
@@ -220,7 +219,7 @@ export class ApplicationCommand {
       );
   }
 
-  public toJSON(): JSONApplicationCommand {
+  public override toJSON(): JSONApplicationCommand {
     return {
       id: this.id,
       type: this.type,

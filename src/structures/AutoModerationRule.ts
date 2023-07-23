@@ -5,10 +5,9 @@ import type {
   JSONAutoModerationRule,
   RawAutoModerationRule,
 } from "../types";
+import { Base } from ".";
 
-export class AutoModerationRule {
-  private client!: Client;
-  public id: string;
+export class AutoModerationRule extends Base {
   public guildId: string;
   public name: string;
   public creatorId: string;
@@ -21,8 +20,8 @@ export class AutoModerationRule {
   public exemptChannels: Array<string>;
 
   constructor(data: RawAutoModerationRule, client: Client) {
-    this.client = client;
-    this.id = data.id;
+    super(data.id, client);
+
     this.guildId = data.guild_id;
     this.name = data.name;
     this.creatorId = data.creator_id;
@@ -96,7 +95,7 @@ export class AutoModerationRule {
     );
   }
 
-  public toJSON(): JSONAutoModerationRule {
+  public override toJSON(): JSONAutoModerationRule {
     return {
       id: this.id,
       guildId: this.guildId,
