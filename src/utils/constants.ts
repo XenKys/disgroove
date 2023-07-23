@@ -132,7 +132,7 @@ export enum ApplicationFlags {
   ApplicationCommandBadge = 1 << 23,
 }
 
-/* https://discOrd.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type */
+/* https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type */
 export enum ApplicationRoleConnectionMetadataType {
   IntegerLessThanOrEqual = 1,
   IntegerGreaterThanOrEqual = 2,

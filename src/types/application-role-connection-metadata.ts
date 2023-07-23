@@ -3,7 +3,7 @@ import type {
   Locale,
 } from "../utils/constants";
 
-/* https://discOrd.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-structure */
+/* https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-structure */
 export interface RawApplicationRoleConnectionMetadata {
   type: ApplicationRoleConnectionMetadataType;
   key: string;
