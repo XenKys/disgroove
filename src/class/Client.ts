@@ -340,23 +340,11 @@ export declare interface Client extends EventEmitter {
   ): this;
   on(
     event: GatewayEvents.MessageCreate,
-    listener: (
-      listener: Message & {
-        guildId: string;
-        member: GuildMember;
-        mentions: Array<User>;
-      }
-    ) => void
+    listener: (listener: Message) => void
   ): this;
   on(
     event: GatewayEvents.MessageUpdate,
-    listener: (
-      listener: Message & {
-        guildId: string;
-        member: GuildMember;
-        mentions: Array<User>;
-      }
-    ) => void
+    listener: (listener: Message) => void
   ): this;
   on(
     event: GatewayEvents.MessageDelete,

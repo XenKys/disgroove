@@ -16,6 +16,7 @@ import type {
   JSONSelectOption,
   JSONSticker,
   JSONStickerItem,
+  RawGuildMember,
   RawMessage,
   RawUser,
 } from "../types";
@@ -59,8 +60,16 @@ export class Message extends Base {
   public stickers?: Array<JSONSticker>;
   public position?: number;
   public roleSubscriptionData?: JSONRoleSubscriptionData;
+  public guildId?: string;
+  public member?: GuildMember;
 
-  constructor(data: RawMessage, client: Client) {
+  constructor(
+    data: RawMessage & {
+      guild_id?: string;
+      member?: RawGuildMember;
+    },
+    client: Client
+  ) {
     super(data.id, client);
 
     this.channelId = data.channel_id;
@@ -73,7 +82,12 @@ export class Message extends Base {
     this.update(data);
   }
 
-  protected override update(data: RawMessage): void {
+  protected override update(
+    data: RawMessage & {
+      guild_id?: string;
+      member?: RawGuildMember;
+    }
+  ): void {
     if (data.author !== undefined)
       this.author = new User(data.author, this.client);
     if (data.content !== undefined) this.content = data.content;
@@ -172,6 +186,9 @@ export class Message extends Base {
           data.role_subscription_data.total_months_subscribed,
         isRenewal: data.role_subscription_data.is_renewal,
       };
+    if (data.guild_id !== undefined) this.guildId = data.guild_id;
+    if (data.member !== undefined)
+      this.member = new GuildMember(data.member, this.client);
   }
 
   /* https://discord.com/developers/docs/resources/channel#crosspost-message */
@@ -368,7 +385,10 @@ export class Message extends Base {
     );
   }
 
-  public override toJSON(): JSONMessage {
+  public override toJSON(): JSONMessage & {
+    guildId?: string;
+    member?: GuildMember;
+  } {
     return {
       id: this.id,
       channelId: this.channelId,
@@ -401,6 +421,8 @@ export class Message extends Base {
       stickers: this.stickers,
       position: this.position,
       roleSubscriptionData: this.roleSubscriptionData,
+      guildId: this.guildId,
+      member: this.member,
     };
   }
 }
