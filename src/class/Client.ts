@@ -7,6 +7,7 @@ import {
   GatewayOPCodes,
   GuildFeatures,
   InviteTargetTypes,
+  OAuth2Scopes,
   PrivacyLevel,
   SystemChannelFlags,
   TriggerTypes,
@@ -727,6 +728,64 @@ export class Client extends EventEmitter {
         custom: data.custom,
       }))
     );
+  }
+
+  /* https://discord.com/developers/docs/topics/gateway#get-gateway */
+  public async getGateway(): Promise<{ url: string }> {
+    return this.rest.request("GET", Endpoints.gateway());
+  }
+
+  /* https://discord.com/developers/docs/topics/gateway#get-gateway-bot */
+  public async getGatewayBot(): Promise<{
+    url: string;
+    shards: number;
+    sessionStartLimit: {
+      total: number;
+      remaining: number;
+      resetAfter: number;
+      maxConcurrency: number;
+    };
+  }> {
+    return this.rest
+      .request("GET", Endpoints.gatewayBot())
+      .then((response) => ({
+        url: response.url,
+        shards: response.shards,
+        sessionStartLimit: {
+          total: response.session_start_limit.total,
+          remaining: response.session_start_limit.remaining,
+          resetAfter: response.session_start_limit.reset_after,
+          maxConcurrency: response.session_start_limit.max_concurrency,
+        },
+      }));
+  }
+
+  /* https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
+  public async getOAuth2Application(): Promise<Application> {
+    return new Application(
+      await this.rest.request("GET", Endpoints.oauth2CurrentApplication()),
+      this
+    );
+  }
+
+  /* https://discord.com/developers/docs/topics/oauth2#get-current-authorization-information */
+  public async getOAuth2Authorization(): Promise<{
+    application: Application;
+    scopes: Array<OAuth2Scopes>;
+    expires: number;
+    user?: User;
+  }> {
+    return this.rest
+      .request("GET", Endpoints.oauth2Authorization())
+      .then((response) => ({
+        application: new Application(response.application, this),
+        scopes: response.scopes,
+        expires: response.expires,
+        user:
+          response.user !== undefined
+            ? new User(response.user, this)
+            : undefined,
+      }));
   }
 
   public connect(): void {
