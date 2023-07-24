@@ -1151,6 +1151,11 @@ export const BitwisePermissionFlags = {
     (1n << 40n),
 } as const;
 
+/* https://discord.com/developers/docs/topics/permissions#role-object-role-flags */
+export enum RoleFlags {
+  InPrompt = 1 << 0,
+}
+
 /* https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum */
 export enum MembershipState {
   Invited = 1,
