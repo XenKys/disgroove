@@ -119,7 +119,6 @@ export interface RawGuildMember {
 
 /* https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
 export interface RawIntegration {
-  guild_id: string;
   id: string;
   name: string;
   type: string;
@@ -292,7 +291,6 @@ export interface JSONGuildMember {
 }
 
 export interface JSONIntegration {
-  guildId: string;
   id: string;
   name: string;
   type: string;

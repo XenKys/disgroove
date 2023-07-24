@@ -10,7 +10,6 @@ import type {
 import type { IntegrationExpireBehaviors, OAuth2Scopes } from "../utils";
 
 export class Integration extends Base {
-  public guildId: string;
   public name: string;
   public type: string;
   public enabled: boolean;
@@ -26,11 +25,11 @@ export class Integration extends Base {
   public revoked?: boolean;
   public application?: JSONIntegrationApplication;
   public scopes?: Array<OAuth2Scopes>;
+  public guildId?: string;
 
-  constructor(data: RawIntegration, client: Client) {
+  constructor(data: RawIntegration & { guild_id?: string }, client: Client) {
     super(data.id, client);
 
-    this.guildId = data.guild_id;
     this.name = data.name;
     this.type = data.type;
     this.enabled = data.enabled;
@@ -39,7 +38,9 @@ export class Integration extends Base {
     this.update(data);
   }
 
-  protected override update(data: RawIntegration): void {
+  protected override update(
+    data: RawIntegration & { guild_id?: string }
+  ): void {
     if (data.syncing !== undefined) this.syncing = data.syncing;
     if (data.role_id !== undefined) this.roleId = data.role_id;
     if (data.enable_emoticons !== undefined)
@@ -65,10 +66,13 @@ export class Integration extends Base {
             : undefined,
       };
     if (data.scopes !== undefined) this.scopes = data.scopes;
+    if (data.guild_id !== undefined) this.guildId = data.guild_id;
   }
 
   /* https://discord.com/developers/docs/resources/guild#delete-guild-integration */
   public async delete(reason?: string): Promise<void> {
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
     this.client.rest.request(
       "DELETE",
       Endpoints.guildIntegration(this.guildId, this.id),
@@ -78,9 +82,8 @@ export class Integration extends Base {
     );
   }
 
-  public override toJSON(): JSONIntegration {
+  public override toJSON(): JSONIntegration & { guildId?: string } {
     return {
-      guildId: this.guildId,
       id: this.id,
       name: this.name,
       type: this.type,
@@ -97,6 +100,7 @@ export class Integration extends Base {
       revoked: this.revoked,
       application: this.application,
       scopes: this.scopes,
+      guildId: this.guildId,
     };
   }
 }

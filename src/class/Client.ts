@@ -299,11 +299,11 @@ export declare interface Client extends EventEmitter {
   ): this;
   on(
     event: GatewayEvents.IntegrationCreate,
-    listener: (listener: Integration, extra: { guildId: string }) => void
+    listener: (listener: Integration) => void
   ): this;
   on(
     event: GatewayEvents.IntegrationUpdate,
-    listener: (listener: Integration, extra: { guildId: string }) => void
+    listener: (listener: Integration) => void
   ): this;
   on(
     event: GatewayEvents.IntegrationDelete,
@@ -1192,22 +1192,10 @@ export class Client extends EventEmitter {
           });
           break;
         case "INTEGRATION_CREATE":
-          super.emit(
-            GatewayEvents.IntegrationCreate,
-            new Integration(d, this),
-            {
-              guildId: d.guild_id,
-            }
-          );
+          super.emit(GatewayEvents.IntegrationCreate, new Integration(d, this));
           break;
         case "INTEGRATION_UPDATE":
-          super.emit(
-            GatewayEvents.IntegrationUpdate,
-            new Integration(d, this),
-            {
-              guildId: d.guild_id,
-            }
-          );
+          super.emit(GatewayEvents.IntegrationUpdate, new Integration(d, this));
           break;
         case "INTEGRATION_DELETE":
           super.emit(GatewayEvents.IntegrationDelete, {
