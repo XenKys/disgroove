@@ -57,9 +57,11 @@ export class GuildMember {
     },
     reason?: string
   ): Promise<void> {
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
     this.client.rest.request(
       "PATCH",
-      Endpoints.guildMember(this.guildId!, this.user?.id),
+      Endpoints.guildMember(this.guildId, this.user?.id),
       {
         json: {
           nick: options?.nick,
@@ -79,10 +81,11 @@ export class GuildMember {
   public async addRole(roleId: string, reason?: string): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.request(
       "PUT",
-      Endpoints.guildMemberRole(this.guildId!, this.user.id, roleId),
+      Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
       {
         reason,
       }
@@ -93,10 +96,11 @@ export class GuildMember {
   public async removeRole(roleId: string, reason?: string): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.request(
       "DELETE",
-      Endpoints.guildMemberRole(this.guildId!, this.user.id, roleId),
+      Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
       {
         reason,
       }
@@ -107,10 +111,11 @@ export class GuildMember {
   public async remove(reason?: string): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.request(
       "DELETE",
-      Endpoints.guildMember(this.guildId!, this.user.id),
+      Endpoints.guildMember(this.guildId, this.user.id),
       {
         reason,
       }
@@ -127,10 +132,11 @@ export class GuildMember {
   ): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.request(
       "PUT",
-      Endpoints.guildBan(this.guildId!, this.user.id),
+      Endpoints.guildBan(this.guildId, this.user.id),
       {
         json: {
           delete_message_days: options?.deleteMessageDays,

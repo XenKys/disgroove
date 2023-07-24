@@ -59,10 +59,12 @@ export class Role extends Base {
     },
     reason?: string
   ): Promise<Role> {
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
     return new Role(
       await this.client.rest.request(
         "PATCH",
-        Endpoints.guildRole(this.guildId!, this.id),
+        Endpoints.guildRole(this.guildId, this.id),
         {
           json: {
             name: options?.name,
