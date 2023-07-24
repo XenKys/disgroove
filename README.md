@@ -47,4 +47,6 @@ client.on(GatewayEvents.MessageCreate, async (message) => {
     });
   }
 });
+
+client.connect();
 ```
