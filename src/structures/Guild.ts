@@ -10,6 +10,7 @@ import {
   Integration,
   Invite,
   Role,
+  StageInstance,
   User,
   Webhook,
 } from ".";
@@ -32,9 +33,11 @@ import type {
   JSONGuildWidgetSettings,
   JSONOnboardingPrompt,
   JSONOverwrite,
+  JSONPresenceUpdateEventFields,
   JSONSticker,
   JSONThreadMember,
   JSONVoiceRegion,
+  JSONVoiceState,
   JSONWelcomeScreen,
   JSONWelcomeScreenChannel,
   RawApplicationCommand,
@@ -56,11 +59,14 @@ import type {
   RawGuildWidgetSettings,
   RawIntegration,
   RawInvite,
+  RawPresenceUpdateEventFields,
   RawRole,
+  RawStageInstance,
   RawSticker,
   RawThreadMember,
   RawUser,
   RawVoiceRegion,
+  RawVoiceState,
   RawWebhook,
   RawWelcomeScreen,
   RawWelcomeScreenChannel,
@@ -130,8 +136,34 @@ export class Guild extends Base {
   public stickers?: Array<JSONSticker>;
   public premiumProgressBarEnabled: boolean;
   public safetyAlertsChannelId: string | null;
+  public joinedAt?: number;
+  public large?: boolean;
+  public unavailable?: boolean;
+  public memberCount?: number;
+  public voiceStates?: Array<JSONVoiceState>;
+  public members?: Array<GuildMember>;
+  public channels?: Array<Channel>;
+  public threads?: Array<Channel>;
+  public presences?: Array<JSONPresenceUpdateEventFields>;
+  public stageInstances?: Array<StageInstance>;
+  public guildScheduledEvents?: Array<GuildScheduledEvent>;
 
-  constructor(data: RawGuild, client: Client) {
+  constructor(
+    data: RawGuild & {
+      joined_at?: number;
+      large?: boolean;
+      unavailable?: boolean;
+      member_count?: number;
+      voice_states?: Array<RawVoiceState>;
+      members?: Array<RawGuildMember>;
+      channels?: Array<RawChannel>;
+      threads?: Array<RawChannel>;
+      presences?: Array<RawPresenceUpdateEventFields>;
+      stage_instances?: Array<RawStageInstance>;
+      guild_scheduled_events?: Array<RawGuildScheduledEvent>;
+    },
+    client: Client
+  ) {
     super(data.id, client);
 
     this.name = data.name;
@@ -165,7 +197,21 @@ export class Guild extends Base {
     this.update(data);
   }
 
-  protected override update(data: RawGuild): void {
+  protected override update(
+    data: RawGuild & {
+      joined_at?: number;
+      large?: boolean;
+      unavailable?: boolean;
+      member_count?: number;
+      voice_states?: Array<RawVoiceState>;
+      members?: Array<RawGuildMember>;
+      channels?: Array<RawChannel>;
+      threads?: Array<RawChannel>;
+      presences?: Array<RawPresenceUpdateEventFields>;
+      stage_instances?: Array<RawStageInstance>;
+      guild_scheduled_events?: Array<RawGuildScheduledEvent>;
+    }
+  ): void {
     if (data.icon_hash !== undefined) this.iconHash = data.icon_hash;
     if (data.owner !== undefined) this.owner = data.owner;
     if (data.permissions !== undefined) this.permissions = data.permissions;
@@ -213,6 +259,95 @@ export class Guild extends Base {
             : undefined,
         sortValue: data?.sort_value,
       }));
+    if (data.joined_at !== undefined) this.joinedAt = data.joined_at;
+    if (data.large !== undefined) this.large = data.large;
+    if (data.unavailable !== undefined) this.unavailable = data.unavailable;
+    if (data.member_count !== undefined) this.memberCount = data.member_count;
+    if (data.voice_states !== undefined)
+      this.voiceStates = data.voice_states.map((voiceState) => ({
+        guildId: voiceState.guild_id,
+        channelId: voiceState.channel_id,
+        userId: voiceState.user_id,
+        member:
+          voiceState.member !== undefined
+            ? new GuildMember(voiceState.member, this.client)
+            : undefined,
+        sessionId: voiceState.session_id,
+        deaf: voiceState.deaf,
+        mute: voiceState.mute,
+        selfDeaf: voiceState.self_deaf,
+        selfMute: voiceState.self_mute,
+        selfStream: voiceState.self_stream,
+        selfVideo: voiceState.self_video,
+        suppress: voiceState.suppress,
+        requestToSpeakTimestamp: voiceState.request_to_speak_timestamp,
+      }));
+    if (data.members !== undefined)
+      this.members = data.members.map(
+        (member) => new GuildMember(member, this.client)
+      );
+    if (data.channels !== undefined)
+      this.channels = data.channels.map(
+        (channel) => new Channel(channel, this.client)
+      );
+    if (data.threads !== undefined)
+      this.threads = data.threads.map(
+        (thread) => new Channel(thread, this.client)
+      );
+    if (data.presences !== undefined)
+      this.presences = data.presences.map((presence) => ({
+        user: new User(presence.user, this.client),
+        guildId: presence.guild_id,
+        status: presence.status,
+        activities: presence.activities.map((activity: any) => ({
+          name: activity.name,
+          type: activity.type,
+          url: activity.url,
+          createdAt: activity.created_at,
+          timestamps: {
+            start: activity.timestamps?.start,
+            end: activity.timestamp.end,
+          },
+          applicationId: activity.application_id,
+          details: activity.details,
+          state: activity.state,
+          party: {
+            id: activity.party?.id,
+            size: activity.party?.size,
+          },
+          assets: {
+            largeImage: activity.assets?.large_image,
+            largeText: activity.assets?.large_text,
+            smallImage: activity.assets?.small_image,
+            smallText: activity.assets?.small_text,
+          },
+          secrets: {
+            join: activity.secrets.join,
+            spectate: activity.secrets.spectate,
+            match: activity.secrets.match,
+          },
+          instance: activity.instance,
+          flags: activity.flags,
+          buttons: activity.buttons?.map((button: any) => ({
+            label: button.label,
+            url: button.url,
+          })),
+        })),
+        clientStatus: {
+          desktop: presence.client_status.desktop,
+          mobile: presence.client_status.mobile,
+          web: presence.client_status.web,
+        },
+      }));
+    if (data.stage_instances !== undefined)
+      this.stageInstances = data.stage_instances.map(
+        (stageIntance) => new StageInstance(stageIntance, this.client)
+      );
+    if (data.guild_scheduled_events !== undefined)
+      this.guildScheduledEvents = data.guild_scheduled_events.map(
+        (guildScheduledEvent) =>
+          new GuildScheduledEvent(guildScheduledEvent, this.client)
+      );
   }
 
   /* https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */

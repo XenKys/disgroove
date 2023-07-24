@@ -78,13 +78,10 @@ import type {
   RawChannel,
   RawEmoji,
   RawGuildMember,
-  RawGuildScheduledEvent,
-  RawStageInstance,
   RawSticker,
   RawStickerPack,
   RawThreadMember,
   RawVoiceRegion,
-  RawVoiceState,
 } from "../types";
 import EventEmitter from "node:events";
 
@@ -167,22 +164,7 @@ export declare interface Client extends EventEmitter {
   ): this;
   on(
     event: GatewayEvents.GuildCreate,
-    listener: (
-      listener: Guild,
-      extra: {
-        joinedAt: number;
-        large: boolean;
-        unavailable?: boolean;
-        memberCount: number;
-        voiceStates: Array<JSONVoiceState>;
-        members: Array<GuildMember>;
-        channels: Array<Channel>;
-        threads: Array<Channel>;
-        presences: Array<JSONPresenceUpdateEventFields>;
-        stageInstances: Array<StageInstance>;
-        guildScheduledEvents: Array<GuildScheduledEvent>;
-      }
-    ) => void
+    listener: (listener: Guild) => void
   ): this;
   on(
     event: GatewayEvents.GuildUpdate,
@@ -863,91 +845,7 @@ export class Client extends EventEmitter {
           });
           break;
         case "GUILD_CREATE":
-          super.emit(GatewayEvents.GuildCreate, new Guild(d, this), {
-            joinedAt: d.joined_at,
-            large: d.large,
-            unavailable: d.unavailable,
-            memberCount: d.member_count,
-            voiceStates: d.voice_states.map((voiceState: RawVoiceState) => ({
-              guildId: voiceState.guild_id,
-              channelId: voiceState.channel_id,
-              userId: voiceState.user_id,
-              member:
-                voiceState.member !== undefined
-                  ? new GuildMember(voiceState.member, this)
-                  : undefined,
-              sessionId: voiceState.session_id,
-              deaf: voiceState.deaf,
-              mute: voiceState.mute,
-              selfDeaf: voiceState.self_deaf,
-              selfMute: voiceState.self_mute,
-              selfStream: voiceState.self_stream,
-              selfVideo: voiceState.self_video,
-              suppress: voiceState.suppress,
-              requestToSpeakTimestamp: voiceState.request_to_speak_timestamp,
-            })),
-            members: d.members.map(
-              (member: RawGuildMember) => new GuildMember(member, this)
-            ),
-            channels: d.channels.map(
-              (channel: RawChannel) => new Channel(channel, this)
-            ),
-            threads: d.threads.map(
-              (thread: RawChannel) => new Channel(thread, this)
-            ),
-            presences: d.presences.map((presence: any) => ({
-              user: new User(presence.user, this),
-              guildId: presence.guild_id,
-              status: presence.status,
-              activities: presence.activities.map((activity: any) => ({
-                name: activity.name,
-                type: activity.type,
-                url: activity.url,
-                createdAt: activity.created_at,
-                timestamps: {
-                  start: activity.timestamps?.start,
-                  end: activity.timestamp.end,
-                },
-                applicationId: activity.application_id,
-                details: activity.details,
-                state: activity.state,
-                party: {
-                  id: activity.party?.id,
-                  size: activity.party?.size,
-                },
-                assets: {
-                  largeImage: activity.assets?.large_image,
-                  largeText: activity.assets?.large_text,
-                  smallImage: activity.assets?.small_image,
-                  smallText: activity.assets?.small_text,
-                },
-                secrets: {
-                  join: activity.secrets.join,
-                  spectate: activity.secrets.spectate,
-                  match: activity.secrets.match,
-                },
-                instance: activity.instance,
-                flags: activity.flags,
-                buttons: activity.buttons?.map((button: any) => ({
-                  label: button.label,
-                  url: button.url,
-                })),
-              })),
-              clientStatus: {
-                desktop: presence.client_status.desktop,
-                mobile: presence.client_status.mobile,
-                web: presence.client_status.web,
-              },
-            })),
-            stageInstances: d.stage_instances.map(
-              (stageInstance: RawStageInstance) =>
-                new StageInstance(stageInstance, this)
-            ),
-            guildScheduledEvents: d.guild_scheduled_events.map(
-              (guildScheduledEvent: RawGuildScheduledEvent) =>
-                new GuildScheduledEvent(guildScheduledEvent, this)
-            ),
-          });
+          super.emit(GatewayEvents.GuildCreate, new Guild(d, this));
           break;
         case "GUILD_UPDATE":
           super.emit(GatewayEvents.GuildUpdate, new Guild(d, this));
