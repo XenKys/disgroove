@@ -74,6 +74,7 @@ import type {
   JSONVoiceServerUpdateEventFields,
   JSONVoiceState,
   JSONWebhooksUpdateEventFields,
+  RawActivity,
   RawApplicationCommandPermission,
   RawChannel,
   RawEmoji,
@@ -1102,14 +1103,14 @@ export class Client extends EventEmitter {
             user: new User(d.user, this),
             guildId: d.guild_id,
             status: d.status,
-            activities: d.activities.map((activity: any) => ({
+            activities: d.activities.map((activity: RawActivity) => ({
               name: activity.name,
               type: activity.type,
               url: activity.url,
               createdAt: activity.created_at,
               timestamps: {
                 start: activity.timestamps?.start,
-                end: activity.timestamp.end,
+                end: activity.timestamps?.end,
               },
               applicationId: activity.application_id,
               details: activity.details,
@@ -1125,9 +1126,9 @@ export class Client extends EventEmitter {
                 smallText: activity.assets?.small_text,
               },
               secrets: {
-                join: activity.secrets.join,
-                spectate: activity.secrets.spectate,
-                match: activity.secrets.match,
+                join: activity.secrets?.join,
+                spectate: activity.secrets?.spectate,
+                match: activity.secrets?.match,
               },
               instance: activity.instance,
               flags: activity.flags,
