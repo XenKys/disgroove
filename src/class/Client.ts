@@ -1419,7 +1419,10 @@ export class Client extends EventEmitter {
   }
 
   public disconnect(): void {
-    clearInterval(this.heartbeatInterval!);
+    if (!this.heartbeatInterval)
+      throw new Error("[disgroove] The client is already disconnected");
+
+    clearInterval(this.heartbeatInterval);
     this.heartbeatInterval = null;
   }
 }
