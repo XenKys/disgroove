@@ -1220,12 +1220,4 @@ export class Client extends EventEmitter {
       throw new Error(`${code}: ${reason}`);
     });
   }
-
-  public disconnect(): void {
-    if (!this.heartbeatInterval)
-      throw new Error("[disgroove] The client is already disconnected");
-
-    clearInterval(this.heartbeatInterval);
-    this.heartbeatInterval = null;
-  }
 }
