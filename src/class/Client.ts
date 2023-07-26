@@ -8,6 +8,7 @@ import {
   GuildFeatures,
   OAuth2Scopes,
   PrivacyLevel,
+  StatusTypes,
   SystemChannelFlags,
   VerificationLevel,
   auditLogEntryToJSON,
@@ -32,6 +33,7 @@ import {
   User,
 } from "../structures";
 import type {
+  JSONActivity,
   JSONAuditLogEntry,
   JSONAutoModerationActionExectionEventFields,
   JSONAutoModerationRule,
@@ -646,6 +648,49 @@ export class Client extends EventEmitter {
           maxConcurrency: response.session_start_limit.max_concurrency,
         },
       }));
+  }
+
+  /* https://discord.com/developers/docs/topics/gateway-events#update-presence */
+  public updatePresence(options: {
+    since: number | null;
+    activities: Array<JSONActivity>;
+    status: StatusTypes;
+    afk: boolean;
+  }): void {
+    this.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.PresenceUpdate,
+        d: {
+          since: options.since,
+          activities: options.activities.map((activity) => ({
+            name: activity.name,
+            type: activity.type,
+            url: activity.url,
+            created_at: activity.createdAt,
+            timestamps: activity.timestamps,
+            application_id: activity.applicationId,
+            details: activity.details,
+            state: activity.state,
+            party: activity.party,
+            assets:
+              activity.assets !== undefined
+                ? {
+                    large_image: activity.assets.largeImage,
+                    large_text: activity.assets.largeText,
+                    small_image: activity.assets.smallImage,
+                    small_text: activity.assets.smallText,
+                  }
+                : undefined,
+            secrets: activity.secrets,
+            instance: activity.instance,
+            flags: activity.flags,
+            buttons: activity.buttons,
+          })),
+          status: options.status,
+          afk: options.afk,
+        },
+      })
+    );
   }
 
   /* https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
