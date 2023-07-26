@@ -12,7 +12,7 @@ import type {
   StatusTypes,
   TriggerTypes,
 } from "../utils";
-import {
+import type {
   RawApplication,
   RawAutoModerationAction,
   RawChannel,

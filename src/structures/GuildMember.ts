@@ -64,13 +64,13 @@ export class GuildMember {
       Endpoints.guildMember(this.guildId, this.user?.id),
       {
         json: {
-          nick: options?.nick,
-          roles: options?.roles,
-          mute: options?.mute,
-          deaf: options?.deaf,
-          channel_id: options?.channelId,
-          communication_disabled_until: options?.communicationDisabledUntil,
-          flags: options?.flags,
+          nick: options.nick,
+          roles: options.roles,
+          mute: options.mute,
+          deaf: options.deaf,
+          channel_id: options.channelId,
+          communication_disabled_until: options.communicationDisabledUntil,
+          flags: options.flags,
         },
         reason,
       }

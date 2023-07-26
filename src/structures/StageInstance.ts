@@ -37,8 +37,8 @@ export class StageInstance extends Base {
         Endpoints.stageInstance(this.channelId),
         {
           json: {
-            topic: options?.topic,
-            privacy_level: options?.privacyLevel,
+            topic: options.topic,
+            privacy_level: options.privacyLevel,
           },
           reason,
         }

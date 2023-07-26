@@ -1,6 +1,6 @@
 import { Application, Base, Channel, GuildMember, User } from ".";
 import type { Client } from "../class";
-import { Endpoints, File } from "../rest";
+import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
   JSONAttachment,
@@ -21,9 +21,9 @@ import type {
   RawUser,
 } from "../types";
 import {
-  ChannelTypes,
-  ComponentTypes,
-  MessageFlags,
+  type ChannelTypes,
+  type ComponentTypes,
+  type MessageFlags,
   embedToJSON,
   emojiToJSON,
   messageComponentToRaw,
@@ -108,14 +108,14 @@ export class Message extends Base {
       this.attachments = data.attachments.map((attachment) => ({
         id: attachment.id,
         filename: attachment.filename,
-        description: attachment?.description,
-        contentType: attachment?.content_type,
+        description: attachment.description,
+        contentType: attachment.content_type,
         size: attachment.size,
         url: attachment.url,
         proxyUrl: attachment.proxy_url,
-        height: attachment?.height,
-        width: attachment?.width,
-        ephemeral: attachment?.ephemeral,
+        height: attachment.height,
+        width: attachment.width,
+        ephemeral: attachment.ephemeral,
       }));
     if (data.embeds !== undefined) this.embeds = embedToJSON(data.embeds);
     if (data.reactions !== undefined)
@@ -161,20 +161,20 @@ export class Message extends Base {
     if (data.stickers !== undefined)
       this.stickers = data.stickers.map((sticker) => ({
         id: sticker.id,
-        packId: sticker?.pack_id,
+        packId: sticker.pack_id,
         name: sticker.name,
         description: sticker.description,
         tags: sticker.tags,
-        asset: sticker?.asset,
+        asset: sticker.asset,
         type: sticker.type,
         formatType: sticker.format_type,
-        available: sticker?.available,
-        guildId: sticker?.guild_id,
+        available: sticker.available,
+        guildId: sticker.guild_id,
         user:
-          sticker?.user !== undefined
+          sticker.user !== undefined
             ? new User(sticker.user, this.client)
             : undefined,
-        sortValue: sticker?.sort_value,
+        sortValue: sticker.sort_value,
       }));
     if (data.position !== undefined) this.position = data.position;
     if (data.role_subscription_data !== undefined)
@@ -329,17 +329,17 @@ export class Message extends Base {
         Endpoints.channelMessage(this.channelId, this.id),
         {
           json: {
-            content: options?.content,
-            embeds: options?.embeds,
-            allowed_mentions: options?.allowedMentions,
+            content: options.content,
+            embeds: options.embeds,
+            allowed_mentions: options.allowedMentions,
             components:
-              options?.components !== undefined
+              options.components !== undefined
                 ? options.components !== null
                   ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
-            attachments: options?.attachments,
-            flags: options?.flags,
+            attachments: options.attachments,
+            flags: options.flags,
           },
           files: options.files,
         }
@@ -375,8 +375,8 @@ export class Message extends Base {
         {
           json: {
             name: options.name,
-            auto_archive_duration: options?.autoArchiveDuration,
-            rate_limit_per_user: options?.rateLimitPerUser,
+            auto_archive_duration: options.autoArchiveDuration,
+            rate_limit_per_user: options.rateLimitPerUser,
           },
           reason,
         }

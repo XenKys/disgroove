@@ -57,8 +57,8 @@ export class GuildTemplate {
         Endpoints.guildTemplate(this.sourceGuildId, this.code),
         {
           json: {
-            name: options?.name,
-            description: options?.description,
+            name: options.name,
+            description: options.description,
           },
         }
       ),

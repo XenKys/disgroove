@@ -65,8 +65,8 @@ export class User extends Base {
     return new User(
       await this.client.rest.request("PATCH", Endpoints.user(), {
         json: {
-          username: options?.username,
-          avatar: options?.avatar,
+          username: options.username,
+          avatar: options.avatar,
         },
       }),
       this.client
@@ -125,8 +125,8 @@ export class User extends Base {
           id: data.id,
           name: data.name,
           type: data.type,
-          revoked: data?.revoked,
-          integrations: data?.integrations?.map(
+          revoked: data.revoked,
+          integrations: data.integrations?.map(
             (integration) => new Integration(integration, this.client)
           ),
           verified: data.verified,
@@ -156,9 +156,9 @@ export class User extends Base {
         type: data.metadata.type,
         key: data.metadata.key,
         name: data.metadata.name,
-        nameLocalizations: data.metadata?.name_localizations,
+        nameLocalizations: data.metadata.name_localizations,
         description: data.metadata.description,
-        descriptionLocalizations: data.metadata?.description_localizations,
+        descriptionLocalizations: data.metadata.description_localizations,
       },
     };
   }
@@ -185,9 +185,9 @@ export class User extends Base {
       ),
       {
         json: {
-          platform_name: options?.platformName,
-          platform_username: options?.platformUsername,
-          metadata: options?.metadata,
+          platform_name: options.platformName,
+          platform_username: options.platformUsername,
+          metadata: options.metadata,
         },
       }
     );
@@ -199,9 +199,9 @@ export class User extends Base {
         type: data.metadata.type,
         key: data.metadata.key,
         name: data.metadata.name,
-        nameLocalizations: data.metadata?.name_localizations,
+        nameLocalizations: data.metadata.name_localizations,
         description: data.metadata.description,
-        descriptionLocalizations: data.metadata?.description_localizations,
+        descriptionLocalizations: data.metadata.description_localizations,
       },
     };
   }

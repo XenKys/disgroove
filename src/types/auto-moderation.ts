@@ -1,4 +1,4 @@
-import type { KeywordPresetTypes, ActionTypes } from "../utils/constants";
+import type { KeywordPresetTypes, ActionTypes } from "../utils";
 
 /* https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-auto-moderation-rule-structure */
 export interface RawAutoModerationRule {

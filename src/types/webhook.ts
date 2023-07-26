@@ -1,4 +1,4 @@
-import type { WebhookTypes } from "../utils/constants";
+import type { WebhookTypes } from "../utils";
 import type { RawChannel, RawGuild, RawUser } from ".";
 import type { Channel, Guild, User } from "../structures";
 

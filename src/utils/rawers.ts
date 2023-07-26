@@ -11,11 +11,11 @@ import type {
   JSONThreadMetadata,
 } from "../types";
 import {
-  ApplicationCommandOptionType,
-  ChannelTypes,
+  type ApplicationCommandOptionType,
+  type ChannelTypes,
   ComponentTypes,
-  Locale,
-  UserFlags,
+  type Locale,
+  type UserFlags,
 } from "./constants";
 
 export function applicationCommandToRaw(command: {
@@ -71,7 +71,7 @@ export function applicationCommandToRaw(command: {
       description_localizations: option.descriptionLocalizations,
       required: option.required,
       choices: option.choices,
-      command: option.options?.map((o) => ({
+      command: option.options.map((o) => ({
         type: o.type,
         name: o.name,
         name_localizations: o.nameLocalizations,
@@ -369,7 +369,7 @@ export function channelToRaw(channel: {
         guild_id: channel.member?.member?.guildId,
         user:
           channel.member?.member?.user !== undefined
-            ? userToRaw(channel.member?.member?.user)
+            ? userToRaw(channel.member.member.user)
             : undefined,
         nick: channel.member?.member?.nick,
         avatar: channel.member?.member?.avatar,
@@ -459,7 +459,7 @@ export function embedToRaw(embeds: Array<JSONEmbed>) {
     fields: embed.fields?.map((field) => ({
       name: field.name,
       value: field.value,
-      inline: field?.inline,
+      inline: field.inline,
     })),
   }));
 }

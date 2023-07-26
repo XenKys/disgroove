@@ -62,12 +62,12 @@ export function applicationCommandToJSON(command: {
     options: command.options?.map((option) => ({
       type: option.type,
       name: option.name,
-      nameLocalizations: option?.name_localizations,
+      nameLocalizations: option.name_localizations,
       description: option.description,
-      descriptionLocalizations: option?.description_localizations,
+      descriptionLocalizations: option.description_localizations,
       required: option.required,
       choices: option.choices,
-      command: option.options?.map((o) => ({
+      command: option.options.map((o) => ({
         type: o.type,
         name: o.name,
         nameLocalizations: o.name_localizations,
@@ -185,7 +185,7 @@ export function messageComponentToJSON(
                 option.emoji !== undefined
                   ? emojiToJSON(option.emoji, client)
                   : undefined,
-              default: option?.default,
+              default: option.default,
             })),
             minValues: c.min_values,
             maxValues: c.max_values,
@@ -261,7 +261,7 @@ export function embedToJSON(embeds: Array<RawEmbed>) {
     fields: embed.fields?.map((field) => ({
       name: field.name,
       value: field.value,
-      inline: field?.inline,
+      inline: field.inline,
     })),
   }));
 }

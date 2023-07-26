@@ -103,12 +103,12 @@ export class Invite {
       stageInstance:
         data.stage_instance !== undefined
           ? {
-              members: data.stage_instance?.members.map(
+              members: data.stage_instance.members.map(
                 (member) => new GuildMember(member, this.client)
               ),
-              participantCount: data.stage_instance?.participant_count,
-              speakerCount: data.stage_instance?.speaker_count,
-              topic: data.stage_instance?.topic,
+              participantCount: data.stage_instance.participant_count,
+              speakerCount: data.stage_instance.speaker_count,
+              topic: data.stage_instance.topic,
             }
           : undefined,
       guildScheduledEvent:

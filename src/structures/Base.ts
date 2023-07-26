@@ -1,4 +1,4 @@
-import { Client } from "../class";
+import type { Client } from "../class";
 
 export abstract class Base {
   protected client!: Client;

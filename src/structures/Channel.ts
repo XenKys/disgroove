@@ -1,6 +1,6 @@
 import { Base, GuildMember, Invite, Message, User, Webhook } from ".";
 import type { Client } from "../class";
-import { Endpoints, File } from "../rest";
+import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
   JSONAttachment,
@@ -23,10 +23,10 @@ import type {
   RawWebhook,
 } from "../types";
 import {
-  ChannelTypes,
-  ComponentTypes,
-  InviteTargetTypes,
-  MessageFlags,
+  type ChannelTypes,
+  type ComponentTypes,
+  type InviteTargetTypes,
+  type MessageFlags,
   messageComponentToRaw,
 } from "../utils";
 
@@ -112,18 +112,18 @@ export class Channel extends Base {
         autoArchiveDuration: data.thread_metadata.auto_archive_duration,
         archiveTimestamp: data.thread_metadata.archive_timestamp,
         locked: data.thread_metadata.locked,
-        invitable: data.thread_metadata?.invitable,
-        createTimestamp: data.thread_metadata?.create_timestamp,
+        invitable: data.thread_metadata.invitable,
+        createTimestamp: data.thread_metadata.create_timestamp,
       };
     if (data.member !== undefined)
       this.member = {
-        id: data.member?.id,
-        userId: data.member?.user_id,
-        joinTimestamp: data.member?.join_timestamp,
-        flags: data.member?.flags,
+        id: data.member.id,
+        userId: data.member.user_id,
+        joinTimestamp: data.member.join_timestamp,
+        flags: data.member.flags,
         member:
-          data.member?.member !== undefined
-            ? new GuildMember(data.member?.member, this.client)
+          data.member.member !== undefined
+            ? new GuildMember(data.member.member, this.client)
             : undefined,
       };
     if (data.default_auto_archive_duration !== undefined)
@@ -178,25 +178,25 @@ export class Channel extends Base {
     return new Channel(
       await this.client.rest.request("PATCH", Endpoints.channel(this.id), {
         json: {
-          name: options?.name,
-          type: options?.type,
-          position: options?.position,
-          topic: options?.topic,
-          nsfw: options?.nsfw,
-          rate_limit_per_user: options?.rateLimitPerUser,
-          bitrate: options?.bitrate,
-          permission_overwrites: options?.permissionOverwrites,
-          parent_id: options?.parentId,
-          rtc_region: options?.rtcRegion,
-          video_quality_mode: options?.videoQualityMode,
-          default_auto_archive_duration: options?.defaultAutoArchiveDuration,
-          flags: options?.flags,
-          available_tags: options?.availableTags,
-          default_reaction_emoji: options?.defaultReactionEmoji,
+          name: options.name,
+          type: options.type,
+          position: options.position,
+          topic: options.topic,
+          nsfw: options.nsfw,
+          rate_limit_per_user: options.rateLimitPerUser,
+          bitrate: options.bitrate,
+          permission_overwrites: options.permissionOverwrites,
+          parent_id: options.parentId,
+          rtc_region: options.rtcRegion,
+          video_quality_mode: options.videoQualityMode,
+          default_auto_archive_duration: options.defaultAutoArchiveDuration,
+          flags: options.flags,
+          available_tags: options.availableTags,
+          default_reaction_emoji: options.defaultReactionEmoji,
           default_thread_rate_limit_per_user:
-            options?.defaultThreadRateLimitPerUser,
-          default_sort_order: options?.defaultSortOrder,
-          default_forum_layout: options?.defaultForumLayout,
+            options.defaultThreadRateLimitPerUser,
+          default_sort_order: options.defaultSortOrder,
+          default_forum_layout: options.defaultForumLayout,
         },
         reason,
       }),
@@ -224,10 +224,10 @@ export class Channel extends Base {
     return this.client.rest
       .request("GET", Endpoints.channelMessages(this.id), {
         query: {
-          around: options?.around,
-          before: options?.before,
-          after: options?.after,
-          limit: options?.limit,
+          around: options.around,
+          before: options.before,
+          after: options.after,
+          limit: options.limit,
         },
       })
       .then((response) =>
@@ -302,24 +302,24 @@ export class Channel extends Base {
         Endpoints.channelMessages(this.id),
         {
           json: {
-            content: options?.content,
-            nonce: options?.nonce,
-            tts: options?.tts,
-            embeds: options?.embeds,
+            content: options.content,
+            nonce: options.nonce,
+            tts: options.tts,
+            embeds: options.embeds,
             allowed_mentions: {
               parse: options.allowedMentions?.parse,
               roles: options.allowedMentions?.roles,
               users: options.allowedMentions?.users,
               replied_user: options.allowedMentions?.repliedUser,
             },
-            message_reference: options?.messageReference,
+            message_reference: options.messageReference,
             components:
-              options?.components !== undefined
+              options.components !== undefined
                 ? messageComponentToRaw(options.components)
                 : undefined,
-            stickers_ids: options?.stickersIds,
-            attachments: options?.attachments,
-            flags: options?.flags,
+            stickers_ids: options.stickersIds,
+            attachments: options.attachments,
+            flags: options.flags,
           },
           files: options.files,
         }
@@ -472,17 +472,17 @@ export class Channel extends Base {
         Endpoints.channelMessage(this.id, messageId),
         {
           json: {
-            content: options?.content,
-            embeds: options?.embeds,
-            allowed_mentions: options?.allowedMentions,
+            content: options.content,
+            embeds: options.embeds,
+            allowed_mentions: options.allowedMentions,
             components:
-              options?.components !== undefined
+              options.components !== undefined
                 ? options.components !== null
                   ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
-            attachments: options?.attachments,
-            flags: options?.flags,
+            attachments: options.attachments,
+            flags: options.flags,
           },
           files: options.files,
         }
@@ -562,13 +562,13 @@ export class Channel extends Base {
         Endpoints.channelInvites(this.id),
         {
           json: {
-            max_age: options?.maxAge,
-            max_uses: options?.maxUses,
-            temporary: options?.temporary,
-            unique: options?.unique,
-            target_type: options?.targetType,
-            target_user_id: options?.targetUserId,
-            target_application_id: options?.targetApplicationId,
+            max_age: options.maxAge,
+            max_uses: options.maxUses,
+            temporary: options.temporary,
+            unique: options.unique,
+            target_type: options.targetType,
+            target_user_id: options.targetUserId,
+            target_application_id: options.targetApplicationId,
           },
           reason,
         }
@@ -692,8 +692,8 @@ export class Channel extends Base {
         {
           json: {
             name: options.name,
-            auto_archive_duration: options?.autoArchiveDuration,
-            rate_limit_per_user: options?.rateLimitPerUser,
+            auto_archive_duration: options.autoArchiveDuration,
+            rate_limit_per_user: options.rateLimitPerUser,
           },
           reason,
         }
@@ -718,9 +718,9 @@ export class Channel extends Base {
         json: {
           name: options.name,
           auto_archive_duration: options.autoArchiveDuration,
-          type: options?.type,
-          invitable: options?.invitable,
-          rate_limit_per_user: options?.rateLimitPerUser,
+          type: options.type,
+          invitable: options.invitable,
+          rate_limit_per_user: options.rateLimitPerUser,
         },
         reason,
       }),
@@ -790,29 +790,29 @@ export class Channel extends Base {
       await this.client.rest.request("POST", Endpoints.threads(this.id), {
         json: {
           name: options.name,
-          auto_archive_duration: options?.autoArchiveDuration,
-          rate_limit_per_user: options?.rateLimitPerUser,
+          auto_archive_duration: options.autoArchiveDuration,
+          rate_limit_per_user: options.rateLimitPerUser,
           message: {
-            content: options.message?.content,
-            embeds: options.message?.embeds,
-            flags: options.message?.flags,
+            content: options.message.content,
+            embeds: options.message.embeds,
+            flags: options.message.flags,
             allowed_mentions: {
-              parse: options.message?.allowedMentions?.parse,
-              roles: options.message?.allowedMentions?.roles,
-              users: options.message?.allowedMentions?.users,
-              replied_user: options.message?.allowedMentions?.repliedUser,
+              parse: options.message.allowedMentions?.parse,
+              roles: options.message.allowedMentions?.roles,
+              users: options.message.allowedMentions?.users,
+              replied_user: options.message.allowedMentions?.repliedUser,
             },
             components:
-              options?.message.components !== undefined
+              options.message.components !== undefined
                 ? options.message.components !== null
                   ? messageComponentToRaw(options.message.components)
                   : null
                 : undefined,
-            attachments: options.message?.attachments,
+            attachments: options.message.attachments,
           },
-          applied_tags: options?.appliedTags,
+          applied_tags: options.appliedTags,
         },
-        files: options.message?.files,
+        files: options.message.files,
         reason,
       }),
       this.client
@@ -869,13 +869,13 @@ export class Channel extends Base {
     );
 
     return {
-      id: data?.id,
-      userId: data?.user_id,
-      joinTimestamp: data?.join_timestamp,
-      flags: data?.flags,
+      id: data.id,
+      userId: data.user_id,
+      joinTimestamp: data.join_timestamp,
+      flags: data.flags,
       member:
-        data?.member !== undefined
-          ? new GuildMember(data?.member, this.client)
+        data.member !== undefined
+          ? new GuildMember(data.member, this.client)
           : undefined,
     };
   }
@@ -924,13 +924,13 @@ export class Channel extends Base {
         (data: RawChannel) => new Channel(data, this.client)
       ),
       members: data.members.map((data: RawThreadMember) => ({
-        id: data?.id,
-        userId: data?.user_id,
-        joinTimestamp: data?.join_timestamp,
-        flags: data?.flags,
+        id: data.id,
+        userId: data.user_id,
+        joinTimestamp: data.join_timestamp,
+        flags: data.flags,
         member:
-          data?.member !== undefined
-            ? new GuildMember(data?.member, this.client)
+          data.member !== undefined
+            ? new GuildMember(data.member, this.client)
             : undefined,
       })),
       hasMore: data.has_more,
@@ -962,13 +962,13 @@ export class Channel extends Base {
         (data: RawChannel) => new Channel(data, this.client)
       ),
       members: data.members.map((data: RawThreadMember) => ({
-        id: data?.id,
-        userId: data?.user_id,
-        joinTimestamp: data?.join_timestamp,
-        flags: data?.flags,
+        id: data.id,
+        userId: data.user_id,
+        joinTimestamp: data.join_timestamp,
+        flags: data.flags,
         member:
-          data?.member !== undefined
-            ? new GuildMember(data?.member, this.client)
+          data.member !== undefined
+            ? new GuildMember(data.member, this.client)
             : undefined,
       })),
       hasMore: data.has_more,
@@ -1000,13 +1000,13 @@ export class Channel extends Base {
         (data: RawChannel) => new Channel(data, this.client)
       ),
       members: data.members.map((data: RawThreadMember) => ({
-        id: data?.id,
-        userId: data?.user_id,
-        joinTimestamp: data?.join_timestamp,
-        flags: data?.flags,
+        id: data.id,
+        userId: data.user_id,
+        joinTimestamp: data.join_timestamp,
+        flags: data.flags,
         member:
-          data?.member !== undefined
-            ? new GuildMember(data?.member, this.client)
+          data.member !== undefined
+            ? new GuildMember(data.member, this.client)
             : undefined,
       })),
       hasMore: data.has_more,
@@ -1028,7 +1028,7 @@ export class Channel extends Base {
         {
           json: {
             name: options.name,
-            avatar: options?.avatar,
+            avatar: options.avatar,
           },
           reason,
         }

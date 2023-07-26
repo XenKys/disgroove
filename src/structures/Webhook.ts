@@ -1,6 +1,6 @@
 import { Base, Channel, Guild, Message, User } from ".";
 import type { Client } from "../class";
-import { Endpoints, File } from "../rest";
+import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
   JSONAttachment,
@@ -11,10 +11,10 @@ import type {
   RawWebhook,
 } from "../types";
 import {
-  ChannelTypes,
-  ComponentTypes,
-  MessageFlags,
-  WebhookTypes,
+  type ChannelTypes,
+  type ComponentTypes,
+  type MessageFlags,
+  type WebhookTypes,
   messageComponentToRaw,
 } from "../utils";
 
@@ -66,9 +66,9 @@ export class Webhook extends Base {
     return new Webhook(
       await this.client.rest.request("PATCH", Endpoints.webhook(this.id), {
         json: {
-          name: options?.name,
-          avatar: options?.avatar,
-          channel_id: options?.channelId,
+          name: options.name,
+          avatar: options.avatar,
+          channel_id: options.channelId,
         },
         reason,
       }),
@@ -91,8 +91,8 @@ export class Webhook extends Base {
         Endpoints.webhook(this.id, token),
         {
           json: {
-            name: options?.name,
-            avatar: options?.avatar,
+            name: options.name,
+            avatar: options.avatar,
           },
           reason,
         }
@@ -179,32 +179,32 @@ export class Webhook extends Base {
         Endpoints.webhook(this.id, token),
         {
           query: {
-            wait: options?.wait,
-            thread_id: options?.threadId,
-            username: options?.username,
-            avatarURL: options?.avatarURL,
+            wait: options.wait,
+            thread_id: options.threadId,
+            username: options.username,
+            avatarURL: options.avatarURL,
           },
           json: {
-            content: options?.content,
-            tts: options?.tts,
-            embeds: options?.embeds,
+            content: options.content,
+            tts: options.tts,
+            embeds: options.embeds,
             allowed_mentions: {
-              parse: options?.allowedMentions?.parse,
-              roles: options?.allowedMentions?.roles,
-              users: options?.allowedMentions?.users,
-              replied_user: options?.allowedMentions?.repliedUser,
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
             },
             components:
-              options?.components !== undefined
+              options.components !== undefined
                 ? options.components !== null
                   ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
-            attachments: options?.attachments,
-            flags: options?.flags,
-            thread_name: options?.threadName,
+            attachments: options.attachments,
+            flags: options.flags,
+            thread_name: options.threadName,
           },
-          files: options?.files,
+          files: options.files,
         }
       ),
       this.client
@@ -225,8 +225,8 @@ export class Webhook extends Base {
         Endpoints.webhook(this.id, token),
         {
           query: {
-            thread_id: options?.threadId,
-            wait: options?.wait,
+            thread_id: options.threadId,
+            wait: options.wait,
           },
         }
       ),
@@ -248,8 +248,8 @@ export class Webhook extends Base {
         Endpoints.webhook(this.id, token),
         {
           query: {
-            thread_id: options?.threadId,
-            wait: options?.wait,
+            thread_id: options.threadId,
+            wait: options.wait,
           },
         }
       ),
@@ -340,27 +340,27 @@ export class Webhook extends Base {
         Endpoints.webhookMessage(this.id, this.token, messageId),
         {
           query: {
-            thread_id: options?.threadId,
+            thread_id: options.threadId,
           },
           json: {
-            content: options?.content,
-            embeds: options?.embeds,
+            content: options.content,
+            embeds: options.embeds,
             allowed_mentions: {
-              parse: options?.allowedMentions?.parse,
-              roles: options?.allowedMentions?.roles,
-              users: options?.allowedMentions?.users,
-              replied_user: options?.allowedMentions?.repliedUser,
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
             },
             components:
-              options?.components !== undefined
+              options.components !== undefined
                 ? options.components !== null
                   ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
-            attachments: options?.attachments,
-            flags: options?.flags,
+            attachments: options.attachments,
+            flags: options.flags,
           },
-          files: options?.files,
+          files: options.files,
         }
       ),
       this.client

@@ -1,6 +1,6 @@
 import { Base, Channel, GuildMember, Message, Role, User } from ".";
 import type { Client } from "../class";
-import { Endpoints, File } from "../rest";
+import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
   JSONApplicationCommandData,
@@ -15,11 +15,11 @@ import type {
   RawInteraction,
 } from "../types";
 import {
-  ChannelTypes,
+  type ChannelTypes,
   ComponentTypes,
   InteractionCallbackType,
-  InteractionType,
-  MessageFlags,
+  type InteractionType,
+  type MessageFlags,
   embedToRaw,
   emojiToJSON,
   messageComponentToRaw,
@@ -88,18 +88,7 @@ export class Interaction extends Base {
             ephemeral: attachment.ephemeral,
           })),
         },
-        options: data.data.options?.map((option) => ({
-          name: option.name,
-          type: option.type,
-          value: option.value,
-          options: option.options?.map((o) => ({
-            name: o.name,
-            type: o.type,
-            value: o.value,
-            focused: o.focused,
-          })),
-          focused: option.focused,
-        })),
+        options: data.data.options,
         guildId: data.data.guild_id,
         targetId: data.data.target_id,
         customId: data.data.custom_id,
@@ -114,7 +103,7 @@ export class Interaction extends Base {
               : undefined,
           default: value.default,
         })),
-        components: data.data.components?.map((component) => ({
+        components: data.data.components.map((component) => ({
           type: component.type,
           components: component.components.map((c) => ({
             type: c.type,
@@ -211,48 +200,10 @@ export class Interaction extends Base {
                 type: options.type,
                 data: {
                   content: options.data.content,
-                  embeds: options.data.embeds?.map((embed) => ({
-                    title: embed.title,
-                    type: embed.type,
-                    description: embed.description,
-                    url: embed.url,
-                    timestamp: embed.timestamp,
-                    color: embed.color,
-                    footer: embed.footer,
-                    image: {
-                      url: embed.image?.url,
-                      proxy_url: embed.image?.proxyUrl,
-                      height: embed.image?.height,
-                      width: embed.image?.width,
-                    },
-                    thumbnail: {
-                      url: embed.thumbnail?.url,
-                      proxy_url: embed.thumbnail?.proxyUrl,
-                      height: embed.thumbnail?.height,
-                      width: embed.thumbnail?.width,
-                    },
-                    video: {
-                      url: embed.video?.url,
-                      proxy_url: embed.video?.proxyUrl,
-                      height: embed.video?.height,
-                      width: embed.video?.width,
-                    },
-                    provider: {
-                      name: embed.provider?.name,
-                      url: embed.provider?.url,
-                    },
-                    author: {
-                      name: embed.author?.name,
-                      url: embed.author?.url,
-                      icon_url: embed.author?.iconUrl,
-                      proxy_icon_url: embed.author?.proxyIconUrl,
-                    },
-                    fields: embed.fields?.map((field) => ({
-                      name: field.name,
-                      value: field.value,
-                      inline: field.inline,
-                    })),
-                  })),
+                  embeds:
+                    options.data.embeds !== undefined
+                      ? embedToRaw(options.data.embeds)
+                      : undefined,
                   allowed_mentions: {
                     parse: options.data.allowedMentions?.parse,
                     roles: options.data.allowedMentions?.roles,
@@ -407,32 +358,32 @@ export class Interaction extends Base {
         Endpoints.interactionOriginalMessage(this.id, this.token),
         {
           query: {
-            thread_id: options?.threadId,
+            thread_id: options.threadId,
           },
           json: {
-            content: options?.content,
+            content: options.content,
             embeds:
-              options?.embeds !== undefined
-                ? options?.embeds !== null
+              options.embeds !== undefined
+                ? options.embeds !== null
                   ? embedToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
-              parse: options?.allowedMentions?.parse,
-              roles: options?.allowedMentions?.roles,
-              users: options?.allowedMentions?.users,
-              replied_user: options?.allowedMentions?.repliedUser,
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
             },
             components:
-              options?.components !== undefined
+              options.components !== undefined
                 ? options.components !== null
                   ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
-            attachments: options?.attachments,
-            flags: options?.flags,
+            attachments: options.attachments,
+            flags: options.flags,
           },
-          files: options?.files,
+          files: options.files,
         }
       ),
       this.client
@@ -503,31 +454,31 @@ export class Interaction extends Base {
       Endpoints.webhook(this.applicationId, this.token),
       {
         json: {
-          content: options?.content,
-          tts: options?.tts,
+          content: options.content,
+          tts: options.tts,
           embeds:
-            options?.embeds !== undefined
-              ? options?.embeds !== null
+            options.embeds !== undefined
+              ? options.embeds !== null
                 ? embedToRaw(options.embeds)
                 : null
               : undefined,
           allowed_mentions: {
-            parse: options?.allowedMentions?.parse,
-            roles: options?.allowedMentions?.roles,
-            users: options?.allowedMentions?.users,
-            replied_user: options?.allowedMentions?.repliedUser,
+            parse: options.allowedMentions?.parse,
+            roles: options.allowedMentions?.roles,
+            users: options.allowedMentions?.users,
+            replied_user: options.allowedMentions?.repliedUser,
           },
           components:
-            options?.components !== undefined
+            options.components !== undefined
               ? options.components !== null
                 ? messageComponentToRaw(options.components)
                 : null
               : undefined,
-          attachments: options?.attachments,
-          flags: options?.flags,
-          thread_name: options?.threadName,
+          attachments: options.attachments,
+          flags: options.flags,
+          thread_name: options.threadName,
         },
-        files: options?.files,
+        files: options.files,
       }
     );
   }
@@ -612,32 +563,32 @@ export class Interaction extends Base {
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
         {
           query: {
-            thread_id: options?.threadId,
+            thread_id: options.threadId,
           },
           json: {
-            content: options?.content,
+            content: options.content,
             embeds:
-              options?.embeds !== undefined
-                ? options?.embeds !== null
+              options.embeds !== undefined
+                ? options.embeds !== null
                   ? embedToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
-              parse: options?.allowedMentions?.parse,
-              roles: options?.allowedMentions?.roles,
-              users: options?.allowedMentions?.users,
-              replied_user: options?.allowedMentions?.repliedUser,
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
             },
             components:
-              options?.components !== undefined
+              options.components !== undefined
                 ? options.components !== null
                   ? messageComponentToRaw(options.components)
                   : null
                 : undefined,
-            attachments: options?.attachments,
-            flags: options?.flags,
+            attachments: options.attachments,
+            flags: options.flags,
           },
-          files: options?.files,
+          files: options.files,
         }
       ),
       this.client

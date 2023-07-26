@@ -16,7 +16,7 @@ import type {
   User,
   Webhook,
 } from "../structures";
-import type { AuditLogEvents } from "../utils/constants";
+import type { AuditLogEvents } from "../utils";
 
 /* https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
 export interface RawAuditLog {

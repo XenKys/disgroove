@@ -31,9 +31,9 @@ export class AutoModerationRule extends Base {
     this.actions = data.actions.map((action) => ({
       type: action.type,
       metadata: {
-        channelId: action.metadata?.channel_id,
-        durationSeconds: action.metadata?.duration_seconds,
-        customMessage: action.metadata?.custom_message,
+        channelId: action.metadata.channel_id,
+        durationSeconds: action.metadata.duration_seconds,
+        customMessage: action.metadata.custom_message,
       },
     }));
     this.enabled = data.enabled;
@@ -61,21 +61,21 @@ export class AutoModerationRule extends Base {
         Endpoints.guildAutoModerationRule(this.guildId, this.id),
         {
           json: {
-            name: options?.name,
-            event_type: options?.eventType,
-            trigger_type: options?.triggerType,
-            trigger_metadata: options?.triggerMetadata,
-            actions: options?.actions?.map((action) => ({
+            name: options.name,
+            event_type: options.eventType,
+            trigger_type: options.triggerType,
+            trigger_metadata: options.triggerMetadata,
+            actions: options.actions?.map((action) => ({
               type: action.type,
               metadata: {
-                channelId: action.metadata?.channelId,
-                durationSeconds: action.metadata?.durationSeconds,
-                customMessage: action.metadata?.customMessage,
+                channelId: action.metadata.channelId,
+                durationSeconds: action.metadata.durationSeconds,
+                customMessage: action.metadata.customMessage,
               },
             })),
-            enabled: options?.enabled,
-            exempt_roles: options?.exemptRoles,
-            exempt_channels: options?.exemptChannels,
+            enabled: options.enabled,
+            exempt_roles: options.exemptRoles,
+            exempt_channels: options.exemptChannels,
           },
           reason,
         }

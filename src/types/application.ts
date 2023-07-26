@@ -1,6 +1,6 @@
 import type { RawUser, RawTeam, JSONTeam } from ".";
 import type { User } from "../structures";
-import type { OAuth2Scopes } from "../utils/constants";
+import type { OAuth2Scopes } from "../utils";
 
 /* https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface RawApplication {

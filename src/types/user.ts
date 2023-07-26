@@ -1,5 +1,5 @@
 import type { Integration } from "../structures";
-import type { UserFlags, Services, VisibilityTypes } from "../utils/constants";
+import type { UserFlags, Services, VisibilityTypes } from "../utils";
 import type {
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,

@@ -2,7 +2,7 @@ import type {
   GuildScheduledEventPrivacyLevel,
   GuildScheduledEventStatus,
   GuildScheduledEventEntityTypes,
-} from "../utils/constants";
+} from "../utils";
 import type { RawGuildMember, RawUser } from ".";
 import type { GuildMember, User } from "../structures";
 

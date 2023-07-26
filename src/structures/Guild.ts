@@ -14,7 +14,7 @@ import {
   Webhook,
 } from ".";
 import type { Client } from "../class";
-import { Endpoints, File } from "../rest";
+import { Endpoints, type File } from "../rest";
 import type {
   JSONAuditLog,
   JSONAutoModerationAction,
@@ -71,24 +71,24 @@ import type {
   RawWelcomeScreenChannel,
 } from "../types";
 import {
-  ApplicationCommandOptionType,
-  ApplicationCommandTypes,
-  ChannelTypes,
-  DefaultMessageNotificationLevel,
-  ExplicitContentFilterLevel,
-  GuildFeatures,
-  GuildMemberFlags,
-  GuildNSFWLevel,
-  GuildScheduledEventEntityTypes,
-  GuildScheduledEventPrivacyLevel,
-  GuildScheduledEventStatus,
-  ImageWidgetStyleOptions,
-  Locale,
-  MFALevel,
-  OnboardingMode,
-  PremiumTier,
-  SystemChannelFlags,
-  VerificationLevel,
+  type ApplicationCommandOptionType,
+  type ApplicationCommandTypes,
+  type ChannelTypes,
+  type DefaultMessageNotificationLevel,
+  type ExplicitContentFilterLevel,
+  type GuildFeatures,
+  type GuildMemberFlags,
+  type GuildNSFWLevel,
+  type GuildScheduledEventEntityTypes,
+  type GuildScheduledEventPrivacyLevel,
+  type GuildScheduledEventStatus,
+  type ImageWidgetStyleOptions,
+  type Locale,
+  type MFALevel,
+  type OnboardingMode,
+  type PremiumTier,
+  type SystemChannelFlags,
+  type VerificationLevel,
   applicationCommandToRaw,
   auditLogEntryToJSON,
   emojiToJSON,
@@ -244,20 +244,20 @@ export class Guild extends Base {
     if (data.stickers !== undefined)
       this.stickers = data.stickers.map((data) => ({
         id: data.id,
-        packId: data?.pack_id,
+        packId: data.pack_id,
         name: data.name,
         description: data.description,
         tags: data.tags,
-        asset: data?.asset,
+        asset: data.asset,
         type: data.type,
         formatType: data.format_type,
-        available: data?.available,
-        guildId: data?.guild_id,
+        available: data.available,
+        guildId: data.guild_id,
         user:
           data.user !== undefined
             ? new User(data.user, this.client)
             : undefined,
-        sortValue: data?.sort_value,
+        sortValue: data.sort_value,
       }));
     if (data.joined_at !== undefined) this.joinedAt = data.joined_at;
     if (data.large !== undefined) this.large = data.large;
@@ -305,21 +305,21 @@ export class Guild extends Base {
           url: activity.url,
           createdAt: activity.created_at,
           timestamps: {
-            start: activity.timestamps?.start,
+            start: activity.timestamps.start,
             end: activity.timestamp.end,
           },
           applicationId: activity.application_id,
           details: activity.details,
           state: activity.state,
           party: {
-            id: activity.party?.id,
-            size: activity.party?.size,
+            id: activity.party.id,
+            size: activity.party.size,
           },
           assets: {
-            largeImage: activity.assets?.large_image,
-            largeText: activity.assets?.large_text,
-            smallImage: activity.assets?.small_image,
-            smallText: activity.assets?.small_text,
+            largeImage: activity.assets.large_image,
+            largeText: activity.assets.large_text,
+            smallImage: activity.assets.small_image,
+            smallText: activity.assets.small_text,
           },
           secrets: {
             join: activity.secrets.join,
@@ -328,7 +328,7 @@ export class Guild extends Base {
           },
           instance: activity.instance,
           flags: activity.flags,
-          buttons: activity.buttons?.map((button: any) => ({
+          buttons: activity.buttons.map((button: any) => ({
             label: button.label,
             url: button.url,
           })),
@@ -698,18 +698,18 @@ export class Guild extends Base {
             name: options.name,
             event_type: options.eventType,
             trigger_type: options.triggerType,
-            trigger_metadata: options?.triggerMetadata,
-            actions: options.actions?.map((action) => ({
+            trigger_metadata: options.triggerMetadata,
+            actions: options.actions.map((action) => ({
               type: action.type,
               metadata: {
-                channel_id: action.metadata?.channelId,
-                duration_seconds: action.metadata?.durationSeconds,
-                custom_message: action.metadata?.customMessage,
+                channel_id: action.metadata.channelId,
+                duration_seconds: action.metadata.durationSeconds,
+                custom_message: action.metadata.customMessage,
               },
             })),
             enabled: options.enabled,
-            exempt_roles: options?.exemptRoles,
-            exempt_channels: options?.exemptChannels,
+            exempt_roles: options.exemptRoles,
+            exempt_channels: options.exemptChannels,
           },
           reason,
         }
@@ -739,21 +739,21 @@ export class Guild extends Base {
         Endpoints.guildAutoModerationRule(this.id, ruleId),
         {
           json: {
-            name: options?.name,
-            event_type: options?.eventType,
-            trigger_type: options?.triggerType,
-            trigger_metadata: options?.triggerMetadata,
-            actions: options?.actions?.map((action) => ({
+            name: options.name,
+            event_type: options.eventType,
+            trigger_type: options.triggerType,
+            trigger_metadata: options.triggerMetadata,
+            actions: options.actions?.map((action) => ({
               type: action.type,
               metadata: {
-                channel_id: action.metadata?.channelId,
-                duration_seconds: action.metadata?.durationSeconds,
-                custom_message: action.metadata?.customMessage,
+                channel_id: action.metadata.channelId,
+                duration_seconds: action.metadata.durationSeconds,
+                custom_message: action.metadata.customMessage,
               },
             })),
-            enabled: options?.enabled,
-            exempt_roles: options?.exemptRoles,
-            exempt_channels: options?.exemptChannels,
+            enabled: options.enabled,
+            exempt_roles: options.exemptRoles,
+            exempt_channels: options.exemptChannels,
           },
           reason,
         }
@@ -865,25 +865,25 @@ export class Guild extends Base {
       discoverySplash: data.discovery_splash,
       emojis: data.emojis.map((emoji) => emojiToJSON(emoji, this.client)),
       features: data.features,
-      approximateMemberCount: data?.approximate_member_count,
-      approximatePresenceCount: data?.approximate_presence_count,
+      approximateMemberCount: data.approximate_member_count,
+      approximatePresenceCount: data.approximate_presence_count,
       description: data.description,
-      stickers: data?.stickers?.map((sticker) => ({
+      stickers: data.stickers?.map((sticker) => ({
         id: sticker.id,
-        packId: sticker?.pack_id,
+        packId: sticker.pack_id,
         name: sticker.name,
         description: sticker.description,
         tags: sticker.tags,
-        asset: sticker?.asset,
+        asset: sticker.asset,
         type: sticker.type,
         formatType: sticker.format_type,
-        available: sticker?.available,
-        guildId: sticker?.guild_id,
+        available: sticker.available,
+        guildId: sticker.guild_id,
         user:
-          sticker?.user !== undefined
+          sticker.user !== undefined
             ? new User(sticker.user, this.client)
             : undefined,
-        sortValue: sticker?.sort_value,
+        sortValue: sticker.sort_value,
       })),
     };
   }
@@ -918,27 +918,27 @@ export class Guild extends Base {
     return new Guild(
       await this.client.rest.request("PATCH", Endpoints.guild(this.id), {
         json: {
-          name: options?.name,
-          region: options?.region,
-          verification_level: options?.verificationLevel,
-          default_message_notifications: options?.defaultMessageNotifications,
-          explicit_content_filter: options?.explicitContentFilter,
-          afk_channel_id: options?.afkChannelId,
-          afk_timeout: options?.afkTimeout,
-          icon: options?.icon,
-          owner_id: options?.ownerId,
-          splash: options?.splash,
-          discovery_splash: options?.discoverySplash,
-          banner: options?.banner,
-          system_channel_id: options?.systemChannelId,
-          system_channel_flags: options?.systemChannelFlags,
-          rules_channel_id: options?.rulesChannelId,
-          public_updates_channel_id: options?.publicUpdatesChannelId,
-          preferred_locale: options?.preferredLocale,
-          features: options?.features,
-          description: options?.description,
-          premium_progress_bar_enabled: options?.premiumProgressBarEnabled,
-          safety_alerts_channel_id: options?.safetyAlertsChannelId,
+          name: options.name,
+          region: options.region,
+          verification_level: options.verificationLevel,
+          default_message_notifications: options.defaultMessageNotifications,
+          explicit_content_filter: options.explicitContentFilter,
+          afk_channel_id: options.afkChannelId,
+          afk_timeout: options.afkTimeout,
+          icon: options.icon,
+          owner_id: options.ownerId,
+          splash: options.splash,
+          discovery_splash: options.discoverySplash,
+          banner: options.banner,
+          system_channel_id: options.systemChannelId,
+          system_channel_flags: options.systemChannelFlags,
+          rules_channel_id: options.rulesChannelId,
+          public_updates_channel_id: options.publicUpdatesChannelId,
+          preferred_locale: options.preferredLocale,
+          features: options.features,
+          description: options.description,
+          premium_progress_bar_enabled: options.premiumProgressBarEnabled,
+          safety_alerts_channel_id: options.safetyAlertsChannelId,
         },
         reason,
       }),
@@ -986,26 +986,26 @@ export class Guild extends Base {
     return new Channel(
       await this.client.rest.request("POST", Endpoints.guildChannels(this.id), {
         json: {
-          name: options?.name,
-          type: options?.type,
-          topic: options?.topic,
-          bitrate: options?.bitrate,
-          user_limit: options?.userLimit,
-          rate_limit_per_user: options?.rateLimitPerUser,
-          position: options?.position,
-          permission_overwrites: options?.permissionOverwrites,
-          parent_id: options?.parentId,
-          nsfw: options?.nsfw,
-          rtc_region: options?.rtcRegion,
-          video_quality_mode: options?.videoQualityMode,
-          default_auto_archive_duration: options?.defaultAutoArchiveDuration,
+          name: options.name,
+          type: options.type,
+          topic: options.topic,
+          bitrate: options.bitrate,
+          user_limit: options.userLimit,
+          rate_limit_per_user: options.rateLimitPerUser,
+          position: options.position,
+          permission_overwrites: options.permissionOverwrites,
+          parent_id: options.parentId,
+          nsfw: options.nsfw,
+          rtc_region: options.rtcRegion,
+          video_quality_mode: options.videoQualityMode,
+          default_auto_archive_duration: options.defaultAutoArchiveDuration,
           default_reaction_emoji: {
-            emojiId: options?.defaultReactionEmoji?.emojiId,
-            emojiName: options?.defaultReactionEmoji?.emojiName,
+            emojiId: options.defaultReactionEmoji?.emojiId,
+            emojiName: options.defaultReactionEmoji?.emojiName,
           },
-          available_tags: options?.availableTags,
-          default_sort_order: options?.defaultSortOrder,
-          default_forum_layout: options?.defaultForumLayout,
+          available_tags: options.availableTags,
+          default_sort_order: options.defaultSortOrder,
+          default_forum_layout: options.defaultForumLayout,
         },
         reason,
       }),
@@ -1049,13 +1049,13 @@ export class Guild extends Base {
           }) => ({
             threads: data.threads.map((data) => new Channel(data, this.client)),
             members: data.members.map((data) => ({
-              id: data?.id,
-              userId: data?.user_id,
-              joinTimestamp: data?.join_timestamp,
-              flags: data?.flags,
+              id: data.id,
+              userId: data.user_id,
+              joinTimestamp: data.join_timestamp,
+              flags: data.flags,
               member:
-                data?.member !== undefined
-                  ? new GuildMember(data?.member, this.client)
+                data.member !== undefined
+                  ? new GuildMember(data.member, this.client)
                   : undefined,
             })),
           })
@@ -1118,10 +1118,10 @@ export class Guild extends Base {
     this.client.rest.request("PUT", Endpoints.guildMember(this.id, userId), {
       json: {
         access_token: options.accessToken,
-        nick: options?.nick,
-        roles: options?.roles,
-        mute: options?.mute,
-        deaf: options?.deaf,
+        nick: options.nick,
+        roles: options.roles,
+        mute: options.mute,
+        deaf: options.deaf,
       },
     });
   }
@@ -1142,13 +1142,13 @@ export class Guild extends Base {
   ): Promise<void> {
     this.client.rest.request("PATCH", Endpoints.guildMember(this.id, userId), {
       json: {
-        nick: options?.nick,
-        roles: options?.roles,
-        mute: options?.mute,
-        deaf: options?.deaf,
-        channel_id: options?.channelId,
-        communication_disabled_until: options?.communicationDisabledUntil,
-        flags: options?.flags,
+        nick: options.nick,
+        roles: options.roles,
+        mute: options.mute,
+        deaf: options.deaf,
+        channel_id: options.channelId,
+        communication_disabled_until: options.communicationDisabledUntil,
+        flags: options.flags,
       },
       reason,
     });
@@ -1316,7 +1316,7 @@ export class Guild extends Base {
       .request("PATCH", Endpoints.guildRoles(this.id), {
         json: options.map((data) => ({
           id: data.id,
-          position: data?.position,
+          position: data.position,
         })),
       })
       .then((response) =>
@@ -1344,13 +1344,13 @@ export class Guild extends Base {
         Endpoints.guildRole(this.id, roleId),
         {
           json: {
-            name: options?.name,
-            permissions: options?.permissions,
-            color: options?.color,
-            hoist: options?.hoist,
-            icon: options?.icon,
-            unicode_emoji: options?.unicodeEmoji,
-            mentionable: options?.mentionable,
+            name: options.name,
+            permissions: options.permissions,
+            color: options.color,
+            hoist: options.hoist,
+            icon: options.icon,
+            unicode_emoji: options.unicodeEmoji,
+            mentionable: options.mentionable,
           },
           reason,
         }
@@ -1416,7 +1416,7 @@ export class Guild extends Base {
           days: options.days,
           compute_prune_count: options.computePruneCount,
           include_roles: options.includeRoles,
-          reason: options?.reason,
+          reason: options.reason,
         },
         reason,
       }
@@ -1499,8 +1499,8 @@ export class Guild extends Base {
       Endpoints.guildWidgetSettings(this.id),
       {
         json: {
-          enabled: options?.enabled,
-          channel_id: options?.channelId,
+          enabled: options.enabled,
+          channel_id: options.channelId,
         },
         reason,
       }
@@ -1588,9 +1588,9 @@ export class Guild extends Base {
       Endpoints.guildWelcomeScreen(this.id),
       {
         json: {
-          enabled: options?.enabled,
-          welcome_channels: options?.welcomeChannels,
-          description: options?.description,
+          enabled: options.enabled,
+          welcome_channels: options.welcomeChannels,
+          description: options.description,
         },
         reason,
       }
@@ -1662,12 +1662,12 @@ export class Guild extends Base {
             emoji: {
               id: option.emoji.id,
               name: option.emoji.name,
-              roles: option.emoji?.roles,
+              roles: option.emoji.roles,
               user: option.emoji.user,
-              require_colons: option.emoji?.requireColons,
-              managed: option.emoji?.managed,
-              animated: option.emoji?.animated,
-              available: option.emoji?.available,
+              require_colons: option.emoji.requireColons,
+              managed: option.emoji.managed,
+              animated: option.emoji.animated,
+              available: option.emoji.available,
             },
             title: option.title,
             description: option.description,
@@ -1690,9 +1690,9 @@ export class Guild extends Base {
   }): Promise<void> {
     this.client.rest.request("PATCH", Endpoints.guildVoiceState(this.id), {
       json: {
-        channel_id: options?.channelId,
-        suppress: options?.suppress,
-        requestToSpeakTimestamp: options?.requestToSpeakTimestamp,
+        channel_id: options.channelId,
+        suppress: options.suppress,
+        requestToSpeakTimestamp: options.requestToSpeakTimestamp,
       },
     });
   }
@@ -1711,9 +1711,9 @@ export class Guild extends Base {
       Endpoints.guildVoiceState(this.id, userId),
       {
         json: {
-          channel_id: options?.channelId,
-          suppress: options?.suppress,
-          requestToSpeakTimestamp: options?.requestToSpeakTimestamp,
+          channel_id: options.channelId,
+          suppress: options.suppress,
+          requestToSpeakTimestamp: options.requestToSpeakTimestamp,
         },
       }
     );
@@ -1758,15 +1758,15 @@ export class Guild extends Base {
         Endpoints.guildScheduledEvents(this.id),
         {
           json: {
-            channel_id: options?.channelId,
-            entity_metadata: options?.entityMetadata,
+            channel_id: options.channelId,
+            entity_metadata: options.entityMetadata,
             name: options.name,
             privacy_level: options.privacyLevel,
             scheduled_start_time: options.scheduledEndTime,
-            scheduled_end_time: options?.scheduledEndTime,
-            description: options?.description,
+            scheduled_end_time: options.scheduledEndTime,
+            description: options.description,
             entity_type: options.entityType,
-            image: options?.image,
+            image: options.image,
           },
           reason,
         }
@@ -1798,16 +1798,16 @@ export class Guild extends Base {
         Endpoints.guildScheduledEvent(this.id, scheduledEventId),
         {
           json: {
-            channel_id: options?.channelId,
-            entity_metadata: options?.entityMetadata,
-            name: options?.name,
-            privacy_level: options?.privacyLevel,
-            scheduled_start_time: options?.scheduledStartTime,
-            scheduled_end_time: options?.scheduledEndTime,
-            description: options?.description,
-            entityType: options?.entityType,
-            status: options?.status,
-            image: options?.image,
+            channel_id: options.channelId,
+            entity_metadata: options.entityMetadata,
+            name: options.name,
+            privacy_level: options.privacyLevel,
+            scheduled_start_time: options.scheduledStartTime,
+            scheduled_end_time: options.scheduledEndTime,
+            description: options.description,
+            entityType: options.entityType,
+            status: options.status,
+            image: options.image,
           },
           reason,
         }
@@ -1893,7 +1893,7 @@ export class Guild extends Base {
         {
           json: {
             name: options.name,
-            description: options?.description,
+            description: options.description,
           },
         }
       ),
@@ -1926,8 +1926,8 @@ export class Guild extends Base {
         Endpoints.guildTemplate(this.id, code),
         {
           json: {
-            name: options?.name,
-            description: options?.description,
+            name: options.name,
+            description: options.description,
           },
         }
       ),

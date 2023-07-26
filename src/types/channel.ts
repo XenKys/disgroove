@@ -2,7 +2,7 @@ import type {
   AllowedMentionTypes,
   ChannelTypes,
   MessageActivityTypes,
-} from "../utils/constants";
+} from "../utils";
 import type {
   RawApplication,
   RawGuildMember,

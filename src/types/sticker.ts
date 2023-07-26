@@ -1,4 +1,4 @@
-import type { StickerTypes, StickerFormatTypes } from "../utils/constants";
+import type { StickerTypes, StickerFormatTypes } from "../utils";
 import type { RawUser } from ".";
 import type { User } from "../structures";
 
