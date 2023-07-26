@@ -1,6 +1,5 @@
 import {
   ApplicationCommand,
-  AuditLogEntry,
   AutoModerationRule,
   Base,
   Channel,
@@ -625,9 +624,36 @@ export class Guild extends Base {
             (applicationCommand) =>
               new ApplicationCommand(applicationCommand, this.client)
           ),
-          auditLogEntries: data.audit_log_entries.map(
-            (auditLogEntry) => new AuditLogEntry(auditLogEntry, this.client)
-          ),
+          auditLogEntries: data.audit_log_entries.map((auditLogEntry) => ({
+            targetId: auditLogEntry.target_id,
+            changes: auditLogEntry.changes?.map((change) => ({
+              newValue: change.new_value,
+              oldValue: change.old_value,
+              key: change.key,
+            })),
+            userId: auditLogEntry.user_id,
+            id: auditLogEntry.id,
+            actionType: auditLogEntry.action_type,
+            options:
+              auditLogEntry.options !== undefined
+                ? {
+                    applicationId: auditLogEntry.options.application_id,
+                    autoModerationRuleName:
+                      auditLogEntry.options.auto_moderation_rule_name,
+                    autoModerationRuleTriggerType:
+                      auditLogEntry.options.auto_moderation_rule_trigger_type,
+                    channelId: auditLogEntry.options.channel_id,
+                    count: auditLogEntry.options.count,
+                    deleteMemberDays: auditLogEntry.options.delete_member_days,
+                    id: auditLogEntry.options.id,
+                    membersRemoved: auditLogEntry.options.members_removed,
+                    messageId: auditLogEntry.options.message_id,
+                    roleName: auditLogEntry.options.role_name,
+                    type: auditLogEntry.options.type,
+                  }
+                : undefined,
+            reason: auditLogEntry.reason,
+          })),
           autoModerationRules: data.auto_moderation_rules.map(
             (autoModerationRule) =>
               new AutoModerationRule(autoModerationRule, this.client)

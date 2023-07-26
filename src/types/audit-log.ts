@@ -9,7 +9,6 @@ import type {
 } from ".";
 import type {
   ApplicationCommand,
-  AuditLogEntry,
   AutoModerationRule,
   Channel,
   GuildScheduledEvent,
@@ -66,7 +65,7 @@ export interface RawAuditLogChange {
 
 export interface JSONAuditLog {
   applicationCommands: Array<ApplicationCommand>;
-  auditLogEntries: Array<AuditLogEntry>;
+  auditLogEntries: Array<JSONAuditLogEntry>;
   autoModerationRules: Array<AutoModerationRule>;
   guildScheduledEvents: Array<GuildScheduledEvent>;
   integrations: Array<Integration>;
