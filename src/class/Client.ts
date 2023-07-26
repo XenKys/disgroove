@@ -423,9 +423,20 @@ export class Client extends EventEmitter {
   }
 
   /* https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template */
-  public async createGuildFromTemplate(code: string): Promise<Guild> {
+  public async createGuildFromTemplate(
+    code: string,
+    options: {
+      name: string;
+      icon?: string;
+    }
+  ): Promise<Guild> {
     return new Guild(
-      await this.rest.request("POST", Endpoints.template(code)),
+      await this.rest.request("POST", Endpoints.template(code), {
+        json: {
+          name: options.name,
+          icon: options.icon,
+        },
+      }),
       this
     );
   }
@@ -469,8 +480,8 @@ export class Client extends EventEmitter {
     options: {
       channelId: string;
       topic: string;
-      privacyLevel: PrivacyLevel;
-      sendStartNotifications: boolean;
+      privacyLevel?: PrivacyLevel;
+      sendStartNotifications?: boolean;
     },
     reason?: string
   ): Promise<StageInstance> {
