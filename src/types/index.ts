@@ -9,7 +9,6 @@ export * from "./guild";
 export * from "./guild-scheduled-event";
 export * from "./guild-template";
 export * from "./invite";
-export * from "./oauth2";
 export * from "./stage-instance";
 export * from "./sticker";
 export * from "./user";
