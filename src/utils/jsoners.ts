@@ -1,6 +1,6 @@
 import type { Client } from "../class";
 import { User } from "../structures";
-import type { JSONEmbed, RawEmbed, RawEmoji, RawSelectOption } from "../types";
+import type { RawEmbed, RawEmoji, RawSelectOption, RawTeam } from "../types";
 import {
   type ApplicationCommandOptionType,
   type ChannelTypes,
@@ -270,5 +270,20 @@ export function emojiToJSON(emoji: RawEmoji, client: Client) {
     managed: emoji.managed,
     animated: emoji.animated,
     available: emoji.available,
+  };
+}
+
+export function teamToJSON(team: RawTeam, client: Client) {
+  return {
+    icon: team.icon,
+    id: team.id,
+    members: team.members.map((member) => ({
+      membershipState: member.membership_state,
+      permissions: member.permissions,
+      teamId: member.team_id,
+      user: new User(member.user, client),
+    })),
+    name: team.name,
+    ownerUserId: team.owner_user_id,
   };
 }

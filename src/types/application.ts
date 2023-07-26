@@ -15,6 +15,7 @@ export interface RawApplication {
   privacy_policy_url?: string;
   owner?: RawUser;
   verify_key: string;
+  team: RawTeam | null;
   guild_id?: string;
   primary_sku_id?: string;
   slug?: string;
@@ -44,6 +45,7 @@ export interface JSONApplication {
   privacyPolicyURL?: string;
   owner?: User;
   verifyKey: string;
+  team: JSONTeam | null;
   guildId?: string;
   primarySkuId?: string;
   slug?: string;
