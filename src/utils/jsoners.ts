@@ -1,6 +1,12 @@
 import type { Client } from "../class";
 import { User } from "../structures";
-import type { RawEmbed, RawEmoji, RawSelectOption, RawTeam } from "../types";
+import type {
+  RawAuditLogEntry,
+  RawEmbed,
+  RawEmoji,
+  RawSelectOption,
+  RawTeam,
+} from "../types";
 import {
   type ApplicationCommandOptionType,
   type ChannelTypes,
@@ -285,5 +291,38 @@ export function teamToJSON(team: RawTeam, client: Client) {
     })),
     name: team.name,
     ownerUserId: team.owner_user_id,
+  };
+}
+
+export function auditLogEntryToJSON(auditLogEntry: RawAuditLogEntry) {
+  return {
+    targetId: auditLogEntry.target_id,
+    changes: auditLogEntry.changes?.map((change) => ({
+      newValue: change.new_value,
+      oldValue: change.old_value,
+      key: change.key,
+    })),
+    userId: auditLogEntry.user_id,
+    id: auditLogEntry.id,
+    actionType: auditLogEntry.action_type,
+    options:
+      auditLogEntry.options !== undefined
+        ? {
+            applicationId: auditLogEntry.options.application_id,
+            autoModerationRuleName:
+              auditLogEntry.options.auto_moderation_rule_name,
+            autoModerationRuleTriggerType:
+              auditLogEntry.options.auto_moderation_rule_trigger_type,
+            channelId: auditLogEntry.options.channel_id,
+            count: auditLogEntry.options.count,
+            deleteMemberDays: auditLogEntry.options.delete_member_days,
+            id: auditLogEntry.options.id,
+            membersRemoved: auditLogEntry.options.members_removed,
+            messageId: auditLogEntry.options.message_id,
+            roleName: auditLogEntry.options.role_name,
+            type: auditLogEntry.options.type,
+          }
+        : undefined,
+    reason: auditLogEntry.reason,
   };
 }

@@ -10,6 +10,7 @@ import {
   PrivacyLevel,
   SystemChannelFlags,
   VerificationLevel,
+  auditLogEntryToJSON,
   channelToRaw,
   emojiToJSON,
   roleToRaw,
@@ -17,7 +18,6 @@ import {
 import { Endpoints, REST } from "../rest";
 import {
   Application,
-  AuditLogEntry,
   AutoModerationRule,
   Channel,
   Guild,
@@ -32,6 +32,7 @@ import {
   User,
 } from "../structures";
 import type {
+  JSONAuditLogEntry,
   JSONAutoModerationActionExectionEventFields,
   JSONAutoModerationRule,
   JSONChannel,
@@ -177,7 +178,7 @@ export declare interface Client extends EventEmitter {
   ): this;
   on(
     event: GatewayEvents.GuildAuditLogEntryCreate,
-    listener: (listener: AuditLogEntry) => void
+    listener: (listener: JSONAuditLogEntry) => void
   ): this;
   on(
     event: GatewayEvents.GuildBanAdd,
@@ -871,7 +872,7 @@ export class Client extends EventEmitter {
         case "GUILD_AUDIT_LOG_ENTRY_CREATE":
           super.emit(
             GatewayEvents.GuildAuditLogEntryCreate,
-            new AuditLogEntry(d, this)
+            auditLogEntryToJSON(d)
           );
           break;
         case "GUILD_BAN_ADD":
