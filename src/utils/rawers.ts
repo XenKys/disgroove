@@ -31,7 +31,7 @@ export function applicationCommandToRaw(command: {
     descriptionLocalizations?: Partial<Record<Locale, string>>;
     required?: boolean;
     choices?: Array<string>;
-    options: Array<{
+    options?: Array<{
       type: ApplicationCommandOptionType;
       name: string;
       nameLocalizations?: Partial<Record<Locale, string>>;
@@ -71,7 +71,7 @@ export function applicationCommandToRaw(command: {
       description_localizations: option.descriptionLocalizations,
       required: option.required,
       choices: option.choices,
-      command: option.options.map((o) => ({
+      command: option.options?.map((o) => ({
         type: o.type,
         name: o.name,
         name_localizations: o.nameLocalizations,

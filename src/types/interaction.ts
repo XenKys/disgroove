@@ -75,12 +75,12 @@ export interface RawModalSubmitData {
 
 /* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
 export interface RawResolvedData {
-  users?: Array<RawUser>;
-  members?: Array<RawGuildMember>;
-  roles?: Array<RawRole>;
-  channels?: Array<RawChannel>;
-  messages?: Array<RawMessage>;
-  attachments?: Array<RawAttachment>;
+  users?: Map<string, RawUser>;
+  members?: Map<string, RawGuildMember>;
+  roles?: Map<string, RawRole>;
+  channels?: Map<string, RawChannel>;
+  messages?: Map<string, RawMessage>;
+  attachments?: Map<string, RawAttachment>;
 }
 
 /* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
@@ -105,10 +105,9 @@ export interface JSONInteraction {
   id: string;
   applicationId: string;
   type: InteractionType;
-  data?:
-    | JSONApplicationCommandData
-    | JSONMessageComponentData
-    | JSONModalSubmitData;
+  data?: JSONApplicationCommandData &
+    JSONMessageComponentData &
+    JSONModalSubmitData;
   guildId?: string;
   channelId?: string;
   member?: GuildMember;

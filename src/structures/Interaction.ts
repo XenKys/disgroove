@@ -60,33 +60,53 @@ export class Interaction extends Base {
         name: data.data.name,
         type: data.data.type,
         resolved: {
-          users: data.data.resolved?.users?.map(
-            (user) => new User(user, this.client)
-          ),
-          members: data.data.resolved?.members?.map(
-            (member) => new GuildMember(member, this.client)
-          ),
-          roles: data.data.resolved?.roles?.map(
-            (roles) => new Role(roles, this.client)
-          ),
-          channels: data.data.resolved?.channels?.map(
-            (channel) => new Channel(channel, this.client)
-          ),
-          messages: data.data.resolved?.messages?.map(
-            (message) => new Message(message, this.client)
-          ),
-          attachments: data.data.resolved?.attachments?.map((attachment) => ({
-            id: attachment.id,
-            filename: attachment.filename,
-            description: attachment.description,
-            contentType: attachment.content_type,
-            size: attachment.size,
-            url: attachment.url,
-            proxyUrl: attachment.proxy_url,
-            height: attachment.height,
-            width: attachment.width,
-            ephemeral: attachment.ephemeral,
-          })),
+          users:
+            data.data.resolved?.users !== undefined
+              ? Object.values(data.data.resolved?.users).map(
+                  (user) => new User(user, this.client)
+                )
+              : undefined,
+          members:
+            data.data.resolved?.members !== undefined
+              ? Object.values(data.data.resolved?.members).map(
+                  (member) => new GuildMember(member, this.client)
+                )
+              : undefined,
+          roles:
+            data.data.resolved?.roles !== undefined
+              ? Object.values(data.data.resolved?.roles).map(
+                  (role) => new Role(role, this.client)
+                )
+              : undefined,
+          channels:
+            data.data.resolved?.channels !== undefined
+              ? Object.values(data.data.resolved?.channels).map(
+                  (channel) => new Channel(channel, this.client)
+                )
+              : undefined,
+          messages:
+            data.data.resolved?.messages !== undefined
+              ? Object.values(data.data.resolved?.messages).map(
+                  (message) => new Message(message, this.client)
+                )
+              : undefined,
+          attachments:
+            data.data.resolved?.attachments !== undefined
+              ? Object.values(data.data.resolved?.attachments).map(
+                  (attachment) => ({
+                    id: attachment.id,
+                    filename: attachment.filename,
+                    description: attachment.description,
+                    contentType: attachment.content_type,
+                    size: attachment.size,
+                    url: attachment.url,
+                    proxyUrl: attachment.proxy_url,
+                    height: attachment.height,
+                    width: attachment.width,
+                    ephemeral: attachment.ephemeral,
+                  })
+                )
+              : undefined,
         },
         options: data.data.options,
         guildId: data.data.guild_id,
@@ -103,9 +123,9 @@ export class Interaction extends Base {
               : undefined,
           default: value.default,
         })),
-        components: data.data.components.map((component) => ({
+        components: data.data.components?.map((component) => ({
           type: component.type,
-          components: component.components.map((c) => ({
+          components: component.components?.map((c) => ({
             type: c.type,
             customId: c.custom_id,
             style: c.style,

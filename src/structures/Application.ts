@@ -114,7 +114,7 @@ export class Application extends Base {
       descriptionLocalizations?: Partial<Record<Locale, string>>;
       required?: boolean;
       choices?: Array<string>;
-      options: Array<{
+      options?: Array<{
         type: ApplicationCommandOptionType;
         name: string;
         nameLocalizations?: Partial<Record<Locale, string>>;
@@ -183,7 +183,7 @@ export class Application extends Base {
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
         choices?: Array<string>;
-        options: Array<{
+        options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
           nameLocalizations?: Partial<Record<Locale, string>>;
@@ -284,7 +284,7 @@ export class Application extends Base {
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
         choices?: Array<string>;
-        options: Array<{
+        options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
           nameLocalizations?: Partial<Record<Locale, string>>;
@@ -356,7 +356,7 @@ export class Application extends Base {
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
         choices?: Array<string>;
-        options: Array<{
+        options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
           nameLocalizations?: Partial<Record<Locale, string>>;
@@ -424,7 +424,7 @@ export class Application extends Base {
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
         choices?: Array<string>;
-        options: Array<{
+        options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
           nameLocalizations?: Partial<Record<Locale, string>>;
@@ -455,40 +455,7 @@ export class Application extends Base {
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
       .request("PUT", Endpoints.applicationGuildCommands(this.id, guildId), {
-        json: {
-          name: options.name,
-          name_localizations: options.nameLocalizations,
-          description: options.description,
-          description_localizations: options.descriptionLocalizations,
-          options: options.options?.map((option) => ({
-            type: option.type,
-            name: option.name,
-            name_localizations: option.nameLocalizations,
-            description: option.description,
-            description_localizations: option.descriptionLocalizations,
-            required: option.required,
-            choices: option.choices,
-            options: option.options.map((o) => ({
-              type: o.type,
-              name: o.name,
-              name_localizations: o.nameLocalizations,
-              description: o.description,
-              description_localizations: o.descriptionLocalizations,
-              required: o.required,
-              choices: o.choices,
-              channel_types: o.channelTypes,
-              min_value: o.minValue,
-              max_value: o.maxValue,
-              min_length: o.minLength,
-              max_length: o.maxLength,
-              autocomplete: o.autocomplete,
-            })),
-          })),
-          default_member_permissions: options.defaultMemberPermissions,
-          default_permission: options.defaultPermission,
-          type: options.type,
-          nsfw: options.nsfw,
-        },
+        json: applicationCommandToRaw(options),
       })
       .then((response) =>
         response.map(
