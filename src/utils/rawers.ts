@@ -71,7 +71,7 @@ export function applicationCommandToRaw(command: {
       description_localizations: option.descriptionLocalizations,
       required: option.required,
       choices: option.choices,
-      command: option.options?.map((o) => ({
+      options: option.options?.map((o) => ({
         type: o.type,
         name: o.name,
         name_localizations: o.nameLocalizations,

@@ -67,7 +67,7 @@ export function applicationCommandToJSON(command: {
       descriptionLocalizations: option.description_localizations,
       required: option.required,
       choices: option.choices,
-      command: option.options.map((o) => ({
+      options: option.options.map((o) => ({
         type: o.type,
         name: o.name,
         nameLocalizations: o.name_localizations,
