@@ -8,6 +8,7 @@ import type {
   RawApplicationCommandPermission,
   JSONApplication,
   JSONTeam,
+  JSONApplicationCommandOptionChoice,
 } from "../types";
 import type { Client } from "../class";
 import { Endpoints } from "../rest";
@@ -113,7 +114,7 @@ export class Application extends Base {
       description: string;
       descriptionLocalizations?: Partial<Record<Locale, string>>;
       required?: boolean;
-      choices?: Array<string>;
+      choices?: Array<JSONApplicationCommandOptionChoice>;
       options?: Array<{
         type: ApplicationCommandOptionType;
         name: string;
@@ -121,7 +122,7 @@ export class Application extends Base {
         description: string;
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
-        choices?: Array<string>;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
         channelTypes?: Array<ChannelTypes>;
         minValue?: number;
         maxValue?: number;
@@ -182,7 +183,7 @@ export class Application extends Base {
         description: string;
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
-        choices?: Array<string>;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
         options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
@@ -190,7 +191,7 @@ export class Application extends Base {
           description: string;
           descriptionLocalizations?: Partial<Record<Locale, string>>;
           required?: boolean;
-          choices?: Array<string>;
+          choices?: Array<JSONApplicationCommandOptionChoice>;
           channelTypes?: Array<ChannelTypes>;
           minValue?: number;
           maxValue?: number;
@@ -283,7 +284,7 @@ export class Application extends Base {
         description: string;
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
-        choices?: Array<string>;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
         options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
@@ -291,7 +292,7 @@ export class Application extends Base {
           description: string;
           descriptionLocalizations?: Partial<Record<Locale, string>>;
           required?: boolean;
-          choices?: Array<string>;
+          choices?: Array<JSONApplicationCommandOptionChoice>;
           channelTypes?: Array<ChannelTypes>;
           minValue?: number;
           maxValue?: number;
@@ -355,7 +356,7 @@ export class Application extends Base {
         description: string;
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
-        choices?: Array<string>;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
         options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
@@ -363,7 +364,7 @@ export class Application extends Base {
           description: string;
           descriptionLocalizations?: Partial<Record<Locale, string>>;
           required?: boolean;
-          choices?: Array<string>;
+          choices?: Array<JSONApplicationCommandOptionChoice>;
           channelTypes?: Array<ChannelTypes>;
           minValue?: number;
           maxValue?: number;
@@ -423,7 +424,7 @@ export class Application extends Base {
         description: string;
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
-        choices?: Array<string>;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
         options?: Array<{
           type: ApplicationCommandOptionType;
           name: string;
@@ -431,7 +432,7 @@ export class Application extends Base {
           description: string;
           descriptionLocalizations?: Partial<Record<Locale, string>>;
           required?: boolean;
-          choices?: Array<string>;
+          choices?: Array<JSONApplicationCommandOptionChoice>;
           channelTypes?: Array<ChannelTypes>;
           minValue?: number;
           maxValue?: number;

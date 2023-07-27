@@ -3,6 +3,7 @@ import { Endpoints } from "../rest";
 import type {
   JSONApplicationCommand,
   JSONApplicationCommandOption,
+  JSONApplicationCommandOptionChoice,
   JSONGuildApplicationCommandPermissions,
   RawApplicationCommand,
   RawApplicationCommandPermission,
@@ -72,7 +73,7 @@ export class ApplicationCommand extends Base {
       description: string;
       descriptionLocalizations?: Partial<Record<Locale, string>>;
       required?: boolean;
-      choices?: Array<string>;
+      choices?: Array<JSONApplicationCommandOptionChoice>;
       options: Array<{
         type: ApplicationCommandOptionType;
         name: string;
@@ -80,7 +81,7 @@ export class ApplicationCommand extends Base {
         description: string;
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
-        choices?: Array<string>;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
         channelTypes?: Array<ChannelTypes>;
         minValue?: number;
         maxValue?: number;

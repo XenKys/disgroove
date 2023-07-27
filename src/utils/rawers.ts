@@ -1,5 +1,6 @@
 import type { User } from "../structures";
 import type {
+  JSONApplicationCommandOptionChoice,
   JSONDefaultReaction,
   JSONEmbed,
   JSONEmoji,
@@ -16,7 +17,7 @@ import {
   ComponentTypes,
   type Locale,
   type UserFlags,
-} from "./constants";
+} from ".";
 
 export function applicationCommandToRaw(command: {
   name?: string;
@@ -30,7 +31,7 @@ export function applicationCommandToRaw(command: {
     description: string;
     descriptionLocalizations?: Partial<Record<Locale, string>>;
     required?: boolean;
-    choices?: Array<string>;
+    choices?: Array<JSONApplicationCommandOptionChoice>;
     options?: Array<{
       type: ApplicationCommandOptionType;
       name: string;
@@ -38,7 +39,7 @@ export function applicationCommandToRaw(command: {
       description: string;
       descriptionLocalizations?: Partial<Record<Locale, string>>;
       required?: boolean;
-      choices?: Array<string>;
+      choices?: Array<JSONApplicationCommandOptionChoice>;
       channelTypes?: Array<ChannelTypes>;
       minValue?: number;
       maxValue?: number;
@@ -70,7 +71,11 @@ export function applicationCommandToRaw(command: {
       description: option.description,
       description_localizations: option.descriptionLocalizations,
       required: option.required,
-      choices: option.choices,
+      choices: option.choices?.map((choice) => ({
+        name: choice.name,
+        name_localizations: choice.nameLocalizations,
+        value: choice.value,
+      })),
       options: option.options?.map((o) => ({
         type: o.type,
         name: o.name,
@@ -78,7 +83,11 @@ export function applicationCommandToRaw(command: {
         description: o.description,
         description_localizations: o.descriptionLocalizations,
         required: o.required,
-        choices: o.choices,
+        choices: o.choices?.map((choice) => ({
+          name: choice.name,
+          name_localizations: choice.nameLocalizations,
+          value: choice.value,
+        })),
         channel_types: o.channelTypes,
         min_value: o.minValue,
         max_value: o.maxValue,
