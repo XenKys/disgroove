@@ -81,14 +81,14 @@ export class ApplicationCommand extends Base {
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
         choices?: Array<string>;
-        channelTypes?: ChannelTypes;
+        channelTypes?: Array<ChannelTypes>;
         minValue?: number;
         maxValue?: number;
         minLength?: number;
         maxLength?: number;
         autocomplete?: boolean;
       }>;
-      channelTypes?: ChannelTypes;
+      channelTypes?: Array<ChannelTypes>;
       minValue?: number;
       maxValue?: number;
       minLength?: number;
