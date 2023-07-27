@@ -28,6 +28,7 @@ import {
   type InviteTargetTypes,
   type MessageFlags,
   messageComponentToRaw,
+  embedToRaw,
 } from "../utils";
 
 export class Channel extends Base {
@@ -305,7 +306,10 @@ export class Channel extends Base {
             content: options.content,
             nonce: options.nonce,
             tts: options.tts,
-            embeds: options.embeds,
+            embeds:
+              options.embeds !== undefined
+                ? embedToRaw(options.embeds)
+                : undefined,
             allowed_mentions: {
               parse: options.allowedMentions?.parse,
               roles: options.allowedMentions?.roles,
@@ -473,7 +477,12 @@ export class Channel extends Base {
         {
           json: {
             content: options.content,
-            embeds: options.embeds,
+            embeds:
+              options.embeds !== undefined
+                ? options.embeds !== null
+                  ? embedToRaw(options.embeds)
+                  : null
+                : undefined,
             allowed_mentions: options.allowedMentions,
             components:
               options.components !== undefined

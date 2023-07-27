@@ -16,6 +16,7 @@ import {
   type MessageFlags,
   type WebhookTypes,
   messageComponentToRaw,
+  embedToRaw,
 } from "../utils";
 
 export class Webhook extends Base {
@@ -187,7 +188,12 @@ export class Webhook extends Base {
           json: {
             content: options.content,
             tts: options.tts,
-            embeds: options.embeds,
+            embeds:
+              options.embeds !== undefined
+                ? options.embeds !== null
+                  ? embedToRaw(options.embeds)
+                  : null
+                : undefined,
             allowed_mentions: {
               parse: options.allowedMentions?.parse,
               roles: options.allowedMentions?.roles,
@@ -336,7 +342,7 @@ export class Webhook extends Base {
 
     return new Message(
       await this.client.rest.request(
-        "POST",
+        "PATCH",
         Endpoints.webhookMessage(this.id, this.token, messageId),
         {
           query: {
@@ -344,7 +350,12 @@ export class Webhook extends Base {
           },
           json: {
             content: options.content,
-            embeds: options.embeds,
+            embeds:
+              options.embeds !== undefined
+                ? options.embeds !== null
+                  ? embedToRaw(options.embeds)
+                  : null
+                : undefined,
             allowed_mentions: {
               parse: options.allowedMentions?.parse,
               roles: options.allowedMentions?.roles,

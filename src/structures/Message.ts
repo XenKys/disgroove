@@ -27,6 +27,7 @@ import {
   embedToJSON,
   emojiToJSON,
   messageComponentToRaw,
+  embedToRaw,
 } from "../utils";
 
 export class Message extends Base {
@@ -330,7 +331,12 @@ export class Message extends Base {
         {
           json: {
             content: options.content,
-            embeds: options.embeds,
+            embeds:
+              options.embeds !== undefined
+                ? options.embeds !== null
+                  ? embedToRaw(options.embeds)
+                  : null
+                : undefined,
             allowed_mentions: options.allowedMentions,
             components:
               options.components !== undefined
