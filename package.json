@@ -1,6 +1,6 @@
 {
   "name": "disgroove",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "An NPM package to interact with the Discord API",
   "main": "dist/index.js",
   "repository": {
