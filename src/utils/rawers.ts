@@ -416,8 +416,8 @@ export function channelToRaw(channel: {
   };
 }
 
-export function embedToRaw(embeds: Array<JSONEmbed>) {
-  embeds.map((embed) => ({
+export function embedsToRaw(embeds: Array<JSONEmbed>) {
+  return embeds.map((embed) => ({
     title: embed.title,
     type: embed.type,
     description: embed.description,

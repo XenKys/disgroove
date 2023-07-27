@@ -16,7 +16,7 @@ import {
   type MessageFlags,
   type WebhookTypes,
   messageComponentToRaw,
-  embedToRaw,
+  embedsToRaw,
 } from "../utils";
 
 export class Webhook extends Base {
@@ -191,7 +191,7 @@ export class Webhook extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedToRaw(options.embeds)
+                  ? embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
@@ -353,7 +353,7 @@ export class Webhook extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedToRaw(options.embeds)
+                  ? embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {

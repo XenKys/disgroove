@@ -20,7 +20,7 @@ import {
   InteractionCallbackType,
   type InteractionType,
   type MessageFlags,
-  embedToRaw,
+  embedsToRaw,
   emojiToJSON,
   messageComponentToRaw,
 } from "../utils";
@@ -222,7 +222,7 @@ export class Interaction extends Base {
                   content: options.data.content,
                   embeds:
                     options.data.embeds !== undefined
-                      ? embedToRaw(options.data.embeds)
+                      ? embedsToRaw(options.data.embeds)
                       : undefined,
                   allowed_mentions: {
                     parse: options.data.allowedMentions?.parse,
@@ -385,7 +385,7 @@ export class Interaction extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedToRaw(options.embeds)
+                  ? embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
@@ -479,7 +479,7 @@ export class Interaction extends Base {
           embeds:
             options.embeds !== undefined
               ? options.embeds !== null
-                ? embedToRaw(options.embeds)
+                ? embedsToRaw(options.embeds)
                 : null
               : undefined,
           allowed_mentions: {
@@ -590,7 +590,7 @@ export class Interaction extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedToRaw(options.embeds)
+                  ? embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
