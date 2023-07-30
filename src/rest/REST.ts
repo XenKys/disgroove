@@ -89,9 +89,7 @@ export class REST {
       headers,
     });
 
-    if (response.status === 204) return null;
-
-    if (!response.ok)
+    if (response.status > 300)
       throw new Error(`[${response.status}] ${response.statusText}`);
 
     return response.json();
