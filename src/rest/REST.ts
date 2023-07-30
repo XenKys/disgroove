@@ -27,17 +27,10 @@ export class REST {
 
     if (data?.query) {
       for (const value of Object.values(data.query)) {
-        if (value !== undefined) {
-          let urlSearchParams = new URLSearchParams(url.searchParams);
+        if (value === undefined) return;
 
-          for (const [key, value] of Object.entries(data?.query)) {
-            if (value === undefined) return;
-
-            urlSearchParams.append(key, value);
-            url = new URL(
-              `https://discord.com/api/v10/${endpoint}?${urlSearchParams.toString()}`
-            );
-          }
+        for (const [key, value] of Object.entries(data?.query)) {
+          url.searchParams.set(key, value);
         }
       }
     }
