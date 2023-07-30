@@ -10,7 +10,7 @@ import type {
   JSONTeam,
   JSONApplicationCommandOptionChoice,
 } from "../types";
-import type { Client } from "../class";
+import type { Client } from "..";
 import { Endpoints } from "../rest";
 import {
   applicationCommandToRaw,

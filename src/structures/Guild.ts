@@ -13,7 +13,7 @@ import {
   User,
   Webhook,
 } from ".";
-import type { Client } from "../class";
+import type { Client } from "..";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONApplicationCommandOptionChoice,

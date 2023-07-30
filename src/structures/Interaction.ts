@@ -1,5 +1,5 @@
 import { Base, Channel, GuildMember, Message, Role, User } from ".";
-import type { Client } from "../class";
+import type { Client } from "..";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,

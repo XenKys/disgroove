@@ -1,5 +1,5 @@
 import { User } from ".";
-import type { Client } from "../class";
+import type { Client } from "..";
 import { Endpoints } from "../rest";
 import type { JSONGuildMember, RawGuildMember } from "../types";
 import type { GuildMemberFlags } from "../utils";

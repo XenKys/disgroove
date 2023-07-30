@@ -1,5 +1,5 @@
 import { Base, GuildMember, User } from ".";
-import type { Client } from "../class";
+import type { Client } from "..";
 import { Endpoints } from "../rest";
 import type {
   JSONGuildScheduledEvent,

@@ -6,7 +6,7 @@ import {
   GuildScheduledEvent,
   User,
 } from ".";
-import type { Client } from "../class";
+import type { Client } from "..";
 import { Endpoints } from "../rest";
 import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 

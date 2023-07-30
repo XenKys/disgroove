@@ -15,8 +15,8 @@ import {
   channelToRaw,
   emojiToJSON,
   roleToRaw,
-} from "../utils";
-import { Endpoints, REST } from "../rest";
+} from "./utils";
+import { Endpoints, REST } from "./rest";
 import {
   Application,
   AutoModerationRule,
@@ -31,7 +31,7 @@ import {
   Role,
   StageInstance,
   User,
-} from "../structures";
+} from "./structures";
 import type {
   JSONActivity,
   JSONAuditLogEntry,
@@ -86,7 +86,7 @@ import type {
   RawStickerPack,
   RawThreadMember,
   RawVoiceRegion,
-} from "../types";
+} from "./types";
 import EventEmitter from "node:events";
 
 export interface ClientOptions {

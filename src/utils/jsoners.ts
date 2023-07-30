@@ -1,4 +1,4 @@
-import type { Client } from "../class";
+import type { Client } from "..";
 import { User } from "../structures";
 import type { RawAuditLogEntry, RawEmbed, RawEmoji, RawTeam } from "../types";
 
