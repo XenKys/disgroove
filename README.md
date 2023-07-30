@@ -34,6 +34,7 @@ const {
   ActivityType,
   StatusTypes,
   InteractionType,
+  InteractionCallbackType,
   MessageFlags,
 } = require("disgroove");
 const client = new Client("token", {
@@ -71,8 +72,11 @@ client.on(GatewayEvents.InteractionCreate, async (interaction) => {
   if (interaction.data.name === "ping") {
     // Check if the application command name is equals to "ping"
     await interaction.createResponse({
-      content: "Pong! �",
-      flags: MessageFlags.Ephemeral,
+      type: InteractionCallbackType.ChannelMessageWithSource,
+      data: {
+        content: "Pong!  ",
+        flags: MessageFlags.Ephemeral,
+      },
     }); // Reply with an ephemeral message "Pong! �"
   }
 });
