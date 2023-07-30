@@ -41,7 +41,6 @@ export class REST {
           "Content-Type"?: string;
           "X-Audit-Log-Reason"?: string;
         }
-      | FormData
       | undefined = {
       Authorization: `Bot ${this.token}`,
     };
