@@ -8,7 +8,7 @@ import {
   type GuildFeatures,
   type OAuth2Scopes,
   type PrivacyLevel,
-  type StatusTypes,
+  StatusTypes,
   type SystemChannelFlags,
   type VerificationLevel,
   auditLogEntryToJSON,
@@ -652,7 +652,6 @@ export class Client extends EventEmitter {
 
   /* https://discord.com/developers/docs/topics/gateway-events#update-presence */
   public updatePresence(options: {
-    since: number | null;
     activities: Array<JSONActivity>;
     status: StatusTypes;
     afk: boolean;
@@ -661,7 +660,7 @@ export class Client extends EventEmitter {
       JSON.stringify({
         op: GatewayOPCodes.PresenceUpdate,
         d: {
-          since: options.since,
+          since: options.status === StatusTypes.Idle ? Date.now() : null,
           activities: options.activities.map((activity) => ({
             name: activity.name,
             type: activity.type,
