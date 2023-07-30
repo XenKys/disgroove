@@ -1,4 +1,4 @@
-/* https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-stage-instance-structure */
+/** https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-stage-instance-structure */
 export interface RawStageInstance {
   id: string;
   guild_id: string;

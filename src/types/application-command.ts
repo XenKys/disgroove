@@ -6,7 +6,7 @@ import type {
   ApplicationCommandPermissionType,
 } from "../utils";
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure */
 export interface RawApplicationCommand {
   id: string;
   type?: ApplicationCommandTypes;
@@ -24,7 +24,7 @@ export interface RawApplicationCommand {
   version: string;
 }
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure */
 export interface RawApplicationCommandOption {
   type: ApplicationCommandOptionType;
   name: string;
@@ -42,14 +42,14 @@ export interface RawApplicationCommandOption {
   autocomplete?: boolean;
 }
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure */
 export interface RawApplicationCommandOptionChoice {
   name: string;
   name_localizations?: Partial<Record<Locale, string>> | null;
   value: string;
 }
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure */
 export interface RawGuildApplicationCommandPermissions {
   id: string;
   application_id: string;
@@ -57,7 +57,7 @@ export interface RawGuildApplicationCommandPermissions {
   permissions: Array<RawApplicationCommandPermission>;
 }
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure */
 export interface RawApplicationCommandPermission {
   id: string;
   type: ApplicationCommandPermissionType;

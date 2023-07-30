@@ -6,7 +6,7 @@ import type {
 import type { RawGuildMember, RawUser } from ".";
 import type { GuildMember, User } from "../structures";
 
-/* https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
 export interface RawGuildScheduledEvent {
   id: string;
   guild_id: string;
@@ -26,12 +26,12 @@ export interface RawGuildScheduledEvent {
   image?: string;
 }
 
-/* https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-metadata */
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-metadata */
 export interface RawGuildScheduledEventEntityMetadata {
   location?: string;
 }
 
-/* https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object-guild-scheduled-event-user-structure */
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object-guild-scheduled-event-user-structure */
 export interface RawGuildScheduledEventUser {
   guild_scheduled_event_id: string;
   user: RawUser;

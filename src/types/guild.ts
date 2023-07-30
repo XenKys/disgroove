@@ -24,7 +24,7 @@ import type {
 } from ".";
 import type { Channel, Role, User } from "../structures";
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface RawGuild {
   id: string;
   name: string;
@@ -70,7 +70,7 @@ export interface RawGuild {
   safety_alerts_channel_id: string | null;
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure */
 export interface RawGuildPreview {
   id: string;
   name: string;
@@ -85,13 +85,13 @@ export interface RawGuildPreview {
   stickers?: Array<RawSticker>;
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-widget-settings-object-guild-widget-settings-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-widget-settings-object-guild-widget-settings-structure */
 export interface RawGuildWidgetSettings {
   enabled: boolean;
   channel_id: string | null;
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-widget-object-guild-widget-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-widget-object-guild-widget-structure */
 export interface RawGuildWidget {
   id: string;
   name: string;
@@ -101,7 +101,7 @@ export interface RawGuildWidget {
   presence_count: number;
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure */
 export interface RawGuildMember {
   user?: RawUser;
   nick?: string | null;
@@ -117,7 +117,7 @@ export interface RawGuildMember {
   communication_disabled_until?: number | null;
 }
 
-/* https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
+/** https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
 export interface RawIntegration {
   id: string;
   name: string;
@@ -137,13 +137,13 @@ export interface RawIntegration {
   scopes?: Array<OAuth2Scopes>;
 }
 
-/* https://discord.com/developers/docs/resources/guild#integration-account-object-integration-account-structure */
+/** https://discord.com/developers/docs/resources/guild#integration-account-object-integration-account-structure */
 export interface RawIntegrationAccount {
   id: string;
   name: string;
 }
 
-/* https://discord.com/developers/docs/resources/guild#integration-application-object-integration-application-structure */
+/** https://discord.com/developers/docs/resources/guild#integration-application-object-integration-application-structure */
 export interface RawIntegrationApplication {
   id: string;
   name: string;
@@ -152,19 +152,19 @@ export interface RawIntegrationApplication {
   bot?: RawUser;
 }
 
-/* https://discord.com/developers/docs/resources/guild#ban-object-ban-structure */
+/** https://discord.com/developers/docs/resources/guild#ban-object-ban-structure */
 export interface RawBan {
   reason: string | null;
   user: RawUser;
 }
 
-/* https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure */
+/** https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure */
 export interface RawWelcomeScreen {
   description: string | null;
   welcome_channels: Array<RawWelcomeScreenChannel>;
 }
 
-/* https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure */
+/** https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure */
 export interface RawWelcomeScreenChannel {
   channel_id: string;
   description: string;
@@ -172,7 +172,7 @@ export interface RawWelcomeScreenChannel {
   emoji_name: string | null;
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-onboarding-object-guild-onboarding-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-guild-onboarding-structure */
 export interface RawGuildOnboarding {
   guild_id: string;
   prompts: Array<RawOnboardingPrompt>;
@@ -181,7 +181,7 @@ export interface RawGuildOnboarding {
   mode: OnboardingMode;
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-prompt-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-prompt-structure */
 export interface RawOnboardingPrompt {
   id: string;
   type: PromptTypes;
@@ -192,7 +192,7 @@ export interface RawOnboardingPrompt {
   in_onboarding: boolean;
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-option-structure */
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-option-structure */
 export interface RawPromptOption {
   id: string;
   channel_ids: Array<string>;

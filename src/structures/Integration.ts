@@ -69,7 +69,7 @@ export class Integration extends Base {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
   }
 
-  /* https://discord.com/developers/docs/resources/guild#delete-guild-integration */
+  /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
   public async delete(reason?: string): Promise<void> {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 

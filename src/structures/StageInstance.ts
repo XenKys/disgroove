@@ -23,7 +23,7 @@ export class StageInstance extends Base {
     this.guildScheduledEventId = data.guild_scheduled_event_id;
   }
 
-  /* https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
+  /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
   public async modify(
     options: {
       topic?: string;
@@ -47,7 +47,7 @@ export class StageInstance extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
+  /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
   public async delete(reason?: string): Promise<void> {
     this.client.rest.request(
       "DELETE",

@@ -55,7 +55,7 @@ export class Webhook extends Base {
     if (data.url !== undefined) this.url = data.url;
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#modify-webhook */
+  /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
   public async modifyWebhook(
     options: {
       name?: string;
@@ -77,7 +77,7 @@ export class Webhook extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
+  /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
   public async modifyWithToken(
     token: string,
     options: {
@@ -102,21 +102,21 @@ export class Webhook extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#delete-webhook */
+  /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
   public async delete(reason?: string): Promise<void> {
     this.client.rest.request("DELETE", Endpoints.webhook(this.id), {
       reason,
     });
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
+  /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
   public async deleteWithToken(token: string, reason?: string): Promise<void> {
     this.client.rest.request("DELETE", Endpoints.webhook(this.id, token), {
       reason,
     });
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#execute-webhook */
+  /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
   public async execute(
     token: string,
     options: {
@@ -217,7 +217,7 @@ export class Webhook extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
+  /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
   public async executeSlackCompatible(
     token: string,
     options: {
@@ -240,7 +240,7 @@ export class Webhook extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
+  /** https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
   public async executeGitHubCompatible(
     token: string,
     options: {
@@ -263,7 +263,7 @@ export class Webhook extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#get-webhook-message */
+  /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
   public async getMessage(
     token: string,
     messageId: string,
@@ -285,7 +285,7 @@ export class Webhook extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
+  /** https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
   public async editMessage(
     messageId: string,
     options: {
@@ -378,7 +378,7 @@ export class Webhook extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
+  /** https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
   public async deleteMessage(
     token: string,
     messageId: string,

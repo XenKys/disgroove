@@ -35,7 +35,7 @@ export class GuildTemplate {
     this.isDirty = data.is_dirty;
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
   public async sync(): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.request(
@@ -46,7 +46,7 @@ export class GuildTemplate {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
   public async modify(options: {
     name?: string;
     description?: string | null;
@@ -66,7 +66,7 @@ export class GuildTemplate {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async delete(): Promise<JSONGuildTemplate> {
     const data: RawGuildTemplate = await this.client.rest.request(
       "DELETE",

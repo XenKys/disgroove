@@ -356,7 +356,7 @@ export class Client extends EventEmitter {
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
   }
 
-  /* https://discord.com/developers/docs/resources/application#get-current-application */
+  /** https://discord.com/developers/docs/resources/application#get-current-application */
   public async getApplication(): Promise<Application> {
     return new Application(
       await this.rest.request("GET", Endpoints.applicationCurrentUser()),
@@ -364,7 +364,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-channel */
+  /** https://discord.com/developers/docs/resources/channel#get-channel */
   public async getChannel(channelId: string): Promise<Channel> {
     return new Channel(
       await this.rest.request("GET", Endpoints.channel(channelId)),
@@ -372,7 +372,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#create-guild */
+  /** https://discord.com/developers/docs/resources/guild#create-guild */
   public async createGuild(options: {
     name: string;
     region?: string | null;
@@ -408,7 +408,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild */
+  /** https://discord.com/developers/docs/resources/guild#get-guild */
   public async getGuild(
     guildId: string,
     options?: {
@@ -425,7 +425,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template */
   public async createGuildFromTemplate(
     code: string,
     options: {
@@ -444,7 +444,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/invite#get-invite */
+  /** https://discord.com/developers/docs/resources/invite#get-invite */
   public async getInvite(
     code: string,
     options?: {
@@ -465,7 +465,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/invite#delete-invite */
+  /** https://discord.com/developers/docs/resources/invite#delete-invite */
   public async deleteInvite(
     code: string,
     reason?: string
@@ -478,7 +478,7 @@ export class Client extends EventEmitter {
     ).toJSON();
   }
 
-  /* https://discord.com/developers/docs/resources/stage-instance#create-stage-instance */
+  /** https://discord.com/developers/docs/resources/stage-instance#create-stage-instance */
   public async createStageInstance(
     options: {
       channelId: string;
@@ -502,7 +502,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/stage-instance#get-stage-instance */
+  /** https://discord.com/developers/docs/resources/stage-instance#get-stage-instance */
   public async getStageInstance(channelId: string): Promise<StageInstance> {
     return new StageInstance(
       await this.rest.request("GET", Endpoints.stageInstance(channelId)),
@@ -510,7 +510,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/sticker#list-nitro-sticker-packs */
+  /** https://discord.com/developers/docs/resources/sticker#list-nitro-sticker-packs */
   public async listNitroStickerPacks(): Promise<{
     stickerPacks: Array<JSONStickerPack>;
   }> {
@@ -547,7 +547,7 @@ export class Client extends EventEmitter {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/user#get-user */
+  /** https://discord.com/developers/docs/resources/user#get-user */
   public async getUser(userId?: string): Promise<User> {
     return new User(
       await this.rest.request("GET", Endpoints.user(userId ?? "@me")),
@@ -555,7 +555,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/user#get-current-user-guilds */
+  /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */
   public async getGuilds(options?: {
     before?: string;
     after?: string;
@@ -607,7 +607,7 @@ export class Client extends EventEmitter {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/voice#list-voice-regions */
+  /** https://discord.com/developers/docs/resources/voice#list-voice-regions */
   public async listVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
     return this.rest.request("GET", Endpoints.voiceRegions()).then((response) =>
       response.map((data: RawVoiceRegion) => ({
@@ -620,12 +620,12 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/topics/gateway#get-gateway */
+  /** https://discord.com/developers/docs/topics/gateway#get-gateway */
   public async getGateway(): Promise<{ url: string }> {
     return this.rest.request("GET", Endpoints.gateway());
   }
 
-  /* https://discord.com/developers/docs/topics/gateway#get-gateway-bot */
+  /** https://discord.com/developers/docs/topics/gateway#get-gateway-bot */
   public async getGatewayBot(): Promise<{
     url: string;
     shards: number;
@@ -650,7 +650,7 @@ export class Client extends EventEmitter {
       }));
   }
 
-  /* https://discord.com/developers/docs/topics/gateway-events#update-presence */
+  /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
   public updatePresence(options: {
     activities: Array<JSONActivity>;
     status: StatusTypes;
@@ -692,7 +692,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
+  /** https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
   public async getOAuth2Application(): Promise<Application> {
     return new Application(
       await this.rest.request("GET", Endpoints.oauth2CurrentApplication()),
@@ -700,7 +700,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /* https://discord.com/developers/docs/topics/oauth2#get-current-authorization-information */
+  /** https://discord.com/developers/docs/topics/oauth2#get-current-authorization-information */
   public async getOAuth2Authorization(): Promise<{
     application: Application;
     scopes: Array<OAuth2Scopes>;
@@ -720,6 +720,7 @@ export class Client extends EventEmitter {
       }));
   }
 
+  /** https://discord.com/developers/docs/topics/gateway#connections */
   public connect(): void {
     this.ws.on("open", () => {
       this.ws.send(

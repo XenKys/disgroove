@@ -351,7 +351,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
+  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
   public async getApplicationCommands(
     applicationId: string,
     options?: {
@@ -376,7 +376,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
   public async createApplicationCommand(
     applicationId: string,
     options: {
@@ -433,7 +433,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
   public async getApplicationCommand(
     applicationId: string,
     commandId: string
@@ -447,7 +447,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
   public async editApplicationCommand(
     applicationId: string,
     commandId: string,
@@ -504,7 +504,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
   public async deleteApplicationCommand(
     applicationId: string,
     commandId: string
@@ -515,7 +515,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
+  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
   public async bulkOverwriteGuildApplicationCommands(
     applicationId: string,
     options: {
@@ -577,7 +577,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
   public async getApplicationCommandPermissions(
     guildId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
@@ -602,7 +602,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log */
+  /** https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log */
   public async getAuditLog(options?: {
     userId?: string;
     actionType?: number;
@@ -651,7 +651,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild */
+  /** https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild */
   public async listAutoModerationRules(): Promise<Array<AutoModerationRule>> {
     return this.client.rest
       .request("GET", Endpoints.guildAutoModerationRules(this.id))
@@ -663,7 +663,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule */
+  /** https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule */
   public async getAutoModerationRule(
     ruleId: string
   ): Promise<AutoModerationRule> {
@@ -676,7 +676,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
+  /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
   public async createAutoModerationRule(
     options: {
       name: string;
@@ -719,7 +719,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
+  /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
   public async modifyAutoModerationRule(
     ruleId: string,
     options: {
@@ -763,7 +763,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
+  /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
   public async deleteAutoModerationRule(
     ruleId: string,
     reason?: string
@@ -777,7 +777,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
+  /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
   public async listGuildEmojis(): Promise<Array<JSONEmoji>> {
     return this.client.rest
       .request("GET", Endpoints.guildEmojis(this.id))
@@ -786,7 +786,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/emoji#get-guild-emoji */
+  /** https://discord.com/developers/docs/resources/emoji#get-guild-emoji */
   public async getEmoji(emojiId: string): Promise<JSONEmoji> {
     return emojiToJSON(
       await this.client.rest.request(
@@ -797,7 +797,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
+  /** https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
   public async createEmoji(
     options: {
       name: string;
@@ -819,7 +819,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
+  /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
   public async modifyEmoji(
     emojiId: string,
     options: {
@@ -844,14 +844,14 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
+  /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
   public async deleteEmoji(emojiId: string, reason?: string): Promise<void> {
     this.client.rest.request("PUT", Endpoints.guildEmoji(this.id, emojiId), {
       reason,
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-preview */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-preview */
   public async getPreview(): Promise<JSONGuildPreview> {
     const data: RawGuildPreview = await this.client.rest.request(
       "GET",
@@ -889,7 +889,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild */
   public async modify(
     options: {
       name?: string;
@@ -947,12 +947,12 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#delete-guild */
+  /** https://discord.com/developers/docs/resources/guild#delete-guild */
   public async delete(): Promise<void> {
     this.client.rest.request("PUT", Endpoints.guild(this.id));
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-channels */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-channels */
   public async getChannels(): Promise<Array<Channel>> {
     return this.client.rest
       .request("GET", Endpoints.guildChannels(this.id))
@@ -961,7 +961,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#create-guild-channel */
+  /** https://discord.com/developers/docs/resources/guild#create-guild-channel */
   public async createChannel(
     options: {
       name: string | null;
@@ -1014,7 +1014,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
   public async modifyChannelPositions(
     options: Array<{
       id: string;
@@ -1033,7 +1033,7 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#list-active-guild-threads */
+  /** https://discord.com/developers/docs/resources/guild#list-active-guild-threads */
   public async listActiveGuildThreads(): Promise<
     Array<{
       threads: Array<Channel>;
@@ -1064,7 +1064,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-member */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-member */
   public async getMember(userId: string): Promise<GuildMember> {
     return new GuildMember(
       await this.client.rest.request(
@@ -1075,7 +1075,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#list-guild-members */
+  /** https://discord.com/developers/docs/resources/guild#list-guild-members */
   public async listGuildMembers(): Promise<Array<GuildMember>> {
     return this.client.rest
       .request("GET", Endpoints.guildMembers(this.id))
@@ -1086,7 +1086,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#search-guild-members */
+  /** https://discord.com/developers/docs/resources/guild#search-guild-members */
   public async searchGuildMembers(options: {
     query: string;
     limit?: number;
@@ -1105,7 +1105,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#add-guild-member */
+  /** https://discord.com/developers/docs/resources/guild#add-guild-member */
   public async addGuildMember(
     userId: string,
     options: {
@@ -1127,7 +1127,7 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-member */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
   public async modifyMember(
     userId: string,
     options: {
@@ -1155,7 +1155,7 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-current-member */
+  /** https://discord.com/developers/docs/resources/guild#modify-current-member */
   public async modifyCurrentMember(
     options: {
       nick: string | null;
@@ -1170,7 +1170,7 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#add-guild-member-role */
+  /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
   public async addGuildMemberRole(
     userId: string,
     roleId: string,
@@ -1185,7 +1185,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
   public async removeMemberRole(
     userId: string,
     roleId: string,
@@ -1200,14 +1200,14 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
   public async removeMember(userId: string, reason?: string): Promise<void> {
     this.client.rest.request("PUT", Endpoints.guildMember(this.id, userId), {
       reason,
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-bans */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-bans */
   public async getBans(options?: {
     limit?: number;
     before?: string;
@@ -1229,7 +1229,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-ban */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-ban */
   public async getBan(userId: string): Promise<JSONBan> {
     const data = await this.client.rest.request(
       "GET",
@@ -1242,7 +1242,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#create-guild-ban */
+  /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
   public async createBan(
     userId: string,
     options?: {
@@ -1260,14 +1260,14 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#remove-guild-ban */
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
   public async removeBan(userId: string, reason?: string): Promise<void> {
     this.client.rest.request("PUT", Endpoints.guildBan(this.id, userId), {
       reason,
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-roles */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-roles */
   public async getRoles(): Promise<Array<Role>> {
     return this.client.rest
       .request("GET", Endpoints.guildRoles(this.id))
@@ -1276,7 +1276,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#create-guild-role */
+  /** https://discord.com/developers/docs/resources/guild#create-guild-role */
   public async createRole(
     options: {
       name: string;
@@ -1306,7 +1306,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
   public async modifyRolePositions(
     options: Array<{
       id: string;
@@ -1325,7 +1325,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-role */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   public async modifyRole(
     roleId: string,
     options: {
@@ -1360,7 +1360,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
   public async modifyMFALevel(
     options: {
       level: MFALevel;
@@ -1375,14 +1375,14 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#delete-guild-role */
+  /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
   public async deleteRole(roleId: string, reason?: string): Promise<void> {
     this.client.rest.request("PUT", Endpoints.guildRole(this.id, roleId), {
       reason,
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-prune-count */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-prune-count */
   public async getPruneCount(options: {
     days: number;
     includeRoles: string | Array<string>;
@@ -1399,7 +1399,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#begin-guild-prune */
+  /** https://discord.com/developers/docs/resources/guild#begin-guild-prune */
   public async beginGuildPrune(
     options: {
       days: number;
@@ -1424,7 +1424,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
   public async getVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
     const data = await this.client.rest.request(
       "GET",
@@ -1440,7 +1440,7 @@ export class Guild extends Base {
     }));
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-invites */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-invites */
   public async getInvites(): Promise<Array<Invite>> {
     return this.client.rest
       .request("GET", Endpoints.guildInvites(this.id))
@@ -1449,7 +1449,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-integrations */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-integrations */
   public async getIntegrations(): Promise<Array<Integration>> {
     return this.client.rest
       .request("GET", Endpoints.guildIntegrations(this.id))
@@ -1460,7 +1460,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#delete-guild-integration */
+  /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
   public async deleteIntegration(
     integrationId: string,
     reason?: string
@@ -1474,7 +1474,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-widget-settings */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-widget-settings */
   public async getWidgetSettings(): Promise<JSONGuildWidgetSettings> {
     const data: RawGuildWidgetSettings = await this.client.rest.request(
       "GET",
@@ -1487,7 +1487,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-widget */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-widget */
   public async modifyWidget(
     options: {
       enabled?: boolean;
@@ -1513,7 +1513,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-widget */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-widget */
   public async getWidget(): Promise<JSONGuildWidget> {
     const data: RawGuildWidget = await this.client.rest.request(
       "GET",
@@ -1532,7 +1532,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
   public async getVanityURL(): Promise<Invite> {
     return new Invite(
       await this.client.rest.request("GET", Endpoints.guildVanityUrl(this.id)),
@@ -1540,7 +1540,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-widget-image */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-widget-image */
   public async getWidgetImage(options?: {
     style?: ImageWidgetStyleOptions;
   }): Promise<string> {
@@ -1555,7 +1555,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen */
   public async getWelcomeScreen(): Promise<JSONWelcomeScreen> {
     const data: RawWelcomeScreen = await this.client.rest.request(
       "GET",
@@ -1575,7 +1575,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
   public async modifyWelcomeScreen(
     options: {
       enabled?: boolean | null;
@@ -1610,7 +1610,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#get-guild-onboarding */
+  /** https://discord.com/developers/docs/resources/guild#get-guild-onboarding */
   public async getOnboarding(): Promise<JSONGuildOnboarding> {
     const data: RawGuildOnboarding = await this.client.rest.request(
       "GET",
@@ -1641,7 +1641,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
   public async modifyOnboarding(
     options: {
       prompts: Array<JSONOnboardingPrompt>;
@@ -1683,7 +1683,7 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
+  /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
   public async modifyCurrentUserVoiceState(options: {
     channelId?: string;
     suppress?: boolean;
@@ -1698,7 +1698,7 @@ export class Guild extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
+  /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
   public async modifyUserVoiceState(
     userId: string,
     options: {
@@ -1720,7 +1720,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild */
   public async listScheduledEvents(options?: {
     withUserCount?: boolean;
   }): Promise<Array<GuildScheduledEvent>> {
@@ -1738,7 +1738,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event */
   public async createScheduledEvent(
     options: {
       channelId?: string | null;
@@ -1776,7 +1776,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
   public async modifyScheduledEvent(
     scheduledEventId: string,
     options: {
@@ -1817,7 +1817,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
   public async deleteScheduledEvent(scheduledEventId: string): Promise<void> {
     this.client.rest.request(
       "PUT",
@@ -1825,7 +1825,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users */
   public async getScheduledEventUsers(
     scheduledEventId: string,
     options?: {
@@ -1860,7 +1860,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#get-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#get-guild-template */
   public async getTemplate(code: string): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.request(
@@ -1871,7 +1871,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#get-guild-templates */
+  /** https://discord.com/developers/docs/resources/guild-template#get-guild-templates */
   public async getTemplates(): Promise<Array<GuildTemplate>> {
     return this.client.rest
       .request("GET", Endpoints.guildTemplates(this.id))
@@ -1882,7 +1882,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#create-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#create-guild-template */
   public async createTemplate(options: {
     name: string;
     description?: string | null;
@@ -1902,7 +1902,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
   public async syncTemplate(code: string): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.request(
@@ -1913,7 +1913,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
   public async modifyTemplate(
     code: string,
     options: {
@@ -1936,7 +1936,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
+  /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async deleteTemplate(code: string): Promise<JSONGuildTemplate> {
     const data: RawGuildTemplate = await this.client.rest.request(
       "PUT",
@@ -1961,7 +1961,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
+  /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
   public async listStickers(): Promise<Array<JSONSticker>> {
     return this.client.rest
       .request("GET", Endpoints.guildStickers(this.id))
@@ -1986,7 +1986,7 @@ export class Guild extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/sticker#get-guild-sticker */
+  /** https://discord.com/developers/docs/resources/sticker#get-guild-sticker */
   public async getSticker(stickerId: string): Promise<JSONSticker> {
     const data: RawSticker = await this.client.rest.request(
       "GET",
@@ -2010,7 +2010,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
+  /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
   public async createSticker(
     options: {
       name: string;
@@ -2051,7 +2051,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
+  /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
   public async modifySticker(
     stickerId: string,
     options: {
@@ -2091,7 +2091,7 @@ export class Guild extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
+  /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
   public async deleteSticker(
     stickerId: string,
     reason?: string
@@ -2105,7 +2105,7 @@ export class Guild extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */
+  /** https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */
   public async getWebhooks(): Promise<Array<Webhook>> {
     return this.client.rest
       .request("GET", Endpoints.guildWebhooks(this.id))

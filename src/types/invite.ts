@@ -15,7 +15,7 @@ import type {
   User,
 } from "../structures";
 
-/* https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
+/** https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
 export interface RawInvite {
   code: string;
   guild?: RawGuild;
@@ -31,7 +31,7 @@ export interface RawInvite {
   guild_scheduled_event?: RawGuildScheduledEvent;
 }
 
-/* https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */
+/** https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */
 export interface RawInviteMetadata {
   uses: number;
   max_uses: number;
@@ -40,7 +40,7 @@ export interface RawInviteMetadata {
   created_at: string;
 }
 
-/* https://discord.com/developers/docs/resources/invite#invite-stage-instance-object-invite-stage-instance-structure */
+/** https://discord.com/developers/docs/resources/invite#invite-stage-instance-object-invite-stage-instance-structure */
 export interface RawInviteStageInstance {
   members: Array<RawGuildMember>;
   participant_count: number;

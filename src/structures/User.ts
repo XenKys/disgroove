@@ -57,7 +57,7 @@ export class User extends Base {
     if (data.public_flags !== undefined) this.publicFlags = data.public_flags;
   }
 
-  /* https://discord.com/developers/docs/resources/user#modify-current-user */
+  /** https://discord.com/developers/docs/resources/user#modify-current-user */
   public async modifyCurrentUser(options: {
     username?: string;
     avatar?: string | null;
@@ -73,7 +73,7 @@ export class User extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
+  /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
   public async getCurrentUserGuildMember(
     guildId: string
   ): Promise<GuildMember> {
@@ -83,12 +83,12 @@ export class User extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/user#leave-guild */
+  /** https://discord.com/developers/docs/resources/user#leave-guild */
   public async leaveGuild(guildId: string): Promise<void> {
     this.client.rest.request("DELETE", Endpoints.userGuild(guildId));
   }
 
-  /* https://discord.com/developers/docs/resources/user#create-dm */
+  /** https://discord.com/developers/docs/resources/user#create-dm */
   public async createDM(options: { recipientId: string }): Promise<Channel> {
     return new Channel(
       await this.client.rest.request("POST", Endpoints.userChannels(), {
@@ -100,7 +100,7 @@ export class User extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/user#create-group-dm */
+  /** https://discord.com/developers/docs/resources/user#create-group-dm */
   public async createGroupDM(options: {
     accessTokens: Array<string>;
     nicks: Array<string>;
@@ -116,7 +116,7 @@ export class User extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/user#get-user-connections */
+  /** https://discord.com/developers/docs/resources/user#get-user-connections */
   public async getUserConnections(): Promise<Array<JSONConnection>> {
     return this.client.rest
       .request("GET", Endpoints.userConnections())
@@ -138,7 +138,7 @@ export class User extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
+  /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
   public async getUserApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
     const data: RawApplicationRoleConnection = await this.client.rest.request(
       "GET",
@@ -163,7 +163,7 @@ export class User extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
+  /** https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
   public async updateUserApplicationRoleConnection(options: {
     platformName?: string;
     platformUsername?: string;

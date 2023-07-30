@@ -41,7 +41,7 @@ export class AutoModerationRule extends Base {
     this.exemptChannels = data.exempt_channels;
   }
 
-  /* https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
+  /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
   public async modify(
     options: {
       name?: string;
@@ -84,7 +84,7 @@ export class AutoModerationRule extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
+  /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
   public async delete(reason?: string): Promise<void> {
     await this.client.rest.request(
       "DELETE",

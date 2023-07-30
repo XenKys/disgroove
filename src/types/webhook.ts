@@ -2,7 +2,7 @@ import type { WebhookTypes } from "../utils";
 import type { RawChannel, RawGuild, RawUser } from ".";
 import type { Channel, Guild, User } from "../structures";
 
-/* https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
+/** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
 export interface RawWebhook {
   id: string;
   type: WebhookTypes;

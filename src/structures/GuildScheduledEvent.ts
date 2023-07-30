@@ -56,7 +56,7 @@ export class GuildScheduledEvent extends Base {
     if (data.image !== undefined) this.image = data.image;
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
   public async modify(
     options: {
       channelId?: string | null;
@@ -96,7 +96,7 @@ export class GuildScheduledEvent extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
   public async delete(): Promise<void> {
     this.client.rest.request(
       "DELETE",
@@ -104,7 +104,7 @@ export class GuildScheduledEvent extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users */
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users */
   public async getUsers(options?: {
     limit?: number;
     withMember?: boolean;

@@ -1,4 +1,4 @@
-/* https://discord.com/developers/docs/reference#image-formatting-image-formats */
+/** https://discord.com/developers/docs/reference#image-formatting-image-formats */
 export enum ImageFormats {
   JPG = "JPG",
   JPEG = "jpeg",
@@ -8,7 +8,7 @@ export enum ImageFormats {
   Lottie = "json",
 }
 
-/* https://discord.com/developers/docs/reference#locales */
+/** https://discord.com/developers/docs/reference#locales */
 export enum Locale {
   Indonesian = "id",
   EnglishUS = "en-US",
@@ -43,14 +43,14 @@ export enum Locale {
   Vietnamese = "vi",
 }
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-types */
 export enum ApplicationCommandTypes {
   ChatInput = 1,
   User,
   Message,
 }
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type */
 export enum ApplicationCommandOptionType {
   SubCommand = 1,
   SubCommandGroup,
@@ -65,14 +65,14 @@ export enum ApplicationCommandOptionType {
   Attachment,
 }
 
-/* https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type */
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type */
 export enum ApplicationCommandPermissionType {
   Role = 1,
   User,
   Channel,
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-type */
 export enum InteractionType {
   Ping = 1,
   ApplicationCommand,
@@ -81,7 +81,7 @@ export enum InteractionType {
   ModalSubmit,
 }
 
-/* https://discord.com/developers/docs/interactions/message-components#component-object-component-types */
+/** https://discord.com/developers/docs/interactions/message-components#component-object-component-types */
 export enum ComponentTypes {
   ActionRow = 1,
   Button,
@@ -93,7 +93,7 @@ export enum ComponentTypes {
   ChannelSelect,
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type */
 export enum InteractionCallbackType {
   Pong = 1,
   ChannelMessageWithSource = 4,
@@ -104,7 +104,7 @@ export enum InteractionCallbackType {
   Modal,
 }
 
-/* https://discord.com/developers/docs/interactions/message-components#button-object-button-styles */
+/** https://discord.com/developers/docs/interactions/message-components#button-object-button-styles */
 export enum ButtonStyles {
   Primary = 1,
   Secondary,
@@ -113,13 +113,13 @@ export enum ButtonStyles {
   Link,
 }
 
-/* https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles */
+/** https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles */
 export enum TextInputStyles {
   Short = 1,
   Paragraph,
 }
 
-/* https://discord.com/developers/docs/resources/application#application-object-application-flags */
+/** https://discord.com/developers/docs/resources/application#application-object-application-flags */
 export enum ApplicationFlags {
   GatewayPresence = 1 << 12,
   GatewayPresenceLimited = 1 << 13,
@@ -132,7 +132,7 @@ export enum ApplicationFlags {
   ApplicationCommandBadge = 1 << 23,
 }
 
-/* https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type */
+/** https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type */
 export enum ApplicationRoleConnectionMetadataType {
   IntegerLessThanOrEqual = 1,
   IntegerGreaterThanOrEqual,
@@ -144,7 +144,7 @@ export enum ApplicationRoleConnectionMetadataType {
   BooleanNotEqual,
 }
 
-/* https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events */
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-events */
 export enum AuditLogEvents {
   GuildUpdate = 1,
   ChannelCreate = 10,
@@ -202,7 +202,7 @@ export enum AuditLogEvents {
   AutoModerationUserCommunicationDisabled,
 }
 
-/* https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types */
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types */
 export enum TriggerTypes {
   Keyword = 1,
   Spam = 3,
@@ -210,26 +210,26 @@ export enum TriggerTypes {
   MentionSpam,
 }
 
-/* https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-preset-types */
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-preset-types */
 export enum KeywordPresetTypes {
   Profanity = 1,
   SexualContent,
   Slurs,
 }
 
-/* https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types */
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types */
 export enum EventTypes {
   MessageSend = 1,
 }
 
-/* https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-types */
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-types */
 export enum ActionTypes {
   BlockMessage = 1,
   SendAlertMessage,
   Timeout,
 }
 
-/* https://discord.com/developers/docs/resources/channel#channel-object-channel-types */
+/** https://discord.com/developers/docs/resources/channel#channel-object-channel-types */
 export enum ChannelTypes {
   GuildText,
   DM,
@@ -245,32 +245,32 @@ export enum ChannelTypes {
   GuildForum,
 }
 
-/* https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes */
+/** https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes */
 export enum VideoQualityModes {
   Auto = 1,
   Full,
 }
 
-/* https://discord.com/developers/docs/resources/channel#channel-object-channel-flags */
+/** https://discord.com/developers/docs/resources/channel#channel-object-channel-flags */
 export enum ChannelFlags {
   Pinned = 1 << 1,
   RequiredTag = 1 << 4,
 }
 
-/* https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types */
+/** https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types */
 export enum SortOrderTypes {
   LatestActivity,
   CreationDate,
 }
 
-/* https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types */
+/** https://discord.com/developers/docs/resources/channel#channel-object-forum-layout-types */
 export enum ForumLayoutTypes {
   NotSet,
   ListView,
   GalleryView,
 }
 
-/* https://discord.com/developers/docs/resources/channel#message-object-message-types */
+/** https://discord.com/developers/docs/resources/channel#message-object-message-types */
 export enum MessageTypes {
   Default,
   RecipientAdd,
@@ -305,7 +305,7 @@ export enum MessageTypes {
   GuildApplicationPremiumSubscription,
 }
 
-/* https://discord.com/developers/docs/resources/channel#message-object-message-activity-types */
+/** https://discord.com/developers/docs/resources/channel#message-object-message-activity-types */
 export enum MessageActivityTypes {
   Join = 1,
   Spectate,
@@ -313,7 +313,7 @@ export enum MessageActivityTypes {
   JoinRequest = 5,
 }
 
-/* https://discord.com/developers/docs/resources/channel#message-object-message-flags */
+/** https://discord.com/developers/docs/resources/channel#message-object-message-flags */
 export enum MessageFlags {
   Crossposted = 1 << 0,
   IsCrosspost = 1 << 1,
@@ -327,33 +327,33 @@ export enum MessageFlags {
   SuppressNotifications = 1 << 12,
 }
 
-/* https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types */
+/** https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types */
 export enum AllowedMentionTypes {
   RoleMentions = "roles",
   UserMentions = "users",
   EveryoneMentions = "everyone",
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level */
+/** https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level */
 export enum DefaultMessageNotificationLevel {
   AllMessages,
   OnlyMentions,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level */
+/** https://discord.com/developers/docs/resources/guild#guild-object-explicit-content-filter-level */
 export enum ExplicitContentFilterLevel {
   Disabled,
   MembersWithoutRoles,
   AllMembers,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-mfa-level */
+/** https://discord.com/developers/docs/resources/guild#guild-object-mfa-level */
 export enum MFALevel {
   None,
   Elevated,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-verification-level */
+/** https://discord.com/developers/docs/resources/guild#guild-object-verification-level */
 export enum VerificationLevel {
   None,
   Low,
@@ -362,7 +362,7 @@ export enum VerificationLevel {
   VeryHigh,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level */
+/** https://discord.com/developers/docs/resources/guild#guild-object-guild-nsfw-level */
 export enum GuildNSFWLevel {
   Default,
   Explicit,
@@ -370,7 +370,7 @@ export enum GuildNSFWLevel {
   AgeRestricted,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-premium-tier */
+/** https://discord.com/developers/docs/resources/guild#guild-object-premium-tier */
 export enum PremiumTier {
   None,
   Tier1,
@@ -378,7 +378,7 @@ export enum PremiumTier {
   Tier3,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags */
+/** https://discord.com/developers/docs/resources/guild#guild-object-system-channel-flags */
 export enum SystemChannelFlags {
   SuppressJoinNotifications = 1 << 0,
   SuppressPremiumSubscriptions = 1 << 1,
@@ -388,7 +388,7 @@ export enum SystemChannelFlags {
   SuppressRoleSubscriptionPurchaseNotificationReplies = 1 << 5,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-guild-features */
+/** https://discord.com/developers/docs/resources/guild#guild-object-guild-features */
 export enum GuildFeatures {
   AnimatedBanner = "ANIMATED_BANNER",
   AnimatedIcon = "ANIMATED_ICON",
@@ -419,14 +419,14 @@ export enum GuildFeatures {
   WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-object-mutable-guild-features */
+/** https://discord.com/developers/docs/resources/guild#guild-object-mutable-guild-features */
 export enum MutableGuildFeatures {
   Community = "COMMUNITY",
   InvitesDisabled = "INVITES_DISABLED",
   Discoverable = "DISCOVERABLE",
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags */
+/** https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags */
 export enum GuildMemberFlags {
   DidRejoin = 1 << 0,
   CompletedOnboarding = 1 << 1,
@@ -434,25 +434,25 @@ export enum GuildMemberFlags {
   StartedOnboarding = 1 << 3,
 }
 
-/* https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors */
+/** https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors */
 export enum IntegrationExpireBehaviors {
   RemoveRole,
   Kick,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode */
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-mode */
 export enum OnboardingMode {
   OnboardingDefault,
   OnboardingAdvanced,
 }
 
-/* https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types */
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-types */
 export enum PromptTypes {
   MultipleChoice,
   Dropdown,
 }
 
-/* https://discord.com/developers/docs/resources/guild#get-guild-widget-image-widget-style-options */
+/** https://discord.com/developers/docs/resources/guild#get-guild-widget-image-widget-style-options */
 export enum ImageWidgetStyleOptions {
   Shield = "shield",
   Banner1 = "banner1",
@@ -461,19 +461,19 @@ export enum ImageWidgetStyleOptions {
   Banner4 = "banner4",
 }
 
-/* https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-privacy-level */
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-privacy-level */
 export enum GuildScheduledEventPrivacyLevel {
   GuildOnly = 2,
 }
 
-/* https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types */
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-types */
 export enum GuildScheduledEventEntityTypes {
   StageIstance = 1,
   Voice,
   External,
 }
 
-/* https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-status */
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-status */
 export enum GuildScheduledEventStatus {
   Scheduled = 1,
   Active,
@@ -481,25 +481,25 @@ export enum GuildScheduledEventStatus {
   Canceled,
 }
 
-/* https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types */
+/** https://discord.com/developers/docs/resources/invite#invite-object-invite-target-types */
 export enum InviteTargetTypes {
   Stream = 1,
   EmbeddedApplication,
 }
 
-/* https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level */
+/** https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level */
 export enum PrivacyLevel {
   Public = 1,
   GuildOnly,
 }
 
-/* https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types */
+/** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-types */
 export enum StickerTypes {
   Standard = 1,
   Guild,
 }
 
-/* https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types */
+/** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-format-types */
 export enum StickerFormatTypes {
   PNG = 1,
   APNG,
@@ -507,7 +507,7 @@ export enum StickerFormatTypes {
   GIF,
 }
 
-/* https://discord.com/developers/docs/resources/user#user-object-user-flags */
+/** https://discord.com/developers/docs/resources/user#user-object-user-flags */
 export enum UserFlags {
   Staff = 1 << 0,
   Partner = 1 << 1,
@@ -526,7 +526,7 @@ export enum UserFlags {
   ActiveDeveloper = 1 << 22,
 }
 
-/* https://discord.com/developers/docs/resources/user#user-object-premium-types */
+/** https://discord.com/developers/docs/resources/user#user-object-premium-types */
 export enum PremiumTypes {
   None,
   NitroClassic,
@@ -534,7 +534,7 @@ export enum PremiumTypes {
   NitroBasic,
 }
 
-/* https://discord.com/developers/docs/resources/user#connection-object-services */
+/** https://discord.com/developers/docs/resources/user#connection-object-services */
 export enum Services {
   BattleNet = "battlenet",
   Ebay = "ebay",
@@ -557,27 +557,27 @@ export enum Services {
   YouTube = "youtube",
 }
 
-/* https://discord.com/developers/docs/resources/user#connection-object-visibility-types */
+/** https://discord.com/developers/docs/resources/user#connection-object-visibility-types */
 export enum VisibilityTypes {
   None,
   Everyone,
 }
 
-/* https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types */
+/** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types */
 export enum WebhookTypes {
   Incoming = 1,
   ChannelFollower,
   Application,
 }
 
-/* https://discord.com/developers/docs/topics/certified-devices#models-device-type */
+/** https://discord.com/developers/docs/topics/certified-devices#models-device-type */
 export enum DeviceType {
   AudioInput = "audioinput",
   AudioOutput = "audiooutput",
   VideoInput = "videoinput",
 }
 
-/* https://discord.com/developers/docs/topics/gateway#list-of-intents */
+/** https://discord.com/developers/docs/topics/gateway#list-of-intents */
 export enum GatewayIntents {
   Guilds = 1 << 0,
   GuildMembers = 1 << 1,
@@ -618,7 +618,7 @@ export enum GatewayIntents {
   All = AllNonPrivileged | AllPrivileged,
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types */
+/** https://discord.com/developers/docs/topics/gateway-events#update-presence-status-types */
 export enum StatusTypes {
   Online = "online",
   DoNotDisturb = "dnd",
@@ -627,7 +627,7 @@ export enum StatusTypes {
   Offline = "offline",
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#receive-events */
+/** https://discord.com/developers/docs/topics/gateway-events#receive-events */
 export enum GatewayEvents {
   Hello = "hello",
   Ready = "ready",
@@ -695,7 +695,7 @@ export enum GatewayEvents {
   WebhooksUpdate = "webhooksUpdate",
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types */
 export enum ActivityType {
   Game,
   Streaming,
@@ -705,7 +705,7 @@ export enum ActivityType {
   Competing,
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-flags */
 export enum ActivityFlags {
   Instance = 1 << 0,
   Join = 1 << 1,
@@ -718,7 +718,7 @@ export enum ActivityFlags {
   Embedded = 1 << 8,
 }
 
-/* https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes */
+/** https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes */
 export enum OAuth2Scopes {
   ActivitiesRead = "activities.read",
   ActivitiesWrite = "activities.write",
@@ -750,7 +750,7 @@ export enum OAuth2Scopes {
   WebhookIncoming = "webhook.incoming",
 }
 
-/* https://discord.com/developers/docs/topics/oauth2#bot-authorization-flow-bot-auth-parameters */
+/** https://discord.com/developers/docs/topics/oauth2#bot-authorization-flow-bot-auth-parameters */
 export enum BotAuthParameters {
   ClientId = "client_id",
   Scope = "scope",
@@ -759,7 +759,7 @@ export enum BotAuthParameters {
   DisabledGuildSelect = "disable_guild_select",
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes */
 export enum GatewayOPCodes {
   Dispatch,
   Heartbeat,
@@ -774,7 +774,7 @@ export enum GatewayOPCodes {
   HeartbeatACK,
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes */
 export enum GatewayCloseEventCodes {
   UnknownError = 4000,
   UnknownOPCode,
@@ -792,7 +792,7 @@ export enum GatewayCloseEventCodes {
   DisallowedIntents,
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-opcodes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-opcodes */
 export enum VoiceOPCodes {
   Identify,
   SelectProtocol,
@@ -807,7 +807,7 @@ export enum VoiceOPCodes {
   ClientDisconnect = 13,
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#voice-voice-close-event-codes */
 export enum VoiceCloseEventCodes {
   UnknownOPCode = 4001,
   FailedToDecodePayload,
@@ -823,7 +823,7 @@ export enum VoiceCloseEventCodes {
   UnknownEncryptionMode,
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#http-http-response-codes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#http-http-response-codes */
 export enum HTTPResponseCodes {
   Ok = 200,
   Created,
@@ -839,7 +839,7 @@ export enum HTTPResponseCodes {
   ServerError = "5xx",
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes */
 export enum JSONErrorCodes {
   GeneralError,
   UnknownAccount = 10001,
@@ -1034,7 +1034,7 @@ export enum JSONErrorCodes {
   MessageBlockedByHarmfulLinksFilter = 240000,
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#rpc-rpc-error-codes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#rpc-rpc-error-codes */
 export enum RPCErrorCodes {
   UnknownError = 1000,
   InvalidPayload = 4000,
@@ -1054,7 +1054,7 @@ export enum RPCErrorCodes {
   CaptureShortcutAlreadyListening,
 }
 
-/* https://discord.com/developers/docs/topics/opcodes-and-status-codes#rpc-rpc-close-event-codes */
+/** https://discord.com/developers/docs/topics/opcodes-and-status-codes#rpc-rpc-close-event-codes */
 export enum RPCCloseEventCodes {
   InvalidClientId = 4000,
   InvalidOrigin,
@@ -1064,7 +1064,7 @@ export enum RPCCloseEventCodes {
   InvalidEncoding,
 }
 
-/* https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags */
+/** https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags */
 export const BitwisePermissionFlags = {
   CreateInstantInvite: 1n << 0n,
   KickMembers: 1n << 1n,
@@ -1151,12 +1151,12 @@ export const BitwisePermissionFlags = {
     (1n << 40n),
 } as const;
 
-/* https://discord.com/developers/docs/topics/permissions#role-object-role-flags */
+/** https://discord.com/developers/docs/topics/permissions#role-object-role-flags */
 export enum RoleFlags {
   InPrompt = 1 << 0,
 }
 
-/* https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum */
+/** https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum */
 export enum MembershipState {
   Invited = 1,
   Accepted,

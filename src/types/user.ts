@@ -6,7 +6,7 @@ import type {
   RawIntegration,
 } from "./index";
 
-/* https://discord.com/developers/docs/resources/user#user-object-user-structure */
+/** https://discord.com/developers/docs/resources/user#user-object-user-structure */
 export interface RawUser {
   id: string;
   username: string;
@@ -26,7 +26,7 @@ export interface RawUser {
   public_flags?: UserFlags;
 }
 
-/* https://discord.com/developers/docs/resources/user#connection-object-connection-structure */
+/** https://discord.com/developers/docs/resources/user#connection-object-connection-structure */
 export interface RawConnection {
   id: string;
   name: string;
@@ -40,7 +40,7 @@ export interface RawConnection {
   visibility: VisibilityTypes;
 }
 
-/* https://discord.com/developers/docs/resources/user#application-role-connection-object-application-role-connection-structure */
+/** https://discord.com/developers/docs/resources/user#application-role-connection-object-application-role-connection-structure */
 export interface RawApplicationRoleConnection {
   platform_name: string | null;
   platform_username: string | null;

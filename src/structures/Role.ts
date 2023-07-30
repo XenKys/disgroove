@@ -46,7 +46,7 @@ export class Role extends Base {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-role */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   public async modify(
     options: {
       name?: string | null;

@@ -150,7 +150,7 @@ export class Channel extends Base {
       this.defaultForumLayout = data.default_forum_layout;
   }
 
-  /* https://discord.com/developers/docs/resources/channel#modify-channel */
+  /** https://discord.com/developers/docs/resources/channel#modify-channel */
   public async modify(
     options: {
       name?: string | null;
@@ -205,7 +205,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#deleteclose-channel */
+  /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
   public async delete(reason?: string): Promise<JSONChannel> {
     return new Channel(
       await this.client.rest.request("DELETE", Endpoints.channel(this.id), {
@@ -215,7 +215,7 @@ export class Channel extends Base {
     ).toJSON();
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-channel-messages */
+  /** https://discord.com/developers/docs/resources/channel#get-channel-messages */
   public async getMessages(options: {
     around?: string;
     before?: string;
@@ -236,7 +236,7 @@ export class Channel extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-channel-message */
+  /** https://discord.com/developers/docs/resources/channel#get-channel-message */
   public async getMessage(): Promise<Message> {
     return new Message(
       await this.client.rest.request("GET", Endpoints.channelMessages(this.id)),
@@ -244,7 +244,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#create-message */
+  /** https://discord.com/developers/docs/resources/channel#create-message */
   public async createMessage(options: {
     content?: string;
     nonce?: string | number;
@@ -332,7 +332,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#crosspost-message */
+  /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   public async crosspostMessage(messageId: string): Promise<Message> {
     return new Message(
       await this.client.rest.request(
@@ -343,7 +343,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#create-reaction */
+  /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public async createReaction(messageId: string, emoji: string): Promise<void> {
     await this.client.rest.request(
       "PUT",
@@ -351,7 +351,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-own-reaction */
+  /** https://discord.com/developers/docs/resources/channel#delete-own-reaction */
   public async deleteOwnReaction(
     messageId: string,
     emoji: string
@@ -362,7 +362,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-user-reaction */
+  /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
   public async deleteUserReaction(
     messageId: string,
     emoji: string,
@@ -374,7 +374,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-reactions */
+  /** https://discord.com/developers/docs/resources/channel#get-reactions */
   public async getReactions(
     messageId: string,
     emoji: string,
@@ -399,7 +399,7 @@ export class Channel extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-all-reactions */
+  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
   public async deleteAllReactions(messageId: string): Promise<void> {
     await this.client.rest.request(
       "DELETE",
@@ -407,7 +407,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
+  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
   public async deleteAllReactionsForEmoji(
     messageId: string,
     emoji: string
@@ -418,7 +418,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#edit-message */
+  /** https://discord.com/developers/docs/resources/channel#edit-message */
   public async editMessage(
     messageId: string,
     options: {
@@ -500,7 +500,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-message */
+  /** https://discord.com/developers/docs/resources/channel#delete-message */
   public async deleteMessage(
     messageId: string,
     reason?: string
@@ -514,7 +514,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
+  /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
   public async bulkDeleteMessages(messagesIds: Array<string>): Promise<void> {
     await this.client.rest.request("POST", Endpoints.channelMessages(this.id), {
       json: {
@@ -523,7 +523,7 @@ export class Channel extends Base {
     });
   }
 
-  /* https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
+  /** https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
   public async editChannelPermissions(
     overwriteId: string,
     options: {
@@ -543,7 +543,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-channel-invites */
+  /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
   public async getChannelInvites(): Promise<Array<Invite>> {
     return this.client.rest
       .request("GET", Endpoints.channelInvites(this.id))
@@ -552,7 +552,7 @@ export class Channel extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#create-channel-invite */
+  /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
   public async createChannelInvite(
     options: {
       maxAge?: number;
@@ -586,7 +586,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-channel-permission */
+  /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
   public async deleteChannelPermission(
     overwriteId: string,
     reason?: string
@@ -600,7 +600,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
+  /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
   public async followAnnouncementChannel(options: {
     webhookChannelId: string;
   }): Promise<JSONFollowedChannel> {
@@ -620,12 +620,12 @@ export class Channel extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
+  /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
   public async triggerTypingIndicator(): Promise<void> {
     await this.client.rest.request("POST", Endpoints.channelTyping(this.id));
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-pinned-messages */
+  /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
   public async getPinnedMessages(): Promise<Array<Message>> {
     return this.client.rest
       .request("GET", Endpoints.channelPins(this.id))
@@ -634,7 +634,7 @@ export class Channel extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#pin-message */
+  /** https://discord.com/developers/docs/resources/channel#pin-message */
   public async pinMessage(messageId: string, reason?: string): Promise<void> {
     await this.client.rest.request(
       "PUT",
@@ -645,7 +645,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#unpin-message */
+  /** https://discord.com/developers/docs/resources/channel#unpin-message */
   public async unpinMessage(messageId: string, reason?: string): Promise<void> {
     await this.client.rest.request(
       "DELETE",
@@ -656,7 +656,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
+  /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
   public async groupDMAddRecipient(
     userId: string,
     options: {
@@ -676,7 +676,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
+  /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
   public async groupDMRemoveRecipient(userId: string): Promise<void> {
     await this.client.rest.request(
       "DELETE",
@@ -684,7 +684,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#start-thread-from-message */
+  /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
   public async startThreadFromMessage(
     messageId: string,
     options: {
@@ -711,7 +711,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#start-thread-without-message */
+  /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
   public async startThreadWithoutMessage(
     options: {
       name: string;
@@ -737,7 +737,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel */
+  /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel */
   public async startThreadInForumChannel(
     options: {
       name: string;
@@ -828,7 +828,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#join-thread */
+  /** https://discord.com/developers/docs/resources/channel#join-thread */
   public async joinThread(): Promise<void> {
     await this.client.rest.request(
       "PUT",
@@ -836,7 +836,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#add-thread-member */
+  /** https://discord.com/developers/docs/resources/channel#add-thread-member */
   public async addThreadMember(userId: string): Promise<void> {
     await this.client.rest.request(
       "PUT",
@@ -844,7 +844,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#leave-thread */
+  /** https://discord.com/developers/docs/resources/channel#leave-thread */
   public async leaveThread(): Promise<void> {
     await this.client.rest.request(
       "DELETE",
@@ -852,7 +852,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#remove-thread-member */
+  /** https://discord.com/developers/docs/resources/channel#remove-thread-member */
   public async removeThreadMember(userId: string): Promise<void> {
     await this.client.rest.request(
       "DELETE",
@@ -860,7 +860,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-thread-member */
+  /** https://discord.com/developers/docs/resources/channel#get-thread-member */
   public async getThreadMember(
     userId: string,
     options?: {
@@ -889,7 +889,7 @@ export class Channel extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/channel#list-thread-members */
+  /** https://discord.com/developers/docs/resources/channel#list-thread-members */
   public async listThreadMembers(options?: {
     withMembers?: boolean;
     after?: string;
@@ -908,7 +908,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
+  /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
   public async listPublicArchivedThreads(options?: {
     before?: number;
     limit?: number;
@@ -946,7 +946,7 @@ export class Channel extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
+  /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
   public async listPrivateArchivedThreads(options?: {
     before?: number;
     limit?: number;
@@ -984,7 +984,7 @@ export class Channel extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
+  /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
   public async listJoinedPrivateArchivedThreads(options?: {
     before?: number;
     limit?: number;
@@ -1022,7 +1022,7 @@ export class Channel extends Base {
     };
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#create-webhook */
+  /** https://discord.com/developers/docs/resources/webhook#create-webhook */
   public async createWebhook(
     options: {
       name: string;
@@ -1046,7 +1046,7 @@ export class Channel extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/webhook#get-channel-webhooks */
+  /** https://discord.com/developers/docs/resources/webhook#get-channel-webhooks */
   public async getWebhooks(): Promise<Array<Webhook>> {
     return this.client.rest
       .request("GET", Endpoints.channelWebhooks(this.id))

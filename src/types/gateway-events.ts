@@ -28,7 +28,7 @@ import type {
   JSONThreadMember,
 } from ".";
 
-/* https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {
   guild_id: string;
   action: RawAutoModerationAction;
@@ -43,7 +43,7 @@ export interface RawAutoModerationActionExectionEventFields {
   matched_content: string | null;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#thread-list-sync-thread-list-sync-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#thread-list-sync-thread-list-sync-event-fields */
 export interface RawThreadListSyncEventFields {
   guild_id: string;
   channel_ids?: Array<string>;
@@ -51,7 +51,7 @@ export interface RawThreadListSyncEventFields {
   members: Array<RawThreadMember>;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#thread-members-update-thread-members-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#thread-members-update-thread-members-update-event-fields */
 export interface RawThreadMembersUpdateEventFields {
   id: string;
   guild_id: string;
@@ -60,55 +60,55 @@ export interface RawThreadMembersUpdateEventFields {
   removed_member_ids?: Array<string>;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#channel-pins-update-channel-pins-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#channel-pins-update-channel-pins-update-event-fields */
 export interface RawChannelPinsUpdateEventFields {
   guild_id?: string;
   channel_id: string;
   last_pin_timestamp: number | null;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-delete */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-delete */
 export interface RawGuildDeleteEventFields {
   id: string;
   unavailable: boolean;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-ban-add-guild-ban-add-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-ban-add-guild-ban-add-event-fields */
 export interface RawGuildBanAddEventFields {
   guild_id: string;
   user: RawUser;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-ban-remove-guild-ban-remove-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-ban-remove-guild-ban-remove-event-fields */
 export interface RawGuildBanRemoveEventFields {
   guild_id: string;
   user: RawUser;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-emojis-update-guild-emojis-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-emojis-update-guild-emojis-update-event-fields */
 export interface RawGuildEmojisUpdateEventFields {
   guild_id: string;
   emojis: Array<RawEmoji>;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-stickers-update-guild-stickers-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-stickers-update-guild-stickers-update-event-fields */
 export interface RawGuildStickersUpdateEventFields {
   guild_id: string;
   stickers: Array<RawSticker>;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-integrations-update-guild-integrations-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-integrations-update-guild-integrations-update-event-fields */
 export interface RawGuildIntegrationsUpdateEventFields {
   guild_id: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-member-remove-guild-member-remove-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-member-remove-guild-member-remove-event-fields */
 export interface RawGuildMemberRemoveEventFields {
   guild_id: string;
   user: RawUser;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-member-update-guild-member-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-member-update-guild-member-update-event-fields */
 export interface RawGuildMemberUpdateEventFields {
   guild_id: string;
   roles: Array<string>;
@@ -123,7 +123,7 @@ export interface RawGuildMemberUpdateEventFields {
   communication_disabled_until?: number | null;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-members-chunk-guild-members-chunk-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-members-chunk-guild-members-chunk-event-fields */
 export interface RawGuildMembersChunkEventFields {
   guild_id: string;
   members: Array<RawGuildMember>;
@@ -134,46 +134,46 @@ export interface RawGuildMembersChunkEventFields {
   nonce?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-role-create-guild-role-create-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-role-create-guild-role-create-event-fields */
 export interface RawGuildRoleCreateEventFields {
   guild_id: string;
   role: RawRole;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-role-update-guild-role-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-role-update-guild-role-update-event-fields */
 export interface RawGuildRoleUpdateEventFields {
   guild_id: string;
   role: RawRole;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-role-delete-guild-role-delete-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-role-delete-guild-role-delete-event-fields */
 export interface RawGuildRoleDeleteEventFields {
   guild_id: string;
   role_id: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-user-add-guild-scheduled-event-user-add-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-user-add-guild-scheduled-event-user-add-event-fields */
 export interface RawGuildScheduledEventUserAddEventFields {
   guild_scheduled_event_id: string;
   user_id: string;
   guild_id: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-user-remove-guild-scheduled-event-user-remove-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-user-remove-guild-scheduled-event-user-remove-event-fields */
 export interface RawGuildScheduledEventUserRemoveEventFields {
   guild_scheduled_event_id: string;
   user_id: string;
   guild_id: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#integration-delete-integration-delete-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#integration-delete-integration-delete-event-fields */
 export interface RawIntegrationDeleteEventFields {
   id: string;
   guild_id: string;
   application_id?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#invite-create-invite-create-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#invite-create-invite-create-event-fields */
 export interface RawInviteCreateEventFields {
   channel_id: string;
   code: string;
@@ -189,28 +189,28 @@ export interface RawInviteCreateEventFields {
   uses: number;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#invite-delete-invite-delete-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#invite-delete-invite-delete-event-fields */
 export interface RawInviteDeleteEventFields {
   channel_id: string;
   guild_id?: string;
   code: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#message-delete-message-delete-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#message-delete-message-delete-event-fields */
 export interface RawMessageDeleteEventFields {
   id: string;
   channel_id: string;
   guild_id?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#message-delete-bulk-message-delete-bulk-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#message-delete-bulk-message-delete-bulk-event-fields */
 export interface RawMessageDeleteBulkEventFields {
   ids: Array<string>;
   channel_id: string;
   guild_id?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#message-reaction-add-message-reaction-add-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#message-reaction-add-message-reaction-add-event-fields */
 export interface RawMessageReactionAddEventFields {
   user_id: string;
   channel_id: string;
@@ -221,7 +221,7 @@ export interface RawMessageReactionAddEventFields {
   message_author_id?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-message-reaction-remove-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-message-reaction-remove-event-fields */
 export interface RawMessageReactionRemoveEventFields {
   user_id: string;
   channel_id: string;
@@ -230,14 +230,14 @@ export interface RawMessageReactionRemoveEventFields {
   emoji: RawEmoji;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-all-message-reaction-remove-all-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-all-message-reaction-remove-all-event-fields */
 export interface RawMessageReactionRemoveAllEventFields {
   channel_id: string;
   messagei_id: string;
   guild_id?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-emoji-message-reaction-remove-emoji-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-emoji-message-reaction-remove-emoji-event-fields */
 export interface RawMessageReactionRemoveEmojiEventFields {
   channel_id: string;
   guild_id?: string;
@@ -245,7 +245,7 @@ export interface RawMessageReactionRemoveEmojiEventFields {
   emoji: RawEmoji;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#presence-update-presence-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#presence-update-presence-update-event-fields */
 export interface RawPresenceUpdateEventFields {
   user: RawUser;
   guild_id: string;
@@ -254,14 +254,14 @@ export interface RawPresenceUpdateEventFields {
   client_status: RawClientStatus;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#client-status-object */
+/** https://discord.com/developers/docs/topics/gateway-events#client-status-object */
 export interface RawClientStatus {
   desktop?: string;
   mobile?: string;
   web?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-structure */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-structure */
 export interface RawActivity {
   name: string;
   type: ActivityType;
@@ -279,19 +279,19 @@ export interface RawActivity {
   buttons?: Array<RawActivityButton>;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-timestamps */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-timestamps */
 export interface RawActivityTimestamps {
   start?: number;
   end?: number;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-party */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-party */
 export interface RawActivityParty {
   id?: string;
   size?: Array<number>;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-assets */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-assets */
 export interface RawActivityAssets {
   large_image?: string;
   large_text?: string;
@@ -299,20 +299,20 @@ export interface RawActivityAssets {
   small_text?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-secrets */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-secrets */
 export interface RawActivitySecrets {
   join?: string;
   spectate?: string;
   match?: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-buttons */
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-buttons */
 export interface RawActivityButton {
   label: string;
   url: string;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#typing-start-typing-start-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#typing-start-typing-start-event-fields */
 export interface RawTypingStartEventFields {
   channel_id: string;
   guild_id?: string;
@@ -321,14 +321,14 @@ export interface RawTypingStartEventFields {
   member?: RawGuildMember;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#voice-server-update-voice-server-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#voice-server-update-voice-server-update-event-fields */
 export interface RawVoiceServerUpdateEventFields {
   token: string;
   guild_id: string;
   endpoint: string | null;
 }
 
-/* https://discord.com/developers/docs/topics/gateway-events#webhooks-update-webhooks-update-event-fields */
+/** https://discord.com/developers/docs/topics/gateway-events#webhooks-update-webhooks-update-event-fields */
 export interface RawWebhooksUpdateEventFields {
   guild_id: string;
   channel_id: string;

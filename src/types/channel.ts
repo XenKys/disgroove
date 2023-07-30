@@ -24,7 +24,7 @@ import type {
   User,
 } from "../structures";
 
-/* https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
+/** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
 export interface RawChannel {
   id: string;
   type: ChannelTypes;
@@ -63,7 +63,7 @@ export interface RawChannel {
   default_forum_layout?: number;
 }
 
-/* https://discord.com/developers/docs/resources/channel#message-object-message-structure */
+/** https://discord.com/developers/docs/resources/channel#message-object-message-structure */
 export interface RawMessage {
   id: string;
   channel_id: string;
@@ -98,13 +98,13 @@ export interface RawMessage {
   role_subscription_data?: RawRoleSubscriptionData;
 }
 
-/* https://discord.com/developers/docs/resources/channel#message-object-message-activity-structure */
+/** https://discord.com/developers/docs/resources/channel#message-object-message-activity-structure */
 export interface RawMessageActivity {
   type: MessageActivityTypes;
   party_id?: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#message-reference-object-message-reference-structure */
+/** https://discord.com/developers/docs/resources/channel#message-reference-object-message-reference-structure */
 export interface RawMessageReference {
   message_id?: string;
   channel_id?: string;
@@ -112,20 +112,20 @@ export interface RawMessageReference {
   fail_if_not_exists?: boolean;
 }
 
-/* https://discord.com/developers/docs/resources/channel#followed-channel-object-followed-channel-structure */
+/** https://discord.com/developers/docs/resources/channel#followed-channel-object-followed-channel-structure */
 export interface RawFollowedChannel {
   channel_id: string;
   webhook_id: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure */
+/** https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure */
 export interface RawReaction {
   count: number;
   me: boolean;
   emoji: RawEmoji;
 }
 
-/* https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure */
+/** https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure */
 export interface RawOverwrite {
   id: string;
   type: number;
@@ -133,7 +133,7 @@ export interface RawOverwrite {
   deny: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#thread-metadata-object-thread-metadata-structure */
+/** https://discord.com/developers/docs/resources/channel#thread-metadata-object-thread-metadata-structure */
 export interface RawThreadMetadata {
   archived: boolean;
   auto_archive_duration: number;
@@ -143,7 +143,7 @@ export interface RawThreadMetadata {
   create_timestamp?: string | null;
 }
 
-/* https://discord.com/developers/docs/resources/channel#thread-member-object-thread-member-structure */
+/** https://discord.com/developers/docs/resources/channel#thread-member-object-thread-member-structure */
 export interface RawThreadMember {
   id?: string;
   user_id?: string;
@@ -152,13 +152,13 @@ export interface RawThreadMember {
   member?: RawGuildMember;
 }
 
-/* https://discord.com/developers/docs/resources/channel#default-reaction-object-default-reaction-structure */
+/** https://discord.com/developers/docs/resources/channel#default-reaction-object-default-reaction-structure */
 export interface RawDefaultReaction {
   emoji_id: string | null;
   emoji_name: string | null;
 }
 
-/* https://discord.com/developers/docs/resources/channel#forum-tag-object-forum-tag-structure */
+/** https://discord.com/developers/docs/resources/channel#forum-tag-object-forum-tag-structure */
 export interface RawForumTag {
   id: string;
   name: string;
@@ -167,7 +167,7 @@ export interface RawForumTag {
   emoji_name?: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-structure */
 export interface RawEmbed {
   title?: string;
   type?: string;
@@ -184,7 +184,7 @@ export interface RawEmbed {
   fields?: Array<RawEmbedField>;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure */
 export interface RawEmbedThumbnail {
   url: string;
   proxy_url?: string;
@@ -192,7 +192,7 @@ export interface RawEmbedThumbnail {
   width?: number;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-video-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-video-structure */
 export interface RawEmbedVideo {
   url?: string;
   proxy_url?: string;
@@ -200,7 +200,7 @@ export interface RawEmbedVideo {
   width?: number;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure */
 export interface RawEmbedImage {
   url: string;
   proxy_url?: string;
@@ -208,13 +208,13 @@ export interface RawEmbedImage {
   width?: number;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-provider-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-provider-structure */
 export interface RawEmbedProvider {
   name?: string;
   url?: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure */
 export interface RawEmbedAuthor {
   name: string;
   url?: string;
@@ -222,21 +222,21 @@ export interface RawEmbedAuthor {
   proxy_icon_url?: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure */
 export interface RawEmbedFooter {
   text: string;
   icon_url?: string;
   proxy_icon_url?: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure */
+/** https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure */
 export interface RawEmbedField {
   name: string;
   value: string;
   inline?: boolean;
 }
 
-/* https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure */
+/** https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure */
 export interface RawAttachment {
   id: string;
   filename: string;
@@ -250,7 +250,7 @@ export interface RawAttachment {
   ephemeral?: boolean;
 }
 
-/* https://discord.com/developers/docs/resources/channel#channel-mention-object-channel-mention-structure */
+/** https://discord.com/developers/docs/resources/channel#channel-mention-object-channel-mention-structure */
 export interface RawChannelMention {
   id: string;
   guild_id: string;
@@ -258,7 +258,7 @@ export interface RawChannelMention {
   name: string;
 }
 
-/* https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mentions-structure */
+/** https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mentions-structure */
 export interface RawAllowedMentions {
   parse: Array<AllowedMentionTypes>;
   roles: Array<string>;
@@ -266,7 +266,7 @@ export interface RawAllowedMentions {
   replied_user: boolean;
 }
 
-/* https://discord.com/developers/docs/resources/channel#role-subscription-data-object-role-subscription-data-object-structure */
+/** https://discord.com/developers/docs/resources/channel#role-subscription-data-object-role-subscription-data-object-structure */
 export interface RawRoleSubscriptionData {
   role_subscription_listing_id: string;
   tier_name: string;

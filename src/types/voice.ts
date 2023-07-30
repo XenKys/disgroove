@@ -1,7 +1,7 @@
 import type { RawGuildMember } from ".";
 import type { GuildMember } from "../structures";
 
-/* https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure */
+/** https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure */
 export interface RawVoiceState {
   guild_id?: string;
   channel_id: string | null;
@@ -18,7 +18,7 @@ export interface RawVoiceState {
   request_to_speak_timestamp: string | null;
 }
 
-/* https://discord.com/developers/docs/resources/voice#voice-region-object-voice-region-structure */
+/** https://discord.com/developers/docs/resources/voice#voice-region-object-voice-region-structure */
 export interface RawVoiceRegion {
   id: string;
   name: string;

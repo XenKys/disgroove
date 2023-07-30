@@ -151,7 +151,7 @@ export class Interaction extends Base {
     if (data.guild_locale !== undefined) this.guildLocale = data.guild_locale;
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
   public async createResponse(options: {
     type: InteractionCallbackType;
     data: {
@@ -304,7 +304,7 @@ export class Interaction extends Base {
     }
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response */
   public async getOriginalResponse(options?: {
     threadId?: string;
   }): Promise<Message> {
@@ -322,7 +322,7 @@ export class Interaction extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
   public async editOriginalResponse(options: {
     threadId?: string;
     content?: string | null;
@@ -410,7 +410,7 @@ export class Interaction extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
   public async deleteOriginalResponse(): Promise<void> {
     this.client.rest.request(
       "DELETE",
@@ -418,7 +418,7 @@ export class Interaction extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
   public async createFollowupMessage(options: {
     content?: string | null;
     tts?: boolean;
@@ -503,7 +503,7 @@ export class Interaction extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message */
   public async getFollowupMessage(
     messageId: string,
     options?: {
@@ -524,7 +524,7 @@ export class Interaction extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message */
   public async editFollowupMessage(
     messageId: string,
     options: {
@@ -615,7 +615,7 @@ export class Interaction extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message */
+  /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message */
   public async deleteFollowupMessage(messageId: string): Promise<void> {
     this.client.rest.request(
       "DELETE",

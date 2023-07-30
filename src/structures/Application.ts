@@ -83,7 +83,7 @@ export class Application extends Base {
         data.role_connections_verification_url;
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
   public async getGlobalApplicationCommands(options: {
     withLocalizations?: boolean;
   }): Promise<Array<ApplicationCommand>> {
@@ -101,7 +101,7 @@ export class Application extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
   public async createGlobalApplicationCommand(options: {
     name: string;
     nameLocalizations?: Partial<Record<Locale, string>> | null;
@@ -155,7 +155,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-global-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-command */
   public async getGlobalApplicationCommand(
     commandId: string
   ): Promise<ApplicationCommand> {
@@ -168,7 +168,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
   public async editGlobalApplicationCommand(
     commandId: string,
     options: {
@@ -224,7 +224,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command */
   public async deleteGlobalApplicationCommand(
     commandId: string
   ): Promise<void> {
@@ -234,7 +234,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
+  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
   public async bulkOverwriteGlobalApplicationCommands(): Promise<
     Array<ApplicationCommand>
   > {
@@ -248,7 +248,7 @@ export class Application extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
+  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
   public async getGuildApplicationCommands(
     guildId: string,
     options?: {
@@ -269,7 +269,7 @@ export class Application extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
   public async createGuildApplicationCommand(
     guildId: string,
     options: {
@@ -326,7 +326,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
   public async getGuildApplicationCommand(
     guildId: string,
     commandId: string
@@ -340,7 +340,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
   public async editGuildApplicationCommand(
     guildId: string,
     commandId: string,
@@ -397,7 +397,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
   public async deleteGuildApplicationCommand(
     guildId: string,
     commandId: string
@@ -408,7 +408,7 @@ export class Application extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
+  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
   public async bulkOverwriteGuildApplicationCommands(
     guildId: string,
     options: {
@@ -466,7 +466,7 @@ export class Application extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
   public async getGuildApplicationCommandPermissions(
     guildId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
@@ -491,7 +491,7 @@ export class Application extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
   public async getApplicationCommandPermissions(
     guildId: string,
     commandId: string
@@ -517,7 +517,7 @@ export class Application extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
+  /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
   public async editApplicationCommandPermissions(
     guildId: string,
     commandId: string,

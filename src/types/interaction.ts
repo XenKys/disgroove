@@ -16,7 +16,7 @@ import type {
   InteractionType,
 } from "../utils";
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {
   id: string;
   application_id: string;
@@ -36,7 +36,7 @@ export interface RawInteraction {
   guild_locale?: string;
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
 export interface RawApplicationCommandData {
   id: string;
   name: string;
@@ -47,14 +47,14 @@ export interface RawApplicationCommandData {
   target_id?: string;
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure */
 export interface RawMessageComponentData {
   custom_id: string;
   component_type: number;
   values?: Array<RawSelectOption>;
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
 export interface RawModalSubmitData {
   custom_id: string;
   components: Array<{
@@ -73,7 +73,7 @@ export interface RawModalSubmitData {
   }>;
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
 export interface RawResolvedData {
   users?: Map<string, RawUser>;
   members?: Map<string, RawGuildMember>;
@@ -83,7 +83,7 @@ export interface RawResolvedData {
   attachments?: Map<string, RawAttachment>;
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
 export interface RawApplicationCommandInteractionDataOption {
   name: string;
   type: number;
@@ -92,7 +92,7 @@ export interface RawApplicationCommandInteractionDataOption {
   focused?: boolean;
 }
 
-/* https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object-message-interaction-structure */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object-message-interaction-structure */
 export interface RawMessageInteraction {
   id: string;
   type: InteractionType;

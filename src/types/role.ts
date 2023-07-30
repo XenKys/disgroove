@@ -1,4 +1,4 @@
-/* https://discord.com/developers/docs/topics/permissions#role-object-role-structure */
+/** https://discord.com/developers/docs/topics/permissions#role-object-role-structure */
 export interface RawRole {
   id: string;
   name: string;
@@ -13,7 +13,7 @@ export interface RawRole {
   tags?: RawRoleTags;
 }
 
-/* https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure */
+/** https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure */
 export interface RawRoleTags {
   bot_id?: string;
   integration_id?: string;

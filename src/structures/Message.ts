@@ -192,7 +192,7 @@ export class Message extends Base {
       this.member = new GuildMember(data.member, this.client);
   }
 
-  /* https://discord.com/developers/docs/resources/channel#crosspost-message */
+  /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   public async crosspost(): Promise<Message> {
     return new Message(
       await this.client.rest.request(
@@ -203,7 +203,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#create-reaction */
+  /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public async createReaction(emoji: string): Promise<void> {
     this.client.rest.request(
       "PUT",
@@ -211,7 +211,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#create-reaction */
+  /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public async deleteOwnReaction(emoji: string): Promise<void> {
     this.client.rest.request(
       "PUT",
@@ -219,7 +219,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#create-reaction */
+  /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public async deleteUserReaction(
     emoji: string,
     userId: string
@@ -235,7 +235,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#get-reactions */
+  /** https://discord.com/developers/docs/resources/channel#get-reactions */
   public async getReactions(
     emoji: string,
     options?: {
@@ -259,7 +259,7 @@ export class Message extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-all-reactions */
+  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
   public async deleteAllReactions(): Promise<void> {
     this.client.rest.request(
       "DELETE",
@@ -267,7 +267,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
+  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
   public async deleteAllReactionsForEmoji(emoji: string): Promise<void> {
     this.client.rest.request(
       "DELETE",
@@ -275,7 +275,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#edit-message */
+  /** https://discord.com/developers/docs/resources/channel#edit-message */
   public async edit(options: {
     content?: string | null;
     embeds?: Array<JSONEmbed> | null;
@@ -354,7 +354,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#delete-message */
+  /** https://discord.com/developers/docs/resources/channel#delete-message */
   public async delete(reason?: string): Promise<void> {
     this.client.rest.request(
       "DELETE",
@@ -365,7 +365,7 @@ export class Message extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/channel#start-thread-from-message */
+  /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
   public async startThread(
     options: {
       name: string;

@@ -2,7 +2,7 @@ import type { RawUser, RawTeam, JSONTeam } from ".";
 import type { User } from "../structures";
 import type { OAuth2Scopes } from "../utils";
 
-/* https://discord.com/developers/docs/resources/application#application-object-application-structure */
+/** https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface RawApplication {
   id: string;
   name: string;
@@ -27,7 +27,7 @@ export interface RawApplication {
   role_connections_verification_url?: string;
 }
 
-/* https://discord.com/developers/docs/resources/application#install-params-object-install-params-structure */
+/** https://discord.com/developers/docs/resources/application#install-params-object-install-params-structure */
 export interface RawInstallParams {
   scopes: Array<OAuth2Scopes>;
   permissions: string;

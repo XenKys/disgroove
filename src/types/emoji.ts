@@ -1,7 +1,7 @@
 import type { RawUser } from ".";
 import type { User } from "../structures";
 
-/* https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure */
+/** https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure */
 export interface RawEmoji {
   id: string | null;
   name: string | null;

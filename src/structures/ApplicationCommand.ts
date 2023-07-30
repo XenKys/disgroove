@@ -60,7 +60,7 @@ export class ApplicationCommand extends Base {
     if (data.nsfw !== undefined) this.nsfw = data.nsfw;
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
   public async edit(options: {
     name?: string;
     nameLocalizations?: Partial<Record<Locale, string>> | null;
@@ -121,7 +121,7 @@ export class ApplicationCommand extends Base {
     );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
+  /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
   public async delete(): Promise<void> {
     this.guildId !== undefined
       ? await this.client.rest.request(
@@ -138,7 +138,7 @@ export class ApplicationCommand extends Base {
         );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
   public async getGuildApplicationCommandPermissions(): Promise<
     Array<JSONGuildApplicationCommandPermissions>
   > {
@@ -172,7 +172,7 @@ export class ApplicationCommand extends Base {
       );
   }
 
-  /* https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
+  /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
   public async editGuildApplicationPermissions(options: {
     permissions: Array<JSONGuildApplicationCommandPermissions>;
   }): Promise<JSONGuildApplicationCommandPermissions> {

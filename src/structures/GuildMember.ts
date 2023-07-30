@@ -44,7 +44,7 @@ export class GuildMember {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
   }
 
-  /* https://discord.com/developers/docs/resources/guild#modify-guild-member */
+  /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
   public async modify(
     options: {
       nick?: string | null;
@@ -77,7 +77,7 @@ export class GuildMember {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#add-guild-member-role */
+  /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
   public async addRole(roleId: string, reason?: string): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
@@ -92,7 +92,7 @@ export class GuildMember {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
   public async removeRole(roleId: string, reason?: string): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
@@ -107,7 +107,7 @@ export class GuildMember {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#remove-guild-member */
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
   public async remove(reason?: string): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
@@ -122,7 +122,7 @@ export class GuildMember {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#create-guild-ban */
+  /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
   public async createBan(
     options?: {
       deleteMessageDays?: number;
@@ -147,7 +147,7 @@ export class GuildMember {
     );
   }
 
-  /* https://discord.com/developers/docs/resources/guild#remove-guild-ban */
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
   public async removeBan(userId: string, reason?: string): Promise<void> {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");

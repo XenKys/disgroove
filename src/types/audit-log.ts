@@ -18,7 +18,7 @@ import type {
 } from "../structures";
 import type { AuditLogEvents } from "../utils";
 
-/* https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
 export interface RawAuditLog {
   application_commands: Array<RawApplicationCommand>;
   audit_log_entries: Array<RawAuditLogEntry>;
@@ -30,7 +30,7 @@ export interface RawAuditLog {
   webhooks: Array<RawWebhook>;
 }
 
-/* https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-entry-structure */
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-entry-structure */
 export interface RawAuditLogEntry {
   target_id: string | null;
   changes?: Array<RawAuditLogChange>;
@@ -41,7 +41,7 @@ export interface RawAuditLogEntry {
   reason?: string;
 }
 
-/* https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info */
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info */
 export interface RawOptionalAuditLogEntryInfo {
   application_id: string;
   auto_moderation_rule_name: string;
@@ -56,7 +56,7 @@ export interface RawOptionalAuditLogEntryInfo {
   type: string;
 }
 
-/* https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure */
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure */
 export interface RawAuditLogChange {
   new_value?: any;
   old_value?: any;

@@ -1,7 +1,7 @@
 import type { JSONEmoji, RawEmoji } from ".";
 import type { ChannelTypes } from "../utils";
 
-/* https://discord.com/developers/docs/interactions/message-components#button-object-button-structure */
+/** https://discord.com/developers/docs/interactions/message-components#button-object-button-structure */
 export interface RawButton {
   type: number;
   style: number;
@@ -12,7 +12,7 @@ export interface RawButton {
   disabled?: boolean;
 }
 
-/* https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure */
+/** https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure */
 export interface RawSelectMenu {
   type: number;
   custom_id: string;
@@ -24,7 +24,7 @@ export interface RawSelectMenu {
   disabled?: boolean;
 }
 
-/* https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure */
+/** https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure */
 export interface RawSelectOption {
   label: string;
   value: string;
@@ -33,7 +33,7 @@ export interface RawSelectOption {
   default?: boolean;
 }
 
-/* https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure */
+/** https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure */
 export interface RawTextInput {
   type: number;
   custom_id: string;

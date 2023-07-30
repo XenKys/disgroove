@@ -1,7 +1,7 @@
 import type { RawGuild, RawUser } from ".";
 import type { Guild, User } from "../structures";
 
-/* https://discord.com/developers/docs/resources/guild-template#guild-template-object-guild-template-structure */
+/** https://discord.com/developers/docs/resources/guild-template#guild-template-object-guild-template-structure */
 export interface RawGuildTemplate {
   code: string;
   name: string;

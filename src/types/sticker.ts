@@ -2,7 +2,7 @@ import type { StickerTypes, StickerFormatTypes } from "../utils";
 import type { RawUser } from ".";
 import type { User } from "../structures";
 
-/* https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
+/** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
 export interface RawSticker {
   id: string;
   pack_id?: string;
@@ -18,14 +18,14 @@ export interface RawSticker {
   sort_value?: number;
 }
 
-/* https://discord.com/developers/docs/resources/sticker#sticker-item-object-sticker-item-structure */
+/** https://discord.com/developers/docs/resources/sticker#sticker-item-object-sticker-item-structure */
 export interface RawStickerItem {
   id: string;
   name: string;
   format_type: StickerFormatTypes;
 }
 
-/* https://discord.com/developers/docs/resources/sticker#sticker-pack-object-sticker-pack-structure */
+/** https://discord.com/developers/docs/resources/sticker#sticker-pack-object-sticker-pack-structure */
 export interface RawStickerPack {
   id: string;
   stickers: Array<RawSticker>;
