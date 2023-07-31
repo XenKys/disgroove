@@ -347,7 +347,7 @@ export declare interface Client extends EventEmitter {
 }
 
 export class Client extends EventEmitter {
-  private heartbeatInterval?: NodeJS.Timer | null;
+  private heartbeatInterval!: NodeJS.Timer | null;
   public token: string;
   public intents: GatewayIntents | number;
   public auth: "Bot" | "Bearer";
@@ -728,6 +728,13 @@ export class Client extends EventEmitter {
     this.ws.on("message", (data) => this.onWebSocketMessage(data));
     this.ws.on("error", (err) => this.onWebSocketError(err));
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
+  }
+
+  public disconnect(): void {
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+      this.heartbeatInterval = null;
+    }
   }
 
   private async onWebSocketOpen(presence?: {
@@ -1363,6 +1370,8 @@ export class Client extends EventEmitter {
   }
 
   private onWebSocketClose(code: number, reason: Buffer): void {
+    if (code === 1000) return;
+
     throw new Error(`${code}: ${reason}`);
   }
 }
