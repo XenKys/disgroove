@@ -91,6 +91,7 @@ import EventEmitter from "node:events";
 
 export interface ClientOptions {
   intents?: GatewayIntents | number;
+  auth?: "Bot" | "Bearer";
 }
 
 export declare interface Client extends EventEmitter {
@@ -344,6 +345,7 @@ export class Client extends EventEmitter {
   private heartbeatInterval?: NodeJS.Timer | null;
   public token: string;
   public intents: GatewayIntents | number;
+  public auth: "Bot" | "Bearer";
   public rest: REST;
   public ws: WebSocket;
 
@@ -352,7 +354,8 @@ export class Client extends EventEmitter {
 
     this.token = token;
     this.intents = options?.intents || GatewayIntents.AllNonPrivileged;
-    this.rest = new REST(token);
+    this.auth = options?.auth || "Bot";
+    this.rest = new REST(token, this.auth);
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
   }
 

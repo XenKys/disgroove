@@ -15,11 +15,13 @@ export interface Request {
 
 export class RequestsManager {
   public token: string;
+  public auth: "Bot" | "Bearer";
   public queue: Array<Request>;
   public globalBlock: boolean;
 
-  constructor(token: string) {
+  constructor(token: string, auth: "Bot" | "Bearer") {
     this.token = token;
+    this.auth = auth;
     this.queue = [];
     this.globalBlock = false;
   }
@@ -49,7 +51,7 @@ export class RequestsManager {
             "X-Audit-Log-Reason"?: string;
           }
         | undefined = {
-        Authorization: `Bot ${this.token}`,
+        Authorization: `${this.auth} ${this.token}`,
       };
       let body: string | FormData | undefined;
 
