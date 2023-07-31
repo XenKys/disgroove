@@ -92,6 +92,11 @@ import EventEmitter from "node:events";
 export interface ClientOptions {
   intents?: GatewayIntents | number;
   auth?: "Bot" | "Bearer";
+  presence?: {
+    activities: Array<JSONActivity>;
+    status: StatusTypes;
+    afk: boolean;
+  };
 }
 
 export declare interface Client extends EventEmitter {
@@ -346,6 +351,11 @@ export class Client extends EventEmitter {
   public token: string;
   public intents: GatewayIntents | number;
   public auth: "Bot" | "Bearer";
+  public presence?: {
+    activities: Array<JSONActivity>;
+    status: StatusTypes;
+    afk: boolean;
+  };
   public rest: REST;
   public ws: WebSocket;
 
@@ -355,6 +365,7 @@ export class Client extends EventEmitter {
     this.token = token;
     this.intents = options?.intents || GatewayIntents.AllNonPrivileged;
     this.auth = options?.auth || "Bot";
+    this.presence = options?.presence;
     this.rest = new REST(token, this.auth);
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
   }
@@ -713,13 +724,17 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
   public connect(): void {
-    this.ws.on("open", () => this.onWebSocketOpen());
+    this.ws.on("open", () => this.onWebSocketOpen(this.presence));
     this.ws.on("message", (data) => this.onWebSocketMessage(data));
     this.ws.on("error", (err) => this.onWebSocketError(err));
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
   }
 
-  private onWebSocketOpen(): void {
+  private onWebSocketOpen(presence?: {
+    activities: Array<JSONActivity>;
+    status: StatusTypes;
+    afk: boolean;
+  }): void {
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.Identify,
@@ -731,6 +746,39 @@ export class Client extends EventEmitter {
             browser: "disgroove",
             device: "disgroove",
           },
+          presence:
+            presence !== undefined
+              ? {
+                  since:
+                    presence.status === StatusTypes.Idle ? Date.now() : null,
+                  activities: presence.activities.map((activity) => ({
+                    name: activity.name,
+                    type: activity.type,
+                    url: activity.url,
+                    created_at: activity.createdAt,
+                    timestamps: activity.timestamps,
+                    application_id: activity.applicationId,
+                    details: activity.details,
+                    state: activity.state,
+                    party: activity.party,
+                    assets:
+                      activity.assets !== undefined
+                        ? {
+                            large_image: activity.assets.largeImage,
+                            large_text: activity.assets.largeText,
+                            small_image: activity.assets.smallImage,
+                            small_text: activity.assets.smallText,
+                          }
+                        : undefined,
+                    secrets: activity.secrets,
+                    instance: activity.instance,
+                    flags: activity.flags,
+                    buttons: activity.buttons,
+                  })),
+                  status: presence.status,
+                  afk: presence.afk,
+                }
+              : undefined,
         },
       })
     );

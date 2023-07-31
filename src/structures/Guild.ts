@@ -40,6 +40,7 @@ import type {
   JSONVoiceState,
   JSONWelcomeScreen,
   JSONWelcomeScreenChannel,
+  RawActivity,
   RawApplicationCommand,
   RawApplicationCommandPermission,
   RawAuditLog,
@@ -300,36 +301,26 @@ export class Guild extends Base {
         user: new User(presence.user, this.client),
         guildId: presence.guild_id,
         status: presence.status,
-        activities: presence.activities.map((activity: any) => ({
+        activities: presence.activities.map((activity: RawActivity) => ({
           name: activity.name,
           type: activity.type,
           url: activity.url,
           createdAt: activity.created_at,
-          timestamps: {
-            start: activity.timestamps.start,
-            end: activity.timestamp.end,
-          },
+          timestamps: activity.timestamps,
           applicationId: activity.application_id,
           details: activity.details,
           state: activity.state,
-          party: {
-            id: activity.party.id,
-            size: activity.party.size,
-          },
+          party: activity.party,
           assets: {
-            largeImage: activity.assets.large_image,
-            largeText: activity.assets.large_text,
-            smallImage: activity.assets.small_image,
-            smallText: activity.assets.small_text,
+            largeImage: activity.assets?.large_image,
+            largeText: activity.assets?.large_text,
+            smallImage: activity.assets?.small_image,
+            smallText: activity.assets?.small_text,
           },
-          secrets: {
-            join: activity.secrets.join,
-            spectate: activity.secrets.spectate,
-            match: activity.secrets.match,
-          },
+          secrets: activity.secrets,
           instance: activity.instance,
           flags: activity.flags,
-          buttons: activity.buttons.map((button: any) => ({
+          buttons: activity.buttons?.map((button: any) => ({
             label: button.label,
             url: button.url,
           })),
