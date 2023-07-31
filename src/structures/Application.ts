@@ -88,7 +88,7 @@ export class Application extends Base {
     withLocalizations?: boolean;
   }): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .request("GET", Endpoints.applicationCommands(this.id), {
+      .get(Endpoints.applicationCommands(this.id), {
         query: {
           with_localizations: options.withLocalizations,
         },
@@ -144,13 +144,9 @@ export class Application extends Base {
     nsfw?: boolean;
   }): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.applicationCommands(this.id),
-        {
-          json: applicationCommandToRaw(options),
-        }
-      ),
+      await this.client.rest.post(Endpoints.applicationCommands(this.id), {
+        json: applicationCommandToRaw(options),
+      }),
       this.client
     );
   }
@@ -160,8 +156,7 @@ export class Application extends Base {
     commandId: string
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.request(
-        "GET",
+      await this.client.rest.get(
         Endpoints.applicationCommand(this.id, commandId)
       ),
       this.client
@@ -213,8 +208,7 @@ export class Application extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.applicationCommand(this.id, commandId),
         {
           json: applicationCommandToRaw(options),
@@ -228,8 +222,7 @@ export class Application extends Base {
   public async deleteGlobalApplicationCommand(
     commandId: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.applicationCommand(this.id, commandId)
     );
   }
@@ -239,7 +232,7 @@ export class Application extends Base {
     Array<ApplicationCommand>
   > {
     return this.client.rest
-      .request("PUT", Endpoints.applicationCommands(this.id))
+      .put(Endpoints.applicationCommands(this.id))
       .then((response) =>
         response.map(
           (data: RawApplicationCommand) =>
@@ -256,7 +249,7 @@ export class Application extends Base {
     }
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .request("GET", Endpoints.applicationGuildCommands(this.id, guildId), {
+      .get(Endpoints.applicationGuildCommands(this.id, guildId), {
         query: {
           with_localizations: options?.withLocalizations,
         },
@@ -315,8 +308,7 @@ export class Application extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.request(
-        "POST",
+      await this.client.rest.post(
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
           json: applicationCommandToRaw(options),
@@ -332,8 +324,7 @@ export class Application extends Base {
     commandId: string
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.request(
-        "GET",
+      await this.client.rest.get(
         Endpoints.applicationGuildCommand(this.id, guildId, commandId)
       ),
       this.client
@@ -386,8 +377,7 @@ export class Application extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.applicationGuildCommand(this.id, guildId, commandId),
         {
           json: applicationCommandToRaw(options),
@@ -402,8 +392,7 @@ export class Application extends Base {
     guildId: string,
     commandId: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.applicationGuildCommand(this.id, guildId, commandId)
     );
   }
@@ -455,7 +444,7 @@ export class Application extends Base {
     }
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .request("PUT", Endpoints.applicationGuildCommands(this.id, guildId), {
+      .put(Endpoints.applicationGuildCommands(this.id, guildId), {
         json: applicationCommandToRaw(options),
       })
       .then((response) =>
@@ -471,10 +460,7 @@ export class Application extends Base {
     guildId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
-      .request(
-        "GET",
-        Endpoints.guildApplicationCommandsPermissions(this.id, guildId)
-      )
+      .get(Endpoints.guildApplicationCommandsPermissions(this.id, guildId))
       .then((response) =>
         response.map((permissions: RawGuildApplicationCommandPermissions) => ({
           id: permissions.id,
@@ -497,10 +483,7 @@ export class Application extends Base {
     commandId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
-      .request(
-        "GET",
-        Endpoints.applicationCommandPermissions(this.id, guildId, commandId)
-      )
+      .get(Endpoints.applicationCommandPermissions(this.id, guildId, commandId))
       .then((response) =>
         response.map((permissions: RawGuildApplicationCommandPermissions) => ({
           id: permissions.id,
@@ -526,8 +509,7 @@ export class Application extends Base {
     }
   ): Promise<RawGuildApplicationCommandPermissions> {
     return this.client.rest
-      .request(
-        "PUT",
+      .put(
         Endpoints.applicationCommandPermissions(this.id, guildId, commandId),
         {
           json: {

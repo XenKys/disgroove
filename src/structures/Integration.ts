@@ -73,13 +73,9 @@ export class Integration extends Base {
   public async delete(reason?: string): Promise<void> {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.request(
-      "DELETE",
-      Endpoints.guildIntegration(this.guildId, this.id),
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildIntegration(this.guildId, this.id), {
+      reason,
+    });
   }
 
   public override toJSON(): JSONIntegration & { guildId?: string } {

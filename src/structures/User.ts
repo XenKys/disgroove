@@ -63,7 +63,7 @@ export class User extends Base {
     avatar?: string | null;
   }): Promise<User> {
     return new User(
-      await this.client.rest.request("PATCH", Endpoints.user(), {
+      await this.client.rest.patch(Endpoints.user(), {
         json: {
           username: options.username,
           avatar: options.avatar,
@@ -78,20 +78,20 @@ export class User extends Base {
     guildId: string
   ): Promise<GuildMember> {
     return new GuildMember(
-      await this.client.rest.request("GET", Endpoints.guildMember(guildId)),
+      await this.client.rest.get(Endpoints.guildMember(guildId)),
       this.client
     );
   }
 
   /** https://discord.com/developers/docs/resources/user#leave-guild */
   public async leaveGuild(guildId: string): Promise<void> {
-    this.client.rest.request("DELETE", Endpoints.userGuild(guildId));
+    this.client.rest.delete(Endpoints.userGuild(guildId));
   }
 
   /** https://discord.com/developers/docs/resources/user#create-dm */
   public async createDM(options: { recipientId: string }): Promise<Channel> {
     return new Channel(
-      await this.client.rest.request("POST", Endpoints.userChannels(), {
+      await this.client.rest.post(Endpoints.userChannels(), {
         json: {
           recipient_id: options.recipientId,
         },
@@ -106,7 +106,7 @@ export class User extends Base {
     nicks: Array<string>;
   }): Promise<Channel> {
     return new Channel(
-      await this.client.rest.request("POST", Endpoints.userChannels(), {
+      await this.client.rest.post(Endpoints.userChannels(), {
         json: {
           access_tokens: options.accessTokens,
           nicks: options.nicks,
@@ -118,30 +118,27 @@ export class User extends Base {
 
   /** https://discord.com/developers/docs/resources/user#get-user-connections */
   public async getUserConnections(): Promise<Array<JSONConnection>> {
-    return this.client.rest
-      .request("GET", Endpoints.userConnections())
-      .then((response) =>
-        response.map((data: RawConnection) => ({
-          id: data.id,
-          name: data.name,
-          type: data.type,
-          revoked: data.revoked,
-          integrations: data.integrations?.map(
-            (integration) => new Integration(integration, this.client)
-          ),
-          verified: data.verified,
-          friendSync: data.friend_sync,
-          showActivity: data.show_activity,
-          twoWayLink: data.two_way_link,
-          visibility: data.visibility,
-        }))
-      );
+    return this.client.rest.get(Endpoints.userConnections()).then((response) =>
+      response.map((data: RawConnection) => ({
+        id: data.id,
+        name: data.name,
+        type: data.type,
+        revoked: data.revoked,
+        integrations: data.integrations?.map(
+          (integration) => new Integration(integration, this.client)
+        ),
+        verified: data.verified,
+        friendSync: data.friend_sync,
+        showActivity: data.show_activity,
+        twoWayLink: data.two_way_link,
+        visibility: data.visibility,
+      }))
+    );
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
   public async getUserApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
-    const data: RawApplicationRoleConnection = await this.client.rest.request(
-      "GET",
+    const data: RawApplicationRoleConnection = await this.client.rest.get(
       Endpoints.userApplicationRoleConnection(
         (
           await this.client.getApplication()
@@ -176,8 +173,7 @@ export class User extends Base {
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
     };
   }): Promise<JSONApplicationRoleConnection> {
-    const data: RawApplicationRoleConnection = await this.client.rest.request(
-      "PUT",
+    const data: RawApplicationRoleConnection = await this.client.rest.put(
       Endpoints.userApplicationRoleConnection(
         (
           await this.client.getApplication()

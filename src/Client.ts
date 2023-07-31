@@ -359,17 +359,14 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/application#get-current-application */
   public async getApplication(): Promise<Application> {
     return new Application(
-      await this.rest.request("GET", Endpoints.applicationCurrentUser()),
+      await this.rest.get(Endpoints.applicationCurrentUser()),
       this
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel */
   public async getChannel(channelId: string): Promise<Channel> {
-    return new Channel(
-      await this.rest.request("GET", Endpoints.channel(channelId)),
-      this
-    );
+    return new Channel(await this.rest.get(Endpoints.channel(channelId)), this);
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild */
@@ -388,7 +385,7 @@ export class Client extends EventEmitter {
     systemChannelFlags?: SystemChannelFlags;
   }): Promise<Guild> {
     return new Guild(
-      await this.rest.request("POST", Endpoints.guilds(), {
+      await this.rest.post(Endpoints.guilds(), {
         json: {
           name: options.name,
           region: options.region,
@@ -416,7 +413,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<Guild> {
     return new Guild(
-      await this.rest.request("GET", Endpoints.guild(guildId), {
+      await this.rest.get(Endpoints.guild(guildId), {
         query: {
           with_counts: options?.withCounts,
         },
@@ -434,7 +431,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<Guild> {
     return new Guild(
-      await this.rest.request("POST", Endpoints.template(code), {
+      await this.rest.post(Endpoints.template(code), {
         json: {
           name: options.name,
           icon: options.icon,
@@ -454,7 +451,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<Invite> {
     return new Invite(
-      await this.rest.request("GET", Endpoints.invite(code), {
+      await this.rest.get(Endpoints.invite(code), {
         query: {
           with_counts: options?.withCounts,
           with_expiration: options?.withExpiration,
@@ -471,7 +468,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<JSONInvite> {
     return new Invite(
-      await this.rest.request("DELETE", Endpoints.invite(code), {
+      await this.rest.delete(Endpoints.invite(code), {
         reason,
       }),
       this
@@ -489,7 +486,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<StageInstance> {
     return new StageInstance(
-      await this.rest.request("POST", Endpoints.stageInstances(), {
+      await this.rest.post(Endpoints.stageInstances(), {
         json: {
           channel_id: options.channelId,
           topic: options.topic,
@@ -505,7 +502,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/stage-instance#get-stage-instance */
   public async getStageInstance(channelId: string): Promise<StageInstance> {
     return new StageInstance(
-      await this.rest.request("GET", Endpoints.stageInstance(channelId)),
+      await this.rest.get(Endpoints.stageInstance(channelId)),
       this
     );
   }
@@ -516,7 +513,7 @@ export class Client extends EventEmitter {
   }> {
     const data: {
       sticker_packs: Array<RawStickerPack>;
-    } = await this.rest.request("GET", Endpoints.nitroStickerPacks());
+    } = await this.rest.get(Endpoints.nitroStickerPacks());
 
     return {
       stickerPacks: data.sticker_packs.map((stickerPack) => ({
@@ -549,10 +546,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/user#get-user */
   public async getUser(userId?: string): Promise<User> {
-    return new User(
-      await this.rest.request("GET", Endpoints.user(userId ?? "@me")),
-      this
-    );
+    return new User(await this.rest.get(Endpoints.user(userId ?? "@me")), this);
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */
@@ -574,7 +568,7 @@ export class Client extends EventEmitter {
     }>
   > {
     return this.rest
-      .request("GET", Endpoints.userGuilds(), {
+      .get(Endpoints.userGuilds(), {
         query: {
           before: options?.before,
           after: options?.after,
@@ -609,7 +603,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/voice#list-voice-regions */
   public async listVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
-    return this.rest.request("GET", Endpoints.voiceRegions()).then((response) =>
+    return this.rest.get(Endpoints.voiceRegions()).then((response) =>
       response.map((data: RawVoiceRegion) => ({
         id: data.id,
         name: data.name,
@@ -622,7 +616,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway#get-gateway */
   public async getGateway(): Promise<{ url: string }> {
-    return this.rest.request("GET", Endpoints.gateway());
+    return this.rest.get(Endpoints.gateway());
   }
 
   /** https://discord.com/developers/docs/topics/gateway#get-gateway-bot */
@@ -636,18 +630,16 @@ export class Client extends EventEmitter {
       maxConcurrency: number;
     };
   }> {
-    return this.rest
-      .request("GET", Endpoints.gatewayBot())
-      .then((response) => ({
-        url: response.url,
-        shards: response.shards,
-        sessionStartLimit: {
-          total: response.session_start_limit.total,
-          remaining: response.session_start_limit.remaining,
-          resetAfter: response.session_start_limit.reset_after,
-          maxConcurrency: response.session_start_limit.max_concurrency,
-        },
-      }));
+    return this.rest.get(Endpoints.gatewayBot()).then((response) => ({
+      url: response.url,
+      shards: response.shards,
+      sessionStartLimit: {
+        total: response.session_start_limit.total,
+        remaining: response.session_start_limit.remaining,
+        resetAfter: response.session_start_limit.reset_after,
+        maxConcurrency: response.session_start_limit.max_concurrency,
+      },
+    }));
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
@@ -695,7 +687,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
   public async getOAuth2Application(): Promise<Application> {
     return new Application(
-      await this.rest.request("GET", Endpoints.oauth2CurrentApplication()),
+      await this.rest.get(Endpoints.oauth2CurrentApplication()),
       this
     );
   }
@@ -707,17 +699,13 @@ export class Client extends EventEmitter {
     expires: number;
     user?: User;
   }> {
-    return this.rest
-      .request("GET", Endpoints.oauth2Authorization())
-      .then((response) => ({
-        application: new Application(response.application, this),
-        scopes: response.scopes,
-        expires: response.expires,
-        user:
-          response.user !== undefined
-            ? new User(response.user, this)
-            : undefined,
-      }));
+    return this.rest.get(Endpoints.oauth2Authorization()).then((response) => ({
+      application: new Application(response.application, this),
+      scopes: response.scopes,
+      expires: response.expires,
+      user:
+        response.user !== undefined ? new User(response.user, this) : undefined,
+    }));
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */

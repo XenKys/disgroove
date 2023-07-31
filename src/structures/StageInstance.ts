@@ -32,30 +32,22 @@ export class StageInstance extends Base {
     reason?: string
   ): Promise<StageInstance> {
     return new StageInstance(
-      await this.client.rest.request(
-        "PATCH",
-        Endpoints.stageInstance(this.channelId),
-        {
-          json: {
-            topic: options.topic,
-            privacy_level: options.privacyLevel,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.patch(Endpoints.stageInstance(this.channelId), {
+        json: {
+          topic: options.topic,
+          privacy_level: options.privacyLevel,
+        },
+        reason,
+      }),
       this.client
     );
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
   public async delete(reason?: string): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
-      Endpoints.stageInstance(this.channelId),
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.stageInstance(this.channelId), {
+      reason,
+    });
   }
 
   public override toJSON(): JSONStageInstance {

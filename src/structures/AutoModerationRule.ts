@@ -56,8 +56,7 @@ export class AutoModerationRule extends Base {
     reason?: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.guildAutoModerationRule(this.guildId, this.id),
         {
           json: {
@@ -86,8 +85,7 @@ export class AutoModerationRule extends Base {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
   public async delete(reason?: string): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.guildAutoModerationRule(this.guildId, this.id),
       {
         reason,

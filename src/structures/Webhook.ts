@@ -65,7 +65,7 @@ export class Webhook extends Base {
     reason?: string
   ): Promise<Webhook> {
     return new Webhook(
-      await this.client.rest.request("PATCH", Endpoints.webhook(this.id), {
+      await this.client.rest.patch(Endpoints.webhook(this.id), {
         json: {
           name: options.name,
           avatar: options.avatar,
@@ -87,31 +87,27 @@ export class Webhook extends Base {
     reason?: string
   ): Promise<Webhook> {
     return new Webhook(
-      await this.client.rest.request(
-        "PATCH",
-        Endpoints.webhook(this.id, token),
-        {
-          json: {
-            name: options.name,
-            avatar: options.avatar,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.patch(Endpoints.webhook(this.id, token), {
+        json: {
+          name: options.name,
+          avatar: options.avatar,
+        },
+        reason,
+      }),
       this.client
     );
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
   public async delete(reason?: string): Promise<void> {
-    this.client.rest.request("DELETE", Endpoints.webhook(this.id), {
+    this.client.rest.delete(Endpoints.webhook(this.id), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
   public async deleteWithToken(token: string, reason?: string): Promise<void> {
-    this.client.rest.request("DELETE", Endpoints.webhook(this.id, token), {
+    this.client.rest.delete(Endpoints.webhook(this.id, token), {
       reason,
     });
   }
@@ -175,44 +171,40 @@ export class Webhook extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.webhook(this.id, token),
-        {
-          query: {
-            wait: options.wait,
-            thread_id: options.threadId,
-            username: options.username,
-            avatarURL: options.avatarURL,
+      await this.client.rest.post(Endpoints.webhook(this.id, token), {
+        query: {
+          wait: options.wait,
+          thread_id: options.threadId,
+          username: options.username,
+          avatarURL: options.avatarURL,
+        },
+        json: {
+          content: options.content,
+          tts: options.tts,
+          embeds:
+            options.embeds !== undefined
+              ? options.embeds !== null
+                ? embedsToRaw(options.embeds)
+                : null
+              : undefined,
+          allowed_mentions: {
+            parse: options.allowedMentions?.parse,
+            roles: options.allowedMentions?.roles,
+            users: options.allowedMentions?.users,
+            replied_user: options.allowedMentions?.repliedUser,
           },
-          json: {
-            content: options.content,
-            tts: options.tts,
-            embeds:
-              options.embeds !== undefined
-                ? options.embeds !== null
-                  ? embedsToRaw(options.embeds)
-                  : null
-                : undefined,
-            allowed_mentions: {
-              parse: options.allowedMentions?.parse,
-              roles: options.allowedMentions?.roles,
-              users: options.allowedMentions?.users,
-              replied_user: options.allowedMentions?.repliedUser,
-            },
-            components:
-              options.components !== undefined
-                ? options.components !== null
-                  ? messageComponentToRaw(options.components)
-                  : null
-                : undefined,
-            attachments: options.attachments,
-            flags: options.flags,
-            thread_name: options.threadName,
-          },
-          files: options.files,
-        }
-      ),
+          components:
+            options.components !== undefined
+              ? options.components !== null
+                ? messageComponentToRaw(options.components)
+                : null
+              : undefined,
+          attachments: options.attachments,
+          flags: options.flags,
+          thread_name: options.threadName,
+        },
+        files: options.files,
+      }),
       this.client
     );
   }
@@ -226,16 +218,12 @@ export class Webhook extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.webhook(this.id, token),
-        {
-          query: {
-            thread_id: options.threadId,
-            wait: options.wait,
-          },
-        }
-      ),
+      await this.client.rest.post(Endpoints.webhook(this.id, token), {
+        query: {
+          thread_id: options.threadId,
+          wait: options.wait,
+        },
+      }),
       this.client
     );
   }
@@ -249,16 +237,12 @@ export class Webhook extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.webhook(this.id, token),
-        {
-          query: {
-            thread_id: options.threadId,
-            wait: options.wait,
-          },
-        }
-      ),
+      await this.client.rest.post(Endpoints.webhook(this.id, token), {
+        query: {
+          thread_id: options.threadId,
+          wait: options.wait,
+        },
+      }),
       this.client
     );
   }
@@ -272,8 +256,7 @@ export class Webhook extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "GET",
+      await this.client.rest.get(
         Endpoints.webhookMessage(this.id, token, messageId),
         {
           query: {
@@ -341,8 +324,7 @@ export class Webhook extends Base {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
     return new Message(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.webhookMessage(this.id, this.token, messageId),
         {
           query: {
@@ -386,8 +368,7 @@ export class Webhook extends Base {
       threadId?: string;
     }
   ): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
+    this.client.rest.delete(
       Endpoints.webhookMessage(this.id, token, messageId),
       {
         query: {

@@ -73,8 +73,7 @@ export class GuildScheduledEvent extends Base {
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return new GuildScheduledEvent(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.guildScheduledEvent(this.guildId, this.id),
         {
           json: {
@@ -98,8 +97,7 @@ export class GuildScheduledEvent extends Base {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
   public async delete(): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
+    this.client.rest.delete(
       Endpoints.guildScheduledEvent(this.guildId, this.id)
     );
   }
@@ -112,7 +110,7 @@ export class GuildScheduledEvent extends Base {
     after?: string;
   }): Promise<Array<User>> {
     return this.client.rest
-      .request("GET", Endpoints.guildScheduledEvent(this.guildId, this.id), {
+      .get(Endpoints.guildScheduledEvent(this.guildId, this.id), {
         query: {
           limit: options?.limit,
           with_member: options?.withMember,

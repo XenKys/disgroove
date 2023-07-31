@@ -195,8 +195,7 @@ export class Message extends Base {
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   public async crosspost(): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "POST",
+      await this.client.rest.post(
         Endpoints.channelMessageCrosspost(this.channelId, this.id)
       ),
       this.client
@@ -205,16 +204,14 @@ export class Message extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public async createReaction(emoji: string): Promise<void> {
-    this.client.rest.request(
-      "PUT",
+    this.client.rest.put(
       Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public async deleteOwnReaction(emoji: string): Promise<void> {
-    this.client.rest.request(
-      "PUT",
+    this.client.rest.put(
       Endpoints.channelMessageOwnReaction(this.channelId, this.id, emoji)
     );
   }
@@ -224,8 +221,7 @@ export class Message extends Base {
     emoji: string,
     userId: string
   ): Promise<void> {
-    this.client.rest.request(
-      "PUT",
+    this.client.rest.put(
       Endpoints.channelMessageUserReaction(
         this.channelId,
         this.id,
@@ -244,16 +240,12 @@ export class Message extends Base {
     }
   ): Promise<Array<User>> {
     return this.client.rest
-      .request(
-        "GET",
-        Endpoints.channelMessageReaction(this.channelId, this.id, emoji),
-        {
-          query: {
-            after: options?.after,
-            limit: options?.limit,
-          },
-        }
-      )
+      .get(Endpoints.channelMessageReaction(this.channelId, this.id, emoji), {
+        query: {
+          after: options?.after,
+          limit: options?.limit,
+        },
+      })
       .then((response) =>
         response.map((data: RawUser) => new User(data, this.client))
       );
@@ -261,16 +253,14 @@ export class Message extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
   public async deleteAllReactions(): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
+    this.client.rest.delete(
       Endpoints.channelMessageAllReactions(this.channelId, this.id)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
   public async deleteAllReactionsForEmoji(emoji: string): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
+    this.client.rest.delete(
       Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
     );
   }
@@ -325,8 +315,7 @@ export class Message extends Base {
     attachments?: Array<JSONAttachment> | null;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.channelMessage(this.channelId, this.id),
         {
           json: {
@@ -356,13 +345,9 @@ export class Message extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
   public async delete(reason?: string): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
-      Endpoints.channelMessage(this.channelId, this.id),
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.channelMessage(this.channelId, this.id), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
@@ -375,18 +360,14 @@ export class Message extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.threads(this.channelId, this.id),
-        {
-          json: {
-            name: options.name,
-            auto_archive_duration: options.autoArchiveDuration,
-            rate_limit_per_user: options.rateLimitPerUser,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.post(Endpoints.threads(this.channelId, this.id), {
+        json: {
+          name: options.name,
+          auto_archive_duration: options.autoArchiveDuration,
+          rate_limit_per_user: options.rateLimitPerUser,
+        },
+        reason,
+      }),
       this.client
     );
   }

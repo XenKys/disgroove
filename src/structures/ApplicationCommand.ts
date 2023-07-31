@@ -103,15 +103,13 @@ export class ApplicationCommand extends Base {
   }): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       this.guildId !== undefined
-        ? await this.client.rest.request(
-            "PATCH",
+        ? await this.client.rest.patch(
             Endpoints.applicationGuildCommand(this.id, this.guildId, this.id),
             {
               json: applicationCommandToRaw(options),
             }
           )
-        : await this.client.rest.request(
-            "PATCH",
+        : await this.client.rest.patch(
             Endpoints.applicationCommand(this.applicationId, this.id),
             {
               json: applicationCommandToRaw(options),
@@ -124,16 +122,14 @@ export class ApplicationCommand extends Base {
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
   public async delete(): Promise<void> {
     this.guildId !== undefined
-      ? await this.client.rest.request(
-          "DELETE",
+      ? await this.client.rest.delete(
           Endpoints.applicationGuildCommand(
             this.applicationId,
             this.guildId,
             this.id
           )
         )
-      : await this.client.rest.request(
-          "DELETE",
+      : await this.client.rest.delete(
           Endpoints.applicationCommand(this.applicationId, this.id)
         );
   }
@@ -148,8 +144,7 @@ export class ApplicationCommand extends Base {
       );
 
     return this.client.rest
-      .request(
-        "GET",
+      .get(
         Endpoints.applicationCommandPermissions(
           this.applicationId,
           this.guildId,
@@ -182,8 +177,7 @@ export class ApplicationCommand extends Base {
       );
 
     return this.client.rest
-      .request(
-        "PATCH",
+      .patch(
         Endpoints.applicationCommandPermissions(
           this.applicationId,
           this.guildId,

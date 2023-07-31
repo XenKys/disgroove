@@ -212,8 +212,7 @@ export class Interaction extends Base {
       case InteractionCallbackType.ChannelMessageWithSource:
       case InteractionCallbackType.UpdateMessage:
         {
-          await this.client.rest.request(
-            "POST",
+          await this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
             {
               json: {
@@ -244,8 +243,7 @@ export class Interaction extends Base {
         break;
       case InteractionCallbackType.ApplicationCommandAutocompleteResult:
         {
-          await this.client.rest.request(
-            "POST",
+          await this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
             {
               json: {
@@ -264,8 +262,7 @@ export class Interaction extends Base {
         break;
       case InteractionCallbackType.Modal:
         {
-          await this.client.rest.request(
-            "POST",
+          await this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
             {
               json: {
@@ -309,8 +306,7 @@ export class Interaction extends Base {
     threadId?: string;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "GET",
+      await this.client.rest.get(
         Endpoints.interactionOriginalMessage(this.id, this.token),
         {
           query: {
@@ -373,8 +369,7 @@ export class Interaction extends Base {
     attachments?: Array<JSONAttachment> | null;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.interactionOriginalMessage(this.id, this.token),
         {
           query: {
@@ -412,8 +407,7 @@ export class Interaction extends Base {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
   public async deleteOriginalResponse(): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
+    this.client.rest.delete(
       Endpoints.interactionOriginalMessage(this.id, this.token)
     );
   }
@@ -469,8 +463,7 @@ export class Interaction extends Base {
     flags?: MessageFlags | null;
     threadName?: string;
   }): Promise<void> {
-    await this.client.rest.request(
-      "POST",
+    await this.client.rest.post(
       Endpoints.webhook(this.applicationId, this.token),
       {
         json: {
@@ -511,8 +504,7 @@ export class Interaction extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "GET",
+      await this.client.rest.get(
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
         {
           query: {
@@ -578,8 +570,7 @@ export class Interaction extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "POST",
+      await this.client.rest.post(
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
         {
           query: {
@@ -617,8 +608,7 @@ export class Interaction extends Base {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message */
   public async deleteFollowupMessage(messageId: string): Promise<void> {
-    this.client.rest.request(
-      "DELETE",
+    this.client.rest.delete(
       Endpoints.webhookMessage(this.applicationId, this.token, messageId)
     );
   }

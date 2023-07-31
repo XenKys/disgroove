@@ -177,7 +177,7 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.request("PATCH", Endpoints.channel(this.id), {
+      await this.client.rest.patch(Endpoints.channel(this.id), {
         json: {
           name: options.name,
           type: options.type,
@@ -208,7 +208,7 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
   public async delete(reason?: string): Promise<JSONChannel> {
     return new Channel(
-      await this.client.rest.request("DELETE", Endpoints.channel(this.id), {
+      await this.client.rest.delete(Endpoints.channel(this.id), {
         reason,
       }),
       this.client
@@ -223,7 +223,7 @@ export class Channel extends Base {
     limit?: number;
   }): Promise<Array<Message>> {
     return this.client.rest
-      .request("GET", Endpoints.channelMessages(this.id), {
+      .get(Endpoints.channelMessages(this.id), {
         query: {
           around: options.around,
           before: options.before,
@@ -239,7 +239,7 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#get-channel-message */
   public async getMessage(): Promise<Message> {
     return new Message(
-      await this.client.rest.request("GET", Endpoints.channelMessages(this.id)),
+      await this.client.rest.get(Endpoints.channelMessages(this.id)),
       this.client
     );
   }
@@ -298,36 +298,32 @@ export class Channel extends Base {
     flags?: MessageFlags;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.channelMessages(this.id),
-        {
-          json: {
-            content: options.content,
-            nonce: options.nonce,
-            tts: options.tts,
-            embeds:
-              options.embeds !== undefined
-                ? embedsToRaw(options.embeds)
-                : undefined,
-            allowed_mentions: {
-              parse: options.allowedMentions?.parse,
-              roles: options.allowedMentions?.roles,
-              users: options.allowedMentions?.users,
-              replied_user: options.allowedMentions?.repliedUser,
-            },
-            message_reference: options.messageReference,
-            components:
-              options.components !== undefined
-                ? messageComponentToRaw(options.components)
-                : undefined,
-            stickers_ids: options.stickersIds,
-            attachments: options.attachments,
-            flags: options.flags,
+      await this.client.rest.post(Endpoints.channelMessages(this.id), {
+        json: {
+          content: options.content,
+          nonce: options.nonce,
+          tts: options.tts,
+          embeds:
+            options.embeds !== undefined
+              ? embedsToRaw(options.embeds)
+              : undefined,
+          allowed_mentions: {
+            parse: options.allowedMentions?.parse,
+            roles: options.allowedMentions?.roles,
+            users: options.allowedMentions?.users,
+            replied_user: options.allowedMentions?.repliedUser,
           },
-          files: options.files,
-        }
-      ),
+          message_reference: options.messageReference,
+          components:
+            options.components !== undefined
+              ? messageComponentToRaw(options.components)
+              : undefined,
+          stickers_ids: options.stickersIds,
+          attachments: options.attachments,
+          flags: options.flags,
+        },
+        files: options.files,
+      }),
       this.client
     );
   }
@@ -335,18 +331,14 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   public async crosspostMessage(messageId: string): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.channelMessage(this.id, messageId)
-      ),
+      await this.client.rest.post(Endpoints.channelMessage(this.id, messageId)),
       this.client
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public async createReaction(messageId: string, emoji: string): Promise<void> {
-    await this.client.rest.request(
-      "PUT",
+    await this.client.rest.put(
       Endpoints.channelMessageOwnReaction(this.id, messageId, emoji)
     );
   }
@@ -356,8 +348,7 @@ export class Channel extends Base {
     messageId: string,
     emoji: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.channelMessageOwnReaction(this.id, messageId, emoji)
     );
   }
@@ -368,8 +359,7 @@ export class Channel extends Base {
     emoji: string,
     userId: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.channelMessageUserReaction(this.id, messageId, emoji, userId)
     );
   }
@@ -384,16 +374,12 @@ export class Channel extends Base {
     }
   ): Promise<Array<User>> {
     return this.client.rest
-      .request(
-        "GET",
-        Endpoints.channelMessageReaction(this.id, messageId, emoji),
-        {
-          query: {
-            after: options?.after,
-            limit: options?.limit,
-          },
-        }
-      )
+      .get(Endpoints.channelMessageReaction(this.id, messageId, emoji), {
+        query: {
+          after: options?.after,
+          limit: options?.limit,
+        },
+      })
       .then((response) =>
         response.map((data: RawUser) => new User(data, this.client))
       );
@@ -401,8 +387,7 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
   public async deleteAllReactions(messageId: string): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.channelMessageAllReactions(this.id, messageId)
     );
   }
@@ -412,8 +397,7 @@ export class Channel extends Base {
     messageId: string,
     emoji: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.channelMessageReaction(this.id, messageId, emoji)
     );
   }
@@ -471,8 +455,7 @@ export class Channel extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.channelMessage(this.id, messageId),
         {
           json: {
@@ -505,8 +488,7 @@ export class Channel extends Base {
     messageId: string,
     reason?: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.channelMessage(this.id, messageId),
       {
         reason,
@@ -516,7 +498,7 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
   public async bulkDeleteMessages(messagesIds: Array<string>): Promise<void> {
-    await this.client.rest.request("POST", Endpoints.channelMessages(this.id), {
+    await this.client.rest.post(Endpoints.channelMessages(this.id), {
       json: {
         messages: messagesIds,
       },
@@ -533,8 +515,7 @@ export class Channel extends Base {
     },
     reason?: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "PUT",
+    await this.client.rest.put(
       Endpoints.channelPermission(this.id, overwriteId),
       {
         json: options,
@@ -546,7 +527,7 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
   public async getChannelInvites(): Promise<Array<Invite>> {
     return this.client.rest
-      .request("GET", Endpoints.channelInvites(this.id))
+      .get(Endpoints.channelInvites(this.id))
       .then((response) =>
         response.map((data: RawInvite) => new Invite(data, this.client))
       );
@@ -566,22 +547,18 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Invite> {
     return new Invite(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.channelInvites(this.id),
-        {
-          json: {
-            max_age: options.maxAge,
-            max_uses: options.maxUses,
-            temporary: options.temporary,
-            unique: options.unique,
-            target_type: options.targetType,
-            target_user_id: options.targetUserId,
-            target_application_id: options.targetApplicationId,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.post(Endpoints.channelInvites(this.id), {
+        json: {
+          max_age: options.maxAge,
+          max_uses: options.maxUses,
+          temporary: options.temporary,
+          unique: options.unique,
+          target_type: options.targetType,
+          target_user_id: options.targetUserId,
+          target_application_id: options.targetApplicationId,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -591,8 +568,7 @@ export class Channel extends Base {
     overwriteId: string,
     reason?: string
   ): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
+    await this.client.rest.delete(
       Endpoints.channelPermission(this.id, overwriteId),
       {
         reason,
@@ -604,8 +580,7 @@ export class Channel extends Base {
   public async followAnnouncementChannel(options: {
     webhookChannelId: string;
   }): Promise<JSONFollowedChannel> {
-    const data = await this.client.rest.request(
-      "POST",
+    const data = await this.client.rest.post(
       Endpoints.channelFollowers(this.id),
       {
         json: {
@@ -622,13 +597,13 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
   public async triggerTypingIndicator(): Promise<void> {
-    await this.client.rest.request("POST", Endpoints.channelTyping(this.id));
+    await this.client.rest.post(Endpoints.channelTyping(this.id));
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
   public async getPinnedMessages(): Promise<Array<Message>> {
     return this.client.rest
-      .request("GET", Endpoints.channelPins(this.id))
+      .get(Endpoints.channelPins(this.id))
       .then((response) =>
         response.map((data: RawMessage) => new Message(data, this.client))
       );
@@ -636,24 +611,16 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
   public async pinMessage(messageId: string, reason?: string): Promise<void> {
-    await this.client.rest.request(
-      "PUT",
-      Endpoints.channelPin(this.id, messageId),
-      {
-        reason,
-      }
-    );
+    await this.client.rest.put(Endpoints.channelPin(this.id, messageId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
   public async unpinMessage(messageId: string, reason?: string): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
-      Endpoints.channelPin(this.id, messageId),
-      {
-        reason,
-      }
-    );
+    await this.client.rest.delete(Endpoints.channelPin(this.id, messageId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
@@ -664,24 +631,17 @@ export class Channel extends Base {
       nick: string;
     }
   ): Promise<void> {
-    await this.client.rest.request(
-      "PUT",
-      Endpoints.channelRecipient(this.id, userId),
-      {
-        json: {
-          access_token: options.accessToken,
-          nick: options.nick,
-        },
-      }
-    );
+    await this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
+      json: {
+        access_token: options.accessToken,
+        nick: options.nick,
+      },
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
   public async groupDMRemoveRecipient(userId: string): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
-      Endpoints.channelRecipient(this.id, userId)
-    );
+    await this.client.rest.delete(Endpoints.channelRecipient(this.id, userId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
@@ -695,18 +655,14 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.threads(this.id, messageId),
-        {
-          json: {
-            name: options.name,
-            auto_archive_duration: options.autoArchiveDuration,
-            rate_limit_per_user: options.rateLimitPerUser,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.post(Endpoints.threads(this.id, messageId), {
+        json: {
+          name: options.name,
+          auto_archive_duration: options.autoArchiveDuration,
+          rate_limit_per_user: options.rateLimitPerUser,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -723,7 +679,7 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.request("POST", Endpoints.threads(this.id), {
+      await this.client.rest.post(Endpoints.threads(this.id), {
         json: {
           name: options.name,
           auto_archive_duration: options.autoArchiveDuration,
@@ -796,7 +752,7 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.request("POST", Endpoints.threads(this.id), {
+      await this.client.rest.post(Endpoints.threads(this.id), {
         json: {
           name: options.name,
           auto_archive_duration: options.autoArchiveDuration,
@@ -830,34 +786,22 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#join-thread */
   public async joinThread(): Promise<void> {
-    await this.client.rest.request(
-      "PUT",
-      Endpoints.threadMembers(this.id, "@me")
-    );
+    await this.client.rest.put(Endpoints.threadMembers(this.id, "@me"));
   }
 
   /** https://discord.com/developers/docs/resources/channel#add-thread-member */
   public async addThreadMember(userId: string): Promise<void> {
-    await this.client.rest.request(
-      "PUT",
-      Endpoints.threadMembers(this.id, userId)
-    );
+    await this.client.rest.put(Endpoints.threadMembers(this.id, userId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#leave-thread */
   public async leaveThread(): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
-      Endpoints.threadMembers(this.id, "@me")
-    );
+    await this.client.rest.delete(Endpoints.threadMembers(this.id, "@me"));
   }
 
   /** https://discord.com/developers/docs/resources/channel#remove-thread-member */
   public async removeThreadMember(userId: string): Promise<void> {
-    await this.client.rest.request(
-      "DELETE",
-      Endpoints.threadMembers(this.id, userId)
-    );
+    await this.client.rest.delete(Endpoints.threadMembers(this.id, userId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-thread-member */
@@ -867,8 +811,7 @@ export class Channel extends Base {
       withMembers?: boolean;
     }
   ): Promise<JSONThreadMember> {
-    const data: RawThreadMember = await this.client.rest.request(
-      "GET",
+    const data: RawThreadMember = await this.client.rest.get(
       Endpoints.threadMembers(this.id, userId),
       {
         query: {
@@ -895,17 +838,13 @@ export class Channel extends Base {
     after?: string;
     limit?: number;
   }): Promise<Array<JSONThreadMember>> {
-    return await this.client.rest.request(
-      "GET",
-      Endpoints.threadMembers(this.id),
-      {
-        query: {
-          with_member: options?.withMembers,
-          after: options?.after,
-          limit: options?.limit,
-        },
-      }
-    );
+    return await this.client.rest.get(Endpoints.threadMembers(this.id), {
+      query: {
+        with_member: options?.withMembers,
+        after: options?.after,
+        limit: options?.limit,
+      },
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
@@ -917,8 +856,7 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const data = await this.client.rest.request(
-      "GET",
+    const data = await this.client.rest.get(
       Endpoints.channelPublicArchivedThreads(this.id),
       {
         query: {
@@ -955,8 +893,7 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const data = await this.client.rest.request(
-      "GET",
+    const data = await this.client.rest.get(
       Endpoints.channelPrivateArchivedThreads(this.id),
       {
         query: {
@@ -993,8 +930,7 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const data = await this.client.rest.request(
-      "GET",
+    const data = await this.client.rest.get(
       Endpoints.channelJoinedPrivateArchivedThreads(this.id),
       {
         query: {
@@ -1031,17 +967,13 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Webhook> {
     return new Webhook(
-      await this.client.rest.request(
-        "POST",
-        Endpoints.channelWebhooks(this.id),
-        {
-          json: {
-            name: options.name,
-            avatar: options.avatar,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.post(Endpoints.channelWebhooks(this.id), {
+        json: {
+          name: options.name,
+          avatar: options.avatar,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -1049,7 +981,7 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/webhook#get-channel-webhooks */
   public async getWebhooks(): Promise<Array<Webhook>> {
     return this.client.rest
-      .request("GET", Endpoints.channelWebhooks(this.id))
+      .get(Endpoints.channelWebhooks(this.id))
       .then((response) =>
         response.map((data: RawWebhook) => new Webhook(data, this.client))
       );

@@ -59,22 +59,18 @@ export class GuildMember {
   ): Promise<void> {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.request(
-      "PATCH",
-      Endpoints.guildMember(this.guildId, this.user?.id),
-      {
-        json: {
-          nick: options.nick,
-          roles: options.roles,
-          mute: options.mute,
-          deaf: options.deaf,
-          channel_id: options.channelId,
-          communication_disabled_until: options.communicationDisabledUntil,
-          flags: options.flags,
-        },
-        reason,
-      }
-    );
+    this.client.rest.patch(Endpoints.guildMember(this.guildId, this.user?.id), {
+      json: {
+        nick: options.nick,
+        roles: options.roles,
+        mute: options.mute,
+        deaf: options.deaf,
+        channel_id: options.channelId,
+        communication_disabled_until: options.communicationDisabledUntil,
+        flags: options.flags,
+      },
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
@@ -83,8 +79,7 @@ export class GuildMember {
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.request(
-      "PUT",
+    this.client.rest.put(
       Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
       {
         reason,
@@ -98,8 +93,7 @@ export class GuildMember {
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.request(
-      "DELETE",
+    this.client.rest.delete(
       Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
       {
         reason,
@@ -113,13 +107,9 @@ export class GuildMember {
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.request(
-      "DELETE",
-      Endpoints.guildMember(this.guildId, this.user.id),
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildMember(this.guildId, this.user.id), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
@@ -134,17 +124,13 @@ export class GuildMember {
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.request(
-      "PUT",
-      Endpoints.guildBan(this.guildId, this.user.id),
-      {
-        json: {
-          delete_message_days: options?.deleteMessageDays,
-          delete_message_seconds: options?.deleteMessageSeconds,
-        },
-        reason,
-      }
-    );
+    this.client.rest.put(Endpoints.guildBan(this.guildId, this.user.id), {
+      json: {
+        delete_message_days: options?.deleteMessageDays,
+        delete_message_seconds: options?.deleteMessageSeconds,
+      },
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
@@ -152,13 +138,9 @@ export class GuildMember {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
 
-    this.client.rest.request(
-      "DELETE",
-      Endpoints.guildBan(this.user.id, userId),
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildBan(this.user.id, userId), {
+      reason,
+    });
   }
 
   public toJSON(): JSONGuildMember & { guildId?: string } {

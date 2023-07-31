@@ -38,8 +38,7 @@ export class GuildTemplate {
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
   public async sync(): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.request(
-        "PUT",
+      await this.client.rest.put(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
       ),
       this.client
@@ -52,8 +51,7 @@ export class GuildTemplate {
     description?: string | null;
   }): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.request(
-        "PATCH",
+      await this.client.rest.patch(
         Endpoints.guildTemplate(this.sourceGuildId, this.code),
         {
           json: {
@@ -68,8 +66,7 @@ export class GuildTemplate {
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async delete(): Promise<JSONGuildTemplate> {
-    const data: RawGuildTemplate = await this.client.rest.request(
-      "DELETE",
+    const data: RawGuildTemplate = await this.client.rest.delete(
       Endpoints.guildTemplate(this.sourceGuildId, this.code)
     );
 
