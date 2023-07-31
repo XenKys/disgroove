@@ -730,58 +730,117 @@ export class Client extends EventEmitter {
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
   }
 
-  private onWebSocketOpen(presence?: {
+  private async onWebSocketOpen(presence?: {
     activities: Array<JSONActivity>;
     status: StatusTypes;
     afk: boolean;
-  }): void {
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.Identify,
-        d: {
-          token: this.token,
-          intents: this.intents,
-          properties: {
-            os: process.platform,
-            browser: "disgroove",
-            device: "disgroove",
-          },
-          presence:
-            presence !== undefined
-              ? {
-                  since:
-                    presence.status === StatusTypes.Idle ? Date.now() : null,
-                  activities: presence.activities.map((activity) => ({
-                    name: activity.name,
-                    type: activity.type,
-                    url: activity.url,
-                    created_at: activity.createdAt,
-                    timestamps: activity.timestamps,
-                    application_id: activity.applicationId,
-                    details: activity.details,
-                    state: activity.state,
-                    party: activity.party,
-                    assets:
-                      activity.assets !== undefined
-                        ? {
-                            large_image: activity.assets.largeImage,
-                            large_text: activity.assets.largeText,
-                            small_image: activity.assets.smallImage,
-                            small_text: activity.assets.smallText,
-                          }
-                        : undefined,
-                    secrets: activity.secrets,
-                    instance: activity.instance,
-                    flags: activity.flags,
-                    buttons: activity.buttons,
-                  })),
-                  status: presence.status,
-                  afk: presence.afk,
-                }
-              : undefined,
-        },
-      })
+  }): Promise<void> {
+    const shards = await this.getGatewayBot().then(
+      (gatewayBot) => gatewayBot.shards
     );
+
+    if (shards > 0) {
+      for (let i = 0; i < shards; i++) {
+        this.ws.send(
+          JSON.stringify({
+            op: GatewayOPCodes.Identify,
+            d: {
+              token: this.token,
+              shard: [i, shards],
+              intents: this.intents,
+              properties: {
+                os: process.platform,
+                browser: "disgroove",
+                device: "disgroove",
+              },
+              presence:
+                presence !== undefined
+                  ? {
+                      since:
+                        presence.status === StatusTypes.Idle
+                          ? Date.now()
+                          : null,
+                      activities: presence.activities.map((activity) => ({
+                        name: activity.name,
+                        type: activity.type,
+                        url: activity.url,
+                        created_at: activity.createdAt,
+                        timestamps: activity.timestamps,
+                        application_id: activity.applicationId,
+                        details: activity.details,
+                        state: activity.state,
+                        party: activity.party,
+                        assets:
+                          activity.assets !== undefined
+                            ? {
+                                large_image: activity.assets.largeImage,
+                                large_text: activity.assets.largeText,
+                                small_image: activity.assets.smallImage,
+                                small_text: activity.assets.smallText,
+                              }
+                            : undefined,
+                        secrets: activity.secrets,
+                        instance: activity.instance,
+                        flags: activity.flags,
+                        buttons: activity.buttons,
+                      })),
+                      status: presence.status,
+                      afk: presence.afk,
+                    }
+                  : undefined,
+            },
+          })
+        );
+      }
+    } else {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.Identify,
+          d: {
+            token: this.token,
+            intents: this.intents,
+            properties: {
+              os: process.platform,
+              browser: "disgroove",
+              device: "disgroove",
+            },
+            presence:
+              presence !== undefined
+                ? {
+                    since:
+                      presence.status === StatusTypes.Idle ? Date.now() : null,
+                    activities: presence.activities.map((activity) => ({
+                      name: activity.name,
+                      type: activity.type,
+                      url: activity.url,
+                      created_at: activity.createdAt,
+                      timestamps: activity.timestamps,
+                      application_id: activity.applicationId,
+                      details: activity.details,
+                      state: activity.state,
+                      party: activity.party,
+                      assets:
+                        activity.assets !== undefined
+                          ? {
+                              large_image: activity.assets.largeImage,
+                              large_text: activity.assets.largeText,
+                              small_image: activity.assets.smallImage,
+                              small_text: activity.assets.smallText,
+                            }
+                          : undefined,
+                      secrets: activity.secrets,
+                      instance: activity.instance,
+                      flags: activity.flags,
+                      buttons: activity.buttons,
+                    })),
+                    status: presence.status,
+                    afk: presence.afk,
+                  }
+                : undefined,
+          },
+        })
+      );
+    }
   }
 
   private onWebSocketMessage(data: RawData): void {

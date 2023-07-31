@@ -74,7 +74,7 @@ client.on(GatewayEvents.InteractionCreate, async (interaction) => {
     await interaction.createResponse({
       type: InteractionCallbackType.ChannelMessageWithSource,
       data: {
-        content: "Pong!  ",
+        content: "Pong! �",
         flags: MessageFlags.Ephemeral,
       },
     }); // Reply with an ephemeral message "Pong! �"
