@@ -742,69 +742,16 @@ export class Client extends EventEmitter {
     status: StatusTypes;
     afk: boolean;
   }): Promise<void> {
-    const shards = await this.getGatewayBot().then(
-      (gatewayBot) => gatewayBot.shards
-    );
+    const gatewayBot = await this.getGatewayBot();
+    const shards = gatewayBot.shards;
 
-    if (shards > 0) {
-      for (let i = 0; i < shards; i++) {
-        this.ws.send(
-          JSON.stringify({
-            op: GatewayOPCodes.Identify,
-            d: {
-              token: this.token,
-              shard: [i, shards],
-              intents: this.intents,
-              properties: {
-                os: process.platform,
-                browser: "disgroove",
-                device: "disgroove",
-              },
-              presence:
-                presence !== undefined
-                  ? {
-                      since:
-                        presence.status === StatusTypes.Idle
-                          ? Date.now()
-                          : null,
-                      activities: presence.activities.map((activity) => ({
-                        name: activity.name,
-                        type: activity.type,
-                        url: activity.url,
-                        created_at: activity.createdAt,
-                        timestamps: activity.timestamps,
-                        application_id: activity.applicationId,
-                        details: activity.details,
-                        state: activity.state,
-                        party: activity.party,
-                        assets:
-                          activity.assets !== undefined
-                            ? {
-                                large_image: activity.assets.largeImage,
-                                large_text: activity.assets.largeText,
-                                small_image: activity.assets.smallImage,
-                                small_text: activity.assets.smallText,
-                              }
-                            : undefined,
-                        secrets: activity.secrets,
-                        instance: activity.instance,
-                        flags: activity.flags,
-                        buttons: activity.buttons,
-                      })),
-                      status: presence.status,
-                      afk: presence.afk,
-                    }
-                  : undefined,
-            },
-          })
-        );
-      }
-    } else {
+    for (let i = 0; i < shards; i++) {
       this.ws.send(
         JSON.stringify({
           op: GatewayOPCodes.Identify,
           d: {
             token: this.token,
+            shard: [i, shards],
             intents: this.intents,
             properties: {
               os: process.platform,
