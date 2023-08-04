@@ -99,250 +99,129 @@ export interface ClientOptions {
   };
 }
 
+export interface ClientEvents {
+  hello: [
+    {
+      heartbeatInterval: number;
+    }
+  ];
+  ready: [];
+  resumed: [];
+  reconnect: [];
+  invalidSession: [];
+  applicationCommandPermissionsUpdate: [
+    applicationCommandPermissions: JSONGuildApplicationCommandPermissions
+  ];
+  autoModerationRuleCreate: [autoModerationRule: AutoModerationRule];
+  autoModerationRuleUpdate: [autoModerationRule: AutoModerationRule];
+  autoModerationRuleDelete: [autoModerationRule: JSONAutoModerationRule];
+  autoModerationActionExecution: [
+    autoModerationAction: JSONAutoModerationActionExectionEventFields
+  ];
+  channelCreate: [channel: Channel];
+  channelUpdate: [channel: Channel];
+  channelDelete: [channel: JSONChannel];
+  threadCreate: [channel: Channel];
+  threadUpdate: [channel: Channel];
+  threadDelete: [channel: JSONChannel];
+  threadListSync: [threadList: JSONThreadListSyncEventFields];
+  threadMemberUpdate: [
+    threadMember: JSONThreadMember & {
+      guildId: string;
+    }
+  ];
+  threadMembersUpdate: [threadMembers: JSONThreadMembersUpdateEventFields];
+  channelPinsUpdate: [channelPins: JSONChannelPinsUpdateEventFields];
+  guildCreate: [guild: Guild];
+  guildUpdate: [guild: Guild];
+  guildDelete: [guild: JSONGuildDeleteEventFields];
+  guildAuditLogEntryCreate: [auditLogEntry: JSONAuditLogEntry];
+  guildBanAdd: [guildBan: JSONGuildBanAddEventFields];
+  guildBanRemove: [guildBan: JSONGuildBanRemoveEventFields];
+  guildEmojisUpdate: [guildEmojis: JSONGuildEmojisUpdateEventFields];
+  guildStickersUpdate: [guildStickers: JSONGuildStickersUpdateEventFields];
+  guildIntegrationsUpdate: [
+    guildIntergrations: JSONGuildIntegrationsUpdateEventFields
+  ];
+  guildMemberAdd: [guildMember: GuildMember];
+  guildMemberRemove: [guildMember: JSONGuildMemberRemoveEventFields];
+  guildMemberUpdate: [guildMember: JSONGuildMemberUpdateEventFields];
+  guildMembersChunk: [guildMembers: JSONGuildMembersChunkEventFields];
+  guildRoleCreate: [role: Role];
+  guildRoleUpdate: [role: JSONGuildRoleUpdateEventFields];
+  guildRoleDelete: [role: JSONGuildRoleDeleteEventFields];
+  guildScheduledEventCreate: [guildScheduledEvent: GuildScheduledEvent];
+  guildScheduledEventUpdate: [guildScheduledEvent: GuildScheduledEvent];
+  guildScheduledEventDelete: [guildScheduledEvent: JSONGuildScheduledEvent];
+  guildScheduledEventUserAdd: [
+    guildScheduledEvent: JSONGuildScheduledEventUserAddEventFields
+  ];
+  guildScheduledEventUserRemove: [
+    guildScheduledEvent: JSONGuildScheduledEventUserRemoveEventFields
+  ];
+  integrationCreate: [integration: Integration];
+  integrationUpdate: [integration: Integration];
+  integrationDelete: [integration: JSONIntegrationDeleteEventFields];
+  inviteCreate: [invite: JSONInviteCreateEventFields];
+  inviteDelete: [invite: JSONInviteDeleteEventFields];
+  messageCreate: [message: Message];
+  messageUpdate: [message: Message];
+  messageDelete: [message: JSONMessageDeleteEventFields];
+  messageDeleteBulk: [message: JSONMessageDeleteBulkEventFields];
+  messageReactionAdd: [message: JSONMessageReactionAddEventFields];
+  messageReactionRemove: [message: JSONMessageReactionRemoveEventFields];
+  messageReactionRemoveAll: [message: JSONMessageReactionRemoveAllEventFields];
+  messageReactionRemoveEmoji: [
+    message: JSONMessageReactionRemoveEmojiEventFields
+  ];
+  presenceUpdate: [guild: JSONPresenceUpdateEventFields];
+  typingStart: [channel: JSONTypingStartEventFields];
+  userUpdate: [user: User];
+  voiceStateUpdate: [member: JSONVoiceState];
+  voiceServerUpdate: [listener: JSONVoiceServerUpdateEventFields];
+  webhooksUpdate: [guild: JSONWebhooksUpdateEventFields];
+  interactionCreate: [interaction: Interaction];
+  stageInstanceCreate: [instance: StageInstance];
+  stageInstanceUpdate: [instance: StageInstance];
+  stageInstanceDelete: [instance: JSONStageInstance];
+}
+
 export declare interface Client extends EventEmitter {
-  on(
-    event: GatewayEvents.Hello,
-    listener: (listener: { heartbeatInterval: number }) => void
+  addListener<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
   ): this;
-  on(event: GatewayEvents.Ready, listener: () => void): this;
-  on(event: GatewayEvents.Resumed, listener: () => void): this;
-  on(event: GatewayEvents.Reconnect, listener: () => void): this;
-  on(event: GatewayEvents.InvalidSession, listener: () => void): this;
-  on(
-    event: GatewayEvents.ApplicationCommandPermissionsUpdate,
-    listener: (listener: JSONGuildApplicationCommandPermissions) => void
+  emit<K extends keyof ClientEvents>(
+    eventName: K,
+    ...args: ClientEvents[K]
+  ): boolean;
+  listenerCount(eventName: keyof ClientEvents): number;
+  listeners(eventName: keyof ClientEvents): Array<Function>;
+  off<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
   ): this;
-  on(
-    event: GatewayEvents.AutoModerationRuleCreate,
-    listener: (listener: AutoModerationRule) => void
+  on<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
   ): this;
-  on(
-    event: GatewayEvents.AutoModerationRuleUpdate,
-    listener: (listener: AutoModerationRule) => void
+  once<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
   ): this;
-  on(
-    event: GatewayEvents.AutoModerationRuleDelete,
-    listener: (listener: JSONAutoModerationRule) => void
+  prependListener<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
   ): this;
-  on(
-    event: GatewayEvents.AutoModerationActionExecution,
-    listener: (listener: JSONAutoModerationActionExectionEventFields) => void
+  prependOnceListener<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
   ): this;
-  on(
-    event: GatewayEvents.ChannelCreate,
-    listener: (listener: Channel) => void
-  ): this;
-  on(
-    event: GatewayEvents.ChannelUpdate,
-    listener: (listener: Channel) => void
-  ): this;
-  on(
-    event: GatewayEvents.ChannelDelete,
-    listener: (listener: JSONChannel) => void
-  ): this;
-  on(
-    event: GatewayEvents.ThreadCreate,
-    listener: (listener: Channel) => void
-  ): this;
-  on(
-    event: GatewayEvents.ThreadUpdate,
-    listener: (listener: Channel) => void
-  ): this;
-  on(
-    event: GatewayEvents.ThreadDelete,
-    listener: (listener: JSONChannel) => void
-  ): this;
-  on(
-    event: GatewayEvents.ThreadListSync,
-    listener: (listener: JSONThreadListSyncEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.ThreadMemberUpdate,
-    listener: (
-      listener: JSONThreadMember & {
-        guildId: string;
-      }
-    ) => void
-  ): this;
-  on(
-    event: GatewayEvents.ThreadMembersUpdate,
-    listener: (listener: JSONThreadMembersUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.ChannelPinsUpdate,
-    listener: (listener: JSONChannelPinsUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildCreate,
-    listener: (listener: Guild) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildUpdate,
-    listener: (listener: Guild) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildDelete,
-    listener: (listener: JSONGuildDeleteEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildAuditLogEntryCreate,
-    listener: (listener: JSONAuditLogEntry) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildBanAdd,
-    listener: (listener: JSONGuildBanAddEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildBanRemove,
-    listener: (listener: JSONGuildBanRemoveEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildEmojisUpdate,
-    listener: (listener: JSONGuildEmojisUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildStickersUpdate,
-    listener: (listener: JSONGuildStickersUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildIntegrationsUpdate,
-    listener: (listener: JSONGuildIntegrationsUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildMemberAdd,
-    listener: (listener: GuildMember) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildMemberRemove,
-    listener: (listener: JSONGuildMemberRemoveEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildMemberUpdate,
-    listener: (listener: JSONGuildMemberUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildMembersChunk,
-    listener: (listener: JSONGuildMembersChunkEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildRoleCreate,
-    listener: (listener: JSONGuildRoleCreateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildRoleUpdate,
-    listener: (listener: JSONGuildRoleUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildRoleDelete,
-    listener: (listener: JSONGuildRoleDeleteEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildScheduledEventCreate,
-    listener: (listener: GuildScheduledEvent) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildScheduledEventUpdate,
-    listener: (listener: GuildScheduledEvent) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildScheduledEventDelete,
-    listener: (listener: JSONGuildScheduledEvent) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildScheduledEventUserAdd,
-    listener: (listener: JSONGuildScheduledEventUserAddEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.GuildScheduledEventUserRemove,
-    listener: (listener: JSONGuildScheduledEventUserRemoveEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.IntegrationCreate,
-    listener: (listener: Integration) => void
-  ): this;
-  on(
-    event: GatewayEvents.IntegrationUpdate,
-    listener: (listener: Integration) => void
-  ): this;
-  on(
-    event: GatewayEvents.IntegrationDelete,
-    listener: (listener: JSONIntegrationDeleteEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.InviteCreate,
-    listener: (listener: JSONInviteCreateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.InviteDelete,
-    listener: (listener: JSONInviteDeleteEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageCreate,
-    listener: (listener: Message) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageUpdate,
-    listener: (listener: Message) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageDelete,
-    listener: (listener: JSONMessageDeleteEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageDeleteBulk,
-    listener: (listener: JSONMessageDeleteBulkEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageReactionAdd,
-    listener: (listener: JSONMessageReactionAddEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageReactionRemove,
-    listener: (listener: JSONMessageReactionRemoveEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageReactionRemoveAll,
-    listener: (listener: JSONMessageReactionRemoveAllEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.MessageReactionRemoveEmoji,
-    listener: (listener: JSONMessageReactionRemoveEmojiEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.PresenceUpdate,
-    listener: (listener: JSONPresenceUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.TypingStart,
-    listener: (listener: JSONTypingStartEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.VoiceStateUpdate,
-    listener: (listener: JSONVoiceState) => void
-  ): this;
-  on(
-    event: GatewayEvents.VoiceServerUpdate,
-    listener: (listener: JSONVoiceServerUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.WebhooksUpdate,
-    listener: (listener: JSONWebhooksUpdateEventFields) => void
-  ): this;
-  on(
-    event: GatewayEvents.InteractionCreate,
-    listener: (listener: Interaction) => void
-  ): this;
-  on(
-    event: GatewayEvents.StageInstanceCreate,
-    listener: (listener: StageInstance) => void
-  ): this;
-  on(
-    event: GatewayEvents.StageInstanceUpdate,
-    listener: (listener: StageInstance) => void
-  ): this;
-  on(
-    event: GatewayEvents.StageInstanceDelete,
-    listener: (listener: JSONStageInstance) => void
+  rawListeners(eventName: keyof ClientEvents): Array<Function>;
+  removeAllListeners(event?: keyof ClientEvents): this;
+  removeListener<K extends keyof ClientEvents>(
+    eveventName: K,
+    listener: (...args: ClientEvents[K]) => void
   ): this;
 }
 
