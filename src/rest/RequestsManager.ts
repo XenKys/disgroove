@@ -112,20 +112,15 @@ export class RequestsManager {
   }
 
   private checkRateLimits(headers: Headers) {
-    if (
-      !headers.has("X-RateLimit-Limit") &&
-      !headers.has("X-RateLimit-Remaining") &&
-      !headers.has("X-RateLimit-Reset")
-    )
-      return;
-    if (parseInt(headers.get("X-RateLimit-Remaining")!) !== 0) return;
+    if (!headers.has("X-RateLimit-Reset")) return;
+    if (headers.get("X-RateLimit-Remaining") !== "0") return;
 
     this.globalBlock = true;
 
     setTimeout(() => {
       this.globalBlock = false;
       this.process();
-    }, new Date(parseInt(headers.get("X-RateLimit-Reset")!)).getMilliseconds());
+    }, new Date(Number(headers.get("X-RateLimit-Reset"))).getMilliseconds());
   }
 
   public request<T>(
