@@ -410,39 +410,37 @@ export class Client extends EventEmitter {
   public async listNitroStickerPacks(): Promise<{
     stickerPacks: Array<JSONStickerPack>;
   }> {
-    const response: {
-      sticker_packs: Array<RawStickerPack>;
-    } = await this.rest.get<{
-      sticker_packs: Array<RawStickerPack>;
-    }>(Endpoints.nitroStickerPacks());
-
-    return {
-      stickerPacks: response.sticker_packs.map((stickerPack) => ({
-        id: stickerPack.id,
-        stickers: stickerPack.stickers.map((sticker) => ({
-          id: sticker.id,
-          packId: sticker.pack_id,
-          name: sticker.name,
-          description: sticker.description,
-          tags: sticker.tags,
-          asset: sticker.asset,
-          type: sticker.type,
-          formatType: sticker.format_type,
-          available: sticker.available,
-          guildId: sticker.guild_id,
-          user:
-            sticker.user !== undefined
-              ? new User(sticker.user, this)
-              : undefined,
-          sortValue: sticker.sort_value,
+    return this.rest
+      .get<{
+        sticker_packs: Array<RawStickerPack>;
+      }>(Endpoints.nitroStickerPacks())
+      .then((response) => ({
+        stickerPacks: response.sticker_packs.map((stickerPack) => ({
+          id: stickerPack.id,
+          stickers: stickerPack.stickers.map((sticker) => ({
+            id: sticker.id,
+            packId: sticker.pack_id,
+            name: sticker.name,
+            description: sticker.description,
+            tags: sticker.tags,
+            asset: sticker.asset,
+            type: sticker.type,
+            formatType: sticker.format_type,
+            available: sticker.available,
+            guildId: sticker.guild_id,
+            user:
+              sticker.user !== undefined
+                ? new User(sticker.user, this)
+                : undefined,
+            sortValue: sticker.sort_value,
+          })),
+          name: stickerPack.name,
+          skuId: stickerPack.sku_id,
+          coverStickerId: stickerPack.cover_sticker_id,
+          description: stickerPack.description,
+          bannerAssetId: stickerPack.banner_asset_id,
         })),
-        name: stickerPack.name,
-        skuId: stickerPack.sku_id,
-        coverStickerId: stickerPack.cover_sticker_id,
-        description: stickerPack.description,
-        bannerAssetId: stickerPack.banner_asset_id,
-      })),
-    };
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user */

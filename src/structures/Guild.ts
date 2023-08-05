@@ -818,40 +818,37 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-preview */
   public async getPreview(): Promise<JSONGuildPreview> {
-    const response: RawGuildPreview =
-      await this.client.rest.get<RawGuildPreview>(
-        Endpoints.guildPreview(this.id)
-      );
-
-    return {
-      id: response.id,
-      name: response.name,
-      icon: response.icon,
-      splash: response.splash,
-      discoverySplash: response.discovery_splash,
-      emojis: response.emojis.map((emoji) => emojiToJSON(emoji, this.client)),
-      features: response.features,
-      approximateMemberCount: response.approximate_member_count,
-      approximatePresenceCount: response.approximate_presence_count,
-      description: response.description,
-      stickers: response.stickers?.map((sticker) => ({
-        id: sticker.id,
-        packId: sticker.pack_id,
-        name: sticker.name,
-        description: sticker.description,
-        tags: sticker.tags,
-        asset: sticker.asset,
-        type: sticker.type,
-        formatType: sticker.format_type,
-        available: sticker.available,
-        guildId: sticker.guild_id,
-        user:
-          sticker.user !== undefined
-            ? new User(sticker.user, this.client)
-            : undefined,
-        sortValue: sticker.sort_value,
-      })),
-    };
+    return this.client.rest
+      .get<RawGuildPreview>(Endpoints.guildPreview(this.id))
+      .then((response) => ({
+        id: response.id,
+        name: response.name,
+        icon: response.icon,
+        splash: response.splash,
+        discoverySplash: response.discovery_splash,
+        emojis: response.emojis.map((emoji) => emojiToJSON(emoji, this.client)),
+        features: response.features,
+        approximateMemberCount: response.approximate_member_count,
+        approximatePresenceCount: response.approximate_presence_count,
+        description: response.description,
+        stickers: response.stickers?.map((sticker) => ({
+          id: sticker.id,
+          packId: sticker.pack_id,
+          name: sticker.name,
+          description: sticker.description,
+          tags: sticker.tags,
+          asset: sticker.asset,
+          type: sticker.type,
+          formatType: sticker.format_type,
+          available: sticker.available,
+          guildId: sticker.guild_id,
+          user:
+            sticker.user !== undefined
+              ? new User(sticker.user, this.client)
+              : undefined,
+          sortValue: sticker.sort_value,
+        })),
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
@@ -1189,14 +1186,12 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-ban */
   public async getBan(userId: string): Promise<JSONBan> {
-    const response: RawBan = await this.client.rest.get<RawBan>(
-      Endpoints.guildBan(this.id, userId)
-    );
-
-    return {
-      reason: response.reason,
-      user: new User(response.user, this.client),
-    };
+    return this.client.rest
+      .get<RawBan>(Endpoints.guildBan(this.id, userId))
+      .then((response) => ({
+        reason: response.reason,
+        user: new User(response.user, this.client),
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
@@ -1370,17 +1365,17 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
   public async getVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
-    const response = await this.client.rest.get<Array<RawVoiceRegion>>(
-      Endpoints.guildVoiceRegions(this.id)
-    );
-
-    return response.map((data) => ({
-      id: data.id,
-      name: data.name,
-      optimal: data.optimal,
-      deprecated: data.deprecated,
-      custom: data.custom,
-    }));
+    return this.client.rest
+      .get<Array<RawVoiceRegion>>(Endpoints.guildVoiceRegions(this.id))
+      .then((response) =>
+        response.map((data) => ({
+          id: data.id,
+          name: data.name,
+          optimal: data.optimal,
+          deprecated: data.deprecated,
+          custom: data.custom,
+        }))
+      );
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-invites */
@@ -1413,15 +1408,12 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-settings */
   public async getWidgetSettings(): Promise<JSONGuildWidgetSettings> {
-    const response: RawGuildWidgetSettings =
-      await this.client.rest.get<RawGuildWidgetSettings>(
-        Endpoints.guildWidgetSettings(this.id)
-      );
-
-    return {
-      enabled: response.enabled,
-      channelId: response.channel_id,
-    };
+    return this.client.rest
+      .get<RawGuildWidgetSettings>(Endpoints.guildWidgetSettings(this.id))
+      .then((response) => ({
+        enabled: response.enabled,
+        channelId: response.channel_id,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-widget */
@@ -1432,38 +1424,34 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONGuildWidgetSettings> {
-    const response: RawGuildWidgetSettings =
-      await this.client.rest.patch<RawGuildWidgetSettings>(
-        Endpoints.guildWidgetSettings(this.id),
-        {
-          json: {
-            enabled: options.enabled,
-            channel_id: options.channelId,
-          },
-          reason,
-        }
-      );
-
-    return {
-      enabled: response.enabled,
-      channelId: response.channel_id,
-    };
+    return this.client.rest
+      .patch<RawGuildWidgetSettings>(Endpoints.guildWidgetSettings(this.id), {
+        json: {
+          enabled: options.enabled,
+          channel_id: options.channelId,
+        },
+        reason,
+      })
+      .then((response) => ({
+        enabled: response.enabled,
+        channelId: response.channel_id,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget */
   public async getWidget(): Promise<JSONGuildWidget> {
-    const response: RawGuildWidget = await this.client.rest.get<RawGuildWidget>(
-      Endpoints.guildWidgetJSON(this.id)
-    );
-
-    return {
-      id: response.id,
-      name: response.name,
-      instantInvite: response.instant_invite,
-      channels: response.channels.map((data) => new Channel(data, this.client)),
-      members: response.members.map((data) => new User(data, this.client)),
-      presenceCount: response.presence_count,
-    };
+    return this.client.rest
+      .get<RawGuildWidget>(Endpoints.guildWidgetJSON(this.id))
+      .then((response) => ({
+        id: response.id,
+        name: response.name,
+        instantInvite: response.instant_invite,
+        channels: response.channels.map(
+          (data) => new Channel(data, this.client)
+        ),
+        members: response.members.map((data) => new User(data, this.client)),
+        presenceCount: response.presence_count,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
@@ -1487,20 +1475,17 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen */
   public async getWelcomeScreen(): Promise<JSONWelcomeScreen> {
-    const response: RawWelcomeScreen =
-      await this.client.rest.get<RawWelcomeScreen>(
-        Endpoints.guildWelcomeScreen(this.id)
-      );
-
-    return {
-      description: response.description,
-      welcomeChannels: response.welcome_channels.map((data) => ({
-        channelId: data.channel_id,
-        description: data.description,
-        emojiId: data.emoji_id,
-        emojiName: data.emoji_name,
-      })),
-    };
+    return this.client.rest
+      .get<RawWelcomeScreen>(Endpoints.guildWelcomeScreen(this.id))
+      .then((response) => ({
+        description: response.description,
+        welcomeChannels: response.welcome_channels.map((data) => ({
+          channelId: data.channel_id,
+          description: data.description,
+          emojiId: data.emoji_id,
+          emojiName: data.emoji_name,
+        })),
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
@@ -1512,59 +1497,52 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONWelcomeScreen> {
-    const response: RawWelcomeScreen =
-      await this.client.rest.patch<RawWelcomeScreen>(
-        Endpoints.guildWelcomeScreen(this.id),
-        {
-          json: {
-            enabled: options.enabled,
-            welcome_channels: options.welcomeChannels,
-            description: options.description,
-          },
-          reason,
-        }
-      );
-
-    return {
-      description: response.description,
-      welcomeChannels: response.welcome_channels.map((data) => ({
-        channelId: data.channel_id,
-        description: data.description,
-        emojiId: data.emoji_id,
-        emojiName: data.emoji_name,
-      })),
-    };
+    return this.client.rest
+      .patch<RawWelcomeScreen>(Endpoints.guildWelcomeScreen(this.id), {
+        json: {
+          enabled: options.enabled,
+          welcome_channels: options.welcomeChannels,
+          description: options.description,
+        },
+        reason,
+      })
+      .then((response) => ({
+        description: response.description,
+        welcomeChannels: response.welcome_channels.map((data) => ({
+          channelId: data.channel_id,
+          description: data.description,
+          emojiId: data.emoji_id,
+          emojiName: data.emoji_name,
+        })),
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-onboarding */
   public async getOnboarding(): Promise<JSONGuildOnboarding> {
-    const response: RawGuildOnboarding =
-      await this.client.rest.get<RawGuildOnboarding>(
-        Endpoints.guildOnboarding(this.id)
-      );
-
-    return {
-      guildId: response.guild_id,
-      prompts: response.prompts.map((prompt) => ({
-        id: prompt.id,
-        type: prompt.type,
-        options: prompt.options.map((option) => ({
-          id: option.id,
-          channelIds: option.channel_ids,
-          roleIds: option.role_ids,
-          emoji: emojiToJSON(option.emoji, this.client),
-          title: option.title,
-          description: option.description,
+    return this.client.rest
+      .get<RawGuildOnboarding>(Endpoints.guildOnboarding(this.id))
+      .then((response) => ({
+        guildId: response.guild_id,
+        prompts: response.prompts.map((prompt) => ({
+          id: prompt.id,
+          type: prompt.type,
+          options: prompt.options.map((option) => ({
+            id: option.id,
+            channelIds: option.channel_ids,
+            roleIds: option.role_ids,
+            emoji: emojiToJSON(option.emoji, this.client),
+            title: option.title,
+            description: option.description,
+          })),
+          title: prompt.title,
+          singleSelect: prompt.single_select,
+          required: prompt.required,
+          inOnboarding: prompt.in_onboarding,
         })),
-        title: prompt.title,
-        singleSelect: prompt.single_select,
-        required: prompt.required,
-        inOnboarding: prompt.in_onboarding,
-      })),
-      defaultChannelIds: response.default_channel_ids,
-      enabled: response.enabled,
-      mode: response.mode,
-    };
+        defaultChannelIds: response.default_channel_ids,
+        enabled: response.enabled,
+        mode: response.mode,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
@@ -1850,27 +1828,24 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async deleteTemplate(code: string): Promise<JSONGuildTemplate> {
-    const response: RawGuildTemplate =
-      await this.client.rest.delete<RawGuildTemplate>(
-        Endpoints.guildTemplate(this.id, code)
-      );
-
-    return {
-      code: response.code,
-      name: response.name,
-      description: response.description,
-      usageCount: response.usage_count,
-      creatorId: response.creator_id,
-      creator: new User(response.creator, this.client),
-      createdAt: response.created_at,
-      updatedAt: response.updated_at,
-      sourceGuildId: response.source_guild_id,
-      serializedSourceGuild: new Guild(
-        response.serialized_source_guild,
-        this.client
-      ),
-      isDirty: response.is_dirty,
-    };
+    return this.client.rest
+      .delete<RawGuildTemplate>(Endpoints.guildTemplate(this.id, code))
+      .then((response) => ({
+        code: response.code,
+        name: response.name,
+        description: response.description,
+        usageCount: response.usage_count,
+        creatorId: response.creator_id,
+        creator: new User(response.creator, this.client),
+        createdAt: response.created_at,
+        updatedAt: response.updated_at,
+        sourceGuildId: response.source_guild_id,
+        serializedSourceGuild: new Guild(
+          response.serialized_source_guild,
+          this.client
+        ),
+        isDirty: response.is_dirty,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
@@ -1900,27 +1875,25 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/sticker#get-guild-sticker */
   public async getSticker(stickerId: string): Promise<JSONSticker> {
-    const response: RawSticker = await this.client.rest.get<RawSticker>(
-      Endpoints.guildSticker(this.id, stickerId)
-    );
-
-    return {
-      id: response.id,
-      packId: response.pack_id,
-      name: response.name,
-      description: response.description,
-      tags: response.tags,
-      asset: response.asset,
-      type: response.type,
-      formatType: response.format_type,
-      available: response.available,
-      guildId: response.guild_id,
-      user:
-        response.user !== undefined
-          ? new User(response.user, this.client)
-          : undefined,
-      sortValue: response.sort_value,
-    };
+    return this.client.rest
+      .get<RawSticker>(Endpoints.guildSticker(this.id, stickerId))
+      .then((response) => ({
+        id: response.id,
+        packId: response.pack_id,
+        name: response.name,
+        description: response.description,
+        tags: response.tags,
+        asset: response.asset,
+        type: response.type,
+        formatType: response.format_type,
+        available: response.available,
+        guildId: response.guild_id,
+        user:
+          response.user !== undefined
+            ? new User(response.user, this.client)
+            : undefined,
+        sortValue: response.sort_value,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
@@ -1933,9 +1906,8 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONSticker> {
-    const response: RawSticker = await this.client.rest.post<RawSticker>(
-      Endpoints.guildStickers(this.id),
-      {
+    return this.client.rest
+      .post<RawSticker>(Endpoints.guildStickers(this.id), {
         json: {
           name: options.name,
           description: options.description,
@@ -1943,26 +1915,24 @@ export class Guild extends Base {
         },
         files: [options.file],
         reason,
-      }
-    );
-
-    return {
-      id: response.id,
-      packId: response.pack_id,
-      name: response.name,
-      description: response.description,
-      tags: response.tags,
-      asset: response.asset,
-      type: response.type,
-      formatType: response.format_type,
-      available: response.available,
-      guildId: response.guild_id,
-      user:
-        response.user !== undefined
-          ? new User(response.user, this.client)
-          : undefined,
-      sortValue: response.sort_value,
-    };
+      })
+      .then((response) => ({
+        id: response.id,
+        packId: response.pack_id,
+        name: response.name,
+        description: response.description,
+        tags: response.tags,
+        asset: response.asset,
+        type: response.type,
+        formatType: response.format_type,
+        available: response.available,
+        guildId: response.guild_id,
+        user:
+          response.user !== undefined
+            ? new User(response.user, this.client)
+            : undefined,
+        sortValue: response.sort_value,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
@@ -1975,35 +1945,32 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONSticker> {
-    const response: RawSticker = await this.client.rest.patch<RawSticker>(
-      Endpoints.guildSticker(this.id, stickerId),
-      {
+    return this.client.rest
+      .patch<RawSticker>(Endpoints.guildSticker(this.id, stickerId), {
         json: {
           name: options.name,
           description: options.description,
           tags: options.tags,
         },
         reason,
-      }
-    );
-
-    return {
-      id: response.id,
-      packId: response.pack_id,
-      name: response.name,
-      description: response.description,
-      tags: response.tags,
-      asset: response.asset,
-      type: response.type,
-      formatType: response.format_type,
-      available: response.available,
-      guildId: response.guild_id,
-      user:
-        response.user !== undefined
-          ? new User(response.user, this.client)
-          : undefined,
-      sortValue: response.sort_value,
-    };
+      })
+      .then((response) => ({
+        id: response.id,
+        packId: response.pack_id,
+        name: response.name,
+        description: response.description,
+        tags: response.tags,
+        asset: response.asset,
+        type: response.type,
+        formatType: response.format_type,
+        available: response.available,
+        guildId: response.guild_id,
+        user:
+          response.user !== undefined
+            ? new User(response.user, this.client)
+            : undefined,
+        sortValue: response.sort_value,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */

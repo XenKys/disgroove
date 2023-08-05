@@ -66,27 +66,26 @@ export class GuildTemplate {
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async delete(): Promise<JSONGuildTemplate> {
-    const response: RawGuildTemplate =
-      await this.client.rest.delete<RawGuildTemplate>(
+    return this.client.rest
+      .delete<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
-      );
-
-    return {
-      code: response.code,
-      name: response.name,
-      description: response.description,
-      usageCount: response.usage_count,
-      creatorId: response.creator_id,
-      creator: new User(response.creator, this.client),
-      createdAt: response.created_at,
-      updatedAt: response.updated_at,
-      sourceGuildId: response.source_guild_id,
-      serializedSourceGuild: new Guild(
-        response.serialized_source_guild,
-        this.client
-      ),
-      isDirty: response.is_dirty,
-    };
+      )
+      .then((response) => ({
+        code: response.code,
+        name: response.name,
+        description: response.description,
+        usageCount: response.usage_count,
+        creatorId: response.creator_id,
+        creator: new User(response.creator, this.client),
+        createdAt: response.created_at,
+        updatedAt: response.updated_at,
+        sourceGuildId: response.source_guild_id,
+        serializedSourceGuild: new Guild(
+          response.serialized_source_guild,
+          this.client
+        ),
+        isDirty: response.is_dirty,
+      }));
   }
 
   public toJSON(): JSONGuildTemplate {

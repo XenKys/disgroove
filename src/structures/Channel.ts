@@ -571,19 +571,16 @@ export class Channel extends Base {
   public async followAnnouncementChannel(options: {
     webhookChannelId: string;
   }): Promise<JSONFollowedChannel> {
-    const response = await this.client.rest.post<RawFollowedChannel>(
-      Endpoints.channelFollowers(this.id),
-      {
+    return this.client.rest
+      .post<RawFollowedChannel>(Endpoints.channelFollowers(this.id), {
         json: {
           webhook_channel_id: options.webhookChannelId,
         },
-      }
-    );
-
-    return {
-      channelId: response.channel_id,
-      webhookId: response.webhook_id,
-    };
+      })
+      .then((response) => ({
+        channelId: response.channel_id,
+        webhookId: response.webhook_id,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
@@ -805,26 +802,22 @@ export class Channel extends Base {
       withMember?: boolean;
     }
   ): Promise<JSONThreadMember> {
-    const response: RawThreadMember =
-      await this.client.rest.get<RawThreadMember>(
-        Endpoints.threadMembers(this.id, userId),
-        {
-          query: {
-            with_member: options?.withMember,
-          },
-        }
-      );
-
-    return {
-      id: response.id,
-      userId: response.user_id,
-      joinTimestamp: response.join_timestamp,
-      flags: response.flags,
-      member:
-        response.member !== undefined
-          ? new GuildMember(response.member, this.client)
-          : undefined,
-    };
+    return this.client.rest
+      .get<RawThreadMember>(Endpoints.threadMembers(this.id, userId), {
+        query: {
+          with_member: options?.withMember,
+        },
+      })
+      .then((response) => ({
+        id: response.id,
+        userId: response.user_id,
+        joinTimestamp: response.join_timestamp,
+        flags: response.flags,
+        member:
+          response.member !== undefined
+            ? new GuildMember(response.member, this.client)
+            : undefined,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-thread-members */
@@ -833,7 +826,7 @@ export class Channel extends Base {
     after?: string;
     limit?: number;
   }): Promise<Array<JSONThreadMember>> {
-    return await this.client.rest
+    return this.client.rest
       .get<Array<RawThreadMember>>(Endpoints.threadMembers(this.id), {
         query: {
           with_member: options?.withMember,
@@ -864,31 +857,31 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const response = await this.client.rest.get<{
-      threads: Array<RawChannel>;
-      members: Array<RawThreadMember>;
-      has_more: boolean;
-    }>(Endpoints.channelPublicArchivedThreads(this.id), {
-      query: {
-        before: options?.before,
-        limit: options?.limit,
-      },
-    });
-
-    return {
-      threads: response.threads.map((data) => new Channel(data, this.client)),
-      members: response.members.map((data) => ({
-        id: data.id,
-        userId: data.user_id,
-        joinTimestamp: data.join_timestamp,
-        flags: data.flags,
-        member:
-          data.member !== undefined
-            ? new GuildMember(data.member, this.client)
-            : undefined,
-      })),
-      hasMore: response.has_more,
-    };
+    return this.client.rest
+      .get<{
+        threads: Array<RawChannel>;
+        members: Array<RawThreadMember>;
+        has_more: boolean;
+      }>(Endpoints.channelPublicArchivedThreads(this.id), {
+        query: {
+          before: options?.before,
+          limit: options?.limit,
+        },
+      })
+      .then((response) => ({
+        threads: response.threads.map((data) => new Channel(data, this.client)),
+        members: response.members.map((data) => ({
+          id: data.id,
+          userId: data.user_id,
+          joinTimestamp: data.join_timestamp,
+          flags: data.flags,
+          member:
+            data.member !== undefined
+              ? new GuildMember(data.member, this.client)
+              : undefined,
+        })),
+        hasMore: response.has_more,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
@@ -900,31 +893,31 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const response = await this.client.rest.get<{
-      threads: Array<RawChannel>;
-      members: Array<RawThreadMember>;
-      has_more: boolean;
-    }>(Endpoints.channelPrivateArchivedThreads(this.id), {
-      query: {
-        before: options?.before,
-        limit: options?.limit,
-      },
-    });
-
-    return {
-      threads: response.threads.map((data) => new Channel(data, this.client)),
-      members: response.members.map((data) => ({
-        id: data.id,
-        userId: data.user_id,
-        joinTimestamp: data.join_timestamp,
-        flags: data.flags,
-        member:
-          data.member !== undefined
-            ? new GuildMember(data.member, this.client)
-            : undefined,
-      })),
-      hasMore: response.has_more,
-    };
+    return this.client.rest
+      .get<{
+        threads: Array<RawChannel>;
+        members: Array<RawThreadMember>;
+        has_more: boolean;
+      }>(Endpoints.channelPrivateArchivedThreads(this.id), {
+        query: {
+          before: options?.before,
+          limit: options?.limit,
+        },
+      })
+      .then((response) => ({
+        threads: response.threads.map((data) => new Channel(data, this.client)),
+        members: response.members.map((data) => ({
+          id: data.id,
+          userId: data.user_id,
+          joinTimestamp: data.join_timestamp,
+          flags: data.flags,
+          member:
+            data.member !== undefined
+              ? new GuildMember(data.member, this.client)
+              : undefined,
+        })),
+        hasMore: response.has_more,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
@@ -936,31 +929,31 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const response = await this.client.rest.get<{
-      threads: Array<RawChannel>;
-      members: Array<RawThreadMember>;
-      has_more: boolean;
-    }>(Endpoints.channelJoinedPrivateArchivedThreads(this.id), {
-      query: {
-        before: options?.before,
-        limit: options?.limit,
-      },
-    });
-
-    return {
-      threads: response.threads.map((data) => new Channel(data, this.client)),
-      members: response.members.map((data) => ({
-        id: data.id,
-        userId: data.user_id,
-        joinTimestamp: data.join_timestamp,
-        flags: data.flags,
-        member:
-          data.member !== undefined
-            ? new GuildMember(data.member, this.client)
-            : undefined,
-      })),
-      hasMore: response.has_more,
-    };
+    return this.client.rest
+      .get<{
+        threads: Array<RawChannel>;
+        members: Array<RawThreadMember>;
+        has_more: boolean;
+      }>(Endpoints.channelJoinedPrivateArchivedThreads(this.id), {
+        query: {
+          before: options?.before,
+          limit: options?.limit,
+        },
+      })
+      .then((response) => ({
+        threads: response.threads.map((data) => new Channel(data, this.client)),
+        members: response.members.map((data) => ({
+          id: data.id,
+          userId: data.user_id,
+          joinTimestamp: data.join_timestamp,
+          flags: data.flags,
+          member:
+            data.member !== undefined
+              ? new GuildMember(data.member, this.client)
+              : undefined,
+        })),
+        hasMore: response.has_more,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/webhook#create-webhook */

@@ -144,27 +144,24 @@ export class User extends Base {
 
   /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
   public async getUserApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
-    const response: RawApplicationRoleConnection =
-      await this.client.rest.get<RawApplicationRoleConnection>(
+    return this.client.rest
+      .get<RawApplicationRoleConnection>(
         Endpoints.userApplicationRoleConnection(
-          (
-            await this.client.getApplication()
-          ).id
+          (await this.client.getApplication()).id
         )
-      );
-
-    return {
-      platformName: response.platform_name,
-      platformUsername: response.platform_username,
-      metadata: {
-        type: response.metadata.type,
-        key: response.metadata.key,
-        name: response.metadata.name,
-        nameLocalizations: response.metadata.name_localizations,
-        description: response.metadata.description,
-        descriptionLocalizations: response.metadata.description_localizations,
-      },
-    };
+      )
+      .then((response) => ({
+        platformName: response.platform_name,
+        platformUsername: response.platform_username,
+        metadata: {
+          type: response.metadata.type,
+          key: response.metadata.key,
+          name: response.metadata.name,
+          nameLocalizations: response.metadata.name_localizations,
+          description: response.metadata.description,
+          descriptionLocalizations: response.metadata.description_localizations,
+        },
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
@@ -180,12 +177,10 @@ export class User extends Base {
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
     };
   }): Promise<JSONApplicationRoleConnection> {
-    const response: RawApplicationRoleConnection =
-      await this.client.rest.put<RawApplicationRoleConnection>(
+    return this.client.rest
+      .put<RawApplicationRoleConnection>(
         Endpoints.userApplicationRoleConnection(
-          (
-            await this.client.getApplication()
-          ).id
+          (await this.client.getApplication()).id
         ),
         {
           json: {
@@ -194,20 +189,19 @@ export class User extends Base {
             metadata: options.metadata,
           },
         }
-      );
-
-    return {
-      platformName: response.platform_name,
-      platformUsername: response.platform_username,
-      metadata: {
-        type: response.metadata.type,
-        key: response.metadata.key,
-        name: response.metadata.name,
-        nameLocalizations: response.metadata.name_localizations,
-        description: response.metadata.description,
-        descriptionLocalizations: response.metadata.description_localizations,
-      },
-    };
+      )
+      .then((response) => ({
+        platformName: response.platform_name,
+        platformUsername: response.platform_username,
+        metadata: {
+          type: response.metadata.type,
+          key: response.metadata.key,
+          name: response.metadata.name,
+          nameLocalizations: response.metadata.name_localizations,
+          description: response.metadata.description,
+          descriptionLocalizations: response.metadata.description_localizations,
+        },
+      }));
   }
 
   public toJSON(): JSONUser {

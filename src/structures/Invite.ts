@@ -69,52 +69,52 @@ export class Invite {
 
   /** https://discord.com/developers/docs/resources/invite#delete-invite */
   public async delete(reason?: string): Promise<JSONInvite> {
-    const response: RawInvite = await this.client.rest.delete<RawInvite>(
-      Endpoints.invite(this.code),
-      {
+    return this.client.rest
+      .delete<RawInvite>(Endpoints.invite(this.code), {
         reason,
-      }
-    );
-
-    return {
-      code: response.code,
-      guild:
-        response.guild !== undefined
-          ? new Guild(response.guild, this.client)
-          : undefined,
-      channel: new Channel(response.channel, this.client),
-      inviter:
-        response.inviter !== undefined
-          ? new User(response.inviter, this.client)
-          : undefined,
-      targetType: response.target_type,
-      targetUser:
-        response.target_user !== undefined
-          ? new User(response.target_user, this.client)
-          : undefined,
-      targetApplication:
-        response.target_application !== undefined
-          ? new Application(response.target_application, this.client)
-          : undefined,
-      approximatePresenceCount: response.approximate_presence_count,
-      approximateMemberCount: response.approximate_member_count,
-      expiresAt: response.expires_at,
-      stageInstance:
-        response.stage_instance !== undefined
-          ? {
-              members: response.stage_instance.members.map(
-                (member) => new GuildMember(member, this.client)
-              ),
-              participantCount: response.stage_instance.participant_count,
-              speakerCount: response.stage_instance.speaker_count,
-              topic: response.stage_instance.topic,
-            }
-          : undefined,
-      guildScheduledEvent:
-        response.guild_scheduled_event !== undefined
-          ? new GuildScheduledEvent(response.guild_scheduled_event, this.client)
-          : undefined,
-    };
+      })
+      .then((response) => ({
+        code: response.code,
+        guild:
+          response.guild !== undefined
+            ? new Guild(response.guild, this.client)
+            : undefined,
+        channel: new Channel(response.channel, this.client),
+        inviter:
+          response.inviter !== undefined
+            ? new User(response.inviter, this.client)
+            : undefined,
+        targetType: response.target_type,
+        targetUser:
+          response.target_user !== undefined
+            ? new User(response.target_user, this.client)
+            : undefined,
+        targetApplication:
+          response.target_application !== undefined
+            ? new Application(response.target_application, this.client)
+            : undefined,
+        approximatePresenceCount: response.approximate_presence_count,
+        approximateMemberCount: response.approximate_member_count,
+        expiresAt: response.expires_at,
+        stageInstance:
+          response.stage_instance !== undefined
+            ? {
+                members: response.stage_instance.members.map(
+                  (member) => new GuildMember(member, this.client)
+                ),
+                participantCount: response.stage_instance.participant_count,
+                speakerCount: response.stage_instance.speaker_count,
+                topic: response.stage_instance.topic,
+              }
+            : undefined,
+        guildScheduledEvent:
+          response.guild_scheduled_event !== undefined
+            ? new GuildScheduledEvent(
+                response.guild_scheduled_event,
+                this.client
+              )
+            : undefined,
+      }));
   }
 
   public toJSON(): JSONInvite {
