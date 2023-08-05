@@ -26,7 +26,7 @@ export class RequestsManager {
     this.globalBlock = false;
   }
 
-  private async process(): Promise<any> {
+  private process<T>(): Promise<T> {
     return new Promise(async (resolve, reject) => {
       if (this.queue.length === 0 || this.globalBlock) return;
 
@@ -99,9 +99,9 @@ export class RequestsManager {
         ) {
           reject(new Error(`[${response.status}] ${response.statusText}`));
         } else if (response.status === HTTPResponseCodes.NoContent) {
-          resolve(null);
+          resolve(null as T);
         } else {
-          resolve(response.json());
+          resolve(response.json() as T);
         }
       } catch (err) {
         reject(err);
@@ -128,7 +128,7 @@ export class RequestsManager {
     }, new Date(parseInt(headers.get("X-RateLimit-Reset")!)).getMilliseconds());
   }
 
-  public async request(
+  public request<T>(
     method: string,
     endpoint: string,
     data?: {
@@ -137,7 +137,7 @@ export class RequestsManager {
       reason?: string;
       query?: Record<string, any>;
     }
-  ): Promise<any> {
+  ): Promise<T> {
     return new Promise(async (resolve) => {
       this.queue.push({ method, endpoint, data });
 

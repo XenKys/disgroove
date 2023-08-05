@@ -38,7 +38,7 @@ export class GuildTemplate {
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
   public async sync(): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.put(
+      await this.client.rest.put<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
       ),
       this.client
@@ -51,7 +51,7 @@ export class GuildTemplate {
     description?: string | null;
   }): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code),
         {
           json: {
@@ -66,25 +66,26 @@ export class GuildTemplate {
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async delete(): Promise<JSONGuildTemplate> {
-    const data: RawGuildTemplate = await this.client.rest.delete(
-      Endpoints.guildTemplate(this.sourceGuildId, this.code)
-    );
+    const response: RawGuildTemplate =
+      await this.client.rest.delete<RawGuildTemplate>(
+        Endpoints.guildTemplate(this.sourceGuildId, this.code)
+      );
 
     return {
-      code: data.code,
-      name: data.name,
-      description: data.description,
-      usageCount: data.usage_count,
-      creatorId: data.creator_id,
-      creator: new User(data.creator, this.client),
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
-      sourceGuildId: data.source_guild_id,
+      code: response.code,
+      name: response.name,
+      description: response.description,
+      usageCount: response.usage_count,
+      creatorId: response.creator_id,
+      creator: new User(response.creator, this.client),
+      createdAt: response.created_at,
+      updatedAt: response.updated_at,
+      sourceGuildId: response.source_guild_id,
       serializedSourceGuild: new Guild(
-        data.serialized_source_guild,
+        response.serialized_source_guild,
         this.client
       ),
-      isDirty: data.is_dirty,
+      isDirty: response.is_dirty,
     };
   }
 

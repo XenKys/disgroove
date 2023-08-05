@@ -62,18 +62,21 @@ export class Role extends Base {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     return new Role(
-      await this.client.rest.patch(Endpoints.guildRole(this.guildId, this.id), {
-        json: {
-          name: options.name,
-          permissions: options.permissions,
-          color: options.color,
-          hoist: options.hoist,
-          icon: options.icon,
-          unicode_emoji: options.unicodeEmoji,
-          mentionable: options.mentionable,
-        },
-        reason,
-      }),
+      await this.client.rest.patch<RawRole>(
+        Endpoints.guildRole(this.guildId, this.id),
+        {
+          json: {
+            name: options.name,
+            permissions: options.permissions,
+            color: options.color,
+            hoist: options.hoist,
+            icon: options.icon,
+            unicode_emoji: options.unicodeEmoji,
+            mentionable: options.mentionable,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }

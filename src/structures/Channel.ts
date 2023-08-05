@@ -16,6 +16,7 @@ import type {
   JSONThreadMember,
   JSONThreadMetadata,
   RawChannel,
+  RawFollowedChannel,
   RawInvite,
   RawMessage,
   RawThreadMember,
@@ -177,7 +178,7 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.patch(Endpoints.channel(this.id), {
+      await this.client.rest.patch<RawChannel>(Endpoints.channel(this.id), {
         json: {
           name: options.name,
           type: options.type,
@@ -208,7 +209,7 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
   public async delete(reason?: string): Promise<JSONChannel> {
     return new Channel(
-      await this.client.rest.delete(Endpoints.channel(this.id), {
+      await this.client.rest.delete<RawChannel>(Endpoints.channel(this.id), {
         reason,
       }),
       this.client
@@ -223,7 +224,7 @@ export class Channel extends Base {
     limit?: number;
   }): Promise<Array<Message>> {
     return this.client.rest
-      .get(Endpoints.channelMessages(this.id), {
+      .get<Array<RawMessage>>(Endpoints.channelMessages(this.id), {
         query: {
           around: options.around,
           before: options.before,
@@ -232,14 +233,16 @@ export class Channel extends Base {
         },
       })
       .then((response) =>
-        response.map((data: RawMessage) => new Message(data, this.client))
+        response.map((data) => new Message(data, this.client))
       );
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-message */
   public async getMessage(): Promise<Message> {
     return new Message(
-      await this.client.rest.get(Endpoints.channelMessages(this.id)),
+      await this.client.rest.get<RawMessage>(
+        Endpoints.channelMessages(this.id)
+      ),
       this.client
     );
   }
@@ -298,32 +301,35 @@ export class Channel extends Base {
     flags?: MessageFlags;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.post(Endpoints.channelMessages(this.id), {
-        json: {
-          content: options.content,
-          nonce: options.nonce,
-          tts: options.tts,
-          embeds:
-            options.embeds !== undefined
-              ? embedsToRaw(options.embeds)
-              : undefined,
-          allowed_mentions: {
-            parse: options.allowedMentions?.parse,
-            roles: options.allowedMentions?.roles,
-            users: options.allowedMentions?.users,
-            replied_user: options.allowedMentions?.repliedUser,
+      await this.client.rest.post<RawMessage>(
+        Endpoints.channelMessages(this.id),
+        {
+          json: {
+            content: options.content,
+            nonce: options.nonce,
+            tts: options.tts,
+            embeds:
+              options.embeds !== undefined
+                ? embedsToRaw(options.embeds)
+                : undefined,
+            allowed_mentions: {
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
+            },
+            message_reference: options.messageReference,
+            components:
+              options.components !== undefined
+                ? messageComponentToRaw(options.components)
+                : undefined,
+            stickers_ids: options.stickersIds,
+            attachments: options.attachments,
+            flags: options.flags,
           },
-          message_reference: options.messageReference,
-          components:
-            options.components !== undefined
-              ? messageComponentToRaw(options.components)
-              : undefined,
-          stickers_ids: options.stickersIds,
-          attachments: options.attachments,
-          flags: options.flags,
-        },
-        files: options.files,
-      }),
+          files: options.files,
+        }
+      ),
       this.client
     );
   }
@@ -331,7 +337,9 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   public async crosspostMessage(messageId: string): Promise<Message> {
     return new Message(
-      await this.client.rest.post(Endpoints.channelMessage(this.id, messageId)),
+      await this.client.rest.post<RawMessage>(
+        Endpoints.channelMessage(this.id, messageId)
+      ),
       this.client
     );
   }
@@ -374,15 +382,16 @@ export class Channel extends Base {
     }
   ): Promise<Array<User>> {
     return this.client.rest
-      .get(Endpoints.channelMessageReaction(this.id, messageId, emoji), {
-        query: {
-          after: options?.after,
-          limit: options?.limit,
-        },
-      })
-      .then((response) =>
-        response.map((data: RawUser) => new User(data, this.client))
-      );
+      .get<Array<RawUser>>(
+        Endpoints.channelMessageReaction(this.id, messageId, emoji),
+        {
+          query: {
+            after: options?.after,
+            limit: options?.limit,
+          },
+        }
+      )
+      .then((response) => response.map((data) => new User(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
@@ -455,7 +464,7 @@ export class Channel extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.id, messageId),
         {
           json: {
@@ -527,9 +536,9 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
   public async getChannelInvites(): Promise<Array<Invite>> {
     return this.client.rest
-      .get(Endpoints.channelInvites(this.id))
+      .get<Array<RawInvite>>(Endpoints.channelInvites(this.id))
       .then((response) =>
-        response.map((data: RawInvite) => new Invite(data, this.client))
+        response.map((data) => new Invite(data, this.client))
       );
   }
 
@@ -547,18 +556,21 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Invite> {
     return new Invite(
-      await this.client.rest.post(Endpoints.channelInvites(this.id), {
-        json: {
-          max_age: options.maxAge,
-          max_uses: options.maxUses,
-          temporary: options.temporary,
-          unique: options.unique,
-          target_type: options.targetType,
-          target_user_id: options.targetUserId,
-          target_application_id: options.targetApplicationId,
-        },
-        reason,
-      }),
+      await this.client.rest.post<RawInvite>(
+        Endpoints.channelInvites(this.id),
+        {
+          json: {
+            max_age: options.maxAge,
+            max_uses: options.maxUses,
+            temporary: options.temporary,
+            unique: options.unique,
+            target_type: options.targetType,
+            target_user_id: options.targetUserId,
+            target_application_id: options.targetApplicationId,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -580,7 +592,7 @@ export class Channel extends Base {
   public async followAnnouncementChannel(options: {
     webhookChannelId: string;
   }): Promise<JSONFollowedChannel> {
-    const data = await this.client.rest.post(
+    const response = await this.client.rest.post<RawFollowedChannel>(
       Endpoints.channelFollowers(this.id),
       {
         json: {
@@ -590,8 +602,8 @@ export class Channel extends Base {
     );
 
     return {
-      channelId: data.id,
-      webhookId: data.webhook_id,
+      channelId: response.channel_id,
+      webhookId: response.webhook_id,
     };
   }
 
@@ -603,9 +615,9 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
   public async getPinnedMessages(): Promise<Array<Message>> {
     return this.client.rest
-      .get(Endpoints.channelPins(this.id))
+      .get<Array<RawMessage>>(Endpoints.channelPins(this.id))
       .then((response) =>
-        response.map((data: RawMessage) => new Message(data, this.client))
+        response.map((data) => new Message(data, this.client))
       );
   }
 
@@ -655,14 +667,17 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post(Endpoints.threads(this.id, messageId), {
-        json: {
-          name: options.name,
-          auto_archive_duration: options.autoArchiveDuration,
-          rate_limit_per_user: options.rateLimitPerUser,
-        },
-        reason,
-      }),
+      await this.client.rest.post<RawChannel>(
+        Endpoints.threads(this.id, messageId),
+        {
+          json: {
+            name: options.name,
+            auto_archive_duration: options.autoArchiveDuration,
+            rate_limit_per_user: options.rateLimitPerUser,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -679,7 +694,7 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post(Endpoints.threads(this.id), {
+      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
         json: {
           name: options.name,
           auto_archive_duration: options.autoArchiveDuration,
@@ -752,7 +767,7 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post(Endpoints.threads(this.id), {
+      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
         json: {
           name: options.name,
           auto_archive_duration: options.autoArchiveDuration,
@@ -808,43 +823,57 @@ export class Channel extends Base {
   public async getThreadMember(
     userId: string,
     options?: {
-      withMembers?: boolean;
+      withMember?: boolean;
     }
   ): Promise<JSONThreadMember> {
-    const data: RawThreadMember = await this.client.rest.get(
-      Endpoints.threadMembers(this.id, userId),
-      {
-        query: {
-          with_members: options?.withMembers,
-        },
-      }
-    );
+    const response: RawThreadMember =
+      await this.client.rest.get<RawThreadMember>(
+        Endpoints.threadMembers(this.id, userId),
+        {
+          query: {
+            with_member: options?.withMember,
+          },
+        }
+      );
 
     return {
-      id: data.id,
-      userId: data.user_id,
-      joinTimestamp: data.join_timestamp,
-      flags: data.flags,
+      id: response.id,
+      userId: response.user_id,
+      joinTimestamp: response.join_timestamp,
+      flags: response.flags,
       member:
-        data.member !== undefined
-          ? new GuildMember(data.member, this.client)
+        response.member !== undefined
+          ? new GuildMember(response.member, this.client)
           : undefined,
     };
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-thread-members */
   public async listThreadMembers(options?: {
-    withMembers?: boolean;
+    withMember?: boolean;
     after?: string;
     limit?: number;
   }): Promise<Array<JSONThreadMember>> {
-    return await this.client.rest.get(Endpoints.threadMembers(this.id), {
-      query: {
-        with_member: options?.withMembers,
-        after: options?.after,
-        limit: options?.limit,
-      },
-    });
+    return await this.client.rest
+      .get<Array<RawThreadMember>>(Endpoints.threadMembers(this.id), {
+        query: {
+          with_member: options?.withMember,
+          after: options?.after,
+          limit: options?.limit,
+        },
+      })
+      .then((response) =>
+        response.map((data) => ({
+          id: data.id,
+          userId: data.user_id,
+          joinTimestamp: data.join_timestamp,
+          flags: data.flags,
+          member:
+            data.member !== undefined
+              ? new GuildMember(data.member, this.client)
+              : undefined,
+        }))
+      );
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
@@ -856,21 +885,20 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const data = await this.client.rest.get(
-      Endpoints.channelPublicArchivedThreads(this.id),
-      {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
-      }
-    );
+    const response = await this.client.rest.get<{
+      threads: Array<RawChannel>;
+      members: Array<RawThreadMember>;
+      has_more: boolean;
+    }>(Endpoints.channelPublicArchivedThreads(this.id), {
+      query: {
+        before: options?.before,
+        limit: options?.limit,
+      },
+    });
 
     return {
-      threads: data.threads.map(
-        (data: RawChannel) => new Channel(data, this.client)
-      ),
-      members: data.members.map((data: RawThreadMember) => ({
+      threads: response.threads.map((data) => new Channel(data, this.client)),
+      members: response.members.map((data) => ({
         id: data.id,
         userId: data.user_id,
         joinTimestamp: data.join_timestamp,
@@ -880,7 +908,7 @@ export class Channel extends Base {
             ? new GuildMember(data.member, this.client)
             : undefined,
       })),
-      hasMore: data.has_more,
+      hasMore: response.has_more,
     };
   }
 
@@ -893,21 +921,20 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const data = await this.client.rest.get(
-      Endpoints.channelPrivateArchivedThreads(this.id),
-      {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
-      }
-    );
+    const response = await this.client.rest.get<{
+      threads: Array<RawChannel>;
+      members: Array<RawThreadMember>;
+      has_more: boolean;
+    }>(Endpoints.channelPrivateArchivedThreads(this.id), {
+      query: {
+        before: options?.before,
+        limit: options?.limit,
+      },
+    });
 
     return {
-      threads: data.threads.map(
-        (data: RawChannel) => new Channel(data, this.client)
-      ),
-      members: data.members.map((data: RawThreadMember) => ({
+      threads: response.threads.map((data) => new Channel(data, this.client)),
+      members: response.members.map((data) => ({
         id: data.id,
         userId: data.user_id,
         joinTimestamp: data.join_timestamp,
@@ -917,7 +944,7 @@ export class Channel extends Base {
             ? new GuildMember(data.member, this.client)
             : undefined,
       })),
-      hasMore: data.has_more,
+      hasMore: response.has_more,
     };
   }
 
@@ -930,21 +957,20 @@ export class Channel extends Base {
     members: Array<JSONThreadMember>;
     hasMore: boolean;
   }> {
-    const data = await this.client.rest.get(
-      Endpoints.channelJoinedPrivateArchivedThreads(this.id),
-      {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
-      }
-    );
+    const response = await this.client.rest.get<{
+      threads: Array<RawChannel>;
+      members: Array<RawThreadMember>;
+      has_more: boolean;
+    }>(Endpoints.channelJoinedPrivateArchivedThreads(this.id), {
+      query: {
+        before: options?.before,
+        limit: options?.limit,
+      },
+    });
 
     return {
-      threads: data.threads.map(
-        (data: RawChannel) => new Channel(data, this.client)
-      ),
-      members: data.members.map((data: RawThreadMember) => ({
+      threads: response.threads.map((data) => new Channel(data, this.client)),
+      members: response.members.map((data) => ({
         id: data.id,
         userId: data.user_id,
         joinTimestamp: data.join_timestamp,
@@ -954,7 +980,7 @@ export class Channel extends Base {
             ? new GuildMember(data.member, this.client)
             : undefined,
       })),
-      hasMore: data.has_more,
+      hasMore: response.has_more,
     };
   }
 
@@ -967,13 +993,16 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Webhook> {
     return new Webhook(
-      await this.client.rest.post(Endpoints.channelWebhooks(this.id), {
-        json: {
-          name: options.name,
-          avatar: options.avatar,
-        },
-        reason,
-      }),
+      await this.client.rest.post<RawWebhook>(
+        Endpoints.channelWebhooks(this.id),
+        {
+          json: {
+            name: options.name,
+            avatar: options.avatar,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -981,9 +1010,9 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/webhook#get-channel-webhooks */
   public async getWebhooks(): Promise<Array<Webhook>> {
     return this.client.rest
-      .get(Endpoints.channelWebhooks(this.id))
+      .get<Array<RawWebhook>>(Endpoints.channelWebhooks(this.id))
       .then((response) =>
-        response.map((data: RawWebhook) => new Webhook(data, this.client))
+        response.map((data) => new Webhook(data, this.client))
       );
   }
 

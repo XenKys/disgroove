@@ -32,13 +32,16 @@ export class StageInstance extends Base {
     reason?: string
   ): Promise<StageInstance> {
     return new StageInstance(
-      await this.client.rest.patch(Endpoints.stageInstance(this.channelId), {
-        json: {
-          topic: options.topic,
-          privacy_level: options.privacyLevel,
-        },
-        reason,
-      }),
+      await this.client.rest.patch<RawStageInstance>(
+        Endpoints.stageInstance(this.channelId),
+        {
+          json: {
+            topic: options.topic,
+            privacy_level: options.privacyLevel,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }

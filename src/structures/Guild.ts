@@ -28,6 +28,7 @@ import type {
   JSONGuildOnboarding,
   JSONGuildPreview,
   JSONGuildScheduledEventEntityMetadata,
+  JSONGuildScheduledEventUser,
   JSONGuildTemplate,
   JSONGuildWidget,
   JSONGuildWidgetSettings,
@@ -350,16 +351,16 @@ export class Guild extends Base {
     }
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .get(Endpoints.applicationGuildCommands(applicationId, this.id), {
-        query: {
-          with_localizations: options?.withLocalizations,
-        },
-      })
+      .get<Array<RawApplicationCommand>>(
+        Endpoints.applicationGuildCommands(applicationId, this.id),
+        {
+          query: {
+            with_localizations: options?.withLocalizations,
+          },
+        }
+      )
       .then((response) =>
-        response.map(
-          (data: RawApplicationCommand) =>
-            new ApplicationCommand(data, this.client)
-        )
+        response.map((data) => new ApplicationCommand(data, this.client))
       );
   }
 
@@ -409,7 +410,7 @@ export class Guild extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.post(
+      await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(applicationId, this.id),
         {
           json: applicationCommandToRaw(options),
@@ -425,7 +426,7 @@ export class Guild extends Base {
     commandId: string
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.get(
+      await this.client.rest.get<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(applicationId, this.id, commandId)
       ),
       this.client
@@ -478,7 +479,7 @@ export class Guild extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(applicationId, this.id, commandId),
         {
           json: applicationCommandToRaw(options),
@@ -545,14 +546,14 @@ export class Guild extends Base {
     }
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .put(Endpoints.applicationGuildCommands(applicationId, this.id), {
-        json: applicationCommandToRaw(options),
-      })
+      .put<Array<RawApplicationCommand>>(
+        Endpoints.applicationGuildCommands(applicationId, this.id),
+        {
+          json: applicationCommandToRaw(options),
+        }
+      )
       .then((response) =>
-        response.map(
-          (data: RawApplicationCommand) =>
-            new ApplicationCommand(data, this.client)
-        )
+        response.map((data) => new ApplicationCommand(data, this.client))
       );
   }
 
@@ -561,19 +562,19 @@ export class Guild extends Base {
     guildId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
-      .get(Endpoints.guildApplicationCommandsPermissions(this.id, guildId))
+      .get<Array<RawGuildApplicationCommandPermissions>>(
+        Endpoints.guildApplicationCommandsPermissions(this.id, guildId)
+      )
       .then((response) =>
-        response.map((permissions: RawGuildApplicationCommandPermissions) => ({
+        response.map((permissions) => ({
           id: permissions.id,
           applicationId: permissions.application_id,
           guildId: permissions.guild_id,
-          permissions: permissions.permissions.map(
-            (permission: RawApplicationCommandPermission) => ({
-              id: permission.id,
-              type: permission.type,
-              permission: permission.permission,
-            })
-          ),
+          permissions: permissions.permissions.map((permission) => ({
+            id: permission.id,
+            type: permission.type,
+            permission: permission.permission,
+          })),
         }))
       );
   }
@@ -585,9 +586,9 @@ export class Guild extends Base {
     before?: string;
     after?: string;
     limit?: number;
-  }): Promise<Array<JSONAuditLog>> {
+  }): Promise<JSONAuditLog> {
     return this.client.rest
-      .get(Endpoints.guildAuditLog(this.id), {
+      .get<RawAuditLog>(Endpoints.guildAuditLog(this.id), {
         query: {
           user_id: options?.userId,
           action_type: options?.actionType,
@@ -596,46 +597,43 @@ export class Guild extends Base {
           limit: options?.limit,
         },
       })
-      .then((response) =>
-        response.map((data: RawAuditLog) => ({
-          applicationCommands: data.application_commands.map(
-            (applicationCommand) =>
-              new ApplicationCommand(applicationCommand, this.client)
-          ),
-          auditLogEntries: data.audit_log_entries.map((auditLogEntry) =>
-            auditLogEntryToJSON(auditLogEntry)
-          ),
-          autoModerationRules: data.auto_moderation_rules.map(
-            (autoModerationRule) =>
-              new AutoModerationRule(autoModerationRule, this.client)
-          ),
-          guildScheduledEvents: data.guild_scheduled_events.map(
-            (guildScheduledEvent) =>
-              new GuildScheduledEvent(guildScheduledEvent, this.client)
-          ),
-          integrations: data.integrations.map(
-            (integration) => new Integration(integration, this.client)
-          ),
-          threads: data.threads.map(
-            (thread) => new Channel(thread, this.client)
-          ),
-          users: data.users.map((user) => new User(user, this.client)),
-          webhooks: data.webhooks.map(
-            (webhook) => new Webhook(webhook, this.client)
-          ),
-        }))
-      );
+      .then((response) => ({
+        applicationCommands: response.application_commands.map(
+          (applicationCommand) =>
+            new ApplicationCommand(applicationCommand, this.client)
+        ),
+        auditLogEntries: response.audit_log_entries.map((auditLogEntry) =>
+          auditLogEntryToJSON(auditLogEntry)
+        ),
+        autoModerationRules: response.auto_moderation_rules.map(
+          (autoModerationRule) =>
+            new AutoModerationRule(autoModerationRule, this.client)
+        ),
+        guildScheduledEvents: response.guild_scheduled_events.map(
+          (guildScheduledEvent) =>
+            new GuildScheduledEvent(guildScheduledEvent, this.client)
+        ),
+        integrations: response.integrations.map(
+          (integration) => new Integration(integration, this.client)
+        ),
+        threads: response.threads.map(
+          (thread) => new Channel(thread, this.client)
+        ),
+        users: response.users.map((user) => new User(user, this.client)),
+        webhooks: response.webhooks.map(
+          (webhook) => new Webhook(webhook, this.client)
+        ),
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild */
   public async listAutoModerationRules(): Promise<Array<AutoModerationRule>> {
     return this.client.rest
-      .get(Endpoints.guildAutoModerationRules(this.id))
+      .get<Array<RawAutoModerationRule>>(
+        Endpoints.guildAutoModerationRules(this.id)
+      )
       .then((response) =>
-        response.map(
-          (data: RawAutoModerationRule) =>
-            new AutoModerationRule(data, this.client)
-        )
+        response.map((data) => new AutoModerationRule(data, this.client))
       );
   }
 
@@ -644,7 +642,7 @@ export class Guild extends Base {
     ruleId: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
-      await this.client.rest.get(
+      await this.client.rest.get<RawAutoModerationRule>(
         Endpoints.guildAutoModerationRule(this.id, ruleId)
       ),
       this.client
@@ -666,26 +664,29 @@ export class Guild extends Base {
     reason?: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
-      await this.client.rest.post(Endpoints.guildAutoModerationRules(this.id), {
-        json: {
-          name: options.name,
-          event_type: options.eventType,
-          trigger_type: options.triggerType,
-          trigger_metadata: options.triggerMetadata,
-          actions: options.actions.map((action) => ({
-            type: action.type,
-            metadata: {
-              channel_id: action.metadata.channelId,
-              duration_seconds: action.metadata.durationSeconds,
-              custom_message: action.metadata.customMessage,
-            },
-          })),
-          enabled: options.enabled,
-          exempt_roles: options.exemptRoles,
-          exempt_channels: options.exemptChannels,
-        },
-        reason,
-      }),
+      await this.client.rest.post<RawAutoModerationRule>(
+        Endpoints.guildAutoModerationRules(this.id),
+        {
+          json: {
+            name: options.name,
+            event_type: options.eventType,
+            trigger_type: options.triggerType,
+            trigger_metadata: options.triggerMetadata,
+            actions: options.actions.map((action) => ({
+              type: action.type,
+              metadata: {
+                channel_id: action.metadata.channelId,
+                duration_seconds: action.metadata.durationSeconds,
+                custom_message: action.metadata.customMessage,
+              },
+            })),
+            enabled: options.enabled,
+            exempt_roles: options.exemptRoles,
+            exempt_channels: options.exemptChannels,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -706,7 +707,7 @@ export class Guild extends Base {
     reason?: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawAutoModerationRule>(
         Endpoints.guildAutoModerationRule(this.id, ruleId),
         {
           json: {
@@ -746,16 +747,18 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
   public async listGuildEmojis(): Promise<Array<JSONEmoji>> {
     return this.client.rest
-      .get(Endpoints.guildEmojis(this.id))
+      .get<Array<RawEmoji>>(Endpoints.guildEmojis(this.id))
       .then((response) =>
-        response.map((data: RawEmoji) => emojiToJSON(data, this.client))
+        response.map((data) => emojiToJSON(data, this.client))
       );
   }
 
   /** https://discord.com/developers/docs/resources/emoji#get-guild-emoji */
   public async getEmoji(emojiId: string): Promise<JSONEmoji> {
     return emojiToJSON(
-      await this.client.rest.get(Endpoints.guildEmoji(this.id, emojiId)),
+      await this.client.rest.get<RawEmoji>(
+        Endpoints.guildEmoji(this.id, emojiId)
+      ),
       this.client
     );
   }
@@ -770,7 +773,7 @@ export class Guild extends Base {
     reason?: string
   ): Promise<JSONEmoji> {
     return emojiToJSON(
-      await this.client.rest.post(Endpoints.guildEmojis(this.id), {
+      await this.client.rest.post<RawEmoji>(Endpoints.guildEmojis(this.id), {
         json: {
           name: options.name,
           image: options.image,
@@ -792,13 +795,16 @@ export class Guild extends Base {
     reason?: string
   ): Promise<JSONEmoji> {
     return emojiToJSON(
-      await this.client.rest.patch(Endpoints.guildEmoji(this.id, emojiId), {
-        json: {
-          name: options.name,
-          roles: options.roles,
-        },
-        reason,
-      }),
+      await this.client.rest.patch<RawEmoji>(
+        Endpoints.guildEmoji(this.id, emojiId),
+        {
+          json: {
+            name: options.name,
+            roles: options.roles,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -812,22 +818,23 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-preview */
   public async getPreview(): Promise<JSONGuildPreview> {
-    const data: RawGuildPreview = await this.client.rest.get(
-      Endpoints.guildPreview(this.id)
-    );
+    const response: RawGuildPreview =
+      await this.client.rest.get<RawGuildPreview>(
+        Endpoints.guildPreview(this.id)
+      );
 
     return {
-      id: data.id,
-      name: data.name,
-      icon: data.icon,
-      splash: data.splash,
-      discoverySplash: data.discovery_splash,
-      emojis: data.emojis.map((emoji) => emojiToJSON(emoji, this.client)),
-      features: data.features,
-      approximateMemberCount: data.approximate_member_count,
-      approximatePresenceCount: data.approximate_presence_count,
-      description: data.description,
-      stickers: data.stickers?.map((sticker) => ({
+      id: response.id,
+      name: response.name,
+      icon: response.icon,
+      splash: response.splash,
+      discoverySplash: response.discovery_splash,
+      emojis: response.emojis.map((emoji) => emojiToJSON(emoji, this.client)),
+      features: response.features,
+      approximateMemberCount: response.approximate_member_count,
+      approximatePresenceCount: response.approximate_presence_count,
+      description: response.description,
+      stickers: response.stickers?.map((sticker) => ({
         id: sticker.id,
         packId: sticker.pack_id,
         name: sticker.name,
@@ -875,7 +882,7 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Guild> {
     return new Guild(
-      await this.client.rest.patch(Endpoints.guild(this.id), {
+      await this.client.rest.patch<RawGuild>(Endpoints.guild(this.id), {
         json: {
           name: options.name,
           region: options.region,
@@ -913,9 +920,9 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild#get-guild-channels */
   public async getChannels(): Promise<Array<Channel>> {
     return this.client.rest
-      .get(Endpoints.guildChannels(this.id))
+      .get<Array<RawChannel>>(Endpoints.guildChannels(this.id))
       .then((response) =>
-        response.map((data: RawChannel) => new Channel(data, this.client))
+        response.map((data) => new Channel(data, this.client))
       );
   }
 
@@ -943,31 +950,34 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post(Endpoints.guildChannels(this.id), {
-        json: {
-          name: options.name,
-          type: options.type,
-          topic: options.topic,
-          bitrate: options.bitrate,
-          user_limit: options.userLimit,
-          rate_limit_per_user: options.rateLimitPerUser,
-          position: options.position,
-          permission_overwrites: options.permissionOverwrites,
-          parent_id: options.parentId,
-          nsfw: options.nsfw,
-          rtc_region: options.rtcRegion,
-          video_quality_mode: options.videoQualityMode,
-          default_auto_archive_duration: options.defaultAutoArchiveDuration,
-          default_reaction_emoji: {
-            emojiId: options.defaultReactionEmoji?.emojiId,
-            emojiName: options.defaultReactionEmoji?.emojiName,
+      await this.client.rest.post<RawChannel>(
+        Endpoints.guildChannels(this.id),
+        {
+          json: {
+            name: options.name,
+            type: options.type,
+            topic: options.topic,
+            bitrate: options.bitrate,
+            user_limit: options.userLimit,
+            rate_limit_per_user: options.rateLimitPerUser,
+            position: options.position,
+            permission_overwrites: options.permissionOverwrites,
+            parent_id: options.parentId,
+            nsfw: options.nsfw,
+            rtc_region: options.rtcRegion,
+            video_quality_mode: options.videoQualityMode,
+            default_auto_archive_duration: options.defaultAutoArchiveDuration,
+            default_reaction_emoji: {
+              emojiId: options.defaultReactionEmoji?.emojiId,
+              emojiName: options.defaultReactionEmoji?.emojiName,
+            },
+            available_tags: options.availableTags,
+            default_sort_order: options.defaultSortOrder,
+            default_forum_layout: options.defaultForumLayout,
           },
-          available_tags: options.availableTags,
-          default_sort_order: options.defaultSortOrder,
-          default_forum_layout: options.defaultForumLayout,
-        },
-        reason,
-      }),
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -999,33 +1009,35 @@ export class Guild extends Base {
     }>
   > {
     return this.client.rest
-      .get(Endpoints.guildActiveThreads(this.id))
+      .get<
+        Array<{
+          threads: Array<RawChannel>;
+          members: Array<RawThreadMember>;
+        }>
+      >(Endpoints.guildActiveThreads(this.id))
       .then((response) =>
-        response.map(
-          (data: {
-            threads: Array<RawChannel>;
-            members: Array<RawThreadMember>;
-          }) => ({
-            threads: data.threads.map((data) => new Channel(data, this.client)),
-            members: data.members.map((data) => ({
-              id: data.id,
-              userId: data.user_id,
-              joinTimestamp: data.join_timestamp,
-              flags: data.flags,
-              member:
-                data.member !== undefined
-                  ? new GuildMember(data.member, this.client)
-                  : undefined,
-            })),
-          })
-        )
+        response.map((data) => ({
+          threads: data.threads.map((data) => new Channel(data, this.client)),
+          members: data.members.map((data) => ({
+            id: data.id,
+            userId: data.user_id,
+            joinTimestamp: data.join_timestamp,
+            flags: data.flags,
+            member:
+              data.member !== undefined
+                ? new GuildMember(data.member, this.client)
+                : undefined,
+          })),
+        }))
       );
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-member */
   public async getMember(userId: string): Promise<GuildMember> {
     return new GuildMember(
-      await this.client.rest.get(Endpoints.guildMember(this.id, userId)),
+      await this.client.rest.get<RawGuildMember>(
+        Endpoints.guildMember(this.id, userId)
+      ),
       this.client
     );
   }
@@ -1033,11 +1045,9 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
   public async listGuildMembers(): Promise<Array<GuildMember>> {
     return this.client.rest
-      .get(Endpoints.guildMembers(this.id))
+      .get<Array<RawGuildMember>>(Endpoints.guildMembers(this.id))
       .then((response) =>
-        response.map(
-          (data: RawGuildMember) => new GuildMember(data, this.client)
-        )
+        response.map((data) => new GuildMember(data, this.client))
       );
   }
 
@@ -1047,16 +1057,14 @@ export class Guild extends Base {
     limit?: number;
   }): Promise<Array<GuildMember>> {
     return this.client.rest
-      .get(Endpoints.guildMembersSearch(this.id), {
+      .get<Array<RawGuildMember>>(Endpoints.guildMembersSearch(this.id), {
         query: {
           query: options.query,
           limit: options.limit,
         },
       })
       .then((response) =>
-        response.map(
-          (data: RawGuildMember) => new GuildMember(data, this.client)
-        )
+        response.map((data) => new GuildMember(data, this.client))
       );
   }
 
@@ -1161,7 +1169,7 @@ export class Guild extends Base {
     after?: string;
   }): Promise<Array<JSONBan>> {
     return this.client.rest
-      .get(Endpoints.guildBans(this.id), {
+      .get<Array<RawBan>>(Endpoints.guildBans(this.id), {
         query: {
           limit: options?.limit,
           before: options?.before,
@@ -1169,7 +1177,7 @@ export class Guild extends Base {
         },
       })
       .then((response) =>
-        response.map((data: RawBan) => ({
+        response.map((data) => ({
           reason: data.reason,
           user: new User(data.user, this.client),
         }))
@@ -1178,13 +1186,13 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-ban */
   public async getBan(userId: string): Promise<JSONBan> {
-    const data = await this.client.rest.get(
+    const response: RawBan = await this.client.rest.get<RawBan>(
       Endpoints.guildBan(this.id, userId)
     );
 
     return {
-      reason: data.reason,
-      user: new User(data.user, this.client),
+      reason: response.reason,
+      user: new User(response.user, this.client),
     };
   }
 
@@ -1216,10 +1224,8 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild#get-guild-roles */
   public async getRoles(): Promise<Array<Role>> {
     return this.client.rest
-      .get(Endpoints.guildRoles(this.id))
-      .then((response) =>
-        response.map((data: RawRole) => new Role(data, this.client))
-      );
+      .get<Array<RawRole>>(Endpoints.guildRoles(this.id))
+      .then((response) => response.map((data) => new Role(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
@@ -1236,7 +1242,7 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Role> {
     return new Role(
-      await this.client.rest.post(Endpoints.guildRoles(this.id), {
+      await this.client.rest.post<RawRole>(Endpoints.guildRoles(this.id), {
         json: {
           name: options.name,
           permissions: options.permissions,
@@ -1260,15 +1266,13 @@ export class Guild extends Base {
     }>
   ): Promise<Array<Role>> {
     return this.client.rest
-      .patch(Endpoints.guildRoles(this.id), {
+      .patch<Array<RawRole>>(Endpoints.guildRoles(this.id), {
         json: options.map((data) => ({
           id: data.id,
           position: data.position,
         })),
       })
-      .then((response) =>
-        response.map((data: RawRole) => new Role(data, this.client))
-      );
+      .then((response) => response.map((data) => new Role(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
@@ -1286,18 +1290,21 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Role> {
     return new Role(
-      await this.client.rest.patch(Endpoints.guildRole(this.id, roleId), {
-        json: {
-          name: options.name,
-          permissions: options.permissions,
-          color: options.color,
-          hoist: options.hoist,
-          icon: options.icon,
-          unicode_emoji: options.unicodeEmoji,
-          mentionable: options.mentionable,
-        },
-        reason,
-      }),
+      await this.client.rest.patch<RawRole>(
+        Endpoints.guildRole(this.id, roleId),
+        {
+          json: {
+            name: options.name,
+            permissions: options.permissions,
+            color: options.color,
+            hoist: options.hoist,
+            icon: options.icon,
+            unicode_emoji: options.unicodeEmoji,
+            mentionable: options.mentionable,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -1309,7 +1316,7 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<number> {
-    return await this.client.rest.post(Endpoints.guildMFA(this.id), {
+    return this.client.rest.post<number>(Endpoints.guildMFA(this.id), {
       json: {
         level: options.level,
       },
@@ -1329,7 +1336,7 @@ export class Guild extends Base {
     days: number;
     includeRoles: string | Array<string>;
   }): Promise<number> {
-    return await this.client.rest.get(Endpoints.guildPrune(this.id), {
+    return this.client.rest.get<number>(Endpoints.guildPrune(this.id), {
       query: {
         days: options.days,
         include_roles: options.includeRoles,
@@ -1347,7 +1354,7 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<number> {
-    return await this.client.rest.post(Endpoints.guildPrune(this.id), {
+    return this.client.rest.post<number>(Endpoints.guildPrune(this.id), {
       json: {
         days: options.days,
         compute_prune_count: options.computePruneCount,
@@ -1360,11 +1367,11 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
   public async getVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
-    const data = await this.client.rest.get(
+    const response = await this.client.rest.get<Array<RawVoiceRegion>>(
       Endpoints.guildVoiceRegions(this.id)
     );
 
-    return data.map((data: RawVoiceRegion) => ({
+    return response.map((data) => ({
       id: data.id,
       name: data.name,
       optimal: data.optimal,
@@ -1376,20 +1383,18 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild#get-guild-invites */
   public async getInvites(): Promise<Array<Invite>> {
     return this.client.rest
-      .get(Endpoints.guildInvites(this.id))
+      .get<Array<RawInvite>>(Endpoints.guildInvites(this.id))
       .then((response) =>
-        response.map((data: RawInvite) => new Invite(data, this.client))
+        response.map((data) => new Invite(data, this.client))
       );
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-integrations */
   public async getIntegrations(): Promise<Array<Integration>> {
     return this.client.rest
-      .get(Endpoints.guildIntegrations(this.id))
+      .get<Array<RawIntegration>>(Endpoints.guildIntegrations(this.id))
       .then((response) =>
-        response.map(
-          (data: RawIntegration) => new Integration(data, this.client)
-        )
+        response.map((data) => new Integration(data, this.client))
       );
   }
 
@@ -1405,13 +1410,14 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-settings */
   public async getWidgetSettings(): Promise<JSONGuildWidgetSettings> {
-    const data: RawGuildWidgetSettings = await this.client.rest.get(
-      Endpoints.guildWidgetSettings(this.id)
-    );
+    const response: RawGuildWidgetSettings =
+      await this.client.rest.get<RawGuildWidgetSettings>(
+        Endpoints.guildWidgetSettings(this.id)
+      );
 
     return {
-      enabled: data.enabled,
-      channelId: data.channel_id,
+      enabled: response.enabled,
+      channelId: response.channel_id,
     };
   }
 
@@ -1423,45 +1429,44 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONGuildWidgetSettings> {
-    const data: RawGuildWidgetSettings = await this.client.rest.patch(
-      Endpoints.guildWidgetSettings(this.id),
-      {
-        json: {
-          enabled: options.enabled,
-          channel_id: options.channelId,
-        },
-        reason,
-      }
-    );
+    const response: RawGuildWidgetSettings =
+      await this.client.rest.patch<RawGuildWidgetSettings>(
+        Endpoints.guildWidgetSettings(this.id),
+        {
+          json: {
+            enabled: options.enabled,
+            channel_id: options.channelId,
+          },
+          reason,
+        }
+      );
 
     return {
-      enabled: data.enabled,
-      channelId: data.channel_id,
+      enabled: response.enabled,
+      channelId: response.channel_id,
     };
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget */
   public async getWidget(): Promise<JSONGuildWidget> {
-    const data: RawGuildWidget = await this.client.rest.get(
+    const response: RawGuildWidget = await this.client.rest.get<RawGuildWidget>(
       Endpoints.guildWidgetJSON(this.id)
     );
 
     return {
-      id: data.id,
-      name: data.name,
-      instantInvite: data.instant_invite,
-      channels: data.channels.map(
-        (data: RawChannel) => new Channel(data, this.client)
-      ),
-      members: data.members.map((data: RawUser) => new User(data, this.client)),
-      presenceCount: data.presence_count,
+      id: response.id,
+      name: response.name,
+      instantInvite: response.instant_invite,
+      channels: response.channels.map((data) => new Channel(data, this.client)),
+      members: response.members.map((data) => new User(data, this.client)),
+      presenceCount: response.presence_count,
     };
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
   public async getVanityURL(): Promise<Invite> {
     return new Invite(
-      await this.client.rest.get(Endpoints.guildVanityUrl(this.id)),
+      await this.client.rest.get<RawInvite>(Endpoints.guildVanityUrl(this.id)),
       this.client
     );
   }
@@ -1470,7 +1475,7 @@ export class Guild extends Base {
   public async getWidgetImage(options?: {
     style?: ImageWidgetStyleOptions;
   }): Promise<string> {
-    return await this.client.rest.get(Endpoints.guildWidgetImage(this.id), {
+    return this.client.rest.get<string>(Endpoints.guildWidgetImage(this.id), {
       query: {
         style: options?.style,
       },
@@ -1479,20 +1484,19 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen */
   public async getWelcomeScreen(): Promise<JSONWelcomeScreen> {
-    const data: RawWelcomeScreen = await this.client.rest.get(
-      Endpoints.guildWelcomeScreen(this.id)
-    );
+    const response: RawWelcomeScreen =
+      await this.client.rest.get<RawWelcomeScreen>(
+        Endpoints.guildWelcomeScreen(this.id)
+      );
 
     return {
-      description: data.description,
-      welcomeChannels: data.welcome_channels.map(
-        (data: RawWelcomeScreenChannel) => ({
-          channelId: data.channel_id,
-          description: data.description,
-          emojiId: data.emoji_id,
-          emojiName: data.emoji_name,
-        })
-      ),
+      description: response.description,
+      welcomeChannels: response.welcome_channels.map((data) => ({
+        channelId: data.channel_id,
+        description: data.description,
+        emojiId: data.emoji_id,
+        emojiName: data.emoji_name,
+      })),
     };
   }
 
@@ -1505,40 +1509,40 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONWelcomeScreen> {
-    const data: RawWelcomeScreen = await this.client.rest.patch(
-      Endpoints.guildWelcomeScreen(this.id),
-      {
-        json: {
-          enabled: options.enabled,
-          welcome_channels: options.welcomeChannels,
-          description: options.description,
-        },
-        reason,
-      }
-    );
+    const response: RawWelcomeScreen =
+      await this.client.rest.patch<RawWelcomeScreen>(
+        Endpoints.guildWelcomeScreen(this.id),
+        {
+          json: {
+            enabled: options.enabled,
+            welcome_channels: options.welcomeChannels,
+            description: options.description,
+          },
+          reason,
+        }
+      );
 
     return {
-      description: data.description,
-      welcomeChannels: data.welcome_channels.map(
-        (data: RawWelcomeScreenChannel) => ({
-          channelId: data.channel_id,
-          description: data.description,
-          emojiId: data.emoji_id,
-          emojiName: data.emoji_name,
-        })
-      ),
+      description: response.description,
+      welcomeChannels: response.welcome_channels.map((data) => ({
+        channelId: data.channel_id,
+        description: data.description,
+        emojiId: data.emoji_id,
+        emojiName: data.emoji_name,
+      })),
     };
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-onboarding */
   public async getOnboarding(): Promise<JSONGuildOnboarding> {
-    const data: RawGuildOnboarding = await this.client.rest.get(
-      Endpoints.guildOnboarding(this.id)
-    );
+    const response: RawGuildOnboarding =
+      await this.client.rest.get<RawGuildOnboarding>(
+        Endpoints.guildOnboarding(this.id)
+      );
 
     return {
-      guildId: data.guild_id,
-      prompts: data.prompts.map((prompt) => ({
+      guildId: response.guild_id,
+      prompts: response.prompts.map((prompt) => ({
         id: prompt.id,
         type: prompt.type,
         options: prompt.options.map((option) => ({
@@ -1554,9 +1558,9 @@ export class Guild extends Base {
         required: prompt.required,
         inOnboarding: prompt.in_onboarding,
       })),
-      defaultChannelIds: data.default_channel_ids,
-      enabled: data.enabled,
-      mode: data.mode,
+      defaultChannelIds: response.default_channel_ids,
+      enabled: response.enabled,
+      mode: response.mode,
     };
   }
 
@@ -1640,16 +1644,16 @@ export class Guild extends Base {
     withUserCount?: boolean;
   }): Promise<Array<GuildScheduledEvent>> {
     return this.client.rest
-      .get(Endpoints.guildScheduledEvents(this.id), {
-        query: {
-          with_user_count: options?.withUserCount,
-        },
-      })
+      .get<Array<RawGuildScheduledEvent>>(
+        Endpoints.guildScheduledEvents(this.id),
+        {
+          query: {
+            with_user_count: options?.withUserCount,
+          },
+        }
+      )
       .then((response) =>
-        response.map(
-          (data: RawGuildScheduledEvent) =>
-            new GuildScheduledEvent(data, this.client)
-        )
+        response.map((data) => new GuildScheduledEvent(data, this.client))
       );
   }
 
@@ -1669,20 +1673,23 @@ export class Guild extends Base {
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return new GuildScheduledEvent(
-      await this.client.rest.post(Endpoints.guildScheduledEvents(this.id), {
-        json: {
-          channel_id: options.channelId,
-          entity_metadata: options.entityMetadata,
-          name: options.name,
-          privacy_level: options.privacyLevel,
-          scheduled_start_time: options.scheduledEndTime,
-          scheduled_end_time: options.scheduledEndTime,
-          description: options.description,
-          entity_type: options.entityType,
-          image: options.image,
-        },
-        reason,
-      }),
+      await this.client.rest.post<RawGuildScheduledEvent>(
+        Endpoints.guildScheduledEvents(this.id),
+        {
+          json: {
+            channel_id: options.channelId,
+            entity_metadata: options.entityMetadata,
+            name: options.name,
+            privacy_level: options.privacyLevel,
+            scheduled_start_time: options.scheduledEndTime,
+            scheduled_end_time: options.scheduledEndTime,
+            description: options.description,
+            entity_type: options.entityType,
+            image: options.image,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -1705,7 +1712,7 @@ export class Guild extends Base {
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return new GuildScheduledEvent(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawGuildScheduledEvent>(
         Endpoints.guildScheduledEvent(this.id, scheduledEventId),
         {
           json: {
@@ -1743,18 +1750,21 @@ export class Guild extends Base {
       before?: string;
       after?: string;
     }
-  ): Promise<Array<User>> {
+  ): Promise<Array<JSONGuildScheduledEventUser>> {
     return this.client.rest
-      .get(Endpoints.guildScheduledEvent(this.id, scheduledEventId), {
-        query: {
-          limit: options?.limit,
-          with_member: options?.withMember,
-          before: options?.before,
-          after: options?.after,
-        },
-      })
+      .get<Array<RawGuildScheduledEventUser>>(
+        Endpoints.guildScheduledEvent(this.id, scheduledEventId),
+        {
+          query: {
+            limit: options?.limit,
+            with_member: options?.withMember,
+            before: options?.before,
+            after: options?.after,
+          },
+        }
+      )
       .then((response) =>
-        response.map((data: RawGuildScheduledEventUser) => ({
+        response.map((data) => ({
           guildScheduledEventId: data.guild_scheduled_event_id,
           user: new User(data.user, this.client),
           member:
@@ -1768,7 +1778,9 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-template */
   public async getTemplate(code: string): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.get(Endpoints.guildTemplate(this.id, code)),
+      await this.client.rest.get<RawGuildTemplate>(
+        Endpoints.guildTemplate(this.id, code)
+      ),
       this.client
     );
   }
@@ -1776,11 +1788,9 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-templates */
   public async getTemplates(): Promise<Array<GuildTemplate>> {
     return this.client.rest
-      .get(Endpoints.guildTemplates(this.id))
+      .get<Array<RawGuildTemplate>>(Endpoints.guildTemplates(this.id))
       .then((response) =>
-        response.map(
-          (data: RawGuildTemplate) => new GuildTemplate(data, this.client)
-        )
+        response.map((data) => new GuildTemplate(data, this.client))
       );
   }
 
@@ -1790,12 +1800,15 @@ export class Guild extends Base {
     description?: string | null;
   }): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.post(Endpoints.guildTemplates(this.id), {
-        json: {
-          name: options.name,
-          description: options.description,
-        },
-      }),
+      await this.client.rest.post<RawGuildTemplate>(
+        Endpoints.guildTemplates(this.id),
+        {
+          json: {
+            name: options.name,
+            description: options.description,
+          },
+        }
+      ),
       this.client
     );
   }
@@ -1803,7 +1816,9 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
   public async syncTemplate(code: string): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.put(Endpoints.guildTemplate(this.id, code)),
+      await this.client.rest.put<RawGuildTemplate>(
+        Endpoints.guildTemplate(this.id, code)
+      ),
       this.client
     );
   }
@@ -1817,46 +1832,50 @@ export class Guild extends Base {
     }
   ): Promise<GuildTemplate> {
     return new GuildTemplate(
-      await this.client.rest.patch(Endpoints.guildTemplate(this.id, code), {
-        json: {
-          name: options.name,
-          description: options.description,
-        },
-      }),
+      await this.client.rest.patch<RawGuildTemplate>(
+        Endpoints.guildTemplate(this.id, code),
+        {
+          json: {
+            name: options.name,
+            description: options.description,
+          },
+        }
+      ),
       this.client
     );
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async deleteTemplate(code: string): Promise<JSONGuildTemplate> {
-    const data: RawGuildTemplate = await this.client.rest.put(
-      Endpoints.guildTemplate(this.id, code)
-    );
+    const response: RawGuildTemplate =
+      await this.client.rest.put<RawGuildTemplate>(
+        Endpoints.guildTemplate(this.id, code)
+      );
 
     return {
-      code: data.code,
-      name: data.name,
-      description: data.description,
-      usageCount: data.usage_count,
-      creatorId: data.creator_id,
-      creator: new User(data.creator, this.client),
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
-      sourceGuildId: data.source_guild_id,
+      code: response.code,
+      name: response.name,
+      description: response.description,
+      usageCount: response.usage_count,
+      creatorId: response.creator_id,
+      creator: new User(response.creator, this.client),
+      createdAt: response.created_at,
+      updatedAt: response.updated_at,
+      sourceGuildId: response.source_guild_id,
       serializedSourceGuild: new Guild(
-        data.serialized_source_guild,
+        response.serialized_source_guild,
         this.client
       ),
-      isDirty: data.is_dirty,
+      isDirty: response.is_dirty,
     };
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
   public async listStickers(): Promise<Array<JSONSticker>> {
     return this.client.rest
-      .get(Endpoints.guildStickers(this.id))
+      .get<Array<RawSticker>>(Endpoints.guildStickers(this.id))
       .then((response) =>
-        response.map((data: RawSticker) => ({
+        response.map((data) => ({
           id: data.id,
           packId: data.pack_id,
           name: data.name,
@@ -1878,24 +1897,26 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/sticker#get-guild-sticker */
   public async getSticker(stickerId: string): Promise<JSONSticker> {
-    const data: RawSticker = await this.client.rest.get(
+    const response: RawSticker = await this.client.rest.get<RawSticker>(
       Endpoints.guildSticker(this.id, stickerId)
     );
 
     return {
-      id: data.id,
-      packId: data.pack_id,
-      name: data.name,
-      description: data.description,
-      tags: data.tags,
-      asset: data.asset,
-      type: data.type,
-      formatType: data.format_type,
-      available: data.available,
-      guildId: data.guild_id,
+      id: response.id,
+      packId: response.pack_id,
+      name: response.name,
+      description: response.description,
+      tags: response.tags,
+      asset: response.asset,
+      type: response.type,
+      formatType: response.format_type,
+      available: response.available,
+      guildId: response.guild_id,
       user:
-        data.user !== undefined ? new User(data.user, this.client) : undefined,
-      sortValue: data.sort_value,
+        response.user !== undefined
+          ? new User(response.user, this.client)
+          : undefined,
+      sortValue: response.sort_value,
     };
   }
 
@@ -1909,7 +1930,7 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONSticker> {
-    const data: RawSticker = await this.client.rest.post(
+    const response: RawSticker = await this.client.rest.post<RawSticker>(
       Endpoints.guildStickers(this.id),
       {
         json: {
@@ -1923,19 +1944,21 @@ export class Guild extends Base {
     );
 
     return {
-      id: data.id,
-      packId: data.pack_id,
-      name: data.name,
-      description: data.description,
-      tags: data.tags,
-      asset: data.asset,
-      type: data.type,
-      formatType: data.format_type,
-      available: data.available,
-      guildId: data.guild_id,
+      id: response.id,
+      packId: response.pack_id,
+      name: response.name,
+      description: response.description,
+      tags: response.tags,
+      asset: response.asset,
+      type: response.type,
+      formatType: response.format_type,
+      available: response.available,
+      guildId: response.guild_id,
       user:
-        data.user !== undefined ? new User(data.user, this.client) : undefined,
-      sortValue: data.sort_value,
+        response.user !== undefined
+          ? new User(response.user, this.client)
+          : undefined,
+      sortValue: response.sort_value,
     };
   }
 
@@ -1949,7 +1972,7 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<JSONSticker> {
-    const data: RawSticker = await this.client.rest.patch(
+    const response: RawSticker = await this.client.rest.patch<RawSticker>(
       Endpoints.guildSticker(this.id, stickerId),
       {
         json: {
@@ -1962,19 +1985,21 @@ export class Guild extends Base {
     );
 
     return {
-      id: data.id,
-      packId: data.pack_id,
-      name: data.name,
-      description: data.description,
-      tags: data.tags,
-      asset: data.asset,
-      type: data.type,
-      formatType: data.format_type,
-      available: data.available,
-      guildId: data.guild_id,
+      id: response.id,
+      packId: response.pack_id,
+      name: response.name,
+      description: response.description,
+      tags: response.tags,
+      asset: response.asset,
+      type: response.type,
+      formatType: response.format_type,
+      available: response.available,
+      guildId: response.guild_id,
       user:
-        data.user !== undefined ? new User(data.user, this.client) : undefined,
-      sortValue: data.sort_value,
+        response.user !== undefined
+          ? new User(response.user, this.client)
+          : undefined,
+      sortValue: response.sort_value,
     };
   }
 
@@ -1991,9 +2016,9 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */
   public async getWebhooks(): Promise<Array<Webhook>> {
     return this.client.rest
-      .get(Endpoints.guildWebhooks(this.id))
+      .get<Array<RawWebhook>>(Endpoints.guildWebhooks(this.id))
       .then((response) =>
-        response.map((data: RawWebhook) => new Webhook(data, this.client))
+        response.map((data) => new Webhook(data, this.client))
       );
   }
 

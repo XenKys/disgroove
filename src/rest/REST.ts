@@ -21,7 +21,7 @@ export class REST {
     this.manager = new RequestsManager(token, auth);
   }
 
-  public get(
+  public get<T>(
     endpoint: string,
     data?: {
       json?: Record<string, any> | Array<Record<string, any>>;
@@ -29,11 +29,11 @@ export class REST {
       reason?: string;
       query?: Record<string, any>;
     }
-  ): Promise<any> {
-    return this.manager.request(RESTMethods.Get, endpoint, data);
+  ): Promise<T> {
+    return this.manager.request<T>(RESTMethods.Get, endpoint, data);
   }
 
-  public post(
+  public post<T>(
     endpoint: string,
     data?: {
       json?: Record<string, any> | Array<Record<string, any>>;
@@ -41,11 +41,11 @@ export class REST {
       reason?: string;
       query?: Record<string, any>;
     }
-  ): Promise<any> {
-    return this.manager.request(RESTMethods.Post, endpoint, data);
+  ): Promise<T> {
+    return this.manager.request<T>(RESTMethods.Post, endpoint, data);
   }
 
-  public delete(
+  public delete<T>(
     endpoint: string,
     data?: {
       json?: Record<string, any> | Array<Record<string, any>>;
@@ -53,11 +53,11 @@ export class REST {
       reason?: string;
       query?: Record<string, any>;
     }
-  ): Promise<any> {
-    return this.manager.request(RESTMethods.Delete, endpoint, data);
+  ): Promise<T> {
+    return this.manager.request<T>(RESTMethods.Delete, endpoint, data);
   }
 
-  public patch(
+  public patch<T>(
     endpoint: string,
     data?: {
       json?: Record<string, any> | Array<Record<string, any>>;
@@ -65,11 +65,11 @@ export class REST {
       reason?: string;
       query?: Record<string, any>;
     }
-  ): Promise<any> {
-    return this.manager.request(RESTMethods.Patch, endpoint, data);
+  ): Promise<T> {
+    return this.manager.request<T>(RESTMethods.Patch, endpoint, data);
   }
 
-  public put(
+  public put<T>(
     endpoint: string,
     data?: {
       json?: Record<string, any> | Array<Record<string, any>>;
@@ -77,7 +77,7 @@ export class REST {
       reason?: string;
       query?: Record<string, any>;
     }
-  ): Promise<any> {
-    return this.manager.request(RESTMethods.Put, endpoint, data);
+  ): Promise<T> {
+    return this.manager.request<T>(RESTMethods.Put, endpoint, data);
   }
 }

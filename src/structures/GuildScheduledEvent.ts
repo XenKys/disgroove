@@ -4,6 +4,7 @@ import { Endpoints } from "../rest";
 import type {
   JSONGuildScheduledEvent,
   JSONGuildScheduledEventEntityMetadata,
+  JSONGuildScheduledEventUser,
   RawGuildScheduledEvent,
   RawGuildScheduledEventUser,
 } from "../types";
@@ -73,7 +74,7 @@ export class GuildScheduledEvent extends Base {
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return new GuildScheduledEvent(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawGuildScheduledEvent>(
         Endpoints.guildScheduledEvent(this.guildId, this.id),
         {
           json: {
@@ -108,18 +109,21 @@ export class GuildScheduledEvent extends Base {
     withMember?: boolean;
     before?: string;
     after?: string;
-  }): Promise<Array<User>> {
+  }): Promise<Array<JSONGuildScheduledEventUser>> {
     return this.client.rest
-      .get(Endpoints.guildScheduledEvent(this.guildId, this.id), {
-        query: {
-          limit: options?.limit,
-          with_member: options?.withMember,
-          before: options?.before,
-          after: options?.after,
-        },
-      })
+      .get<Array<RawGuildScheduledEventUser>>(
+        Endpoints.guildScheduledEvent(this.guildId, this.id),
+        {
+          query: {
+            limit: options?.limit,
+            with_member: options?.withMember,
+            before: options?.before,
+            after: options?.after,
+          },
+        }
+      )
       .then((response) =>
-        response.map((data: RawGuildScheduledEventUser) => ({
+        response.map((data) => ({
           guildScheduledEventId: data.guild_scheduled_event_id,
           user: new User(data.user, this.client),
           member:

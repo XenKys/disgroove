@@ -56,7 +56,7 @@ export class AutoModerationRule extends Base {
     reason?: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawAutoModerationRule>(
         Endpoints.guildAutoModerationRule(this.guildId, this.id),
         {
           json: {

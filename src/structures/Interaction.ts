@@ -13,6 +13,7 @@ import type {
   JSONModalSubmitData,
   JSONSelectOption,
   RawInteraction,
+  RawMessage,
 } from "../types";
 import {
   type ChannelTypes,
@@ -306,7 +307,7 @@ export class Interaction extends Base {
     threadId?: string;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.get(
+      await this.client.rest.get<RawMessage>(
         Endpoints.interactionOriginalMessage(this.id, this.token),
         {
           query: {
@@ -369,7 +370,7 @@ export class Interaction extends Base {
     attachments?: Array<JSONAttachment> | null;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawMessage>(
         Endpoints.interactionOriginalMessage(this.id, this.token),
         {
           query: {
@@ -504,7 +505,7 @@ export class Interaction extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.get(
+      await this.client.rest.get<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
         {
           query: {
@@ -570,7 +571,7 @@ export class Interaction extends Base {
     }
   ): Promise<Message> {
     return new Message(
-      await this.client.rest.post(
+      await this.client.rest.post<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
         {
           query: {

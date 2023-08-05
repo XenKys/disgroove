@@ -88,16 +88,16 @@ export class Application extends Base {
     withLocalizations?: boolean;
   }): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .get(Endpoints.applicationCommands(this.id), {
-        query: {
-          with_localizations: options.withLocalizations,
-        },
-      })
+      .get<Array<RawApplicationCommand>>(
+        Endpoints.applicationCommands(this.id),
+        {
+          query: {
+            with_localizations: options.withLocalizations,
+          },
+        }
+      )
       .then((response) =>
-        response.map(
-          (data: RawApplicationCommand) =>
-            new ApplicationCommand(data, this.client)
-        )
+        response.map((data) => new ApplicationCommand(data, this.client))
       );
   }
 
@@ -144,9 +144,12 @@ export class Application extends Base {
     nsfw?: boolean;
   }): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.post(Endpoints.applicationCommands(this.id), {
-        json: applicationCommandToRaw(options),
-      }),
+      await this.client.rest.post<RawApplicationCommand>(
+        Endpoints.applicationCommands(this.id),
+        {
+          json: applicationCommandToRaw(options),
+        }
+      ),
       this.client
     );
   }
@@ -156,7 +159,7 @@ export class Application extends Base {
     commandId: string
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.get(
+      await this.client.rest.get<RawApplicationCommand>(
         Endpoints.applicationCommand(this.id, commandId)
       ),
       this.client
@@ -208,7 +211,7 @@ export class Application extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationCommand(this.id, commandId),
         {
           json: applicationCommandToRaw(options),
@@ -222,9 +225,7 @@ export class Application extends Base {
   public async deleteGlobalApplicationCommand(
     commandId: string
   ): Promise<void> {
-    await this.client.rest.delete(
-      Endpoints.applicationCommand(this.id, commandId)
-    );
+    this.client.rest.delete(Endpoints.applicationCommand(this.id, commandId));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
@@ -232,12 +233,9 @@ export class Application extends Base {
     Array<ApplicationCommand>
   > {
     return this.client.rest
-      .put(Endpoints.applicationCommands(this.id))
+      .put<Array<RawApplicationCommand>>(Endpoints.applicationCommands(this.id))
       .then((response) =>
-        response.map(
-          (data: RawApplicationCommand) =>
-            new ApplicationCommand(data, this.client)
-        )
+        response.map((data) => new ApplicationCommand(data, this.client))
       );
   }
 
@@ -249,16 +247,16 @@ export class Application extends Base {
     }
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .get(Endpoints.applicationGuildCommands(this.id, guildId), {
-        query: {
-          with_localizations: options?.withLocalizations,
-        },
-      })
+      .get<Array<RawApplicationCommand>>(
+        Endpoints.applicationGuildCommands(this.id, guildId),
+        {
+          query: {
+            with_localizations: options?.withLocalizations,
+          },
+        }
+      )
       .then((response) =>
-        response.map(
-          (data: RawApplicationCommand) =>
-            new ApplicationCommand(data, this.client)
-        )
+        response.map((data) => new ApplicationCommand(data, this.client))
       );
   }
 
@@ -308,7 +306,7 @@ export class Application extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.post(
+      await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
           json: applicationCommandToRaw(options),
@@ -324,7 +322,7 @@ export class Application extends Base {
     commandId: string
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.get(
+      await this.client.rest.get<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(this.id, guildId, commandId)
       ),
       this.client
@@ -377,7 +375,7 @@ export class Application extends Base {
     }
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(this.id, guildId, commandId),
         {
           json: applicationCommandToRaw(options),
@@ -392,7 +390,7 @@ export class Application extends Base {
     guildId: string,
     commandId: string
   ): Promise<void> {
-    await this.client.rest.delete(
+    this.client.rest.delete(
       Endpoints.applicationGuildCommand(this.id, guildId, commandId)
     );
   }
@@ -444,14 +442,14 @@ export class Application extends Base {
     }
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .put(Endpoints.applicationGuildCommands(this.id, guildId), {
-        json: applicationCommandToRaw(options),
-      })
+      .put<Array<RawApplicationCommand>>(
+        Endpoints.applicationGuildCommands(this.id, guildId),
+        {
+          json: applicationCommandToRaw(options),
+        }
+      )
       .then((response) =>
-        response.map(
-          (data: RawApplicationCommand) =>
-            new ApplicationCommand(data, this.client)
-        )
+        response.map((data) => new ApplicationCommand(data, this.client))
       );
   }
 
@@ -460,7 +458,9 @@ export class Application extends Base {
     guildId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
-      .get(Endpoints.guildApplicationCommandsPermissions(this.id, guildId))
+      .get<Array<RawGuildApplicationCommandPermissions>>(
+        Endpoints.guildApplicationCommandsPermissions(this.id, guildId)
+      )
       .then((response) =>
         response.map((permissions: RawGuildApplicationCommandPermissions) => ({
           id: permissions.id,
@@ -483,7 +483,9 @@ export class Application extends Base {
     commandId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
-      .get(Endpoints.applicationCommandPermissions(this.id, guildId, commandId))
+      .get<Array<RawGuildApplicationCommandPermissions>>(
+        Endpoints.applicationCommandPermissions(this.id, guildId, commandId)
+      )
       .then((response) =>
         response.map((permissions: RawGuildApplicationCommandPermissions) => ({
           id: permissions.id,
@@ -507,9 +509,9 @@ export class Application extends Base {
     options: {
       permissions: Array<JSONGuildApplicationCommandPermissions>;
     }
-  ): Promise<RawGuildApplicationCommandPermissions> {
+  ): Promise<JSONGuildApplicationCommandPermissions> {
     return this.client.rest
-      .put(
+      .put<RawGuildApplicationCommandPermissions>(
         Endpoints.applicationCommandPermissions(this.id, guildId, commandId),
         {
           json: {
@@ -526,20 +528,18 @@ export class Application extends Base {
           },
         }
       )
-      .then((response) =>
-        response.map((permissions: RawGuildApplicationCommandPermissions) => ({
-          id: permissions.id,
-          applicationId: permissions.application_id,
-          guildId: permissions.guild_id,
-          permissions: permissions.permissions.map(
-            (permission: RawApplicationCommandPermission) => ({
-              id: permission.id,
-              type: permission.type,
-              permission: permission.permission,
-            })
-          ),
-        }))
-      );
+      .then((response) => ({
+        id: response.id,
+        applicationId: response.application_id,
+        guildId: response.guild_id,
+        permissions: response.permissions.map(
+          (permission: RawApplicationCommandPermission) => ({
+            id: permission.id,
+            type: permission.type,
+            permission: permission.permission,
+          })
+        ),
+      }));
   }
 
   public override toJSON(): JSONApplication {

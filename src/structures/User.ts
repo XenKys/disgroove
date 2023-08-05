@@ -6,7 +6,9 @@ import type {
   JSONConnection,
   JSONUser,
   RawApplicationRoleConnection,
+  RawChannel,
   RawConnection,
+  RawGuildMember,
   RawUser,
 } from "../types";
 import type {
@@ -63,7 +65,7 @@ export class User extends Base {
     avatar?: string | null;
   }): Promise<User> {
     return new User(
-      await this.client.rest.patch(Endpoints.user(), {
+      await this.client.rest.patch<RawUser>(Endpoints.user(), {
         json: {
           username: options.username,
           avatar: options.avatar,
@@ -78,7 +80,9 @@ export class User extends Base {
     guildId: string
   ): Promise<GuildMember> {
     return new GuildMember(
-      await this.client.rest.get(Endpoints.guildMember(guildId)),
+      await this.client.rest.get<RawGuildMember>(
+        Endpoints.guildMember(guildId)
+      ),
       this.client
     );
   }
@@ -91,7 +95,7 @@ export class User extends Base {
   /** https://discord.com/developers/docs/resources/user#create-dm */
   public async createDM(options: { recipientId: string }): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post(Endpoints.userChannels(), {
+      await this.client.rest.post<RawChannel>(Endpoints.userChannels(), {
         json: {
           recipient_id: options.recipientId,
         },
@@ -106,7 +110,7 @@ export class User extends Base {
     nicks: Array<string>;
   }): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post(Endpoints.userChannels(), {
+      await this.client.rest.post<RawChannel>(Endpoints.userChannels(), {
         json: {
           access_tokens: options.accessTokens,
           nicks: options.nicks,
@@ -118,44 +122,47 @@ export class User extends Base {
 
   /** https://discord.com/developers/docs/resources/user#get-user-connections */
   public async getUserConnections(): Promise<Array<JSONConnection>> {
-    return this.client.rest.get(Endpoints.userConnections()).then((response) =>
-      response.map((data: RawConnection) => ({
-        id: data.id,
-        name: data.name,
-        type: data.type,
-        revoked: data.revoked,
-        integrations: data.integrations?.map(
-          (integration) => new Integration(integration, this.client)
-        ),
-        verified: data.verified,
-        friendSync: data.friend_sync,
-        showActivity: data.show_activity,
-        twoWayLink: data.two_way_link,
-        visibility: data.visibility,
-      }))
-    );
+    return this.client.rest
+      .get<Array<RawConnection>>(Endpoints.userConnections())
+      .then((response) =>
+        response.map((data) => ({
+          id: data.id,
+          name: data.name,
+          type: data.type,
+          revoked: data.revoked,
+          integrations: data.integrations?.map(
+            (integration) => new Integration(integration, this.client)
+          ),
+          verified: data.verified,
+          friendSync: data.friend_sync,
+          showActivity: data.show_activity,
+          twoWayLink: data.two_way_link,
+          visibility: data.visibility,
+        }))
+      );
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
   public async getUserApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
-    const data: RawApplicationRoleConnection = await this.client.rest.get(
-      Endpoints.userApplicationRoleConnection(
-        (
-          await this.client.getApplication()
-        ).id
-      )
-    );
+    const response: RawApplicationRoleConnection =
+      await this.client.rest.get<RawApplicationRoleConnection>(
+        Endpoints.userApplicationRoleConnection(
+          (
+            await this.client.getApplication()
+          ).id
+        )
+      );
 
     return {
-      platformName: data.platform_name,
-      platformUsername: data.platform_username,
+      platformName: response.platform_name,
+      platformUsername: response.platform_username,
       metadata: {
-        type: data.metadata.type,
-        key: data.metadata.key,
-        name: data.metadata.name,
-        nameLocalizations: data.metadata.name_localizations,
-        description: data.metadata.description,
-        descriptionLocalizations: data.metadata.description_localizations,
+        type: response.metadata.type,
+        key: response.metadata.key,
+        name: response.metadata.name,
+        nameLocalizations: response.metadata.name_localizations,
+        description: response.metadata.description,
+        descriptionLocalizations: response.metadata.description_localizations,
       },
     };
   }
@@ -173,31 +180,32 @@ export class User extends Base {
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
     };
   }): Promise<JSONApplicationRoleConnection> {
-    const data: RawApplicationRoleConnection = await this.client.rest.put(
-      Endpoints.userApplicationRoleConnection(
-        (
-          await this.client.getApplication()
-        ).id
-      ),
-      {
-        json: {
-          platform_name: options.platformName,
-          platform_username: options.platformUsername,
-          metadata: options.metadata,
-        },
-      }
-    );
+    const response: RawApplicationRoleConnection =
+      await this.client.rest.put<RawApplicationRoleConnection>(
+        Endpoints.userApplicationRoleConnection(
+          (
+            await this.client.getApplication()
+          ).id
+        ),
+        {
+          json: {
+            platform_name: options.platformName,
+            platform_username: options.platformUsername,
+            metadata: options.metadata,
+          },
+        }
+      );
 
     return {
-      platformName: data.platform_name,
-      platformUsername: data.platform_username,
+      platformName: response.platform_name,
+      platformUsername: response.platform_username,
       metadata: {
-        type: data.metadata.type,
-        key: data.metadata.key,
-        name: data.metadata.name,
-        nameLocalizations: data.metadata.name_localizations,
-        description: data.metadata.description,
-        descriptionLocalizations: data.metadata.description_localizations,
+        type: response.metadata.type,
+        key: response.metadata.key,
+        name: response.metadata.name,
+        nameLocalizations: response.metadata.name_localizations,
+        description: response.metadata.description,
+        descriptionLocalizations: response.metadata.description_localizations,
       },
     };
   }

@@ -1,7 +1,7 @@
 import type { Client } from "..";
 
 export abstract class Base {
-  protected client!: Client;
+  protected client: Client;
   public id: string;
 
   constructor(id: string, client: Client) {

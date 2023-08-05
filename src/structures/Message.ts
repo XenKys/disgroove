@@ -16,6 +16,7 @@ import type {
   JSONSelectOption,
   JSONSticker,
   JSONStickerItem,
+  RawChannel,
   RawGuildMember,
   RawMessage,
   RawUser,
@@ -195,7 +196,7 @@ export class Message extends Base {
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   public async crosspost(): Promise<Message> {
     return new Message(
-      await this.client.rest.post(
+      await this.client.rest.post<RawMessage>(
         Endpoints.channelMessageCrosspost(this.channelId, this.id)
       ),
       this.client
@@ -240,15 +241,16 @@ export class Message extends Base {
     }
   ): Promise<Array<User>> {
     return this.client.rest
-      .get(Endpoints.channelMessageReaction(this.channelId, this.id, emoji), {
-        query: {
-          after: options?.after,
-          limit: options?.limit,
-        },
-      })
-      .then((response) =>
-        response.map((data: RawUser) => new User(data, this.client))
-      );
+      .get<Array<RawUser>>(
+        Endpoints.channelMessageReaction(this.channelId, this.id, emoji),
+        {
+          query: {
+            after: options?.after,
+            limit: options?.limit,
+          },
+        }
+      )
+      .then((response) => response.map((data) => new User(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
@@ -315,7 +317,7 @@ export class Message extends Base {
     attachments?: Array<JSONAttachment> | null;
   }): Promise<Message> {
     return new Message(
-      await this.client.rest.patch(
+      await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.channelId, this.id),
         {
           json: {
@@ -360,14 +362,17 @@ export class Message extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post(Endpoints.threads(this.channelId, this.id), {
-        json: {
-          name: options.name,
-          auto_archive_duration: options.autoArchiveDuration,
-          rate_limit_per_user: options.rateLimitPerUser,
-        },
-        reason,
-      }),
+      await this.client.rest.post<RawChannel>(
+        Endpoints.threads(this.channelId, this.id),
+        {
+          json: {
+            name: options.name,
+            auto_archive_duration: options.autoArchiveDuration,
+            rate_limit_per_user: options.rateLimitPerUser,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }

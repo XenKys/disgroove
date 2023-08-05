@@ -4,6 +4,7 @@ import type {
   JSONApplicationCommand,
   JSONApplicationCommandOption,
   JSONApplicationCommandOptionChoice,
+  JSONApplicationCommandPermission,
   JSONGuildApplicationCommandPermissions,
   RawApplicationCommand,
   RawApplicationCommandPermission,
@@ -103,13 +104,13 @@ export class ApplicationCommand extends Base {
   }): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       this.guildId !== undefined
-        ? await this.client.rest.patch(
+        ? await this.client.rest.patch<RawApplicationCommand>(
             Endpoints.applicationGuildCommand(this.id, this.guildId, this.id),
             {
               json: applicationCommandToRaw(options),
             }
           )
-        : await this.client.rest.patch(
+        : await this.client.rest.patch<RawApplicationCommand>(
             Endpoints.applicationCommand(this.applicationId, this.id),
             {
               json: applicationCommandToRaw(options),
@@ -135,41 +136,37 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
-  public async getGuildApplicationCommandPermissions(): Promise<
-    Array<JSONGuildApplicationCommandPermissions>
-  > {
+  public async getGuildApplicationCommandPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
       throw new Error(
         "[disgroove] Can't get the permissions of a global application command"
       );
 
     return this.client.rest
-      .get(
+      .get<RawGuildApplicationCommandPermissions>(
         Endpoints.applicationCommandPermissions(
           this.applicationId,
           this.guildId,
           this.id
         )
       )
-      .then((response) =>
-        response.map((permissions: RawGuildApplicationCommandPermissions) => ({
-          id: permissions.id,
-          applicationId: permissions.application_id,
-          guildId: permissions.guild_id,
-          permissions: permissions.permissions.map(
-            (permission: RawApplicationCommandPermission) => ({
-              id: permission.id,
-              type: permission.type,
-              permission: permission.permission,
-            })
-          ),
-        }))
-      );
+      .then((response) => ({
+        id: response.id,
+        applicationId: response.application_id,
+        guildId: response.guild_id,
+        permissions: response.permissions.map(
+          (permission: RawApplicationCommandPermission) => ({
+            id: permission.id,
+            type: permission.type,
+            permission: permission.permission,
+          })
+        ),
+      }));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
   public async editGuildApplicationPermissions(options: {
-    permissions: Array<JSONGuildApplicationCommandPermissions>;
+    permissions: Array<JSONApplicationCommandPermission>;
   }): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
       throw new Error(
@@ -177,7 +174,7 @@ export class ApplicationCommand extends Base {
       );
 
     return this.client.rest
-      .patch(
+      .patch<RawGuildApplicationCommandPermissions>(
         Endpoints.applicationCommandPermissions(
           this.applicationId,
           this.guildId,
@@ -185,33 +182,22 @@ export class ApplicationCommand extends Base {
         ),
         {
           json: {
-            permissions: options.permissions.map((option) => ({
-              id: option.id,
-              application_id: option.applicationId,
-              guild_id: option.guildId,
-              permissions: option.permissions.map((permission) => ({
-                id: permission.id,
-                type: permission.type,
-                permission: permission.permission,
-              })),
-            })),
+            permissions: options.permissions,
           },
         }
       )
-      .then((response) =>
-        response.map((permissions: RawGuildApplicationCommandPermissions) => ({
-          id: permissions.id,
-          applicationId: permissions.application_id,
-          guildId: permissions.guild_id,
-          permissions: permissions.permissions.map(
-            (permission: RawApplicationCommandPermission) => ({
-              id: permission.id,
-              type: permission.type,
-              permission: permission.permission,
-            })
-          ),
-        }))
-      );
+      .then((response) => ({
+        id: response.id,
+        applicationId: response.application_id,
+        guildId: response.guild_id,
+        permissions: response.permissions.map(
+          (permission: RawApplicationCommandPermission) => ({
+            id: permission.id,
+            type: permission.type,
+            permission: permission.permission,
+          })
+        ),
+      }));
   }
 
   public override toJSON(): JSONApplicationCommand {

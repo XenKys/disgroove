@@ -69,7 +69,7 @@ export class Invite {
 
   /** https://discord.com/developers/docs/resources/invite#delete-invite */
   public async delete(reason?: string): Promise<JSONInvite> {
-    const data: RawInvite = await this.client.rest.delete(
+    const response: RawInvite = await this.client.rest.delete<RawInvite>(
       Endpoints.invite(this.code),
       {
         reason,
@@ -77,42 +77,42 @@ export class Invite {
     );
 
     return {
-      code: data.code,
+      code: response.code,
       guild:
-        data.guild !== undefined
-          ? new Guild(data.guild, this.client)
+        response.guild !== undefined
+          ? new Guild(response.guild, this.client)
           : undefined,
-      channel: new Channel(data.channel, this.client),
+      channel: new Channel(response.channel, this.client),
       inviter:
-        data.inviter !== undefined
-          ? new User(data.inviter, this.client)
+        response.inviter !== undefined
+          ? new User(response.inviter, this.client)
           : undefined,
-      targetType: data.target_type,
+      targetType: response.target_type,
       targetUser:
-        data.target_user !== undefined
-          ? new User(data.target_user, this.client)
+        response.target_user !== undefined
+          ? new User(response.target_user, this.client)
           : undefined,
       targetApplication:
-        data.target_application !== undefined
-          ? new Application(data.target_application, this.client)
+        response.target_application !== undefined
+          ? new Application(response.target_application, this.client)
           : undefined,
-      approximatePresenceCount: data.approximate_presence_count,
-      approximateMemberCount: data.approximate_member_count,
-      expiresAt: data.expires_at,
+      approximatePresenceCount: response.approximate_presence_count,
+      approximateMemberCount: response.approximate_member_count,
+      expiresAt: response.expires_at,
       stageInstance:
-        data.stage_instance !== undefined
+        response.stage_instance !== undefined
           ? {
-              members: data.stage_instance.members.map(
+              members: response.stage_instance.members.map(
                 (member) => new GuildMember(member, this.client)
               ),
-              participantCount: data.stage_instance.participant_count,
-              speakerCount: data.stage_instance.speaker_count,
-              topic: data.stage_instance.topic,
+              participantCount: response.stage_instance.participant_count,
+              speakerCount: response.stage_instance.speaker_count,
+              topic: response.stage_instance.topic,
             }
           : undefined,
       guildScheduledEvent:
-        data.guild_scheduled_event !== undefined
-          ? new GuildScheduledEvent(data.guild_scheduled_event, this.client)
+        response.guild_scheduled_event !== undefined
+          ? new GuildScheduledEvent(response.guild_scheduled_event, this.client)
           : undefined,
     };
   }
