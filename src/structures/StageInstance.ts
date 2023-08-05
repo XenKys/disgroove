@@ -47,7 +47,7 @@ export class StageInstance extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
-  public async delete(reason?: string): Promise<void> {
+  public delete(reason?: string): void {
     this.client.rest.delete(Endpoints.stageInstance(this.channelId), {
       reason,
     });

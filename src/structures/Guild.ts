@@ -490,10 +490,10 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  public async deleteApplicationCommand(
+  public deleteApplicationCommand(
     applicationId: string,
     commandId: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.put(
       Endpoints.applicationGuildCommand(applicationId, this.id, commandId)
     );
@@ -735,10 +735,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
-  public async deleteAutoModerationRule(
-    ruleId: string,
-    reason?: string
-  ): Promise<void> {
+  public deleteAutoModerationRule(ruleId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildAutoModerationRule(this.id, ruleId), {
       reason,
     });
@@ -810,7 +807,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
-  public async deleteEmoji(emojiId: string, reason?: string): Promise<void> {
+  public deleteEmoji(emojiId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildEmoji(this.id, emojiId), {
       reason,
     });
@@ -913,7 +910,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild */
-  public async delete(): Promise<void> {
+  public delete(): void {
     this.client.rest.put(Endpoints.guild(this.id));
   }
 
@@ -983,14 +980,14 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
-  public async modifyChannelPositions(
+  public modifyChannelPositions(
     options: Array<{
       id: string;
       position: number | null;
       lockPermissions: boolean | null;
       parentId: string | null;
     }>
-  ): Promise<void> {
+  ): void {
     this.client.rest.patch(Endpoints.guildChannels(this.id), {
       json: options.map((data) => ({
         id: data.id,
@@ -1069,7 +1066,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member */
-  public async addGuildMember(
+  public addGuildMember(
     userId: string,
     options: {
       accessToken: string;
@@ -1078,7 +1075,7 @@ export class Guild extends Base {
       mute?: boolean;
       deaf?: boolean;
     }
-  ): Promise<void> {
+  ): void {
     this.client.rest.put(Endpoints.guildMember(this.id, userId), {
       json: {
         access_token: options.accessToken,
@@ -1091,7 +1088,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public async modifyMember(
+  public modifyMember(
     userId: string,
     options: {
       nick?: string | null;
@@ -1103,7 +1100,7 @@ export class Guild extends Base {
       flags?: GuildMemberFlags;
     },
     reason?: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.patch(Endpoints.guildMember(this.id, userId), {
       json: {
         nick: options.nick,
@@ -1119,12 +1116,12 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
-  public async modifyCurrentMember(
+  public modifyCurrentMember(
     options: {
       nick: string | null;
     },
     reason?: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.patch(Endpoints.guildMember(this.id), {
       json: {
         nick: options.nick,
@@ -1134,29 +1131,29 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
-  public async addGuildMemberRole(
+  public addGuildMemberRole(
     userId: string,
     roleId: string,
     reason?: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.put(Endpoints.guildMemberRole(this.id, userId, roleId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
-  public async removeMemberRole(
+  public removeMemberRole(
     userId: string,
     roleId: string,
     reason?: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.put(Endpoints.guildMemberRole(this.id, userId, roleId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
-  public async removeMember(userId: string, reason?: string): Promise<void> {
+  public removeMember(userId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildMember(this.id, userId), {
       reason,
     });
@@ -1197,14 +1194,14 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
-  public async createBan(
+  public createBan(
     userId: string,
     options?: {
       deleteMessageDays?: number;
       deleteMessageSeconds?: number;
     },
     reason?: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.put(Endpoints.guildBan(this.id, userId), {
       json: {
         delete_message_days: options?.deleteMessageDays,
@@ -1215,7 +1212,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
-  public async removeBan(userId: string, reason?: string): Promise<void> {
+  public removeBan(userId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildBan(this.id, userId), {
       reason,
     });
@@ -1325,7 +1322,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
-  public async deleteRole(roleId: string, reason?: string): Promise<void> {
+  public deleteRole(roleId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildRole(this.id, roleId), {
       reason,
     });
@@ -1399,10 +1396,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
-  public async deleteIntegration(
-    integrationId: string,
-    reason?: string
-  ): Promise<void> {
+  public deleteIntegration(integrationId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildIntegration(this.id, integrationId), {
       reason,
     });
@@ -1565,7 +1559,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
-  public async modifyOnboarding(
+  public modifyOnboarding(
     options: {
       prompts: Array<JSONOnboardingPrompt>;
       defaultChannelIds: Array<string>;
@@ -1573,7 +1567,7 @@ export class Guild extends Base {
       mode: OnboardingMode;
     },
     reason?: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.patch(Endpoints.guildOnboarding(this.id), {
       json: {
         prompts: options.prompts.map((prompt) => ({
@@ -1607,11 +1601,11 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
-  public async modifyCurrentUserVoiceState(options: {
+  public modifyCurrentUserVoiceState(options: {
     channelId?: string;
     suppress?: boolean;
     requestToSpeakTimestamp?: number | null;
-  }): Promise<void> {
+  }): void {
     this.client.rest.patch(Endpoints.guildVoiceState(this.id), {
       json: {
         channel_id: options.channelId,
@@ -1622,14 +1616,14 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
-  public async modifyUserVoiceState(
+  public modifyUserVoiceState(
     userId: string,
     options: {
       channelId?: string;
       suppress?: boolean;
       requestToSpeakTimestamp?: number | null;
     }
-  ): Promise<void> {
+  ): void {
     this.client.rest.patch(Endpoints.guildVoiceState(this.id, userId), {
       json: {
         channel_id: options.channelId,
@@ -1735,7 +1729,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
-  public async deleteScheduledEvent(scheduledEventId: string): Promise<void> {
+  public deleteScheduledEvent(scheduledEventId: string): void {
     this.client.rest.put(
       Endpoints.guildScheduledEvent(this.id, scheduledEventId)
     );
@@ -2004,10 +1998,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
-  public async deleteSticker(
-    stickerId: string,
-    reason?: string
-  ): Promise<void> {
+  public deleteSticker(stickerId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildSticker(this.id, stickerId), {
       reason,
     });

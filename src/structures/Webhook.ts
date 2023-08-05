@@ -103,14 +103,14 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
-  public async delete(reason?: string): Promise<void> {
+  public delete(reason?: string): void {
     this.client.rest.delete(Endpoints.webhook(this.id), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
-  public async deleteWithToken(token: string, reason?: string): Promise<void> {
+  public deleteWithToken(token: string, reason?: string): void {
     this.client.rest.delete(Endpoints.webhook(this.id, token), {
       reason,
     });
@@ -374,13 +374,13 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
-  public async deleteMessage(
+  public deleteMessage(
     token: string,
     messageId: string,
     options?: {
       threadId?: string;
     }
-  ): Promise<void> {
+  ): void {
     this.client.rest.delete(
       Endpoints.webhookMessage(this.id, token, messageId),
       {

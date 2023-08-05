@@ -153,7 +153,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
-  public async createResponse(options: {
+  public createResponse(options: {
     type: InteractionCallbackType;
     data: {
       tts?: boolean;
@@ -206,14 +206,14 @@ export class Interaction extends Base {
       customId?: string;
       title?: string;
     };
-  }): Promise<void> {
+  }): void {
     switch (options.type) {
       case InteractionCallbackType.Pong:
         break;
       case InteractionCallbackType.ChannelMessageWithSource:
       case InteractionCallbackType.UpdateMessage:
         {
-          await this.client.rest.post(
+          this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
             {
               json: {
@@ -244,7 +244,7 @@ export class Interaction extends Base {
         break;
       case InteractionCallbackType.ApplicationCommandAutocompleteResult:
         {
-          await this.client.rest.post(
+          this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
             {
               json: {
@@ -263,7 +263,7 @@ export class Interaction extends Base {
         break;
       case InteractionCallbackType.Modal:
         {
-          await this.client.rest.post(
+          this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
             {
               json: {
@@ -407,14 +407,14 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
-  public async deleteOriginalResponse(): Promise<void> {
+  public deleteOriginalResponse(): void {
     this.client.rest.delete(
       Endpoints.interactionOriginalMessage(this.id, this.token)
     );
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
-  public async createFollowupMessage(options: {
+  public createFollowupMessage(options: {
     content?: string | null;
     tts?: boolean;
     embeds?: Array<JSONEmbed> | null;
@@ -463,38 +463,35 @@ export class Interaction extends Base {
     attachments?: Array<JSONAttachment> | null;
     flags?: MessageFlags | null;
     threadName?: string;
-  }): Promise<void> {
-    await this.client.rest.post(
-      Endpoints.webhook(this.applicationId, this.token),
-      {
-        json: {
-          content: options.content,
-          tts: options.tts,
-          embeds:
-            options.embeds !== undefined
-              ? options.embeds !== null
-                ? embedsToRaw(options.embeds)
-                : null
-              : undefined,
-          allowed_mentions: {
-            parse: options.allowedMentions?.parse,
-            roles: options.allowedMentions?.roles,
-            users: options.allowedMentions?.users,
-            replied_user: options.allowedMentions?.repliedUser,
-          },
-          components:
-            options.components !== undefined
-              ? options.components !== null
-                ? messageComponentToRaw(options.components)
-                : null
-              : undefined,
-          attachments: options.attachments,
-          flags: options.flags,
-          thread_name: options.threadName,
+  }): void {
+    this.client.rest.post(Endpoints.webhook(this.applicationId, this.token), {
+      json: {
+        content: options.content,
+        tts: options.tts,
+        embeds:
+          options.embeds !== undefined
+            ? options.embeds !== null
+              ? embedsToRaw(options.embeds)
+              : null
+            : undefined,
+        allowed_mentions: {
+          parse: options.allowedMentions?.parse,
+          roles: options.allowedMentions?.roles,
+          users: options.allowedMentions?.users,
+          replied_user: options.allowedMentions?.repliedUser,
         },
-        files: options.files,
-      }
-    );
+        components:
+          options.components !== undefined
+            ? options.components !== null
+              ? messageComponentToRaw(options.components)
+              : null
+            : undefined,
+        attachments: options.attachments,
+        flags: options.flags,
+        thread_name: options.threadName,
+      },
+      files: options.files,
+    });
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message */
@@ -608,7 +605,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message */
-  public async deleteFollowupMessage(messageId: string): Promise<void> {
+  public deleteFollowupMessage(messageId: string): void {
     this.client.rest.delete(
       Endpoints.webhookMessage(this.applicationId, this.token, messageId)
     );

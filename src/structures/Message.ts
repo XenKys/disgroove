@@ -204,24 +204,21 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public async createReaction(emoji: string): Promise<void> {
+  public createReaction(emoji: string): void {
     this.client.rest.put(
       Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public async deleteOwnReaction(emoji: string): Promise<void> {
+  public deleteOwnReaction(emoji: string): void {
     this.client.rest.put(
       Endpoints.channelMessageOwnReaction(this.channelId, this.id, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public async deleteUserReaction(
-    emoji: string,
-    userId: string
-  ): Promise<void> {
+  public deleteUserReaction(emoji: string, userId: string): void {
     this.client.rest.put(
       Endpoints.channelMessageUserReaction(
         this.channelId,
@@ -254,14 +251,14 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
-  public async deleteAllReactions(): Promise<void> {
+  public deleteAllReactions(): void {
     this.client.rest.delete(
       Endpoints.channelMessageAllReactions(this.channelId, this.id)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
-  public async deleteAllReactionsForEmoji(emoji: string): Promise<void> {
+  public deleteAllReactionsForEmoji(emoji: string): void {
     this.client.rest.delete(
       Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
     );
@@ -346,7 +343,7 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
-  public async delete(reason?: string): Promise<void> {
+  public delete(reason?: string): void {
     this.client.rest.delete(Endpoints.channelMessage(this.channelId, this.id), {
       reason,
     });

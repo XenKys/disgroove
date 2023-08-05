@@ -84,8 +84,8 @@ export class AutoModerationRule extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
-  public async delete(reason?: string): Promise<void> {
-    await this.client.rest.delete(
+  public delete(reason?: string): void {
+    this.client.rest.delete(
       Endpoints.guildAutoModerationRule(this.guildId, this.id),
       {
         reason,

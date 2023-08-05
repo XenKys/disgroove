@@ -70,7 +70,7 @@ export class Integration extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
-  public async delete(reason?: string): Promise<void> {
+  public delete(reason?: string): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.delete(Endpoints.guildIntegration(this.guildId, this.id), {

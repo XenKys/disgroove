@@ -121,16 +121,16 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  public async delete(): Promise<void> {
+  public delete(): void {
     this.guildId !== undefined
-      ? await this.client.rest.delete(
+      ? this.client.rest.delete(
           Endpoints.applicationGuildCommand(
             this.applicationId,
             this.guildId,
             this.id
           )
         )
-      : await this.client.rest.delete(
+      : this.client.rest.delete(
           Endpoints.applicationCommand(this.applicationId, this.id)
         );
   }

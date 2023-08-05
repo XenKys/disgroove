@@ -345,29 +345,26 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public async createReaction(messageId: string, emoji: string): Promise<void> {
-    await this.client.rest.put(
+  public createReaction(messageId: string, emoji: string): void {
+    this.client.rest.put(
       Endpoints.channelMessageOwnReaction(this.id, messageId, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-own-reaction */
-  public async deleteOwnReaction(
-    messageId: string,
-    emoji: string
-  ): Promise<void> {
-    await this.client.rest.delete(
+  public deleteOwnReaction(messageId: string, emoji: string): void {
+    this.client.rest.delete(
       Endpoints.channelMessageOwnReaction(this.id, messageId, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
-  public async deleteUserReaction(
+  public deleteUserReaction(
     messageId: string,
     emoji: string,
     userId: string
-  ): Promise<void> {
-    await this.client.rest.delete(
+  ): void {
+    this.client.rest.delete(
       Endpoints.channelMessageUserReaction(this.id, messageId, emoji, userId)
     );
   }
@@ -395,18 +392,15 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
-  public async deleteAllReactions(messageId: string): Promise<void> {
-    await this.client.rest.delete(
+  public deleteAllReactions(messageId: string): void {
+    this.client.rest.delete(
       Endpoints.channelMessageAllReactions(this.id, messageId)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
-  public async deleteAllReactionsForEmoji(
-    messageId: string,
-    emoji: string
-  ): Promise<void> {
-    await this.client.rest.delete(
+  public deleteAllReactionsForEmoji(messageId: string, emoji: string): void {
+    this.client.rest.delete(
       Endpoints.channelMessageReaction(this.id, messageId, emoji)
     );
   }
@@ -493,21 +487,15 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
-  public async deleteMessage(
-    messageId: string,
-    reason?: string
-  ): Promise<void> {
-    await this.client.rest.delete(
-      Endpoints.channelMessage(this.id, messageId),
-      {
-        reason,
-      }
-    );
+  public deleteMessage(messageId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.channelMessage(this.id, messageId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
-  public async bulkDeleteMessages(messagesIds: Array<string>): Promise<void> {
-    await this.client.rest.post(Endpoints.channelMessages(this.id), {
+  public bulkDeleteMessages(messagesIds: Array<string>): void {
+    this.client.rest.post(Endpoints.channelMessages(this.id), {
       json: {
         messages: messagesIds,
       },
@@ -515,7 +503,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
-  public async editChannelPermissions(
+  public editChannelPermissions(
     overwriteId: string,
     options: {
       allow?: string | null;
@@ -523,14 +511,11 @@ export class Channel extends Base {
       type: number;
     },
     reason?: string
-  ): Promise<void> {
-    await this.client.rest.put(
-      Endpoints.channelPermission(this.id, overwriteId),
-      {
-        json: options,
-        reason,
-      }
-    );
+  ): void {
+    this.client.rest.put(Endpoints.channelPermission(this.id, overwriteId), {
+      json: options,
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
@@ -576,16 +561,10 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
-  public async deleteChannelPermission(
-    overwriteId: string,
-    reason?: string
-  ): Promise<void> {
-    await this.client.rest.delete(
-      Endpoints.channelPermission(this.id, overwriteId),
-      {
-        reason,
-      }
-    );
+  public deleteChannelPermission(overwriteId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.channelPermission(this.id, overwriteId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
@@ -608,8 +587,8 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
-  public async triggerTypingIndicator(): Promise<void> {
-    await this.client.rest.post(Endpoints.channelTyping(this.id));
+  public triggerTypingIndicator(): void {
+    this.client.rest.post(Endpoints.channelTyping(this.id));
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
@@ -622,28 +601,28 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
-  public async pinMessage(messageId: string, reason?: string): Promise<void> {
-    await this.client.rest.put(Endpoints.channelPin(this.id, messageId), {
+  public pinMessage(messageId: string, reason?: string): void {
+    this.client.rest.put(Endpoints.channelPin(this.id, messageId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
-  public async unpinMessage(messageId: string, reason?: string): Promise<void> {
-    await this.client.rest.delete(Endpoints.channelPin(this.id, messageId), {
+  public unpinMessage(messageId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.channelPin(this.id, messageId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
-  public async groupDMAddRecipient(
+  public groupDMAddRecipient(
     userId: string,
     options: {
       accessToken: string;
       nick: string;
     }
-  ): Promise<void> {
-    await this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
+  ): void {
+    this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
       json: {
         access_token: options.accessToken,
         nick: options.nick,
@@ -652,8 +631,8 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
-  public async groupDMRemoveRecipient(userId: string): Promise<void> {
-    await this.client.rest.delete(Endpoints.channelRecipient(this.id, userId));
+  public groupDMRemoveRecipient(userId: string): void {
+    this.client.rest.delete(Endpoints.channelRecipient(this.id, userId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
@@ -800,23 +779,23 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#join-thread */
-  public async joinThread(): Promise<void> {
-    await this.client.rest.put(Endpoints.threadMembers(this.id, "@me"));
+  public joinThread(): void {
+    this.client.rest.put(Endpoints.threadMembers(this.id, "@me"));
   }
 
   /** https://discord.com/developers/docs/resources/channel#add-thread-member */
-  public async addThreadMember(userId: string): Promise<void> {
-    await this.client.rest.put(Endpoints.threadMembers(this.id, userId));
+  public addThreadMember(userId: string): void {
+    this.client.rest.put(Endpoints.threadMembers(this.id, userId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#leave-thread */
-  public async leaveThread(): Promise<void> {
-    await this.client.rest.delete(Endpoints.threadMembers(this.id, "@me"));
+  public leaveThread(): void {
+    this.client.rest.delete(Endpoints.threadMembers(this.id, "@me"));
   }
 
   /** https://discord.com/developers/docs/resources/channel#remove-thread-member */
-  public async removeThreadMember(userId: string): Promise<void> {
-    await this.client.rest.delete(Endpoints.threadMembers(this.id, userId));
+  public removeThreadMember(userId: string): void {
+    this.client.rest.delete(Endpoints.threadMembers(this.id, userId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-thread-member */

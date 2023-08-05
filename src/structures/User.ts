@@ -88,7 +88,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#leave-guild */
-  public async leaveGuild(guildId: string): Promise<void> {
+  public leaveGuild(guildId: string): void {
     this.client.rest.delete(Endpoints.userGuild(guildId));
   }
 

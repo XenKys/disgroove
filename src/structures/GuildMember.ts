@@ -5,7 +5,7 @@ import type { JSONGuildMember, RawGuildMember } from "../types";
 import type { GuildMemberFlags } from "../utils";
 
 export class GuildMember {
-  private client!: Client;
+  private client: Client;
   public user?: User;
   public nick?: string | null;
   public avatar?: string | null;
@@ -45,7 +45,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public async modify(
+  public modify(
     options: {
       nick?: string | null;
       roles?: Array<string> | null;
@@ -56,7 +56,7 @@ export class GuildMember {
       flags?: GuildMemberFlags;
     },
     reason?: string
-  ): Promise<void> {
+  ): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.patch(Endpoints.guildMember(this.guildId, this.user?.id), {
@@ -74,7 +74,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
-  public async addRole(roleId: string, reason?: string): Promise<void> {
+  public addRole(roleId: string, reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -88,7 +88,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
-  public async removeRole(roleId: string, reason?: string): Promise<void> {
+  public removeRole(roleId: string, reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -102,7 +102,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
-  public async remove(reason?: string): Promise<void> {
+  public remove(reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -113,13 +113,13 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
-  public async createBan(
+  public createBan(
     options?: {
       deleteMessageDays?: number;
       deleteMessageSeconds?: number;
     },
     reason?: string
-  ): Promise<void> {
+  ): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -134,7 +134,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
-  public async removeBan(userId: string, reason?: string): Promise<void> {
+  public removeBan(userId: string, reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
 

@@ -97,7 +97,7 @@ export class GuildScheduledEvent extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
-  public async delete(): Promise<void> {
+  public delete(): void {
     this.client.rest.delete(
       Endpoints.guildScheduledEvent(this.guildId, this.id)
     );

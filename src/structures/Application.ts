@@ -222,9 +222,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command */
-  public async deleteGlobalApplicationCommand(
-    commandId: string
-  ): Promise<void> {
+  public deleteGlobalApplicationCommand(commandId: string): void {
     this.client.rest.delete(Endpoints.applicationCommand(this.id, commandId));
   }
 
@@ -386,10 +384,10 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  public async deleteGuildApplicationCommand(
+  public deleteGuildApplicationCommand(
     guildId: string,
     commandId: string
-  ): Promise<void> {
+  ): void {
     this.client.rest.delete(
       Endpoints.applicationGuildCommand(this.id, guildId, commandId)
     );

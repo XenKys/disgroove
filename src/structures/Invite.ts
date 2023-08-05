@@ -11,7 +11,7 @@ import { Endpoints } from "../rest";
 import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 
 export class Invite {
-  private client!: Client;
+  private client: Client;
   public code: string;
   public guild?: Guild;
   public channel: Channel;

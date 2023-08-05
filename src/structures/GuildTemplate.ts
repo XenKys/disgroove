@@ -4,7 +4,7 @@ import { Endpoints } from "../rest";
 import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
 
 export class GuildTemplate {
-  private client!: Client;
+  private client: Client;
   public code: string;
   public name: string;
   public description: string | null;
