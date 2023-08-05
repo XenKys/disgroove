@@ -494,7 +494,7 @@ export class Guild extends Base {
     applicationId: string,
     commandId: string
   ): void {
-    this.client.rest.put(
+    this.client.rest.delete(
       Endpoints.applicationGuildCommand(applicationId, this.id, commandId)
     );
   }
@@ -736,9 +736,12 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
   public deleteAutoModerationRule(ruleId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.guildAutoModerationRule(this.id, ruleId), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.guildAutoModerationRule(this.id, ruleId),
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
@@ -808,7 +811,7 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
   public deleteEmoji(emojiId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.guildEmoji(this.id, emojiId), {
+    this.client.rest.delete(Endpoints.guildEmoji(this.id, emojiId), {
       reason,
     });
   }
@@ -911,7 +914,7 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild */
   public delete(): void {
-    this.client.rest.put(Endpoints.guild(this.id));
+    this.client.rest.delete(Endpoints.guild(this.id));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-channels */
@@ -1147,14 +1150,17 @@ export class Guild extends Base {
     roleId: string,
     reason?: string
   ): void {
-    this.client.rest.put(Endpoints.guildMemberRole(this.id, userId, roleId), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.guildMemberRole(this.id, userId, roleId),
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
   public removeMember(userId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.guildMember(this.id, userId), {
+    this.client.rest.delete(Endpoints.guildMember(this.id, userId), {
       reason,
     });
   }
@@ -1213,7 +1219,7 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
   public removeBan(userId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.guildBan(this.id, userId), {
+    this.client.rest.delete(Endpoints.guildBan(this.id, userId), {
       reason,
     });
   }
@@ -1323,7 +1329,7 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
   public deleteRole(roleId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.guildRole(this.id, roleId), {
+    this.client.rest.delete(Endpoints.guildRole(this.id, roleId), {
       reason,
     });
   }
@@ -1397,9 +1403,12 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
   public deleteIntegration(integrationId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.guildIntegration(this.id, integrationId), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.guildIntegration(this.id, integrationId),
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-settings */
@@ -1730,7 +1739,7 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
   public deleteScheduledEvent(scheduledEventId: string): void {
-    this.client.rest.put(
+    this.client.rest.delete(
       Endpoints.guildScheduledEvent(this.id, scheduledEventId)
     );
   }
@@ -1842,7 +1851,7 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   public async deleteTemplate(code: string): Promise<JSONGuildTemplate> {
     const response: RawGuildTemplate =
-      await this.client.rest.put<RawGuildTemplate>(
+      await this.client.rest.delete<RawGuildTemplate>(
         Endpoints.guildTemplate(this.id, code)
       );
 
@@ -1999,7 +2008,7 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
   public deleteSticker(stickerId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.guildSticker(this.id, stickerId), {
+    this.client.rest.delete(Endpoints.guildSticker(this.id, stickerId), {
       reason,
     });
   }

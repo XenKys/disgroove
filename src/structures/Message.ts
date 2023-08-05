@@ -212,14 +212,14 @@ export class Message extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public deleteOwnReaction(emoji: string): void {
-    this.client.rest.put(
+    this.client.rest.delete(
       Endpoints.channelMessageOwnReaction(this.channelId, this.id, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public deleteUserReaction(emoji: string, userId: string): void {
-    this.client.rest.put(
+    this.client.rest.delete(
       Endpoints.channelMessageUserReaction(
         this.channelId,
         this.id,
