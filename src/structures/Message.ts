@@ -139,7 +139,13 @@ export class Message extends Base {
       this.application = new Application(data.application, this.client);
     if (data.application_id !== undefined)
       this.applicationId = data.application_id;
-    if (data.message_reference !== undefined) this.messageReference = {};
+    if (data.message_reference !== undefined)
+      this.messageReference = {
+        messageId: data.message_reference.message_id,
+        channelId: data.message_reference.channel_id,
+        guildId: data.message_reference.guild_id,
+        failIfNotExists: data.message_reference.fail_if_not_exists,
+      };
     if (data.flags !== undefined) this.flags = data.flags;
     if (data.referenced_message !== undefined)
       this.referencedMessage =
