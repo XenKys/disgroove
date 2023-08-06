@@ -11,7 +11,11 @@ export abstract class Base {
 
   protected update(data: unknown): void {}
 
-  protected toJSON(): {
+  public toString(): string {
+    return `[${this.constructor.name}]`;
+  }
+
+  public toJSON(): {
     id: string;
   } {
     return {

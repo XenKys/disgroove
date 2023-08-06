@@ -88,6 +88,10 @@ export class GuildTemplate {
       }));
   }
 
+  public toString(): string {
+    return `[${this.constructor.name}]`;
+  }
+
   public toJSON(): JSONGuildTemplate {
     return {
       code: this.code,

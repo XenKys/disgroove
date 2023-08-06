@@ -143,6 +143,10 @@ export class GuildMember {
     });
   }
 
+  public toString(): string {
+    return `[${this.constructor.name}]`;
+  }
+
   public toJSON(): JSONGuildMember & { guildId?: string } {
     return {
       user: this.user,

@@ -117,6 +117,10 @@ export class Invite {
       }));
   }
 
+  public toString(): string {
+    return `[${this.constructor.name}]`;
+  }
+
   public toJSON(): JSONInvite {
     return {
       code: this.code,
