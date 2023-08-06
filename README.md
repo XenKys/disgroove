@@ -30,7 +30,6 @@ const client = new Client("token", {
 const {
   Client,
   GatewayIntents,
-  GatewayEvents,
   ActivityType,
   StatusTypes,
   InteractionType,
@@ -39,9 +38,20 @@ const {
 } = require("disgroove");
 const client = new Client("token", {
   intents: GatewayIntents.All,
+  presence: {
+    activities: [
+      {
+        name: "/ping",
+        type: ActivityType.Watching,
+        createdAt: Date.now(),
+      },
+    ],
+    status: StatusTypes.Online,
+    afk: false,
+  }, // Set the bot presence to "Watching /ping"
 });
 
-client.on(GatewayEvents.Ready, async () => {
+client.on("ready", async () => {
   const user = await client.getUser(); // Get the bot user
 
   console.log(`${user.username} is now online!`); // Print "Username is now online!" when the bot connects to the gateway
@@ -52,26 +62,14 @@ client.on(GatewayEvents.Ready, async () => {
     name: "ping",
     description: "Reply with Pong! �",
   }); // Create a global application command named "ping"
-
-  client.updatePresence({
-    activities: [
-      {
-        name: "/ping",
-        type: ActivityType.Watching,
-        createdAt: Date.now(),
-      },
-    ],
-    status: StatusTypes.Online,
-    afk: false,
-  }); // Update the bot presence to "Watching /ping"
 });
 
-client.on(GatewayEvents.InteractionCreate, async (interaction) => {
+client.on("interactionCreate", (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return; // Check if the interaction is an application command
 
   if (interaction.data.name === "ping") {
     // Check if the application command name is equals to "ping"
-    await interaction.createResponse({
+    interaction.createResponse({
       type: InteractionCallbackType.ChannelMessageWithSource,
       data: {
         content: "Pong! �",
