@@ -1,4 +1,12 @@
-import { Application, Base, Channel, GuildMember, User } from ".";
+import {
+  Application,
+  Base,
+  Channel,
+  Emoji,
+  GuildMember,
+  Sticker,
+  User,
+} from ".";
 import type { Client } from "..";
 import { Endpoints, type File } from "../rest";
 import type {
@@ -14,7 +22,6 @@ import type {
   JSONReaction,
   JSONRoleSubscriptionData,
   JSONSelectOption,
-  JSONSticker,
   JSONStickerItem,
   RawChannel,
   RawGuildMember,
@@ -26,7 +33,6 @@ import {
   type ComponentTypes,
   type MessageFlags,
   embedToJSON,
-  emojiToJSON,
   messageComponentToRaw,
   embedsToRaw,
 } from "../utils";
@@ -59,7 +65,7 @@ export class Message extends Base {
   public thread?: Channel;
   public components?: Array<number>;
   public stickerItems?: Array<JSONStickerItem>;
-  public stickers?: Array<JSONSticker>;
+  public stickers?: Array<Sticker>;
   public position?: number;
   public roleSubscriptionData?: JSONRoleSubscriptionData;
   public guildId?: string;
@@ -124,7 +130,7 @@ export class Message extends Base {
       this.reactions = data.reactions.map((reaction) => ({
         count: reaction.count,
         me: reaction.me,
-        emoji: emojiToJSON(reaction.emoji, this.client),
+        emoji: new Emoji(reaction.emoji, this.client),
       }));
     if (data.nonce !== undefined) this.nonce = data.nonce;
     if (data.webhook_id !== undefined) this.webhookId = data.webhook_id;
@@ -161,23 +167,9 @@ export class Message extends Base {
         formatType: stickerItem.format_type,
       }));
     if (data.stickers !== undefined)
-      this.stickers = data.stickers.map((sticker) => ({
-        id: sticker.id,
-        packId: sticker.pack_id,
-        name: sticker.name,
-        description: sticker.description,
-        tags: sticker.tags,
-        asset: sticker.asset,
-        type: sticker.type,
-        formatType: sticker.format_type,
-        available: sticker.available,
-        guildId: sticker.guild_id,
-        user:
-          sticker.user !== undefined
-            ? new User(sticker.user, this.client)
-            : undefined,
-        sortValue: sticker.sort_value,
-      }));
+      this.stickers = data.stickers.map(
+        (sticker) => new Sticker(sticker, this.client)
+      );
     if (data.position !== undefined) this.position = data.position;
     if (data.role_subscription_data !== undefined)
       this.roleSubscriptionData = {

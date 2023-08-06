@@ -23,10 +23,9 @@ import type {
   RawThreadMember,
   RawUser,
   JSONAutoModerationAction,
-  JSONEmoji,
-  JSONSticker,
   JSONThreadMember,
 } from ".";
+import type { Emoji, Sticker } from "../structures";
 
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {
@@ -334,7 +333,7 @@ export interface RawWebhooksUpdateEventFields {
   channel_id: string;
 }
 
-export interface JSONAutoModerationActionExectionEventFields {
+export interface AutoModerationActionExectionEventFields {
   guildId: string;
   action: JSONAutoModerationAction;
   ruleId: string;
@@ -348,14 +347,14 @@ export interface JSONAutoModerationActionExectionEventFields {
   matchedContent: string | null;
 }
 
-export interface JSONThreadListSyncEventFields {
+export interface ThreadListSyncEventFields {
   guildId: string;
   channelIds?: Array<string>;
   threads: Array<Channel>;
   members: Array<JSONThreadMember>;
 }
 
-export interface JSONThreadMembersUpdateEventFields {
+export interface ThreadMembersUpdateEventFields {
   id: string;
   guildId: string;
   memberCount: number;
@@ -363,47 +362,47 @@ export interface JSONThreadMembersUpdateEventFields {
   removedMemberIds?: Array<string>;
 }
 
-export interface JSONChannelPinsUpdateEventFields {
+export interface ChannelPinsUpdateEventFields {
   guildId?: string;
   channelId: string;
   lastPinTimestamp: number | null;
 }
 
-export interface JSONGuildDeleteEventFields {
+export interface GuildDeleteEventFields {
   id: string;
   unavailable: boolean;
 }
 
-export interface JSONGuildBanAddEventFields {
+export interface GuildBanAddEventFields {
   guildId: string;
   user: User;
 }
 
-export interface JSONGuildBanRemoveEventFields {
+export interface GuildBanRemoveEventFields {
   guildId: string;
   user: User;
 }
 
-export interface JSONGuildEmojisUpdateEventFields {
+export interface GuildEmojisUpdateEventFields {
   guildId: string;
-  emojis: Array<JSONEmoji>;
+  emojis: Array<Emoji>;
 }
 
-export interface JSONGuildStickersUpdateEventFields {
+export interface GuildStickersUpdateEventFields {
   guildId: string;
-  stickers: Array<JSONSticker>;
+  stickers: Array<Sticker>;
 }
 
-export interface JSONGuildIntegrationsUpdateEventFields {
+export interface GuildIntegrationsUpdateEventFields {
   guildId: string;
 }
 
-export interface JSONGuildMemberRemoveEventFields {
+export interface GuildMemberRemoveEventFields {
   guildId: string;
   user: User;
 }
 
-export interface JSONGuildMemberUpdateEventFields {
+export interface GuildMemberUpdateEventFields {
   guildId: string;
   roles: Array<string>;
   user: User;
@@ -417,50 +416,50 @@ export interface JSONGuildMemberUpdateEventFields {
   communicationDisabledUntil?: number | null;
 }
 
-export interface JSONGuildMembersChunkEventFields {
+export interface GuildMembersChunkEventFields {
   guildId: string;
   members: Array<GuildMember>;
   chunkIndex: number;
   chunkCount: number;
   notFound?: Array<string>;
-  presences?: Array<JSONPresenceUpdateEventFields>;
+  presences?: Array<PresenceUpdateEventFields>;
   nonce?: string;
 }
 
-export interface JSONGuildRoleCreateEventFields {
+export interface GuildRoleCreateEventFields {
   guildId: string;
   role: Role;
 }
 
-export interface JSONGuildRoleUpdateEventFields {
+export interface GuildRoleUpdateEventFields {
   guildId: string;
   role: Role;
 }
 
-export interface JSONGuildRoleDeleteEventFields {
+export interface GuildRoleDeleteEventFields {
   guildId: string;
   roleId: string;
 }
 
-export interface JSONGuildScheduledEventUserAddEventFields {
+export interface GuildScheduledEventUserAddEventFields {
   guildScheduledEventId: string;
   userId: string;
   guildId: string;
 }
 
-export interface JSONGuildScheduledEventUserRemoveEventFields {
+export interface GuildScheduledEventUserRemoveEventFields {
   guildScheduledEventId: string;
   userId: string;
   guildId: string;
 }
 
-export interface JSONIntegrationDeleteEventFields {
+export interface IntegrationDeleteEventFields {
   id: string;
   guildId: string;
   applicationId?: string;
 }
 
-export interface JSONInviteCreateEventFields {
+export interface InviteCreateEventFields {
   channelId: string;
   code: string;
   createdAt: number;
@@ -475,115 +474,115 @@ export interface JSONInviteCreateEventFields {
   uses: number;
 }
 
-export interface JSONInviteDeleteEventFields {
+export interface InviteDeleteEventFields {
   channelId: string;
   guildId?: string;
   code: string;
 }
 
-export interface JSONMessageDeleteEventFields {
+export interface MessageDeleteEventFields {
   id: string;
   channelId: string;
   guildId?: string;
 }
 
-export interface JSONMessageDeleteBulkEventFields {
+export interface MessageDeleteBulkEventFields {
   ids: Array<string>;
   channelId: string;
   guildId?: string;
 }
 
-export interface JSONMessageReactionAddEventFields {
+export interface MessageReactionAddEventFields {
   userId: string;
   channelId: string;
   messageId: string;
   guildId?: string;
   member?: GuildMember;
-  emoji: JSONEmoji;
+  emoji: Emoji;
   messageAuthorId?: string;
 }
 
-export interface JSONMessageReactionRemoveEventFields {
+export interface MessageReactionRemoveEventFields {
   userId: string;
   channelId: string;
   messageId: string;
   guildId?: string;
-  emoji: JSONEmoji;
+  emoji: Emoji;
 }
 
-export interface JSONMessageReactionRemoveAllEventFields {
+export interface MessageReactionRemoveAllEventFields {
   channelId: string;
   messageId: string;
   guildId?: string;
 }
 
-export interface JSONMessageReactionRemoveEmojiEventFields {
+export interface MessageReactionRemoveEmojiEventFields {
   channelId: string;
   guildId?: string;
   messageId: string;
-  emoji: JSONEmoji;
+  emoji: Emoji;
 }
 
-export interface JSONPresenceUpdateEventFields {
+export interface PresenceUpdateEventFields {
   user: User;
   guildId: string;
   status: StatusTypes;
-  activities: Array<JSONActivity>;
-  clientStatus: JSONClientStatus;
+  activities: Array<Activity>;
+  clientStatus: ClientStatus;
 }
 
-export interface JSONClientStatus {
+export interface ClientStatus {
   desktop?: string;
   mobile?: string;
   web?: string;
 }
 
-export interface JSONActivity {
+export interface Activity {
   name: string;
   type: ActivityType;
   url?: string | null;
   createdAt: number;
-  timestamps?: JSONActivityTimestamps;
+  timestamps?: ActivityTimestamps;
   applicationId?: string;
   details?: string | null;
   state?: string | null;
-  party?: JSONActivityParty;
-  assets?: JSONActivityAssets;
-  secrets?: JSONActivitySecrets;
+  party?: ActivityParty;
+  assets?: ActivityAssets;
+  secrets?: ActivitySecrets;
   instance?: boolean;
   flags?: ActivityFlags;
-  buttons?: Array<JSONActivityButton>;
+  buttons?: Array<ActivityButton>;
 }
 
-export interface JSONActivityTimestamps {
+export interface ActivityTimestamps {
   start?: number;
   end?: number;
 }
 
-export interface JSONActivityParty {
+export interface ActivityParty {
   id?: string;
   size?: Array<number>;
 }
 
-export interface JSONActivityAssets {
+export interface ActivityAssets {
   largeImage?: string;
   largeText?: string;
   smallImage?: string;
   smallText?: string;
 }
 
-export interface JSONActivitySecrets {
+export interface ActivitySecrets {
   join?: string;
   spectate?: string;
   match?: string;
 }
 
-export interface JSONActivityButton {
+export interface ActivityButton {
   label: string;
   url: string;
 }
 
-export interface JSONTypingStartEventFields {
+export interface TypingStartEventFields {
   channelId: string;
   guildId?: string;
   userId: string;
@@ -591,13 +590,13 @@ export interface JSONTypingStartEventFields {
   member?: GuildMember;
 }
 
-export interface JSONVoiceServerUpdateEventFields {
+export interface VoiceServerUpdateEventFields {
   token: string;
   guildId: string;
   endpoint: string | null;
 }
 
-export interface JSONWebhooksUpdateEventFields {
+export interface WebhooksUpdateEventFields {
   guildId: string;
   channelId: string;
 }

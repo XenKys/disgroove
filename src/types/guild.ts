@@ -21,8 +21,10 @@ import type {
   RawRole,
   JSONEmoji,
   JSONSticker,
+  JSONUser,
+  JSONRole,
+  JSONChannel,
 } from ".";
-import type { Channel, Role, User } from "../structures";
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface RawGuild {
@@ -220,7 +222,7 @@ export interface JSONGuild {
   verificationLevel: VerificationLevel;
   defaultMessageNotifications: DefaultMessageNotificationLevel;
   explicitContentFilter: ExplicitContentFilterLevel;
-  roles: Array<Role>;
+  roles: Array<JSONRole>;
   emojis: Array<JSONEmoji>;
   features: Array<GuildFeatures>;
   mfaLevel: MFALevel;
@@ -270,13 +272,13 @@ export interface JSONGuildWidget {
   id: string;
   name: string;
   instantInvite: string | null;
-  channels: Array<Channel>;
-  members: Array<User>;
+  channels: Array<JSONChannel>;
+  members: Array<JSONUser>;
   presenceCount: number;
 }
 
 export interface JSONGuildMember {
-  user?: User;
+  user?: JSONUser;
   nick?: string | null;
   avatar?: string | null;
   roles: Array<string>;
@@ -300,7 +302,7 @@ export interface JSONIntegration {
   enableEmoticons?: boolean;
   expireBehavior?: IntegrationExpireBehaviors;
   expireGracePeriod?: number;
-  user?: User;
+  user?: JSONUser;
   account: JSONIntegrationAccount;
   syncedAt?: number;
   subscriberCount?: number;
@@ -319,12 +321,12 @@ export interface JSONIntegrationApplication {
   name: string;
   icon: string | null;
   description: string;
-  bot?: User;
+  bot?: JSONUser;
 }
 
 export interface JSONBan {
   reason: string | null;
-  user: User;
+  user: JSONUser;
 }
 
 export interface JSONWelcomeScreen {

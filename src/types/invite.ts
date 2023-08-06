@@ -1,4 +1,10 @@
 import type {
+  JSONApplication,
+  JSONChannel,
+  JSONGuild,
+  JSONGuildMember,
+  JSONGuildScheduledEvent,
+  JSONUser,
   RawApplication,
   RawChannel,
   RawGuild,
@@ -6,14 +12,6 @@ import type {
   RawGuildScheduledEvent,
   RawUser,
 } from ".";
-import type {
-  Application,
-  Channel,
-  Guild,
-  GuildMember,
-  GuildScheduledEvent,
-  User,
-} from "../structures";
 
 /** https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
 export interface RawInvite {
@@ -50,17 +48,17 @@ export interface RawInviteStageInstance {
 
 export interface JSONInvite {
   code: string;
-  guild?: Guild;
-  channel: Channel;
-  inviter?: User;
+  guild?: JSONGuild;
+  channel: JSONChannel;
+  inviter?: JSONUser;
   targetType?: number;
-  targetUser?: User;
-  targetApplication?: Application;
+  targetUser?: JSONUser;
+  targetApplication?: JSONApplication;
   approximatePresenceCount?: number;
   approximateMemberCount?: number;
   expiresAt?: string | null;
   stageInstance?: JSONInviteStageInstance;
-  guildScheduledEvent?: GuildScheduledEvent;
+  guildScheduledEvent?: JSONGuildScheduledEvent;
 }
 
 export interface JSONInviteMetadata {
@@ -72,7 +70,7 @@ export interface JSONInviteMetadata {
 }
 
 export interface JSONInviteStageInstance {
-  members: Array<GuildMember>;
+  members: Array<JSONGuildMember>;
   participantCount: number;
   speakerCount: number;
   topic: string;

@@ -8,8 +8,12 @@ import type {
   RawRole,
   JSONAttachment,
   JSONSelectOption,
+  JSONUser,
+  JSONGuildMember,
+  JSONMessage,
+  JSONRole,
+  JSONChannel,
 } from ".";
-import type { Channel, GuildMember, Message, Role, User } from "../structures";
 import type {
   ApplicationCommandTypes,
   ComponentTypes,
@@ -110,11 +114,11 @@ export interface JSONInteraction {
     JSONModalSubmitData;
   guildId?: string;
   channelId?: string;
-  member?: GuildMember;
-  user?: User;
+  member?: JSONGuildMember;
+  user?: JSONUser;
   token: string;
   version: number;
-  message?: Message;
+  message?: JSONMessage;
   appPermissions?: string;
   locale?: string;
   guildLocale?: string;
@@ -155,11 +159,11 @@ export interface JSONModalSubmitData {
 }
 
 export interface JSONResolvedData {
-  users?: Array<User>;
-  members?: Array<GuildMember>;
-  roles?: Array<Role>;
-  channels?: Array<Channel>;
-  messages?: Array<Message>;
+  users?: Array<JSONUser>;
+  members?: Array<JSONGuildMember>;
+  roles?: Array<JSONRole>;
+  channels?: Array<JSONChannel>;
+  messages?: Array<JSONMessage>;
   attachments?: Array<JSONAttachment>;
 }
 
@@ -175,6 +179,6 @@ export interface JSONMessageInteraction {
   id: string;
   type: InteractionType;
   name: string;
-  user: User;
-  member?: GuildMember;
+  user: JSONUser;
+  member?: JSONGuildMember;
 }

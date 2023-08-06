@@ -1,7 +1,7 @@
-import type { Integration } from "../structures";
 import type { UserFlags, Services, VisibilityTypes } from "../utils";
 import type {
   JSONApplicationRoleConnectionMetadata,
+  JSONIntegration,
   RawApplicationRoleConnectionMetadata,
   RawIntegration,
 } from "./index";
@@ -71,7 +71,7 @@ export interface JSONConnection {
   name: string;
   type: Services;
   revoked?: boolean;
-  integrations?: Array<Integration>;
+  integrations?: Array<JSONIntegration>;
   verified: boolean;
   friendSync: boolean;
   showActivity: boolean;

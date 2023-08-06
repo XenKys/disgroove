@@ -3,8 +3,7 @@ import type {
   GuildScheduledEventStatus,
   GuildScheduledEventEntityTypes,
 } from "../utils";
-import type { RawGuildMember, RawUser } from ".";
-import type { GuildMember, User } from "../structures";
+import type { JSONGuildMember, JSONUser, RawGuildMember, RawUser } from ".";
 
 /** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
 export interface RawGuildScheduledEvent {
@@ -52,7 +51,7 @@ export interface JSONGuildScheduledEvent {
   entityType: GuildScheduledEventEntityTypes;
   entityId?: string;
   entityMetadata: JSONGuildScheduledEventEntityMetadata | null;
-  creator?: User;
+  creator?: JSONUser;
   userCount?: number;
   image?: string;
 }
@@ -63,6 +62,6 @@ export interface JSONGuildScheduledEventEntityMetadata {
 
 export interface JSONGuildScheduledEventUser {
   guildScheduledEventId: string;
-  user: User;
-  member?: GuildMember;
+  user: JSONUser;
+  member?: JSONGuildMember;
 }

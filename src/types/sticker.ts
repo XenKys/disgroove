@@ -1,6 +1,5 @@
 import type { StickerTypes, StickerFormatTypes } from "../utils";
-import type { RawUser } from ".";
-import type { User } from "../structures";
+import type { JSONUser, RawUser } from ".";
 
 /** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
 export interface RawSticker {
@@ -47,7 +46,7 @@ export interface JSONSticker {
   formatType: StickerFormatTypes;
   available?: boolean;
   guildId?: string;
-  user?: User;
+  user?: JSONUser;
   sortValue?: number;
 }
 

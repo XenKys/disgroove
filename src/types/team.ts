@@ -1,5 +1,4 @@
-import type { RawUser } from ".";
-import type { User } from "../structures";
+import type { JSONUser, RawUser } from ".";
 
 /** https://discord.com/developers/docs/topics/teams#data-models-team-object */
 export interface RawTeam {
@@ -30,5 +29,5 @@ export interface JSONTeamMember {
   membershipState: number;
   permissions: Array<string>;
   teamId: string;
-  user: User;
+  user: JSONUser;
 }

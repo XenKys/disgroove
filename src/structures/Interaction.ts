@@ -1,4 +1,4 @@
-import { Base, Channel, GuildMember, Message, Role, User } from ".";
+import { Base, Channel, Emoji, GuildMember, Message, Role, User } from ".";
 import type { Client } from "..";
 import { Endpoints, type File } from "../rest";
 import type {
@@ -22,7 +22,6 @@ import {
   type InteractionType,
   type MessageFlags,
   embedsToRaw,
-  emojiToJSON,
   messageComponentToRaw,
 } from "../utils";
 
@@ -120,7 +119,7 @@ export class Interaction extends Base {
           description: value.description,
           emoji:
             value.emoji !== undefined
-              ? emojiToJSON(value.emoji, this.client)
+              ? new Emoji(value.emoji, this.client)
               : undefined,
           default: value.default,
         })),

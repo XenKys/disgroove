@@ -59,19 +59,6 @@ export function embedToJSON(embeds: Array<RawEmbed>) {
   }));
 }
 
-export function emojiToJSON(emoji: RawEmoji, client: Client) {
-  return {
-    id: emoji.id,
-    name: emoji.name,
-    roles: emoji.roles,
-    user: emoji.user !== undefined ? new User(emoji.user, client) : undefined,
-    requireColons: emoji.require_colons,
-    managed: emoji.managed,
-    animated: emoji.animated,
-    available: emoji.available,
-  };
-}
-
 export function teamToJSON(team: RawTeam, client: Client) {
   return {
     icon: team.icon,

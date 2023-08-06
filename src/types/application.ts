@@ -1,5 +1,4 @@
-import type { RawUser, RawTeam, JSONTeam } from ".";
-import type { User } from "../structures";
+import type { RawUser, RawTeam, JSONTeam, JSONUser } from ".";
 import type { OAuth2Scopes } from "../utils";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
@@ -43,7 +42,7 @@ export interface JSONApplication {
   botRequireCodeGrant: boolean;
   termsOfServiceURL?: string;
   privacyPolicyURL?: string;
-  owner?: User;
+  owner?: JSONUser;
   verifyKey: string;
   team: JSONTeam | null;
   guildId?: string;

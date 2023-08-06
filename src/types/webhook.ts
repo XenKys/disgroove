@@ -1,6 +1,12 @@
 import type { WebhookTypes } from "../utils";
-import type { RawChannel, RawGuild, RawUser } from ".";
-import type { Channel, Guild, User } from "../structures";
+import type {
+  JSONChannel,
+  JSONGuild,
+  JSONUser,
+  RawChannel,
+  RawGuild,
+  RawUser,
+} from ".";
 
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
 export interface RawWebhook {
@@ -23,12 +29,12 @@ export interface JSONWebhook {
   type: WebhookTypes;
   guildId?: string | null;
   channelId: string | null;
-  user?: User;
+  user?: JSONUser;
   name: string | null;
   avatar: string | null;
   token?: string;
   applicationId: string | null;
-  sourceGuild?: Guild;
-  sourceChannel?: Channel;
+  sourceGuild?: JSONGuild;
+  sourceChannel?: JSONChannel;
   url?: string;
 }

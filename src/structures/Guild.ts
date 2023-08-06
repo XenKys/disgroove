@@ -3,6 +3,7 @@ import {
   AutoModerationRule,
   Base,
   Channel,
+  Emoji,
   GuildMember,
   GuildScheduledEvent,
   GuildTemplate,
@@ -10,7 +11,9 @@ import {
   Invite,
   Role,
   StageInstance,
+  Sticker,
   User,
+  VoiceState,
   Webhook,
 } from ".";
 import type { Client } from "..";
@@ -21,7 +24,6 @@ import type {
   JSONAutoModerationAction,
   JSONBan,
   JSONDefaultReaction,
-  JSONEmoji,
   JSONForumTag,
   JSONGuild,
   JSONGuildApplicationCommandPermissions,
@@ -34,16 +36,13 @@ import type {
   JSONGuildWidgetSettings,
   JSONOnboardingPrompt,
   JSONOverwrite,
-  JSONPresenceUpdateEventFields,
-  JSONSticker,
+  PresenceUpdateEventFields,
   JSONThreadMember,
   JSONVoiceRegion,
-  JSONVoiceState,
   JSONWelcomeScreen,
   JSONWelcomeScreenChannel,
   RawActivity,
   RawApplicationCommand,
-  RawApplicationCommandPermission,
   RawAuditLog,
   RawAutoModerationRule,
   RawBan,
@@ -66,12 +65,10 @@ import type {
   RawStageInstance,
   RawSticker,
   RawThreadMember,
-  RawUser,
   RawVoiceRegion,
   RawVoiceState,
   RawWebhook,
   RawWelcomeScreen,
-  RawWelcomeScreenChannel,
 } from "../types";
 import {
   type ApplicationCommandOptionType,
@@ -94,7 +91,6 @@ import {
   type VerificationLevel,
   applicationCommandToRaw,
   auditLogEntryToJSON,
-  emojiToJSON,
 } from "../utils";
 
 export class Guild extends Base {
@@ -115,7 +111,7 @@ export class Guild extends Base {
   public defaultMessageNotifications: DefaultMessageNotificationLevel;
   public explicitContentFilter: ExplicitContentFilterLevel;
   public roles: Array<Role>;
-  public emojis: Array<JSONEmoji>;
+  public emojis: Array<Emoji>;
   public features: Array<GuildFeatures>;
   public mfaLevel: MFALevel;
   public applicationId: string | null;
@@ -136,18 +132,18 @@ export class Guild extends Base {
   public approximatePresenceCount?: number;
   public welcomeScreen?: JSONWelcomeScreen;
   public nsfwLevel: GuildNSFWLevel;
-  public stickers?: Array<JSONSticker>;
+  public stickers?: Array<Sticker>;
   public premiumProgressBarEnabled: boolean;
   public safetyAlertsChannelId: string | null;
   public joinedAt?: number;
   public large?: boolean;
   public unavailable?: boolean;
   public memberCount?: number;
-  public voiceStates?: Array<JSONVoiceState>;
+  public voiceStates?: Array<VoiceState>;
   public members?: Array<GuildMember>;
   public channels?: Array<Channel>;
   public threads?: Array<Channel>;
-  public presences?: Array<JSONPresenceUpdateEventFields>;
+  public presences?: Array<PresenceUpdateEventFields>;
   public stageInstances?: Array<StageInstance>;
   public guildScheduledEvents?: Array<GuildScheduledEvent>;
 
@@ -180,7 +176,7 @@ export class Guild extends Base {
     this.defaultMessageNotifications = data.default_message_notifications;
     this.explicitContentFilter = data.explicit_content_filter;
     this.roles = data.roles.map((role) => new Role(role, client));
-    this.emojis = data.emojis.map((emoji) => emojiToJSON(emoji, client));
+    this.emojis = data.emojis.map((emoji) => new Emoji(emoji, client));
     this.features = data.features;
     this.mfaLevel = data.mfa_level;
     this.applicationId = data.application_id;
@@ -245,46 +241,17 @@ export class Guild extends Base {
         })),
       };
     if (data.stickers !== undefined)
-      this.stickers = data.stickers.map((data) => ({
-        id: data.id,
-        packId: data.pack_id,
-        name: data.name,
-        description: data.description,
-        tags: data.tags,
-        asset: data.asset,
-        type: data.type,
-        formatType: data.format_type,
-        available: data.available,
-        guildId: data.guild_id,
-        user:
-          data.user !== undefined
-            ? new User(data.user, this.client)
-            : undefined,
-        sortValue: data.sort_value,
-      }));
+      this.stickers = data.stickers.map(
+        (data) => new Sticker(data, this.client)
+      );
     if (data.joined_at !== undefined) this.joinedAt = data.joined_at;
     if (data.large !== undefined) this.large = data.large;
     if (data.unavailable !== undefined) this.unavailable = data.unavailable;
     if (data.member_count !== undefined) this.memberCount = data.member_count;
     if (data.voice_states !== undefined)
-      this.voiceStates = data.voice_states.map((voiceState) => ({
-        guildId: voiceState.guild_id,
-        channelId: voiceState.channel_id,
-        userId: voiceState.user_id,
-        member:
-          voiceState.member !== undefined
-            ? new GuildMember(voiceState.member, this.client)
-            : undefined,
-        sessionId: voiceState.session_id,
-        deaf: voiceState.deaf,
-        mute: voiceState.mute,
-        selfDeaf: voiceState.self_deaf,
-        selfMute: voiceState.self_mute,
-        selfStream: voiceState.self_stream,
-        selfVideo: voiceState.self_video,
-        suppress: voiceState.suppress,
-        requestToSpeakTimestamp: voiceState.request_to_speak_timestamp,
-      }));
+      this.voiceStates = data.voice_states.map(
+        (voiceState) => new VoiceState(voiceState, this.client)
+      );
     if (data.members !== undefined)
       this.members = data.members.map(
         (member) => new GuildMember(member, this.client)
@@ -745,17 +712,15 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
-  public async listGuildEmojis(): Promise<Array<JSONEmoji>> {
+  public async listGuildEmojis(): Promise<Array<Emoji>> {
     return this.client.rest
       .get<Array<RawEmoji>>(Endpoints.guildEmojis(this.id))
-      .then((response) =>
-        response.map((data) => emojiToJSON(data, this.client))
-      );
+      .then((response) => response.map((data) => new Emoji(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/emoji#get-guild-emoji */
-  public async getEmoji(emojiId: string): Promise<JSONEmoji> {
-    return emojiToJSON(
+  public async getEmoji(emojiId: string): Promise<Emoji> {
+    return new Emoji(
       await this.client.rest.get<RawEmoji>(
         Endpoints.guildEmoji(this.id, emojiId)
       ),
@@ -771,8 +736,8 @@ export class Guild extends Base {
       roles: Array<string>;
     },
     reason?: string
-  ): Promise<JSONEmoji> {
-    return emojiToJSON(
+  ): Promise<Emoji> {
+    return new Emoji(
       await this.client.rest.post<RawEmoji>(Endpoints.guildEmojis(this.id), {
         json: {
           name: options.name,
@@ -793,8 +758,8 @@ export class Guild extends Base {
       roles?: Array<string> | null;
     },
     reason?: string
-  ): Promise<JSONEmoji> {
-    return emojiToJSON(
+  ): Promise<Emoji> {
+    return new Emoji(
       await this.client.rest.patch<RawEmoji>(
         Endpoints.guildEmoji(this.id, emojiId),
         {
@@ -826,7 +791,7 @@ export class Guild extends Base {
         icon: response.icon,
         splash: response.splash,
         discoverySplash: response.discovery_splash,
-        emojis: response.emojis.map((emoji) => emojiToJSON(emoji, this.client)),
+        emojis: response.emojis.map((emoji) => new Emoji(emoji, this.client)),
         features: response.features,
         approximateMemberCount: response.approximate_member_count,
         approximatePresenceCount: response.approximate_presence_count,
@@ -1530,7 +1495,7 @@ export class Guild extends Base {
             id: option.id,
             channelIds: option.channel_ids,
             roleIds: option.role_ids,
-            emoji: emojiToJSON(option.emoji, this.client),
+            emoji: new Emoji(option.emoji, this.client),
             title: option.title,
             description: option.description,
           })),
@@ -1849,51 +1814,19 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
-  public async listStickers(): Promise<Array<JSONSticker>> {
+  public async listStickers(): Promise<Array<Sticker>> {
     return this.client.rest
       .get<Array<RawSticker>>(Endpoints.guildStickers(this.id))
       .then((response) =>
-        response.map((data) => ({
-          id: data.id,
-          packId: data.pack_id,
-          name: data.name,
-          description: data.description,
-          tags: data.tags,
-          asset: data.asset,
-          type: data.type,
-          formatType: data.format_type,
-          available: data.available,
-          guildId: data.guild_id,
-          user:
-            data.user !== undefined
-              ? new User(data.user, this.client)
-              : undefined,
-          sortValue: data.sort_value,
-        }))
+        response.map((data) => new Sticker(data, this.client))
       );
   }
 
   /** https://discord.com/developers/docs/resources/sticker#get-guild-sticker */
-  public async getSticker(stickerId: string): Promise<JSONSticker> {
+  public async getSticker(stickerId: string): Promise<Sticker> {
     return this.client.rest
       .get<RawSticker>(Endpoints.guildSticker(this.id, stickerId))
-      .then((response) => ({
-        id: response.id,
-        packId: response.pack_id,
-        name: response.name,
-        description: response.description,
-        tags: response.tags,
-        asset: response.asset,
-        type: response.type,
-        formatType: response.format_type,
-        available: response.available,
-        guildId: response.guild_id,
-        user:
-          response.user !== undefined
-            ? new User(response.user, this.client)
-            : undefined,
-        sortValue: response.sort_value,
-      }));
+      .then((response) => new Sticker(response, this.client));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
@@ -1905,7 +1838,7 @@ export class Guild extends Base {
       file: File;
     },
     reason?: string
-  ): Promise<JSONSticker> {
+  ): Promise<Sticker> {
     return this.client.rest
       .post<RawSticker>(Endpoints.guildStickers(this.id), {
         json: {
@@ -1916,23 +1849,7 @@ export class Guild extends Base {
         files: [options.file],
         reason,
       })
-      .then((response) => ({
-        id: response.id,
-        packId: response.pack_id,
-        name: response.name,
-        description: response.description,
-        tags: response.tags,
-        asset: response.asset,
-        type: response.type,
-        formatType: response.format_type,
-        available: response.available,
-        guildId: response.guild_id,
-        user:
-          response.user !== undefined
-            ? new User(response.user, this.client)
-            : undefined,
-        sortValue: response.sort_value,
-      }));
+      .then((response) => new Sticker(response, this.client));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
@@ -1944,7 +1861,7 @@ export class Guild extends Base {
       tags?: string;
     },
     reason?: string
-  ): Promise<JSONSticker> {
+  ): Promise<Sticker> {
     return this.client.rest
       .patch<RawSticker>(Endpoints.guildSticker(this.id, stickerId), {
         json: {
@@ -1954,23 +1871,7 @@ export class Guild extends Base {
         },
         reason,
       })
-      .then((response) => ({
-        id: response.id,
-        packId: response.pack_id,
-        name: response.name,
-        description: response.description,
-        tags: response.tags,
-        asset: response.asset,
-        type: response.type,
-        formatType: response.format_type,
-        available: response.available,
-        guildId: response.guild_id,
-        user:
-          response.user !== undefined
-            ? new User(response.user, this.client)
-            : undefined,
-        sortValue: response.sort_value,
-      }));
+      .then((response) => new Sticker(response, this.client));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */

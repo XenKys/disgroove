@@ -15,14 +15,10 @@ import type {
   JSONStickerItem,
   JSONSticker,
   JSONEmoji,
+  JSONUser,
+  JSONApplication,
+  JSONGuildMember,
 } from ".";
-import type {
-  Application,
-  Channel,
-  GuildMember,
-  Message,
-  User,
-} from "../structures";
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
 export interface RawChannel {
@@ -287,7 +283,7 @@ export interface JSONChannel {
   bitrate?: number;
   userLimit?: number;
   rateLimitPerUser?: number;
-  recipients?: Array<User>;
+  recipients?: Array<JSONUser>;
   icon?: string | null;
   ownerId?: string;
   applicationId?: string;
@@ -315,13 +311,13 @@ export interface JSONChannel {
 export interface JSONMessage {
   id: string;
   channelId: string;
-  author?: User;
+  author?: JSONUser;
   content?: string;
   timestamp: string;
   editedTimestamp?: string | null;
   tts: boolean;
   mentionEveryone: boolean;
-  mentions?: Array<User>;
+  mentions?: Array<JSONUser>;
   mentionRoles?: Array<string>;
   mentionChannels?: Array<JSONChannelMention>;
   attachments?: Array<JSONAttachment>;
@@ -332,13 +328,13 @@ export interface JSONMessage {
   webhookId?: string;
   type: number;
   activity?: JSONMessageActivity;
-  application?: Application;
+  application?: JSONApplication;
   applicationId?: string;
   messageReference?: JSONMessageReference;
   flags?: number;
-  referencedMessage?: Message | null;
+  referencedMessage?: JSONMessage | null;
   interaction?: JSONMessageInteraction;
-  thread?: Channel;
+  thread?: JSONChannel;
   components?: Array<number>;
   stickerItems?: Array<JSONStickerItem>;
   stickers?: Array<JSONSticker>;
@@ -390,7 +386,7 @@ export interface JSONThreadMember {
   userId?: string;
   joinTimestamp: string;
   flags: number;
-  member?: GuildMember;
+  member?: JSONGuildMember;
 }
 
 export interface JSONDefaultReaction {

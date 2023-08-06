@@ -1,5 +1,4 @@
-import type { RawGuildMember } from ".";
-import type { GuildMember } from "../structures";
+import type { JSONGuildMember, RawGuildMember } from ".";
 
 /** https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure */
 export interface RawVoiceState {
@@ -31,7 +30,7 @@ export interface JSONVoiceState {
   guildId?: string;
   channelId: string | null;
   userId: string;
-  member?: GuildMember;
+  member?: JSONGuildMember;
   sessionId: string;
   deaf: boolean;
   mute: boolean;

@@ -6,16 +6,14 @@ import type {
   RawChannel,
   RawUser,
   RawWebhook,
+  JSONUser,
+  JSONApplicationCommand,
+  JSONAutoModerationRule,
+  JSONGuildScheduledEvent,
+  JSONIntegration,
+  JSONChannel,
+  JSONWebhook,
 } from ".";
-import type {
-  ApplicationCommand,
-  AutoModerationRule,
-  Channel,
-  GuildScheduledEvent,
-  Integration,
-  User,
-  Webhook,
-} from "../structures";
 import type { AuditLogEvents } from "../utils";
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
@@ -64,14 +62,14 @@ export interface RawAuditLogChange {
 }
 
 export interface JSONAuditLog {
-  applicationCommands: Array<ApplicationCommand>;
+  applicationCommands: Array<JSONApplicationCommand>;
   auditLogEntries: Array<JSONAuditLogEntry>;
-  autoModerationRules: Array<AutoModerationRule>;
-  guildScheduledEvents: Array<GuildScheduledEvent>;
-  integrations: Array<Integration>;
-  threads: Array<Channel>;
-  users: Array<User>;
-  webhooks: Array<Webhook>;
+  autoModerationRules: Array<JSONAutoModerationRule>;
+  guildScheduledEvents: Array<JSONGuildScheduledEvent>;
+  integrations: Array<JSONIntegration>;
+  threads: Array<JSONChannel>;
+  users: Array<JSONUser>;
+  webhooks: Array<JSONWebhook>;
 }
 
 export interface JSONAuditLogEntry {

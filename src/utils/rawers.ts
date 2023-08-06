@@ -1,4 +1,3 @@
-import type { User } from "../structures";
 import type {
   JSONApplicationCommandOptionChoice,
   JSONDefaultReaction,
@@ -10,6 +9,7 @@ import type {
   JSONSelectOption,
   JSONThreadMember,
   JSONThreadMetadata,
+  JSONUser,
 } from "../types";
 import {
   type ApplicationCommandOptionType,
@@ -308,7 +308,7 @@ export function channelToRaw(channel: {
   bitrate?: number;
   userLimit?: number;
   rateLimitPerUser?: number;
-  recipients?: Array<User>;
+  recipients?: Array<JSONUser>;
   icon?: string | null;
   ownerId?: string;
   applicationId?: string;
@@ -375,7 +375,6 @@ export function channelToRaw(channel: {
       join_timestamp: channel.member?.joinTimestamp,
       flags: channel.member?.flags,
       member: {
-        guild_id: channel.member?.member?.guildId,
         user:
           channel.member?.member?.user !== undefined
             ? userToRaw(channel.member.member.user)
