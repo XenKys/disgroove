@@ -96,6 +96,7 @@ import EventEmitter from "node:events";
 
 export interface ClientOptions {
   intents?: GatewayIntents | number;
+  shards?: number;
   auth?: "Bot" | "Bearer";
   presence?: {
     activities: Array<JSONActivity>;
@@ -232,6 +233,7 @@ export class Client extends EventEmitter {
   private heartbeatInterval!: NodeJS.Timer | null;
   public token: string;
   public intents: GatewayIntents | number;
+  public shards: number;
   public auth: "Bot" | "Bearer";
   public presence?: {
     activities: Array<JSONActivity>;
@@ -246,6 +248,7 @@ export class Client extends EventEmitter {
 
     this.token = token;
     this.intents = options?.intents || GatewayIntents.AllNonPrivileged;
+    this.shards = options?.shards || -1;
     this.auth = options?.auth || "Bot";
     this.presence = options?.presence;
     this.rest = new REST(token, this.auth);
@@ -664,7 +667,7 @@ export class Client extends EventEmitter {
     afk: boolean;
   }): Promise<void> {
     const gatewayBot = await this.getGatewayBot();
-    const shards = gatewayBot.shards;
+    const shards = this.shards !== -1 ? this.shards : gatewayBot.shards;
 
     for (let i = 0; i < shards; i++) {
       this.ws.send(
