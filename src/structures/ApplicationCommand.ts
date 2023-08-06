@@ -154,13 +154,11 @@ export class ApplicationCommand extends Base {
         id: response.id,
         applicationId: response.application_id,
         guildId: response.guild_id,
-        permissions: response.permissions.map(
-          (permission: RawApplicationCommandPermission) => ({
-            id: permission.id,
-            type: permission.type,
-            permission: permission.permission,
-          })
-        ),
+        permissions: response.permissions.map((permission) => ({
+          id: permission.id,
+          type: permission.type,
+          permission: permission.permission,
+        })),
       }));
   }
 
@@ -190,13 +188,11 @@ export class ApplicationCommand extends Base {
         id: response.id,
         applicationId: response.application_id,
         guildId: response.guild_id,
-        permissions: response.permissions.map(
-          (permission: RawApplicationCommandPermission) => ({
-            id: permission.id,
-            type: permission.type,
-            permission: permission.permission,
-          })
-        ),
+        permissions: response.permissions.map((permission) => ({
+          id: permission.id,
+          type: permission.type,
+          permission: permission.permission,
+        })),
       }));
   }
 

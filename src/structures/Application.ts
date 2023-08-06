@@ -9,8 +9,10 @@ import type {
   JSONApplication,
   JSONTeam,
   JSONApplicationCommandOptionChoice,
+  JSONApplicationRoleConnectionMetadata,
+  RawApplicationRoleConnectionMetadata,
 } from "../types";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import {
   applicationCommandToRaw,
@@ -464,13 +466,11 @@ export class Application extends Base {
           id: permissions.id,
           applicationId: permissions.application_id,
           guildId: permissions.guild_id,
-          permissions: permissions.permissions.map(
-            (permission: RawApplicationCommandPermission) => ({
-              id: permission.id,
-              type: permission.type,
-              permission: permission.permission,
-            })
-          ),
+          permissions: permissions.permissions.map((permission) => ({
+            id: permission.id,
+            type: permission.type,
+            permission: permission.permission,
+          })),
         }))
       );
   }
@@ -489,13 +489,11 @@ export class Application extends Base {
           id: permissions.id,
           applicationId: permissions.application_id,
           guildId: permissions.guild_id,
-          permissions: permissions.permissions.map(
-            (permission: RawApplicationCommandPermission) => ({
-              id: permission.id,
-              type: permission.type,
-              permission: permission.permission,
-            })
-          ),
+          permissions: permissions.permissions.map((permission) => ({
+            id: permission.id,
+            type: permission.type,
+            permission: permission.permission,
+          })),
         }))
       );
   }
@@ -530,14 +528,52 @@ export class Application extends Base {
         id: response.id,
         applicationId: response.application_id,
         guildId: response.guild_id,
-        permissions: response.permissions.map(
-          (permission: RawApplicationCommandPermission) => ({
-            id: permission.id,
-            type: permission.type,
-            permission: permission.permission,
-          })
-        ),
+        permissions: response.permissions.map((permission) => ({
+          id: permission.id,
+          type: permission.type,
+          permission: permission.permission,
+        })),
       }));
+  }
+
+  /** https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records */
+  public async getApplicationRoleConnectionMetadataRecords(): Promise<
+    Array<JSONApplicationRoleConnectionMetadata>
+  > {
+    return this.client.rest
+      .get<Array<RawApplicationRoleConnectionMetadata>>(
+        Endpoints.applicationRoleConnectionMetadata(this.id)
+      )
+      .then((response) =>
+        response.map((data) => ({
+          type: data.type,
+          key: data.key,
+          name: data.name,
+          nameLocalizations: data.name_localizations,
+          description: data.description,
+          descriptionLocalizations: data.description_localizations,
+        }))
+      );
+  }
+
+  /** https://discord.com/developers/docs/resources/application-role-connection-metadata#update-application-role-connection-metadata-records */
+  public async updateApplicationRoleConnectionMetadataRecords(): Promise<
+    Array<JSONApplicationRoleConnectionMetadata>
+  > {
+    return this.client.rest
+      .put<Array<RawApplicationRoleConnectionMetadata>>(
+        Endpoints.applicationRoleConnectionMetadata(this.id)
+      )
+      .then((response) =>
+        response.map((data) => ({
+          type: data.type,
+          key: data.key,
+          name: data.name,
+          nameLocalizations: data.name_localizations,
+          description: data.description,
+          descriptionLocalizations: data.description_localizations,
+        }))
+      );
   }
 
   public override toJSON(): JSONApplication {

@@ -27,7 +27,7 @@ export class RequestsManager {
   }
 
   private process<T>(): Promise<T> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise<T>(async (resolve, reject) => {
       if (this.queue.length === 0 || this.globalBlock) return;
 
       const { method, endpoint, data } = this.queue.shift()!;
@@ -91,7 +91,7 @@ export class RequestsManager {
           headers,
         });
 
-        this.checkRateLimits(response.headers);
+        this.checkRateLimits<T>(response.headers);
 
         if (
           response.status >= HTTPResponseCodes.NotModified &&
@@ -106,12 +106,12 @@ export class RequestsManager {
       } catch (err) {
         reject(err);
       } finally {
-        this.process();
+        this.process<T>();
       }
     });
   }
 
-  private checkRateLimits(headers: Headers) {
+  private checkRateLimits<T>(headers: Headers): void {
     if (!headers.has("X-RateLimit-Reset")) return;
     if (headers.get("X-RateLimit-Remaining") !== "0") return;
 
@@ -119,7 +119,7 @@ export class RequestsManager {
 
     setTimeout(() => {
       this.globalBlock = false;
-      this.process();
+      this.process<T>();
     }, new Date(Number(headers.get("X-RateLimit-Reset"))).getMilliseconds());
   }
 
@@ -133,10 +133,10 @@ export class RequestsManager {
       query?: Record<string, any>;
     }
   ): Promise<T> {
-    return new Promise(async (resolve) => {
+    return new Promise<T>(async (resolve) => {
       this.queue.push({ method, endpoint, data });
 
-      resolve(this.process());
+      resolve(this.process<T>());
     });
   }
 }
