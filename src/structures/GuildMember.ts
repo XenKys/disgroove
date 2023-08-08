@@ -1,5 +1,5 @@
 import { User } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONGuildMember, RawGuildMember } from "../types";
 import type { GuildMemberFlags } from "../utils";
@@ -28,10 +28,10 @@ export class GuildMember {
     this.mute = data.mute;
     this.flags = data.flags;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected update(data: RawGuildMember & { guild_id?: string }): void {
+  private patch(data: RawGuildMember & { guild_id?: string }): void {
     if (data.user !== undefined) this.user = new User(data.user, this.client);
     if (data.nick !== undefined) this.nick = data.nick;
     if (data.avatar !== undefined) this.avatar = data.avatar;

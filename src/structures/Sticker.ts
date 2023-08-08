@@ -1,5 +1,5 @@
 import { Base, User } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import type { StickerFormatTypes, StickerTypes } from "../utils";
 import type { JSONSticker, RawSticker } from "../types";
 
@@ -25,10 +25,10 @@ export class Sticker extends Base {
     this.type = data.type;
     this.formatType = data.format_type;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawSticker) {
+  protected override patch(data: RawSticker) {
     if (data.pack_id !== undefined) this.packId = data.pack_id;
     if (data.asset != undefined) this.asset = data.asset;
     if (data.available !== undefined) this.available = data.available;

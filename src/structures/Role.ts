@@ -1,4 +1,4 @@
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONRole, JSONRoleTags, RawRole } from "../types";
 import { Base } from ".";
@@ -27,10 +27,10 @@ export class Role extends Base {
     this.managed = data.managed;
     this.mentionable = data.mentionable;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawRole & { guild_id?: string }): void {
+  protected override patch(data: RawRole & { guild_id?: string }): void {
     if (data.icon !== undefined) this.icon = data.icon;
     if (data.unicode_emoji !== undefined)
       this.unicodeEmoji = data.unicode_emoji;

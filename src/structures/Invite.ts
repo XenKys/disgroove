@@ -6,7 +6,7 @@ import {
   GuildScheduledEvent,
   User,
 } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 
@@ -30,10 +30,10 @@ export class Invite {
     this.code = data.code;
     this.channel = new Channel(data.channel, client);
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected update(data: RawInvite): void {
+  private patch(data: RawInvite): void {
     if (data.guild !== undefined)
       this.guild = new Guild(data.guild, this.client);
     if (data.inviter !== undefined)

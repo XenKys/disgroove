@@ -1,5 +1,5 @@
 import { Base, Channel, GuildMember, Integration } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONApplicationRoleConnection,
@@ -42,10 +42,10 @@ export class User extends Base {
     this.globalName = data.global_name;
     this.avatar = data.avatar;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawUser): void {
+  protected override patch(data: RawUser): void {
     if (data.bot !== undefined) this.bot = data.bot;
     if (data.system !== undefined) this.system = data.system;
     if (data.mfa_enabled !== undefined) this.mfaEnabled = data.mfa_enabled;

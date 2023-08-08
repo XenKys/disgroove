@@ -16,7 +16,7 @@ import {
   VoiceState,
   Webhook,
 } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONApplicationCommandOptionChoice,
@@ -193,10 +193,10 @@ export class Guild extends Base {
     this.premiumProgressBarEnabled = data.premium_progress_bar_enabled;
     this.safetyAlertsChannelId = data.safety_alerts_channel_id;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(
+  protected override patch(
     data: RawGuild & {
       joined_at?: number;
       large?: boolean;

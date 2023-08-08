@@ -57,10 +57,10 @@ export class Application extends Base {
     this.verifyKey = data.verify_key;
     this.team = null;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawApplication) {
+  protected override patch(data: RawApplication) {
     if (data.rpc_origins !== undefined) this.rpcOrigins = data.rpc_origins;
     if (data.terms_of_service_url !== undefined)
       this.termsOfServiceURL = data.terms_of_service_url;

@@ -1,5 +1,5 @@
 import { Base, GuildMember, Invite, Message, User, Webhook } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
@@ -73,10 +73,10 @@ export class Channel extends Base {
 
     this.type = data.type;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawChannel): void {
+  protected override patch(data: RawChannel): void {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.position !== undefined) this.position = data.position;
     if (data.permission_overwrites !== undefined)

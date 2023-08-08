@@ -1,4 +1,4 @@
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONApplicationCommand,
@@ -43,10 +43,10 @@ export class ApplicationCommand extends Base {
     this.defaultMemberPermissions = data.default_member_permissions;
     this.version = data.version;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawApplicationCommand): void {
+  protected override patch(data: RawApplicationCommand): void {
     if (data.type !== undefined) this.type = data.type;
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.name_localizations !== undefined)

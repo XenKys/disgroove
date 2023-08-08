@@ -1,5 +1,5 @@
 import { GuildMember } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import type { JSONVoiceState, RawVoiceState } from "../types";
 
 export class VoiceState {
@@ -31,10 +31,10 @@ export class VoiceState {
     this.suppress = data.suppress;
     this.requestToSpeakTimestamp = data.request_to_speak_timestamp;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  private update(data: RawVoiceState) {
+  private patch(data: RawVoiceState) {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.member !== undefined)
       this.member = new GuildMember(data.member, this.client);

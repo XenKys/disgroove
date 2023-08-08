@@ -1,5 +1,5 @@
 import { User } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import type { JSONEmoji, RawEmoji } from "../types";
 
 export class Emoji {
@@ -18,10 +18,10 @@ export class Emoji {
     this.id = data.id;
     this.name = data.name;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  private update(data: RawEmoji) {
+  private patch(data: RawEmoji) {
     if (data.roles !== undefined) this.roles = data.roles;
     if (data.user !== undefined) this.user = new User(data.user, this.client);
     if (data.require_colons !== undefined)

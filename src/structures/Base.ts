@@ -1,4 +1,4 @@
-import type { Client } from "..";
+import type { Client } from "../Client";
 
 export abstract class Base {
   protected client: Client;
@@ -9,7 +9,7 @@ export abstract class Base {
     this.id = id;
   }
 
-  protected update(data: unknown): void {}
+  protected patch(data: unknown): void {}
 
   public toString(): string {
     return `[${this.constructor.name}]`;

@@ -7,7 +7,7 @@ import {
   Sticker,
   User,
 } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
@@ -87,10 +87,10 @@ export class Message extends Base {
     this.pinned = data.pinned;
     this.type = data.type;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(
+  protected override patch(
     data: RawMessage & {
       guild_id?: string;
       member?: RawGuildMember;

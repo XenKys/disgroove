@@ -1,5 +1,5 @@
 import { Base, User } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONIntegration,
@@ -35,12 +35,10 @@ export class Integration extends Base {
     this.enabled = data.enabled;
     this.account = data.account;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(
-    data: RawIntegration & { guild_id?: string }
-  ): void {
+  protected override patch(data: RawIntegration & { guild_id?: string }): void {
     if (data.syncing !== undefined) this.syncing = data.syncing;
     if (data.role_id !== undefined) this.roleId = data.role_id;
     if (data.enable_emoticons !== undefined)

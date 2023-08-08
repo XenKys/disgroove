@@ -1,5 +1,5 @@
 import { Base, GuildMember, User } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONGuildScheduledEvent,
@@ -44,10 +44,10 @@ export class GuildScheduledEvent extends Base {
     this.entityType = data.entity_type;
     this.entityMetadata = data.entity_metadata;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawGuildScheduledEvent): void {
+  protected override patch(data: RawGuildScheduledEvent): void {
     if (data.creator_id !== undefined) this.creatorId = data.creator_id;
     if (data.description !== undefined) this.description = data.description;
     if (data.entity_id !== undefined) this.entityId = data.entity_id;

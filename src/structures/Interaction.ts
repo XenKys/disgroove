@@ -1,5 +1,5 @@
 import { Base, Channel, Emoji, GuildMember, Message, Role, User } from ".";
-import type { Client } from "..";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
@@ -50,10 +50,10 @@ export class Interaction extends Base {
     this.token = data.token;
     this.version = data.version;
 
-    this.update(data);
+    this.patch(data);
   }
 
-  protected override update(data: RawInteraction): void {
+  protected override patch(data: RawInteraction): void {
     if (data.data !== undefined)
       this.data = {
         id: data.data.id,
