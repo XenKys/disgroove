@@ -21,6 +21,7 @@ import {
 } from "../utils";
 
 export class Webhook extends Base {
+  protected override raw: RawWebhook;
   public type: WebhookTypes;
   public guildId?: string | null;
   public channelId: string | null;
@@ -36,6 +37,7 @@ export class Webhook extends Base {
   constructor(data: RawWebhook, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.type = data.type;
     this.channelId = data.channel_id;
     this.name = data.name;
@@ -389,6 +391,10 @@ export class Webhook extends Base {
         },
       }
     );
+  }
+
+  public override toRaw(): RawWebhook {
+    return this.raw;
   }
 
   public override toJSON(): JSONWebhook {

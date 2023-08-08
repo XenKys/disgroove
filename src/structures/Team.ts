@@ -3,6 +3,7 @@ import type { Client } from "../Client";
 import type { JSONTeam, JSONTeamMember, RawTeam } from "../types";
 
 export class Team extends Base {
+  protected override raw: RawTeam;
   public icon: string | null;
   public members: Array<JSONTeamMember>;
   public name: string;
@@ -11,6 +12,7 @@ export class Team extends Base {
   constructor(data: RawTeam, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.icon = data.icon;
     this.members = data.members.map((teamMember) => ({
       membershipState: teamMember.membership_state,
@@ -20,6 +22,10 @@ export class Team extends Base {
     }));
     this.name = data.name;
     this.ownerUserId = data.owner_user_id;
+  }
+
+  public override toRaw(): RawTeam {
+    return this.raw;
   }
 
   public override toJSON(): JSONTeam {

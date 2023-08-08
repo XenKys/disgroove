@@ -26,6 +26,7 @@ import {
 } from "../utils";
 
 export class Interaction extends Base {
+  protected override raw: RawInteraction;
   public applicationId: string;
   public type: InteractionType;
   public data?: JSONApplicationCommandData &
@@ -45,6 +46,7 @@ export class Interaction extends Base {
   constructor(data: RawInteraction, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.applicationId = data.application_id;
     this.type = data.type;
     this.token = data.token;
@@ -608,6 +610,10 @@ export class Interaction extends Base {
     this.client.rest.delete(
       Endpoints.webhookMessage(this.applicationId, this.token, messageId)
     );
+  }
+
+  public override toRaw(): RawInteraction {
+    return this.raw;
   }
 
   public override toJSON(): JSONInteraction {

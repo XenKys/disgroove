@@ -7,7 +7,6 @@ import type {
   JSONApplicationCommandPermission,
   JSONGuildApplicationCommandPermissions,
   RawApplicationCommand,
-  RawApplicationCommandPermission,
   RawGuildApplicationCommandPermissions,
 } from "../types";
 import {
@@ -20,6 +19,7 @@ import {
 import { Base } from ".";
 
 export class ApplicationCommand extends Base {
+  protected override raw: RawApplicationCommand;
   public type?: ApplicationCommandTypes;
   public applicationId: string;
   public guildId?: string;
@@ -37,6 +37,7 @@ export class ApplicationCommand extends Base {
   constructor(data: RawApplicationCommand, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.applicationId = data.application_id;
     this.name = data.name;
     this.description = data.description;
@@ -194,6 +195,10 @@ export class ApplicationCommand extends Base {
           permission: permission.permission,
         })),
       }));
+  }
+
+  public override toRaw(): RawApplicationCommand {
+    return this.raw;
   }
 
   public override toJSON(): JSONApplicationCommand {

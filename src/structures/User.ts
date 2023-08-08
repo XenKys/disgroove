@@ -18,6 +18,7 @@ import type {
 } from "../utils";
 
 export class User extends Base {
+  protected override raw: RawUser;
   public username: string;
   public discriminator: string;
   public avatar: string;
@@ -37,6 +38,7 @@ export class User extends Base {
   constructor(data: RawUser, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.username = data.username;
     this.discriminator = data.discriminator;
     this.globalName = data.global_name;
@@ -204,7 +206,11 @@ export class User extends Base {
       }));
   }
 
-  public toJSON(): JSONUser {
+  public override toRaw(): RawUser {
+    return this.raw;
+  }
+
+  public override toJSON(): JSONUser {
     return {
       id: this.id,
       username: this.username,

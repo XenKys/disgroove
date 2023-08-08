@@ -22,6 +22,7 @@ import {
 import { Base } from ".";
 
 export class Application extends Base {
+  protected override raw: RawApplication;
   public name: string;
   public icon: string | null;
   public description: string;
@@ -46,6 +47,7 @@ export class Application extends Base {
   constructor(data: RawApplication, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.name = data.name;
     this.icon = data.icon;
     this.description = data.description;
@@ -570,6 +572,10 @@ export class Application extends Base {
           descriptionLocalizations: data.description_localizations,
         }))
       );
+  }
+
+  public override toRaw(): RawApplication {
+    return this.raw;
   }
 
   public override toJSON(): JSONApplication {

@@ -4,6 +4,7 @@ import type { JSONRole, JSONRoleTags, RawRole } from "../types";
 import { Base } from ".";
 
 export class Role extends Base {
+  protected override raw: RawRole;
   public name: string;
   public color: number;
   public hoist: boolean;
@@ -19,6 +20,7 @@ export class Role extends Base {
   constructor(data: RawRole & { guild_id?: string }, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.name = data.name;
     this.color = data.color;
     this.hoist = data.hoist;
@@ -79,6 +81,12 @@ export class Role extends Base {
       ),
       this.client
     );
+  }
+
+  public override toRaw(): RawRole & {
+    guild_id?: string;
+  } {
+    return this.raw;
   }
 
   public override toJSON(): JSONRole & { guildId?: string } {

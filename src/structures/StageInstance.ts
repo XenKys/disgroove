@@ -5,6 +5,7 @@ import type { PrivacyLevel } from "../utils";
 import { Base } from ".";
 
 export class StageInstance extends Base {
+  protected override raw: RawStageInstance;
   public guildId: string;
   public channelId: string;
   public topic: string;
@@ -15,6 +16,7 @@ export class StageInstance extends Base {
   constructor(data: RawStageInstance, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.guildId = data.guild_id;
     this.channelId = data.channel_id;
     this.topic = data.topic;
@@ -51,6 +53,10 @@ export class StageInstance extends Base {
     this.client.rest.delete(Endpoints.stageInstance(this.channelId), {
       reason,
     });
+  }
+
+  public override toRaw(): RawStageInstance {
+    return this.raw;
   }
 
   public override toJSON(): JSONStageInstance {

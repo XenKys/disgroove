@@ -1,6 +1,4 @@
-import type { Client } from "../Client";
-import { User } from "../structures";
-import type { RawAuditLogEntry, RawEmbed, RawEmoji, RawTeam } from "../types";
+import type { RawAuditLogEntry, RawEmbed } from "../types";
 
 export function embedToJSON(embeds: Array<RawEmbed>) {
   return embeds.map((embed) => ({

@@ -33,6 +33,7 @@ import {
 } from "../utils";
 
 export class Channel extends Base {
+  protected override raw: RawChannel;
   public type: ChannelTypes;
   public guildId?: string;
   public position?: number;
@@ -71,6 +72,7 @@ export class Channel extends Base {
   constructor(data: RawChannel, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.type = data.type;
 
     this.patch(data);
@@ -986,6 +988,10 @@ export class Channel extends Base {
       .then((response) =>
         response.map((data) => new Webhook(data, this.client))
       );
+  }
+
+  public override toRaw(): RawChannel {
+    return this.raw;
   }
 
   public override toJSON(): JSONChannel {

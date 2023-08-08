@@ -5,6 +5,7 @@ import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
 
 export class GuildTemplate {
   private client: Client;
+  private raw: RawGuildTemplate;
   public code: string;
   public name: string;
   public description: string | null;
@@ -19,6 +20,7 @@ export class GuildTemplate {
 
   constructor(data: RawGuildTemplate, client: Client) {
     this.client = client;
+    this.raw = data;
     this.code = data.code;
     this.name = data.name;
     this.description = data.description;
@@ -90,6 +92,10 @@ export class GuildTemplate {
 
   public toString(): string {
     return `[${this.constructor.name}]`;
+  }
+
+  public toRaw(): RawGuildTemplate {
+    return this.raw;
   }
 
   public toJSON(): JSONGuildTemplate {

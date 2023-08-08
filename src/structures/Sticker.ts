@@ -4,6 +4,7 @@ import type { StickerFormatTypes, StickerTypes } from "../utils";
 import type { JSONSticker, RawSticker } from "../types";
 
 export class Sticker extends Base {
+  protected override raw: RawSticker;
   public packId?: string;
   public name: string;
   public description: string | null;
@@ -19,6 +20,7 @@ export class Sticker extends Base {
   constructor(data: RawSticker, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.name = data.name;
     this.description = data.description;
     this.tags = data.tags;
@@ -35,6 +37,10 @@ export class Sticker extends Base {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.user !== undefined) this.user = new User(data.user, this.client);
     if (data.sort_value !== undefined) this.sortValue = data.sort_value;
+  }
+
+  public override toRaw(): RawSticker {
+    return this.raw;
   }
 
   public override toJSON(): JSONSticker {

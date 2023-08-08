@@ -12,6 +12,7 @@ import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 
 export class Invite {
   private client: Client;
+  private raw: RawInvite;
   public code: string;
   public guild?: Guild;
   public channel: Channel;
@@ -27,6 +28,7 @@ export class Invite {
 
   constructor(data: RawInvite, client: Client) {
     this.client = client;
+    this.raw = data;
     this.code = data.code;
     this.channel = new Channel(data.channel, client);
 
@@ -119,6 +121,10 @@ export class Invite {
 
   public toString(): string {
     return `[${this.constructor.name}]`;
+  }
+
+  public toRaw(): RawInvite {
+    return this.raw;
   }
 
   public toJSON(): JSONInvite {

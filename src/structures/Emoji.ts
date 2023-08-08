@@ -4,6 +4,7 @@ import type { JSONEmoji, RawEmoji } from "../types";
 
 export class Emoji {
   private client: Client;
+  private raw: RawEmoji;
   public id: string | null;
   public name: string | null;
   public roles?: Array<string>;
@@ -15,6 +16,7 @@ export class Emoji {
 
   constructor(data: RawEmoji, client: Client) {
     this.client = client;
+    this.raw = data;
     this.id = data.id;
     this.name = data.name;
 
@@ -33,6 +35,10 @@ export class Emoji {
 
   public toString(): string {
     return `[${this.constructor.name}]`;
+  }
+
+  public toRaw(): RawEmoji {
+    return this.raw;
   }
 
   public toJSON(): JSONEmoji {

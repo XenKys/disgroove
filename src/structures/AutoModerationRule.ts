@@ -8,6 +8,7 @@ import type {
 import { Base } from ".";
 
 export class AutoModerationRule extends Base {
+  protected override raw: RawAutoModerationRule;
   public guildId: string;
   public name: string;
   public creatorId: string;
@@ -22,6 +23,7 @@ export class AutoModerationRule extends Base {
   constructor(data: RawAutoModerationRule, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.guildId = data.guild_id;
     this.name = data.name;
     this.creatorId = data.creator_id;
@@ -91,6 +93,10 @@ export class AutoModerationRule extends Base {
         reason,
       }
     );
+  }
+
+  public override toRaw(): RawAutoModerationRule {
+    return this.raw;
   }
 
   public override toJSON(): JSONAutoModerationRule {

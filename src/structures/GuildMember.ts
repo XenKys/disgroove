@@ -6,6 +6,7 @@ import type { GuildMemberFlags } from "../utils";
 
 export class GuildMember {
   private client: Client;
+  private raw: RawGuildMember & { guild_id?: string };
   public user?: User;
   public nick?: string | null;
   public avatar?: string | null;
@@ -22,6 +23,7 @@ export class GuildMember {
 
   constructor(data: RawGuildMember & { guild_id?: string }, client: Client) {
     this.client = client;
+    this.raw = data;
     this.roles = data.roles;
     this.joinedAt = data.joined_at;
     this.deaf = data.deaf;
@@ -145,6 +147,10 @@ export class GuildMember {
 
   public toString(): string {
     return `[${this.constructor.name}]`;
+  }
+
+  public toRaw(): RawGuildMember & { guild_id?: string } {
+    return this.raw;
   }
 
   public toJSON(): JSONGuildMember & { guildId?: string } {

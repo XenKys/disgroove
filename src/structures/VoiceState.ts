@@ -4,6 +4,7 @@ import type { JSONVoiceState, RawVoiceState } from "../types";
 
 export class VoiceState {
   private client: Client;
+  private raw: RawVoiceState;
   public guildId?: string;
   public channelId: string | null;
   public userId: string;
@@ -20,6 +21,7 @@ export class VoiceState {
 
   constructor(data: RawVoiceState, client: Client) {
     this.client = client;
+    this.raw = data;
     this.channelId = data.channel_id;
     this.userId = data.user_id;
     this.sessionId = data.session_id;
@@ -43,6 +45,10 @@ export class VoiceState {
 
   public toString(): string {
     return `[${this.constructor.name}]`;
+  }
+
+  public toRaw(): RawVoiceState {
+    return this.raw;
   }
 
   public toJSON(): JSONVoiceState {

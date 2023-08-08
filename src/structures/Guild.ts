@@ -94,6 +94,7 @@ import {
 } from "../utils";
 
 export class Guild extends Base {
+  protected override raw: RawGuild;
   public name: string;
   public icon: string | null;
   public iconHash?: string | null;
@@ -165,6 +166,7 @@ export class Guild extends Base {
   ) {
     super(data.id, client);
 
+    this.raw = data;
     this.name = data.name;
     this.icon = data.icon;
     this.splash = data.splash;
@@ -1888,6 +1890,10 @@ export class Guild extends Base {
       .then((response) =>
         response.map((data) => new Webhook(data, this.client))
       );
+  }
+
+  public override toRaw(): RawGuild {
+    return this.raw;
   }
 
   public override toJSON(): JSONGuild {

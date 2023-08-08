@@ -10,6 +10,7 @@ import type {
 import type { IntegrationExpireBehaviors, OAuth2Scopes } from "../utils";
 
 export class Integration extends Base {
+  protected override raw: RawIntegration & { guild_id?: string };
   public name: string;
   public type: string;
   public enabled: boolean;
@@ -30,6 +31,7 @@ export class Integration extends Base {
   constructor(data: RawIntegration & { guild_id?: string }, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.name = data.name;
     this.type = data.type;
     this.enabled = data.enabled;
@@ -74,6 +76,10 @@ export class Integration extends Base {
     this.client.rest.delete(Endpoints.guildIntegration(this.guildId, this.id), {
       reason,
     });
+  }
+
+  public override toRaw(): RawIntegration & { guild_id?: string } {
+    return this.raw;
   }
 
   public override toJSON(): JSONIntegration & { guildId?: string } {

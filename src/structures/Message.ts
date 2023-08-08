@@ -38,6 +38,10 @@ import {
 } from "../utils";
 
 export class Message extends Base {
+  protected override raw: RawMessage & {
+    guild_id?: string;
+    member?: RawGuildMember;
+  };
   public channelId: string;
   public author?: User;
   public content?: string;
@@ -80,6 +84,7 @@ export class Message extends Base {
   ) {
     super(data.id, client);
 
+    this.raw = data;
     this.channelId = data.channel_id;
     this.timestamp = data.timestamp;
     this.tts = data.tts;
@@ -370,6 +375,13 @@ export class Message extends Base {
       ),
       this.client
     );
+  }
+
+  public override toRaw(): RawMessage & {
+    guild_id?: string;
+    member?: RawGuildMember;
+  } {
+    return this.raw;
   }
 
   public override toJSON(): JSONMessage & {

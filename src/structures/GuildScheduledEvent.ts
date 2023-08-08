@@ -15,6 +15,7 @@ import type {
 } from "../utils";
 
 export class GuildScheduledEvent extends Base {
+  protected override raw: RawGuildScheduledEvent;
   public guildId: string;
   public channelId: string | null;
   public creatorId?: string | null;
@@ -34,6 +35,7 @@ export class GuildScheduledEvent extends Base {
   constructor(data: RawGuildScheduledEvent, client: Client) {
     super(data.id, client);
 
+    this.raw = data;
     this.guildId = data.guild_id;
     this.channelId = data.channel_id;
     this.name = data.name;
@@ -132,6 +134,10 @@ export class GuildScheduledEvent extends Base {
               : undefined,
         }))
       );
+  }
+
+  public override toRaw(): RawGuildScheduledEvent {
+    return this.raw;
   }
 
   public override toJSON(): JSONGuildScheduledEvent {
