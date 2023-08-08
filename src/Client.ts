@@ -95,7 +95,7 @@ import type {
 import EventEmitter from "node:events";
 
 export interface ClientOptions {
-  intents?: GatewayIntents | number;
+  intents?: number | Array<number>;
   shards?: number;
   auth?: "Bot" | "Bearer";
   presence?: {
@@ -243,7 +243,12 @@ export class Client extends EventEmitter {
     super();
 
     this.token = token;
-    this.intents = options?.intents || GatewayIntents.AllNonPrivileged;
+    this.intents =
+      options?.intents !== undefined
+        ? Array.isArray(options.intents)
+          ? options.intents.reduce((sum, num) => sum + num, 0)
+          : options.intents
+        : GatewayIntents.AllNonPrivileged;
     this.shards = options?.shards || -1;
     this.auth = options?.auth || "Bot";
     this.presence = options?.presence;
@@ -718,9 +723,9 @@ export class Client extends EventEmitter {
   }
 
   private onWebSocketMessage(data: RawData): void {
-    const { t, op, d } = JSON.parse(data.toString());
+    const packet = JSON.parse(data.toString());
 
-    switch (op) {
+    switch (packet.op) {
       case GatewayOPCodes.Reconnect:
         super.emit(GatewayEvents.Reconnect);
         break;
@@ -736,16 +741,16 @@ export class Client extends EventEmitter {
                 d: null,
               })
             );
-          }, d.heartbeat_interval);
+          }, packet.d.heartbeat_interval);
 
           super.emit(GatewayEvents.Hello, {
-            heartbeatInterval: d.heartbeat_interval,
+            heartbeatInterval: packet.d.heartbeat_interval,
           });
         }
         break;
     }
 
-    switch (t) {
+    switch (packet.t) {
       case "READY":
         super.emit(GatewayEvents.Ready);
         break;
@@ -754,10 +759,10 @@ export class Client extends EventEmitter {
         break;
       case "APPLICATION_COMMAND_PERMISSIONS_UPDATE":
         super.emit(GatewayEvents.ApplicationCommandPermissionsUpdate, {
-          id: d.id,
-          applicationId: d.application_id,
-          guildId: d.guild_id,
-          permissions: d.permissions.map(
+          id: packet.d.id,
+          applicationId: packet.d.application_id,
+          guildId: packet.d.guild_id,
+          permissions: packet.d.permissions.map(
             (permission: RawApplicationCommandPermission) => ({
               id: permission.id,
               type: permission.type,
@@ -769,72 +774,78 @@ export class Client extends EventEmitter {
       case "AUTO_MODERATION_RULE_CREATE":
         super.emit(
           GatewayEvents.AutoModerationRuleCreate,
-          new AutoModerationRule(d, this)
+          new AutoModerationRule(packet.d, this)
         );
         break;
       case "AUTO_MODERATION_RULE_UPDATE":
         super.emit(
           GatewayEvents.AutoModerationRuleUpdate,
-          new AutoModerationRule(d, this)
+          new AutoModerationRule(packet.d, this)
         );
         break;
       case "AUTO_MODERATION_RULE_DELETE":
         super.emit(
           GatewayEvents.AutoModerationRuleDelete,
-          new AutoModerationRule(d, this).toJSON()
+          new AutoModerationRule(packet.d, this).toJSON()
         );
         break;
       case "AUTO_MODERATION_ACTION_EXECUTION":
         super.emit(GatewayEvents.AutoModerationActionExecution, {
-          guildId: d.guild_id,
+          guildId: packet.d.guild_id,
           action: {
-            type: d.action.type,
-            metadata: d.action.metadata,
+            type: packet.d.action.type,
+            metadata: packet.d.action.metadata,
           },
-          ruleId: d.rule_id,
-          ruleTriggerType: d.rule_trigger_type,
-          userId: d.user_id,
-          channelId: d.channel_id,
-          messageId: d.message_id,
-          alertSystemMessageId: d.alert_system_message_id,
-          content: d.content,
-          matchedKeyword: d.matched_keyword,
-          matchedContent: d.matched_content,
+          ruleId: packet.d.rule_id,
+          ruleTriggerType: packet.d.rule_trigger_type,
+          userId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          alertSystemMessageId: packet.d.alert_system_message_id,
+          content: packet.d.content,
+          matchedKeyword: packet.d.matched_keyword,
+          matchedContent: packet.d.matched_content,
         });
         break;
       case "CHANNEL_CREATE":
-        super.emit(GatewayEvents.ChannelCreate, new Channel(d, this));
+        super.emit(GatewayEvents.ChannelCreate, new Channel(packet.d, this));
         break;
       case "CHANNEL_UPDATE":
-        super.emit(GatewayEvents.ChannelUpdate, new Channel(d, this));
+        super.emit(GatewayEvents.ChannelUpdate, new Channel(packet.d, this));
         break;
       case "CHANNEL_DELETE":
-        super.emit(GatewayEvents.ChannelDelete, new Channel(d, this).toJSON());
+        super.emit(
+          GatewayEvents.ChannelDelete,
+          new Channel(packet.d, this).toJSON()
+        );
         break;
       case "CHANNEL_PINS_UPDATE":
         super.emit(GatewayEvents.ChannelPinsUpdate, {
-          guildId: d.guild_id,
-          channelId: d.channel_id,
-          lastPinTimestamp: d.last_pin_timestamp,
+          guildId: packet.d.guild_id,
+          channelId: packet.d.channel_id,
+          lastPinTimestamp: packet.d.last_pin_timestamp,
         });
         break;
       case "THREAD_CREATE":
-        super.emit(GatewayEvents.ThreadCreate, new Channel(d, this));
+        super.emit(GatewayEvents.ThreadCreate, new Channel(packet.d, this));
         break;
       case "THREAD_UPDATE":
-        super.emit(GatewayEvents.ThreadUpdate, new Channel(d, this));
+        super.emit(GatewayEvents.ThreadUpdate, new Channel(packet.d, this));
         break;
       case "THREAD_DELETE":
-        super.emit(GatewayEvents.ThreadDelete, new Channel(d, this).toJSON());
+        super.emit(
+          GatewayEvents.ThreadDelete,
+          new Channel(packet.d, this).toJSON()
+        );
         break;
       case "THREAD_LIST_SYNC":
         super.emit(GatewayEvents.ThreadListSync, {
-          guildId: d.guild_id,
-          channelIds: d.channel_ids,
-          threads: d.threads.map(
+          guildId: packet.d.guild_id,
+          channelIds: packet.d.channel_ids,
+          threads: packet.d.threads.map(
             (channel: RawChannel) => new Channel(channel, this)
           ),
-          members: d.members.map((member: RawThreadMember) => ({
+          members: packet.d.members.map((member: RawThreadMember) => ({
             id: member.id,
             userId: member.user_id,
             joinTimestamp: member.join_timestamp,
@@ -848,77 +859,79 @@ export class Client extends EventEmitter {
         break;
       case "THREAD_MEMBER_UPDATE":
         super.emit(GatewayEvents.ThreadMemberUpdate, {
-          id: d.id,
-          userId: d.user_id,
-          joinTimestamp: d.join_timestamp,
-          flags: d.flags,
+          id: packet.d.id,
+          userId: packet.d.user_id,
+          joinTimestamp: packet.d.join_timestamp,
+          flags: packet.d.flags,
           member:
-            d.member !== undefined
-              ? new GuildMember(d.member, this)
+            packet.d.member !== undefined
+              ? new GuildMember(packet.d.member, this)
               : undefined,
-          guildId: d.guild_id,
+          guildId: packet.d.guild_id,
         });
         break;
       case "THREAD_MEMBERS_UPDATE":
         super.emit(GatewayEvents.ThreadMembersUpdate, {
-          id: d.id,
-          guildId: d.guild_id,
-          memberCount: d.member_count,
-          addedMembers: d.added_members?.map((member: RawThreadMember) => ({
-            id: member.id,
-            userId: member.user_id,
-            joinTimestamp: member.join_timestamp,
-            flags: member.flags,
-            member:
-              member.member !== undefined
-                ? new GuildMember(member.member, this)
-                : undefined,
-          })),
-          removedMemberIds: d.removed_member_ids,
+          id: packet.d.id,
+          guildId: packet.d.guild_id,
+          memberCount: packet.d.member_count,
+          addedMembers: packet.d.added_members?.map(
+            (member: RawThreadMember) => ({
+              id: member.id,
+              userId: member.user_id,
+              joinTimestamp: member.join_timestamp,
+              flags: member.flags,
+              member:
+                member.member !== undefined
+                  ? new GuildMember(member.member, this)
+                  : undefined,
+            })
+          ),
+          removedMemberIds: packet.d.removed_member_ids,
         });
         break;
       case "GUILD_CREATE":
-        super.emit(GatewayEvents.GuildCreate, new Guild(d, this));
+        super.emit(GatewayEvents.GuildCreate, new Guild(packet.d, this));
         break;
       case "GUILD_UPDATE":
-        super.emit(GatewayEvents.GuildUpdate, new Guild(d, this));
+        super.emit(GatewayEvents.GuildUpdate, new Guild(packet.d, this));
         break;
       case "GUILD_DELETE":
         super.emit(GatewayEvents.GuildDelete, {
-          id: d.id,
-          unavailable: d.unavailable,
+          id: packet.d.id,
+          unavailable: packet.d.unavailable,
         });
         break;
       case "GUILD_AUDIT_LOG_ENTRY_CREATE":
         super.emit(
           GatewayEvents.GuildAuditLogEntryCreate,
-          auditLogEntryToJSON(d)
+          auditLogEntryToJSON(packet.d)
         );
         break;
       case "GUILD_BAN_ADD":
         super.emit(GatewayEvents.GuildBanAdd, {
-          guildId: d.guild_id,
-          user: new User(d.user, this),
+          guildId: packet.d.guild_id,
+          user: new User(packet.d.user, this),
         });
         break;
       case "GUILD_BAN_REMOVE":
         super.emit(GatewayEvents.GuildBanRemove, {
-          guildId: d.guild_id,
-          user: new User(d.user, this),
+          guildId: packet.d.guild_id,
+          user: new User(packet.d.user, this),
         });
         break;
       case "GUILD_EMOJIS_UPDATE":
         super.emit(GatewayEvents.GuildEmojisUpdate, {
-          guildId: d.guild_id,
-          emojis: d.emojis.map((emoji: RawEmoji) =>
+          guildId: packet.d.guild_id,
+          emojis: packet.d.emojis.map((emoji: RawEmoji) =>
             new Emoji(emoji, this).toJSON()
           ),
         });
         break;
       case "GUILD_STICKERS_UPDATE":
         super.emit(GatewayEvents.GuildStickersUpdate, {
-          guildId: d.guild_id,
-          stickers: d.stickers.map((sticker: RawSticker) => ({
+          guildId: packet.d.guild_id,
+          stickers: packet.d.stickers.map((sticker: RawSticker) => ({
             id: sticker.id,
             packId: sticker.pack_id,
             name: sticker.name,
@@ -939,202 +952,219 @@ export class Client extends EventEmitter {
         break;
       case "GUILD_INTEGRATIONS_UPDATE":
         super.emit(GatewayEvents.GuildIntegrationsUpdate, {
-          guildId: d.guild_id,
+          guildId: packet.d.guild_id,
         });
         break;
       case "GUILD_MEMBER_ADD":
-        super.emit(GatewayEvents.GuildMemberAdd, new GuildMember(d, this));
+        super.emit(
+          GatewayEvents.GuildMemberAdd,
+          new GuildMember(packet.d, this)
+        );
         break;
       case "GUILD_MEMBER_REMOVE":
         super.emit(GatewayEvents.GuildMemberRemove, {
-          guildId: d.guild_id,
-          user: new User(d.user, this),
+          guildId: packet.d.guild_id,
+          user: new User(packet.d.user, this),
         });
         break;
       case "GUILD_MEMBER_UPDATE":
         super.emit(GatewayEvents.GuildMemberUpdate, {
-          guildId: d.guild_id,
-          roles: d.roles,
-          user: new User(d.user, this),
-          nick: d.nick,
-          avatar: d.avatar,
-          joinedAt: d.joined_at,
-          premiumSince: d.premium_since,
-          deaf: d.deaf,
-          mute: d.mute,
-          pending: d.pending,
-          communicationDisabledUntil: d.communication_disabled_until,
+          guildId: packet.d.guild_id,
+          roles: packet.d.roles,
+          user: new User(packet.d.user, this),
+          nick: packet.d.nick,
+          avatar: packet.d.avatar,
+          joinedAt: packet.d.joined_at,
+          premiumSince: packet.d.premium_since,
+          deaf: packet.d.deaf,
+          mute: packet.d.mute,
+          pending: packet.d.pending,
+          communicationDisabledUntil: packet.d.communication_disabled_until,
         });
         break;
       case "GUILD_MEMBERS_CHUNK":
         super.emit(GatewayEvents.GuildMembersChunk, {
-          guildId: d.guild_id,
-          members: d.members.map(
+          guildId: packet.d.guild_id,
+          members: packet.d.members.map(
             (member: RawGuildMember) => new GuildMember(member, this)
           ),
-          chunkIndex: d.chunk_index,
-          chunkCount: d.chunk_count,
-          notFound: d.not_found,
-          presences: d.presences,
-          nonce: d.nonce,
+          chunkIndex: packet.d.chunk_index,
+          chunkCount: packet.d.chunk_count,
+          notFound: packet.d.not_found,
+          presences: packet.d.presences,
+          nonce: packet.d.nonce,
         });
         break;
       case "GUILD_ROLE_CREATE":
         super.emit(GatewayEvents.GuildRoleCreate, {
-          guildId: d.guild_id,
-          role: new Role(d.role, this),
+          guildId: packet.d.guild_id,
+          role: new Role(packet.d.role, this),
         });
         break;
       case "GUILD_ROLE_UPDATE":
         super.emit(GatewayEvents.GuildRoleUpdate, {
-          guildId: d.guild_id,
-          role: new Role(d.role, this),
+          guildId: packet.d.guild_id,
+          role: new Role(packet.d.role, this),
         });
         break;
       case "GUILD_ROLE_DELETE":
         super.emit(GatewayEvents.GuildRoleDelete, {
-          guildId: d.guild_id,
-          roleId: d.role_id,
+          guildId: packet.d.guild_id,
+          roleId: packet.d.role_id,
         });
         break;
       case "GUILD_SCHEDULED_EVENT_CREATE":
         super.emit(
           GatewayEvents.GuildScheduledEventCreate,
-          new GuildScheduledEvent(d, this)
+          new GuildScheduledEvent(packet.d, this)
         );
         break;
       case "GUILD_SCHEDULED_EVENT_UPDATE":
         super.emit(
           GatewayEvents.GuildScheduledEventUpdate,
-          new GuildScheduledEvent(d, this)
+          new GuildScheduledEvent(packet.d, this)
         );
         break;
       case "GUILD_SCHEDULED_EVENT_DELETE":
         super.emit(
           GatewayEvents.GuildScheduledEventDelete,
-          new GuildScheduledEvent(d, this).toJSON()
+          new GuildScheduledEvent(packet.d, this).toJSON()
         );
         break;
       case "GUILD_SCHEDULED_EVENT_USER_ADD":
         super.emit(GatewayEvents.GuildScheduledEventUserAdd, {
-          guildScheduledEventId: d.guild_scheduled_event_id,
-          userId: d.user_id,
-          guildId: d.guild_id,
+          guildScheduledEventId: packet.d.guild_scheduled_event_id,
+          userId: packet.d.user_id,
+          guildId: packet.d.guild_id,
         });
         break;
       case "GUILD_SCHEDULED_EVENT_USER_REMOVE":
         super.emit(GatewayEvents.GuildScheduledEventUserRemove, {
-          guildScheduledEventId: d.guild_scheduled_event_id,
-          userId: d.user_id,
-          guildId: d.guild_id,
+          guildScheduledEventId: packet.d.guild_scheduled_event_id,
+          userId: packet.d.user_id,
+          guildId: packet.d.guild_id,
         });
         break;
       case "INTEGRATION_CREATE":
-        super.emit(GatewayEvents.IntegrationCreate, new Integration(d, this));
+        super.emit(
+          GatewayEvents.IntegrationCreate,
+          new Integration(packet.d, this)
+        );
         break;
       case "INTEGRATION_UPDATE":
-        super.emit(GatewayEvents.IntegrationUpdate, new Integration(d, this));
+        super.emit(
+          GatewayEvents.IntegrationUpdate,
+          new Integration(packet.d, this)
+        );
         break;
       case "INTEGRATION_DELETE":
         super.emit(GatewayEvents.IntegrationDelete, {
-          id: d.id,
-          guildId: d.guild_id,
-          applicationId: d.application_id,
+          id: packet.d.id,
+          guildId: packet.d.guild_id,
+          applicationId: packet.d.application_id,
         });
         break;
       case "INTERACTION_CREATE":
-        super.emit(GatewayEvents.InteractionCreate, new Interaction(d, this));
+        super.emit(
+          GatewayEvents.InteractionCreate,
+          new Interaction(packet.d, this)
+        );
         break;
       case "INVITE_CREATE":
         super.emit(GatewayEvents.InviteCreate, {
-          channelId: d.channel_id,
-          code: d.code,
-          createdAt: d.created_at,
-          guildId: d.guild_id,
+          channelId: packet.d.channel_id,
+          code: packet.d.code,
+          createdAt: packet.d.created_at,
+          guildId: packet.d.guild_id,
           inviter:
-            d.inviter !== undefined ? new User(d.inviter, this) : undefined,
-          maxAge: d.max_age,
-          maxUses: d.max_uses,
-          targetType: d.target_type,
+            packet.d.inviter !== undefined
+              ? new User(packet.d.inviter, this)
+              : undefined,
+          maxAge: packet.d.max_age,
+          maxUses: packet.d.max_uses,
+          targetType: packet.d.target_type,
           targetUser:
-            d.target_user !== undefined
-              ? new User(d.target_user, this)
+            packet.d.target_user !== undefined
+              ? new User(packet.d.target_user, this)
               : undefined,
           targetApplication:
-            d.target_application !== undefined
-              ? new Application(d.target_application, this)
+            packet.d.target_application !== undefined
+              ? new Application(packet.d.target_application, this)
               : undefined,
-          temporary: d.temporary,
-          uses: d.uses,
+          temporary: packet.d.temporary,
+          uses: packet.d.uses,
         });
         break;
       case "INVITE_DELETE":
         super.emit(GatewayEvents.InviteDelete, {
-          channelId: d.channel_id,
-          guildId: d.guild_id,
-          code: d.code,
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+          code: packet.d.code,
         });
         break;
       case "MESSAGE_CREATE":
-        super.emit(GatewayEvents.MessageCreate, new Message(d, this));
+        super.emit(GatewayEvents.MessageCreate, new Message(packet.d, this));
         break;
       case "MESSAGE_UPDATE":
-        super.emit(GatewayEvents.MessageUpdate, new Message(d, this));
+        super.emit(GatewayEvents.MessageUpdate, new Message(packet.d, this));
         break;
       case "MESSAGE_DELETE":
-        super.emit(GatewayEvents.MessageDelete, new Message(d, this).toJSON());
+        super.emit(
+          GatewayEvents.MessageDelete,
+          new Message(packet.d, this).toJSON()
+        );
         break;
       case "MESSAGE_DELETE_BULK":
         super.emit(GatewayEvents.MessageDeleteBulk, {
-          ids: d.ids,
-          channelId: d.channel_id,
-          guildId: d.guild_id,
+          ids: packet.d.ids,
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
         });
         break;
       case "MESSAGE_REACTION_ADD":
         super.emit(GatewayEvents.MessageReactionAdd, {
-          userId: d.user_id,
-          channelId: d.channel_id,
-          messageId: d.message_id,
-          guildId: d.guild_id,
+          userId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
           member:
-            d.member !== undefined
-              ? new GuildMember(d.member, this)
+            packet.d.member !== undefined
+              ? new GuildMember(packet.d.member, this)
               : undefined,
-          emoji: new Emoji(d.emoji, this),
-          messageAuthorId: d.message_author_id,
+          emoji: new Emoji(packet.d.emoji, this),
+          messageAuthorId: packet.d.message_author_id,
         });
         break;
       case "MESSAGE_REACTION_REMOVE":
         super.emit(GatewayEvents.MessageReactionRemove, {
-          userId: d.user_id,
-          channelId: d.channel_id,
-          messageId: d.message_id,
-          guildId: d.guild_id,
-          emoji: new Emoji(d.emoji, this),
+          userId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
+          emoji: new Emoji(packet.d.emoji, this),
         });
         break;
       case "MESSAGE_REACTION_REMOVE_ALL":
         super.emit(GatewayEvents.MessageReactionRemoveAll, {
-          channelId: d.channel_id,
-          messageId: d.message_id,
-          guildId: d.guild_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
         });
         break;
       case "MESSAGE_REACTION_REMOVE_EMOJI":
         super.emit(GatewayEvents.MessageReactionRemoveEmoji, {
-          channelId: d.channel_id,
-          guildId: d.guild_id,
-          messageId: d.message_id,
-          emoji: new Emoji(d.emoji, this),
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+          messageId: packet.d.message_id,
+          emoji: new Emoji(packet.d.emoji, this),
         });
         break;
       case "PRESENCE_UPDATE":
         super.emit(GatewayEvents.PresenceUpdate, {
-          user: new User(d.user, this),
-          guildId: d.guild_id,
-          status: d.status,
-          activities: d.activities.map((activity: RawActivity) => ({
+          user: new User(packet.d.user, this),
+          guildId: packet.d.guild_id,
+          status: packet.d.status,
+          activities: packet.d.activities.map((activity: RawActivity) => ({
             name: activity.name,
             type: activity.type,
             url: activity.url,
@@ -1159,76 +1189,76 @@ export class Client extends EventEmitter {
             buttons: activity.buttons,
           })),
           clientStatus: {
-            desktop: d.client_status.desktop,
-            mobile: d.client_status.mobile,
-            web: d.client_status.web,
+            desktop: packet.d.client_status.desktop,
+            mobile: packet.d.client_status.mobile,
+            web: packet.d.client_status.web,
           },
         });
         break;
       case "STAGE_INSTANCE_CREATE":
         super.emit(
           GatewayEvents.StageInstanceCreate,
-          new StageInstance(d, this)
+          new StageInstance(packet.d, this)
         );
         break;
       case "STAGE_INSTANCE_UPDATE":
         super.emit(
           GatewayEvents.StageInstanceUpdate,
-          new StageInstance(d, this)
+          new StageInstance(packet.d, this)
         );
         break;
       case "STAGE_INSTANCE_DELETE":
         super.emit(
           GatewayEvents.StageInstanceDelete,
-          new StageInstance(d, this).toJSON()
+          new StageInstance(packet.d, this).toJSON()
         );
         break;
       case "TYPING_START":
         super.emit(GatewayEvents.TypingStart, {
-          channelId: d.channel_id,
-          guildId: d.guild_id,
-          userId: d.user_id,
-          timestamp: d.timestamp,
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+          userId: packet.d.user_id,
+          timestamp: packet.d.timestamp,
           member:
-            d.member !== undefined
-              ? new GuildMember(d.member, this)
+            packet.d.member !== undefined
+              ? new GuildMember(packet.d.member, this)
               : undefined,
         });
         break;
       case "USER_UPDATE":
-        super.emit(GatewayEvents.UserUpdate, new User(d, this));
+        super.emit(GatewayEvents.UserUpdate, new User(packet.d, this));
         break;
       case "VOICE_STATE_UPDATE":
         super.emit(GatewayEvents.VoiceStateUpdate, {
-          guildId: d.guild_id,
-          channelId: d.channel_id,
-          userId: d.user_id,
+          guildId: packet.d.guild_id,
+          channelId: packet.d.channel_id,
+          userId: packet.d.user_id,
           member:
-            d.member !== undefined
-              ? new GuildMember(d.member, this)
+            packet.d.member !== undefined
+              ? new GuildMember(packet.d.member, this)
               : undefined,
-          sessionId: d.session_id,
-          deaf: d.deaf,
-          mute: d.mute,
-          selfDeaf: d.self_deaf,
-          selfMute: d.self_mute,
-          selfStream: d.self_stream,
-          selfVideo: d.self_video,
-          suppress: d.suppress,
-          requestToSpeakTimestamp: d.request_to_speak_timestamp,
+          sessionId: packet.d.session_id,
+          deaf: packet.d.deaf,
+          mute: packet.d.mute,
+          selfDeaf: packet.d.self_deaf,
+          selfMute: packet.d.self_mute,
+          selfStream: packet.d.self_stream,
+          selfVideo: packet.d.self_video,
+          suppress: packet.d.suppress,
+          requestToSpeakTimestamp: packet.d.request_to_speak_timestamp,
         });
         break;
       case "VOICE_SERVER_UPDATE":
         super.emit(GatewayEvents.VoiceServerUpdate, {
-          token: d.token,
-          guildId: d.guild_id,
-          endpoint: d.endpoint,
+          token: packet.d.token,
+          guildId: packet.d.guild_id,
+          endpoint: packet.d.endpoint,
         });
         break;
       case "WEBHOOKS_UPDATE":
         super.emit(GatewayEvents.WebhooksUpdate, {
-          guildId: d.guild_id,
-          channelId: d.channel_id,
+          guildId: packet.d.guild_id,
+          channelId: packet.d.channel_id,
         });
         break;
     }
