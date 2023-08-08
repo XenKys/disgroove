@@ -226,7 +226,7 @@ export class Webhook extends Base {
   ): Promise<Message> {
     return new Message(
       await this.client.rest.post<RawMessage>(
-        Endpoints.webhook(this.id, token),
+        Endpoints.webhookPlatform(this.id, token, "slack"),
         {
           query: {
             thread_id: options.threadId,
@@ -248,7 +248,7 @@ export class Webhook extends Base {
   ): Promise<Message> {
     return new Message(
       await this.client.rest.post<RawMessage>(
-        Endpoints.webhook(this.id, token),
+        Endpoints.webhookPlatform(this.id, token, "github"),
         {
           query: {
             thread_id: options.threadId,
