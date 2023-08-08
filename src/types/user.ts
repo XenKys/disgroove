@@ -4,7 +4,7 @@ import type {
   JSONIntegration,
   RawApplicationRoleConnectionMetadata,
   RawIntegration,
-} from "./index";
+} from ".";
 
 /** https://discord.com/developers/docs/resources/user#user-object-user-structure */
 export interface RawUser {

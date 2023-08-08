@@ -1221,7 +1221,7 @@ export class Client extends EventEmitter {
       case "VOICE_SERVER_UPDATE":
         super.emit(GatewayEvents.VoiceServerUpdate, {
           token: d.token,
-          guildId: d.guildId,
+          guildId: d.guild_id,
           endpoint: d.endpoint,
         });
         break;
