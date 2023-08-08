@@ -31,24 +31,12 @@ const {
   Client,
   GatewayIntents,
   ActivityType,
-  StatusTypes,
   InteractionType,
   InteractionCallbackType,
   MessageFlags,
 } = require("disgroove");
 const client = new Client("token", {
   intents: GatewayIntents.All,
-  presence: {
-    activities: [
-      {
-        name: "/ping",
-        type: ActivityType.Watching,
-        createdAt: Date.now(),
-      },
-    ],
-    status: StatusTypes.Online,
-    afk: false,
-  }, // Set the bot presence to "Watching /ping"
 });
 
 client.on("ready", async () => {
@@ -58,13 +46,20 @@ client.on("ready", async () => {
 
   const application = await client.getApplication(); // Get the bot application
 
-  await application.createGlobalApplicationCommand({
+  application.createGlobalApplicationCommand({
     name: "ping",
-    description: "Reply with Pong! �",
+    description: "Reply with Pong! 🏓",
   }); // Create a global application command named "ping"
+
+  client.updatePresence({
+    activity: {
+      name: "/ping",
+      type: ActivityType.Watching,
+    },
+  }); // Update the bot presence to "Watching /ping"
 });
 
-client.on("interactionCreate", (interaction) => {
+client.on("interactionCreate", async (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return; // Check if the interaction is an application command
 
   if (interaction.data.name === "ping") {
@@ -72,10 +67,10 @@ client.on("interactionCreate", (interaction) => {
     interaction.createResponse({
       type: InteractionCallbackType.ChannelMessageWithSource,
       data: {
-        content: "Pong! �",
+        content: "Pong! 🏓",
         flags: MessageFlags.Ephemeral,
       },
-    }); // Reply with an ephemeral message "Pong! �"
+    }); // Reply with an ephemeral message "Pong! 🏓"
   }
 });
 

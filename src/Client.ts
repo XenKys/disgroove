@@ -98,11 +98,6 @@ export interface ClientOptions {
   intents?: number | Array<number>;
   shards?: number;
   auth?: "Bot" | "Bearer";
-  presence?: {
-    activities: Array<Activity>;
-    status: StatusTypes;
-    afk: boolean;
-  };
 }
 
 export interface ClientEvents {
@@ -231,11 +226,6 @@ export class Client extends EventEmitter {
   public intents: GatewayIntents | number;
   public shards: number;
   public auth: "Bot" | "Bearer";
-  public presence?: {
-    activities: Array<Activity>;
-    status: StatusTypes;
-    afk: boolean;
-  };
   public rest: REST;
   public ws: WebSocket;
 
@@ -249,9 +239,8 @@ export class Client extends EventEmitter {
           ? options.intents.reduce((sum, num) => sum + num, 0)
           : options.intents
         : GatewayIntents.AllNonPrivileged;
-    this.shards = options?.shards || -1;
-    this.auth = options?.auth || "Bot";
-    this.presence = options?.presence;
+    this.shards = options?.shards ?? -1;
+    this.auth = options?.auth ?? "Bot";
     this.rest = new REST(token, this.auth);
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
   }
@@ -574,41 +563,19 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
   public updatePresence(options: {
-    activities: Array<Activity>;
-    status: StatusTypes;
-    afk: boolean;
+    activity?: Pick<Activity, "name" | "type" | "url">;
+    status?: StatusTypes;
+    afk?: boolean;
   }): void {
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.PresenceUpdate,
         d: {
           since: options.status === StatusTypes.Idle ? Date.now() : null,
-          activities: options.activities.map((activity) => ({
-            name: activity.name,
-            type: activity.type,
-            url: activity.url,
-            created_at: activity.createdAt,
-            timestamps: activity.timestamps,
-            application_id: activity.applicationId,
-            details: activity.details,
-            state: activity.state,
-            party: activity.party,
-            assets:
-              activity.assets !== undefined
-                ? {
-                    large_image: activity.assets.largeImage,
-                    large_text: activity.assets.largeText,
-                    small_image: activity.assets.smallImage,
-                    small_text: activity.assets.smallText,
-                  }
-                : undefined,
-            secrets: activity.secrets,
-            instance: activity.instance,
-            flags: activity.flags,
-            buttons: activity.buttons,
-          })),
-          status: options.status,
-          afk: options.afk,
+          activities:
+            options.activity !== undefined ? [options.activity] : null,
+          status: options.status ?? StatusTypes.Online,
+          afk: !!options.afk,
         },
       })
     );
@@ -649,7 +616,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
   public connect(): void {
-    this.ws.on("open", () => this.onWebSocketOpen(this.presence));
+    this.ws.on("open", () => this.onWebSocketOpen());
     this.ws.on("message", (data) => this.onWebSocketMessage(data));
     this.ws.on("error", (err) => this.onWebSocketError(err));
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
@@ -662,11 +629,7 @@ export class Client extends EventEmitter {
     }
   }
 
-  private async onWebSocketOpen(presence?: {
-    activities: Array<Activity>;
-    status: StatusTypes;
-    afk: boolean;
-  }): Promise<void> {
+  private async onWebSocketOpen(): Promise<void> {
     const gatewayBot = await this.getGatewayBot();
     const shards = this.shards !== -1 ? this.shards : gatewayBot.shards;
 
@@ -683,39 +646,6 @@ export class Client extends EventEmitter {
               browser: "disgroove",
               device: "disgroove",
             },
-            presence:
-              presence !== undefined
-                ? {
-                    since:
-                      presence.status === StatusTypes.Idle ? Date.now() : null,
-                    activities: presence.activities.map((activity) => ({
-                      name: activity.name,
-                      type: activity.type,
-                      url: activity.url,
-                      created_at: activity.createdAt,
-                      timestamps: activity.timestamps,
-                      application_id: activity.applicationId,
-                      details: activity.details,
-                      state: activity.state,
-                      party: activity.party,
-                      assets:
-                        activity.assets !== undefined
-                          ? {
-                              large_image: activity.assets.largeImage,
-                              large_text: activity.assets.largeText,
-                              small_image: activity.assets.smallImage,
-                              small_text: activity.assets.smallText,
-                            }
-                          : undefined,
-                      secrets: activity.secrets,
-                      instance: activity.instance,
-                      flags: activity.flags,
-                      buttons: activity.buttons,
-                    })),
-                    status: presence.status,
-                    afk: presence.afk,
-                  }
-                : undefined,
           },
         })
       );
