@@ -55,7 +55,7 @@ export const guildEmojis = (guildId: string) =>
   `guilds/${guildId}/emojis` as const;
 export const guildEmoji = (guildId: string, emojiId: string) =>
   `guilds/${guildId}/emojis/${emojiId}` as const;
-export const guilds = () => "/guilds" as const;
+export const guilds = () => "guilds" as const;
 export const guild = (guildId: string) => `guilds/${guildId}` as const;
 export const guildPreview = (guildId: string) =>
   `guilds/${guildId}/preview` as const;
@@ -132,12 +132,12 @@ export const user = (userId: string | "@me" = "@me") =>
   `users/${userId}` as const;
 export const userApplicationRoleConnection = (applicationId: string) =>
   `users/@me/applications/${applicationId}/role-connection` as const;
-export const userGuilds = () => `users/@me/guilds` as const;
+export const userGuilds = () => "users/@me/guilds" as const;
 export const userGuild = (guildId: string) =>
   `users/@me/guilds/${guildId}` as const;
-export const userChannels = () => `users/@me/channels` as const;
-export const userConnections = () => `users/@me/connections` as const;
-export const voiceRegions = () => `voice/regions` as const;
+export const userChannels = () => "users/@me/channels" as const;
+export const userConnections = () => "users/@me/connections" as const;
+export const voiceRegions = () => "voice/regions" as const;
 export const channelWebhooks = (channelId: string) =>
   `channels/${channelId}/webhooks` as const;
 export const guildWebhooks = (guildId: string) =>
@@ -156,14 +156,14 @@ export const webhookPlatform = (
   webhookToken: string,
   platform: "github" | "slack"
 ) => `webhooks/${webhookId}/${webhookToken}/${platform}` as const;
-export const gateway = () => `gateway` as const;
-export const gatewayBot = () => `gateway/bot` as const;
+export const gateway = () => "gateway" as const;
+export const gatewayBot = () => "gateway/bot" as const;
 export const oauth2CurrentApplication = () =>
   `oauth2/applications/@me` as const;
-export const oauth2CurrentAuthorization = () => `oauth2/@me` as const;
-export const oauth2Authorization = () => `oauth2/authorize` as const;
-export const oauth2TokenExchange = () => `oauth2/token` as const;
-export const oauth2TokenRevocation = () => `oauth2/token/revoke` as const;
+export const oauth2CurrentAuthorization = () => "oauth2/@me" as const;
+export const oauth2Authorization = () => "oauth2/authorize" as const;
+export const oauth2TokenExchange = () => "oauth2/token" as const;
+export const oauth2TokenRevocation = () => "oauth2/token/revoke" as const;
 export const applicationCommands = (applicationId: string) =>
   `applications/${applicationId}/commands` as const;
 export const applicationCommand = (applicationId: string, commandId: string) =>
@@ -204,14 +204,14 @@ export const applicationCommandPermissions = (
   commandId: string
 ) =>
   `applications/${applicationId}/guilds/${guildId}/commands/${commandId}/permissions` as const;
-export const applicationCurrentUser = () => `applications/@me` as const;
+export const applicationCurrentUser = () => "applications/@me" as const;
 export const guildWelcomeScreen = (guildId: string) =>
   `guilds/${guildId}/welcome-screen` as const;
-export const stageInstances = () => `stage-instances` as const;
+export const stageInstances = () => "stage-instances" as const;
 export const stageInstance = (channelId: string) =>
   `stage-instances/${channelId}` as const;
 export const sticker = (stickerId: string) => `stickers/${stickerId}` as const;
-export const nitroStickerPacks = () => "/sticker-packs" as const;
+export const nitroStickerPacks = () => "sticker-packs" as const;
 export const guildStickers = (guildId: string) =>
   `guilds/${guildId}/stickers` as const;
 export const guildSticker = (guildId: string, stickerId: string) =>
