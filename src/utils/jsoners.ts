@@ -59,21 +59,6 @@ export function embedToJSON(embeds: Array<RawEmbed>) {
   }));
 }
 
-export function teamToJSON(team: RawTeam, client: Client) {
-  return {
-    icon: team.icon,
-    id: team.id,
-    members: team.members.map((member) => ({
-      membershipState: member.membership_state,
-      permissions: member.permissions,
-      teamId: member.team_id,
-      user: new User(member.user, client),
-    })),
-    name: team.name,
-    ownerUserId: team.owner_user_id,
-  };
-}
-
 export function auditLogEntryToJSON(auditLogEntry: RawAuditLogEntry) {
   return {
     targetId: auditLogEntry.target_id,

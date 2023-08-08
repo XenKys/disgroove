@@ -1,13 +1,11 @@
-import { User, ApplicationCommand } from ".";
+import { User, ApplicationCommand, Team } from ".";
 import type {
   JSONInstallParams,
   JSONGuildApplicationCommandPermissions,
   RawApplication,
   RawGuildApplicationCommandPermissions,
   RawApplicationCommand,
-  RawApplicationCommandPermission,
   JSONApplication,
-  JSONTeam,
   JSONApplicationCommandOptionChoice,
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,
@@ -20,7 +18,6 @@ import {
   type ApplicationCommandTypes,
   type ChannelTypes,
   type Locale,
-  teamToJSON,
 } from "../utils";
 import { Base } from ".";
 
@@ -35,7 +32,7 @@ export class Application extends Base {
   public privacyPolicyURL?: string;
   public owner?: User;
   public verifyKey: string;
-  public team: JSONTeam | null;
+  public team: Team | null;
   public guildId?: string;
   public primarySKUId?: string;
   public slug?: string;
@@ -67,8 +64,7 @@ export class Application extends Base {
     if (data.owner !== undefined)
       this.owner = new User(data.owner, this.client);
     if (data.team !== undefined)
-      this.team =
-        data.team !== null ? teamToJSON(data.team, this.client) : null;
+      this.team = data.team !== null ? new Team(data.team, this.client) : null;
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.primary_sku_id !== undefined)
       this.primarySKUId = data.primary_sku_id;

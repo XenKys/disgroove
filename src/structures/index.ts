@@ -15,6 +15,7 @@ export * from "./Message";
 export * from "./Role";
 export * from "./StageInstance";
 export * from "./Sticker";
+export * from "./Team";
 export * from "./User";
 export * from "./VoiceState";
 export * from "./Webhook";
