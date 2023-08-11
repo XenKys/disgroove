@@ -403,7 +403,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-nitro-sticker-packs */
-  public async listNitroStickerPacks(): Promise<{
+  public async getNitroStickerPacks(): Promise<{
     stickerPacks: Array<JSONStickerPack>;
   }> {
     return this.rest
@@ -500,7 +500,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/voice#list-voice-regions */
-  public async listVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
+  public async getVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
     return this.rest
       .get<Array<RawVoiceRegion>>(Endpoints.voiceRegions())
       .then((response) =>

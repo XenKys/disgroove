@@ -809,7 +809,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-thread-members */
-  public async listThreadMembers(options?: {
+  public async getThreadMembers(options?: {
     withMember?: boolean;
     after?: string;
     limit?: number;
@@ -837,7 +837,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
-  public async listPublicArchivedThreads(options?: {
+  public async getPublicArchivedThreads(options?: {
     before?: number;
     limit?: number;
   }): Promise<{
@@ -873,7 +873,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
-  public async listPrivateArchivedThreads(options?: {
+  public async getPrivateArchivedThreads(options?: {
     before?: number;
     limit?: number;
   }): Promise<{
@@ -909,7 +909,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
-  public async listJoinedPrivateArchivedThreads(options?: {
+  public async getJoinedPrivateArchivedThreads(options?: {
     before?: number;
     limit?: number;
   }): Promise<{

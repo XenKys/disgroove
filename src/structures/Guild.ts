@@ -596,7 +596,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild */
-  public async listAutoModerationRules(): Promise<Array<AutoModerationRule>> {
+  public async getAutoModerationRules(): Promise<Array<AutoModerationRule>> {
     return this.client.rest
       .get<Array<RawAutoModerationRule>>(
         Endpoints.guildAutoModerationRules(this.id)
@@ -714,7 +714,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
-  public async listGuildEmojis(): Promise<Array<Emoji>> {
+  public async getGuildEmojis(): Promise<Array<Emoji>> {
     return this.client.rest
       .get<Array<RawEmoji>>(Endpoints.guildEmojis(this.id))
       .then((response) => response.map((data) => new Emoji(data, this.client)));
@@ -966,7 +966,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-active-guild-threads */
-  public async listActiveGuildThreads(): Promise<
+  public async getActiveGuildThreads(): Promise<
     Array<{
       threads: Array<Channel>;
       members: Array<JSONThreadMember>;
@@ -1007,7 +1007,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
-  public async listGuildMembers(): Promise<Array<GuildMember>> {
+  public async getGuildMembers(): Promise<Array<GuildMember>> {
     return this.client.rest
       .get<Array<RawGuildMember>>(Endpoints.guildMembers(this.id))
       .then((response) =>
@@ -1588,7 +1588,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild */
-  public async listScheduledEvents(options?: {
+  public async getScheduledEvents(options?: {
     withUserCount?: boolean;
   }): Promise<Array<GuildScheduledEvent>> {
     return this.client.rest
@@ -1816,7 +1816,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
-  public async listStickers(): Promise<Array<Sticker>> {
+  public async getStickers(): Promise<Array<Sticker>> {
     return this.client.rest
       .get<Array<RawSticker>>(Endpoints.guildStickers(this.id))
       .then((response) =>
