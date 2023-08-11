@@ -483,27 +483,16 @@ export class Client extends EventEmitter {
         },
       })
       .then((response) =>
-        response.map(
-          (data: {
-            id: string;
-            name: string;
-            icon: string;
-            owner: boolean;
-            permissions: string;
-            features: Array<GuildFeatures>;
-            approximate_member_count: number;
-            approximate_presence_count: number;
-          }) => ({
-            id: data.id,
-            name: data.name,
-            icon: data.icon,
-            owner: data.owner,
-            permissions: data.permissions,
-            features: data.features,
-            approximate_member_count: data.approximate_member_count,
-            approximate_presence_count: data.approximate_presence_count,
-          })
-        )
+        response.map((data) => ({
+          id: data.id,
+          name: data.name,
+          icon: data.icon,
+          owner: data.owner,
+          permissions: data.permissions,
+          features: data.features,
+          approximate_member_count: data.approximate_member_count,
+          approximate_presence_count: data.approximate_presence_count,
+        }))
       );
   }
 

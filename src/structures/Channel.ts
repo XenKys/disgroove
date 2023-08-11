@@ -664,7 +664,7 @@ export class Channel extends Base {
   public async startThreadWithoutMessage(
     options: {
       name: string;
-      autoArchiveDuration: number;
+      autoArchiveDuration?: number;
       type?: ChannelTypes;
       invitable?: boolean;
       rateLimitPerUser?: number | null;
