@@ -62,7 +62,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#modify-current-user */
-  public async modifyCurrentUser(options: {
+  public async modify(options: {
     username?: string;
     avatar?: string | null;
   }): Promise<User> {
@@ -78,9 +78,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
-  public async getCurrentUserGuildMember(
-    guildId: string
-  ): Promise<GuildMember> {
+  public async getGuildMember(guildId: string): Promise<GuildMember> {
     return new GuildMember(
       await this.client.rest.get<RawGuildMember>(
         Endpoints.guildMember(guildId)
@@ -123,7 +121,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user-connections */
-  public async getUserConnections(): Promise<Array<JSONConnection>> {
+  public async getConnections(): Promise<Array<JSONConnection>> {
     return this.client.rest
       .get<Array<RawConnection>>(Endpoints.userConnections())
       .then((response) =>
@@ -145,7 +143,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
-  public async getUserApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
+  public async getApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
     return this.client.rest
       .get<RawApplicationRoleConnection>(
         Endpoints.userApplicationRoleConnection(
@@ -167,7 +165,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
-  public async updateUserApplicationRoleConnection(options: {
+  public async updateApplicationRoleConnection(options: {
     platformName?: string;
     platformUsername?: string;
     metadata?: {
