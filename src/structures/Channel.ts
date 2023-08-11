@@ -30,6 +30,7 @@ import {
   type MessageFlags,
   messageComponentToRaw,
   embedsToRaw,
+  ChannelFlags,
 } from "../utils";
 
 export class Channel extends Base {
@@ -170,12 +171,17 @@ export class Channel extends Base {
       rtcRegion?: string | null;
       videoQualityMode?: number;
       defaultAutoArchiveDuration?: number;
-      flags?: number;
+      flags?: ChannelFlags;
       availableTags?: Array<JSONForumTag>;
       defaultReactionEmoji?: JSONDefaultReaction | null;
       defaultThreadRateLimitPerUser?: number;
       defaultSortOrder?: number | null;
       defaultForumLayout?: number;
+      archived?: boolean;
+      autoArchiveDuration?: number;
+      locked?: boolean;
+      invitable?: boolean;
+      appliedTags?: Array<string>;
     },
     reason?: string
   ): Promise<Channel> {
@@ -201,6 +207,11 @@ export class Channel extends Base {
             options.defaultThreadRateLimitPerUser,
           default_sort_order: options.defaultSortOrder,
           default_forum_layout: options.defaultForumLayout,
+          archived: options.archived,
+          auto_archive_duration: options.autoArchiveDuration,
+          locked: options.locked,
+          invitable: options.invitable,
+          applied_tags: options.appliedTags,
         },
         reason,
       }),
