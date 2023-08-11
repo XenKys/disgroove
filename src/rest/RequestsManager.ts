@@ -26,7 +26,7 @@ export class RequestsManager {
     this.globalBlock = false;
   }
 
-  private process<T>(): Promise<T> {
+  private process<T = unknown>(): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
       if (this.queue.length === 0 || this.globalBlock) return;
 
@@ -86,10 +86,11 @@ export class RequestsManager {
 
       try {
         const response = await fetch(url.href, {
-          method,
-          body,
-          headers,
-        });
+            method,
+            body,
+            headers,
+          }),
+          responseJSON = await response.json();
 
         this.checkRateLimits<T>(response.headers);
 
@@ -97,11 +98,20 @@ export class RequestsManager {
           response.status >= HTTPResponseCodes.NotModified &&
           response.status !== HTTPResponseCodes.TooManyRequests
         ) {
-          reject(new Error(`[${response.status}] ${response.statusText}`));
+          reject(
+            new Error(
+              responseJSON &&
+              typeof responseJSON === "object" &&
+              "code" in responseJSON &&
+              "message" in responseJSON
+                ? `[${responseJSON.code}] ${responseJSON.message}`
+                : `[${response.status}] ${response.statusText}`
+            )
+          );
         } else if (response.status === HTTPResponseCodes.NoContent) {
           resolve(null as T);
         } else {
-          resolve(response.json() as T);
+          resolve(responseJSON as T);
         }
       } catch (err) {
         reject(err);

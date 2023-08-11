@@ -1190,6 +1190,6 @@ export class Client extends EventEmitter {
   private onWebSocketClose(code: number, reason: Buffer): void {
     if (code === 1000) return;
 
-    throw new Error(`${code}: ${reason}`);
+    throw new Error(`[${code}] ${reason}`);
   }
 }
