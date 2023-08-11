@@ -59,7 +59,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
-  public async modifyWebhook(
+  public async editWebhook(
     options: {
       name?: string;
       avatar?: string | null;
@@ -81,7 +81,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
-  public async modifyWithToken(
+  public async editWithToken(
     token: string,
     options: {
       name?: string;

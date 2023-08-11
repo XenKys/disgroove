@@ -49,7 +49,7 @@ export class Role extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
-  public async modify(
+  public async edit(
     options: {
       name?: string | null;
       permissions?: string | null;

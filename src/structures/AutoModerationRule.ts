@@ -53,7 +53,7 @@ export class AutoModerationRule extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
-  public async modify(
+  public async edit(
     options: {
       name?: string;
       eventType?: number;

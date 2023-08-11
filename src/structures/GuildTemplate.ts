@@ -48,7 +48,7 @@ export class GuildTemplate {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
-  public async modify(options: {
+  public async edit(options: {
     name?: string;
     description?: string | null;
   }): Promise<GuildTemplate> {

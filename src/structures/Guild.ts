@@ -661,7 +661,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
-  public async modifyAutoModerationRule(
+  public async editAutoModerationRule(
     ruleId: string,
     options: {
       name?: string;
@@ -753,7 +753,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
-  public async modifyEmoji(
+  public async editEmoji(
     emojiId: string,
     options: {
       name?: string;
@@ -819,7 +819,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
-  public async modify(
+  public async edit(
     options: {
       name?: string;
       region?: string | null;
@@ -947,7 +947,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
-  public modifyChannelPositions(
+  public editChannelPositions(
     options: Array<{
       id: string;
       position: number | null;
@@ -1055,7 +1055,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public modifyMember(
+  public editMember(
     userId: string,
     options: {
       nick?: string | null;
@@ -1083,7 +1083,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
-  public modifyCurrentMember(
+  public editCurrentMember(
     options: {
       nick: string | null;
     },
@@ -1224,7 +1224,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
-  public async modifyRolePositions(
+  public async editRolePositions(
     options: Array<{
       id: string;
       position?: number | null;
@@ -1241,7 +1241,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
-  public async modifyRole(
+  public async editRole(
     roleId: string,
     options: {
       name?: string | null;
@@ -1275,7 +1275,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
-  public async modifyMFALevel(
+  public async editMFALevel(
     options: {
       level: MFALevel;
     },
@@ -1384,7 +1384,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-widget */
-  public async modifyWidget(
+  public async editWidget(
     options: {
       enabled?: boolean;
       channelId?: boolean;
@@ -1456,7 +1456,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
-  public async modifyWelcomeScreen(
+  public async editWelcomeScreen(
     options: {
       enabled?: boolean | null;
       welcomeChannels?: Array<JSONWelcomeScreenChannel> | null;
@@ -1513,7 +1513,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
-  public modifyOnboarding(
+  public editOnboarding(
     options: {
       prompts: Array<JSONOnboardingPrompt>;
       defaultChannelIds: Array<string>;
@@ -1555,7 +1555,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
-  public modifyCurrentUserVoiceState(options: {
+  public editCurrentUserVoiceState(options: {
     channelId?: string;
     suppress?: boolean;
     requestToSpeakTimestamp?: number | null;
@@ -1570,7 +1570,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
-  public modifyUserVoiceState(
+  public editUserVoiceState(
     userId: string,
     options: {
       channelId?: string;
@@ -1643,7 +1643,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
-  public async modifyScheduledEvent(
+  public async editScheduledEvent(
     scheduledEventId: string,
     options: {
       channelId?: string | null;
@@ -1772,7 +1772,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
-  public async modifyTemplate(
+  public async editTemplate(
     code: string,
     options: {
       name?: string;
@@ -1855,7 +1855,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
-  public async modifySticker(
+  public async editSticker(
     stickerId: string,
     options: {
       name?: string;

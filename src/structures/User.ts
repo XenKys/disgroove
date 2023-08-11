@@ -62,7 +62,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#modify-current-user */
-  public async modify(options: {
+  public async edit(options: {
     username?: string;
     avatar?: string | null;
   }): Promise<User> {

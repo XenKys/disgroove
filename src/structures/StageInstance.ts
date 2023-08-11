@@ -26,7 +26,7 @@ export class StageInstance extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
-  public async modify(
+  public async edit(
     options: {
       topic?: string;
       privacyLevel?: PrivacyLevel;

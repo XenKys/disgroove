@@ -154,7 +154,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
-  public async modify(
+  public async edit(
     options: {
       name?: string | null;
       type?: ChannelTypes;

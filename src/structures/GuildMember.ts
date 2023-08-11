@@ -47,7 +47,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public modify(
+  public edit(
     options: {
       nick?: string | null;
       roles?: Array<string> | null;

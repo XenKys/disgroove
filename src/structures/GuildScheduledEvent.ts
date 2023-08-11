@@ -60,7 +60,7 @@ export class GuildScheduledEvent extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
-  public async modify(
+  public async edit(
     options: {
       channelId?: string | null;
       entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
