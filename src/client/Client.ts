@@ -555,7 +555,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
   public updatePresence(options: {
-    activity?: Pick<Activity, "name" | "type" | "url">;
+    activity?: Pick<Activity, "name" | "type" | "url" | "state">;
     status?: StatusTypes;
     afk?: boolean;
   }): void {
