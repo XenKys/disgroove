@@ -3,18 +3,20 @@ import { Endpoints } from "../rest";
 import type {
   JSONAutoModerationAction,
   JSONAutoModerationRule,
+  JSONTriggerMetadata,
   RawAutoModerationRule,
 } from "../types";
 import { Base } from ".";
+import type { EventTypes } from "../utils";
 
 export class AutoModerationRule extends Base {
   protected override raw: RawAutoModerationRule;
   public guildId: string;
   public name: string;
   public creatorId: string;
-  public eventType: number;
+  public eventType: EventTypes;
   public triggerType: number;
-  public triggerMetadata: object;
+  public triggerMetadata: JSONTriggerMetadata;
   public actions: Array<JSONAutoModerationAction>;
   public enabled: boolean;
   public exemptRoles: Array<string>;
@@ -29,7 +31,14 @@ export class AutoModerationRule extends Base {
     this.creatorId = data.creator_id;
     this.eventType = data.event_type;
     this.triggerType = data.trigger_type;
-    this.triggerMetadata = data.trigger_metadata;
+    this.triggerMetadata = {
+      keywordFilter: data.trigger_metadata.keyword_filter,
+      regexPatterns: data.trigger_metadata.regex_patterns,
+      presets: data.trigger_metadata.presets,
+      allowList: data.trigger_metadata.allow_list,
+      mentionTotalLimit: data.trigger_metadata.mention_total_limit,
+      mentionRaidProtection: data.trigger_metadata.mention_raid_protection,
+    };
     this.actions = data.actions.map((action) => ({
       type: action.type,
       metadata: {

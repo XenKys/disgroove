@@ -1,4 +1,4 @@
-import type { KeywordPresetTypes, ActionTypes } from "../utils";
+import type { KeywordPresetTypes, ActionTypes, EventTypes } from "../utils";
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-auto-moderation-rule-structure */
 export interface RawAutoModerationRule {
@@ -6,9 +6,9 @@ export interface RawAutoModerationRule {
   guild_id: string;
   name: string;
   creator_id: string;
-  event_type: number;
+  event_type: EventTypes;
   trigger_type: number;
-  trigger_metadata: object;
+  trigger_metadata: RawTriggerMetadata;
   actions: Array<RawAutoModerationAction>;
   enabled: boolean;
   exempt_roles: Array<string>;
@@ -43,9 +43,9 @@ export interface JSONAutoModerationRule {
   guildId: string;
   name: string;
   creatorId: string;
-  eventType: number;
+  eventType: EventTypes;
   triggerType: number;
-  triggerMetadata: object;
+  triggerMetadata: JSONTriggerMetadata;
   actions: Array<JSONAutoModerationAction>;
   enabled: boolean;
   exemptRoles: Array<string>;
