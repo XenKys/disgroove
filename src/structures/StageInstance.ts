@@ -1,4 +1,4 @@
-import type { Client } from "../Client";
+import type { Client } from "../client/Client";
 import { Endpoints } from "../rest";
 import type { JSONStageInstance, RawStageInstance } from "../types";
 import type { PrivacyLevel } from "../utils";

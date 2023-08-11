@@ -1,5 +1,5 @@
 import { Guild, User } from ".";
-import type { Client } from "../Client";
+import type { Client } from "../client/Client";
 import { Endpoints } from "../rest";
 import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
 

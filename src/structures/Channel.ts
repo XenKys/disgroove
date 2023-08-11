@@ -1,5 +1,5 @@
 import { Base, GuildMember, Invite, Message, User, Webhook } from ".";
-import type { Client } from "../Client";
+import type { Client } from "../client/Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,

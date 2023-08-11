@@ -40,13 +40,9 @@ const client = new Client("token", {
 });
 
 client.on("ready", async () => {
-  const user = await client.getUser(); // Get the bot user
+  console.log(`${client.user.username} is now online!`); // Print "Username is now online!" when the bot connects to the gateway
 
-  console.log(`${user.username} is now online!`); // Print "Username is now online!" when the bot connects to the gateway
-
-  const application = await client.getApplication(); // Get the bot application
-
-  application.createGlobalApplicationCommand({
+  client.application.createGlobalApplicationCommand({
     name: "ping",
     description: "Reply with Pong! 🏓",
   }); // Create a global application command named "ping"

@@ -1,16 +1,13 @@
-import { Base, User, ApplicationCommand, Team } from ".";
+import { ApplicationCommand } from "../structures";
 import type {
-  JSONInstallParams,
   JSONGuildApplicationCommandPermissions,
-  RawApplication,
   RawGuildApplicationCommandPermissions,
   RawApplicationCommand,
-  JSONApplication,
   JSONApplicationCommandOptionChoice,
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,
 } from "../types";
-import type { Client } from "../client/Client";
+import type { Client } from ".";
 import { Endpoints } from "../rest";
 import {
   applicationCommandToRaw,
@@ -20,66 +17,26 @@ import {
   type Locale,
 } from "../utils";
 
-export class Application extends Base {
-  protected override raw: RawApplication;
-  public name: string;
-  public icon: string | null;
-  public description: string;
-  public rpcOrigins?: Array<string>;
-  public botPublic: boolean;
-  public botRequireCodeGrant: boolean;
-  public termsOfServiceURL?: string;
-  public privacyPolicyURL?: string;
-  public owner?: User;
-  public verifyKey: string;
-  public team: Team | null;
-  public guildId?: string;
-  public primarySKUId?: string;
-  public slug?: string;
-  public coverImage?: string;
-  public flags?: number;
-  public tags?: Array<string>;
-  public installParams?: JSONInstallParams;
-  public customInstallURL?: string;
-  public roleConnectionsVerificationURL?: string;
+export class ClientApplication {
+  private client: Client;
+  private raw: {
+    id: string;
+    flags: number;
+  };
+  public id: string;
+  public flags: number;
 
-  constructor(data: RawApplication, client: Client) {
-    super(data.id, client);
-
+  constructor(
+    data: {
+      id: string;
+      flags: number;
+    },
+    client: Client
+  ) {
+    this.client = client;
     this.raw = data;
-    this.name = data.name;
-    this.icon = data.icon;
-    this.description = data.description;
-    this.botPublic = data.bot_public;
-    this.botRequireCodeGrant = data.bot_require_code_grant;
-    this.verifyKey = data.verify_key;
-    this.team = null;
-
-    this.patch(data);
-  }
-
-  protected override patch(data: RawApplication) {
-    if (data.rpc_origins !== undefined) this.rpcOrigins = data.rpc_origins;
-    if (data.terms_of_service_url !== undefined)
-      this.termsOfServiceURL = data.terms_of_service_url;
-    if (data.owner !== undefined)
-      this.owner = new User(data.owner, this.client);
-    if (data.team !== undefined)
-      this.team = data.team !== null ? new Team(data.team, this.client) : null;
-    if (data.guild_id !== undefined) this.guildId = data.guild_id;
-    if (data.primary_sku_id !== undefined)
-      this.primarySKUId = data.primary_sku_id;
-    if (data.slug !== undefined) this.slug = data.slug;
-    if (data.cover_image !== undefined) this.coverImage = data.cover_image;
-    if (data.flags !== undefined) this.flags = data.flags;
-    if (data.tags !== undefined) this.tags = data.tags;
-    if (data.install_params !== undefined)
-      this.installParams = data.install_params;
-    if (data.custom_install_url !== undefined)
-      this.customInstallURL = data.custom_install_url;
-    if (data.role_connections_verification_url !== undefined)
-      this.roleConnectionsVerificationURL =
-        data.role_connections_verification_url;
+    this.id = data.id;
+    this.flags = data.flags;
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
@@ -573,33 +530,20 @@ export class Application extends Base {
       );
   }
 
-  public override toRaw(): RawApplication {
+  public toRaw(): {
+    id: string;
+    flags: number;
+  } {
     return this.raw;
   }
 
-  public override toJSON(): JSONApplication {
+  public toJSON(): {
+    id: string;
+    flags: number;
+  } {
     return {
       id: this.id,
-      name: this.name,
-      icon: this.icon,
-      description: this.description,
-      rpcOrigins: this.rpcOrigins,
-      botPublic: this.botPublic,
-      botRequireCodeGrant: this.botRequireCodeGrant,
-      termsOfServiceURL: this.termsOfServiceURL,
-      privacyPolicyURL: this.privacyPolicyURL,
-      owner: this.owner,
-      verifyKey: this.verifyKey,
-      team: this.team,
-      guildId: this.guildId,
-      primarySkuId: this.primarySKUId,
-      slug: this.slug,
-      coverImage: this.coverImage,
       flags: this.flags,
-      tags: this.tags,
-      installParams: this.installParams,
-      customInstallURL: this.customInstallURL,
-      roleConnectionsVerificationURL: this.roleConnectionsVerificationURL,
     };
   }
 }

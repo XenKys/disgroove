@@ -1,5 +1,5 @@
 import { User } from ".";
-import type { Client } from "../Client";
+import type { Client } from "../client/Client";
 import type { JSONEmoji, RawEmoji } from "../types";
 
 export class Emoji {

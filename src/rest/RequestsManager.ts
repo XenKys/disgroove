@@ -86,11 +86,10 @@ export class RequestsManager {
 
       try {
         const response = await fetch(url.href, {
-            method,
-            body,
-            headers,
-          }),
-          responseJSON = await response.json();
+          method,
+          body,
+          headers,
+        });
 
         this.checkRateLimits<T>(response.headers);
 
@@ -98,6 +97,8 @@ export class RequestsManager {
           response.status >= HTTPResponseCodes.NotModified &&
           response.status !== HTTPResponseCodes.TooManyRequests
         ) {
+          const responseJSON = await response.json();
+
           reject(
             new Error(
               responseJSON &&
@@ -111,7 +112,7 @@ export class RequestsManager {
         } else if (response.status === HTTPResponseCodes.NoContent) {
           resolve(null as T);
         } else {
-          resolve(responseJSON as T);
+          resolve((await response.json()) as T);
         }
       } catch (err) {
         reject(err);

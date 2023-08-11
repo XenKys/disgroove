@@ -14,8 +14,8 @@ import {
   auditLogEntryToJSON,
   channelToRaw,
   roleToRaw,
-} from "./utils";
-import { Endpoints, REST } from "./rest";
+} from "../utils";
+import { Endpoints, REST } from "../rest";
 import {
   Application,
   AutoModerationRule,
@@ -32,7 +32,7 @@ import {
   StageInstance,
   User,
   VoiceState,
-} from "./structures";
+} from "../structures";
 import type {
   Activity,
   JSONAuditLogEntry,
@@ -91,8 +91,9 @@ import type {
   RawThreadMember,
   RawUser,
   RawVoiceRegion,
-} from "./types";
+} from "../types";
 import EventEmitter from "node:events";
+import { ClientApplication } from ".";
 
 export interface ClientOptions {
   intents?: number | Array<number>;
@@ -228,6 +229,8 @@ export class Client extends EventEmitter {
   public auth: "Bot" | "Bearer";
   public rest: REST;
   public ws: WebSocket;
+  public user!: User;
+  public application!: ClientApplication;
 
   constructor(token: string, options?: ClientOptions) {
     super();
@@ -671,7 +674,12 @@ export class Client extends EventEmitter {
 
     switch (packet.t) {
       case "READY":
-        super.emit(GatewayEvents.Ready);
+        {
+          this.user = new User(packet.d.user, this);
+          this.application = new ClientApplication(packet.d.application, this);
+
+          super.emit(GatewayEvents.Ready);
+        }
         break;
       case "RESUMED":
         super.emit(GatewayEvents.Resumed);

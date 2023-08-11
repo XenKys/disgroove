@@ -1,5 +1,5 @@
 import { Base, User } from ".";
-import type { Client } from "../Client";
+import type { Client } from "../client/Client";
 import type { StickerFormatTypes, StickerTypes } from "../utils";
 import type { JSONSticker, RawSticker } from "../types";
 

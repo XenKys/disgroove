@@ -1,5 +1,5 @@
 import { Base, Channel, GuildMember, Integration } from ".";
-import type { Client } from "../Client";
+import type { Client } from "../client/Client";
 import { Endpoints } from "../rest";
 import type {
   JSONApplicationRoleConnection,
