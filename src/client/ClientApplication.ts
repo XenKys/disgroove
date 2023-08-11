@@ -183,11 +183,56 @@ export class ClientApplication {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
-  public async bulkOverwriteGlobalApplicationCommands(): Promise<
-    Array<ApplicationCommand>
-  > {
+  public async bulkOverwriteGlobalApplicationCommands(
+    commands: Array<{
+      name: string;
+      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      description?: string;
+      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      options?: Array<{
+        type: ApplicationCommandOptionType;
+        name: string;
+        nameLocalizations?: Partial<Record<Locale, string>>;
+        description: string;
+        descriptionLocalizations?: Partial<Record<Locale, string>>;
+        required?: boolean;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
+        options?: Array<{
+          type: ApplicationCommandOptionType;
+          name: string;
+          nameLocalizations?: Partial<Record<Locale, string>>;
+          description: string;
+          descriptionLocalizations?: Partial<Record<Locale, string>>;
+          required?: boolean;
+          choices?: Array<JSONApplicationCommandOptionChoice>;
+          channelTypes?: Array<ChannelTypes>;
+          minValue?: number;
+          maxValue?: number;
+          minLength?: number;
+          maxLength?: number;
+          autocomplete?: boolean;
+        }>;
+        channelTypes?: Array<ChannelTypes>;
+        minValue?: number;
+        maxValue?: number;
+        minLength?: number;
+        maxLength?: number;
+        autocomplete?: boolean;
+      }>;
+      defaultMemberPermissions?: string | null;
+      dmPermission?: boolean;
+      defaultPermission?: boolean | null;
+      type?: ApplicationCommandTypes;
+      nsfw?: boolean;
+    }>
+  ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
-      .put<Array<RawApplicationCommand>>(Endpoints.applicationCommands(this.id))
+      .put<Array<RawApplicationCommand>>(
+        Endpoints.applicationCommands(this.id),
+        {
+          json: commands.map((command) => applicationCommandToRaw(command)),
+        }
+      )
       .then((response) =>
         response.map((data) => new ApplicationCommand(data, this.client))
       );
@@ -352,7 +397,7 @@ export class ClientApplication {
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
   public async bulkOverwriteGuildApplicationCommands(
     guildId: string,
-    options: {
+    commands: Array<{
       id?: string;
       name?: string;
       nameLocalizations?: Partial<Record<Locale, string>> | null;
@@ -393,13 +438,13 @@ export class ClientApplication {
       defaultPermission?: boolean | null;
       type: ApplicationCommandTypes;
       nsfw?: boolean;
-    }
+    }>
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
-          json: applicationCommandToRaw(options),
+          json: commands.map((command) => applicationCommandToRaw(command)),
         }
       )
       .then((response) =>
