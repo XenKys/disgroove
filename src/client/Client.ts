@@ -91,6 +91,7 @@ import type {
   RawThreadMember,
   RawUser,
   RawVoiceRegion,
+  HelloEventFields,
 } from "../types";
 import EventEmitter from "node:events";
 import { ClientApplication } from ".";
@@ -102,11 +103,7 @@ export interface ClientOptions {
 }
 
 export interface ClientEvents {
-  hello: [
-    listener: {
-      heartbeatInterval: number;
-    }
-  ];
+  hello: [listener: HelloEventFields];
   ready: [];
   resumed: [];
   reconnect: [];

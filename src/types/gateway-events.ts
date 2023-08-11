@@ -27,6 +27,11 @@ import type {
 } from ".";
 import type { Emoji, Sticker } from "../structures";
 
+/** https://discord.com/developers/docs/topics/gateway-events#hello-hello-structure */
+export interface RawHelloEventFields {
+  heartbeat_interval: number;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {
   guild_id: string;
@@ -331,6 +336,10 @@ export interface RawVoiceServerUpdateEventFields {
 export interface RawWebhooksUpdateEventFields {
   guild_id: string;
   channel_id: string;
+}
+
+export interface HelloEventFields {
+  heartbeatInterval: number;
 }
 
 export interface AutoModerationActionExectionEventFields {
