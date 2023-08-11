@@ -146,9 +146,7 @@ export class User extends Base {
   public async getApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
     return this.client.rest
       .get<RawApplicationRoleConnection>(
-        Endpoints.userApplicationRoleConnection(
-          (await this.client.getApplication()).id
-        )
+        Endpoints.userApplicationRoleConnection(this.client.application.id)
       )
       .then((response) => ({
         platformName: response.platform_name,
@@ -179,9 +177,7 @@ export class User extends Base {
   }): Promise<JSONApplicationRoleConnection> {
     return this.client.rest
       .put<RawApplicationRoleConnection>(
-        Endpoints.userApplicationRoleConnection(
-          (await this.client.getApplication()).id
-        ),
+        Endpoints.userApplicationRoleConnection(this.client.application.id),
         {
           json: {
             platform_name: options.platformName,
