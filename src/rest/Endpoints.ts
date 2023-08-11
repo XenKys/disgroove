@@ -13,28 +13,21 @@ export const channelMessage = (channelId: string, messageId: string) =>
   `channels/${channelId}/messages/${messageId}` as const;
 export const channelMessageCrosspost = (channelId: string, messageId: string) =>
   `channels/${channelId}/messages/${messageId}/crosspost` as const;
-export const channelMessageOwnReaction = (
-  channelId: string,
-  messageId: string,
-  emoji: string
-) =>
-  `channels/${channelId}/messages/${messageId}/reactions/${emoji}/@me` as const;
-export const channelMessageUserReaction = (
-  channelId: string,
-  messageId: string,
-  emoji: string,
-  userId: string
-) =>
-  `channels/${channelId}/messages/${messageId}/reactions/${emoji}/${userId}` as const;
 export const channelMessageReaction = (
   channelId: string,
   messageId: string,
-  emoji: string
-) => `channels/${channelId}/messages/${messageId}/reactions/${emoji}` as const;
+  emoji: string,
+  userId: string | "@me" = "@me"
+) =>
+  `channels/${channelId}/messages/${messageId}/reactions/${emoji}/${userId}` as const;
 export const channelMessageAllReactions = (
   channelId: string,
-  messageId: string
-) => `channels/${channelId}/messages/${messageId}/reactions` as const;
+  messageId: string,
+  emoji?: string
+) =>
+  emoji !== undefined
+    ? `channels/${channelId}/messages/${messageId}/reactions/${emoji}`
+    : (`channels/${channelId}/messages/${messageId}/reactions` as const);
 export const channelBulkDelete = (channelId: string) =>
   `channels/${channelId}/messages/bulk-delete` as const;
 export const channelPermission = (channelId: string, overwriteId: string) =>

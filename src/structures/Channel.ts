@@ -349,25 +349,18 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
   public createReaction(messageId: string, emoji: string): void {
     this.client.rest.put(
-      Endpoints.channelMessageOwnReaction(this.id, messageId, emoji)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#delete-own-reaction */
-  public deleteOwnReaction(messageId: string, emoji: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessageOwnReaction(this.id, messageId, emoji)
+      Endpoints.channelMessageReaction(this.id, messageId, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
-  public deleteUserReaction(
+  public deleteReaction(
     messageId: string,
     emoji: string,
-    userId: string
+    userId?: string
   ): void {
     this.client.rest.delete(
-      Endpoints.channelMessageUserReaction(this.id, messageId, emoji, userId)
+      Endpoints.channelMessageReaction(this.id, messageId, emoji, userId)
     );
   }
 
@@ -382,7 +375,7 @@ export class Channel extends Base {
   ): Promise<Array<User>> {
     return this.client.rest
       .get<Array<RawUser>>(
-        Endpoints.channelMessageReaction(this.id, messageId, emoji),
+        Endpoints.channelMessageAllReactions(this.id, messageId, emoji),
         {
           query: {
             after: options?.after,
@@ -394,16 +387,9 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
-  public deleteAllReactions(messageId: string): void {
+  public deleteAllReactions(messageId: string, emoji?: string): void {
     this.client.rest.delete(
-      Endpoints.channelMessageAllReactions(this.id, messageId)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
-  public deleteAllReactionsForEmoji(messageId: string, emoji: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessageReaction(this.id, messageId, emoji)
+      Endpoints.channelMessageAllReactions(this.id, messageId, emoji)
     );
   }
 

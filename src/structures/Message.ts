@@ -214,21 +214,9 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public deleteOwnReaction(emoji: string): void {
+  public deleteReaction(emoji: string, userId?: string): void {
     this.client.rest.delete(
-      Endpoints.channelMessageOwnReaction(this.channelId, this.id, emoji)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public deleteUserReaction(emoji: string, userId: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessageUserReaction(
-        this.channelId,
-        this.id,
-        emoji,
-        userId
-      )
+      Endpoints.channelMessageReaction(this.channelId, this.id, emoji, userId)
     );
   }
 
@@ -242,7 +230,7 @@ export class Message extends Base {
   ): Promise<Array<User>> {
     return this.client.rest
       .get<Array<RawUser>>(
-        Endpoints.channelMessageReaction(this.channelId, this.id, emoji),
+        Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji),
         {
           query: {
             after: options?.after,
@@ -254,16 +242,9 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
-  public deleteAllReactions(): void {
+  public deleteAllReactions(emoji?: string): void {
     this.client.rest.delete(
-      Endpoints.channelMessageAllReactions(this.channelId, this.id)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions-for-emoji */
-  public deleteAllReactionsForEmoji(emoji: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
+      Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji)
     );
   }
 
