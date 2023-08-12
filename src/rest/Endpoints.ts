@@ -111,10 +111,6 @@ export const channelThreads = (
   channelId: string,
   archivedStatus: "public" | "private"
 ) => `channels/${channelId}/threads/archived/${archivedStatus}` as const;
-export const channelPublicArchivedThreads = (channelId: string) =>
-  `channels/${channelId}/threads/archived/public` as const;
-export const channelPrivateArchivedThreads = (channelId: string) =>
-  `channels/${channelId}/threads/archived/private` as const;
 export const channelJoinedPrivateArchivedThreads = (channelId: string) =>
   `channels/${channelId}/users/@me/threads/archived/private` as const;
 export const threadMembers = (threadId: string, userId?: string | "@me") =>

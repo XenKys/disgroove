@@ -276,18 +276,20 @@ export class Interaction extends Base {
                       ? options.data.components.map((component) => ({
                           type: component.type,
                           components: component.components.map((c) => {
-                            if (c.type === ComponentTypes.TextInput) {
-                              return {
-                                type: c.type,
-                                custom_id: c.customId,
-                                style: c.style,
-                                label: c.label,
-                                min_length: c.minLength,
-                                max_length: c.maxLength,
-                                required: c.required,
-                                value: c.value,
-                                placeholder: c.placeholder,
-                              };
+                            switch (c.type) {
+                              case ComponentTypes.TextInput: {
+                                return {
+                                  type: c.type,
+                                  custom_id: c.customId,
+                                  style: c.style,
+                                  label: c.label,
+                                  min_length: c.minLength,
+                                  max_length: c.maxLength,
+                                  required: c.required,
+                                  value: c.value,
+                                  placeholder: c.placeholder,
+                                };
+                              }
                             }
                           }),
                         }))

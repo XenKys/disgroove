@@ -2,7 +2,6 @@ import { RequestsManager } from ".";
 
 export interface File {
   contents: Buffer;
-  index?: number;
   name: string;
 }
 

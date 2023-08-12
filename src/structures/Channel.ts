@@ -861,7 +861,7 @@ export class Channel extends Base {
         threads: Array<RawChannel>;
         members: Array<RawThreadMember>;
         has_more: boolean;
-      }>(Endpoints.channelPublicArchivedThreads(this.id), {
+      }>(Endpoints.channelThreads(this.id, "public"), {
         query: {
           before: options?.before,
           limit: options?.limit,
@@ -897,7 +897,7 @@ export class Channel extends Base {
         threads: Array<RawChannel>;
         members: Array<RawThreadMember>;
         has_more: boolean;
-      }>(Endpoints.channelPrivateArchivedThreads(this.id), {
+      }>(Endpoints.channelThreads(this.id, "private"), {
         query: {
           before: options?.before,
           limit: options?.limit,

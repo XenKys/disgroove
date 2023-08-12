@@ -144,7 +144,7 @@ export class RequestsManager {
       query?: Record<string, any>;
     }
   ): Promise<T> {
-    return new Promise<T>(async (resolve) => {
+    return new Promise<T>((resolve) => {
       this.queue.push({ method, endpoint, data });
 
       resolve(this.process<T>());

@@ -438,10 +438,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/user#get-user */
   public async getUser(userId?: string): Promise<User> {
-    return new User(
-      await this.rest.get<RawUser>(Endpoints.user(userId ?? "@me")),
-      this
-    );
+    return new User(await this.rest.get<RawUser>(Endpoints.user(userId)), this);
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */

@@ -13,15 +13,13 @@ npm install disgroove
 - Import the package
 
 ```js
-const { Client, GatewayIntents } = require("disgroove");
+const { Client } = require("disgroove");
 ```
 
 - Create the client
 
 ```js
-const client = new Client("token", {
-  intents: GatewayIntents.AllNonPrivileged,
-});
+const client = new Client("token");
 ```
 
 ### Example
@@ -44,7 +42,7 @@ client.on("ready", async () => {
 
   client.application.createGlobalApplicationCommand({
     name: "ping",
-    description: "Reply with Pong! 🏓",
+    description: "Responds with Pong! 🏓",
   }); // Create a global application command named "ping"
 
   client.updatePresence({
