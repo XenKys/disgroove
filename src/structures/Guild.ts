@@ -70,25 +70,25 @@ import type {
   RawWebhook,
   RawWelcomeScreen,
 } from "../types";
-import {
-  type ApplicationCommandOptionType,
-  type ApplicationCommandTypes,
-  type ChannelTypes,
-  type DefaultMessageNotificationLevel,
-  type ExplicitContentFilterLevel,
-  type GuildFeatures,
-  type GuildMemberFlags,
-  type GuildNSFWLevel,
-  type GuildScheduledEventEntityTypes,
-  type GuildScheduledEventPrivacyLevel,
-  type GuildScheduledEventStatus,
-  type ImageWidgetStyleOptions,
-  type Locale,
-  type MFALevel,
-  type OnboardingMode,
-  type PremiumTier,
-  type SystemChannelFlags,
-  type VerificationLevel,
+import type {
+  ApplicationCommandOptionType,
+  ApplicationCommandTypes,
+  ChannelTypes,
+  DefaultMessageNotificationLevel,
+  ExplicitContentFilterLevel,
+  GuildFeatures,
+  GuildMemberFlags,
+  GuildNSFWLevel,
+  GuildScheduledEventEntityTypes,
+  GuildScheduledEventPrivacyLevel,
+  GuildScheduledEventStatus,
+  ImageWidgetStyleOptions,
+  Locale,
+  MFALevel,
+  OnboardingMode,
+  PremiumTier,
+  SystemChannelFlags,
+  VerificationLevel,
 } from "../constants";
 
 export class Guild extends Base {
@@ -1058,7 +1058,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member */
-  public addGuildMember(
+  public async addGuildMember(
     userId: string,
     options: {
       accessToken: string;
@@ -1067,20 +1067,28 @@ export class Guild extends Base {
       mute?: boolean;
       deaf?: boolean;
     }
-  ): void {
-    this.client.rest.put(Endpoints.guildMember(this.id, userId), {
-      json: {
-        access_token: options.accessToken,
-        nick: options.nick,
-        roles: options.roles,
-        mute: options.mute,
-        deaf: options.deaf,
-      },
-    });
+  ): Promise<GuildMember | null> {
+    return this.client.rest
+      .put<RawGuildMember>(Endpoints.guildMember(this.id, userId), {
+        json: {
+          access_token: options.accessToken,
+          nick: options.nick,
+          roles: options.roles,
+          mute: options.mute,
+          deaf: options.deaf,
+        },
+      })
+      .then((response) => {
+        if (response !== null) {
+          return new GuildMember(response, this.client);
+        } else {
+          return null;
+        }
+      });
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public editMember(
+  public async editMember(
     userId: string,
     options: {
       nick?: string | null;
@@ -1092,34 +1100,40 @@ export class Guild extends Base {
       flags?: GuildMemberFlags;
     },
     reason?: string
-  ): void {
-    this.client.rest.patch(Endpoints.guildMember(this.id, userId), {
-      json: {
-        nick: options.nick,
-        roles: options.roles,
-        mute: options.mute,
-        deaf: options.deaf,
-        channel_id: options.channelId,
-        communication_disabled_until: options.communicationDisabledUntil,
-        flags: options.flags,
-      },
-      reason,
-    });
+  ): Promise<GuildMember> {
+    return new GuildMember(
+      await this.client.rest.patch(Endpoints.guildMember(this.id, userId), {
+        json: {
+          nick: options.nick,
+          roles: options.roles,
+          mute: options.mute,
+          deaf: options.deaf,
+          channel_id: options.channelId,
+          communication_disabled_until: options.communicationDisabledUntil,
+          flags: options.flags,
+        },
+        reason,
+      }),
+      this.client
+    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
-  public editCurrentMember(
+  public async editCurrentMember(
     options: {
       nick: string | null;
     },
     reason?: string
-  ): void {
-    this.client.rest.patch(Endpoints.guildMember(this.id), {
-      json: {
-        nick: options.nick,
-      },
-      reason,
-    });
+  ): Promise<GuildMember> {
+    return new GuildMember(
+      await this.client.rest.patch(Endpoints.guildMember(this.id), {
+        json: {
+          nick: options.nick,
+        },
+        reason,
+      }),
+      this.client
+    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */

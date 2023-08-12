@@ -28,11 +28,7 @@ import type {
   RawMessage,
   RawUser,
 } from "../types";
-import {
-  type ChannelTypes,
-  type ComponentTypes,
-  type MessageFlags,
-} from "../constants";
+import type { ChannelTypes, ComponentTypes, MessageFlags } from "../constants";
 
 export class Message extends Base {
   protected override raw: RawMessage & {

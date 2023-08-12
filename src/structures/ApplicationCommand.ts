@@ -9,11 +9,11 @@ import type {
   RawApplicationCommand,
   RawGuildApplicationCommandPermissions,
 } from "../types";
-import {
-  type ApplicationCommandOptionType,
-  type ApplicationCommandTypes,
-  type ChannelTypes,
-  type Locale,
+import type {
+  ApplicationCommandOptionType,
+  ApplicationCommandTypes,
+  ChannelTypes,
+  Locale,
 } from "../constants";
 import { Base } from ".";
 

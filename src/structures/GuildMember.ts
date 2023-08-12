@@ -47,7 +47,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public edit(
+  public async edit(
     options: {
       nick?: string | null;
       roles?: Array<string> | null;
@@ -58,21 +58,27 @@ export class GuildMember {
       flags?: GuildMemberFlags;
     },
     reason?: string
-  ): void {
+  ): Promise<GuildMember> {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.patch(Endpoints.guildMember(this.guildId, this.user?.id), {
-      json: {
-        nick: options.nick,
-        roles: options.roles,
-        mute: options.mute,
-        deaf: options.deaf,
-        channel_id: options.channelId,
-        communication_disabled_until: options.communicationDisabledUntil,
-        flags: options.flags,
-      },
-      reason,
-    });
+    return new GuildMember(
+      await this.client.rest.patch(
+        Endpoints.guildMember(this.guildId, this.user?.id),
+        {
+          json: {
+            nick: options.nick,
+            roles: options.roles,
+            mute: options.mute,
+            deaf: options.deaf,
+            channel_id: options.channelId,
+            communication_disabled_until: options.communicationDisabledUntil,
+            flags: options.flags,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */

@@ -11,11 +11,11 @@ import type {
 } from "../types";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
-import {
-  type ApplicationCommandOptionType,
-  type ApplicationCommandTypes,
-  type ChannelTypes,
-  type Locale,
+import type {
+  ApplicationCommandOptionType,
+  ApplicationCommandTypes,
+  ChannelTypes,
+  Locale,
 } from "../constants";
 
 export class ClientApplication extends Base {

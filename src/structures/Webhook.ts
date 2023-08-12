@@ -11,11 +11,11 @@ import type {
   RawMessage,
   RawWebhook,
 } from "../types";
-import {
-  type ChannelTypes,
-  type ComponentTypes,
-  type MessageFlags,
-  type WebhookTypes,
+import type {
+  ChannelTypes,
+  ComponentTypes,
+  MessageFlags,
+  WebhookTypes,
 } from "../constants";
 
 export class Webhook extends Base {
