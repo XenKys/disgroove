@@ -1,5 +1,5 @@
 import { Base, User } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import type { JSONTeam, JSONTeamMember, RawTeam } from "../types";
 
 export class Team extends Base {

@@ -1,4 +1,4 @@
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONApplicationCommand,
@@ -15,7 +15,7 @@ import {
   type ChannelTypes,
   type Locale,
   applicationCommandToRaw,
-} from "../utils";
+} from "../constants";
 import { Base } from ".";
 
 export class ApplicationCommand extends Base {

@@ -14,7 +14,7 @@ import type {
   JSONChannel,
   JSONWebhook,
 } from ".";
-import type { AuditLogEvents } from "../utils";
+import type { AuditLogEvents } from "../constants";
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
 export interface RawAuditLog {

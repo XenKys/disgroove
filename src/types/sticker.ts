@@ -1,4 +1,4 @@
-import type { StickerTypes, StickerFormatTypes } from "../utils";
+import type { StickerTypes, StickerFormatTypes } from "../constants";
 import type { JSONUser, RawUser } from ".";
 
 /** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */

@@ -1,4 +1,7 @@
-import type { ApplicationRoleConnectionMetadataType, Locale } from "../utils";
+import type {
+  ApplicationRoleConnectionMetadataType,
+  Locale,
+} from "../constants";
 
 /** https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-structure */
 export interface RawApplicationRoleConnectionMetadata {

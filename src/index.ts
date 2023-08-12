@@ -1,4 +1,4 @@
-export * from "./client";
+export * from "./Client";
 export * from "./rest";
 export * from "./structures";
 export * from "./types";

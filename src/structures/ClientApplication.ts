@@ -1,42 +1,37 @@
-import { ApplicationCommand } from "../structures";
+import { Base, ApplicationCommand } from ".";
 import type {
   JSONGuildApplicationCommandPermissions,
+  RawApplication,
   RawGuildApplicationCommandPermissions,
   RawApplicationCommand,
+  JSONApplication,
   JSONApplicationCommandOptionChoice,
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,
 } from "../types";
-import type { Client } from ".";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import {
-  applicationCommandToRaw,
   type ApplicationCommandOptionType,
   type ApplicationCommandTypes,
   type ChannelTypes,
   type Locale,
-} from "../utils";
+} from "../constants";
 
-export class ClientApplication {
-  private client: Client;
-  private raw: {
-    id: string;
-    flags: number;
-  };
-  public id: string;
-  public flags: number;
+export class ClientApplication extends Base {
+  protected override raw: Pick<RawApplication, "id" | "flags">;
+  public flags?: number;
 
-  constructor(
-    data: {
-      id: string;
-      flags: number;
-    },
-    client: Client
-  ) {
-    this.client = client;
+  constructor(data: Pick<RawApplication, "id" | "flags">, client: Client) {
+    super(data.id, client);
+
     this.raw = data;
-    this.id = data.id;
-    this.flags = data.flags;
+
+    this.patch(data);
+  }
+
+  protected override patch(data: Pick<RawApplication, "id" | "flags">) {
+    if (data.flags !== undefined) this.flags = data.flags;
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
@@ -103,7 +98,7 @@ export class ClientApplication {
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationCommands(this.id),
         {
-          json: applicationCommandToRaw(options),
+          json: this.client.util.applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -170,7 +165,7 @@ export class ClientApplication {
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationCommand(this.id, commandId),
         {
-          json: applicationCommandToRaw(options),
+          json: this.client.util.applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -230,7 +225,9 @@ export class ClientApplication {
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationCommands(this.id),
         {
-          json: commands.map((command) => applicationCommandToRaw(command)),
+          json: commands.map((command) =>
+            this.client.util.applicationCommandToRaw(command)
+          ),
         }
       )
       .then((response) =>
@@ -308,7 +305,7 @@ export class ClientApplication {
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
-          json: applicationCommandToRaw(options),
+          json: this.client.util.applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -377,7 +374,7 @@ export class ClientApplication {
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(this.id, guildId, commandId),
         {
-          json: applicationCommandToRaw(options),
+          json: this.client.util.applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -444,7 +441,9 @@ export class ClientApplication {
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
-          json: commands.map((command) => applicationCommandToRaw(command)),
+          json: commands.map((command) =>
+            this.client.util.applicationCommandToRaw(command)
+          ),
         }
       )
       .then((response) =>
@@ -575,17 +574,11 @@ export class ClientApplication {
       );
   }
 
-  public toRaw(): {
-    id: string;
-    flags: number;
-  } {
+  public override toRaw(): Pick<RawApplication, "id" | "flags"> {
     return this.raw;
   }
 
-  public toJSON(): {
-    id: string;
-    flags: number;
-  } {
+  public override toJSON(): Pick<JSONApplication, "id" | "flags"> {
     return {
       id: this.id,
       flags: this.flags,

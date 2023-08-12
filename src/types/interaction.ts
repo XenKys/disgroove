@@ -18,7 +18,7 @@ import type {
   ApplicationCommandTypes,
   ComponentTypes,
   InteractionType,
-} from "../utils";
+} from "../constants";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {

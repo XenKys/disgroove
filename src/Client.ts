@@ -11,11 +11,9 @@ import {
   StatusTypes,
   type SystemChannelFlags,
   type VerificationLevel,
-  auditLogEntryToJSON,
-  channelToRaw,
-  roleToRaw,
-} from "../utils";
-import { Endpoints, REST } from "../rest";
+} from "./constants";
+import { Util } from "./utils";
+import { Endpoints, REST } from "./rest";
 import {
   Application,
   AutoModerationRule,
@@ -32,7 +30,8 @@ import {
   StageInstance,
   User,
   VoiceState,
-} from "../structures";
+  ClientApplication,
+} from "./structures";
 import type {
   Activity,
   JSONAuditLogEntry,
@@ -92,9 +91,9 @@ import type {
   RawUser,
   RawVoiceRegion,
   HelloEventFields,
-} from "../types";
+  RawAuditLogChange,
+} from "./types";
 import EventEmitter from "node:events";
-import { ClientApplication } from ".";
 
 export interface ClientOptions {
   intents?: number | Array<number>;
@@ -226,6 +225,7 @@ export class Client extends EventEmitter {
   public auth: "Bot" | "Bearer";
   public rest: REST;
   public ws: WebSocket;
+  public util: Util;
   public user!: User;
   public application!: ClientApplication;
 
@@ -243,6 +243,7 @@ export class Client extends EventEmitter {
     this.auth = options?.auth ?? "Bot";
     this.rest = new REST(token, this.auth);
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
+    this.util = new Util();
   }
 
   /** https://discord.com/developers/docs/resources/application#get-current-application */
@@ -285,8 +286,10 @@ export class Client extends EventEmitter {
           verification_level: options.verificationLevel,
           default_message_notifications: options.defaultMessageNotifications,
           explicit_content_filter: options.explicitContentFilter,
-          roles: options.roles?.map((role) => roleToRaw(role)),
-          channels: options.channels?.map((channel) => channelToRaw(channel)),
+          roles: options.roles?.map((role) => this.util.roleToRaw(role)),
+          channels: options.channels?.map((channel) =>
+            this.util.channelToRaw(channel)
+          ),
           afk_channel_id: options.afkChannelId,
           afk_timeout: options.afkTimeout,
           system_channel_id: options.systemChannelId,
@@ -824,10 +827,36 @@ export class Client extends EventEmitter {
         });
         break;
       case "GUILD_AUDIT_LOG_ENTRY_CREATE":
-        super.emit(
-          GatewayEvents.GuildAuditLogEntryCreate,
-          auditLogEntryToJSON(packet.d)
-        );
+        super.emit(GatewayEvents.GuildAuditLogEntryCreate, {
+          targetId: packet.d.target_id,
+          changes: packet.d.changes?.map((change: RawAuditLogChange) => ({
+            newValue: change.new_value,
+            oldValue: change.old_value,
+            key: change.key,
+          })),
+          userId: packet.d.user_id,
+          id: packet.d.id,
+          actionType: packet.d.action_type,
+          options:
+            packet.d.options !== undefined
+              ? {
+                  applicationId: packet.d.options.application_id,
+                  autoModerationRuleName:
+                    packet.d.options.auto_moderation_rule_name,
+                  autoModerationRuleTriggerType:
+                    packet.d.options.auto_moderation_rule_trigger_type,
+                  channelId: packet.d.options.channel_id,
+                  count: packet.d.options.count,
+                  deleteMemberDays: packet.d.options.delete_member_days,
+                  id: packet.d.options.id,
+                  membersRemoved: packet.d.options.members_removed,
+                  messageId: packet.d.options.message_id,
+                  roleName: packet.d.options.role_name,
+                  type: packet.d.options.type,
+                }
+              : undefined,
+          reason: packet.d.reason,
+        });
         break;
       case "GUILD_BAN_ADD":
         super.emit(GatewayEvents.GuildBanAdd, {

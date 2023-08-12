@@ -1,5 +1,5 @@
 import { Base, Channel, Guild, Message, User } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
@@ -16,9 +16,7 @@ import {
   type ComponentTypes,
   type MessageFlags,
   type WebhookTypes,
-  messageComponentToRaw,
-  embedsToRaw,
-} from "../utils";
+} from "../constants";
 
 export class Webhook extends Base {
   protected override raw: RawWebhook;
@@ -192,7 +190,7 @@ export class Webhook extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedsToRaw(options.embeds)
+                  ? this.client.util.embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
@@ -204,7 +202,7 @@ export class Webhook extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,
@@ -350,7 +348,7 @@ export class Webhook extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedsToRaw(options.embeds)
+                  ? this.client.util.embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
@@ -362,7 +360,7 @@ export class Webhook extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,

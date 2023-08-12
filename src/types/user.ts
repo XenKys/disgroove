@@ -1,4 +1,4 @@
-import type { UserFlags, Services, VisibilityTypes } from "../utils";
+import type { UserFlags, Services, VisibilityTypes } from "../constants";
 import type {
   JSONApplicationRoleConnectionMetadata,
   JSONIntegration,

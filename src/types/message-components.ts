@@ -1,5 +1,5 @@
 import type { JSONEmoji, RawEmoji } from ".";
-import type { ChannelTypes } from "../utils";
+import type { ChannelTypes } from "../constants";
 
 /** https://discord.com/developers/docs/interactions/message-components#button-object-button-structure */
 export interface RawButton {

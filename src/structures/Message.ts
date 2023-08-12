@@ -7,7 +7,7 @@ import {
   Sticker,
   User,
 } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
@@ -32,10 +32,7 @@ import {
   type ChannelTypes,
   type ComponentTypes,
   type MessageFlags,
-  embedToJSON,
-  messageComponentToRaw,
-  embedsToRaw,
-} from "../utils";
+} from "../constants";
 
 export class Message extends Base {
   protected override raw: RawMessage & {
@@ -130,7 +127,61 @@ export class Message extends Base {
         width: attachment.width,
         ephemeral: attachment.ephemeral,
       }));
-    if (data.embeds !== undefined) this.embeds = embedToJSON(data.embeds);
+    if (data.embeds !== undefined)
+      this.embeds = data.embeds.map((embed) => ({
+        title: embed.title,
+        type: embed.type,
+        description: embed.description,
+        url: embed.url,
+        timestamp: embed.timestamp,
+        color: embed.color,
+        footer: embed.footer
+          ? {
+              text: embed.footer.text,
+              iconUrl: embed.footer.icon_url,
+              proxyIconUrl: embed.footer.proxy_icon_url,
+            }
+          : undefined,
+        image: embed.image
+          ? {
+              url: embed.image.url,
+              proxyUrl: embed.image.proxy_url,
+              height: embed.image.height,
+              width: embed.image.width,
+            }
+          : undefined,
+        thumbnail: embed.thumbnail
+          ? {
+              url: embed.thumbnail.url,
+              proxyUrl: embed.thumbnail.proxy_url,
+              height: embed.thumbnail.height,
+              width: embed.thumbnail.width,
+            }
+          : undefined,
+        video: {
+          url: embed.video?.url,
+          proxyUrl: embed.video?.proxy_url,
+          height: embed.video?.height,
+          width: embed.video?.width,
+        },
+        provider: {
+          name: embed.provider?.name,
+          url: embed.provider?.url,
+        },
+        author: embed.author
+          ? {
+              name: embed.author.name,
+              url: embed.author.url,
+              iconUrl: embed.author.icon_url,
+              proxyIconUrl: embed.author.proxy_icon_url,
+            }
+          : undefined,
+        fields: embed.fields?.map((field) => ({
+          name: field.name,
+          value: field.value,
+          inline: field.inline,
+        })),
+      }));
     if (data.reactions !== undefined)
       this.reactions = data.reactions.map((reaction) => ({
         count: reaction.count,
@@ -306,14 +357,14 @@ export class Message extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedsToRaw(options.embeds)
+                  ? this.client.util.embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: options.allowedMentions,
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,

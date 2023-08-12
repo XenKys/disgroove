@@ -16,7 +16,7 @@ import {
   VoiceState,
   Webhook,
 } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONApplicationCommandOptionChoice,
@@ -89,9 +89,7 @@ import {
   type PremiumTier,
   type SystemChannelFlags,
   type VerificationLevel,
-  applicationCommandToRaw,
-  auditLogEntryToJSON,
-} from "../utils";
+} from "../constants";
 
 export class Guild extends Base {
   protected override raw: RawGuild;
@@ -382,7 +380,7 @@ export class Guild extends Base {
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(applicationId, this.id),
         {
-          json: applicationCommandToRaw(options),
+          json: this.client.util.applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -451,7 +449,7 @@ export class Guild extends Base {
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(applicationId, this.id, commandId),
         {
-          json: applicationCommandToRaw(options),
+          json: this.client.util.applicationCommandToRaw(options),
         }
       ),
       this.client
@@ -518,7 +516,7 @@ export class Guild extends Base {
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(applicationId, this.id),
         {
-          json: applicationCommandToRaw(options),
+          json: this.client.util.applicationCommandToRaw(options),
         }
       )
       .then((response) =>
@@ -571,9 +569,36 @@ export class Guild extends Base {
           (applicationCommand) =>
             new ApplicationCommand(applicationCommand, this.client)
         ),
-        auditLogEntries: response.audit_log_entries.map((auditLogEntry) =>
-          auditLogEntryToJSON(auditLogEntry)
-        ),
+        auditLogEntries: response.audit_log_entries.map((auditLogEntry) => ({
+          targetId: auditLogEntry.target_id,
+          changes: auditLogEntry.changes?.map((change) => ({
+            newValue: change.new_value,
+            oldValue: change.old_value,
+            key: change.key,
+          })),
+          userId: auditLogEntry.user_id,
+          id: auditLogEntry.id,
+          actionType: auditLogEntry.action_type,
+          options:
+            auditLogEntry.options !== undefined
+              ? {
+                  applicationId: auditLogEntry.options.application_id,
+                  autoModerationRuleName:
+                    auditLogEntry.options.auto_moderation_rule_name,
+                  autoModerationRuleTriggerType:
+                    auditLogEntry.options.auto_moderation_rule_trigger_type,
+                  channelId: auditLogEntry.options.channel_id,
+                  count: auditLogEntry.options.count,
+                  deleteMemberDays: auditLogEntry.options.delete_member_days,
+                  id: auditLogEntry.options.id,
+                  membersRemoved: auditLogEntry.options.members_removed,
+                  messageId: auditLogEntry.options.message_id,
+                  roleName: auditLogEntry.options.role_name,
+                  type: auditLogEntry.options.type,
+                }
+              : undefined,
+          reason: auditLogEntry.reason,
+        })),
         autoModerationRules: response.auto_moderation_rules.map(
           (autoModerationRule) =>
             new AutoModerationRule(autoModerationRule, this.client)

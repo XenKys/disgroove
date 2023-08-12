@@ -1,7 +1,7 @@
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONStageInstance, RawStageInstance } from "../types";
-import type { PrivacyLevel } from "../utils";
+import type { PrivacyLevel } from "../constants";
 import { Base } from ".";
 
 export class StageInstance extends Base {

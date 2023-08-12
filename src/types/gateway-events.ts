@@ -11,7 +11,7 @@ import type {
   InviteTargetTypes,
   StatusTypes,
   TriggerTypes,
-} from "../utils";
+} from "../constants";
 import type {
   RawApplication,
   RawAutoModerationAction,

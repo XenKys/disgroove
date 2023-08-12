@@ -1,4 +1,4 @@
-import type { WebhookTypes } from "../utils";
+import type { WebhookTypes } from "../constants";
 import type {
   JSONChannel,
   JSONGuild,

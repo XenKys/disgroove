@@ -1,5 +1,5 @@
 import { Base, Channel, GuildMember, Integration } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONApplicationRoleConnection,
@@ -15,7 +15,7 @@ import type {
   ApplicationRoleConnectionMetadataType,
   Locale,
   UserFlags,
-} from "../utils";
+} from "../constants";
 
 export class User extends Base {
   protected override raw: RawUser;

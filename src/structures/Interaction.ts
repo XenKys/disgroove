@@ -1,5 +1,5 @@
 import { Base, Channel, Emoji, GuildMember, Message, Role, User } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
@@ -21,9 +21,7 @@ import {
   InteractionCallbackType,
   type InteractionType,
   type MessageFlags,
-  embedsToRaw,
-  messageComponentToRaw,
-} from "../utils";
+} from "../constants";
 
 export class Interaction extends Base {
   protected override raw: RawInteraction;
@@ -223,7 +221,7 @@ export class Interaction extends Base {
                   content: options.data.content,
                   embeds:
                     options.data.embeds !== undefined
-                      ? embedsToRaw(options.data.embeds)
+                      ? this.client.util.embedsToRaw(options.data.embeds)
                       : undefined,
                   allowed_mentions: {
                     parse: options.data.allowedMentions?.parse,
@@ -234,7 +232,9 @@ export class Interaction extends Base {
                   flags: options.data.flags,
                   components:
                     options.data.components !== undefined
-                      ? messageComponentToRaw(options.data.components)
+                      ? this.client.util.messageComponentToRaw(
+                          options.data.components
+                        )
                       : undefined,
                   attachments: options.data.attachments,
                 },
@@ -384,7 +384,7 @@ export class Interaction extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedsToRaw(options.embeds)
+                  ? this.client.util.embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
@@ -396,7 +396,7 @@ export class Interaction extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,
@@ -474,7 +474,7 @@ export class Interaction extends Base {
         embeds:
           options.embeds !== undefined
             ? options.embeds !== null
-              ? embedsToRaw(options.embeds)
+              ? this.client.util.embedsToRaw(options.embeds)
               : null
             : undefined,
         allowed_mentions: {
@@ -486,7 +486,7 @@ export class Interaction extends Base {
         components:
           options.components !== undefined
             ? options.components !== null
-              ? messageComponentToRaw(options.components)
+              ? this.client.util.messageComponentToRaw(options.components)
               : null
             : undefined,
         attachments: options.attachments,
@@ -582,7 +582,7 @@ export class Interaction extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedsToRaw(options.embeds)
+                  ? this.client.util.embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: {
@@ -594,7 +594,7 @@ export class Interaction extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,

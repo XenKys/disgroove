@@ -1,6 +1,6 @@
 import { Base, User } from ".";
-import type { Client } from "../client/Client";
-import type { StickerFormatTypes, StickerTypes } from "../utils";
+import type { Client } from "../Client";
+import type { StickerFormatTypes, StickerTypes } from "../constants";
 import type { JSONSticker, RawSticker } from "../types";
 
 export class Sticker extends Base {

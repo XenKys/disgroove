@@ -1,5 +1,5 @@
 import { Base, GuildMember, Invite, Message, User, Webhook } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONAllowedMentions,
@@ -28,10 +28,8 @@ import {
   type ComponentTypes,
   type InviteTargetTypes,
   type MessageFlags,
-  messageComponentToRaw,
-  embedsToRaw,
   ChannelFlags,
-} from "../utils";
+} from "../constants";
 
 export class Channel extends Base {
   protected override raw: RawChannel;
@@ -323,7 +321,7 @@ export class Channel extends Base {
             tts: options.tts,
             embeds:
               options.embeds !== undefined
-                ? embedsToRaw(options.embeds)
+                ? this.client.util.embedsToRaw(options.embeds)
                 : undefined,
             allowed_mentions: {
               parse: options.allowedMentions?.parse,
@@ -334,7 +332,7 @@ export class Channel extends Base {
             message_reference: options.messageReference,
             components:
               options.components !== undefined
-                ? messageComponentToRaw(options.components)
+                ? this.client.util.messageComponentToRaw(options.components)
                 : undefined,
             stickers_ids: options.stickersIds,
             attachments: options.attachments,
@@ -465,14 +463,14 @@ export class Channel extends Base {
             embeds:
               options.embeds !== undefined
                 ? options.embeds !== null
-                  ? embedsToRaw(options.embeds)
+                  ? this.client.util.embedsToRaw(options.embeds)
                   : null
                 : undefined,
             allowed_mentions: options.allowedMentions,
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,
@@ -760,7 +758,9 @@ export class Channel extends Base {
             components:
               options.message.components !== undefined
                 ? options.message.components !== null
-                  ? messageComponentToRaw(options.message.components)
+                  ? this.client.util.messageComponentToRaw(
+                      options.message.components
+                    )
                   : null
                 : undefined,
             attachments: options.message.attachments,

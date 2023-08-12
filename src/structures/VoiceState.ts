@@ -1,5 +1,5 @@
 import { GuildMember } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import type { JSONVoiceState, RawVoiceState } from "../types";
 
 export class VoiceState {

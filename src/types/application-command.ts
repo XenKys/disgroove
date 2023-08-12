@@ -4,7 +4,7 @@ import type {
   ChannelTypes,
   Locale,
   ApplicationCommandPermissionType,
-} from "../utils";
+} from "../constants";
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure */
 export interface RawApplicationCommand {

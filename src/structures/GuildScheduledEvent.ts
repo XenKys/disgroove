@@ -1,5 +1,5 @@
 import { Base, GuildMember, User } from ".";
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONGuildScheduledEvent,
@@ -12,7 +12,7 @@ import type {
   GuildScheduledEventEntityTypes,
   GuildScheduledEventPrivacyLevel,
   GuildScheduledEventStatus,
-} from "../utils";
+} from "../constants";
 
 export class GuildScheduledEvent extends Base {
   protected override raw: RawGuildScheduledEvent;

@@ -3,6 +3,7 @@ export * from "./Application";
 export * from "./ApplicationCommand";
 export * from "./AutoModerationRule";
 export * from "./Channel";
+export * from "./ClientApplication";
 export * from "./Emoji";
 export * from "./Guild";
 export * from "./GuildMember";

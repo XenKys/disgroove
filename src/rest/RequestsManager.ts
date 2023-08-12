@@ -1,6 +1,6 @@
 import { File } from ".";
 import { fetch, FormData, Headers, File as UndiciFile } from "undici";
-import { HTTPResponseCodes } from "../utils";
+import { HTTPResponseCodes } from "../constants";
 
 export interface Request {
   method: string;

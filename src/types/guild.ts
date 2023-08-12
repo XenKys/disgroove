@@ -12,7 +12,7 @@ import type {
   SystemChannelFlags,
   OnboardingMode,
   PromptTypes,
-} from "../utils";
+} from "../constants";
 import type {
   RawChannel,
   RawEmoji,

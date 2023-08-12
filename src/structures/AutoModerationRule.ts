@@ -1,4 +1,4 @@
-import type { Client } from "../client/Client";
+import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
   JSONAutoModerationAction,
@@ -7,7 +7,7 @@ import type {
   RawAutoModerationRule,
 } from "../types";
 import { Base } from ".";
-import type { EventTypes } from "../utils";
+import type { EventTypes } from "../constants";
 
 export class AutoModerationRule extends Base {
   protected override raw: RawAutoModerationRule;

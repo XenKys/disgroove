@@ -2,7 +2,7 @@ import type {
   GuildScheduledEventPrivacyLevel,
   GuildScheduledEventStatus,
   GuildScheduledEventEntityTypes,
-} from "../utils";
+} from "../constants";
 import type { JSONGuildMember, JSONUser, RawGuildMember, RawUser } from ".";
 
 /** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
