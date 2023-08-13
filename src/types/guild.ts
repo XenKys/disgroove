@@ -72,6 +72,12 @@ export interface RawGuild {
   safety_alerts_channel_id: string | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#unavailable-guild-object */
+export interface RawUnavailableGuild {
+  id: string;
+  unavailable: boolean;
+}
+
 /** https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure */
 export interface RawGuildPreview {
   id: string;
@@ -247,6 +253,11 @@ export interface JSONGuild {
   stickers?: Array<JSONSticker>;
   premiumProgressBarEnabled: boolean;
   safetyAlertsChannelId: string | null;
+}
+
+export interface JSONUnavailableGuild {
+  id: string;
+  unavailable: boolean;
 }
 
 export interface JSONGuildPreview {

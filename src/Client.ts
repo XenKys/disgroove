@@ -30,7 +30,7 @@ import {
   StageInstance,
   User,
   VoiceState,
-  ClientApplication,
+  PartialApplication,
 } from "./structures";
 import type {
   Activity,
@@ -227,7 +227,7 @@ export class Client extends EventEmitter {
   public ws: WebSocket;
   public util: Util;
   public user!: User;
-  public application!: ClientApplication;
+  public application!: PartialApplication;
 
   constructor(token: string, options?: ClientOptions) {
     super();
@@ -673,7 +673,7 @@ export class Client extends EventEmitter {
       case "READY":
         {
           this.user = new User(packet.d.user, this);
-          this.application = new ClientApplication(packet.d.application, this);
+          this.application = new PartialApplication(packet.d.application, this);
 
           super.emit(GatewayEvents.Ready);
         }
