@@ -1,6 +1,7 @@
 import { File } from ".";
 import { fetch, FormData, Headers, File as UndiciFile } from "undici";
 import { HTTPResponseCodes } from "../constants";
+import { HTTPError, RESTError } from "../utils";
 
 export interface Request {
   method: string;
@@ -96,14 +97,12 @@ export class RequestsManager {
           const responseJSON = await response.json();
 
           reject(
-            new Error(
-              responseJSON &&
+            responseJSON &&
               typeof responseJSON === "object" &&
               "code" in responseJSON &&
               "message" in responseJSON
-                ? `[${responseJSON.code}] ${responseJSON.message}`
-                : `[${response.status}] ${response.statusText}`
-            )
+              ? new RESTError(`[${responseJSON.code}] ${responseJSON.message}`)
+              : new HTTPError(`[${response.status}] ${response.statusText}`)
           );
         } else if (response.status === HTTPResponseCodes.NoContent) {
           resolve(null as T);
