@@ -17,6 +17,7 @@ import type {
 } from "../constants";
 import { Base } from ".";
 
+/** https://discord.com/developers/docs/interactions/application-commands */
 export class ApplicationCommand extends Base {
   protected override raw: RawApplicationCommand;
   public type?: ApplicationCommandTypes;

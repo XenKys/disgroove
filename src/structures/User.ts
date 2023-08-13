@@ -17,6 +17,7 @@ import type {
   UserFlags,
 } from "../constants";
 
+/** https://discord.com/developers/docs/resources/user */
 export class User extends Base {
   protected override raw: RawUser;
   public username: string;

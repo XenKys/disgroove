@@ -4,6 +4,7 @@ import type { JSONStageInstance, RawStageInstance } from "../types";
 import type { PrivacyLevel } from "../constants";
 import { Base } from ".";
 
+/** https://discord.com/developers/docs/resources/stage-instance */
 export class StageInstance extends Base {
   protected override raw: RawStageInstance;
   public guildId: string;

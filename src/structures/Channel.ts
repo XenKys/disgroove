@@ -31,6 +31,7 @@ import {
   ChannelFlags,
 } from "../constants";
 
+/** https://discord.com/developers/docs/resources/channel */
 export class Channel extends Base {
   protected override raw: RawChannel;
   public type: ChannelTypes;

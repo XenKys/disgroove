@@ -10,6 +10,7 @@ import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 
+/** https://discord.com/developers/docs/resources/invite */
 export class Invite {
   private client: Client;
   private raw: RawInvite;

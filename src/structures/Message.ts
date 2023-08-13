@@ -30,6 +30,7 @@ import type {
 } from "../types";
 import type { ChannelTypes, ComponentTypes, MessageFlags } from "../constants";
 
+/** https://discord.com/developers/docs/resources/channel */
 export class Message extends Base {
   protected override raw: RawMessage & {
     guild_id?: string;

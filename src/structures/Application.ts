@@ -19,6 +19,7 @@ import type {
   Locale,
 } from "../constants";
 
+/** https://discord.com/developers/docs/resources/application */
 export class Application extends Base {
   protected override raw: RawApplication;
   public name: string;

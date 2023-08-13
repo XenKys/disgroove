@@ -23,6 +23,7 @@ import {
   type MessageFlags,
 } from "../constants";
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding */
 export class Interaction extends Base {
   protected override raw: RawInteraction;
   public applicationId: string;

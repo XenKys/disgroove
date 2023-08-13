@@ -14,6 +14,7 @@ import type {
   GuildScheduledEventStatus,
 } from "../constants";
 
+/** https://discord.com/developers/docs/resources/guild-scheduled-event */
 export class GuildScheduledEvent extends Base {
   protected override raw: RawGuildScheduledEvent;
   public guildId: string;

@@ -3,6 +3,7 @@ import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
 
+/** https://discord.com/developers/docs/resources/guild-template */
 export class GuildTemplate {
   private client: Client;
   private raw: RawGuildTemplate;

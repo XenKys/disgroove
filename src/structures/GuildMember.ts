@@ -4,6 +4,7 @@ import { Endpoints } from "../rest";
 import type { JSONGuildMember, RawGuildMember } from "../types";
 import type { GuildMemberFlags } from "../constants";
 
+/** https://discord.com/developers/docs/resources/guild */
 export class GuildMember {
   private client: Client;
   private raw: RawGuildMember & { guild_id?: string };

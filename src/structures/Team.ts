@@ -2,6 +2,7 @@ import { Base, User } from ".";
 import type { Client } from "../Client";
 import type { JSONTeam, JSONTeamMember, RawTeam } from "../types";
 
+/** https://discord.com/developers/docs/topics/teams */
 export class Team extends Base {
   protected override raw: RawTeam;
   public icon: string | null;

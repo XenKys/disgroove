@@ -2,6 +2,7 @@ import { User } from ".";
 import type { Client } from "../Client";
 import type { JSONEmoji, RawEmoji } from "../types";
 
+/** https://discord.com/developers/docs/resources/emoji */
 export class Emoji {
   private client: Client;
   private raw: RawEmoji;

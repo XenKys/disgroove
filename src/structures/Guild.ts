@@ -91,6 +91,7 @@ import type {
   VerificationLevel,
 } from "../constants";
 
+/** https://discord.com/developers/docs/resources/guild */
 export class Guild extends Base {
   protected override raw: RawGuild;
   public name: string;

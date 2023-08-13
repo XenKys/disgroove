@@ -2,6 +2,7 @@ import { GuildMember } from ".";
 import type { Client } from "../Client";
 import type { JSONVoiceState, RawVoiceState } from "../types";
 
+/** https://discord.com/developers/docs/resources/voice */
 export class VoiceState {
   private client: Client;
   private raw: RawVoiceState;

@@ -18,6 +18,7 @@ import type {
   WebhookTypes,
 } from "../constants";
 
+/** https://discord.com/developers/docs/resources/webhook */
 export class Webhook extends Base {
   protected override raw: RawWebhook;
   public type: WebhookTypes;

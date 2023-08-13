@@ -3,6 +3,7 @@ import { Endpoints } from "../rest";
 import type { JSONRole, JSONRoleTags, RawRole } from "../types";
 import { Base } from ".";
 
+/** https://discord.com/developers/docs/topics/permissions */
 export class Role extends Base {
   protected override raw: RawRole;
   public name: string;

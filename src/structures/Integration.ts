@@ -9,6 +9,7 @@ import type {
 } from "../types";
 import type { IntegrationExpireBehaviors, OAuth2Scopes } from "../constants";
 
+/** https://discord.com/developers/docs/resources/guild */
 export class Integration extends Base {
   protected override raw: RawIntegration & { guild_id?: string };
   public name: string;

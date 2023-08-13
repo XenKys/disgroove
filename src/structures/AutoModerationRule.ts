@@ -9,6 +9,7 @@ import type {
 import { Base } from ".";
 import type { EventTypes } from "../constants";
 
+/** https://discord.com/developers/docs/resources/auto-moderation */
 export class AutoModerationRule extends Base {
   protected override raw: RawAutoModerationRule;
   public guildId: string;

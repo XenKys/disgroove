@@ -3,6 +3,7 @@ import type { Client } from "../Client";
 import type { StickerFormatTypes, StickerTypes } from "../constants";
 import type { JSONSticker, RawSticker } from "../types";
 
+/** https://discord.com/developers/docs/resources/sticker */
 export class Sticker extends Base {
   protected override raw: RawSticker;
   public packId?: string;
