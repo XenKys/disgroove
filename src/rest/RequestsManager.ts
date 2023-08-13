@@ -35,12 +35,8 @@ export class RequestsManager {
       let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
       if (data?.query) {
-        for (const value of Object.values(data.query)) {
-          if (value === undefined) return;
-
-          for (const [key, value] of Object.entries(data?.query)) {
-            url.searchParams.set(key, value);
-          }
+        for (const [key, value] of Object.entries(data?.query)) {
+          if (value !== undefined) url.searchParams.set(key, value);
         }
       }
 
