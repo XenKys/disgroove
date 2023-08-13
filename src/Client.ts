@@ -31,6 +31,7 @@ import {
   User,
   VoiceState,
   PartialApplication,
+  UnavailableGuild,
 } from "./structures";
 import type {
   Activity,
@@ -92,6 +93,8 @@ import type {
   RawVoiceRegion,
   HelloEventFields,
   RawAuditLogChange,
+  ReadyEventFields,
+  RawUnavailableGuild,
 } from "./types";
 import EventEmitter from "node:events";
 
@@ -103,7 +106,7 @@ export interface ClientOptions {
 
 export interface ClientEvents {
   hello: [listener: HelloEventFields];
-  ready: [];
+  ready: [listener: ReadyEventFields];
   resumed: [];
   reconnect: [];
   invalidSession: [];
@@ -675,7 +678,15 @@ export class Client extends EventEmitter {
           this.user = new User(packet.d.user, this);
           this.application = new PartialApplication(packet.d.application, this);
 
-          super.emit(GatewayEvents.Ready);
+          super.emit(GatewayEvents.Ready, {
+            v: packet.d.v,
+            guilds: packet.d.guilds.map(
+              (guild: RawUnavailableGuild) => new UnavailableGuild(guild, this)
+            ),
+            sessionId: packet.d.session_id,
+            resumeGatewayURL: packet.d.resume_gateway_url,
+            shard: packet.d.shard,
+          });
         }
         break;
       case "RESUMED":
