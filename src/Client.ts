@@ -31,6 +31,7 @@ import {
   User,
   VoiceState,
   PartialApplication,
+  UnavailableGuild,
 } from "./structures";
 import type {
   Activity,
@@ -92,6 +93,7 @@ import type {
   RawVoiceRegion,
   HelloEventFields,
   RawAuditLogChange,
+  RawUnavailableGuild,
 } from "./types";
 import EventEmitter from "node:events";
 
@@ -227,6 +229,7 @@ export class Client extends EventEmitter {
   public ws: WebSocket;
   public util: Util;
   public user!: User;
+  public guilds!: Array<UnavailableGuild>;
   public application!: PartialApplication;
 
   constructor(token: string, options?: ClientOptions) {
@@ -673,6 +676,9 @@ export class Client extends EventEmitter {
       case "READY":
         {
           this.user = new User(packet.d.user, this);
+          this.guilds = packet.d.guilds.map(
+            (guild: RawUnavailableGuild) => new UnavailableGuild(guild, this)
+          );
           this.application = new PartialApplication(packet.d.application, this);
 
           super.emit(GatewayEvents.Ready);
