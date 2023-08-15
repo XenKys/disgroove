@@ -2,27 +2,15 @@
 
 An NPM package to interact with the Discord API
 
-## Getting started
+## Installation
 
-- Install the package
+[**Node.js**](https://nodejs.org) v16 or higher required
 
 ```
 npm install disgroove
 ```
 
-- Import the package
-
-```js
-const { Client } = require("disgroove");
-```
-
-- Create the client
-
-```js
-const client = new Client("token");
-```
-
-### Example
+## Example
 
 ```js
 const {
@@ -64,7 +52,7 @@ client.on("interactionCreate", async (interaction) => {
         content: "Pong! 🏓",
         flags: MessageFlags.Ephemeral,
       },
-    }); // Reply with an ephemeral message "Pong! 🏓"
+    }); // Responds with an ephemeral message "Pong! 🏓"
   }
 });
 
