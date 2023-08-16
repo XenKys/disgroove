@@ -61,16 +61,15 @@ export class RequestsManager {
             const file = files[i];
 
             formData?.set(
-              `file[${i}]`,
+              `files[${i}]`,
               new UndiciFile([file.contents], file.name)
             );
           }
 
-          if (data?.json) formData?.set("payload_json", data?.json);
+          if (data?.json)
+            formData?.set("payload_json", JSON.stringify(data?.json));
 
           body = formData;
-
-          headers["Content-Type"] = "multipart/form-data";
         } else {
           body = JSON.stringify(data?.json);
 
