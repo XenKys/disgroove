@@ -12,6 +12,8 @@ npm install disgroove
 
 ## Example
 
+To see more examples see the [examples](https://github.com/XenKys/disgroove/tree/main/examples) folder on GitHub repository
+
 ```js
 const {
   Client,
