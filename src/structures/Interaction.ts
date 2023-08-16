@@ -114,16 +114,7 @@ export class Interaction extends Base {
         targetId: data.data.target_id,
         customId: data.data.custom_id,
         componentType: data.data.component_type,
-        values: data.data.values?.map((value) => ({
-          label: value.label,
-          value: value.value,
-          description: value.description,
-          emoji:
-            value.emoji !== undefined
-              ? new Emoji(value.emoji, this.client)
-              : undefined,
-          default: value.default,
-        })),
+        values: data.data.values,
         components: data.data.components?.map((component) => ({
           type: component.type,
           components: component.components?.map((c) => ({

@@ -4,10 +4,8 @@ import type {
   RawGuildMember,
   RawMessage,
   RawUser,
-  RawSelectOption,
   RawRole,
   JSONAttachment,
-  JSONSelectOption,
   JSONUser,
   JSONGuildMember,
   JSONMessage,
@@ -55,7 +53,7 @@ export interface RawApplicationCommandData {
 export interface RawMessageComponentData {
   custom_id: string;
   component_type: number;
-  values?: Array<RawSelectOption>;
+  values?: Array<string>;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
@@ -137,7 +135,7 @@ export interface JSONApplicationCommandData {
 export interface JSONMessageComponentData {
   customId: string;
   componentType: number;
-  values?: Array<JSONSelectOption>;
+  values?: Array<string>;
 }
 
 export interface JSONModalSubmitData {
