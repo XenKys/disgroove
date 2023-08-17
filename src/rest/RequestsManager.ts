@@ -126,7 +126,7 @@ export class RequestsManager {
     setTimeout(() => {
       this.globalBlock = false;
       this.process<T>();
-    }, new Date(Number(headers.get("X-RateLimit-Reset"))).getMilliseconds());
+    }, new Date(Number(headers.get("X-RateLimit-Reset")) * 1000).getTime() - new Date().getTime());
   }
 
   public request<T>(
