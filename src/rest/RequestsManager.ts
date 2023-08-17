@@ -99,7 +99,8 @@ export class RequestsManager {
             responseJSON &&
               typeof responseJSON === "object" &&
               "code" in responseJSON &&
-              "message" in responseJSON
+              "message" in responseJSON &&
+              responseJSON.code !== 0
               ? new RESTError(`[${responseJSON.code}] ${responseJSON.message}`)
               : new HTTPError(`[${response.status}] ${response.statusText}`)
           );
