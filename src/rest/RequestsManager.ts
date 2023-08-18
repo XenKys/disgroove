@@ -1,37 +1,33 @@
-import { File } from ".";
-import { fetch, FormData, Headers, File as UndiciFile } from "undici";
+import { File, RESTMethods } from ".";
+import { fetch, FormData, File as UndiciFile } from "undici";
 import { HTTPResponseCodes } from "../constants";
 import { HTTPError, RESTError } from "../utils";
-
-export interface Request {
-  method: string;
-  endpoint: string;
-  data?: {
-    json?: Record<string, any> | Array<Record<string, any>>;
-    files?: Array<File> | null;
-    reason?: string;
-    query?: Record<string, any>;
-  };
-}
 
 export class RequestsManager {
   public token: string;
   public auth: "Bot" | "Bearer";
-  public queue: Array<Request>;
+  public rateLimits: Array<string>;
   public globalBlock: boolean;
 
   constructor(token: string, auth: "Bot" | "Bearer") {
     this.token = token;
     this.auth = auth;
-    this.queue = [];
+    this.rateLimits = [];
     this.globalBlock = false;
   }
 
-  private process<T = unknown>(): Promise<T> {
+  public request<T = unknown>(
+    method: string,
+    endpoint: string,
+    data?: {
+      json?: Record<string, any> | Array<Record<string, any>>;
+      files?: Array<File> | null;
+      reason?: string;
+      query?: Record<string, any>;
+    }
+  ): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
-      if (this.queue.length === 0 || this.globalBlock) return;
-
-      const { method, endpoint, data } = this.queue.shift()!;
+      if (this.globalBlock) return;
 
       let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
@@ -41,18 +37,16 @@ export class RequestsManager {
         }
       }
 
-      let headers:
-        | {
-            Authorization: string;
-            "Content-Type"?: string;
-            "X-Audit-Log-Reason"?: string;
-          }
-        | undefined = {
+      let headers: {
+        Authorization: string;
+        "Content-Type"?: string;
+        "X-Audit-Log-Reason"?: string;
+      } = {
         Authorization: `${this.auth} ${this.token}`,
       };
       let body: string | FormData | undefined;
 
-      if (method !== "GET") {
+      if (method !== RESTMethods.Get) {
         if (data?.files && data?.files?.length !== 0) {
           const formData = new FormData(),
             files = data?.files;
@@ -87,23 +81,62 @@ export class RequestsManager {
           headers,
         });
 
-        this.checkRateLimits<T>(response.headers);
+        if (
+          this.rateLimits.find(
+            (bucket) => bucket === response.headers.get("X-RateLimit-Bucket")
+          )
+        )
+          return;
 
         if (
-          response.status >= HTTPResponseCodes.NotModified &&
-          response.status !== HTTPResponseCodes.TooManyRequests
+          response.headers.has("X-RateLimit-Bucket") &&
+          response.headers.get("X-RateLimit-Remaining") === "0" &&
+          !this.rateLimits.find(
+            (bucket) => bucket === response.headers.get("X-RateLimit-Bucket")
+          )
         ) {
-          const responseJSON = await response.json();
+          this.rateLimits.push(response.headers.get("X-RateLimit-Bucket")!);
 
-          reject(
-            responseJSON &&
-              typeof responseJSON === "object" &&
-              "code" in responseJSON &&
-              "message" in responseJSON &&
-              responseJSON.code !== 0
-              ? new RESTError(`[${responseJSON.code}] ${responseJSON.message}`)
-              : new HTTPError(`[${response.status}] ${response.statusText}`)
-          );
+          setTimeout(() => {
+            this.rateLimits = this.rateLimits.filter(
+              (bucket) => bucket !== response.headers.get("X-RateLimit-Bucket")
+            );
+            this.request<T>(method, endpoint, data).then(resolve).catch(reject);
+          }, Number(response.headers.get("X-RateLimit-Reset-After")) * 1000);
+        }
+
+        if (response.status >= HTTPResponseCodes.NotModified) {
+          if (response.status === HTTPResponseCodes.TooManyRequests) {
+            if (response.headers.has("X-RateLimit-Global")) {
+              this.globalBlock = true;
+
+              setTimeout(() => {
+                this.globalBlock = false;
+
+                this.rateLimits = this.rateLimits.filter(
+                  (bucket) =>
+                    bucket !== response.headers.get("X-RateLimit-Bucket")
+                );
+                this.request<T>(method, endpoint, data)
+                  .then(resolve)
+                  .catch(reject);
+              }, Number(response.headers.get("Retry-After")) * 1000);
+            }
+          } else {
+            const responseJSON = await response.json();
+
+            reject(
+              responseJSON &&
+                typeof responseJSON === "object" &&
+                "code" in responseJSON &&
+                "message" in responseJSON &&
+                responseJSON.code !== 0
+                ? new RESTError(
+                    `[${responseJSON.code}] ${responseJSON.message}`
+                  )
+                : new HTTPError(`[${response.status}] ${response.statusText}`)
+            );
+          }
         } else if (response.status === HTTPResponseCodes.NoContent) {
           resolve(null as T);
         } else {
@@ -111,38 +144,7 @@ export class RequestsManager {
         }
       } catch (err) {
         reject(err);
-      } finally {
-        this.process<T>();
       }
-    });
-  }
-
-  private checkRateLimits<T>(headers: Headers): void {
-    if (!headers.has("X-RateLimit-Reset")) return;
-    if (headers.get("X-RateLimit-Remaining") !== "0") return;
-
-    this.globalBlock = true;
-
-    setTimeout(() => {
-      this.globalBlock = false;
-      this.process<T>();
-    }, new Date(Number(headers.get("X-RateLimit-Reset")) * 1000).getTime() - new Date().getTime());
-  }
-
-  public request<T>(
-    method: string,
-    endpoint: string,
-    data?: {
-      json?: Record<string, any> | Array<Record<string, any>>;
-      files?: Array<File> | null;
-      reason?: string;
-      query?: Record<string, any>;
-    }
-  ): Promise<T> {
-    return new Promise<T>((resolve) => {
-      this.queue.push({ method, endpoint, data });
-
-      resolve(this.process<T>());
     });
   }
 }
