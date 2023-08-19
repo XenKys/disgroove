@@ -82,18 +82,14 @@ export class RequestsManager {
         });
 
         if (
-          this.rateLimits.find(
-            (bucket) => bucket === response.headers.get("X-RateLimit-Bucket")
-          )
+          this.rateLimits.includes(response.headers.get("X-RateLimit-Bucket")!)
         )
           return;
 
         if (
           response.headers.has("X-RateLimit-Bucket") &&
           response.headers.get("X-RateLimit-Remaining") === "0" &&
-          !this.rateLimits.find(
-            (bucket) => bucket === response.headers.get("X-RateLimit-Bucket")
-          )
+          !this.rateLimits.includes(response.headers.get("X-RateLimit-Bucket")!)
         ) {
           this.rateLimits.push(response.headers.get("X-RateLimit-Bucket")!);
 
@@ -107,6 +103,13 @@ export class RequestsManager {
 
         if (response.status >= HTTPResponseCodes.NotModified) {
           if (response.status === HTTPResponseCodes.TooManyRequests) {
+            if (
+              !this.rateLimits.includes(
+                response.headers.get("X-RateLimit-Bucket")!
+              )
+            )
+              this.rateLimits.push(response.headers.get("X-RateLimit-Bucket")!);
+
             if (response.headers.has("X-RateLimit-Global")) {
               this.globalBlock = true;
 
