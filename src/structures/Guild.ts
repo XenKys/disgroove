@@ -176,8 +176,8 @@ export class Guild extends Base {
     this.verificationLevel = data.verification_level;
     this.defaultMessageNotifications = data.default_message_notifications;
     this.explicitContentFilter = data.explicit_content_filter;
-    this.roles = data.roles.map((role) => new Role(role, client));
-    this.emojis = data.emojis.map((emoji) => new Emoji(emoji, client));
+    this.roles = data.roles?.map((role) => new Role(role, client));
+    this.emojis = data.emojis?.map((emoji) => new Emoji(emoji, client));
     this.features = data.features;
     this.mfaLevel = data.mfa_level;
     this.applicationId = data.application_id;

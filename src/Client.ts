@@ -453,31 +453,9 @@ export class Client extends EventEmitter {
     after?: string;
     limit?: number;
     withCounts?: boolean;
-  }): Promise<
-    Array<{
-      id: string;
-      name: string;
-      icon: string;
-      owner: boolean;
-      permissions: string;
-      features: Array<GuildFeatures>;
-      approximate_member_count: number;
-      approximate_presence_count: number;
-    }>
-  > {
+  }): Promise<Array<Guild>> {
     return this.rest
-      .get<
-        Array<{
-          id: string;
-          name: string;
-          icon: string;
-          owner: boolean;
-          permissions: string;
-          features: Array<GuildFeatures>;
-          approximate_member_count: number;
-          approximate_presence_count: number;
-        }>
-      >(Endpoints.userGuilds(), {
+      .get<Array<RawGuild>>(Endpoints.userGuilds(), {
         query: {
           before: options?.before,
           after: options?.after,
@@ -485,18 +463,7 @@ export class Client extends EventEmitter {
           with_counts: options?.withCounts,
         },
       })
-      .then((response) =>
-        response.map((data) => ({
-          id: data.id,
-          name: data.name,
-          icon: data.icon,
-          owner: data.owner,
-          permissions: data.permissions,
-          features: data.features,
-          approximate_member_count: data.approximate_member_count,
-          approximate_presence_count: data.approximate_presence_count,
-        }))
-      );
+      .then((response) => response.map((data) => new Guild(data, this)));
   }
 
   /** https://discord.com/developers/docs/resources/voice#list-voice-regions */
