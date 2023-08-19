@@ -5,7 +5,6 @@ import {
   GatewayEvents,
   GatewayIntents,
   GatewayOPCodes,
-  type GuildFeatures,
   type OAuth2Scopes,
   type PrivacyLevel,
   StatusTypes,
@@ -36,7 +35,7 @@ import {
 import type {
   Activity,
   JSONAuditLogEntry,
-  AutoModerationActionExectionEventFields,
+  AutoModerationActionExecutionEventFields,
   JSONAutoModerationRule,
   JSONChannel,
   ChannelPinsUpdateEventFields,
@@ -117,7 +116,7 @@ export interface ClientEvents {
   autoModerationRuleUpdate: [listener: AutoModerationRule];
   autoModerationRuleDelete: [listener: JSONAutoModerationRule];
   autoModerationActionExecution: [
-    listener: AutoModerationActionExectionEventFields
+    listener: AutoModerationActionExecutionEventFields
   ];
   channelCreate: [listener: Channel];
   channelUpdate: [listener: Channel];

@@ -361,7 +361,7 @@ export interface ReadyEventFields {
   shard?: Array<number>;
 }
 
-export interface AutoModerationActionExectionEventFields {
+export interface AutoModerationActionExecutionEventFields {
   guildId: string;
   action: JSONAutoModerationAction;
   ruleId: string;
