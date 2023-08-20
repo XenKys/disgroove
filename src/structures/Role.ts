@@ -85,7 +85,7 @@ export class Role extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
-  public deleteRole(reason?: string): void {
+  public delete(reason?: string): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.delete(Endpoints.guildRole(this.guildId, this.id), {
