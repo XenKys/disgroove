@@ -492,11 +492,17 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
-  public bulkDeleteMessages(messagesIds: Array<string>): void {
-    this.client.rest.post(Endpoints.channelMessages(this.id), {
+  public bulkDeleteMessages(
+    options?: {
+      messagesIds?: Array<string>;
+    },
+    reason?: string
+  ): void {
+    this.client.rest.post(Endpoints.channelBulkDelete(this.id), {
       json: {
-        messages: messagesIds,
+        messages: options?.messagesIds,
       },
+      reason,
     });
   }
 
