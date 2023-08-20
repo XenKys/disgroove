@@ -89,7 +89,6 @@ export class RequestsManager {
         if (
           response.headers.has("X-RateLimit-Bucket") &&
           response.headers.get("X-RateLimit-Remaining") === "0" &&
-          response.headers.get("X-RateLimit-Limit") !== "1" &&
           !this.rateLimits.includes(response.headers.get("X-RateLimit-Bucket")!)
         ) {
           this.rateLimits.push(response.headers.get("X-RateLimit-Bucket")!);
