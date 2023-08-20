@@ -407,7 +407,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
-  public createFollowupMessage(options: {
+  public async createFollowupMessage(options: {
     content?: string | null;
     tts?: boolean;
     embeds?: Array<JSONEmbed> | null;
@@ -456,35 +456,41 @@ export class Interaction extends Base {
     attachments?: Array<JSONAttachment> | null;
     flags?: MessageFlags | null;
     threadName?: string;
-  }): void {
-    this.client.rest.post(Endpoints.webhook(this.applicationId, this.token), {
-      json: {
-        content: options.content,
-        tts: options.tts,
-        embeds:
-          options.embeds !== undefined
-            ? options.embeds !== null
-              ? this.client.util.embedsToRaw(options.embeds)
-              : null
-            : undefined,
-        allowed_mentions: {
-          parse: options.allowedMentions?.parse,
-          roles: options.allowedMentions?.roles,
-          users: options.allowedMentions?.users,
-          replied_user: options.allowedMentions?.repliedUser,
-        },
-        components:
-          options.components !== undefined
-            ? options.components !== null
-              ? this.client.util.messageComponentToRaw(options.components)
-              : null
-            : undefined,
-        attachments: options.attachments,
-        flags: options.flags,
-        thread_name: options.threadName,
-      },
-      files: options.files,
-    });
+  }): Promise<Message> {
+    return new Message(
+      await this.client.rest.post(
+        Endpoints.webhook(this.applicationId, this.token),
+        {
+          json: {
+            content: options.content,
+            tts: options.tts,
+            embeds:
+              options.embeds !== undefined
+                ? options.embeds !== null
+                  ? this.client.util.embedsToRaw(options.embeds)
+                  : null
+                : undefined,
+            allowed_mentions: {
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
+            },
+            components:
+              options.components !== undefined
+                ? options.components !== null
+                  ? this.client.util.messageComponentToRaw(options.components)
+                  : null
+                : undefined,
+            attachments: options.attachments,
+            flags: options.flags,
+            thread_name: options.threadName,
+          },
+          files: options.files,
+        }
+      ),
+      this.client
+    );
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message */
