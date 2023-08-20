@@ -174,47 +174,84 @@ export class Webhook extends Base {
       flags?: MessageFlags | null;
       threadName?: string;
     }
-  ): Promise<Message> {
-    return new Message(
-      await this.client.rest.post<RawMessage>(
-        Endpoints.webhook(this.id, token),
-        {
-          query: {
-            wait: options.wait,
-            thread_id: options.threadId,
-            username: options.username,
-            avatarURL: options.avatarURL,
-          },
-          json: {
-            content: options.content,
-            tts: options.tts,
-            embeds:
-              options.embeds !== undefined
-                ? options.embeds !== null
-                  ? this.client.util.embedsToRaw(options.embeds)
-                  : null
-                : undefined,
-            allowed_mentions: {
-              parse: options.allowedMentions?.parse,
-              roles: options.allowedMentions?.roles,
-              users: options.allowedMentions?.users,
-              replied_user: options.allowedMentions?.repliedUser,
+  ): Promise<Message | void> {
+    if (options.wait) {
+      return new Message(
+        await this.client.rest.post<RawMessage>(
+          Endpoints.webhook(this.id, token),
+          {
+            query: {
+              wait: options.wait,
+              thread_id: options.threadId,
+              username: options.username,
+              avatarURL: options.avatarURL,
             },
-            components:
-              options.components !== undefined
-                ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
-                  : null
-                : undefined,
-            attachments: options.attachments,
-            flags: options.flags,
-            thread_name: options.threadName,
+            json: {
+              content: options.content,
+              tts: options.tts,
+              embeds:
+                options.embeds !== undefined
+                  ? options.embeds !== null
+                    ? this.client.util.embedsToRaw(options.embeds)
+                    : null
+                  : undefined,
+              allowed_mentions: {
+                parse: options.allowedMentions?.parse,
+                roles: options.allowedMentions?.roles,
+                users: options.allowedMentions?.users,
+                replied_user: options.allowedMentions?.repliedUser,
+              },
+              components:
+                options.components !== undefined
+                  ? options.components !== null
+                    ? this.client.util.messageComponentToRaw(options.components)
+                    : null
+                  : undefined,
+              attachments: options.attachments,
+              flags: options.flags,
+              thread_name: options.threadName,
+            },
+            files: options.files,
+          }
+        ),
+        this.client
+      );
+    } else {
+      this.client.rest.post(Endpoints.webhook(this.id, token), {
+        query: {
+          wait: options.wait,
+          thread_id: options.threadId,
+          username: options.username,
+          avatarURL: options.avatarURL,
+        },
+        json: {
+          content: options.content,
+          tts: options.tts,
+          embeds:
+            options.embeds !== undefined
+              ? options.embeds !== null
+                ? this.client.util.embedsToRaw(options.embeds)
+                : null
+              : undefined,
+          allowed_mentions: {
+            parse: options.allowedMentions?.parse,
+            roles: options.allowedMentions?.roles,
+            users: options.allowedMentions?.users,
+            replied_user: options.allowedMentions?.repliedUser,
           },
-          files: options.files,
-        }
-      ),
-      this.client
-    );
+          components:
+            options.components !== undefined
+              ? options.components !== null
+                ? this.client.util.messageComponentToRaw(options.components)
+                : null
+              : undefined,
+          attachments: options.attachments,
+          flags: options.flags,
+          thread_name: options.threadName,
+        },
+        files: options.files,
+      });
+    }
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
