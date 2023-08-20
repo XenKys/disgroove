@@ -241,7 +241,7 @@ export class Client extends EventEmitter {
           ? options.intents.reduce((sum, num) => sum + num, 0)
           : options.intents
         : GatewayIntents.AllNonPrivileged;
-    this.shards = options?.shards ?? -1;
+    this.shards = options?.shards ?? "auto";
     this.auth = options?.auth ?? "Bot";
     this.rest = new REST(token, this.auth);
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
@@ -588,8 +588,10 @@ export class Client extends EventEmitter {
   }
 
   private async onWebSocketOpen(): Promise<void> {
-    const gatewayBot = await this.getGatewayBot();
-    const shards = this.shards !== "auto" ? this.shards : gatewayBot.shards;
+    const shards =
+      this.shards !== "auto"
+        ? this.shards
+        : (await this.getGatewayBot()).shards;
 
     for (let i = 0; i < shards; i++) {
       this.ws.send(
