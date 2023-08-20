@@ -220,7 +220,7 @@ export interface ClientOptions {
 }
 
 export class Client extends EventEmitter {
-  private heartbeatInterval!: NodeJS.Timer | null;
+  private heartbeatInterval!: NodeJS.Timeout | null;
   public token: string;
   public intents: GatewayIntents | number;
   public shards: number | "auto";
