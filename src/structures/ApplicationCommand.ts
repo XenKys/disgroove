@@ -173,7 +173,7 @@ export class ApplicationCommand extends Base {
       );
 
     return this.client.rest
-      .patch<RawGuildApplicationCommandPermissions>(
+      .put<RawGuildApplicationCommandPermissions>(
         Endpoints.applicationCommandPermissions(
           this.applicationId,
           this.guildId,
