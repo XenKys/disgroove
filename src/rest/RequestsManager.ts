@@ -126,6 +126,14 @@ export class RequestsManager {
                   .catch(reject);
               }, Number(response.headers.get("Retry-After")) * 1000);
             }
+          } else if (response.status === HTTPResponseCodes.GatewayUnavailable) {
+            setTimeout(
+              () =>
+                this.request<T>(method, endpoint, data)
+                  .then(resolve)
+                  .catch(reject),
+              5 * 1000
+            );
           } else {
             const responseJSON = await response.json();
 
