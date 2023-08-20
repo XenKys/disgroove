@@ -507,7 +507,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
-  public editChannelPermissions(
+  public editPermissions(
     overwriteId: string,
     options: {
       allow?: string | null;
@@ -523,7 +523,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
-  public async getChannelInvites(): Promise<Array<Invite>> {
+  public async getInvites(): Promise<Array<Invite>> {
     return this.client.rest
       .get<Array<RawInvite>>(Endpoints.channelInvites(this.id))
       .then((response) =>
@@ -532,7 +532,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
-  public async createChannelInvite(
+  public async createInvite(
     options: {
       maxAge?: number;
       maxUses?: number;
@@ -565,7 +565,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
-  public deleteChannelPermission(overwriteId: string, reason?: string): void {
+  public deletePermission(overwriteId: string, reason?: string): void {
     this.client.rest.delete(Endpoints.channelPermission(this.id, overwriteId), {
       reason,
     });
