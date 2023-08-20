@@ -298,9 +298,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response */
-  public async getOriginalResponse(options?: {
-    threadId?: string;
-  }): Promise<Message> {
+  public async getResponse(options?: { threadId?: string }): Promise<Message> {
     return new Message(
       await this.client.rest.get<RawMessage>(
         Endpoints.interactionOriginalMessage(this.id, this.token),
@@ -315,7 +313,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
-  public async editOriginalResponse(options: {
+  public async editResponse(options: {
     threadId?: string;
     content?: string | null;
     embeds?: Array<JSONEmbed> | null;
@@ -402,7 +400,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
-  public deleteOriginalResponse(): void {
+  public deleteResponse(): void {
     this.client.rest.delete(
       Endpoints.interactionOriginalMessage(this.id, this.token)
     );
