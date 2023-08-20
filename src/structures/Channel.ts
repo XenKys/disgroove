@@ -572,7 +572,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
-  public async followAnnouncementChannel(options: {
+  public async follow(options: {
     webhookChannelId: string;
   }): Promise<JSONFollowedChannel> {
     return this.client.rest
