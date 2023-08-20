@@ -616,7 +616,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
-  public groupDMAddRecipient(
+  public addRecipient(
     userId: string,
     options: {
       accessToken: string;
@@ -632,7 +632,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
-  public groupDMRemoveRecipient(userId: string): void {
+  public removeRecipient(userId: string): void {
     this.client.rest.delete(Endpoints.channelRecipient(this.id, userId));
   }
 
