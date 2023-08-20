@@ -750,15 +750,6 @@ export enum OAuth2Scopes {
   WebhookIncoming = "webhook.incoming",
 }
 
-/** https://discord.com/developers/docs/topics/oauth2#bot-authorization-flow-bot-auth-parameters */
-export enum BotAuthParameters {
-  ClientId = "client_id",
-  Scope = "scope",
-  Permissions = "permissions",
-  GuildId = "guild_id",
-  DisabledGuildSelect = "disable_guild_select",
-}
-
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-opcodes */
 export enum GatewayOPCodes {
   Dispatch,
