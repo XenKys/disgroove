@@ -312,15 +312,15 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
-  public async getApplicationCommands(
-    applicationId: string,
-    options?: {
-      withLocalizations?: boolean;
-    }
-  ): Promise<Array<ApplicationCommand>> {
+  public async getApplicationCommands(options?: {
+    withLocalizations?: boolean;
+  }): Promise<Array<ApplicationCommand>> {
+    if (!this.applicationId)
+      throw new Error("[disgroove] Cannot find guild application ID");
+
     return this.client.rest
       .get<Array<RawApplicationCommand>>(
-        Endpoints.applicationGuildCommands(applicationId, this.id),
+        Endpoints.applicationGuildCommands(this.applicationId, this.id),
         {
           query: {
             with_localizations: options?.withLocalizations,
@@ -333,14 +333,20 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
-  public async createApplicationCommand(
-    applicationId: string,
-    options: {
-      name?: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
-      description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
+  public async createApplicationCommand(options: {
+    name?: string;
+    nameLocalizations?: Partial<Record<Locale, string>> | null;
+    description?: string;
+    descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+    options?: Array<{
+      type: ApplicationCommandOptionType;
+      name: string;
+      nameLocalizations?: Partial<Record<Locale, string>>;
+      description: string;
+      descriptionLocalizations?: Partial<Record<Locale, string>>;
+      required?: boolean;
+      choices?: Array<JSONApplicationCommandOptionChoice>;
+      options: Array<{
         type: ApplicationCommandOptionType;
         name: string;
         nameLocalizations?: Partial<Record<Locale, string>>;
@@ -348,21 +354,6 @@ export class Guild extends Base {
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
         choices?: Array<JSONApplicationCommandOptionChoice>;
-        options: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
         channelTypes?: Array<ChannelTypes>;
         minValue?: number;
         maxValue?: number;
@@ -370,16 +361,25 @@ export class Guild extends Base {
         maxLength?: number;
         autocomplete?: boolean;
       }>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type?: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }
-  ): Promise<ApplicationCommand> {
+      channelTypes?: Array<ChannelTypes>;
+      minValue?: number;
+      maxValue?: number;
+      minLength?: number;
+      maxLength?: number;
+      autocomplete?: boolean;
+    }>;
+    defaultMemberPermissions?: string | null;
+    dmPermission?: boolean;
+    defaultPermission?: boolean | null;
+    type?: ApplicationCommandTypes;
+    nsfw?: boolean;
+  }): Promise<ApplicationCommand> {
+    if (!this.applicationId)
+      throw new Error("[disgroove] Cannot find guild application ID");
+
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
-        Endpoints.applicationGuildCommands(applicationId, this.id),
+        Endpoints.applicationGuildCommands(this.applicationId, this.id),
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -390,12 +390,18 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
   public async getApplicationCommand(
-    applicationId: string,
     commandId: string
   ): Promise<ApplicationCommand> {
+    if (!this.applicationId)
+      throw new Error("[disgroove] Cannot find guild application ID");
+
     return new ApplicationCommand(
       await this.client.rest.get<RawApplicationCommand>(
-        Endpoints.applicationGuildCommand(applicationId, this.id, commandId)
+        Endpoints.applicationGuildCommand(
+          this.applicationId,
+          this.id,
+          commandId
+        )
       ),
       this.client
     );
@@ -403,7 +409,6 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
   public async editApplicationCommand(
-    applicationId: string,
     commandId: string,
     options: {
       name?: string;
@@ -446,9 +451,16 @@ export class Guild extends Base {
       nsfw?: boolean;
     }
   ): Promise<ApplicationCommand> {
+    if (!this.applicationId)
+      throw new Error("[disgroove] Cannot find guild application ID");
+
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
-        Endpoints.applicationGuildCommand(applicationId, this.id, commandId),
+        Endpoints.applicationGuildCommand(
+          this.applicationId,
+          this.id,
+          commandId
+        ),
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -458,25 +470,31 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  public deleteApplicationCommand(
-    applicationId: string,
-    commandId: string
-  ): void {
+  public deleteApplicationCommand(commandId: string): void {
+    if (!this.applicationId)
+      throw new Error("[disgroove] Cannot find guild application ID");
+
     this.client.rest.delete(
-      Endpoints.applicationGuildCommand(applicationId, this.id, commandId)
+      Endpoints.applicationGuildCommand(this.applicationId, this.id, commandId)
     );
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
-  public async bulkOverwriteGuildApplicationCommands(
-    applicationId: string,
-    options: {
-      id?: string;
-      name?: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
-      description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
+  public async bulkOverwriteGuildApplicationCommands(options: {
+    id?: string;
+    name?: string;
+    nameLocalizations?: Partial<Record<Locale, string>> | null;
+    description?: string;
+    descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+    options?: Array<{
+      type: ApplicationCommandOptionType;
+      name: string;
+      nameLocalizations?: Partial<Record<Locale, string>>;
+      description: string;
+      descriptionLocalizations?: Partial<Record<Locale, string>>;
+      required?: boolean;
+      choices?: Array<JSONApplicationCommandOptionChoice>;
+      options: Array<{
         type: ApplicationCommandOptionType;
         name: string;
         nameLocalizations?: Partial<Record<Locale, string>>;
@@ -484,21 +502,6 @@ export class Guild extends Base {
         descriptionLocalizations?: Partial<Record<Locale, string>>;
         required?: boolean;
         choices?: Array<JSONApplicationCommandOptionChoice>;
-        options: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
         channelTypes?: Array<ChannelTypes>;
         minValue?: number;
         maxValue?: number;
@@ -506,16 +509,25 @@ export class Guild extends Base {
         maxLength?: number;
         autocomplete?: boolean;
       }>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }
-  ): Promise<Array<ApplicationCommand>> {
+      channelTypes?: Array<ChannelTypes>;
+      minValue?: number;
+      maxValue?: number;
+      minLength?: number;
+      maxLength?: number;
+      autocomplete?: boolean;
+    }>;
+    defaultMemberPermissions?: string | null;
+    dmPermission?: boolean;
+    defaultPermission?: boolean | null;
+    type: ApplicationCommandTypes;
+    nsfw?: boolean;
+  }): Promise<Array<ApplicationCommand>> {
+    if (!this.applicationId)
+      throw new Error("[disgroove] Cannot find guild application ID");
+
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
-        Endpoints.applicationGuildCommands(applicationId, this.id),
+        Endpoints.applicationGuildCommands(this.applicationId, this.id),
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
