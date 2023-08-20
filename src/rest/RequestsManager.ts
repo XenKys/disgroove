@@ -98,7 +98,6 @@ export class RequestsManager {
             this.rateLimits = this.rateLimits.filter(
               (bucket) => bucket !== response.headers.get("X-RateLimit-Bucket")
             );
-            this.request<T>(method, endpoint, data).then(resolve).catch(reject);
           }, Number(response.headers.get("X-RateLimit-Reset-After")) * 1000);
         }
 
