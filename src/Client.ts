@@ -97,12 +97,6 @@ import type {
 } from "./types";
 import EventEmitter from "node:events";
 
-export interface ClientOptions {
-  intents?: number | Array<number>;
-  shards?: number;
-  auth?: "Bot" | "Bearer";
-}
-
 export interface ClientEvents {
   hello: [listener: HelloEventFields];
   ready: [listener: ReadyEventFields];
@@ -219,11 +213,17 @@ export declare interface Client extends EventEmitter {
   ): this;
 }
 
+export interface ClientOptions {
+  intents?: number | Array<number>;
+  shards?: number | "auto";
+  auth?: "Bot" | "Bearer";
+}
+
 export class Client extends EventEmitter {
   private heartbeatInterval!: NodeJS.Timer | null;
   public token: string;
   public intents: GatewayIntents | number;
-  public shards: number;
+  public shards: number | "auto";
   public auth: "Bot" | "Bearer";
   public rest: REST;
   public ws: WebSocket;
@@ -589,7 +589,7 @@ export class Client extends EventEmitter {
 
   private async onWebSocketOpen(): Promise<void> {
     const gatewayBot = await this.getGatewayBot();
-    const shards = this.shards !== -1 ? this.shards : gatewayBot.shards;
+    const shards = this.shards !== "auto" ? this.shards : gatewayBot.shards;
 
     for (let i = 0; i < shards; i++) {
       this.ws.send(
