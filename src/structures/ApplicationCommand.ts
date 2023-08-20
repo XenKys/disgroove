@@ -137,7 +137,7 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
-  public async getGuildApplicationCommandPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
+  public async getPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
       throw new Error(
         "[disgroove] Can't get the permissions of a global application command"
@@ -164,7 +164,7 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
-  public async editGuildApplicationPermissions(options: {
+  public async editPermissions(options: {
     permissions: Array<JSONApplicationCommandPermission>;
   }): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)

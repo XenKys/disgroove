@@ -740,7 +740,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
-  public async getGuildEmojis(): Promise<Array<Emoji>> {
+  public async getEmojis(): Promise<Array<Emoji>> {
     return this.client.rest
       .get<Array<RawEmoji>>(Endpoints.guildEmojis(this.id))
       .then((response) => response.map((data) => new Emoji(data, this.client)));
@@ -992,7 +992,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-active-guild-threads */
-  public async getActiveGuildThreads(): Promise<
+  public async getActiveThreads(): Promise<
     Array<{
       threads: Array<Channel>;
       members: Array<JSONThreadMember>;
@@ -1033,7 +1033,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
-  public async getGuildMembers(): Promise<Array<GuildMember>> {
+  public async getMembers(): Promise<Array<GuildMember>> {
     return this.client.rest
       .get<Array<RawGuildMember>>(Endpoints.guildMembers(this.id))
       .then((response) =>
@@ -1042,7 +1042,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#search-guild-members */
-  public async searchGuildMembers(options: {
+  public async searchMembers(options: {
     query: string;
     limit?: number;
   }): Promise<Array<GuildMember>> {
@@ -1059,7 +1059,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member */
-  public async addGuildMember(
+  public async addMember(
     userId: string,
     options: {
       accessToken: string;
@@ -1138,11 +1138,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
-  public addGuildMemberRole(
-    userId: string,
-    roleId: string,
-    reason?: string
-  ): void {
+  public addMemberRole(userId: string, roleId: string, reason?: string): void {
     this.client.rest.put(Endpoints.guildMemberRole(this.id, userId, roleId), {
       reason,
     });

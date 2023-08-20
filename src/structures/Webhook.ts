@@ -58,7 +58,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
-  public async editWebhook(
+  public async edit(
     options: {
       name?: string;
       avatar?: string | null;
