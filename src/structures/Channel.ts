@@ -250,10 +250,10 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-message */
-  public async getMessage(): Promise<Message> {
+  public async getMessage(messageId: string): Promise<Message> {
     return new Message(
       await this.client.rest.get<RawMessage>(
-        Endpoints.channelMessages(this.id)
+        Endpoints.channelMessage(this.id, messageId)
       ),
       this.client
     );
