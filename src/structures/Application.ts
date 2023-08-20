@@ -443,7 +443,6 @@ export class Application extends Base {
   public async bulkOverwriteGuildApplicationCommands(
     guildId: string,
     commands: Array<{
-      id?: string;
       name?: string;
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
