@@ -14,7 +14,7 @@ export enum RESTMethods {
 }
 
 export class REST {
-  private manager: RequestsManager;
+  public manager: RequestsManager;
 
   constructor(token: string, auth: "Bot" | "Bearer") {
     this.manager = new RequestsManager(token, auth);

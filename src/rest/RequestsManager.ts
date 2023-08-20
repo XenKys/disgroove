@@ -48,8 +48,8 @@ export class RequestsManager {
 
       if (method !== RESTMethods.Get) {
         if (data?.files && data?.files?.length !== 0) {
-          const formData = new FormData(),
-            files = data?.files;
+          const formData = new FormData();
+          const files = data?.files;
 
           for (let i = 0; i < data?.files.length; i++) {
             const file = files[i];
