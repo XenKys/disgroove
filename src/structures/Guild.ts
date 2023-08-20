@@ -526,12 +526,18 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
-  public async getApplicationCommandPermissions(
-    guildId: string
-  ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
+  public async getApplicationCommandPermissions(): Promise<
+    Array<JSONGuildApplicationCommandPermissions>
+  > {
+    if (!this.applicationId)
+      throw new Error("[disgroove] Cannot find guild application ID");
+
     return this.client.rest
       .get<Array<RawGuildApplicationCommandPermissions>>(
-        Endpoints.guildApplicationCommandsPermissions(this.id, guildId)
+        Endpoints.guildApplicationCommandsPermissions(
+          this.applicationId,
+          this.id
+        )
       )
       .then((response) =>
         response.map((permissions) => ({
