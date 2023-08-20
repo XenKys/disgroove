@@ -51,7 +51,7 @@ export class Role extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   public async edit(
-    options: {
+    options?: {
       name?: string | null;
       permissions?: string | null;
       color?: number | null;
@@ -69,13 +69,13 @@ export class Role extends Base {
         Endpoints.guildRole(this.guildId, this.id),
         {
           json: {
-            name: options.name,
-            permissions: options.permissions,
-            color: options.color,
-            hoist: options.hoist,
-            icon: options.icon,
-            unicode_emoji: options.unicodeEmoji,
-            mentionable: options.mentionable,
+            name: options?.name,
+            permissions: options?.permissions,
+            color: options?.color,
+            hoist: options?.hoist,
+            icon: options?.icon,
+            unicode_emoji: options?.unicodeEmoji,
+            mentionable: options?.mentionable,
           },
           reason,
         }
