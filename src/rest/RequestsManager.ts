@@ -17,7 +17,7 @@ export class RequestsManager {
     method: string,
     endpoint: string,
     data?: {
-      json?: Record<string, any> | Array<Record<string, any>>;
+      json?: unknown;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -36,7 +36,7 @@ export class RequestsManager {
 
       let headers: Record<string, string> = {
         Authorization: `${this.auth} ${this.token}`,
-        "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.2.2)`,
+        "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.2.3-dev.afd49cc)`,
       };
       let body: string | FormData | undefined;
 

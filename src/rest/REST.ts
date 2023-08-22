@@ -23,9 +23,6 @@ export class REST {
   public get<T>(
     endpoint: string,
     data?: {
-      json?: Record<string, any> | Array<Record<string, any>>;
-      files?: Array<File> | null;
-      reason?: string;
       query?: Record<string, any>;
     }
   ): Promise<T> {
@@ -35,7 +32,7 @@ export class REST {
   public post<T>(
     endpoint: string,
     data?: {
-      json?: Record<string, any> | Array<Record<string, any>>;
+      json?: unknown;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -47,7 +44,7 @@ export class REST {
   public delete<T>(
     endpoint: string,
     data?: {
-      json?: Record<string, any> | Array<Record<string, any>>;
+      json?: unknown;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -59,7 +56,7 @@ export class REST {
   public patch<T>(
     endpoint: string,
     data?: {
-      json?: Record<string, any> | Array<Record<string, any>>;
+      json?: unknown;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -71,7 +68,7 @@ export class REST {
   public put<T>(
     endpoint: string,
     data?: {
-      json?: Record<string, any> | Array<Record<string, any>>;
+      json?: unknown;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
