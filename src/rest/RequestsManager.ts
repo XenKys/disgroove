@@ -6,14 +6,11 @@ import { HTTPError, RESTError } from "../utils";
 export class RequestsManager {
   public token: string;
   public auth: "Bot" | "Bearer";
-  public rateLimits: Array<string>;
-  public globalBlock: boolean;
+  public globalBlock: boolean = false;
 
   constructor(token: string, auth: "Bot" | "Bearer") {
     this.token = token;
     this.auth = auth;
-    this.rateLimits = [];
-    this.globalBlock = false;
   }
 
   public request<T = unknown>(
@@ -37,12 +34,9 @@ export class RequestsManager {
         }
       }
 
-      let headers: {
-        Authorization: string;
-        "Content-Type"?: string;
-        "X-Audit-Log-Reason"?: string;
-      } = {
+      let headers: Record<string, string> = {
         Authorization: `${this.auth} ${this.token}`,
+        "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.2.2)`,
       };
       let body: string | FormData | undefined;
 
@@ -81,49 +75,25 @@ export class RequestsManager {
           headers,
         });
 
-        if (
-          this.rateLimits.includes(response.headers.get("X-RateLimit-Bucket")!)
-        )
-          return;
-
-        if (
-          response.headers.has("X-RateLimit-Bucket") &&
-          response.headers.get("X-RateLimit-Remaining") === "0" &&
-          !this.rateLimits.includes(response.headers.get("X-RateLimit-Bucket")!)
-        ) {
-          this.rateLimits.push(response.headers.get("X-RateLimit-Bucket")!);
+        if (response.headers.has("X-RateLimit-Global")) {
+          this.globalBlock = true;
 
           setTimeout(() => {
-            this.rateLimits = this.rateLimits.filter(
-              (bucket) => bucket !== response.headers.get("X-RateLimit-Bucket")
-            );
-          }, Number(response.headers.get("X-RateLimit-Reset-After")) * 1000);
+            this.globalBlock = false;
+
+            this.request<T>(method, endpoint, data).then(resolve).catch(reject);
+          }, Number(response.headers.get("Retry-After")) * 1000);
         }
 
         if (response.status >= HTTPResponseCodes.NotModified) {
           if (response.status === HTTPResponseCodes.TooManyRequests) {
-            if (
-              !this.rateLimits.includes(
-                response.headers.get("X-RateLimit-Bucket")!
-              )
-            )
-              this.rateLimits.push(response.headers.get("X-RateLimit-Bucket")!);
-
-            if (response.headers.has("X-RateLimit-Global")) {
-              this.globalBlock = true;
-
-              setTimeout(() => {
-                this.globalBlock = false;
-
-                this.rateLimits = this.rateLimits.filter(
-                  (bucket) =>
-                    bucket !== response.headers.get("X-RateLimit-Bucket")
-                );
+            setTimeout(
+              () =>
                 this.request<T>(method, endpoint, data)
                   .then(resolve)
-                  .catch(reject);
-              }, Number(response.headers.get("Retry-After")) * 1000);
-            }
+                  .catch(reject),
+              Number(response.headers.get("Retry-After")) * 1000
+            );
           } else if (response.status === HTTPResponseCodes.GatewayUnavailable) {
             setTimeout(
               () =>
