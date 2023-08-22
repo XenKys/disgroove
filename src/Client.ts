@@ -104,59 +104,59 @@ export interface ClientEvents {
   reconnect: [];
   invalidSession: [];
   applicationCommandPermissionsUpdate: [
-    listener: JSONGuildApplicationCommandPermissions
+    applicationCommandPermissions: JSONGuildApplicationCommandPermissions
   ];
-  autoModerationRuleCreate: [listener: AutoModerationRule];
-  autoModerationRuleUpdate: [listener: AutoModerationRule];
-  autoModerationRuleDelete: [listener: JSONAutoModerationRule];
+  autoModerationRuleCreate: [autoModerationRule: AutoModerationRule];
+  autoModerationRuleUpdate: [autoModerationRule: AutoModerationRule];
+  autoModerationRuleDelete: [autoModerationRule: JSONAutoModerationRule];
   autoModerationActionExecution: [
-    listener: AutoModerationActionExecutionEventFields
+    autoModerationAction: AutoModerationActionExecutionEventFields
   ];
-  channelCreate: [listener: Channel];
-  channelUpdate: [listener: Channel];
-  channelDelete: [listener: JSONChannel];
-  threadCreate: [listener: Channel];
-  threadUpdate: [listener: Channel];
-  threadDelete: [listener: JSONChannel];
+  channelCreate: [channel: Channel];
+  channelUpdate: [channel: Channel];
+  channelDelete: [channel: JSONChannel];
+  threadCreate: [thread: Channel];
+  threadUpdate: [thread: Channel];
+  threadDelete: [thread: JSONChannel];
   threadListSync: [listener: ThreadListSyncEventFields];
   threadMemberUpdate: [
-    listener: JSONThreadMember & {
+    threadMember: JSONThreadMember & {
       guildId: string;
     }
   ];
   threadMembersUpdate: [listener: ThreadMembersUpdateEventFields];
   channelPinsUpdate: [listener: ChannelPinsUpdateEventFields];
-  guildCreate: [listener: Guild];
-  guildUpdate: [listener: Guild];
-  guildDelete: [listener: GuildDeleteEventFields];
-  guildAuditLogEntryCreate: [listener: JSONAuditLogEntry];
-  guildBanAdd: [listener: GuildBanAddEventFields];
-  guildBanRemove: [listener: GuildBanRemoveEventFields];
+  guildCreate: [guild: Guild];
+  guildUpdate: [guild: Guild];
+  guildDelete: [guild: GuildDeleteEventFields];
+  guildAuditLogEntryCreate: [auditLogEntry: JSONAuditLogEntry];
+  guildBanAdd: [guildBan: GuildBanAddEventFields];
+  guildBanRemove: [guildBan: GuildBanRemoveEventFields];
   guildEmojisUpdate: [listener: GuildEmojisUpdateEventFields];
   guildStickersUpdate: [listener: GuildStickersUpdateEventFields];
   guildIntegrationsUpdate: [listener: GuildIntegrationsUpdateEventFields];
-  guildMemberAdd: [listener: GuildMember];
-  guildMemberRemove: [listener: GuildMemberRemoveEventFields];
-  guildMemberUpdate: [listener: GuildMemberUpdateEventFields];
+  guildMemberAdd: [guildMember: GuildMember];
+  guildMemberRemove: [guildMember: GuildMemberRemoveEventFields];
+  guildMemberUpdate: [guildMember: GuildMemberUpdateEventFields];
   guildMembersChunk: [listener: GuildMembersChunkEventFields];
   guildRoleCreate: [listener: GuildRoleCreateEventFields];
   guildRoleUpdate: [listener: GuildRoleUpdateEventFields];
   guildRoleDelete: [listener: GuildRoleDeleteEventFields];
-  guildScheduledEventCreate: [listener: GuildScheduledEvent];
-  guildScheduledEventUpdate: [listener: GuildScheduledEvent];
-  guildScheduledEventDelete: [listener: JSONGuildScheduledEvent];
+  guildScheduledEventCreate: [guildScheduledEvent: GuildScheduledEvent];
+  guildScheduledEventUpdate: [guildScheduledEvent: GuildScheduledEvent];
+  guildScheduledEventDelete: [guildScheduledEvent: JSONGuildScheduledEvent];
   guildScheduledEventUserAdd: [listener: GuildScheduledEventUserAddEventFields];
   guildScheduledEventUserRemove: [
     listener: GuildScheduledEventUserRemoveEventFields
   ];
-  integrationCreate: [listener: Integration];
-  integrationUpdate: [listener: Integration];
-  integrationDelete: [listener: IntegrationDeleteEventFields];
-  inviteCreate: [listener: InviteCreateEventFields];
-  inviteDelete: [listener: InviteDeleteEventFields];
-  messageCreate: [listener: Message];
-  messageUpdate: [listener: Message];
-  messageDelete: [listener: MessageDeleteEventFields];
+  integrationCreate: [integration: Integration];
+  integrationUpdate: [integration: Integration];
+  integrationDelete: [integration: IntegrationDeleteEventFields];
+  inviteCreate: [invite: InviteCreateEventFields];
+  inviteDelete: [invite: InviteDeleteEventFields];
+  messageCreate: [message: Message];
+  messageUpdate: [message: Message];
+  messageDelete: [message: MessageDeleteEventFields];
   messageDeleteBulk: [listener: MessageDeleteBulkEventFields];
   messageReactionAdd: [listener: MessageReactionAddEventFields];
   messageReactionRemove: [listener: MessageReactionRemoveEventFields];
@@ -164,14 +164,14 @@ export interface ClientEvents {
   messageReactionRemoveEmoji: [listener: MessageReactionRemoveEmojiEventFields];
   presenceUpdate: [listener: PresenceUpdateEventFields];
   typingStart: [listener: TypingStartEventFields];
-  userUpdate: [listener: User];
-  voiceStateUpdate: [listener: VoiceState];
+  userUpdate: [user: User];
+  voiceStateUpdate: [voiceState: VoiceState];
   voiceServerUpdate: [listener: VoiceServerUpdateEventFields];
   webhooksUpdate: [listener: WebhooksUpdateEventFields];
-  interactionCreate: [listener: Interaction];
-  stageInstanceCreate: [listener: StageInstance];
-  stageInstanceUpdate: [listener: StageInstance];
-  stageInstanceDelete: [listener: JSONStageInstance];
+  interactionCreate: [interaction: Interaction];
+  stageInstanceCreate: [stageInstance: StageInstance];
+  stageInstanceUpdate: [stageInstance: StageInstance];
+  stageInstanceDelete: [stageInstance: JSONStageInstance];
 }
 
 export declare interface Client extends EventEmitter {
