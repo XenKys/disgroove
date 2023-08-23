@@ -30,7 +30,7 @@ export class RequestsManager {
 
       if (data?.query) {
         for (const [key, value] of Object.entries(data?.query)) {
-          if (value !== undefined) url.searchParams.set(key, value);
+          if (value !== undefined) url.searchParams.set(key, String(value));
         }
       }
 
