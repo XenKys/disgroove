@@ -1,6 +1,7 @@
 import { Base, User } from ".";
 import type { Client } from "../Client";
 import type { StickerFormatTypes, StickerTypes } from "../constants";
+import { Endpoints } from "../rest";
 import type { JSONSticker, RawSticker } from "../types";
 
 /** https://discord.com/developers/docs/resources/sticker */
@@ -38,6 +39,39 @@ export class Sticker extends Base {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.user !== undefined) this.user = new User(data.user, this.client);
     if (data.sort_value !== undefined) this.sortValue = data.sort_value;
+  }
+
+  /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
+  public async edit(
+    guildId: string,
+    options: {
+      name?: string;
+      description?: string | null;
+      tags?: string;
+    },
+    reason?: string
+  ): Promise<Sticker> {
+    return new Sticker(
+      await this.client.rest.patch<RawSticker>(
+        Endpoints.guildSticker(guildId, this.id),
+        {
+          json: {
+            name: options.name,
+            description: options.description,
+            tags: options.tags,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
+  public delete(guildId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.guildSticker(guildId, this.id), {
+      reason,
+    });
   }
 
   public override toRaw(): RawSticker {
