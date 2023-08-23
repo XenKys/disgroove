@@ -90,6 +90,7 @@ import type {
   SystemChannelFlags,
   VerificationLevel,
 } from "../constants";
+import { File as UndiciFile, FormData } from "undici";
 
 /** https://discord.com/developers/docs/resources/guild */
 export class Guild extends Base {
@@ -1895,14 +1896,19 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<Sticker> {
+    const formData = new FormData();
+
+    formData.set("name", options.name);
+    formData.set("description", options.description);
+    formData.set("tags", options.tags);
+    formData.set(
+      "file",
+      new UndiciFile([options.file.contents], options.file.name)
+    );
+
     return this.client.rest
       .post<RawSticker>(Endpoints.guildStickers(this.id), {
-        json: {
-          name: options.name,
-          description: options.description,
-          tags: options.tags,
-        },
-        files: [options.file],
+        form: formData,
         reason,
       })
       .then((response) => new Sticker(response, this.client));
