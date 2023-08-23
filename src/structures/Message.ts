@@ -37,17 +37,17 @@ export class Message extends Base {
     member?: RawGuildMember;
   };
   public channelId: string;
-  public author?: User;
-  public content?: string;
+  public author: User;
+  public content: string;
   public timestamp: string;
-  public editedTimestamp?: string | null;
+  public editedTimestamp: string | null;
   public tts: boolean;
   public mentionEveryone: boolean;
-  public mentions?: Array<User>;
-  public mentionRoles?: Array<string>;
+  public mentions: Array<User>;
+  public mentionRoles: Array<string>;
   public mentionChannels?: Array<JSONChannelMention>;
-  public attachments?: Array<JSONAttachment>;
-  public embeds?: Array<JSONEmbed>;
+  public attachments: Array<JSONAttachment>;
+  public embeds: Array<JSONEmbed>;
   public reactions?: Array<JSONReaction>;
   public nonce?: number | string;
   public pinned: boolean;
@@ -80,7 +80,78 @@ export class Message extends Base {
 
     this.raw = data;
     this.channelId = data.channel_id;
+    this.author = new User(data.author, this.client);
+    this.content = data.content;
     this.timestamp = data.timestamp;
+    this.editedTimestamp = null;
+    this.mentions = data.mentions.map((user) => new User(user, this.client));
+    this.mentionRoles = data.mention_roles;
+    this.attachments = data.attachments.map((attachment) => ({
+      id: attachment.id,
+      filename: attachment.filename,
+      description: attachment.description,
+      contentType: attachment.content_type,
+      size: attachment.size,
+      url: attachment.url,
+      proxyUrl: attachment.proxy_url,
+      height: attachment.height,
+      width: attachment.width,
+      ephemeral: attachment.ephemeral,
+    }));
+    this.embeds = data.embeds.map((embed) => ({
+      title: embed.title,
+      type: embed.type,
+      description: embed.description,
+      url: embed.url,
+      timestamp: embed.timestamp,
+      color: embed.color,
+      footer: embed.footer
+        ? {
+            text: embed.footer.text,
+            iconUrl: embed.footer.icon_url,
+            proxyIconUrl: embed.footer.proxy_icon_url,
+          }
+        : undefined,
+      image: embed.image
+        ? {
+            url: embed.image.url,
+            proxyUrl: embed.image.proxy_url,
+            height: embed.image.height,
+            width: embed.image.width,
+          }
+        : undefined,
+      thumbnail: embed.thumbnail
+        ? {
+            url: embed.thumbnail.url,
+            proxyUrl: embed.thumbnail.proxy_url,
+            height: embed.thumbnail.height,
+            width: embed.thumbnail.width,
+          }
+        : undefined,
+      video: {
+        url: embed.video?.url,
+        proxyUrl: embed.video?.proxy_url,
+        height: embed.video?.height,
+        width: embed.video?.width,
+      },
+      provider: {
+        name: embed.provider?.name,
+        url: embed.provider?.url,
+      },
+      author: embed.author
+        ? {
+            name: embed.author.name,
+            url: embed.author.url,
+            iconUrl: embed.author.icon_url,
+            proxyIconUrl: embed.author.proxy_icon_url,
+          }
+        : undefined,
+      fields: embed.fields?.map((field) => ({
+        name: field.name,
+        value: field.value,
+        inline: field.inline,
+      })),
+    }));
     this.tts = data.tts;
     this.mentionEveryone = data.mention_everyone;
     this.pinned = data.pinned;
@@ -95,89 +166,14 @@ export class Message extends Base {
       member?: RawGuildMember;
     }
   ): void {
-    if (data.author !== undefined)
-      this.author = new User(data.author, this.client);
-    if (data.content !== undefined) this.content = data.content;
-    if (data.edited_timestamp !== undefined)
-      this.editedTimestamp = data.edited_timestamp;
-    if (data.mentions !== undefined)
-      this.mentions = data.mentions.map((user) => new User(user, this.client));
-    if (data.mention_roles !== undefined)
-      this.mentionRoles = data.mention_roles;
+    this.editedTimestamp =
+      data.edited_timestamp !== null ? data.edited_timestamp : null;
     if (data.mention_channels !== undefined)
       this.mentionChannels = data.mention_channels.map((mentionChannel) => ({
         id: mentionChannel.id,
         guildId: mentionChannel.guild_id,
         type: mentionChannel.type,
         name: mentionChannel.name,
-      }));
-    if (data.attachments !== undefined)
-      this.attachments = data.attachments.map((attachment) => ({
-        id: attachment.id,
-        filename: attachment.filename,
-        description: attachment.description,
-        contentType: attachment.content_type,
-        size: attachment.size,
-        url: attachment.url,
-        proxyUrl: attachment.proxy_url,
-        height: attachment.height,
-        width: attachment.width,
-        ephemeral: attachment.ephemeral,
-      }));
-    if (data.embeds !== undefined)
-      this.embeds = data.embeds.map((embed) => ({
-        title: embed.title,
-        type: embed.type,
-        description: embed.description,
-        url: embed.url,
-        timestamp: embed.timestamp,
-        color: embed.color,
-        footer: embed.footer
-          ? {
-              text: embed.footer.text,
-              iconUrl: embed.footer.icon_url,
-              proxyIconUrl: embed.footer.proxy_icon_url,
-            }
-          : undefined,
-        image: embed.image
-          ? {
-              url: embed.image.url,
-              proxyUrl: embed.image.proxy_url,
-              height: embed.image.height,
-              width: embed.image.width,
-            }
-          : undefined,
-        thumbnail: embed.thumbnail
-          ? {
-              url: embed.thumbnail.url,
-              proxyUrl: embed.thumbnail.proxy_url,
-              height: embed.thumbnail.height,
-              width: embed.thumbnail.width,
-            }
-          : undefined,
-        video: {
-          url: embed.video?.url,
-          proxyUrl: embed.video?.proxy_url,
-          height: embed.video?.height,
-          width: embed.video?.width,
-        },
-        provider: {
-          name: embed.provider?.name,
-          url: embed.provider?.url,
-        },
-        author: embed.author
-          ? {
-              name: embed.author.name,
-              url: embed.author.url,
-              iconUrl: embed.author.icon_url,
-              proxyIconUrl: embed.author.proxy_icon_url,
-            }
-          : undefined,
-        fields: embed.fields?.map((field) => ({
-          name: field.name,
-          value: field.value,
-          inline: field.inline,
-        })),
       }));
     if (data.reactions !== undefined)
       this.reactions = data.reactions.map((reaction) => ({
