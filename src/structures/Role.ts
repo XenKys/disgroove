@@ -18,9 +18,8 @@ export class Role extends Base {
   public mentionable: boolean;
   public tags?: JSONRoleTags;
   public flags: RoleFlags;
-  public guildId?: string;
 
-  constructor(data: RawRole & { guild_id?: string }, client: Client) {
+  constructor(data: RawRole, client: Client) {
     super(data.id, client);
 
     this.raw = data;
@@ -36,7 +35,7 @@ export class Role extends Base {
     this.patch(data);
   }
 
-  protected override patch(data: RawRole & { guild_id?: string }): void {
+  protected override patch(data: RawRole): void {
     if (data.icon !== undefined) this.icon = data.icon;
     if (data.unicode_emoji !== undefined)
       this.unicodeEmoji = data.unicode_emoji;
@@ -49,11 +48,11 @@ export class Role extends Base {
         availableForPurchase: data.tags.available_for_purchase,
         guildConnections: data.tags.guild_connections,
       };
-    if (data.guild_id !== undefined) this.guildId = data.guild_id;
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   public async edit(
+    guildId: string,
     options?: {
       name?: string | null;
       permissions?: string | null;
@@ -65,11 +64,9 @@ export class Role extends Base {
     },
     reason?: string
   ): Promise<Role> {
-    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
-
     return new Role(
       await this.client.rest.patch<RawRole>(
-        Endpoints.guildRole(this.guildId, this.id),
+        Endpoints.guildRole(guildId, this.id),
         {
           json: {
             name: options?.name,
@@ -88,10 +85,8 @@ export class Role extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
-  public delete(reason?: string): void {
-    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
-
-    this.client.rest.delete(Endpoints.guildRole(this.guildId, this.id), {
+  public delete(guildId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.guildRole(guildId, this.id), {
       reason,
     });
   }
@@ -102,7 +97,7 @@ export class Role extends Base {
     return this.raw;
   }
 
-  public override toJSON(): JSONRole & { guildId?: string } {
+  public override toJSON(): JSONRole {
     return {
       id: this.id,
       name: this.name,
@@ -116,7 +111,6 @@ export class Role extends Base {
       mentionable: this.mentionable,
       tags: this.tags,
       flags: this.flags,
-      guildId: this.guildId,
     };
   }
 }
