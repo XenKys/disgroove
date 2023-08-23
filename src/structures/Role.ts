@@ -2,6 +2,7 @@ import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONRole, JSONRoleTags, RawRole } from "../types";
 import { Base } from ".";
+import { RoleFlags } from "../constants";
 
 /** https://discord.com/developers/docs/topics/permissions */
 export class Role extends Base {
@@ -16,6 +17,7 @@ export class Role extends Base {
   public managed: boolean;
   public mentionable: boolean;
   public tags?: JSONRoleTags;
+  public flags: RoleFlags;
   public guildId?: string;
 
   constructor(data: RawRole & { guild_id?: string }, client: Client) {
@@ -29,6 +31,7 @@ export class Role extends Base {
     this.permissions = data.permissions;
     this.managed = data.managed;
     this.mentionable = data.mentionable;
+    this.flags = data.flags;
 
     this.patch(data);
   }
@@ -112,6 +115,7 @@ export class Role extends Base {
       managed: this.managed,
       mentionable: this.mentionable,
       tags: this.tags,
+      flags: this.flags,
       guildId: this.guildId,
     };
   }

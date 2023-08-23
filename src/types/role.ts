@@ -1,3 +1,5 @@
+import { RoleFlags } from "../constants";
+
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-structure */
 export interface RawRole {
   id: string;
@@ -11,6 +13,7 @@ export interface RawRole {
   managed: boolean;
   mentionable: boolean;
   tags?: RawRoleTags;
+  flags: RoleFlags;
 }
 
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure */
@@ -35,6 +38,7 @@ export interface JSONRole {
   managed: boolean;
   mentionable: boolean;
   tags?: JSONRoleTags;
+  flags: RoleFlags;
 }
 
 export interface JSONRoleTags {
