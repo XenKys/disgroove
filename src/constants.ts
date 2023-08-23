@@ -1098,6 +1098,10 @@ export const BitwisePermissionFlags = {
   SendMessagesInThreads: 1n << 38n,
   UseEmbeddedActivities: 1n << 39n,
   ModerateMembers: 1n << 40n,
+  ViewCreatorMonetizationAnalytics: 1n << 41n,
+  UseSoundboard: 1n << 42n,
+  UseExternalSounds: 1n << 45n,
+  SendVoiceMessages: 1n << 46n,
   All:
     (1n << 0n) +
     (1n << 1n) +
@@ -1139,7 +1143,11 @@ export const BitwisePermissionFlags = {
     (1n << 37n) +
     (1n << 38n) +
     (1n << 39n) +
-    (1n << 40n),
+    (1n << 40n) +
+    (1n << 41n) +
+    (1n << 42n) +
+    (1n << 45n) +
+    (1n << 46n),
 } as const;
 
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-flags */
