@@ -1,3 +1,4 @@
+import type { FormData } from "undici";
 import { RequestsManager } from ".";
 
 export interface File {
@@ -33,6 +34,7 @@ export class REST {
     endpoint: string,
     data?: {
       json?: unknown;
+      form?: FormData;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -45,6 +47,7 @@ export class REST {
     endpoint: string,
     data?: {
       json?: unknown;
+      form?: FormData;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -57,6 +60,7 @@ export class REST {
     endpoint: string,
     data?: {
       json?: unknown;
+      form?: FormData;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -69,6 +73,7 @@ export class REST {
     endpoint: string,
     data?: {
       json?: unknown;
+      form?: FormData;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;

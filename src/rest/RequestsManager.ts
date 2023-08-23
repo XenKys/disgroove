@@ -18,6 +18,7 @@ export class RequestsManager {
     endpoint: string,
     data?: {
       json?: unknown;
+      form?: FormData;
       files?: Array<File> | null;
       reason?: string;
       query?: Record<string, any>;
@@ -28,11 +29,10 @@ export class RequestsManager {
 
       let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
-      if (data?.query) {
+      if (data?.query)
         for (const [key, value] of Object.entries(data?.query)) {
           if (value !== undefined) url.searchParams.set(key, String(value));
         }
-      }
 
       let headers: Record<string, string> = {
         Authorization: `${this.auth} ${this.token}`,
@@ -41,21 +41,23 @@ export class RequestsManager {
       let body: string | FormData | undefined;
 
       if (method !== RESTMethods.Get) {
-        if (data?.files && data?.files?.length !== 0) {
-          const formData = new FormData();
-          const files = data?.files;
+        if (data?.form || (data?.files && data?.files?.length !== 0)) {
+          const formData = data.form ?? new FormData();
 
-          for (let i = 0; i < data?.files.length; i++) {
-            const file = files[i];
+          if (data?.files && data?.files?.length !== 0) {
+            for (let i = 0; i < data?.files.length; i++) {
+              const files = data?.files;
+              const file = files[i];
 
-            formData?.set(
-              `files[${i}]`,
-              new UndiciFile([file.contents], file.name)
-            );
+              formData?.set(
+                `files[${i}]`,
+                new UndiciFile([file.contents], file.name)
+              );
+            }
+
+            if (data?.json)
+              formData?.set("payload_json", JSON.stringify(data?.json));
           }
-
-          if (data?.json)
-            formData?.set("payload_json", JSON.stringify(data?.json));
 
           body = formData;
         } else {
