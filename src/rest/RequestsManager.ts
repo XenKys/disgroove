@@ -82,8 +82,6 @@ export class RequestsManager {
 
           setTimeout(() => {
             this.globalBlock = false;
-
-            this.request<T>(method, endpoint, data).then(resolve).catch(reject);
           }, Number(response.headers.get("Retry-After")) * 1000);
         }
 
