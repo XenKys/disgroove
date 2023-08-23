@@ -1,5 +1,6 @@
 import { User } from ".";
 import type { Client } from "../Client";
+import { Endpoints } from "../rest";
 import type { JSONEmoji, RawEmoji } from "../types";
 
 /** https://discord.com/developers/docs/resources/emoji */
@@ -32,6 +33,41 @@ export class Emoji {
     if (data.managed !== undefined) this.managed = data.managed;
     if (data.animated !== undefined) this.animated = data.animated;
     if (data.available !== undefined) this.available = data.available;
+  }
+
+  /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
+  public async edit(
+    guildId: string,
+    options: {
+      name?: string;
+      roles?: Array<string> | null;
+    },
+    reason?: string
+  ): Promise<Emoji> {
+    if (!this.id) throw new Error("[disgroove] Emoji ID not found");
+
+    return new Emoji(
+      await this.client.rest.patch<RawEmoji>(
+        Endpoints.guildEmoji(guildId, this.id),
+        {
+          json: {
+            name: options.name,
+            roles: options.roles,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
+  public delete(guildId: string, reason?: string): void {
+    if (!this.id) throw new Error("[disgroove] Emoji ID not found");
+
+    this.client.rest.delete(Endpoints.guildEmoji(guildId, this.id), {
+      reason,
+    });
   }
 
   public toString(): string {
