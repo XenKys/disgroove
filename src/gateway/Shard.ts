@@ -1,15 +1,6 @@
 import WebSocket, { type RawData } from "ws";
-import {
-  type DefaultMessageNotificationLevel,
-  type ExplicitContentFilterLevel,
-  GatewayEvents,
-  GatewayOPCodes,
-  StatusTypes,
-  type SystemChannelFlags,
-  type VerificationLevel,
-} from "../constants";
+import { GatewayEvents, GatewayOPCodes, StatusTypes } from "../constants";
 import { GatewayError } from "../utils";
-import { Endpoints } from "../rest";
 import {
   Application,
   AutoModerationRule,
@@ -26,23 +17,17 @@ import {
   User,
   VoiceState,
   PartialApplication,
-  UnavailableGuild,
 } from "../structures";
 import type {
   Activity,
-  JSONChannel,
-  JSONRole,
   RawActivity,
-  RawApplication,
   RawApplicationCommandPermission,
   RawChannel,
   RawEmoji,
-  RawGuild,
   RawGuildMember,
   RawSticker,
   RawThreadMember,
   RawAuditLogChange,
-  RawUnavailableGuild,
 } from "../types";
 import { Client } from "../Client";
 
@@ -132,9 +117,7 @@ export class Shard {
             );
           }, packet.d.heartbeat_interval);
 
-          this.client.emit(GatewayEvents.Hello, {
-            heartbeatInterval: packet.d.heartbeat_interval,
-          });
+          this.client.emit(GatewayEvents.Hello);
         }
         break;
     }
@@ -148,16 +131,7 @@ export class Shard {
             this.client
           );
 
-          this.client.emit(GatewayEvents.Ready, {
-            v: packet.d.v,
-            guilds: packet.d.guilds.map(
-              (guild: RawUnavailableGuild) =>
-                new UnavailableGuild(guild, this.client)
-            ),
-            sessionId: packet.d.session_id,
-            resumeGatewayURL: packet.d.resume_gateway_url,
-            shard: packet.d.shard,
-          });
+          this.client.emit(GatewayEvents.Ready);
         }
         break;
       case "RESUMED":

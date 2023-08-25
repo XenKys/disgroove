@@ -3,7 +3,6 @@ import type {
   Channel,
   GuildMember,
   Role,
-  UnavailableGuild,
   User,
 } from "../structures";
 import type {
@@ -25,23 +24,8 @@ import type {
   RawUser,
   JSONAutoModerationAction,
   JSONThreadMember,
-  RawUnavailableGuild,
 } from ".";
 import type { Emoji, Sticker } from "../structures";
-
-/** https://discord.com/developers/docs/topics/gateway-events#hello-hello-structure */
-export interface RawHelloEventFields {
-  heartbeat_interval: number;
-}
-
-/** https://discord.com/developers/docs/topics/gateway-events#ready-ready-event-fields */
-export interface RawReadyEventFields {
-  v: number;
-  guilds: Array<RawUnavailableGuild>;
-  session_id: string;
-  resume_gateway_url: string;
-  shard?: Array<number>;
-}
 
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {
@@ -347,18 +331,6 @@ export interface RawVoiceServerUpdateEventFields {
 export interface RawWebhooksUpdateEventFields {
   guild_id: string;
   channel_id: string;
-}
-
-export interface HelloEventFields {
-  heartbeatInterval: number;
-}
-
-export interface ReadyEventFields {
-  v: number;
-  guilds: Array<UnavailableGuild>;
-  sessionId: string;
-  resumeGatewayURL: string;
-  shard?: Array<number>;
 }
 
 export interface AutoModerationActionExecutionEventFields {

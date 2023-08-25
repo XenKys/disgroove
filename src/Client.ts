@@ -78,15 +78,13 @@ import type {
   RawStickerPack,
   RawUser,
   RawVoiceRegion,
-  HelloEventFields,
-  ReadyEventFields,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardsManager } from "./gateway";
 
 export interface ClientEvents {
-  hello: [listener: HelloEventFields];
-  ready: [listener: ReadyEventFields];
+  hello: [];
+  ready: [];
   resumed: [];
   reconnect: [];
   invalidSession: [];
