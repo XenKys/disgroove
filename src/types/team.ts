@@ -12,9 +12,9 @@ export interface RawTeam {
 /** https://discord.com/developers/docs/topics/teams#data-models-team-member-object */
 export interface RawTeamMember {
   membership_state: number;
-  permissions: Array<string>;
   team_id: string;
   user: RawUser;
+  role: string;
 }
 
 export interface JSONTeam {
@@ -27,7 +27,7 @@ export interface JSONTeam {
 
 export interface JSONTeamMember {
   membershipState: number;
-  permissions: Array<string>;
   teamId: string;
   user: JSONUser;
+  role: string;
 }

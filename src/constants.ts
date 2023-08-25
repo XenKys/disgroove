@@ -1155,6 +1155,14 @@ export enum RoleFlags {
   InPrompt = 1 << 0,
 }
 
+/** https://discord.com/developers/docs/topics/teams#team-member-roles-team-member-role-types */
+export enum TeamMemberRoleTypes {
+  Owner = "owner",
+  Admin = "admin",
+  Developer = "developer",
+  ReadOnly = "read_only",
+}
+
 /** https://discord.com/developers/docs/topics/teams#data-models-membership-state-enum */
 export enum MembershipState {
   Invited = 1,
