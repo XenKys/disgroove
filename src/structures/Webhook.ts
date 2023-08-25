@@ -81,16 +81,17 @@ export class Webhook extends Base {
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
   public async editWithToken(
-    token: string,
     options: {
       name?: string;
       avatar?: string | null;
     },
     reason?: string
   ): Promise<Webhook> {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
     return new Webhook(
       await this.client.rest.patch<RawWebhook>(
-        Endpoints.webhook(this.id, token),
+        Endpoints.webhook(this.id, this.token),
         {
           json: {
             name: options.name,
@@ -111,74 +112,75 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
-  public deleteWithToken(token: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.webhook(this.id, token), {
+  public deleteWithToken(reason?: string): void {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
+    this.client.rest.delete(Endpoints.webhook(this.id, this.token), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
-  public async execute(
-    token: string,
-    options: {
-      wait?: boolean;
-      threadId?: string;
-      content?: string | null;
-      username?: string;
-      avatarURL?: string;
-      tts?: boolean;
-      embeds?: Array<JSONEmbed> | null;
-      allowedMentions?: JSONAllowedMentions | null;
-      components?: Array<{
-        type: ComponentTypes.ActionRow;
-        components: Array<
-          | {
-              type: ComponentTypes.Button;
-              style: number;
-              label?: string;
-              emoji?: JSONEmoji;
-              customId?: string;
-              url?: string;
-              disabled?: boolean;
-            }
-          | {
-              type:
-                | ComponentTypes.StringSelect
-                | ComponentTypes.ChannelSelect
-                | ComponentTypes.MentionableSelect
-                | ComponentTypes.RoleSelect
-                | ComponentTypes.UserSelect;
-              customId: string;
-              options?: Array<JSONSelectOption>;
-              channelTypes?: Array<ChannelTypes>;
-              placeholder?: string;
-              minValues?: number;
-              maxValues?: number;
-              disabled?: boolean;
-            }
-          | {
-              type: ComponentTypes.TextInput;
-              customId: string;
-              style: number;
-              label: string;
-              minLength?: number;
-              maxLength?: number;
-              required?: boolean;
-              value?: string;
-              placeholder?: string;
-            }
-        >;
-      }> | null;
-      files?: Array<File> | null;
-      attachments?: Array<JSONAttachment> | null;
-      flags?: MessageFlags | null;
-      threadName?: string;
-    }
-  ): Promise<Message | void> {
+  public async execute(options: {
+    wait?: boolean;
+    threadId?: string;
+    content?: string | null;
+    username?: string;
+    avatarURL?: string;
+    tts?: boolean;
+    embeds?: Array<JSONEmbed> | null;
+    allowedMentions?: JSONAllowedMentions | null;
+    components?: Array<{
+      type: ComponentTypes.ActionRow;
+      components: Array<
+        | {
+            type: ComponentTypes.Button;
+            style: number;
+            label?: string;
+            emoji?: JSONEmoji;
+            customId?: string;
+            url?: string;
+            disabled?: boolean;
+          }
+        | {
+            type:
+              | ComponentTypes.StringSelect
+              | ComponentTypes.ChannelSelect
+              | ComponentTypes.MentionableSelect
+              | ComponentTypes.RoleSelect
+              | ComponentTypes.UserSelect;
+            customId: string;
+            options?: Array<JSONSelectOption>;
+            channelTypes?: Array<ChannelTypes>;
+            placeholder?: string;
+            minValues?: number;
+            maxValues?: number;
+            disabled?: boolean;
+          }
+        | {
+            type: ComponentTypes.TextInput;
+            customId: string;
+            style: number;
+            label: string;
+            minLength?: number;
+            maxLength?: number;
+            required?: boolean;
+            value?: string;
+            placeholder?: string;
+          }
+      >;
+    }> | null;
+    files?: Array<File> | null;
+    attachments?: Array<JSONAttachment> | null;
+    flags?: MessageFlags | null;
+    threadName?: string;
+  }): Promise<Message | void> {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
     if (options.wait) {
       return new Message(
         await this.client.rest.post<RawMessage>(
-          Endpoints.webhook(this.id, token),
+          Endpoints.webhook(this.id, this.token),
           {
             query: {
               wait: options.wait,
@@ -217,7 +219,7 @@ export class Webhook extends Base {
         this.client
       );
     } else {
-      this.client.rest.post(Endpoints.webhook(this.id, token), {
+      this.client.rest.post(Endpoints.webhook(this.id, this.token), {
         query: {
           wait: options.wait,
           thread_id: options.threadId,
@@ -255,16 +257,15 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
-  public async executeSlackCompatible(
-    token: string,
-    options: {
-      threadId?: string;
-      wait?: boolean;
-    }
-  ): Promise<Message> {
+  public async executeSlackCompatible(options: {
+    threadId?: string;
+    wait?: boolean;
+  }): Promise<Message> {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
     return new Message(
       await this.client.rest.post<RawMessage>(
-        Endpoints.webhookPlatform(this.id, token, "slack"),
+        Endpoints.webhookPlatform(this.id, this.token, "slack"),
         {
           query: {
             thread_id: options.threadId,
@@ -277,16 +278,15 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
-  public async executeGitHubCompatible(
-    token: string,
-    options: {
-      threadId?: string;
-      wait?: boolean;
-    }
-  ): Promise<Message> {
+  public async executeGitHubCompatible(options: {
+    threadId?: string;
+    wait?: boolean;
+  }): Promise<Message> {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
     return new Message(
       await this.client.rest.post<RawMessage>(
-        Endpoints.webhookPlatform(this.id, token, "github"),
+        Endpoints.webhookPlatform(this.id, this.token, "github"),
         {
           query: {
             thread_id: options.threadId,
@@ -300,15 +300,16 @@ export class Webhook extends Base {
 
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
   public async getMessage(
-    token: string,
     messageId: string,
     options?: {
       threadId?: string;
     }
   ): Promise<Message> {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
     return new Message(
       await this.client.rest.get<RawMessage>(
-        Endpoints.webhookMessage(this.id, token, messageId),
+        Endpoints.webhookMessage(this.id, this.token, messageId),
         {
           query: {
             thread_id: options?.threadId,
@@ -413,14 +414,15 @@ export class Webhook extends Base {
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
   public deleteMessage(
-    token: string,
     messageId: string,
     options?: {
       threadId?: string;
     }
   ): void {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
     this.client.rest.delete(
-      Endpoints.webhookMessage(this.id, token, messageId),
+      Endpoints.webhookMessage(this.id, this.token, messageId),
       {
         query: {
           thread_id: options?.threadId,
