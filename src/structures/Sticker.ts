@@ -43,7 +43,6 @@ export class Sticker extends Base {
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
   public async edit(
-    guildId: string,
     options: {
       name?: string;
       description?: string | null;
@@ -51,9 +50,11 @@ export class Sticker extends Base {
     },
     reason?: string
   ): Promise<Sticker> {
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
     return new Sticker(
       await this.client.rest.patch<RawSticker>(
-        Endpoints.guildSticker(guildId, this.id),
+        Endpoints.guildSticker(this.guildId, this.id),
         {
           json: {
             name: options.name,
@@ -68,8 +69,10 @@ export class Sticker extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
-  public delete(guildId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.guildSticker(guildId, this.id), {
+  public delete(reason?: string): void {
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
+    this.client.rest.delete(Endpoints.guildSticker(this.guildId, this.id), {
       reason,
     });
   }
