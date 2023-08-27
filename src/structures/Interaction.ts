@@ -301,7 +301,7 @@ export class Interaction extends Base {
   public async getResponse(options?: { threadId?: string }): Promise<Message> {
     return new Message(
       await this.client.rest.get<RawMessage>(
-        Endpoints.interactionOriginalMessage(this.id, this.token),
+        Endpoints.webhookMessage(this.id, this.token),
         {
           query: {
             thread_id: options?.threadId,
@@ -364,7 +364,7 @@ export class Interaction extends Base {
   }): Promise<Message> {
     return new Message(
       await this.client.rest.patch<RawMessage>(
-        Endpoints.interactionOriginalMessage(this.id, this.token),
+        Endpoints.webhookMessage(this.id, this.token),
         {
           query: {
             thread_id: options.threadId,
@@ -401,9 +401,7 @@ export class Interaction extends Base {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
   public deleteResponse(): void {
-    this.client.rest.delete(
-      Endpoints.interactionOriginalMessage(this.id, this.token)
-    );
+    this.client.rest.delete(Endpoints.webhookMessage(this.id, this.token));
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */

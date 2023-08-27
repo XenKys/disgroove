@@ -159,45 +159,6 @@ export interface ClientEvents {
   stageInstanceDelete: [stageInstance: JSONStageInstance];
 }
 
-export declare interface Client extends EventEmitter {
-  addListener<K extends keyof ClientEvents>(
-    eventName: K,
-    listener: (...args: ClientEvents[K]) => void
-  ): this;
-  emit<K extends keyof ClientEvents>(
-    eventName: K,
-    ...args: ClientEvents[K]
-  ): boolean;
-  listenerCount(eventName: keyof ClientEvents): number;
-  listeners(eventName: keyof ClientEvents): Array<Function>;
-  off<K extends keyof ClientEvents>(
-    eventName: K,
-    listener: (...args: ClientEvents[K]) => void
-  ): this;
-  on<K extends keyof ClientEvents>(
-    eventName: K,
-    listener: (...args: ClientEvents[K]) => void
-  ): this;
-  once<K extends keyof ClientEvents>(
-    eventName: K,
-    listener: (...args: ClientEvents[K]) => void
-  ): this;
-  prependListener<K extends keyof ClientEvents>(
-    eventName: K,
-    listener: (...args: ClientEvents[K]) => void
-  ): this;
-  prependOnceListener<K extends keyof ClientEvents>(
-    eventName: K,
-    listener: (...args: ClientEvents[K]) => void
-  ): this;
-  rawListeners(eventName: keyof ClientEvents): Array<Function>;
-  removeAllListeners(event?: keyof ClientEvents): this;
-  removeListener<K extends keyof ClientEvents>(
-    eventName: K,
-    listener: (...args: ClientEvents[K]) => void
-  ): this;
-}
-
 export interface ClientOptions {
   intents?: number | Array<number>;
   shardsCount?: number | "auto";
@@ -557,4 +518,43 @@ export class Client extends EventEmitter {
 
     this.shards.connect();
   }
+}
+
+export declare interface Client extends EventEmitter {
+  addListener<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
+  ): this;
+  emit<K extends keyof ClientEvents>(
+    eventName: K,
+    ...args: ClientEvents[K]
+  ): boolean;
+  listenerCount(eventName: keyof ClientEvents): number;
+  listeners(eventName: keyof ClientEvents): Array<Function>;
+  off<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
+  ): this;
+  on<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
+  ): this;
+  once<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
+  ): this;
+  prependListener<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
+  ): this;
+  prependOnceListener<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
+  ): this;
+  rawListeners(eventName: keyof ClientEvents): Array<Function>;
+  removeAllListeners(event?: keyof ClientEvents): this;
+  removeListener<K extends keyof ClientEvents>(
+    eventName: K,
+    listener: (...args: ClientEvents[K]) => void
+  ): this;
 }

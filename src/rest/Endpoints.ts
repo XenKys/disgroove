@@ -171,11 +171,6 @@ export const interactionCallback = (
   interactionId: string,
   interactionToken: string
 ) => `interactions/${interactionId}/${interactionToken}/callback` as const;
-export const interactionOriginalMessage = (
-  interactionId: string,
-  interactionToken: string
-) =>
-  `interactions/${interactionId}/${interactionToken}/messages/@original` as const;
 export const guildMemberVerification = (guildId: string) =>
   `guilds/${guildId}/member-verification` as const;
 export const guildVoiceState = (
