@@ -28,7 +28,7 @@ export class RequestsManager {
     }
   ): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
-      if (this.globalBlock) return;
+      if (this.globalBlock && !endpoint.startsWith("interactions")) return;
 
       let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
