@@ -206,6 +206,8 @@ export class Interaction extends Base {
         {
           this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
+            null,
+            true,
             {
               json: {
                 type: options.type,
@@ -239,6 +241,8 @@ export class Interaction extends Base {
         {
           this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
+            null,
+            true,
             {
               json: {
                 type: options.type,
@@ -258,6 +262,8 @@ export class Interaction extends Base {
         {
           this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
+            null,
+            true,
             {
               json: {
                 type: options.type,
@@ -303,9 +309,7 @@ export class Interaction extends Base {
       await this.client.rest.get<RawMessage>(
         Endpoints.webhookMessage(this.id, this.token),
         {
-          query: {
-            thread_id: options?.threadId,
-          },
+          thread_id: options?.threadId,
         }
       ),
       this.client
@@ -366,9 +370,10 @@ export class Interaction extends Base {
       await this.client.rest.patch<RawMessage>(
         Endpoints.webhookMessage(this.id, this.token),
         {
-          query: {
-            thread_id: options.threadId,
-          },
+          thread_id: options.threadId,
+        },
+        true,
+        {
           json: {
             content: options.content,
             embeds:
@@ -458,6 +463,8 @@ export class Interaction extends Base {
     return new Message(
       await this.client.rest.post(
         Endpoints.webhook(this.applicationId, this.token),
+        null,
+        true,
         {
           json: {
             content: options.content,
@@ -502,9 +509,7 @@ export class Interaction extends Base {
       await this.client.rest.get<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
         {
-          query: {
-            thread_id: options?.threadId,
-          },
+          thread_id: options?.threadId,
         }
       ),
       this.client
@@ -568,9 +573,10 @@ export class Interaction extends Base {
       await this.client.rest.post<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
         {
-          query: {
-            thread_id: options.threadId,
-          },
+          thread_id: options.threadId,
+        },
+        true,
+        {
           json: {
             content: options.content,
             embeds:

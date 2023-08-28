@@ -65,6 +65,8 @@ export class GuildMember {
     return new GuildMember(
       await this.client.rest.patch(
         Endpoints.guildMember(this.guildId, this.user?.id),
+        null,
+        true,
         {
           json: {
             nick: options.nick,
@@ -90,6 +92,8 @@ export class GuildMember {
 
     this.client.rest.put(
       Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
+      null,
+      true,
       {
         reason,
       }
@@ -104,6 +108,8 @@ export class GuildMember {
 
     this.client.rest.delete(
       Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
+      null,
+      true,
       {
         reason,
       }
@@ -116,9 +122,14 @@ export class GuildMember {
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.delete(Endpoints.guildMember(this.guildId, this.user.id), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.guildMember(this.guildId, this.user.id),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
@@ -133,13 +144,18 @@ export class GuildMember {
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.put(Endpoints.guildBan(this.guildId, this.user.id), {
-      json: {
-        delete_message_days: options?.deleteMessageDays,
-        delete_message_seconds: options?.deleteMessageSeconds,
-      },
-      reason,
-    });
+    this.client.rest.put(
+      Endpoints.guildBan(this.guildId, this.user.id),
+      null,
+      true,
+      {
+        json: {
+          delete_message_days: options?.deleteMessageDays,
+          delete_message_seconds: options?.deleteMessageSeconds,
+        },
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
@@ -147,9 +163,14 @@ export class GuildMember {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
 
-    this.client.rest.delete(Endpoints.guildBan(this.user.id, userId), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.guildBan(this.user.id, userId),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   public toString(): string {

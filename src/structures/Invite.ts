@@ -73,7 +73,7 @@ export class Invite {
   /** https://discord.com/developers/docs/resources/invite#delete-invite */
   public async delete(reason?: string): Promise<JSONInvite> {
     return this.client.rest
-      .delete<RawInvite>(Endpoints.invite(this.code), {
+      .delete<RawInvite>(Endpoints.invite(this.code), null, true, {
         reason,
       })
       .then((response) => ({

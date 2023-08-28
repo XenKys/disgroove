@@ -70,6 +70,8 @@ export class AutoModerationRule extends Base {
     return new AutoModerationRule(
       await this.client.rest.patch<RawAutoModerationRule>(
         Endpoints.guildAutoModerationRule(this.guildId, this.id),
+        null,
+        true,
         {
           json: {
             name: options.name,

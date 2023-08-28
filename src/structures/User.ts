@@ -68,7 +68,7 @@ export class User extends Base {
     avatar?: string | null;
   }): Promise<User> {
     return new User(
-      await this.client.rest.patch<RawUser>(Endpoints.user(), {
+      await this.client.rest.patch<RawUser>(Endpoints.user(), null, true, {
         json: {
           username: options.username,
           avatar: options.avatar,
@@ -96,11 +96,16 @@ export class User extends Base {
   /** https://discord.com/developers/docs/resources/user#create-dm */
   public async createDM(options: { recipientId: string }): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post<RawChannel>(Endpoints.userChannels(), {
-        json: {
-          recipient_id: options.recipientId,
-        },
-      }),
+      await this.client.rest.post<RawChannel>(
+        Endpoints.userChannels(),
+        null,
+        true,
+        {
+          json: {
+            recipient_id: options.recipientId,
+          },
+        }
+      ),
       this.client
     );
   }
@@ -111,12 +116,17 @@ export class User extends Base {
     nicks: Array<string>;
   }): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post<RawChannel>(Endpoints.userChannels(), {
-        json: {
-          access_tokens: options.accessTokens,
-          nicks: options.nicks,
-        },
-      }),
+      await this.client.rest.post<RawChannel>(
+        Endpoints.userChannels(),
+        null,
+        true,
+        {
+          json: {
+            access_tokens: options.accessTokens,
+            nicks: options.nicks,
+          },
+        }
+      ),
       this.client
     );
   }
@@ -179,6 +189,8 @@ export class User extends Base {
     return this.client.rest
       .put<RawApplicationRoleConnection>(
         Endpoints.userApplicationRoleConnection(this.client.application.id),
+        null,
+        true,
         {
           json: {
             platform_name: options.platformName,

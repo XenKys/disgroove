@@ -16,12 +16,15 @@ export class RequestsManager {
   public request<T = unknown>(
     method: string,
     endpoint: string,
+    query: Partial<
+      Record<string, string | number | boolean | Array<string>>
+    > | null = null,
+    withAuthorization: boolean = true,
     data?: {
       json?: unknown;
       form?: FormData;
       files?: Array<File> | null;
       reason?: string;
-      query?: Record<string, any>;
     }
   ): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
@@ -29,16 +32,18 @@ export class RequestsManager {
 
       let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
-      if (data?.query)
-        for (const [key, value] of Object.entries(data?.query)) {
+      if (query)
+        for (const [key, value] of Object.entries(query)) {
           if (value !== undefined) url.searchParams.set(key, String(value));
         }
 
       let headers: Record<string, string> = {
-        Authorization: `${this.auth} ${this.token}`,
         "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.2.4)`,
       };
       let body: string | FormData | undefined;
+
+      if (withAuthorization)
+        headers["Authorization"] = `${this.auth} ${this.token}`;
 
       if (method !== RESTMethods.Get) {
         if (data?.form || (data?.files && data?.files?.length !== 0)) {
@@ -46,8 +51,7 @@ export class RequestsManager {
 
           if (data?.files && data?.files?.length !== 0) {
             for (let i = 0; i < data?.files.length; i++) {
-              const files = data?.files;
-              const file = files[i];
+              const file = data?.files[i];
 
               formData?.set(
                 `files[${i}]`,
@@ -89,7 +93,13 @@ export class RequestsManager {
           if (response.status === HTTPResponseCodes.TooManyRequests) {
             setTimeout(
               () =>
-                this.request<T>(method, endpoint, data)
+                this.request<T>(
+                  method,
+                  endpoint,
+                  query,
+                  withAuthorization,
+                  data
+                )
                   .then(resolve)
                   .catch(reject),
               Number(response.headers.get("Retry-After")) * 1000
@@ -97,7 +107,13 @@ export class RequestsManager {
           } else if (response.status === HTTPResponseCodes.GatewayUnavailable) {
             setTimeout(
               () =>
-                this.request<T>(method, endpoint, data)
+                this.request<T>(
+                  method,
+                  endpoint,
+                  query,
+                  withAuthorization,
+                  data
+                )
                   .then(resolve)
                   .catch(reject),
               5 * 1000

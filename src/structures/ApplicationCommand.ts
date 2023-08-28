@@ -107,12 +107,16 @@ export class ApplicationCommand extends Base {
       this.guildId !== undefined
         ? await this.client.rest.patch<RawApplicationCommand>(
             Endpoints.applicationGuildCommand(this.id, this.guildId, this.id),
+            null,
+            true,
             {
               json: this.client.util.applicationCommandToRaw(options),
             }
           )
         : await this.client.rest.patch<RawApplicationCommand>(
             Endpoints.applicationCommand(this.applicationId, this.id),
+            null,
+            true,
             {
               json: this.client.util.applicationCommandToRaw(options),
             }
@@ -179,6 +183,8 @@ export class ApplicationCommand extends Base {
           this.guildId,
           this.id
         ),
+        null,
+        true,
         {
           json: {
             permissions: options.permissions,

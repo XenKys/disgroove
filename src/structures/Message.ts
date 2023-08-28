@@ -276,10 +276,8 @@ export class Message extends Base {
       .get<Array<RawUser>>(
         Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji),
         {
-          query: {
-            after: options?.after,
-            limit: options?.limit,
-          },
+          after: options?.after,
+          limit: options?.limit,
         }
       )
       .then((response) => response.map((data) => new User(data, this.client)));
@@ -344,6 +342,8 @@ export class Message extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.channelId, this.id),
+        null,
+        true,
         {
           json: {
             content: options.content,
@@ -372,9 +372,14 @@ export class Message extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
   public delete(reason?: string): void {
-    this.client.rest.delete(Endpoints.channelMessage(this.channelId, this.id), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.channelMessage(this.channelId, this.id),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
@@ -389,6 +394,8 @@ export class Message extends Base {
     return new Channel(
       await this.client.rest.post<RawChannel>(
         Endpoints.threads(this.channelId, this.id),
+        null,
+        true,
         {
           json: {
             name: options.name,

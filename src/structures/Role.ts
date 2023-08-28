@@ -67,6 +67,8 @@ export class Role extends Base {
     return new Role(
       await this.client.rest.patch<RawRole>(
         Endpoints.guildRole(guildId, this.id),
+        null,
+        true,
         {
           json: {
             name: options?.name,
@@ -86,7 +88,7 @@ export class Role extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
   public delete(guildId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.guildRole(guildId, this.id), {
+    this.client.rest.delete(Endpoints.guildRole(guildId, this.id), null, true, {
       reason,
     });
   }

@@ -55,6 +55,8 @@ export class Sticker extends Base {
     return new Sticker(
       await this.client.rest.patch<RawSticker>(
         Endpoints.guildSticker(this.guildId, this.id),
+        null,
+        true,
         {
           json: {
             name: options.name,
@@ -72,9 +74,14 @@ export class Sticker extends Base {
   public delete(reason?: string): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.delete(Endpoints.guildSticker(this.guildId, this.id), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.guildSticker(this.guildId, this.id),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   public override toRaw(): RawSticker {

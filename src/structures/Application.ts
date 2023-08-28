@@ -90,9 +90,7 @@ export class Application extends Base {
       .get<Array<RawApplicationCommand>>(
         Endpoints.applicationCommands(this.id),
         {
-          query: {
-            with_localizations: options.withLocalizations,
-          },
+          with_localizations: options.withLocalizations,
         }
       )
       .then((response) =>
@@ -145,6 +143,8 @@ export class Application extends Base {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationCommands(this.id),
+        null,
+        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -212,6 +212,8 @@ export class Application extends Base {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationCommand(this.id, commandId),
+        null,
+        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -272,6 +274,8 @@ export class Application extends Base {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationCommands(this.id),
+        null,
+        true,
         {
           json: commands.map((command) =>
             this.client.util.applicationCommandToRaw(command)
@@ -294,9 +298,7 @@ export class Application extends Base {
       .get<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
-          query: {
-            with_localizations: options?.withLocalizations,
-          },
+          with_localizations: options?.withLocalizations,
         }
       )
       .then((response) =>
@@ -352,6 +354,8 @@ export class Application extends Base {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(this.id, guildId),
+        null,
+        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -421,6 +425,8 @@ export class Application extends Base {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(this.id, guildId, commandId),
+        null,
+        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -487,6 +493,8 @@ export class Application extends Base {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(this.id, guildId),
+        null,
+        true,
         {
           json: commands.map((command) =>
             this.client.util.applicationCommandToRaw(command)
@@ -554,6 +562,8 @@ export class Application extends Base {
     return this.client.rest
       .put<RawGuildApplicationCommandPermissions>(
         Endpoints.applicationCommandPermissions(this.id, guildId, commandId),
+        null,
+        true,
         {
           json: {
             permissions: options.permissions.map((option) => ({

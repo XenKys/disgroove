@@ -74,9 +74,14 @@ export class Integration extends Base {
   public delete(reason?: string): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.delete(Endpoints.guildIntegration(this.guildId, this.id), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.guildIntegration(this.guildId, this.id),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   public override toRaw(): RawIntegration & { guild_id?: string } {

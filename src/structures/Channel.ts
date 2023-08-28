@@ -185,35 +185,40 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.patch<RawChannel>(Endpoints.channel(this.id), {
-        json: {
-          name: options.name,
-          type: options.type,
-          position: options.position,
-          topic: options.topic,
-          nsfw: options.nsfw,
-          rate_limit_per_user: options.rateLimitPerUser,
-          bitrate: options.bitrate,
-          permission_overwrites: options.permissionOverwrites,
-          parent_id: options.parentId,
-          rtc_region: options.rtcRegion,
-          video_quality_mode: options.videoQualityMode,
-          default_auto_archive_duration: options.defaultAutoArchiveDuration,
-          flags: options.flags,
-          available_tags: options.availableTags,
-          default_reaction_emoji: options.defaultReactionEmoji,
-          default_thread_rate_limit_per_user:
-            options.defaultThreadRateLimitPerUser,
-          default_sort_order: options.defaultSortOrder,
-          default_forum_layout: options.defaultForumLayout,
-          archived: options.archived,
-          auto_archive_duration: options.autoArchiveDuration,
-          locked: options.locked,
-          invitable: options.invitable,
-          applied_tags: options.appliedTags,
-        },
-        reason,
-      }),
+      await this.client.rest.patch<RawChannel>(
+        Endpoints.channel(this.id),
+        null,
+        true,
+        {
+          json: {
+            name: options.name,
+            type: options.type,
+            position: options.position,
+            topic: options.topic,
+            nsfw: options.nsfw,
+            rate_limit_per_user: options.rateLimitPerUser,
+            bitrate: options.bitrate,
+            permission_overwrites: options.permissionOverwrites,
+            parent_id: options.parentId,
+            rtc_region: options.rtcRegion,
+            video_quality_mode: options.videoQualityMode,
+            default_auto_archive_duration: options.defaultAutoArchiveDuration,
+            flags: options.flags,
+            available_tags: options.availableTags,
+            default_reaction_emoji: options.defaultReactionEmoji,
+            default_thread_rate_limit_per_user:
+              options.defaultThreadRateLimitPerUser,
+            default_sort_order: options.defaultSortOrder,
+            default_forum_layout: options.defaultForumLayout,
+            archived: options.archived,
+            auto_archive_duration: options.autoArchiveDuration,
+            locked: options.locked,
+            invitable: options.invitable,
+            applied_tags: options.appliedTags,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -237,12 +242,10 @@ export class Channel extends Base {
   }): Promise<Array<Message>> {
     return this.client.rest
       .get<Array<RawMessage>>(Endpoints.channelMessages(this.id), {
-        query: {
-          around: options.around,
-          before: options.before,
-          after: options.after,
-          limit: options.limit,
-        },
+        around: options.around,
+        before: options.before,
+        after: options.after,
+        limit: options.limit,
       })
       .then((response) =>
         response.map((data) => new Message(data, this.client))
@@ -315,6 +318,8 @@ export class Channel extends Base {
     return new Message(
       await this.client.rest.post<RawMessage>(
         Endpoints.channelMessages(this.id),
+        null,
+        true,
         {
           json: {
             content: options.content,
@@ -387,10 +392,8 @@ export class Channel extends Base {
       .get<Array<RawUser>>(
         Endpoints.channelMessageAllReactions(this.id, messageId, emoji),
         {
-          query: {
-            after: options?.after,
-            limit: options?.limit,
-          },
+          after: options?.after,
+          limit: options?.limit,
         }
       )
       .then((response) => response.map((data) => new User(data, this.client)));
@@ -458,6 +461,8 @@ export class Channel extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.id, messageId),
+        null,
+        true,
         {
           json: {
             content: options.content,
@@ -498,7 +503,7 @@ export class Channel extends Base {
     },
     reason?: string
   ): void {
-    this.client.rest.post(Endpoints.channelBulkDelete(this.id), {
+    this.client.rest.post(Endpoints.channelBulkDelete(this.id), null, true, {
       json: {
         messages: options?.messagesIds,
       },
@@ -516,10 +521,15 @@ export class Channel extends Base {
     },
     reason?: string
   ): void {
-    this.client.rest.put(Endpoints.channelPermission(this.id, overwriteId), {
-      json: options,
-      reason,
-    });
+    this.client.rest.put(
+      Endpoints.channelPermission(this.id, overwriteId),
+      null,
+      true,
+      {
+        json: options,
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
@@ -547,6 +557,8 @@ export class Channel extends Base {
     return new Invite(
       await this.client.rest.post<RawInvite>(
         Endpoints.channelInvites(this.id),
+        null,
+        true,
         {
           json: {
             max_age: options.maxAge,
@@ -576,11 +588,16 @@ export class Channel extends Base {
     webhookChannelId: string;
   }): Promise<JSONFollowedChannel> {
     return this.client.rest
-      .post<RawFollowedChannel>(Endpoints.channelFollowers(this.id), {
-        json: {
-          webhook_channel_id: options.webhookChannelId,
-        },
-      })
+      .post<RawFollowedChannel>(
+        Endpoints.channelFollowers(this.id),
+        null,
+        true,
+        {
+          json: {
+            webhook_channel_id: options.webhookChannelId,
+          },
+        }
+      )
       .then((response) => ({
         channelId: response.channel_id,
         webhookId: response.webhook_id,
@@ -623,12 +640,17 @@ export class Channel extends Base {
       nick: string;
     }
   ): void {
-    this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
-      json: {
-        access_token: options.accessToken,
-        nick: options.nick,
-      },
-    });
+    this.client.rest.put(
+      Endpoints.channelRecipient(this.id, userId),
+      null,
+      true,
+      {
+        json: {
+          access_token: options.accessToken,
+          nick: options.nick,
+        },
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
@@ -649,6 +671,8 @@ export class Channel extends Base {
     return new Channel(
       await this.client.rest.post<RawChannel>(
         Endpoints.threads(this.id, messageId),
+        null,
+        true,
         {
           json: {
             name: options.name,
@@ -674,16 +698,21 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
-        json: {
-          name: options.name,
-          auto_archive_duration: options.autoArchiveDuration,
-          type: options.type,
-          invitable: options.invitable,
-          rate_limit_per_user: options.rateLimitPerUser,
-        },
-        reason,
-      }),
+      await this.client.rest.post<RawChannel>(
+        Endpoints.threads(this.id),
+        null,
+        true,
+        {
+          json: {
+            name: options.name,
+            auto_archive_duration: options.autoArchiveDuration,
+            type: options.type,
+            invitable: options.invitable,
+            rate_limit_per_user: options.rateLimitPerUser,
+          },
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -747,36 +776,41 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
-        json: {
-          name: options.name,
-          auto_archive_duration: options.autoArchiveDuration,
-          rate_limit_per_user: options.rateLimitPerUser,
-          message: {
-            content: options.message.content,
-            embeds: options.message.embeds,
-            flags: options.message.flags,
-            allowed_mentions: {
-              parse: options.message.allowedMentions?.parse,
-              roles: options.message.allowedMentions?.roles,
-              users: options.message.allowedMentions?.users,
-              replied_user: options.message.allowedMentions?.repliedUser,
+      await this.client.rest.post<RawChannel>(
+        Endpoints.threads(this.id),
+        null,
+        true,
+        {
+          json: {
+            name: options.name,
+            auto_archive_duration: options.autoArchiveDuration,
+            rate_limit_per_user: options.rateLimitPerUser,
+            message: {
+              content: options.message.content,
+              embeds: options.message.embeds,
+              flags: options.message.flags,
+              allowed_mentions: {
+                parse: options.message.allowedMentions?.parse,
+                roles: options.message.allowedMentions?.roles,
+                users: options.message.allowedMentions?.users,
+                replied_user: options.message.allowedMentions?.repliedUser,
+              },
+              components:
+                options.message.components !== undefined
+                  ? options.message.components !== null
+                    ? this.client.util.messageComponentToRaw(
+                        options.message.components
+                      )
+                    : null
+                  : undefined,
+              attachments: options.message.attachments,
             },
-            components:
-              options.message.components !== undefined
-                ? options.message.components !== null
-                  ? this.client.util.messageComponentToRaw(
-                      options.message.components
-                    )
-                  : null
-                : undefined,
-            attachments: options.message.attachments,
+            applied_tags: options.appliedTags,
           },
-          applied_tags: options.appliedTags,
-        },
-        files: options.message.files,
-        reason,
-      }),
+          files: options.message.files,
+          reason,
+        }
+      ),
       this.client
     );
   }
@@ -810,9 +844,7 @@ export class Channel extends Base {
   ): Promise<JSONThreadMember> {
     return this.client.rest
       .get<RawThreadMember>(Endpoints.threadMembers(this.id, userId), {
-        query: {
-          with_member: options?.withMember,
-        },
+        with_member: options?.withMember,
       })
       .then((response) => ({
         id: response.id,
@@ -834,11 +866,9 @@ export class Channel extends Base {
   }): Promise<Array<JSONThreadMember>> {
     return this.client.rest
       .get<Array<RawThreadMember>>(Endpoints.threadMembers(this.id), {
-        query: {
-          with_member: options?.withMember,
-          after: options?.after,
-          limit: options?.limit,
-        },
+        with_member: options?.withMember,
+        after: options?.after,
+        limit: options?.limit,
       })
       .then((response) =>
         response.map((data) => ({
@@ -872,10 +902,8 @@ export class Channel extends Base {
         members: Array<RawThreadMember>;
         has_more: boolean;
       }>(Endpoints.channelThreads(this.id, archivedStatus, false), {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
+        before: options?.before,
+        limit: options?.limit,
       })
       .then((response) => ({
         threads: response.threads.map((data) => new Channel(data, this.client)),
@@ -908,10 +936,8 @@ export class Channel extends Base {
         members: Array<RawThreadMember>;
         has_more: boolean;
       }>(Endpoints.channelThreads(this.id, "private", true), {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
+        before: options?.before,
+        limit: options?.limit,
       })
       .then((response) => ({
         threads: response.threads.map((data) => new Channel(data, this.client)),
@@ -940,6 +966,8 @@ export class Channel extends Base {
     return new Webhook(
       await this.client.rest.post<RawWebhook>(
         Endpoints.channelWebhooks(this.id),
+        null,
+        true,
         {
           json: {
             name: options.name,
