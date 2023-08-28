@@ -17,6 +17,7 @@ import {
   User,
   VoiceState,
   PartialApplication,
+  Sticker,
 } from "../structures";
 import type {
   Activity,
@@ -345,39 +346,28 @@ export class Shard {
         });
         break;
       case "GUILD_EMOJIS_UPDATE":
-        this.client.emit(GatewayEvents.GuildEmojisUpdate, {
-          guildId: packet.d.guild_id,
-          emojis: packet.d.emojis.map((emoji: RawEmoji) =>
-            new Emoji(emoji, this.client).toJSON()
-          ),
-        });
+        this.client.emit(
+          GatewayEvents.GuildEmojisUpdate,
+          packet.d.guild_id,
+          packet.d.emojis.map(
+            (emoji: RawEmoji) => new Emoji(emoji, this.client)
+          )
+        );
         break;
       case "GUILD_STICKERS_UPDATE":
-        this.client.emit(GatewayEvents.GuildStickersUpdate, {
-          guildId: packet.d.guild_id,
-          stickers: packet.d.stickers.map((sticker: RawSticker) => ({
-            id: sticker.id,
-            packId: sticker.pack_id,
-            name: sticker.name,
-            description: sticker.description,
-            tags: sticker.tags,
-            asset: sticker.asset,
-            type: sticker.type,
-            formatType: sticker.format_type,
-            available: sticker.available,
-            guildId: sticker.guild_id,
-            user:
-              sticker.user !== undefined
-                ? new User(sticker.user, this.client)
-                : undefined,
-            sortValue: sticker.sort_value,
-          })),
-        });
+        this.client.emit(
+          GatewayEvents.GuildStickersUpdate,
+          packet.d.guild_id,
+          packet.d.stickers.map(
+            (sticker: RawSticker) => new Sticker(sticker, this.client)
+          )
+        );
         break;
       case "GUILD_INTEGRATIONS_UPDATE":
-        this.client.emit(GatewayEvents.GuildIntegrationsUpdate, {
-          guildId: packet.d.guild_id,
-        });
+        this.client.emit(
+          GatewayEvents.GuildIntegrationsUpdate,
+          packet.d.guild_id
+        );
         break;
       case "GUILD_MEMBER_ADD":
         this.client.emit(
@@ -420,22 +410,25 @@ export class Shard {
         });
         break;
       case "GUILD_ROLE_CREATE":
-        this.client.emit(GatewayEvents.GuildRoleCreate, {
-          guildId: packet.d.guild_id,
-          role: new Role(packet.d.role, this.client),
-        });
+        this.client.emit(
+          GatewayEvents.GuildRoleCreate,
+          packet.d.guild_id,
+          new Role(packet.d.role, this.client)
+        );
         break;
       case "GUILD_ROLE_UPDATE":
-        this.client.emit(GatewayEvents.GuildRoleUpdate, {
-          guildId: packet.d.guild_id,
-          role: new Role(packet.d.role, this.client),
-        });
+        this.client.emit(
+          GatewayEvents.GuildRoleUpdate,
+          packet.d.guild_id,
+          new Role(packet.d.role, this.client)
+        );
         break;
       case "GUILD_ROLE_DELETE":
-        this.client.emit(GatewayEvents.GuildRoleDelete, {
-          guildId: packet.d.guild_id,
-          roleId: packet.d.role_id,
-        });
+        this.client.emit(
+          GatewayEvents.GuildRoleDelete,
+          packet.d.guild_id,
+          packet.d.role_id
+        );
         break;
       case "GUILD_SCHEDULED_EVENT_CREATE":
         this.client.emit(
@@ -456,18 +449,20 @@ export class Shard {
         );
         break;
       case "GUILD_SCHEDULED_EVENT_USER_ADD":
-        this.client.emit(GatewayEvents.GuildScheduledEventUserAdd, {
-          guildScheduledEventId: packet.d.guild_scheduled_event_id,
-          userId: packet.d.user_id,
-          guildId: packet.d.guild_id,
-        });
+        this.client.emit(
+          GatewayEvents.GuildScheduledEventUserAdd,
+          packet.d.guild_scheduled_event_id,
+          packet.d.user_id,
+          packet.d.guild_id
+        );
         break;
       case "GUILD_SCHEDULED_EVENT_USER_REMOVE":
-        this.client.emit(GatewayEvents.GuildScheduledEventUserRemove, {
-          guildScheduledEventId: packet.d.guild_scheduled_event_id,
-          userId: packet.d.user_id,
-          guildId: packet.d.guild_id,
-        });
+        this.client.emit(
+          GatewayEvents.GuildScheduledEventUserRemove,
+          packet.d.guild_scheduled_event_id,
+          packet.d.user_id,
+          packet.d.guild_id
+        );
         break;
       case "INTEGRATION_CREATE":
         this.client.emit(
@@ -675,10 +670,11 @@ export class Shard {
         });
         break;
       case "WEBHOOKS_UPDATE":
-        this.client.emit(GatewayEvents.WebhooksUpdate, {
-          guildId: packet.d.guild_id,
-          channelId: packet.d.channel_id,
-        });
+        this.client.emit(
+          GatewayEvents.WebhooksUpdate,
+          packet.d.guild_id,
+          packet.d.channel_id
+        );
         break;
     }
   }
