@@ -855,10 +855,13 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
-  public async getPublicArchivedThreads(options?: {
-    before?: number;
-    limit?: number;
-  }): Promise<{
+  public async getArchivedThreads(
+    archivedStatus: "public" | "private",
+    options?: {
+      before?: number;
+      limit?: number;
+    }
+  ): Promise<{
     threads: Array<Channel>;
     members: Array<JSONThreadMember>;
     hasMore: boolean;
@@ -868,43 +871,7 @@ export class Channel extends Base {
         threads: Array<RawChannel>;
         members: Array<RawThreadMember>;
         has_more: boolean;
-      }>(Endpoints.channelThreads(this.id, "public"), {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
-      })
-      .then((response) => ({
-        threads: response.threads.map((data) => new Channel(data, this.client)),
-        members: response.members.map((data) => ({
-          id: data.id,
-          userId: data.user_id,
-          joinTimestamp: data.join_timestamp,
-          flags: data.flags,
-          member:
-            data.member !== undefined
-              ? new GuildMember(data.member, this.client)
-              : undefined,
-        })),
-        hasMore: response.has_more,
-      }));
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
-  public async getPrivateArchivedThreads(options?: {
-    before?: number;
-    limit?: number;
-  }): Promise<{
-    threads: Array<Channel>;
-    members: Array<JSONThreadMember>;
-    hasMore: boolean;
-  }> {
-    return this.client.rest
-      .get<{
-        threads: Array<RawChannel>;
-        members: Array<RawThreadMember>;
-        has_more: boolean;
-      }>(Endpoints.channelThreads(this.id, "private"), {
+      }>(Endpoints.channelThreads(this.id, archivedStatus, false), {
         query: {
           before: options?.before,
           limit: options?.limit,
@@ -928,7 +895,7 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
   public async getJoinedPrivateArchivedThreads(options?: {
-    before?: number;
+    before?: string;
     limit?: number;
   }): Promise<{
     threads: Array<Channel>;
@@ -940,7 +907,7 @@ export class Channel extends Base {
         threads: Array<RawChannel>;
         members: Array<RawThreadMember>;
         has_more: boolean;
-      }>(Endpoints.channelJoinedPrivateArchivedThreads(this.id), {
+      }>(Endpoints.channelThreads(this.id, "private", true), {
         query: {
           before: options?.before,
           limit: options?.limit,
