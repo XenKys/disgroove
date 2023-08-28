@@ -213,7 +213,7 @@ export interface RawMessageDeleteBulkEventFields {
 export interface RawMessageReactionAddEventFields {
   user_id: string;
   channel_id: string;
-  messagei_id: string;
+  message_id: string;
   guild_id?: string;
   member?: RawGuildMember;
   emoji: RawEmoji;
@@ -224,7 +224,7 @@ export interface RawMessageReactionAddEventFields {
 export interface RawMessageReactionRemoveEventFields {
   user_id: string;
   channel_id: string;
-  messagei_id: string;
+  message_id: string;
   guild_id?: string;
   emoji: RawEmoji;
 }
