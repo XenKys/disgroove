@@ -63,7 +63,7 @@ export interface RawThreadMembersUpdateEventFields {
 export interface RawChannelPinsUpdateEventFields {
   guild_id?: string;
   channel_id: string;
-  last_pin_timestamp: number | null;
+  last_pin_timestamp?: number | null;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-delete */
