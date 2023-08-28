@@ -232,7 +232,7 @@ export interface RawMessageReactionRemoveEventFields {
 /** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-all-message-reaction-remove-all-event-fields */
 export interface RawMessageReactionRemoveAllEventFields {
   channel_id: string;
-  messagei_id: string;
+  message_id: string;
   guild_id?: string;
 }
 
@@ -240,7 +240,7 @@ export interface RawMessageReactionRemoveAllEventFields {
 export interface RawMessageReactionRemoveEmojiEventFields {
   channel_id: string;
   guild_id?: string;
-  messagei_id: string;
+  message_id: string;
   emoji: RawEmoji;
 }
 
