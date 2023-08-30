@@ -27,6 +27,7 @@ export interface RawInteraction {
     RawMessageComponentData &
     RawModalSubmitData;
   guild_id?: string;
+  channel?: RawChannel;
   channel_id?: string;
   member?: RawGuildMember;
   user?: RawUser;
@@ -111,6 +112,7 @@ export interface JSONInteraction {
     JSONMessageComponentData &
     JSONModalSubmitData;
   guildId?: string;
+  channel?: JSONChannel;
   channelId?: string;
   member?: JSONGuildMember;
   user?: JSONUser;

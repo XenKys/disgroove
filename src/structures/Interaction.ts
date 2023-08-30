@@ -32,6 +32,7 @@ export class Interaction extends Base {
     JSONMessageComponentData &
     JSONModalSubmitData;
   public guildId?: string;
+  public channel?: Channel;
   public channelId?: string;
   public member?: GuildMember;
   public user?: User;
@@ -131,6 +132,8 @@ export class Interaction extends Base {
         })),
       };
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
+    if (data.channel !== undefined)
+      this.channel = new Channel(data.channel, this.client);
     if (data.channel_id !== undefined) this.channelId = data.channel_id;
     if (data.member !== undefined)
       this.member = new GuildMember(data.member, this.client);
@@ -627,6 +630,7 @@ export class Interaction extends Base {
       type: this.type,
       data: this.data,
       guildId: this.guildId,
+      channel: this.channel,
       channelId: this.channelId,
       member: this.member,
       user: this.user,
