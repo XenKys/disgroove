@@ -348,19 +348,19 @@ export class Shard {
       case "GUILD_EMOJIS_UPDATE":
         this.client.emit(
           GatewayEvents.GuildEmojisUpdate,
-          packet.d.guild_id,
           packet.d.emojis.map(
             (emoji: RawEmoji) => new Emoji(emoji, this.client)
-          )
+          ),
+          packet.d.guild_id
         );
         break;
       case "GUILD_STICKERS_UPDATE":
         this.client.emit(
           GatewayEvents.GuildStickersUpdate,
-          packet.d.guild_id,
           packet.d.stickers.map(
             (sticker: RawSticker) => new Sticker(sticker, this.client)
-          )
+          ),
+          packet.d.guild_id
         );
         break;
       case "GUILD_INTEGRATIONS_UPDATE":
@@ -412,22 +412,22 @@ export class Shard {
       case "GUILD_ROLE_CREATE":
         this.client.emit(
           GatewayEvents.GuildRoleCreate,
-          packet.d.guild_id,
-          new Role(packet.d.role, this.client)
+          new Role(packet.d.role, this.client),
+          packet.d.guild_id
         );
         break;
       case "GUILD_ROLE_UPDATE":
         this.client.emit(
           GatewayEvents.GuildRoleUpdate,
-          packet.d.guild_id,
-          new Role(packet.d.role, this.client)
+          new Role(packet.d.role, this.client),
+          packet.d.guild_id
         );
         break;
       case "GUILD_ROLE_DELETE":
         this.client.emit(
           GatewayEvents.GuildRoleDelete,
-          packet.d.guild_id,
-          packet.d.role_id
+          packet.d.role_id,
+          packet.d.guild_id
         );
         break;
       case "GUILD_SCHEDULED_EVENT_CREATE":
@@ -451,16 +451,16 @@ export class Shard {
       case "GUILD_SCHEDULED_EVENT_USER_ADD":
         this.client.emit(
           GatewayEvents.GuildScheduledEventUserAdd,
-          packet.d.guild_scheduled_event_id,
           packet.d.user_id,
+          packet.d.guild_scheduled_event_id,
           packet.d.guild_id
         );
         break;
       case "GUILD_SCHEDULED_EVENT_USER_REMOVE":
         this.client.emit(
           GatewayEvents.GuildScheduledEventUserRemove,
-          packet.d.guild_scheduled_event_id,
           packet.d.user_id,
+          packet.d.guild_scheduled_event_id,
           packet.d.guild_id
         );
         break;
@@ -672,8 +672,8 @@ export class Shard {
       case "WEBHOOKS_UPDATE":
         this.client.emit(
           GatewayEvents.WebhooksUpdate,
-          packet.d.guild_id,
-          packet.d.channel_id
+          packet.d.channel_id,
+          packet.d.guild_id
         );
         break;
     }

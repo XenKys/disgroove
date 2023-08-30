@@ -111,27 +111,27 @@ export interface ClientEvents {
   guildAuditLogEntryCreate: [auditLogEntry: JSONAuditLogEntry];
   guildBanAdd: [ban: GuildBanAddEventFields];
   guildBanRemove: [ban: GuildBanRemoveEventFields];
-  guildEmojisUpdate: [guildId: string, emojis: Array<Emoji>];
-  guildStickersUpdate: [guildId: string, stickers: Array<Sticker>];
+  guildEmojisUpdate: [emojis: Array<Emoji>, guildId: string];
+  guildStickersUpdate: [stickers: Array<Sticker>, guildId: string];
   guildIntegrationsUpdate: [guildId: string];
   guildMemberAdd: [guildMember: GuildMember];
   guildMemberRemove: [guildMember: GuildMemberRemoveEventFields];
   guildMemberUpdate: [guildMember: GuildMemberUpdateEventFields];
   guildMembersChunk: [request: GuildMembersChunkEventFields];
-  guildRoleCreate: [guildId: string, role: Role];
-  guildRoleUpdate: [guildId: string, role: Role];
-  guildRoleDelete: [guildId: string, roleId: string];
+  guildRoleCreate: [role: Role, guildId: string];
+  guildRoleUpdate: [role: Role, guildId: string];
+  guildRoleDelete: [roleId: string, guildId: string];
   guildScheduledEventCreate: [guildScheduledEvent: GuildScheduledEvent];
   guildScheduledEventUpdate: [guildScheduledEvent: GuildScheduledEvent];
   guildScheduledEventDelete: [guildScheduledEvent: JSONGuildScheduledEvent];
   guildScheduledEventUserAdd: [
-    guildScheduledEventId: string,
     userId: string,
+    guildScheduledEventId: string,
     guildId: string
   ];
   guildScheduledEventUserRemove: [
-    guildScheduledEventId: string,
     userId: string,
+    guildScheduledEventId: string,
     guildId: string
   ];
   integrationCreate: [integration: Integration];
@@ -152,7 +152,7 @@ export interface ClientEvents {
   userUpdate: [user: User];
   voiceStateUpdate: [voiceState: VoiceState];
   voiceServerUpdate: [voiceServer: VoiceServerUpdateEventFields];
-  webhooksUpdate: [guildId: string, channelId: string];
+  webhooksUpdate: [channelId: string, guildId: string];
   interactionCreate: [interaction: Interaction];
   stageInstanceCreate: [stageInstance: StageInstance];
   stageInstanceUpdate: [stageInstance: StageInstance];

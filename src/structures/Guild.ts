@@ -380,7 +380,6 @@ export class Guild extends Base {
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(applicationId, this.id),
         null,
-
         true,
         {
           json: this.client.util.applicationCommandToRaw(options),
