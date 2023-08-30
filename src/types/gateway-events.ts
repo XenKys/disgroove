@@ -365,7 +365,7 @@ export interface ThreadMembersUpdateEventFields {
 export interface ChannelPinsUpdateEventFields {
   guildId?: string;
   channelId: string;
-  lastPinTimestamp: number | null;
+  lastPinTimestamp?: number | null;
 }
 
 export interface GuildDeleteEventFields {
