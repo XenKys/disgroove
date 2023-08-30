@@ -409,7 +409,7 @@ export enum GuildFeatures {
   News = "NEWS",
   Partnered = "PARTNERED",
   PreviewEnabled = "PREVIEW_ENABLED",
-  RaidAlertsDisabled = "RaidAlertsDisabled",
+  RaidAlertsDisabled = "RAID_ALERTS_DISABLED",
   RoleIcons = "ROLE_ICONS",
   RoleSubscriptionsAvailableForPurchase = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
   RoleSubscriptionsEnabled = "ROLE_SUBSCRIPTIONS_ENABLED",
@@ -425,6 +425,7 @@ export enum MutableGuildFeatures {
   Community = "COMMUNITY",
   InvitesDisabled = "INVITES_DISABLED",
   Discoverable = "DISCOVERABLE",
+  RaidAlertsDisabled = "RAID_ALERTS_DISABLED",
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-flags */
