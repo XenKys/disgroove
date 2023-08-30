@@ -517,6 +517,10 @@ export class Client extends EventEmitter {
 
     this.shards.connect();
   }
+
+  public disconnect(): void {
+    this.shards.disconnect();
+  }
 }
 
 export declare interface Client extends EventEmitter {
