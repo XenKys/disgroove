@@ -532,12 +532,39 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
-  public async getApplicationCommandPermissions(
+  public async getApplicationCommandsPermissions(
     applicationId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
       .get<Array<RawGuildApplicationCommandPermissions>>(
         Endpoints.guildApplicationCommandsPermissions(applicationId, this.id)
+      )
+      .then((response) =>
+        response.map((permissions) => ({
+          id: permissions.id,
+          applicationId: permissions.application_id,
+          guildId: permissions.guild_id,
+          permissions: permissions.permissions.map((permission) => ({
+            id: permission.id,
+            type: permission.type,
+            permission: permission.permission,
+          })),
+        }))
+      );
+  }
+
+  /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
+  public async getApplicationCommandPermissions(
+    applicationId: string,
+    commandId: string
+  ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
+    return this.client.rest
+      .get<Array<RawGuildApplicationCommandPermissions>>(
+        Endpoints.applicationCommandPermissions(
+          applicationId,
+          this.id,
+          commandId
+        )
       )
       .then((response) =>
         response.map((permissions) => ({
