@@ -287,7 +287,7 @@ export class Application extends Base {
       );
   }
 
-  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
+  /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-commands */
   public async getGuildApplicationCommands(
     guildId: string,
     options?: {

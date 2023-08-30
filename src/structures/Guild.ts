@@ -471,10 +471,9 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
-  public async bulkOverwriteGuildApplicationCommands(
+  public async bulkOverwriteApplicationCommands(
     applicationId: string,
-    options: {
-      id?: string;
+    commands: Array<{
       name?: string;
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
@@ -514,7 +513,7 @@ export class Guild extends Base {
       defaultPermission?: boolean | null;
       type: ApplicationCommandTypes;
       nsfw?: boolean;
-    }
+    }>
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
@@ -522,7 +521,9 @@ export class Guild extends Base {
         null,
         true,
         {
-          json: this.client.util.applicationCommandToRaw(options),
+          json: commands.map((command) =>
+            this.client.util.applicationCommandToRaw(command)
+          ),
         }
       )
       .then((response) =>
