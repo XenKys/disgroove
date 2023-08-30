@@ -271,9 +271,11 @@ export class Client extends EventEmitter {
     }
   ): Promise<Guild> {
     return new Guild(
-      await this.rest.post<RawGuild>(Endpoints.template(code), {
-        name: options.name,
-        icon: options.icon,
+      await this.rest.post<RawGuild>(Endpoints.template(code), null, true, {
+        json: {
+          name: options.name,
+          icon: options.icon,
+        },
       }),
       this
     );
