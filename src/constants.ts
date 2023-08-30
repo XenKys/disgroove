@@ -243,6 +243,7 @@ export enum ChannelTypes {
   GuildStageVoice,
   GuildDirectory,
   GuildForum,
+  GuildMedia,
 }
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-video-quality-modes */
