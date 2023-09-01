@@ -226,9 +226,14 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
   public async delete(reason?: string): Promise<JSONChannel> {
     return new Channel(
-      await this.client.rest.delete<RawChannel>(Endpoints.channel(this.id), {
-        reason,
-      }),
+      await this.client.rest.delete<RawChannel>(
+        Endpoints.channel(this.id),
+        null,
+        true,
+        {
+          reason,
+        }
+      ),
       this.client
     ).toJSON();
   }
@@ -491,9 +496,14 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
   public deleteMessage(messageId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.channelMessage(this.id, messageId), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.channelMessage(this.id, messageId),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
@@ -578,9 +588,14 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
   public deletePermission(overwriteId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.channelPermission(this.id, overwriteId), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.channelPermission(this.id, overwriteId),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
@@ -620,16 +635,21 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
   public pinMessage(messageId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.channelPin(this.id, messageId), {
+    this.client.rest.put(Endpoints.channelPin(this.id, messageId), null, true, {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
   public unpinMessage(messageId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.channelPin(this.id, messageId), {
-      reason,
-    });
+    this.client.rest.delete(
+      Endpoints.channelPin(this.id, messageId),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */

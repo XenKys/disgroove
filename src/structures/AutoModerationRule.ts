@@ -101,6 +101,8 @@ export class AutoModerationRule extends Base {
   public delete(reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildAutoModerationRule(this.guildId, this.id),
+      null,
+      true,
       {
         reason,
       }
