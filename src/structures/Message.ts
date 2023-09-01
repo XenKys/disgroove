@@ -383,6 +383,30 @@ export class Message extends Base {
     );
   }
 
+  /** https://discord.com/developers/docs/resources/channel#pin-message */
+  public pin(reason?: string): void {
+    this.client.rest.put(
+      Endpoints.channelPin(this.channelId, this.id),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#unpin-message */
+  public unpin(reason?: string): void {
+    this.client.rest.delete(
+      Endpoints.channelPin(this.channelId, this.id),
+      null,
+      true,
+      {
+        reason,
+      }
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
   public async startThread(
     options: {
