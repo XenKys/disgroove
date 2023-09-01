@@ -159,12 +159,13 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
-  public removeBan(userId: string, reason?: string): void {
+  public removeBan(reason?: string): void {
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
 
     this.client.rest.delete(
-      Endpoints.guildBan(this.user.id, userId),
+      Endpoints.guildBan(this.guildId, this.user.id),
       null,
       true,
       {
