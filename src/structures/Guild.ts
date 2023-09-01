@@ -1550,11 +1550,14 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
-  public async getVanityURL(): Promise<Invite> {
-    return new Invite(
-      await this.client.rest.get<RawInvite>(Endpoints.guildVanityUrl(this.id)),
-      this.client
-    );
+  public getVanityURL(): Promise<{
+    code: string;
+    uses: number;
+  }> {
+    return this.client.rest.get<{
+      code: string;
+      uses: number;
+    }>(Endpoints.guildVanityUrl(this.id));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-image */
