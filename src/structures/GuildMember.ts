@@ -183,7 +183,7 @@ export class GuildMember {
 
   public toJSON(): JSONGuildMember & { guildId?: string } {
     return {
-      user: this.user,
+      user: this.user?.toJSON(),
       nick: this.nick,
       avatar: this.avatar,
       roles: this.roles,

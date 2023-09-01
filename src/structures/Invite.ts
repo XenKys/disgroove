@@ -131,17 +131,17 @@ export class Invite {
   public toJSON(): JSONInvite {
     return {
       code: this.code,
-      guild: this.guild,
-      channel: this.channel,
-      inviter: this.inviter,
+      guild: this.guild?.toJSON(),
+      channel: this.channel.toJSON(),
+      inviter: this.inviter?.toJSON(),
       targetType: this.targetType,
-      targetUser: this.targetUser,
-      targetApplication: this.targetApplication,
+      targetUser: this.targetUser?.toJSON(),
+      targetApplication: this.targetApplication?.toJSON(),
       approximatePresenceCount: this.approximatePresenceCount,
       approximateMemberCount: this.approximateMemberCount,
       expiresAt: this.expiresAt,
       stageInstance: this.stageInstance,
-      guildScheduledEvent: this.guildScheduledEvent,
+      guildScheduledEvent: this.guildScheduledEvent?.toJSON(),
     };
   }
 }

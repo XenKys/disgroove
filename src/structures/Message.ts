@@ -15,6 +15,7 @@ import type {
   JSONChannelMention,
   JSONEmbed,
   JSONEmoji,
+  JSONGuildMember,
   JSONMessage,
   JSONMessageActivity,
   JSONMessageInteraction,
@@ -418,12 +419,12 @@ export class Message extends Base {
 
   public override toJSON(): JSONMessage & {
     guildId?: string;
-    member?: GuildMember;
+    member?: JSONGuildMember;
   } {
     return {
       id: this.id,
       channelId: this.channelId,
-      author: this.author,
+      author: this.author.toJSON(),
       content: this.content,
       timestamp: this.timestamp,
       editedTimestamp: this.editedTimestamp,
@@ -440,7 +441,7 @@ export class Message extends Base {
       webhookId: this.webhookId,
       type: this.type,
       activity: this.activity,
-      application: this.application,
+      application: this.application?.toJSON(),
       applicationId: this.applicationId,
       messageReference: this.messageReference,
       flags: this.flags,
@@ -453,7 +454,7 @@ export class Message extends Base {
       position: this.position,
       roleSubscriptionData: this.roleSubscriptionData,
       guildId: this.guildId,
-      member: this.member,
+      member: this.member?.toJSON(),
     };
   }
 }

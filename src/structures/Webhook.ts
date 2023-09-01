@@ -451,13 +451,13 @@ export class Webhook extends Base {
       type: this.type,
       guildId: this.guildId,
       channelId: this.channelId,
-      user: this.user,
+      user: this.user?.toJSON(),
       name: this.name,
       avatar: this.avatar,
       token: this.token,
       applicationId: this.applicationId,
-      sourceGuild: this.sourceGuild,
-      sourceChannel: this.sourceChannel,
+      sourceGuild: this.sourceGuild?.toJSON(),
+      sourceChannel: this.sourceChannel?.toJSON(),
       url: this.url,
     };
   }

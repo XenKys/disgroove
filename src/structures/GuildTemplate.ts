@@ -112,7 +112,7 @@ export class GuildTemplate {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       sourceGuildId: this.sourceGuildId,
-      serializedSourceGuild: this.serializedSourceGuild,
+      serializedSourceGuild: this.serializedSourceGuild.toJSON(),
       isDirty: this.isDirty,
     };
   }

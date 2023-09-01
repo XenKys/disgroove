@@ -156,7 +156,7 @@ export class GuildScheduledEvent extends Base {
       entityType: this.entityType,
       entityId: this.entityId,
       entityMetadata: this.entityMetadata,
-      creator: this.creator,
+      creator: this.creator?.toJSON(),
       userCount: this.userCount,
       image: this.image,
     };

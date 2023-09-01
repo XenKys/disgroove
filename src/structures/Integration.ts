@@ -99,7 +99,7 @@ export class Integration extends Base {
       enableEmoticons: this.enableEmoticons,
       expireBehavior: this.expireBehavior,
       expireGracePeriod: this.expireGracePeriod,
-      user: this.user,
+      user: this.user?.toJSON(),
       account: this.account,
       syncedAt: this.syncedAt,
       subscriberCount: this.subscriberCount,
