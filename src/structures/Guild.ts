@@ -69,6 +69,11 @@ import type {
   RawVoiceState,
   RawWebhook,
   RawWelcomeScreen,
+  JSONVoiceState,
+  JSONGuildMember,
+  JSONChannel,
+  JSONStageInstance,
+  JSONGuildScheduledEvent,
 } from "../types";
 import type {
   ApplicationCommandOptionType,
@@ -94,7 +99,19 @@ import { File as UndiciFile, FormData } from "undici";
 
 /** https://discord.com/developers/docs/resources/guild */
 export class Guild extends Base {
-  protected override raw: RawGuild;
+  protected override raw: RawGuild & {
+    joined_at?: number;
+    large?: boolean;
+    unavailable?: boolean;
+    member_count?: number;
+    voice_states?: Array<RawVoiceState>;
+    members?: Array<RawGuildMember>;
+    channels?: Array<RawChannel>;
+    threads?: Array<RawChannel>;
+    presences?: Array<RawPresenceUpdateEventFields>;
+    stage_instances?: Array<RawStageInstance>;
+    guild_scheduled_events?: Array<RawGuildScheduledEvent>;
+  };
   public name: string;
   public icon: string | null;
   public iconHash?: string | null;
@@ -2035,11 +2052,35 @@ export class Guild extends Base {
       );
   }
 
-  public override toRaw(): RawGuild {
+  public override toRaw(): RawGuild & {
+    joined_at?: number;
+    large?: boolean;
+    unavailable?: boolean;
+    member_count?: number;
+    voice_states?: Array<RawVoiceState>;
+    members?: Array<RawGuildMember>;
+    channels?: Array<RawChannel>;
+    threads?: Array<RawChannel>;
+    presences?: Array<RawPresenceUpdateEventFields>;
+    stage_instances?: Array<RawStageInstance>;
+    guild_scheduled_events?: Array<RawGuildScheduledEvent>;
+  } {
     return this.raw;
   }
 
-  public override toJSON(): JSONGuild {
+  public override toJSON(): JSONGuild & {
+    joinedAt?: number;
+    large?: boolean;
+    unavailable?: boolean;
+    memberCount?: number;
+    voiceStates?: Array<JSONVoiceState>;
+    members?: Array<JSONGuildMember>;
+    channels?: Array<JSONChannel>;
+    threads?: Array<JSONChannel>;
+    presences?: Array<PresenceUpdateEventFields>;
+    stageInstances?: Array<JSONStageInstance>;
+    guildScheduledEvents?: Array<JSONGuildScheduledEvent>;
+  } {
     return {
       id: this.id,
       name: this.name,
@@ -2083,6 +2124,21 @@ export class Guild extends Base {
       stickers: this.stickers,
       premiumProgressBarEnabled: this.premiumProgressBarEnabled,
       safetyAlertsChannelId: this.safetyAlertsChannelId,
+      joinedAt: this.joinedAt,
+      large: this.large,
+      unavailable: this.unavailable,
+      memberCount: this.memberCount,
+      voiceStates: this.voiceStates?.map((voiceState) => voiceState.toJSON()),
+      members: this.members?.map((member) => member.toJSON()),
+      channels: this.channels?.map((channel) => channel.toJSON()),
+      threads: this.threads?.map((thread) => thread.toJSON()),
+      presences: this.presences,
+      stageInstances: this.stageInstances?.map((stageInstance) =>
+        stageInstance.toJSON()
+      ),
+      guildScheduledEvents: this.guildScheduledEvents?.map(
+        (guildScheduledEvent) => guildScheduledEvent.toJSON()
+      ),
     };
   }
 }
