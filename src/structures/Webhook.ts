@@ -189,7 +189,7 @@ export class Webhook extends Base {
   }): Promise<Message | void> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
-    if (options.wait) {
+    if (options.wait || options.wait === undefined) {
       return new Message(
         await this.client.rest.post<RawMessage>(
           Endpoints.webhook(this.id, this.token),
@@ -277,38 +277,58 @@ export class Webhook extends Base {
   public async executeSlackCompatible(options: {
     threadId?: string;
     wait?: boolean;
-  }): Promise<Message> {
+  }): Promise<Message | void> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
-    return new Message(
-      await this.client.rest.post<RawMessage>(
+    if (options.wait || options.wait === undefined) {
+      return new Message(
+        await this.client.rest.post<RawMessage>(
+          Endpoints.webhookPlatform(this.id, this.token, "slack"),
+          {
+            thread_id: options.threadId,
+            wait: options.wait,
+          }
+        ),
+        this.client
+      );
+    } else {
+      this.client.rest.post<RawMessage>(
         Endpoints.webhookPlatform(this.id, this.token, "slack"),
         {
           thread_id: options.threadId,
           wait: options.wait,
         }
-      ),
-      this.client
-    );
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
   public async executeGitHubCompatible(options: {
     threadId?: string;
     wait?: boolean;
-  }): Promise<Message> {
+  }): Promise<Message | void> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
-    return new Message(
-      await this.client.rest.post<RawMessage>(
+    if (options.wait || options.wait === undefined) {
+      return new Message(
+        await this.client.rest.post<RawMessage>(
+          Endpoints.webhookPlatform(this.id, this.token, "github"),
+          {
+            thread_id: options.threadId,
+            wait: options.wait,
+          }
+        ),
+        this.client
+      );
+    } else {
+      this.client.rest.post<RawMessage>(
         Endpoints.webhookPlatform(this.id, this.token, "github"),
         {
           thread_id: options.threadId,
           wait: options.wait,
         }
-      ),
-      this.client
-    );
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
