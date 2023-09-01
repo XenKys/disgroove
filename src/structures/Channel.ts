@@ -68,8 +68,14 @@ export class Channel extends Base {
   public defaultThreadRateLimitPerUser?: number;
   public defaultSortOrder?: number | null;
   public defaultForumLayout?: number;
+  public newlyCreated?: boolean;
 
-  constructor(data: RawChannel, client: Client) {
+  constructor(
+    data: RawChannel & {
+      newly_created?: boolean;
+    },
+    client: Client
+  ) {
     super(data.id, client);
 
     this.raw = data;
@@ -78,7 +84,11 @@ export class Channel extends Base {
     this.patch(data);
   }
 
-  protected override patch(data: RawChannel): void {
+  protected override patch(
+    data: RawChannel & {
+      newly_created?: boolean;
+    }
+  ): void {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.position !== undefined) this.position = data.position;
     if (data.permission_overwrites !== undefined)
@@ -151,6 +161,8 @@ export class Channel extends Base {
       this.defaultSortOrder = data.default_sort_order;
     if (data.default_forum_layout !== undefined)
       this.defaultForumLayout = data.default_forum_layout;
+    if (data.newly_created !== undefined)
+      this.newlyCreated = data.newly_created;
   }
 
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
@@ -1013,7 +1025,9 @@ export class Channel extends Base {
     return this.raw;
   }
 
-  public override toJSON(): JSONChannel {
+  public override toJSON(): JSONChannel & {
+    newlyCreated?: boolean;
+  } {
     return {
       id: this.id,
       type: this.type,
@@ -1050,6 +1064,7 @@ export class Channel extends Base {
       defaultThreadRateLimitPerUser: this.defaultThreadRateLimitPerUser,
       defaultSortOrder: this.defaultSortOrder,
       defaultForumLayout: this.defaultForumLayout,
+      newlyCreated: this.newlyCreated,
     };
   }
 }
