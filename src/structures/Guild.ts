@@ -1937,22 +1937,7 @@ export class Guild extends Base {
   public async deleteTemplate(code: string): Promise<JSONGuildTemplate> {
     return this.client.rest
       .delete<RawGuildTemplate>(Endpoints.guildTemplate(this.id, code))
-      .then((response) => ({
-        code: response.code,
-        name: response.name,
-        description: response.description,
-        usageCount: response.usage_count,
-        creatorId: response.creator_id,
-        creator: new User(response.creator, this.client),
-        createdAt: response.created_at,
-        updatedAt: response.updated_at,
-        sourceGuildId: response.source_guild_id,
-        serializedSourceGuild: new Guild(
-          response.serialized_source_guild,
-          this.client
-        ),
-        isDirty: response.is_dirty,
-      }));
+      .then((response) => new GuildTemplate(response, this.client).toJSON());
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
