@@ -29,7 +29,7 @@ import type {
   RawMessage,
   RawUser,
 } from "../types";
-import type { ChannelTypes, ComponentTypes, MessageFlags } from "../constants";
+import { ChannelTypes, ComponentTypes, MessageFlags } from "../constants";
 
 /** https://discord.com/developers/docs/resources/channel */
 export class Message extends Base {
@@ -62,7 +62,46 @@ export class Message extends Base {
   public referencedMessage?: Message | null;
   public interaction?: JSONMessageInteraction;
   public thread?: Channel;
-  public components?: Array<number>;
+  public components?: Array<{
+    type: ComponentTypes.ActionRow;
+    components: Array<
+      | {
+          type: ComponentTypes.Button;
+          style: number;
+          label?: string;
+          emoji?: JSONEmoji;
+          customId?: string;
+          url?: string;
+          disabled?: boolean;
+        }
+      | {
+          type:
+            | ComponentTypes.StringSelect
+            | ComponentTypes.ChannelSelect
+            | ComponentTypes.MentionableSelect
+            | ComponentTypes.RoleSelect
+            | ComponentTypes.UserSelect;
+          customId: string;
+          options?: Array<JSONSelectOption>;
+          channelTypes?: Array<ChannelTypes>;
+          placeholder?: string;
+          minValues?: number;
+          maxValues?: number;
+          disabled?: boolean;
+        }
+      | {
+          type: ComponentTypes.TextInput;
+          customId: string;
+          style: number;
+          label: string;
+          minLength?: number;
+          maxLength?: number;
+          required?: boolean;
+          value?: string;
+          placeholder?: string;
+        }
+    >;
+  }>;
   public stickerItems?: Array<JSONStickerItem>;
   public stickers?: Array<Sticker>;
   public position?: number;
@@ -215,7 +254,84 @@ export class Message extends Base {
       };
     if (data.thread !== undefined)
       this.thread = new Channel(data.thread, this.client);
-    if (data.components !== undefined) this.components = data.components;
+    if (data.components !== undefined)
+      this.components = data.components.map((component) => ({
+        type: component.type,
+        components: component.components.map((c) => {
+          switch (c.type) {
+            case ComponentTypes.Button: {
+              return {
+                type: c.type,
+                style: c.style,
+                label: c.label,
+                emoji:
+                  c.emoji !== undefined
+                    ? new Emoji(c.emoji, this.client).toJSON()
+                    : undefined,
+                customId: c.custom_id,
+                url: c.url,
+                disabled: c.disabled,
+              };
+            }
+            case ComponentTypes.TextInput: {
+              return {
+                type: c.type,
+                customId: c.custom_id,
+                style: c.style,
+                label: c.label,
+                minLength: c.min_length,
+                maxLength: c.max_length,
+                required: c.required,
+                value: c.value,
+                placeholder: c.placeholder,
+              };
+            }
+            case ComponentTypes.ChannelSelect: {
+              return {
+                type: c.type,
+                customId: c.custom_id,
+                channelTypes: c.channel_types,
+                placeholder: c.placeholder,
+                minValues: c.min_values,
+                maxValues: c.max_values,
+                disabled: c.disabled,
+              };
+            }
+            case ComponentTypes.StringSelect: {
+              return {
+                type: c.type,
+                customId: c.custom_id,
+                placeholder: c.placeholder,
+                options: c.options?.map((option) => ({
+                  label: option.label,
+                  value: option.value,
+                  description: option.description,
+                  emoji:
+                    option.emoji !== undefined
+                      ? new Emoji(option.emoji, this.client).toJSON()
+                      : undefined,
+                  default: option.default,
+                })),
+                minValues: c.min_values,
+                maxValues: c.max_values,
+                disabled: c.disabled,
+              };
+            }
+            case ComponentTypes.MentionableSelect:
+            case ComponentTypes.RoleSelect:
+            case ComponentTypes.UserSelect: {
+              return {
+                type: c.type,
+                customId: c.custom_id,
+                placeholder: c.placeholder,
+                minValues: c.min_values,
+                maxValues: c.max_values,
+                disabled: c.disabled,
+              };
+            }
+          }
+        }),
+      }));
     if (data.sticker_items !== undefined)
       this.stickerItems = data.sticker_items.map((stickerItem) => ({
         id: stickerItem.id,
