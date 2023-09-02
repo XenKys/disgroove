@@ -2,6 +2,7 @@ import { Base, Channel, Guild, Message, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
+  JSONActionRow,
   JSONAllowedMentions,
   JSONAttachment,
   JSONEmbed,
@@ -142,46 +143,7 @@ export class Webhook extends Base {
     tts?: boolean;
     embeds?: Array<JSONEmbed> | null;
     allowedMentions?: JSONAllowedMentions | null;
-    components?: Array<{
-      type: ComponentTypes.ActionRow;
-      components: Array<
-        | {
-            type: ComponentTypes.Button;
-            style: number;
-            label?: string;
-            emoji?: JSONEmoji;
-            customId?: string;
-            url?: string;
-            disabled?: boolean;
-          }
-        | {
-            type:
-              | ComponentTypes.StringSelect
-              | ComponentTypes.ChannelSelect
-              | ComponentTypes.MentionableSelect
-              | ComponentTypes.RoleSelect
-              | ComponentTypes.UserSelect;
-            customId: string;
-            options?: Array<JSONSelectOption>;
-            channelTypes?: Array<ChannelTypes>;
-            placeholder?: string;
-            minValues?: number;
-            maxValues?: number;
-            disabled?: boolean;
-          }
-        | {
-            type: ComponentTypes.TextInput;
-            customId: string;
-            style: number;
-            label: string;
-            minLength?: number;
-            maxLength?: number;
-            required?: boolean;
-            value?: string;
-            placeholder?: string;
-          }
-      >;
-    }> | null;
+    components?: Array<JSONActionRow> | null;
     files?: Array<File> | null;
     attachments?: Array<JSONAttachment> | null;
     flags?: MessageFlags | null;
@@ -360,46 +322,7 @@ export class Webhook extends Base {
       embeds?: Array<JSONEmbed> | null;
       flags?: MessageFlags | null;
       allowedMentions?: JSONAllowedMentions | null;
-      components?: Array<{
-        type: ComponentTypes.ActionRow;
-        components: Array<
-          | {
-              type: ComponentTypes.Button;
-              style: number;
-              label?: string;
-              emoji?: JSONEmoji;
-              customId?: string;
-              url?: string;
-              disabled?: boolean;
-            }
-          | {
-              type:
-                | ComponentTypes.StringSelect
-                | ComponentTypes.ChannelSelect
-                | ComponentTypes.MentionableSelect
-                | ComponentTypes.RoleSelect
-                | ComponentTypes.UserSelect;
-              customId: string;
-              options?: Array<JSONSelectOption>;
-              channelTypes?: Array<ChannelTypes>;
-              placeholder?: string;
-              minValues?: number;
-              maxValues?: number;
-              disabled?: boolean;
-            }
-          | {
-              type: ComponentTypes.TextInput;
-              customId: string;
-              style: number;
-              label: string;
-              minLength?: number;
-              maxLength?: number;
-              required?: boolean;
-              value?: string;
-              placeholder?: string;
-            }
-        >;
-      }> | null;
+      components?: Array<JSONActionRow> | null;
       files?: Array<File> | null;
       attachments?: Array<JSONAttachment> | null;
     }

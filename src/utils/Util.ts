@@ -1,4 +1,5 @@
 import type {
+  JSONActionRow,
   JSONApplicationCommandOptionChoice,
   JSONDefaultReaction,
   JSONEmbed,
@@ -109,48 +110,7 @@ export class Util {
     };
   }
 
-  public messageComponentToRaw(
-    components: Array<{
-      type: ComponentTypes.ActionRow;
-      components: Array<
-        | {
-            type: ComponentTypes.Button;
-            style: number;
-            label?: string;
-            emoji?: JSONEmoji;
-            customId?: string;
-            url?: string;
-            disabled?: boolean;
-          }
-        | {
-            type:
-              | ComponentTypes.StringSelect
-              | ComponentTypes.ChannelSelect
-              | ComponentTypes.MentionableSelect
-              | ComponentTypes.RoleSelect
-              | ComponentTypes.UserSelect;
-            customId: string;
-            options?: Array<JSONSelectOption>;
-            channelTypes?: Array<ChannelTypes>;
-            placeholder?: string;
-            minValues?: number;
-            maxValues?: number;
-            disabled?: boolean;
-          }
-        | {
-            type: ComponentTypes.TextInput;
-            customId: string;
-            style: number;
-            label: string;
-            minLength?: number;
-            maxLength?: number;
-            required?: boolean;
-            value?: string;
-            placeholder?: string;
-          }
-      >;
-    }>
-  ) {
+  public messageComponentToRaw(components: Array<JSONActionRow>) {
     return components.map((component) => ({
       type: component.type,
       components: component.components.map((c) => {
@@ -161,7 +121,13 @@ export class Util {
               style: c.style,
               label: c.label,
               emoji:
-                c.emoji !== undefined ? this.emojiToRaw(c.emoji) : undefined,
+                c.emoji !== undefined
+                  ? {
+                      name: c.emoji.name,
+                      id: c.emoji.id,
+                      animated: c.emoji.animated,
+                    }
+                  : undefined,
               custom_id: c.customId,
               url: c.url,
               disabled: c.disabled,
@@ -202,7 +168,11 @@ export class Util {
                 description: option.description,
                 emoji:
                   option.emoji !== undefined
-                    ? this.emojiToRaw(option.emoji)
+                    ? {
+                        name: option.emoji.name,
+                        id: option.emoji.id,
+                        animated: option.emoji.animated,
+                      }
                     : undefined,
                 default: option.default,
               })),

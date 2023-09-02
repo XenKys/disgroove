@@ -1,12 +1,17 @@
 import type { JSONEmoji, RawEmoji } from ".";
-import type { ChannelTypes } from "../constants";
+import type {
+  ButtonStyles,
+  ChannelTypes,
+  ComponentTypes,
+  TextInputStyles,
+} from "../constants";
 
 /** https://discord.com/developers/docs/interactions/message-components#button-object-button-structure */
 export interface RawButton {
-  type: number;
-  style: number;
+  type: ComponentTypes.Button;
+  style: ButtonStyles;
   label?: string;
-  emoji?: RawEmoji;
+  emoji?: Partial<Pick<RawEmoji, "name" | "id" | "animated">>;
   custom_id?: string;
   url?: string;
   disabled?: boolean;
@@ -14,7 +19,12 @@ export interface RawButton {
 
 /** https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure */
 export interface RawSelectMenu {
-  type: number;
+  type:
+    | ComponentTypes.ChannelSelect
+    | ComponentTypes.MentionableSelect
+    | ComponentTypes.RoleSelect
+    | ComponentTypes.StringSelect
+    | ComponentTypes.UserSelect;
   custom_id: string;
   options?: Array<RawSelectOption>;
   channel_types?: Array<ChannelTypes>;
@@ -29,15 +39,15 @@ export interface RawSelectOption {
   label: string;
   value: string;
   description?: string;
-  emoji?: RawEmoji;
+  emoji?: Partial<Pick<RawEmoji, "name" | "id" | "animated">>;
   default?: boolean;
 }
 
 /** https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure */
 export interface RawTextInput {
-  type: number;
+  type: ComponentTypes.TextInput;
   custom_id: string;
-  style: number;
+  style: TextInputStyles;
   label: string;
   min_length?: number;
   max_length?: number;
@@ -46,18 +56,65 @@ export interface RawTextInput {
   placeholder?: string;
 }
 
+/** https://discord.com/developers/docs/interactions/message-components#action-rows */
+export interface RawActionRow {
+  type: ComponentTypes.ActionRow;
+  components: Array<
+    | {
+        type: ComponentTypes.Button;
+        style: ButtonStyles;
+        label?: string;
+        emoji?: Partial<Pick<RawEmoji, "name" | "id" | "animated">>;
+        custom_id?: string;
+        url?: string;
+        disabled?: boolean;
+      }
+    | {
+        type:
+          | ComponentTypes.ChannelSelect
+          | ComponentTypes.MentionableSelect
+          | ComponentTypes.RoleSelect
+          | ComponentTypes.StringSelect
+          | ComponentTypes.UserSelect;
+        custom_id: string;
+        options?: Array<RawSelectOption>;
+        channel_types?: Array<ChannelTypes>;
+        placeholder?: string;
+        min_values?: number;
+        max_values?: number;
+        disabled?: boolean;
+      }
+    | {
+        type: ComponentTypes.TextInput;
+        custom_id: string;
+        style: TextInputStyles;
+        label: string;
+        min_length?: number;
+        max_length?: number;
+        required?: boolean;
+        value?: string;
+        placeholder?: string;
+      }
+  >;
+}
+
 export interface JSONButton {
-  type: number;
-  style: number;
+  type: ComponentTypes.Button;
+  style: ButtonStyles;
   label?: string;
-  emoji?: JSONEmoji;
+  emoji?: Partial<Pick<JSONEmoji, "name" | "id" | "animated">>;
   customId?: string;
   url?: string;
   disabled?: boolean;
 }
 
 export interface JSONSelectMenu {
-  type: number;
+  type:
+    | ComponentTypes.ChannelSelect
+    | ComponentTypes.MentionableSelect
+    | ComponentTypes.RoleSelect
+    | ComponentTypes.StringSelect
+    | ComponentTypes.UserSelect;
   customId: string;
   options?: Array<JSONSelectOption>;
   channelTypes?: Array<ChannelTypes>;
@@ -71,18 +128,59 @@ export interface JSONSelectOption {
   label: string;
   value: string;
   description?: string;
-  emoji?: JSONEmoji;
+  emoji?: Partial<Pick<JSONEmoji, "name" | "id" | "animated">>;
   default?: boolean;
 }
 
 export interface JSONTextInput {
-  type: number;
+  type: ComponentTypes.TextInput;
   customId: string;
-  style: number;
+  style: TextInputStyles;
   label: string;
   minLength?: number;
   maxLength?: number;
   required?: boolean;
   value?: string;
   placeholder?: string;
+}
+
+export interface JSONActionRow {
+  type: ComponentTypes.ActionRow;
+  components: Array<
+    | {
+        type: ComponentTypes.Button;
+        style: ButtonStyles;
+        label?: string;
+        emoji?: Partial<Pick<JSONEmoji, "name" | "id" | "animated">>;
+        customId?: string;
+        url?: string;
+        disabled?: boolean;
+      }
+    | {
+        type:
+          | ComponentTypes.ChannelSelect
+          | ComponentTypes.MentionableSelect
+          | ComponentTypes.RoleSelect
+          | ComponentTypes.StringSelect
+          | ComponentTypes.UserSelect;
+        customId: string;
+        options?: Array<JSONSelectOption>;
+        channelTypes?: Array<ChannelTypes>;
+        placeholder?: string;
+        minValues?: number;
+        maxValues?: number;
+        disabled?: boolean;
+      }
+    | {
+        type: ComponentTypes.TextInput;
+        customId: string;
+        style: TextInputStyles;
+        label: string;
+        minLength?: number;
+        maxLength?: number;
+        required?: boolean;
+        value?: string;
+        placeholder?: string;
+      }
+  >;
 }

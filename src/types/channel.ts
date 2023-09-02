@@ -21,6 +21,8 @@ import type {
   JSONGuildMember,
   RawSelectOption,
   JSONSelectOption,
+  RawActionRow,
+  JSONActionRow,
 } from ".";
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
@@ -90,46 +92,7 @@ export interface RawMessage {
   referenced_message?: RawMessage | null;
   interaction?: RawMessageInteraction;
   thread?: RawChannel;
-  components?: Array<{
-    type: ComponentTypes.ActionRow;
-    components: Array<
-      | {
-          type: ComponentTypes.Button;
-          style: number;
-          label?: string;
-          emoji?: RawEmoji;
-          custom_id?: string;
-          url?: string;
-          disabled?: boolean;
-        }
-      | {
-          type:
-            | ComponentTypes.StringSelect
-            | ComponentTypes.ChannelSelect
-            | ComponentTypes.MentionableSelect
-            | ComponentTypes.RoleSelect
-            | ComponentTypes.UserSelect;
-          custom_id: string;
-          options?: Array<RawSelectOption>;
-          channel_types?: Array<ChannelTypes>;
-          placeholder?: string;
-          min_values?: number;
-          max_values?: number;
-          disabled?: boolean;
-        }
-      | {
-          type: ComponentTypes.TextInput;
-          custom_id: string;
-          style: number;
-          label: string;
-          min_length?: number;
-          max_length?: number;
-          required?: boolean;
-          value?: string;
-          placeholder?: string;
-        }
-    >;
-  }>;
+  components?: Array<RawActionRow>;
   sticker_items?: Array<RawStickerItem>;
   stickers?: Array<RawSticker>;
   position?: number;
@@ -377,46 +340,7 @@ export interface JSONMessage {
   referencedMessage?: JSONMessage | null;
   interaction?: JSONMessageInteraction;
   thread?: JSONChannel;
-  components?: Array<{
-    type: ComponentTypes.ActionRow;
-    components: Array<
-      | {
-          type: ComponentTypes.Button;
-          style: number;
-          label?: string;
-          emoji?: JSONEmoji;
-          customId?: string;
-          url?: string;
-          disabled?: boolean;
-        }
-      | {
-          type:
-            | ComponentTypes.StringSelect
-            | ComponentTypes.ChannelSelect
-            | ComponentTypes.MentionableSelect
-            | ComponentTypes.RoleSelect
-            | ComponentTypes.UserSelect;
-          customId: string;
-          options?: Array<JSONSelectOption>;
-          channelTypes?: Array<ChannelTypes>;
-          placeholder?: string;
-          minValues?: number;
-          maxValues?: number;
-          disabled?: boolean;
-        }
-      | {
-          type: ComponentTypes.TextInput;
-          customId: string;
-          style: number;
-          label: string;
-          minLength?: number;
-          maxLength?: number;
-          required?: boolean;
-          value?: string;
-          placeholder?: string;
-        }
-    >;
-  }>;
+  components?: Array<JSONActionRow>;
   stickerItems?: Array<JSONStickerItem>;
   stickers?: Array<JSONSticker>;
   position?: number;

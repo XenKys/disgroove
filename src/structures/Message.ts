@@ -10,6 +10,7 @@ import {
 import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
+  JSONActionRow,
   JSONAllowedMentions,
   JSONAttachment,
   JSONChannelMention,
@@ -62,46 +63,7 @@ export class Message extends Base {
   public referencedMessage?: Message | null;
   public interaction?: JSONMessageInteraction;
   public thread?: Channel;
-  public components?: Array<{
-    type: ComponentTypes.ActionRow;
-    components: Array<
-      | {
-          type: ComponentTypes.Button;
-          style: number;
-          label?: string;
-          emoji?: JSONEmoji;
-          customId?: string;
-          url?: string;
-          disabled?: boolean;
-        }
-      | {
-          type:
-            | ComponentTypes.StringSelect
-            | ComponentTypes.ChannelSelect
-            | ComponentTypes.MentionableSelect
-            | ComponentTypes.RoleSelect
-            | ComponentTypes.UserSelect;
-          customId: string;
-          options?: Array<JSONSelectOption>;
-          channelTypes?: Array<ChannelTypes>;
-          placeholder?: string;
-          minValues?: number;
-          maxValues?: number;
-          disabled?: boolean;
-        }
-      | {
-          type: ComponentTypes.TextInput;
-          customId: string;
-          style: number;
-          label: string;
-          minLength?: number;
-          maxLength?: number;
-          required?: boolean;
-          value?: string;
-          placeholder?: string;
-        }
-    >;
-  }>;
+  public components?: Array<JSONActionRow>;
   public stickerItems?: Array<JSONStickerItem>;
   public stickers?: Array<Sticker>;
   public position?: number;
@@ -266,7 +228,11 @@ export class Message extends Base {
                 label: c.label,
                 emoji:
                   c.emoji !== undefined
-                    ? new Emoji(c.emoji, this.client).toJSON()
+                    ? {
+                        name: c.emoji.name,
+                        id: c.emoji.id,
+                        animated: c.emoji.animated,
+                      }
                     : undefined,
                 customId: c.custom_id,
                 url: c.url,
@@ -308,7 +274,11 @@ export class Message extends Base {
                   description: option.description,
                   emoji:
                     option.emoji !== undefined
-                      ? new Emoji(option.emoji, this.client).toJSON()
+                      ? {
+                          name: option.emoji.name,
+                          id: option.emoji.id,
+                          animated: option.emoji.animated,
+                        }
                       : undefined,
                   default: option.default,
                 })),
@@ -413,46 +383,7 @@ export class Message extends Base {
     embeds?: Array<JSONEmbed> | null;
     flags?: MessageFlags | null;
     allowedMentions?: JSONAllowedMentions | null;
-    components?: Array<{
-      type: ComponentTypes.ActionRow;
-      components: Array<
-        | {
-            type: ComponentTypes.Button;
-            style: number;
-            label?: string;
-            emoji?: JSONEmoji;
-            customId?: string;
-            url?: string;
-            disabled?: boolean;
-          }
-        | {
-            type:
-              | ComponentTypes.StringSelect
-              | ComponentTypes.ChannelSelect
-              | ComponentTypes.MentionableSelect
-              | ComponentTypes.RoleSelect
-              | ComponentTypes.UserSelect;
-            customId: string;
-            options?: Array<JSONSelectOption>;
-            channelTypes?: Array<ChannelTypes>;
-            placeholder?: string;
-            minValues?: number;
-            maxValues?: number;
-            disabled?: boolean;
-          }
-        | {
-            type: ComponentTypes.TextInput;
-            customId: string;
-            style: number;
-            label: string;
-            minLength?: number;
-            maxLength?: number;
-            required?: boolean;
-            value?: string;
-            placeholder?: string;
-          }
-      >;
-    }> | null;
+    components?: Array<JSONActionRow> | null;
     files?: Array<File> | null;
     attachments?: Array<JSONAttachment> | null;
   }): Promise<Message> {
@@ -585,7 +516,7 @@ export class Message extends Base {
       applicationId: this.applicationId,
       messageReference: this.messageReference,
       flags: this.flags,
-      referencedMessage: this.referencedMessage,
+      referencedMessage: this.referencedMessage?.toJSON(),
       interaction: this.interaction,
       thread: this.thread,
       components: this.components,
