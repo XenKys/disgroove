@@ -7,6 +7,7 @@ import {
   StatusTypes,
   type SystemChannelFlags,
   type VerificationLevel,
+  MessageFlags,
 } from "./constants";
 import { Util } from "./utils";
 import { Endpoints, REST } from "./rest";
@@ -140,7 +141,16 @@ export interface ClientEvents {
   inviteCreate: [invite: InviteCreateEventFields];
   inviteDelete: [invite: InviteDeleteEventFields];
   messageCreate: [message: Message];
-  messageUpdate: [message: Message];
+  messageUpdate: [
+    message:
+      | Message
+      | {
+          id: string;
+          flags: MessageFlags;
+          channelId: string;
+          guildId: string;
+        }
+  ];
   messageDelete: [message: MessageDeleteEventFields];
   messageDeleteBulk: [bulk: MessageDeleteBulkEventFields];
   messageReactionAdd: [reaction: MessageReactionAddEventFields];

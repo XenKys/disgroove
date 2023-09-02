@@ -1,5 +1,10 @@
 import WebSocket, { type RawData } from "ws";
-import { GatewayEvents, GatewayOPCodes, StatusTypes } from "../constants";
+import {
+  GatewayEvents,
+  GatewayOPCodes,
+  MessageFlags,
+  StatusTypes,
+} from "../constants";
 import { GatewayError } from "../utils";
 import {
   Application,
@@ -530,7 +535,14 @@ export class Shard {
       case "MESSAGE_UPDATE":
         this.client.emit(
           GatewayEvents.MessageUpdate,
-          new Message(packet.d, this.client)
+          packet.d.flags === MessageFlags.HasThread
+            ? {
+                id: packet.d.id,
+                flags: packet.d.flags,
+                channelId: packet.d.channel_id,
+                guildId: packet.d.guild_id,
+              }
+            : new Message(packet.d, this.client)
         );
         break;
       case "MESSAGE_DELETE":
