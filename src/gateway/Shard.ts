@@ -546,10 +546,11 @@ export class Shard {
         );
         break;
       case "MESSAGE_DELETE":
-        this.client.emit(
-          GatewayEvents.MessageDelete,
-          new Message(packet.d, this.client).toJSON()
-        );
+        this.client.emit(GatewayEvents.MessageDelete, {
+          id: packet.d.id,
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+        });
         break;
       case "MESSAGE_DELETE_BULK":
         this.client.emit(GatewayEvents.MessageDeleteBulk, {
