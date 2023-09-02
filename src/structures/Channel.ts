@@ -148,7 +148,13 @@ export class Channel extends Base {
     if (data.total_message_sent !== undefined)
       this.totalMessageSent = data.total_message_sent;
     if (data.available_tags !== undefined)
-      this.availableTags = data.available_tags;
+      this.availableTags = data.available_tags.map((tag) => ({
+        id: tag.id,
+        name: tag.name,
+        moderated: tag.moderated,
+        emojiId: tag.emoji_id,
+        emojiName: tag.emoji_name,
+      }));
     if (data.applied_tags !== undefined) this.appliedTags = data.applied_tags;
     if (data.default_reaction_emoji !== undefined)
       this.defaultReactionEmoji = {
