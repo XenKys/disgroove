@@ -22,6 +22,7 @@ import {
 
 export class Util {
   public applicationCommandToRaw(command: {
+    id?: string;
     name?: string;
     nameLocalizations?: Partial<Record<Locale, string>> | null;
     description?: string;
@@ -62,6 +63,7 @@ export class Util {
     nsfw?: boolean;
   }) {
     return {
+      id: command.id,
       name: command.name,
       name_localizations: command.nameLocalizations,
       description: command.description,
