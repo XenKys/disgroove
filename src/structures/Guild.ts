@@ -1709,7 +1709,7 @@ export class Guild extends Base {
   public editCurrentUserVoiceState(options: {
     channelId?: string;
     suppress?: boolean;
-    requestToSpeakTimestamp?: number | null;
+    requestToSpeakTimestamp?: string | null;
   }): void {
     this.client.rest.patch(Endpoints.guildVoiceState(this.id), null, true, {
       json: {
@@ -1726,7 +1726,7 @@ export class Guild extends Base {
     options: {
       channelId?: string;
       suppress?: boolean;
-      requestToSpeakTimestamp?: number | null;
+      requestToSpeakTimestamp?: string | null;
     }
   ): void {
     this.client.rest.patch(

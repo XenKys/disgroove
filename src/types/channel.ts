@@ -45,7 +45,7 @@ export interface RawChannel {
   application_id?: string;
   managed?: boolean;
   parent_id?: string | null;
-  last_pin_timestamp?: number | null;
+  last_pin_timestamp?: string | null;
   rtc_region?: string | null;
   video_quality_mode?: number;
   message_count?: number;
@@ -294,7 +294,7 @@ export interface JSONChannel {
   applicationId?: string;
   managed?: boolean;
   parentId?: string | null;
-  lastPinTimestamp?: number | null;
+  lastPinTimestamp?: string | null;
   rtcRegion?: string | null;
   videoQualityMode?: number;
   messageCount?: number;

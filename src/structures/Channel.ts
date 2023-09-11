@@ -52,7 +52,7 @@ export class Channel extends Base {
   public applicationId?: string;
   public managed?: boolean;
   public parentId?: string | null;
-  public lastPinTimestamp?: number | null;
+  public lastPinTimestamp?: string | null;
   public rtcRegion?: string | null;
   public videoQualityMode?: number;
   public messageCount?: number;

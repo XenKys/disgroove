@@ -294,7 +294,7 @@ export class Util {
     applicationId?: string;
     managed?: boolean;
     parentId?: string | null;
-    lastPinTimestamp?: number | null;
+    lastPinTimestamp?: string | null;
     rtcRegion?: string | null;
     videoQualityMode?: number;
     messageCount?: number;

@@ -63,7 +63,7 @@ export interface RawThreadMembersUpdateEventFields {
 export interface RawChannelPinsUpdateEventFields {
   guild_id?: string;
   channel_id: string;
-  last_pin_timestamp?: number | null;
+  last_pin_timestamp?: string | null;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-delete */
@@ -316,7 +316,7 @@ export interface RawTypingStartEventFields {
   channel_id: string;
   guild_id?: string;
   user_id: string;
-  timestamp: number;
+  timestamp: string;
   member?: RawGuildMember;
 }
 
@@ -365,7 +365,7 @@ export interface ThreadMembersUpdateEventFields {
 export interface ChannelPinsUpdateEventFields {
   guildId?: string;
   channelId: string;
-  lastPinTimestamp?: number | null;
+  lastPinTimestamp?: string | null;
 }
 
 export interface GuildDeleteEventFields {
@@ -586,7 +586,7 @@ export interface TypingStartEventFields {
   channelId: string;
   guildId?: string;
   userId: string;
-  timestamp: number;
+  timestamp: string;
   member?: GuildMember;
 }
 
