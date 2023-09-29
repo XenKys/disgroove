@@ -689,6 +689,45 @@ export class Shard {
           packet.d.guild_id
         );
         break;
+      case "ENTITLEMENT_CREATE":
+        this.client.emit(GatewayEvents.EntitlementCreate, {
+          id: packet.d.id,
+          skuId: packet.d.sku_id,
+          userId: packet.d.user_id,
+          guildId: packet.d.guild_id,
+          applicationId: packet.d.application_id,
+          type: packet.d.type,
+          consumed: packet.d.consumed,
+          startsAt: packet.d.starts_at,
+          endsAt: packet.d.ends_at,
+        });
+        break;
+      case "ENTITLEMENT_UPDATE":
+        this.client.emit(GatewayEvents.EntitlementUpdate, {
+          id: packet.d.id,
+          skuId: packet.d.sku_id,
+          userId: packet.d.user_id,
+          guildId: packet.d.guild_id,
+          applicationId: packet.d.application_id,
+          type: packet.d.type,
+          consumed: packet.d.consumed,
+          startsAt: packet.d.starts_at,
+          endsAt: packet.d.ends_at,
+        });
+        break;
+      case "ENTITLEMENT_DELETE":
+        this.client.emit(GatewayEvents.EntitlementDelete, {
+          id: packet.d.id,
+          skuId: packet.d.sku_id,
+          userId: packet.d.user_id,
+          guildId: packet.d.guild_id,
+          applicationId: packet.d.application_id,
+          type: packet.d.type,
+          consumed: packet.d.consumed,
+          startsAt: packet.d.starts_at,
+          endsAt: packet.d.ends_at,
+        });
+        break;
     }
   }
 

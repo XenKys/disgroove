@@ -187,6 +187,14 @@ export const applicationCommandPermissions = (
 ) =>
   `applications/${applicationId}/guilds/${guildId}/commands/${commandId}/permissions` as const;
 export const applicationCurrentUser = () => "applications/@me" as const;
+export const applicationSKUs = (applicationId: string) =>
+  `applications/${applicationId}/skus` as const;
+export const applicationEntitlements = (applicationId: string) =>
+  `applications/${applicationId}/entitlements` as const;
+export const applicationEntitlement = (
+  applicationId: string,
+  entitlementId: string
+) => `applications/${applicationId}/entitlements/${entitlementId}` as const;
 
 // Webhooks
 export const webhook = (webhookId: string, webhookToken?: string) =>

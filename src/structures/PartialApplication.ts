@@ -17,6 +17,7 @@ import type {
   ChannelTypes,
   Locale,
 } from "../constants";
+import { JSONEntitlement, RawEntitlement } from "../types/entitlements";
 
 export class PartialApplication extends Base {
   protected override raw: Pick<RawApplication, "id" | "flags">;
@@ -583,6 +584,73 @@ export class PartialApplication extends Base {
           descriptionLocalizations: data.description_localizations,
         }))
       );
+  }
+
+  /** https://discord.com/developers/docs/monetization/entitlements#list-entitlements */
+  public async getEntitlements(options?: {
+    userId?: string;
+    skuIds?: Array<string>;
+    before?: string;
+    after?: string;
+    limit?: number;
+    guildId?: string;
+    excludeEnded?: boolean;
+  }): Promise<Array<JSONEntitlement>> {
+    return this.client.rest
+      .get<Array<RawEntitlement>>(Endpoints.applicationEntitlements(this.id))
+      .then((response) =>
+        response.map((data) => ({
+          id: data.id,
+          applicationId: data.application_id,
+          consumed: data.consumed,
+          guildId: data.guild_id,
+          skuId: data.sku_id,
+          type: data.type,
+          userId: data.user_id,
+          startsAt: data.starts_at,
+          endsAt: data.ends_at,
+        }))
+      );
+  }
+
+  /** https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement */
+  public async createTestEntitlement(options: {
+    skuId: string;
+    ownerId: string;
+    ownerType: number;
+  }): Promise<
+    Pick<
+      JSONEntitlement,
+      "applicationId" | "consumed" | "guildId" | "skuId" | "type" | "userId"
+    >
+  > {
+    return this.client.rest
+      .post<
+        Pick<
+          RawEntitlement,
+          | "application_id"
+          | "consumed"
+          | "guild_id"
+          | "sku_id"
+          | "type"
+          | "user_id"
+        >
+      >(Endpoints.applicationEntitlements(this.id))
+      .then((response) => ({
+        applicationId: response.application_id,
+        consumed: response.consumed,
+        guildId: response.guild_id,
+        skuId: response.sku_id,
+        type: response.type,
+        userId: response.user_id,
+      }));
+  }
+
+  /** https://discord.com/developers/docs/monetization/entitlements#delete-test-entitlement */
+  public deleteTestEntitlement(entitlementId: string): void {
+    this.client.rest.delete(
+      Endpoints.applicationEntitlement(this.id, entitlementId)
+    );
   }
 
   public override toRaw(): Pick<RawApplication, "id" | "flags"> {

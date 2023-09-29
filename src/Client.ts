@@ -76,6 +76,7 @@ import type {
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardsManager } from "./gateway";
+import { JSONEntitlement } from "./types/entitlements";
 
 export interface ClientEvents {
   hello: [];
@@ -167,6 +168,9 @@ export interface ClientEvents {
   stageInstanceCreate: [stageInstance: StageInstance];
   stageInstanceUpdate: [stageInstance: StageInstance];
   stageInstanceDelete: [stageInstance: JSONStageInstance];
+  entitlementCreate: [entitlement: JSONEntitlement];
+  entitlementUpdate: [entitlement: JSONEntitlement];
+  entitlementDelete: [entitlement: JSONEntitlement];
 }
 
 export interface ClientOptions {

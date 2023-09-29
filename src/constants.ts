@@ -102,6 +102,7 @@ export enum InteractionCallbackType {
   UpdateMessage,
   ApplicationCommandAutocompleteResult,
   Modal,
+  PremiumRequired,
 }
 
 /** https://discord.com/developers/docs/interactions/message-components#button-object-button-styles */
@@ -695,6 +696,9 @@ export enum GatewayEvents {
   VoiceStateUpdate = "voiceStateUpdate",
   VoiceServerUpdate = "voiceServerUpdate",
   WebhooksUpdate = "webhooksUpdate",
+  EntitlementCreate = "entitlementCreate",
+  EntitlementUpdate = "entitlementUpdate",
+  EntitlementDelete = "entitlementDelete",
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types */
@@ -1123,4 +1127,15 @@ export enum TeamMemberRoleTypes {
 export enum MembershipState {
   Invited = 1,
   Accepted,
+}
+
+/** https://discord.com/developers/docs/monetization/skus#sku-object-sku-types */
+export enum SKUTypes {
+  Subscription = 5,
+  SubscriptionGroup,
+}
+
+/** https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types */
+export enum EntitlementTypes {
+  ApplicationSubscription = 8,
 }
