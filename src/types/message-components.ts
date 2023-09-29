@@ -29,6 +29,7 @@ export interface RawSelectMenu {
   options?: Array<RawSelectOption>;
   channel_types?: Array<ChannelTypes>;
   placeholder?: string;
+  default_values?: Array<RawDefaultValue>;
   min_values?: number;
   max_values?: number;
   disabled?: boolean;
@@ -41,6 +42,12 @@ export interface RawSelectOption {
   description?: string;
   emoji?: Partial<Pick<RawEmoji, "name" | "id" | "animated">>;
   default?: boolean;
+}
+
+/** https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-default-value-structure */
+export interface RawDefaultValue {
+  id: string;
+  type: string;
 }
 
 /** https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-structure */
@@ -119,6 +126,7 @@ export interface JSONSelectMenu {
   options?: Array<JSONSelectOption>;
   channelTypes?: Array<ChannelTypes>;
   placeholder?: string;
+  defaultValues?: Array<JSONDefaultValue>;
   minValues?: number;
   maxValues?: number;
   disabled?: boolean;
@@ -130,6 +138,11 @@ export interface JSONSelectOption {
   description?: string;
   emoji?: Partial<Pick<JSONEmoji, "name" | "id" | "animated">>;
   default?: boolean;
+}
+
+export interface JSONDefaultValue {
+  id: string;
+  type: string;
 }
 
 export interface JSONTextInput {
