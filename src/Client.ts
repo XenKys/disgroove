@@ -73,10 +73,10 @@ import type {
   RawStickerPack,
   RawUser,
   RawVoiceRegion,
+  JSONEntitlement,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardsManager } from "./gateway";
-import { JSONEntitlement } from "./types/entitlements";
 
 export interface ClientEvents {
   hello: [];

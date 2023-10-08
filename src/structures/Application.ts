@@ -9,6 +9,10 @@ import type {
   JSONApplicationCommandOptionChoice,
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,
+  JSONSKU,
+  RawSKU,
+  JSONEntitlement,
+  RawEntitlement,
 } from "../types";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
@@ -18,8 +22,6 @@ import type {
   ChannelTypes,
   Locale,
 } from "../constants";
-import { JSONEntitlement, RawEntitlement } from "../types/entitlements";
-import { JSONSKU, RawSKU } from "../types/sku";
 
 /** https://discord.com/developers/docs/resources/application */
 export class Application extends Base {
@@ -646,6 +648,7 @@ export class Application extends Base {
           applicationId: data.application_id,
           name: data.name,
           slug: data.slug,
+          flags: data.flags,
         }))
       );
   }

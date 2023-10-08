@@ -8,6 +8,10 @@ import type {
   JSONApplicationCommandOptionChoice,
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,
+  JSONSKU,
+  RawEntitlement,
+  JSONEntitlement,
+  RawSKU,
 } from "../types";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
@@ -17,7 +21,6 @@ import type {
   ChannelTypes,
   Locale,
 } from "../constants";
-import { JSONEntitlement, RawEntitlement } from "../types/entitlements";
 
 export class PartialApplication extends Base {
   protected override raw: Pick<RawApplication, "id" | "flags">;
@@ -582,6 +585,22 @@ export class PartialApplication extends Base {
           nameLocalizations: data.name_localizations,
           description: data.description,
           descriptionLocalizations: data.description_localizations,
+        }))
+      );
+  }
+
+  /** https://discord.com/developers/docs/monetization/skus#list-skus */
+  public async getSKUs(): Promise<Array<JSONSKU>> {
+    return this.client.rest
+      .get<Array<RawSKU>>(Endpoints.applicationSKUs(this.id))
+      .then((response) =>
+        response.map((data) => ({
+          id: data.id,
+          type: data.type,
+          applicationId: data.application_id,
+          name: data.name,
+          slug: data.slug,
+          flags: data.flags,
         }))
       );
   }
