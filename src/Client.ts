@@ -334,6 +334,7 @@ export class Client extends EventEmitter {
       topic: string;
       privacyLevel?: PrivacyLevel;
       sendStartNotifications?: boolean;
+      guildScheduledEventId?: string;
     },
     reason?: string
   ): Promise<StageInstance> {
@@ -348,6 +349,7 @@ export class Client extends EventEmitter {
             topic: options.topic,
             privacy_level: options.privacyLevel,
             send_start_notifications: options.sendStartNotifications,
+            guild_scheduled_event_id: options.guildScheduledEventId,
           },
           reason,
         }
