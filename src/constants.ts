@@ -1135,6 +1135,12 @@ export enum SKUTypes {
   SubscriptionGroup,
 }
 
+/** https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags */
+export enum SKUFlags {
+  GuildSubscription = 1 << 7,
+  UserSubscription = 1 << 8,
+}
+
 /** https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types */
 export enum EntitlementTypes {
   ApplicationSubscription = 8,

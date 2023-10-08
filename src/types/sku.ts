@@ -1,4 +1,4 @@
-import type { SKUTypes } from "../constants";
+import type { SKUFlags, SKUTypes } from "../constants";
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-structure */
 export interface RawSKU {
@@ -7,6 +7,7 @@ export interface RawSKU {
   application_id: string;
   name: string;
   slug: string;
+  flags: SKUFlags;
 }
 
 export interface JSONSKU {
@@ -15,4 +16,5 @@ export interface JSONSKU {
   applicationId: string;
   name: string;
   slug: string;
+  flags: SKUFlags;
 }
