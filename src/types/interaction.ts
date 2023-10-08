@@ -138,6 +138,7 @@ export interface JSONMessageComponentData {
   customId: string;
   componentType: number;
   values?: Array<string>;
+  resolved?: JSONResolvedData;
 }
 
 export interface JSONModalSubmitData {
