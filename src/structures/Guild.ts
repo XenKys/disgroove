@@ -1008,6 +1008,7 @@ export class Guild extends Base {
       availableTags?: Array<JSONForumTag>;
       defaultSortOrder?: number | null;
       defaultForumLayout?: number;
+      defaultThreadRateLimitPerUser?: number;
     },
     reason?: string
   ): Promise<Channel> {
@@ -1038,6 +1039,8 @@ export class Guild extends Base {
             available_tags: options.availableTags,
             default_sort_order: options.defaultSortOrder,
             default_forum_layout: options.defaultForumLayout,
+            default_thread_rate_limit_per_user:
+              options.defaultThreadRateLimitPerUser,
           },
           reason,
         }
