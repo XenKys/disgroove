@@ -693,39 +693,39 @@ export class Shard {
         this.client.emit(GatewayEvents.EntitlementCreate, {
           id: packet.d.id,
           skuId: packet.d.sku_id,
-          userId: packet.d.user_id,
-          guildId: packet.d.guild_id,
           applicationId: packet.d.application_id,
+          userId: packet.d.user_id,
           type: packet.d.type,
-          consumed: packet.d.consumed,
+          deleted: packet.d.deleted,
           startsAt: packet.d.starts_at,
           endsAt: packet.d.ends_at,
+          guildId: packet.d.guild_id,
         });
         break;
       case "ENTITLEMENT_UPDATE":
         this.client.emit(GatewayEvents.EntitlementUpdate, {
           id: packet.d.id,
           skuId: packet.d.sku_id,
-          userId: packet.d.user_id,
-          guildId: packet.d.guild_id,
           applicationId: packet.d.application_id,
+          userId: packet.d.user_id,
           type: packet.d.type,
-          consumed: packet.d.consumed,
+          deleted: packet.d.deleted,
           startsAt: packet.d.starts_at,
           endsAt: packet.d.ends_at,
+          guildId: packet.d.guild_id,
         });
         break;
       case "ENTITLEMENT_DELETE":
         this.client.emit(GatewayEvents.EntitlementDelete, {
           id: packet.d.id,
           skuId: packet.d.sku_id,
-          userId: packet.d.user_id,
-          guildId: packet.d.guild_id,
           applicationId: packet.d.application_id,
+          userId: packet.d.user_id,
           type: packet.d.type,
-          consumed: packet.d.consumed,
+          deleted: packet.d.deleted,
           startsAt: packet.d.starts_at,
           endsAt: packet.d.ends_at,
+          guildId: packet.d.guild_id,
         });
         break;
     }

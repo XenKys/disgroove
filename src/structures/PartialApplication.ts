@@ -621,7 +621,7 @@ export class PartialApplication extends Base {
         response.map((data) => ({
           id: data.id,
           applicationId: data.application_id,
-          consumed: data.consumed,
+          deleted: data.deleted,
           guildId: data.guild_id,
           skuId: data.sku_id,
           type: data.type,
@@ -640,7 +640,7 @@ export class PartialApplication extends Base {
   }): Promise<
     Pick<
       JSONEntitlement,
-      "applicationId" | "consumed" | "guildId" | "skuId" | "type" | "userId"
+      "applicationId" | "deleted" | "guildId" | "skuId" | "type" | "userId"
     >
   > {
     return this.client.rest
@@ -648,7 +648,7 @@ export class PartialApplication extends Base {
         Pick<
           RawEntitlement,
           | "application_id"
-          | "consumed"
+          | "deleted"
           | "guild_id"
           | "sku_id"
           | "type"
@@ -657,7 +657,7 @@ export class PartialApplication extends Base {
       >(Endpoints.applicationEntitlements(this.id))
       .then((response) => ({
         applicationId: response.application_id,
-        consumed: response.consumed,
+        deleted: response.deleted,
         guildId: response.guild_id,
         skuId: response.sku_id,
         type: response.type,
