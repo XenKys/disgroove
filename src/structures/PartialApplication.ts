@@ -616,7 +616,15 @@ export class PartialApplication extends Base {
     excludeEnded?: boolean;
   }): Promise<Array<JSONEntitlement>> {
     return this.client.rest
-      .get<Array<RawEntitlement>>(Endpoints.applicationEntitlements(this.id))
+      .get<Array<RawEntitlement>>(Endpoints.applicationEntitlements(this.id), {
+        user_id: options?.userId,
+        sku_ids: options?.skuIds,
+        before: options?.before,
+        after: options?.after,
+        limit: options?.limit,
+        guild_id: options?.guildId,
+        exclude_ended: options?.excludeEnded,
+      })
       .then((response) =>
         response.map((data) => ({
           id: data.id,
@@ -640,13 +648,20 @@ export class PartialApplication extends Base {
   }): Promise<
     Pick<
       JSONEntitlement,
-      "applicationId" | "deleted" | "guildId" | "skuId" | "type" | "userId"
+      | "id"
+      | "applicationId"
+      | "deleted"
+      | "guildId"
+      | "skuId"
+      | "type"
+      | "userId"
     >
   > {
     return this.client.rest
       .post<
         Pick<
           RawEntitlement,
+          | "id"
           | "application_id"
           | "deleted"
           | "guild_id"
@@ -654,8 +669,15 @@ export class PartialApplication extends Base {
           | "type"
           | "user_id"
         >
-      >(Endpoints.applicationEntitlements(this.id))
+      >(Endpoints.applicationEntitlements(this.id), null, true, {
+        json: {
+          sku_id: options.skuId,
+          owner_id: options.ownerId,
+          owner_type: options.ownerType,
+        },
+      })
       .then((response) => ({
+        id: response.id,
         applicationId: response.application_id,
         deleted: response.deleted,
         guildId: response.guild_id,
