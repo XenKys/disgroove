@@ -1137,6 +1137,7 @@ export enum SKUTypes {
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags */
 export enum SKUFlags {
+  Available = 1 << 2,
   GuildSubscription = 1 << 7,
   UserSubscription = 1 << 8,
 }
