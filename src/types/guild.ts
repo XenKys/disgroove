@@ -205,7 +205,10 @@ export interface RawPromptOption {
   id: string;
   channel_ids: Array<string>;
   role_ids: Array<string>;
-  emoji: RawEmoji;
+  emoji?: RawEmoji;
+  emoji_id?: string;
+  emoji_name?: string;
+  emoji_animated?: boolean;
   title: string;
   description: string | null;
 }
@@ -374,7 +377,10 @@ export interface JSONPromptOption {
   id: string;
   channelIds: Array<string>;
   roleIds: Array<string>;
-  emoji: JSONEmoji;
+  emoji?: JSONEmoji;
+  emojiId?: string;
+  emojiName?: string;
+  emojiAnimated?: boolean;
   title: string;
   description: string | null;
 }
