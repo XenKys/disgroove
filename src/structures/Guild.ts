@@ -1651,7 +1651,13 @@ export class Guild extends Base {
             id: option.id,
             channelIds: option.channel_ids,
             roleIds: option.role_ids,
-            emoji: new Emoji(option.emoji, this.client),
+            emoji:
+              option.emoji !== undefined
+                ? new Emoji(option.emoji, this.client)
+                : undefined,
+            emojiId: option.emoji_id,
+            emojiName: option.emoji_name,
+            emojiAnimated: option.emoji_animated,
             title: option.title,
             description: option.description,
           })),
@@ -1685,16 +1691,22 @@ export class Guild extends Base {
             id: option.id,
             channel_ids: option.channelIds,
             role_ids: option.roleIds,
-            emoji: {
-              id: option.emoji.id,
-              name: option.emoji.name,
-              roles: option.emoji.roles,
-              user: option.emoji.user,
-              require_colons: option.emoji.requireColons,
-              managed: option.emoji.managed,
-              animated: option.emoji.animated,
-              available: option.emoji.available,
-            },
+            emoji:
+              option.emoji !== undefined
+                ? {
+                    id: option.emoji.id,
+                    name: option.emoji.name,
+                    roles: option.emoji.roles,
+                    user: option.emoji.user,
+                    require_colons: option.emoji.requireColons,
+                    managed: option.emoji.managed,
+                    animated: option.emoji.animated,
+                    available: option.emoji.available,
+                  }
+                : undefined,
+            emoji_id: option.emojiId,
+            emoji_name: option.emojiName,
+            emoji_animated: option.emojiAnimated,
             title: option.title,
             description: option.description,
           })),
