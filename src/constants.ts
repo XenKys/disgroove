@@ -1106,6 +1106,8 @@ export const BitwisePermissionFlags = {
   ModerateMembers: 1n << 40n,
   ViewCreatorMonetizationAnalytics: 1n << 41n,
   UseSoundboard: 1n << 42n,
+  CreateGuildExpressions: 1n << 43n,
+  CreateEvents: 1n << 44n,
   UseExternalSounds: 1n << 45n,
   SendVoiceMessages: 1n << 46n,
 } as const;
