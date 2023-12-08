@@ -99,6 +99,7 @@ export class Webhook extends Base {
             avatar: options.avatar,
           },
           reason,
+          authorization: false,
         }
       ),
       this.client
@@ -118,6 +119,7 @@ export class Webhook extends Base {
 
     this.client.rest.delete(Endpoints.webhook(this.id, this.token), {
       reason,
+      authorization: false,
     });
   }
 
