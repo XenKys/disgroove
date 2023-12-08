@@ -49,8 +49,6 @@ export class Emoji {
     return new Emoji(
       await this.client.rest.patch<RawEmoji>(
         Endpoints.guildEmoji(guildId, this.id),
-        null,
-        true,
         {
           json: {
             name: options.name,
@@ -67,14 +65,9 @@ export class Emoji {
   public delete(guildId: string, reason?: string): void {
     if (!this.id) throw new Error("[disgroove] Emoji ID not found");
 
-    this.client.rest.delete(
-      Endpoints.guildEmoji(guildId, this.id),
-      null,
-      true,
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildEmoji(guildId, this.id), {
+      reason,
+    });
   }
 
   public toString(): string {

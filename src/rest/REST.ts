@@ -23,104 +23,77 @@ export class REST {
 
   public get<T>(
     endpoint: string,
-    query: Partial<
-      Record<string, string | number | boolean | Array<string>>
-    > | null = null,
-    withAuthorization: boolean = true
+    data?: {
+      query?: Partial<
+        Record<string, string | number | boolean | Array<string>>
+      >;
+      authorization?: boolean;
+    }
   ): Promise<T> {
-    return this.manager.request<T>(
-      RESTMethods.Get,
-      endpoint,
-      query,
-      withAuthorization
-    );
+    return this.manager.request<T>(RESTMethods.Get, endpoint, data);
   }
 
   public post<T>(
     endpoint: string,
-    query: Partial<
-      Record<string, string | number | boolean | Array<string>>
-    > | null = null,
-    withAuthorization: boolean = true,
     data?: {
       json?: unknown;
       form?: FormData;
       files?: Array<File> | null;
       reason?: string;
+      query?: Partial<
+        Record<string, string | number | boolean | Array<string>>
+      >;
+      authorization?: boolean;
     }
   ): Promise<T> {
-    return this.manager.request<T>(
-      RESTMethods.Post,
-      endpoint,
-      query,
-      withAuthorization,
-      data
-    );
+    return this.manager.request<T>(RESTMethods.Post, endpoint, data);
   }
 
   public delete<T>(
     endpoint: string,
-    query: Partial<
-      Record<string, string | number | boolean | Array<string>>
-    > | null = null,
-    withAuthorization: boolean = true,
     data?: {
       json?: unknown;
       form?: FormData;
       files?: Array<File> | null;
       reason?: string;
+      query?: Partial<
+        Record<string, string | number | boolean | Array<string>>
+      >;
+      authorization?: boolean;
     }
   ): Promise<T> {
-    return this.manager.request<T>(
-      RESTMethods.Delete,
-      endpoint,
-      query,
-      withAuthorization,
-      data
-    );
+    return this.manager.request<T>(RESTMethods.Delete, endpoint, data);
   }
 
   public patch<T>(
     endpoint: string,
-    query: Partial<
-      Record<string, string | number | boolean | Array<string>>
-    > | null = null,
-    withAuthorization: boolean = true,
     data?: {
       json?: unknown;
       form?: FormData;
       files?: Array<File> | null;
       reason?: string;
+      query?: Partial<
+        Record<string, string | number | boolean | Array<string>>
+      >;
+      authorization?: boolean;
     }
   ): Promise<T> {
-    return this.manager.request<T>(
-      RESTMethods.Patch,
-      endpoint,
-      query,
-      withAuthorization,
-      data
-    );
+    return this.manager.request<T>(RESTMethods.Patch, endpoint, data);
   }
 
   public put<T>(
     endpoint: string,
-    query: Partial<
-      Record<string, string | number | boolean | Array<string>>
-    > | null = null,
-    withAuthorization: boolean = true,
     data?: {
       json?: unknown;
       form?: FormData;
       files?: Array<File> | null;
       reason?: string;
+      query?: Partial<
+        Record<string, string | number | boolean | Array<string>>
+      >;
+      authorization?: boolean;
     }
   ): Promise<T> {
-    return this.manager.request<T>(
-      RESTMethods.Put,
-      endpoint,
-      query,
-      withAuthorization,
-      data
-    );
+    return this.manager.request<T>(RESTMethods.Put, endpoint, data);
   }
 }

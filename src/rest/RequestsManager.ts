@@ -16,15 +16,15 @@ export class RequestsManager {
   public request<T = unknown>(
     method: string,
     endpoint: string,
-    query: Partial<
-      Record<string, string | number | boolean | Array<string>>
-    > | null = null,
-    withAuthorization: boolean = true,
     data?: {
       json?: unknown;
       form?: FormData;
       files?: Array<File> | null;
       reason?: string;
+      query?: Partial<
+        Record<string, string | number | boolean | Array<string>>
+      >;
+      authorization?: boolean;
     }
   ): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
@@ -32,8 +32,8 @@ export class RequestsManager {
 
       let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
-      if (query)
-        for (const [key, value] of Object.entries(query)) {
+      if (data?.query)
+        for (const [key, value] of Object.entries(data.query)) {
           if (value !== undefined) url.searchParams.set(key, String(value));
         }
 
@@ -42,7 +42,7 @@ export class RequestsManager {
       };
       let body: string | FormData | undefined;
 
-      if (withAuthorization)
+      if (data?.authorization === undefined)
         headers["Authorization"] = `${this.auth} ${this.token}`;
 
       if (method !== RESTMethods.Get) {
@@ -93,13 +93,7 @@ export class RequestsManager {
           if (response.status === HTTPResponseCodes.TooManyRequests) {
             setTimeout(
               () =>
-                this.request<T>(
-                  method,
-                  endpoint,
-                  query,
-                  withAuthorization,
-                  data
-                )
+                this.request<T>(method, endpoint, data)
                   .then(resolve)
                   .catch(reject),
               Number(response.headers.get("Retry-After")) * 1000
@@ -107,13 +101,7 @@ export class RequestsManager {
           } else if (response.status === HTTPResponseCodes.GatewayUnavailable) {
             setTimeout(
               () =>
-                this.request<T>(
-                  method,
-                  endpoint,
-                  query,
-                  withAuthorization,
-                  data
-                )
+                this.request<T>(method, endpoint, data)
                   .then(resolve)
                   .catch(reject),
               5 * 1000

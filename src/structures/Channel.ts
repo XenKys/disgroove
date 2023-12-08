@@ -204,40 +204,35 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.patch<RawChannel>(
-        Endpoints.channel(this.id),
-        null,
-        true,
-        {
-          json: {
-            name: options.name,
-            type: options.type,
-            position: options.position,
-            topic: options.topic,
-            nsfw: options.nsfw,
-            rate_limit_per_user: options.rateLimitPerUser,
-            bitrate: options.bitrate,
-            permission_overwrites: options.permissionOverwrites,
-            parent_id: options.parentId,
-            rtc_region: options.rtcRegion,
-            video_quality_mode: options.videoQualityMode,
-            default_auto_archive_duration: options.defaultAutoArchiveDuration,
-            flags: options.flags,
-            available_tags: options.availableTags,
-            default_reaction_emoji: options.defaultReactionEmoji,
-            default_thread_rate_limit_per_user:
-              options.defaultThreadRateLimitPerUser,
-            default_sort_order: options.defaultSortOrder,
-            default_forum_layout: options.defaultForumLayout,
-            archived: options.archived,
-            auto_archive_duration: options.autoArchiveDuration,
-            locked: options.locked,
-            invitable: options.invitable,
-            applied_tags: options.appliedTags,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.patch<RawChannel>(Endpoints.channel(this.id), {
+        json: {
+          name: options.name,
+          type: options.type,
+          position: options.position,
+          topic: options.topic,
+          nsfw: options.nsfw,
+          rate_limit_per_user: options.rateLimitPerUser,
+          bitrate: options.bitrate,
+          permission_overwrites: options.permissionOverwrites,
+          parent_id: options.parentId,
+          rtc_region: options.rtcRegion,
+          video_quality_mode: options.videoQualityMode,
+          default_auto_archive_duration: options.defaultAutoArchiveDuration,
+          flags: options.flags,
+          available_tags: options.availableTags,
+          default_reaction_emoji: options.defaultReactionEmoji,
+          default_thread_rate_limit_per_user:
+            options.defaultThreadRateLimitPerUser,
+          default_sort_order: options.defaultSortOrder,
+          default_forum_layout: options.defaultForumLayout,
+          archived: options.archived,
+          auto_archive_duration: options.autoArchiveDuration,
+          locked: options.locked,
+          invitable: options.invitable,
+          applied_tags: options.appliedTags,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -245,14 +240,9 @@ export class Channel extends Base {
   /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
   public async delete(reason?: string): Promise<JSONChannel> {
     return new Channel(
-      await this.client.rest.delete<RawChannel>(
-        Endpoints.channel(this.id),
-        null,
-        true,
-        {
-          reason,
-        }
-      ),
+      await this.client.rest.delete<RawChannel>(Endpoints.channel(this.id), {
+        reason,
+      }),
       this.client
     ).toJSON();
   }
@@ -266,10 +256,12 @@ export class Channel extends Base {
   }): Promise<Array<Message>> {
     return this.client.rest
       .get<Array<RawMessage>>(Endpoints.channelMessages(this.id), {
-        around: options.around,
-        before: options.before,
-        after: options.after,
-        limit: options.limit,
+        query: {
+          around: options.around,
+          before: options.before,
+          after: options.after,
+          limit: options.limit,
+        },
       })
       .then((response) =>
         response.map((data) => new Message(data, this.client))
@@ -303,8 +295,6 @@ export class Channel extends Base {
     return new Message(
       await this.client.rest.post<RawMessage>(
         Endpoints.channelMessages(this.id),
-        null,
-        true,
         {
           json: {
             content: options.content,
@@ -377,8 +367,10 @@ export class Channel extends Base {
       .get<Array<RawUser>>(
         Endpoints.channelMessageAllReactions(this.id, messageId, emoji),
         {
-          after: options?.after,
-          limit: options?.limit,
+          query: {
+            after: options?.after,
+            limit: options?.limit,
+          },
         }
       )
       .then((response) => response.map((data) => new User(data, this.client)));
@@ -407,8 +399,6 @@ export class Channel extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.id, messageId),
-        null,
-        true,
         {
           json: {
             content: options.content,
@@ -437,14 +427,9 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
   public deleteMessage(messageId: string, reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessage(this.id, messageId),
-      null,
-      true,
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.channelMessage(this.id, messageId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
@@ -454,7 +439,7 @@ export class Channel extends Base {
     },
     reason?: string
   ): void {
-    this.client.rest.post(Endpoints.channelBulkDelete(this.id), null, true, {
+    this.client.rest.post(Endpoints.channelBulkDelete(this.id), {
       json: {
         messages: options?.messagesIds,
       },
@@ -472,15 +457,10 @@ export class Channel extends Base {
     },
     reason?: string
   ): void {
-    this.client.rest.put(
-      Endpoints.channelPermission(this.id, overwriteId),
-      null,
-      true,
-      {
-        json: options,
-        reason,
-      }
-    );
+    this.client.rest.put(Endpoints.channelPermission(this.id, overwriteId), {
+      json: options,
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
@@ -508,8 +488,6 @@ export class Channel extends Base {
     return new Invite(
       await this.client.rest.post<RawInvite>(
         Endpoints.channelInvites(this.id),
-        null,
-        true,
         {
           json: {
             max_age: options.maxAge,
@@ -529,14 +507,9 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
   public deletePermission(overwriteId: string, reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelPermission(this.id, overwriteId),
-      null,
-      true,
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.channelPermission(this.id, overwriteId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
@@ -544,16 +517,11 @@ export class Channel extends Base {
     webhookChannelId: string;
   }): Promise<JSONFollowedChannel> {
     return this.client.rest
-      .post<RawFollowedChannel>(
-        Endpoints.channelFollowers(this.id),
-        null,
-        true,
-        {
-          json: {
-            webhook_channel_id: options.webhookChannelId,
-          },
-        }
-      )
+      .post<RawFollowedChannel>(Endpoints.channelFollowers(this.id), {
+        json: {
+          webhook_channel_id: options.webhookChannelId,
+        },
+      })
       .then((response) => ({
         channelId: response.channel_id,
         webhookId: response.webhook_id,
@@ -576,21 +544,16 @@ export class Channel extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
   public pinMessage(messageId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.channelPin(this.id, messageId), null, true, {
+    this.client.rest.put(Endpoints.channelPin(this.id, messageId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
   public unpinMessage(messageId: string, reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelPin(this.id, messageId),
-      null,
-      true,
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.channelPin(this.id, messageId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
@@ -601,17 +564,12 @@ export class Channel extends Base {
       nick: string;
     }
   ): void {
-    this.client.rest.put(
-      Endpoints.channelRecipient(this.id, userId),
-      null,
-      true,
-      {
-        json: {
-          access_token: options.accessToken,
-          nick: options.nick,
-        },
-      }
-    );
+    this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
+      json: {
+        access_token: options.accessToken,
+        nick: options.nick,
+      },
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
@@ -632,8 +590,6 @@ export class Channel extends Base {
     return new Channel(
       await this.client.rest.post<RawChannel>(
         Endpoints.threads(this.id, messageId),
-        null,
-        true,
         {
           json: {
             name: options.name,
@@ -659,21 +615,16 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post<RawChannel>(
-        Endpoints.threads(this.id),
-        null,
-        true,
-        {
-          json: {
-            name: options.name,
-            auto_archive_duration: options.autoArchiveDuration,
-            type: options.type,
-            invitable: options.invitable,
-            rate_limit_per_user: options.rateLimitPerUser,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
+        json: {
+          name: options.name,
+          auto_archive_duration: options.autoArchiveDuration,
+          type: options.type,
+          invitable: options.invitable,
+          rate_limit_per_user: options.rateLimitPerUser,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -698,41 +649,36 @@ export class Channel extends Base {
     reason?: string
   ): Promise<Channel> {
     return new Channel(
-      await this.client.rest.post<RawChannel>(
-        Endpoints.threads(this.id),
-        null,
-        true,
-        {
-          json: {
-            name: options.name,
-            auto_archive_duration: options.autoArchiveDuration,
-            rate_limit_per_user: options.rateLimitPerUser,
-            message: {
-              content: options.message.content,
-              embeds: options.message.embeds,
-              flags: options.message.flags,
-              allowed_mentions: {
-                parse: options.message.allowedMentions?.parse,
-                roles: options.message.allowedMentions?.roles,
-                users: options.message.allowedMentions?.users,
-                replied_user: options.message.allowedMentions?.repliedUser,
-              },
-              components:
-                options.message.components !== undefined
-                  ? options.message.components !== null
-                    ? this.client.util.messageComponentToRaw(
-                        options.message.components
-                      )
-                    : null
-                  : undefined,
-              attachments: options.message.attachments,
+      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
+        json: {
+          name: options.name,
+          auto_archive_duration: options.autoArchiveDuration,
+          rate_limit_per_user: options.rateLimitPerUser,
+          message: {
+            content: options.message.content,
+            embeds: options.message.embeds,
+            flags: options.message.flags,
+            allowed_mentions: {
+              parse: options.message.allowedMentions?.parse,
+              roles: options.message.allowedMentions?.roles,
+              users: options.message.allowedMentions?.users,
+              replied_user: options.message.allowedMentions?.repliedUser,
             },
-            applied_tags: options.appliedTags,
+            components:
+              options.message.components !== undefined
+                ? options.message.components !== null
+                  ? this.client.util.messageComponentToRaw(
+                      options.message.components
+                    )
+                  : null
+                : undefined,
+            attachments: options.message.attachments,
           },
-          files: options.message.files,
-          reason,
-        }
-      ),
+          applied_tags: options.appliedTags,
+        },
+        files: options.message.files,
+        reason,
+      }),
       this.client
     );
   }
@@ -766,7 +712,9 @@ export class Channel extends Base {
   ): Promise<JSONThreadMember> {
     return this.client.rest
       .get<RawThreadMember>(Endpoints.threadMembers(this.id, userId), {
-        with_member: options?.withMember,
+        query: {
+          with_member: options?.withMember,
+        },
       })
       .then((response) => ({
         id: response.id,
@@ -788,9 +736,11 @@ export class Channel extends Base {
   }): Promise<Array<JSONThreadMember>> {
     return this.client.rest
       .get<Array<RawThreadMember>>(Endpoints.threadMembers(this.id), {
-        with_member: options?.withMember,
-        after: options?.after,
-        limit: options?.limit,
+        query: {
+          with_member: options?.withMember,
+          after: options?.after,
+          limit: options?.limit,
+        },
       })
       .then((response) =>
         response.map((data) => ({
@@ -824,8 +774,10 @@ export class Channel extends Base {
         members: Array<RawThreadMember>;
         has_more: boolean;
       }>(Endpoints.channelThreads(this.id, archivedStatus, false), {
-        before: options?.before,
-        limit: options?.limit,
+        query: {
+          before: options?.before,
+          limit: options?.limit,
+        },
       })
       .then((response) => ({
         threads: response.threads.map((data) => new Channel(data, this.client)),
@@ -858,8 +810,10 @@ export class Channel extends Base {
         members: Array<RawThreadMember>;
         has_more: boolean;
       }>(Endpoints.channelThreads(this.id, "private", true), {
-        before: options?.before,
-        limit: options?.limit,
+        query: {
+          before: options?.before,
+          limit: options?.limit,
+        },
       })
       .then((response) => ({
         threads: response.threads.map((data) => new Channel(data, this.client)),
@@ -888,8 +842,6 @@ export class Channel extends Base {
     return new Webhook(
       await this.client.rest.post<RawWebhook>(
         Endpoints.channelWebhooks(this.id),
-        null,
-        true,
         {
           json: {
             name: options.name,

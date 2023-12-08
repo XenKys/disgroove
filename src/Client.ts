@@ -239,7 +239,7 @@ export class Client extends EventEmitter {
     systemChannelFlags?: SystemChannelFlags;
   }): Promise<Guild> {
     return new Guild(
-      await this.rest.post<RawGuild>(Endpoints.guilds(), null, true, {
+      await this.rest.post<RawGuild>(Endpoints.guilds(), {
         json: {
           name: options.name,
           region: options.region,
@@ -270,7 +270,9 @@ export class Client extends EventEmitter {
   ): Promise<Guild> {
     return new Guild(
       await this.rest.get<RawGuild>(Endpoints.guild(guildId), {
-        with_counts: options?.withCounts,
+        query: {
+          with_counts: options?.withCounts,
+        },
       }),
       this
     );
@@ -285,7 +287,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<Guild> {
     return new Guild(
-      await this.rest.post<RawGuild>(Endpoints.template(code), null, true, {
+      await this.rest.post<RawGuild>(Endpoints.template(code), {
         json: {
           name: options.name,
           icon: options.icon,
@@ -306,9 +308,11 @@ export class Client extends EventEmitter {
   ): Promise<Invite> {
     return new Invite(
       await this.rest.get<RawInvite>(Endpoints.invite(code), {
-        with_counts: options?.withCounts,
-        with_expiration: options?.withExpiration,
-        guild_scheduled_event_id: options?.guildScheduledEventId,
+        query: {
+          with_counts: options?.withCounts,
+          with_expiration: options?.withExpiration,
+          guild_scheduled_event_id: options?.guildScheduledEventId,
+        },
       }),
       this
     );
@@ -320,7 +324,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<JSONInvite> {
     return new Invite(
-      await this.rest.delete<RawInvite>(Endpoints.invite(code), null, true, {
+      await this.rest.delete<RawInvite>(Endpoints.invite(code), {
         reason,
       }),
       this
@@ -339,21 +343,16 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<StageInstance> {
     return new StageInstance(
-      await this.rest.post<RawStageInstance>(
-        Endpoints.stageInstances(),
-        null,
-        true,
-        {
-          json: {
-            channel_id: options.channelId,
-            topic: options.topic,
-            privacy_level: options.privacyLevel,
-            send_start_notifications: options.sendStartNotifications,
-            guild_scheduled_event_id: options.guildScheduledEventId,
-          },
-          reason,
-        }
-      ),
+      await this.rest.post<RawStageInstance>(Endpoints.stageInstances(), {
+        json: {
+          channel_id: options.channelId,
+          topic: options.topic,
+          privacy_level: options.privacyLevel,
+          send_start_notifications: options.sendStartNotifications,
+          guild_scheduled_event_id: options.guildScheduledEventId,
+        },
+        reason,
+      }),
       this
     );
   }
@@ -417,10 +416,12 @@ export class Client extends EventEmitter {
   }): Promise<Array<Guild>> {
     return this.rest
       .get<Array<RawGuild>>(Endpoints.userGuilds(), {
-        before: options?.before,
-        after: options?.after,
-        limit: options?.limit,
-        with_counts: options?.withCounts,
+        query: {
+          before: options?.before,
+          after: options?.after,
+          limit: options?.limit,
+          with_counts: options?.withCounts,
+        },
       })
       .then((response) => response.map((data) => new Guild(data, this)));
   }

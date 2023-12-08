@@ -79,8 +79,7 @@ export class GuildScheduledEvent extends Base {
     return new GuildScheduledEvent(
       await this.client.rest.patch<RawGuildScheduledEvent>(
         Endpoints.guildScheduledEvent(this.guildId, this.id),
-        null,
-        true,
+
         {
           json: {
             channel_id: options.channelId,
@@ -119,10 +118,12 @@ export class GuildScheduledEvent extends Base {
       .get<Array<RawGuildScheduledEventUser>>(
         Endpoints.guildScheduledEvent(this.guildId, this.id),
         {
-          limit: options?.limit,
-          with_member: options?.withMember,
-          before: options?.before,
-          after: options?.after,
+          query: {
+            limit: options?.limit,
+            with_member: options?.withMember,
+            before: options?.before,
+            after: options?.after,
+          },
         }
       )
       .then((response) =>

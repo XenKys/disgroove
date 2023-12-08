@@ -363,8 +363,10 @@ export class Message extends Base {
       .get<Array<RawUser>>(
         Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji),
         {
-          after: options?.after,
-          limit: options?.limit,
+          query: {
+            after: options?.after,
+            limit: options?.limit,
+          },
         }
       )
       .then((response) => response.map((data) => new User(data, this.client)));
@@ -390,8 +392,7 @@ export class Message extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.channelId, this.id),
-        null,
-        true,
+
         {
           json: {
             content: options.content,
@@ -422,8 +423,7 @@ export class Message extends Base {
   public delete(reason?: string): void {
     this.client.rest.delete(
       Endpoints.channelMessage(this.channelId, this.id),
-      null,
-      true,
+
       {
         reason,
       }
@@ -434,8 +434,7 @@ export class Message extends Base {
   public pin(reason?: string): void {
     this.client.rest.put(
       Endpoints.channelPin(this.channelId, this.id),
-      null,
-      true,
+
       {
         reason,
       }
@@ -446,8 +445,7 @@ export class Message extends Base {
   public unpin(reason?: string): void {
     this.client.rest.delete(
       Endpoints.channelPin(this.channelId, this.id),
-      null,
-      true,
+
       {
         reason,
       }
@@ -466,8 +464,7 @@ export class Message extends Base {
     return new Channel(
       await this.client.rest.post<RawChannel>(
         Endpoints.threads(this.channelId, this.id),
-        null,
-        true,
+
         {
           json: {
             name: options.name,

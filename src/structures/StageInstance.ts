@@ -37,8 +37,6 @@ export class StageInstance extends Base {
     return new StageInstance(
       await this.client.rest.patch<RawStageInstance>(
         Endpoints.stageInstance(this.channelId),
-        null,
-        true,
         {
           json: {
             topic: options.topic,
@@ -53,14 +51,9 @@ export class StageInstance extends Base {
 
   /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
   public delete(reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.stageInstance(this.channelId),
-      null,
-      true,
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.stageInstance(this.channelId), {
+      reason,
+    });
   }
 
   public override toRaw(): RawStageInstance {

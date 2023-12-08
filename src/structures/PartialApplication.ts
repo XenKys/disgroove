@@ -46,7 +46,9 @@ export class PartialApplication extends Base {
       .get<Array<RawApplicationCommand>>(
         Endpoints.applicationCommands(this.id),
         {
-          with_localizations: options.withLocalizations,
+          query: {
+            with_localizations: options.withLocalizations,
+          },
         }
       )
       .then((response) =>
@@ -99,8 +101,6 @@ export class PartialApplication extends Base {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationCommands(this.id),
-        null,
-        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -168,8 +168,6 @@ export class PartialApplication extends Base {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationCommand(this.id, commandId),
-        null,
-        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -231,8 +229,6 @@ export class PartialApplication extends Base {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationCommands(this.id),
-        null,
-        true,
         {
           json: commands.map((command) =>
             this.client.util.applicationCommandToRaw(command)
@@ -255,7 +251,9 @@ export class PartialApplication extends Base {
       .get<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(this.id, guildId),
         {
-          with_localizations: options?.withLocalizations,
+          query: {
+            with_localizations: options?.withLocalizations,
+          },
         }
       )
       .then((response) =>
@@ -311,8 +309,6 @@ export class PartialApplication extends Base {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(this.id, guildId),
-        null,
-        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -382,8 +378,6 @@ export class PartialApplication extends Base {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(this.id, guildId, commandId),
-        null,
-        true,
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -451,8 +445,6 @@ export class PartialApplication extends Base {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(this.id, guildId),
-        null,
-        true,
         {
           json: commands.map((command) =>
             this.client.util.applicationCommandToRaw(command)
@@ -520,8 +512,6 @@ export class PartialApplication extends Base {
     return this.client.rest
       .put<RawGuildApplicationCommandPermissions>(
         Endpoints.applicationCommandPermissions(this.id, guildId, commandId),
-        null,
-        true,
         {
           json: {
             permissions: options.permissions.map((option) => ({
@@ -617,13 +607,15 @@ export class PartialApplication extends Base {
   }): Promise<Array<JSONEntitlement>> {
     return this.client.rest
       .get<Array<RawEntitlement>>(Endpoints.applicationEntitlements(this.id), {
-        user_id: options?.userId,
-        sku_ids: options?.skuIds,
-        before: options?.before,
-        after: options?.after,
-        limit: options?.limit,
-        guild_id: options?.guildId,
-        exclude_ended: options?.excludeEnded,
+        query: {
+          user_id: options?.userId,
+          sku_ids: options?.skuIds,
+          before: options?.before,
+          after: options?.after,
+          limit: options?.limit,
+          guild_id: options?.guildId,
+          exclude_ended: options?.excludeEnded,
+        },
       })
       .then((response) =>
         response.map((data) => ({
@@ -669,7 +661,7 @@ export class PartialApplication extends Base {
           | "type"
           | "user_id"
         >
-      >(Endpoints.applicationEntitlements(this.id), null, true, {
+      >(Endpoints.applicationEntitlements(this.id), {
         json: {
           sku_id: options.skuId,
           owner_id: options.ownerId,

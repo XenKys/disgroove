@@ -76,8 +76,7 @@ export class Integration extends Base {
 
     this.client.rest.delete(
       Endpoints.guildIntegration(this.guildId, this.id),
-      null,
-      true,
+
       {
         reason,
       }

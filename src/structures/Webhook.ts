@@ -68,19 +68,14 @@ export class Webhook extends Base {
     reason?: string
   ): Promise<Webhook> {
     return new Webhook(
-      await this.client.rest.patch<RawWebhook>(
-        Endpoints.webhook(this.id),
-        null,
-        true,
-        {
-          json: {
-            name: options.name,
-            avatar: options.avatar,
-            channel_id: options.channelId,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.patch<RawWebhook>(Endpoints.webhook(this.id), {
+        json: {
+          name: options.name,
+          avatar: options.avatar,
+          channel_id: options.channelId,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -98,8 +93,6 @@ export class Webhook extends Base {
     return new Webhook(
       await this.client.rest.patch<RawWebhook>(
         Endpoints.webhook(this.id, this.token),
-        null,
-        false,
         {
           json: {
             name: options.name,
@@ -114,7 +107,7 @@ export class Webhook extends Base {
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
   public delete(reason?: string): void {
-    this.client.rest.delete(Endpoints.webhook(this.id), null, true, {
+    this.client.rest.delete(Endpoints.webhook(this.id), {
       reason,
     });
   }
@@ -123,14 +116,9 @@ export class Webhook extends Base {
   public deleteWithToken(reason?: string): void {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
-    this.client.rest.delete(
-      Endpoints.webhook(this.id, this.token),
-      null,
-      false,
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.webhook(this.id, this.token), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
@@ -155,13 +143,6 @@ export class Webhook extends Base {
       return new Message(
         await this.client.rest.post<RawMessage>(
           Endpoints.webhook(this.id, this.token),
-          {
-            wait: options.wait,
-            thread_id: options.threadId,
-            username: options.username,
-            avatarURL: options.avatarURL,
-          },
-          true,
           {
             json: {
               content: options.content,
@@ -189,49 +170,51 @@ export class Webhook extends Base {
               thread_name: options.threadName,
             },
             files: options.files,
+            query: {
+              wait: options.wait,
+              thread_id: options.threadId,
+              username: options.username,
+              avatarURL: options.avatarURL,
+            },
           }
         ),
         this.client
       );
     } else {
-      this.client.rest.post(
-        Endpoints.webhook(this.id, this.token),
-        {
+      this.client.rest.post(Endpoints.webhook(this.id, this.token), {
+        json: {
+          content: options.content,
+          tts: options.tts,
+          embeds:
+            options.embeds !== undefined
+              ? options.embeds !== null
+                ? this.client.util.embedsToRaw(options.embeds)
+                : null
+              : undefined,
+          allowed_mentions: {
+            parse: options.allowedMentions?.parse,
+            roles: options.allowedMentions?.roles,
+            users: options.allowedMentions?.users,
+            replied_user: options.allowedMentions?.repliedUser,
+          },
+          components:
+            options.components !== undefined
+              ? options.components !== null
+                ? this.client.util.messageComponentToRaw(options.components)
+                : null
+              : undefined,
+          attachments: options.attachments,
+          flags: options.flags,
+          thread_name: options.threadName,
+        },
+        files: options.files,
+        query: {
           wait: options.wait,
           thread_id: options.threadId,
           username: options.username,
           avatarURL: options.avatarURL,
         },
-        true,
-        {
-          json: {
-            content: options.content,
-            tts: options.tts,
-            embeds:
-              options.embeds !== undefined
-                ? options.embeds !== null
-                  ? this.client.util.embedsToRaw(options.embeds)
-                  : null
-                : undefined,
-            allowed_mentions: {
-              parse: options.allowedMentions?.parse,
-              roles: options.allowedMentions?.roles,
-              users: options.allowedMentions?.users,
-              replied_user: options.allowedMentions?.repliedUser,
-            },
-            components:
-              options.components !== undefined
-                ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
-                  : null
-                : undefined,
-            attachments: options.attachments,
-            flags: options.flags,
-            thread_name: options.threadName,
-          },
-          files: options.files,
-        }
-      );
+      });
     }
   }
 
@@ -247,8 +230,10 @@ export class Webhook extends Base {
         await this.client.rest.post<RawMessage>(
           Endpoints.webhookPlatform(this.id, this.token, "slack"),
           {
-            thread_id: options.threadId,
-            wait: options.wait,
+            query: {
+              thread_id: options.threadId,
+              wait: options.wait,
+            },
           }
         ),
         this.client
@@ -257,8 +242,10 @@ export class Webhook extends Base {
       this.client.rest.post<RawMessage>(
         Endpoints.webhookPlatform(this.id, this.token, "slack"),
         {
-          thread_id: options.threadId,
-          wait: options.wait,
+          query: {
+            thread_id: options.threadId,
+            wait: options.wait,
+          },
         }
       );
     }
@@ -276,8 +263,10 @@ export class Webhook extends Base {
         await this.client.rest.post<RawMessage>(
           Endpoints.webhookPlatform(this.id, this.token, "github"),
           {
-            thread_id: options.threadId,
-            wait: options.wait,
+            query: {
+              thread_id: options.threadId,
+              wait: options.wait,
+            },
           }
         ),
         this.client
@@ -286,8 +275,10 @@ export class Webhook extends Base {
       this.client.rest.post<RawMessage>(
         Endpoints.webhookPlatform(this.id, this.token, "github"),
         {
-          thread_id: options.threadId,
-          wait: options.wait,
+          query: {
+            thread_id: options.threadId,
+            wait: options.wait,
+          },
         }
       );
     }
@@ -306,7 +297,9 @@ export class Webhook extends Base {
       await this.client.rest.get<RawMessage>(
         Endpoints.webhookMessage(this.id, this.token, messageId),
         {
-          thread_id: options?.threadId,
+          query: {
+            thread_id: options?.threadId,
+          },
         }
       ),
       this.client
@@ -332,10 +325,7 @@ export class Webhook extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.webhookMessage(this.id, this.token, messageId),
-        {
-          thread_id: options.threadId,
-        },
-        true,
+
         {
           json: {
             content: options.content,
@@ -361,6 +351,9 @@ export class Webhook extends Base {
             flags: options.flags,
           },
           files: options.files,
+          query: {
+            thread_id: options.threadId,
+          },
         }
       ),
       this.client
@@ -379,7 +372,9 @@ export class Webhook extends Base {
     this.client.rest.delete(
       Endpoints.webhookMessage(this.id, this.token, messageId),
       {
-        thread_id: options?.threadId,
+        query: {
+          thread_id: options?.threadId,
+        },
       }
     );
   }

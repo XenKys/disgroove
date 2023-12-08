@@ -56,8 +56,6 @@ export class GuildTemplate {
     return new GuildTemplate(
       await this.client.rest.patch<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code),
-        null,
-        true,
         {
           json: {
             name: options.name,

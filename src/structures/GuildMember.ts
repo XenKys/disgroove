@@ -65,8 +65,7 @@ export class GuildMember {
     return new GuildMember(
       await this.client.rest.patch(
         Endpoints.guildMember(this.guildId, this.user?.id),
-        null,
-        true,
+
         {
           json: {
             nick: options.nick,
@@ -92,8 +91,7 @@ export class GuildMember {
 
     this.client.rest.put(
       Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
-      null,
-      true,
+
       {
         reason,
       }
@@ -108,8 +106,7 @@ export class GuildMember {
 
     this.client.rest.delete(
       Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
-      null,
-      true,
+
       {
         reason,
       }
@@ -124,8 +121,7 @@ export class GuildMember {
 
     this.client.rest.delete(
       Endpoints.guildMember(this.guildId, this.user.id),
-      null,
-      true,
+
       {
         reason,
       }
@@ -146,8 +142,7 @@ export class GuildMember {
 
     this.client.rest.put(
       Endpoints.guildBan(this.guildId, this.user.id),
-      null,
-      true,
+
       {
         json: {
           delete_message_days: options?.deleteMessageDays,
@@ -166,8 +161,7 @@ export class GuildMember {
 
     this.client.rest.delete(
       Endpoints.guildBan(this.guildId, this.user.id),
-      null,
-      true,
+
       {
         reason,
       }
