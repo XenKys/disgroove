@@ -1,5 +1,4 @@
-import type { FormData } from "undici";
-import { RequestsManager } from ".";
+import { RequestData, RequestsManager } from ".";
 
 export interface File {
   contents: Buffer;
@@ -23,77 +22,24 @@ export class REST {
 
   public get<T>(
     endpoint: string,
-    data?: {
-      query?: Partial<
-        Record<string, string | number | boolean | Array<string>>
-      >;
-      authorization?: boolean;
-    }
+    data?: Pick<RequestData, "query" | "authorization">
   ): Promise<T> {
     return this.manager.request<T>(RESTMethods.Get, endpoint, data);
   }
 
-  public post<T>(
-    endpoint: string,
-    data?: {
-      json?: unknown;
-      form?: FormData;
-      files?: Array<File> | null;
-      reason?: string;
-      query?: Partial<
-        Record<string, string | number | boolean | Array<string>>
-      >;
-      authorization?: boolean;
-    }
-  ): Promise<T> {
+  public post<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Post, endpoint, data);
   }
 
-  public delete<T>(
-    endpoint: string,
-    data?: {
-      json?: unknown;
-      form?: FormData;
-      files?: Array<File> | null;
-      reason?: string;
-      query?: Partial<
-        Record<string, string | number | boolean | Array<string>>
-      >;
-      authorization?: boolean;
-    }
-  ): Promise<T> {
+  public delete<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Delete, endpoint, data);
   }
 
-  public patch<T>(
-    endpoint: string,
-    data?: {
-      json?: unknown;
-      form?: FormData;
-      files?: Array<File> | null;
-      reason?: string;
-      query?: Partial<
-        Record<string, string | number | boolean | Array<string>>
-      >;
-      authorization?: boolean;
-    }
-  ): Promise<T> {
+  public patch<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Patch, endpoint, data);
   }
 
-  public put<T>(
-    endpoint: string,
-    data?: {
-      json?: unknown;
-      form?: FormData;
-      files?: Array<File> | null;
-      reason?: string;
-      query?: Partial<
-        Record<string, string | number | boolean | Array<string>>
-      >;
-      authorization?: boolean;
-    }
-  ): Promise<T> {
+  public put<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Put, endpoint, data);
   }
 }

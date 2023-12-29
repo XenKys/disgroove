@@ -3,6 +3,15 @@ import { fetch, FormData, File as UndiciFile } from "undici";
 import { HTTPResponseCodes } from "../constants";
 import { HTTPError, RESTError } from "../utils";
 
+export interface RequestData {
+  json?: unknown;
+  form?: FormData;
+  files?: Array<File> | null;
+  reason?: string;
+  query?: Partial<Record<string, string | number | boolean | Array<string>>>;
+  authorization?: boolean;
+}
+
 export class RequestsManager {
   public token: string;
   public auth: "Bot" | "Bearer";
@@ -16,16 +25,7 @@ export class RequestsManager {
   public request<T = unknown>(
     method: string,
     endpoint: string,
-    data?: {
-      json?: unknown;
-      form?: FormData;
-      files?: Array<File> | null;
-      reason?: string;
-      query?: Partial<
-        Record<string, string | number | boolean | Array<string>>
-      >;
-      authorization?: boolean;
-    }
+    data?: RequestData
   ): Promise<T> {
     return new Promise<T>(async (resolve, reject) => {
       if (this.globalBlock && !endpoint.startsWith("interactions")) return;
