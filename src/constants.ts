@@ -652,6 +652,9 @@ export enum GatewayEvents {
   ThreadListSync = "threadListSync",
   ThreadMemberUpdate = "threadMemberUpdate",
   ThreadMembersUpdate = "threadMembersUpdate",
+  EntitlementCreate = "entitlementCreate",
+  EntitlementUpdate = "entitlementUpdate",
+  EntitlementDelete = "entitlementDelete",
   GuildCreate = "guildCreate",
   GuildUpdate = "guildUpdate",
   GuildDelete = "guildDelete",
@@ -696,9 +699,6 @@ export enum GatewayEvents {
   VoiceStateUpdate = "voiceStateUpdate",
   VoiceServerUpdate = "voiceServerUpdate",
   WebhooksUpdate = "webhooksUpdate",
-  EntitlementCreate = "entitlementCreate",
-  EntitlementUpdate = "entitlementUpdate",
-  EntitlementDelete = "entitlementDelete",
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types */

@@ -96,6 +96,7 @@ export interface ClientEvents {
   channelCreate: [channel: Channel];
   channelUpdate: [channel: Channel];
   channelDelete: [channel: JSONChannel];
+  channelPinsUpdate: [pins: ChannelPinsUpdateEventFields];
   threadCreate: [thread: Channel];
   threadUpdate: [thread: Channel];
   threadDelete: [thread: JSONChannel];
@@ -106,7 +107,9 @@ export interface ClientEvents {
     }
   ];
   threadMembersUpdate: [thread: ThreadMembersUpdateEventFields];
-  channelPinsUpdate: [pins: ChannelPinsUpdateEventFields];
+  entitlementCreate: [entitlement: JSONEntitlement];
+  entitlementUpdate: [entitlement: JSONEntitlement];
+  entitlementDelete: [entitlement: JSONEntitlement];
   guildCreate: [guild: Guild];
   guildUpdate: [guild: Guild];
   guildDelete: [guild: GuildDeleteEventFields];
@@ -139,6 +142,7 @@ export interface ClientEvents {
   integrationCreate: [integration: Integration];
   integrationUpdate: [integration: Integration];
   integrationDelete: [integration: IntegrationDeleteEventFields];
+  interactionCreate: [interaction: Interaction];
   inviteCreate: [invite: InviteCreateEventFields];
   inviteDelete: [invite: InviteDeleteEventFields];
   messageCreate: [message: Message];
@@ -159,18 +163,14 @@ export interface ClientEvents {
   messageReactionRemoveAll: [reaction: MessageReactionRemoveAllEventFields];
   messageReactionRemoveEmoji: [reaction: MessageReactionRemoveEmojiEventFields];
   presenceUpdate: [presence: PresenceUpdateEventFields];
+  stageInstanceCreate: [stageInstance: StageInstance];
+  stageInstanceUpdate: [stageInstance: StageInstance];
+  stageInstanceDelete: [stageInstance: JSONStageInstance];
   typingStart: [typing: TypingStartEventFields];
   userUpdate: [user: User];
   voiceStateUpdate: [voiceState: VoiceState];
   voiceServerUpdate: [voiceServer: VoiceServerUpdateEventFields];
   webhooksUpdate: [channelId: string, guildId: string];
-  interactionCreate: [interaction: Interaction];
-  stageInstanceCreate: [stageInstance: StageInstance];
-  stageInstanceUpdate: [stageInstance: StageInstance];
-  stageInstanceDelete: [stageInstance: JSONStageInstance];
-  entitlementCreate: [entitlement: JSONEntitlement];
-  entitlementUpdate: [entitlement: JSONEntitlement];
-  entitlementDelete: [entitlement: JSONEntitlement];
 }
 
 export interface ClientOptions {

@@ -288,6 +288,45 @@ export class Shard {
           removedMemberIds: packet.d.removed_member_ids,
         });
         break;
+      case "ENTITLEMENT_CREATE":
+        this.client.emit(GatewayEvents.EntitlementCreate, {
+          id: packet.d.id,
+          skuId: packet.d.sku_id,
+          applicationId: packet.d.application_id,
+          userId: packet.d.user_id,
+          type: packet.d.type,
+          deleted: packet.d.deleted,
+          startsAt: packet.d.starts_at,
+          endsAt: packet.d.ends_at,
+          guildId: packet.d.guild_id,
+        });
+        break;
+      case "ENTITLEMENT_UPDATE":
+        this.client.emit(GatewayEvents.EntitlementUpdate, {
+          id: packet.d.id,
+          skuId: packet.d.sku_id,
+          applicationId: packet.d.application_id,
+          userId: packet.d.user_id,
+          type: packet.d.type,
+          deleted: packet.d.deleted,
+          startsAt: packet.d.starts_at,
+          endsAt: packet.d.ends_at,
+          guildId: packet.d.guild_id,
+        });
+        break;
+      case "ENTITLEMENT_DELETE":
+        this.client.emit(GatewayEvents.EntitlementDelete, {
+          id: packet.d.id,
+          skuId: packet.d.sku_id,
+          applicationId: packet.d.application_id,
+          userId: packet.d.user_id,
+          type: packet.d.type,
+          deleted: packet.d.deleted,
+          startsAt: packet.d.starts_at,
+          endsAt: packet.d.ends_at,
+          guildId: packet.d.guild_id,
+        });
+        break;
       case "GUILD_CREATE":
         this.client.emit(
           GatewayEvents.GuildCreate,
@@ -688,45 +727,6 @@ export class Shard {
           packet.d.channel_id,
           packet.d.guild_id
         );
-        break;
-      case "ENTITLEMENT_CREATE":
-        this.client.emit(GatewayEvents.EntitlementCreate, {
-          id: packet.d.id,
-          skuId: packet.d.sku_id,
-          applicationId: packet.d.application_id,
-          userId: packet.d.user_id,
-          type: packet.d.type,
-          deleted: packet.d.deleted,
-          startsAt: packet.d.starts_at,
-          endsAt: packet.d.ends_at,
-          guildId: packet.d.guild_id,
-        });
-        break;
-      case "ENTITLEMENT_UPDATE":
-        this.client.emit(GatewayEvents.EntitlementUpdate, {
-          id: packet.d.id,
-          skuId: packet.d.sku_id,
-          applicationId: packet.d.application_id,
-          userId: packet.d.user_id,
-          type: packet.d.type,
-          deleted: packet.d.deleted,
-          startsAt: packet.d.starts_at,
-          endsAt: packet.d.ends_at,
-          guildId: packet.d.guild_id,
-        });
-        break;
-      case "ENTITLEMENT_DELETE":
-        this.client.emit(GatewayEvents.EntitlementDelete, {
-          id: packet.d.id,
-          skuId: packet.d.sku_id,
-          applicationId: packet.d.application_id,
-          userId: packet.d.user_id,
-          type: packet.d.type,
-          deleted: packet.d.deleted,
-          startsAt: packet.d.starts_at,
-          endsAt: packet.d.ends_at,
-          guildId: packet.d.guild_id,
-        });
         break;
     }
   }
