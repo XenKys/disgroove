@@ -75,7 +75,7 @@ export interface RawGuild {
 /** https://discord.com/developers/docs/resources/guild#unavailable-guild-object */
 export interface RawUnavailableGuild {
   id: string;
-  unavailable: boolean;
+  unavailable: true;
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure */
@@ -260,7 +260,7 @@ export interface JSONGuild {
 
 export interface JSONUnavailableGuild {
   id: string;
-  unavailable: boolean;
+  unavailable: true;
 }
 
 export interface JSONGuildPreview {
