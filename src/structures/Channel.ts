@@ -8,12 +8,10 @@ import type {
   JSONChannel,
   JSONDefaultReaction,
   JSONEmbed,
-  JSONEmoji,
   JSONFollowedChannel,
   JSONForumTag,
   JSONMessageReference,
   JSONOverwrite,
-  JSONSelectOption,
   JSONThreadMember,
   JSONThreadMetadata,
   RawChannel,
@@ -26,7 +24,6 @@ import type {
 } from "../types";
 import {
   type ChannelTypes,
-  type ComponentTypes,
   type InviteTargetTypes,
   type MessageFlags,
   ChannelFlags,

@@ -60,20 +60,14 @@ import type {
   RawGuildWidgetSettings,
   RawIntegration,
   RawInvite,
-  RawPresenceUpdateEventFields,
   RawRole,
-  RawStageInstance,
   RawSticker,
   RawThreadMember,
   RawVoiceRegion,
-  RawVoiceState,
   RawWebhook,
   RawWelcomeScreen,
-  JSONVoiceState,
-  JSONGuildMember,
-  JSONChannel,
-  JSONStageInstance,
-  JSONGuildScheduledEvent,
+  RawGuildCreateEventExtraFields,
+  JSONGuildCreateEventExtraFields,
 } from "../types";
 import type {
   ApplicationCommandOptionType,
@@ -99,19 +93,7 @@ import { File as UndiciFile, FormData } from "undici";
 
 /** https://discord.com/developers/docs/resources/guild */
 export class Guild extends Base {
-  protected override raw: RawGuild & {
-    joined_at?: number;
-    large?: boolean;
-    unavailable?: boolean;
-    member_count?: number;
-    voice_states?: Array<RawVoiceState>;
-    members?: Array<RawGuildMember>;
-    channels?: Array<RawChannel>;
-    threads?: Array<RawChannel>;
-    presences?: Array<RawPresenceUpdateEventFields>;
-    stage_instances?: Array<RawStageInstance>;
-    guild_scheduled_events?: Array<RawGuildScheduledEvent>;
-  };
+  protected override raw: RawGuild & Partial<RawGuildCreateEventExtraFields>;
   public name: string;
   public icon: string | null;
   public iconHash?: string | null;
@@ -166,19 +148,7 @@ export class Guild extends Base {
   public guildScheduledEvents?: Array<GuildScheduledEvent>;
 
   constructor(
-    data: RawGuild & {
-      joined_at?: number;
-      large?: boolean;
-      unavailable?: boolean;
-      member_count?: number;
-      voice_states?: Array<RawVoiceState>;
-      members?: Array<RawGuildMember>;
-      channels?: Array<RawChannel>;
-      threads?: Array<RawChannel>;
-      presences?: Array<RawPresenceUpdateEventFields>;
-      stage_instances?: Array<RawStageInstance>;
-      guild_scheduled_events?: Array<RawGuildScheduledEvent>;
-    },
+    data: RawGuild & Partial<RawGuildCreateEventExtraFields>,
     client: Client
   ) {
     super(data.id, client);
@@ -216,19 +186,7 @@ export class Guild extends Base {
   }
 
   protected override patch(
-    data: RawGuild & {
-      joined_at?: number;
-      large?: boolean;
-      unavailable?: boolean;
-      member_count?: number;
-      voice_states?: Array<RawVoiceState>;
-      members?: Array<RawGuildMember>;
-      channels?: Array<RawChannel>;
-      threads?: Array<RawChannel>;
-      presences?: Array<RawPresenceUpdateEventFields>;
-      stage_instances?: Array<RawStageInstance>;
-      guild_scheduled_events?: Array<RawGuildScheduledEvent>;
-    }
+    data: RawGuild & Partial<RawGuildCreateEventExtraFields>
   ): void {
     if (data.icon_hash !== undefined) this.iconHash = data.icon_hash;
     if (data.owner !== undefined) this.owner = data.owner;
@@ -2054,35 +2012,12 @@ export class Guild extends Base {
       );
   }
 
-  public override toRaw(): RawGuild & {
-    joined_at?: number;
-    large?: boolean;
-    unavailable?: boolean;
-    member_count?: number;
-    voice_states?: Array<RawVoiceState>;
-    members?: Array<RawGuildMember>;
-    channels?: Array<RawChannel>;
-    threads?: Array<RawChannel>;
-    presences?: Array<RawPresenceUpdateEventFields>;
-    stage_instances?: Array<RawStageInstance>;
-    guild_scheduled_events?: Array<RawGuildScheduledEvent>;
-  } {
+  public override toRaw(): RawGuild & Partial<RawGuildCreateEventExtraFields> {
     return this.raw;
   }
 
-  public override toJSON(): JSONGuild & {
-    joinedAt?: number;
-    large?: boolean;
-    unavailable?: boolean;
-    memberCount?: number;
-    voiceStates?: Array<JSONVoiceState>;
-    members?: Array<JSONGuildMember>;
-    channels?: Array<JSONChannel>;
-    threads?: Array<JSONChannel>;
-    presences?: Array<PresenceUpdateEventFields>;
-    stageInstances?: Array<JSONStageInstance>;
-    guildScheduledEvents?: Array<JSONGuildScheduledEvent>;
-  } {
+  public override toJSON(): JSONGuild &
+    Partial<JSONGuildCreateEventExtraFields> {
     return {
       id: this.id,
       name: this.name,

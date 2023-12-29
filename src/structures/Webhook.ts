@@ -6,18 +6,11 @@ import type {
   JSONAllowedMentions,
   JSONAttachment,
   JSONEmbed,
-  JSONEmoji,
-  JSONSelectOption,
   JSONWebhook,
   RawMessage,
   RawWebhook,
 } from "../types";
-import type {
-  ChannelTypes,
-  ComponentTypes,
-  MessageFlags,
-  WebhookTypes,
-} from "../constants";
+import type { MessageFlags, WebhookTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/webhook */
 export class Webhook extends Base {

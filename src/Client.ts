@@ -29,6 +29,7 @@ import {
   Emoji,
   Sticker,
   Role,
+  UnavailableGuild,
 } from "./structures";
 import type {
   Activity,
@@ -40,7 +41,6 @@ import type {
   JSONGuildApplicationCommandPermissions,
   GuildBanAddEventFields,
   GuildBanRemoveEventFields,
-  GuildDeleteEventFields,
   GuildMemberRemoveEventFields,
   GuildMemberUpdateEventFields,
   GuildMembersChunkEventFields,
@@ -112,7 +112,7 @@ export interface ClientEvents {
   entitlementDelete: [entitlement: JSONEntitlement];
   guildCreate: [guild: Guild];
   guildUpdate: [guild: Guild];
-  guildDelete: [guild: GuildDeleteEventFields];
+  guildDelete: [guild: UnavailableGuild];
   guildAuditLogEntryCreate: [auditLogEntry: JSONAuditLogEntry];
   guildBanAdd: [ban: GuildBanAddEventFields];
   guildBanRemove: [ban: GuildBanRemoveEventFields];

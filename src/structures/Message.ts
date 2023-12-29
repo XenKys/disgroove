@@ -15,29 +15,25 @@ import type {
   JSONAttachment,
   JSONChannelMention,
   JSONEmbed,
-  JSONEmoji,
-  JSONGuildMember,
   JSONMessage,
   JSONMessageActivity,
+  JSONMessageCreateEventExtraFields,
   JSONMessageInteraction,
   JSONMessageReference,
   JSONReaction,
   JSONRoleSubscriptionData,
-  JSONSelectOption,
   JSONStickerItem,
   RawChannel,
-  RawGuildMember,
   RawMessage,
+  RawMessageCreateEventExtraFields,
   RawUser,
 } from "../types";
-import { ChannelTypes, ComponentTypes, MessageFlags } from "../constants";
+import { ComponentTypes, MessageFlags } from "../constants";
 
 /** https://discord.com/developers/docs/resources/channel */
 export class Message extends Base {
-  protected override raw: RawMessage & {
-    guild_id?: string;
-    member?: RawGuildMember;
-  };
+  protected override raw: RawMessage &
+    Partial<RawMessageCreateEventExtraFields>;
   public channelId: string;
   public author: User;
   public content: string;
@@ -72,10 +68,7 @@ export class Message extends Base {
   public member?: GuildMember;
 
   constructor(
-    data: RawMessage & {
-      guild_id?: string;
-      member?: RawGuildMember;
-    },
+    data: RawMessage & Partial<RawMessageCreateEventExtraFields>,
     client: Client
   ) {
     super(data.id, client);
@@ -163,10 +156,7 @@ export class Message extends Base {
   }
 
   protected override patch(
-    data: RawMessage & {
-      guild_id?: string;
-      member?: RawGuildMember;
-    }
+    data: RawMessage & Partial<RawMessageCreateEventExtraFields>
   ): void {
     this.editedTimestamp =
       data.edited_timestamp !== null ? data.edited_timestamp : null;
@@ -478,17 +468,13 @@ export class Message extends Base {
     );
   }
 
-  public override toRaw(): RawMessage & {
-    guild_id?: string;
-    member?: RawGuildMember;
-  } {
+  public override toRaw(): RawMessage &
+    Partial<RawMessageCreateEventExtraFields> {
     return this.raw;
   }
 
-  public override toJSON(): JSONMessage & {
-    guildId?: string;
-    member?: JSONGuildMember;
-  } {
+  public override toJSON(): JSONMessage &
+    Partial<JSONMessageCreateEventExtraFields> {
     return {
       id: this.id,
       channelId: this.channelId,

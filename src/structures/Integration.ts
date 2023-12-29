@@ -5,13 +5,21 @@ import type {
   JSONIntegration,
   JSONIntegrationAccount,
   JSONIntegrationApplication,
+  JSONIntegrationCreateEventExtraFields,
+  JSONIntegrationUpdateEventExtraFields,
   RawIntegration,
+  RawIntegrationCreateEventExtraFields,
+  RawIntegrationUpdateEventExtraFields,
 } from "../types";
 import type { IntegrationExpireBehaviors, OAuth2Scopes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/guild */
 export class Integration extends Base {
-  protected override raw: RawIntegration & { guild_id?: string };
+  protected override raw: RawIntegration &
+    Partial<
+      | RawIntegrationCreateEventExtraFields
+      | RawIntegrationUpdateEventExtraFields
+    >;
   public name: string;
   public type: string;
   public enabled: boolean;
@@ -29,7 +37,14 @@ export class Integration extends Base {
   public scopes?: Array<OAuth2Scopes>;
   public guildId?: string;
 
-  constructor(data: RawIntegration & { guild_id?: string }, client: Client) {
+  constructor(
+    data: RawIntegration &
+      Partial<
+        | RawIntegrationCreateEventExtraFields
+        | RawIntegrationUpdateEventExtraFields
+      >,
+    client: Client
+  ) {
     super(data.id, client);
 
     this.raw = data;
@@ -41,7 +56,13 @@ export class Integration extends Base {
     this.patch(data);
   }
 
-  protected override patch(data: RawIntegration & { guild_id?: string }): void {
+  protected override patch(
+    data: RawIntegration &
+      Partial<
+        | RawIntegrationCreateEventExtraFields
+        | RawIntegrationUpdateEventExtraFields
+      >
+  ): void {
     if (data.syncing !== undefined) this.syncing = data.syncing;
     if (data.role_id !== undefined) this.roleId = data.role_id;
     if (data.enable_emoticons !== undefined)
@@ -83,11 +104,19 @@ export class Integration extends Base {
     );
   }
 
-  public override toRaw(): RawIntegration & { guild_id?: string } {
+  public override toRaw(): RawIntegration &
+    Partial<
+      | RawIntegrationCreateEventExtraFields
+      | RawIntegrationUpdateEventExtraFields
+    > {
     return this.raw;
   }
 
-  public override toJSON(): JSONIntegration & { guildId?: string } {
+  public override toJSON(): JSONIntegration &
+    Partial<
+      | JSONIntegrationCreateEventExtraFields
+      | JSONIntegrationUpdateEventExtraFields
+    > {
     return {
       id: this.id,
       name: this.name,

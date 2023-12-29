@@ -1,13 +1,18 @@
 import { User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
-import type { JSONGuildMember, RawGuildMember } from "../types";
+import type {
+  JSONGuildMember,
+  JSONGuildMemberAddEventExtraFields,
+  RawGuildMember,
+  RawGuildMemberAddEventExtraFields,
+} from "../types";
 import type { GuildMemberFlags } from "../constants";
 
 /** https://discord.com/developers/docs/resources/guild */
 export class GuildMember {
   private client: Client;
-  private raw: RawGuildMember & { guild_id?: string };
+  private raw: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>;
   public user?: User;
   public nick?: string | null;
   public avatar?: string | null;
@@ -22,7 +27,10 @@ export class GuildMember {
   public communicationDisabledUntil?: number | null;
   public guildId?: string;
 
-  constructor(data: RawGuildMember & { guild_id?: string }, client: Client) {
+  constructor(
+    data: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>,
+    client: Client
+  ) {
     this.client = client;
     this.raw = data;
     this.roles = data.roles;
@@ -34,7 +42,9 @@ export class GuildMember {
     this.patch(data);
   }
 
-  private patch(data: RawGuildMember & { guild_id?: string }): void {
+  private patch(
+    data: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>
+  ): void {
     if (data.user !== undefined) this.user = new User(data.user, this.client);
     if (data.nick !== undefined) this.nick = data.nick;
     if (data.avatar !== undefined) this.avatar = data.avatar;
@@ -172,11 +182,12 @@ export class GuildMember {
     return `[${this.constructor.name}]`;
   }
 
-  public toRaw(): RawGuildMember & { guild_id?: string } {
+  public toRaw(): RawGuildMember & Partial<RawGuildMemberAddEventExtraFields> {
     return this.raw;
   }
 
-  public toJSON(): JSONGuildMember & { guildId?: string } {
+  public toJSON(): JSONGuildMember &
+    Partial<JSONGuildMemberAddEventExtraFields> {
     return {
       user: this.user?.toJSON(),
       nick: this.nick,

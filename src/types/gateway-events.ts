@@ -2,8 +2,11 @@ import type {
   Application,
   Channel,
   GuildMember,
+  GuildScheduledEvent,
   Role,
+  StageInstance,
   User,
+  VoiceState,
 } from "../structures";
 import type {
   ActivityFlags,
@@ -30,6 +33,12 @@ import type {
   JSONSticker,
   JSONGuildMember,
   JSONRole,
+  RawVoiceState,
+  RawStageInstance,
+  RawGuildScheduledEvent,
+  JSONVoiceState,
+  JSONStageInstance,
+  JSONGuildScheduledEvent,
 } from ".";
 import type { Emoji, Sticker } from "../structures";
 
@@ -72,10 +81,19 @@ export interface RawChannelPinsUpdateEventFields {
   last_pin_timestamp?: string | null;
 }
 
-/** https://discord.com/developers/docs/topics/gateway-events#guild-delete */
-export interface RawGuildDeleteEventFields {
-  id: string;
-  unavailable: boolean;
+/** https://discord.com/developers/docs/topics/gateway-events#guild-create-guild-create-extra-fields */
+export interface RawGuildCreateEventExtraFields {
+  joined_at?: number;
+  large?: boolean;
+  unavailable?: boolean;
+  member_count?: number;
+  voice_states?: Array<RawVoiceState>;
+  members?: Array<RawGuildMember>;
+  channels?: Array<RawChannel>;
+  threads?: Array<RawChannel>;
+  presences?: Array<RawPresenceUpdateEventFields>;
+  stage_instances?: Array<RawStageInstance>;
+  guild_scheduled_events?: Array<RawGuildScheduledEvent>;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-ban-add-guild-ban-add-event-fields */
@@ -104,6 +122,11 @@ export interface RawGuildStickersUpdateEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-integrations-update-guild-integrations-update-event-fields */
 export interface RawGuildIntegrationsUpdateEventFields {
+  guild_id: string;
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#guild-member-add-guild-member-add-extra-fields */
+export interface RawGuildMemberAddEventExtraFields {
   guild_id: string;
 }
 
@@ -171,6 +194,16 @@ export interface RawGuildScheduledEventUserRemoveEventFields {
   guild_id: string;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#integration-create-integration-create-event-additional-fields */
+export interface RawIntegrationCreateEventExtraFields {
+  guild_id: string;
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#integration-update-integration-update-event-additional-fields */
+export interface RawIntegrationUpdateEventExtraFields {
+  guild_id: string;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#integration-delete-integration-delete-event-fields */
 export interface RawIntegrationDeleteEventFields {
   id: string;
@@ -199,6 +232,13 @@ export interface RawInviteDeleteEventFields {
   channel_id: string;
   guild_id?: string;
   code: string;
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#message-create-message-create-extra-fields */
+export interface RawMessageCreateEventExtraFields {
+  guild_id?: string;
+  member?: RawGuildMember;
+  mentions: Array<RawUser>;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-delete-message-delete-event-fields */
@@ -374,9 +414,18 @@ export interface JSONChannelPinsUpdateEventFields {
   lastPinTimestamp?: string | null;
 }
 
-export interface JSONGuildDeleteEventFields {
-  id: string;
-  unavailable: boolean;
+export interface JSONGuildCreateEventExtraFields {
+  joinedAt?: number;
+  large?: boolean;
+  unavailable?: boolean;
+  memberCount?: number;
+  voiceStates?: Array<JSONVoiceState>;
+  members?: Array<JSONGuildMember>;
+  channels?: Array<JSONChannel>;
+  threads?: Array<JSONChannel>;
+  presences?: Array<JSONPresenceUpdateEventFields>;
+  stageInstances?: Array<JSONStageInstance>;
+  guildScheduledEvents?: Array<JSONGuildScheduledEvent>;
 }
 
 export interface JSONGuildBanAddEventFields {
@@ -400,6 +449,10 @@ export interface JSONGuildStickersUpdateEventFields {
 }
 
 export interface JSONGuildIntegrationsUpdateEventFields {
+  guildId: string;
+}
+
+export interface JSONGuildMemberAddEventExtraFields {
   guildId: string;
 }
 
@@ -459,6 +512,14 @@ export interface JSONGuildScheduledEventUserRemoveEventFields {
   guildId: string;
 }
 
+export interface JSONIntegrationCreateEventExtraFields {
+  guildId: string;
+}
+
+export interface JSONIntegrationUpdateEventExtraFields {
+  guildId: string;
+}
+
 export interface JSONIntegrationDeleteEventFields {
   id: string;
   guildId: string;
@@ -484,6 +545,12 @@ export interface JSONInviteDeleteEventFields {
   channelId: string;
   guildId?: string;
   code: string;
+}
+
+export interface JSONMessageCreateEventExtraFields {
+  guildId?: string;
+  member?: JSONGuildMember;
+  mentions: Array<JSONUser>;
 }
 
 export interface JSONMessageDeleteEventFields {
@@ -642,9 +709,18 @@ export interface ChannelPinsUpdateEventFields {
   lastPinTimestamp?: string | null;
 }
 
-export interface GuildDeleteEventFields {
-  id: string;
-  unavailable: boolean;
+export interface GuildCreateEventExtraFields {
+  joinedAt?: number;
+  large?: boolean;
+  unavailable?: boolean;
+  memberCount?: number;
+  voiceStates?: Array<VoiceState>;
+  members?: Array<GuildMember>;
+  channels?: Array<Channel>;
+  threads?: Array<Channel>;
+  presences?: Array<PresenceUpdateEventFields>;
+  stageInstances?: Array<StageInstance>;
+  guildScheduledEvents?: Array<GuildScheduledEvent>;
 }
 
 export interface GuildBanAddEventFields {
@@ -668,6 +744,10 @@ export interface GuildStickersUpdateEventFields {
 }
 
 export interface GuildIntegrationsUpdateEventFields {
+  guildId: string;
+}
+
+export interface GuildMemberAddEventExtraFields {
   guildId: string;
 }
 
@@ -727,6 +807,14 @@ export interface GuildScheduledEventUserRemoveEventFields {
   guildId: string;
 }
 
+export interface IntegrationCreateEventExtraFields {
+  guildId: string;
+}
+
+export interface IntegrationUpdateEventExtraFields {
+  guildId: string;
+}
+
 export interface IntegrationDeleteEventFields {
   id: string;
   guildId: string;
@@ -752,6 +840,12 @@ export interface InviteDeleteEventFields {
   channelId: string;
   guildId?: string;
   code: string;
+}
+
+export interface MessageCreateEventExtraFields {
+  guildId?: string;
+  member?: GuildMember;
+  mentions: Array<User>;
 }
 
 export interface MessageDeleteEventFields {

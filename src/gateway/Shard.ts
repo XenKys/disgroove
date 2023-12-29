@@ -23,6 +23,7 @@ import {
   VoiceState,
   PartialApplication,
   Sticker,
+  UnavailableGuild,
 } from "../structures";
 import type {
   Activity,
@@ -340,10 +341,10 @@ export class Shard {
         );
         break;
       case "GUILD_DELETE":
-        this.client.emit(GatewayEvents.GuildDelete, {
-          id: packet.d.id,
-          unavailable: packet.d.unavailable,
-        });
+        this.client.emit(
+          GatewayEvents.GuildDelete,
+          new UnavailableGuild(packet.d, this.client)
+        );
         break;
       case "GUILD_AUDIT_LOG_ENTRY_CREATE":
         this.client.emit(GatewayEvents.GuildAuditLogEntryCreate, {

@@ -88,7 +88,7 @@ import { File as UndiciFile, FormData } from "undici";
 /** https://discord.com/developers/docs/resources/guild */
 export class UnavailableGuild extends Base {
   protected override raw: RawUnavailableGuild;
-  public unavailable: true;
+  public unavailable: boolean;
 
   constructor(data: RawUnavailableGuild, client: Client) {
     super(data.id, client);

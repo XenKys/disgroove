@@ -1,4 +1,4 @@
-import { Base, Channel, Emoji, GuildMember, Message, Role, User } from ".";
+import { Base, Channel, GuildMember, Message, Role, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
@@ -8,16 +8,13 @@ import type {
   JSONApplicationCommandOptionChoice,
   JSONAttachment,
   JSONEmbed,
-  JSONEmoji,
   JSONInteraction,
   JSONMessageComponentData,
   JSONModalSubmitData,
-  JSONSelectOption,
   RawInteraction,
   RawMessage,
 } from "../types";
 import {
-  type ChannelTypes,
   ComponentTypes,
   InteractionCallbackType,
   type InteractionType,
