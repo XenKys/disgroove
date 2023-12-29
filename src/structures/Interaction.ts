@@ -8,6 +8,7 @@ import type {
   JSONApplicationCommandOptionChoice,
   JSONAttachment,
   JSONEmbed,
+  JSONEntitlement,
   JSONInteraction,
   JSONMessageComponentData,
   JSONModalSubmitData,
@@ -40,6 +41,7 @@ export class Interaction extends Base {
   public appPermissions?: string;
   public locale?: string;
   public guildLocale?: string;
+  public entitlements: Array<JSONEntitlement>;
 
   constructor(data: RawInteraction, client: Client) {
     super(data.id, client);
@@ -49,6 +51,21 @@ export class Interaction extends Base {
     this.type = data.type;
     this.token = data.token;
     this.version = data.version;
+    this.entitlements = data.entitlements.map((entitlement) => ({
+      id: entitlement.id,
+      skuId: entitlement.sku_id,
+      applicationId: entitlement.application_id,
+      userId: entitlement.user_id,
+      promotionId: entitlement.promotion_id,
+      type: entitlement.type,
+      deleted: entitlement.deleted,
+      giftCodeFlags: entitlement.gift_code_flags,
+      consumed: entitlement.consumed,
+      startsAt: entitlement.starts_at,
+      endsAt: entitlement.ends_at,
+      guildId: entitlement.guild_id,
+      subscriptionId: entitlement.subscription_id,
+    }));
 
     this.patch(data);
   }
@@ -481,6 +498,7 @@ export class Interaction extends Base {
       appPermissions: this.appPermissions,
       locale: this.locale,
       guildLocale: this.guildLocale,
+      entitlements: this.entitlements,
     };
   }
 }

@@ -11,6 +11,8 @@ import type {
   JSONMessage,
   JSONRole,
   JSONChannel,
+  JSONEntitlement,
+  RawEntitlement,
 } from ".";
 import type {
   ApplicationCommandTypes,
@@ -37,6 +39,7 @@ export interface RawInteraction {
   app_permissions?: string;
   locale?: string;
   guild_locale?: string;
+  entitlements: Array<RawEntitlement>;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
@@ -122,6 +125,7 @@ export interface JSONInteraction {
   appPermissions?: string;
   locale?: string;
   guildLocale?: string;
+  entitlements: Array<JSONEntitlement>;
 }
 
 export interface JSONApplicationCommandData {
