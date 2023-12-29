@@ -46,6 +46,7 @@ export class Application extends Base {
   public installParams?: JSONInstallParams;
   public customInstallURL?: string;
   public roleConnectionsVerificationURL?: string;
+  public entitlements: Array<JSONEntitlement>;
 
   constructor(data: RawApplication, client: Client) {
     super(data.id, client);
@@ -58,6 +59,21 @@ export class Application extends Base {
     this.botRequireCodeGrant = data.bot_require_code_grant;
     this.verifyKey = data.verify_key;
     this.team = null;
+    this.entitlements = data.entitlements.map((entitlement) => ({
+      id: entitlement.id,
+      skuId: entitlement.sku_id,
+      applicationId: entitlement.application_id,
+      userId: entitlement.user_id,
+      promotionId: entitlement.promotion_id,
+      type: entitlement.type,
+      deleted: entitlement.deleted,
+      giftCodeFlags: entitlement.gift_code_flags,
+      consumed: entitlement.consumed,
+      startsAt: entitlement.starts_at,
+      endsAt: entitlement.ends_at,
+      guildId: entitlement.guild_id,
+      subscriptionId: entitlement.subscription_id,
+    }));
 
     this.patch(data);
   }
@@ -761,6 +777,7 @@ export class Application extends Base {
       installParams: this.installParams,
       customInstallURL: this.customInstallURL,
       roleConnectionsVerificationURL: this.roleConnectionsVerificationURL,
+      entitlements: this.entitlements,
     };
   }
 }

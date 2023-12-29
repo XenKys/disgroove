@@ -1,4 +1,11 @@
-import type { RawUser, RawTeam, JSONTeam, JSONUser } from ".";
+import type {
+  RawUser,
+  RawTeam,
+  JSONTeam,
+  JSONUser,
+  JSONEntitlement,
+  RawEntitlement,
+} from ".";
 import type { OAuth2Scopes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
@@ -24,6 +31,7 @@ export interface RawApplication {
   install_params?: RawInstallParams;
   custom_install_url?: string;
   role_connections_verification_url?: string;
+  entitlements: Array<RawEntitlement>;
 }
 
 /** https://discord.com/developers/docs/resources/application#install-params-object-install-params-structure */
@@ -54,6 +62,7 @@ export interface JSONApplication {
   installParams?: JSONInstallParams;
   customInstallURL?: string;
   roleConnectionsVerificationURL?: string;
+  entitlements: Array<JSONEntitlement>;
 }
 
 export interface JSONInstallParams {
