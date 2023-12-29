@@ -1,6 +1,6 @@
 {
   "name": "disgroove",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "An NPM package to interact with the Discord API",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,10 +21,10 @@
   },
   "homepage": "https://github.com/XenKys/disgroove#readme",
   "dependencies": {
-    "@types/node": "^20.6.0",
-    "@types/ws": "^8.5.5",
-    "node": "^20.6.0",
-    "undici": "^5.24.0",
-    "ws": "^8.14.1"
+    "@types/node": "^20.10.5",
+    "@types/ws": "^8.5.10",
+    "node": "^20.10.0",
+    "undici": "^5.28.2",
+    "ws": "^8.16.0"
   }
 }
