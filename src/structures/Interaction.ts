@@ -178,14 +178,11 @@ export class Interaction extends Base {
     };
   }): void {
     switch (options.type) {
-      case InteractionCallbackType.Pong:
-        break;
       case InteractionCallbackType.ChannelMessageWithSource:
       case InteractionCallbackType.UpdateMessage:
         {
           this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
-
             {
               json: {
                 type: options.type,
@@ -215,11 +212,37 @@ export class Interaction extends Base {
           );
         }
         break;
+      case InteractionCallbackType.DeferredChannelMessageWithSource:
+        {
+          this.client.rest.post(
+            Endpoints.interactionCallback(this.id, this.token),
+            {
+              json: {
+                type: options.type,
+                data: {
+                  flags: options.data.flags,
+                },
+              },
+            }
+          );
+        }
+        break;
+      case InteractionCallbackType.DeferredUpdateMessage:
+        {
+          this.client.rest.post(
+            Endpoints.interactionCallback(this.id, this.token),
+            {
+              json: {
+                type: options.type,
+              },
+            }
+          );
+        }
+        break;
       case InteractionCallbackType.ApplicationCommandAutocompleteResult:
         {
           this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
-
             {
               json: {
                 type: options.type,
@@ -239,7 +262,6 @@ export class Interaction extends Base {
         {
           this.client.rest.post(
             Endpoints.interactionCallback(this.id, this.token),
-
             {
               json: {
                 type: options.type,
@@ -274,7 +296,18 @@ export class Interaction extends Base {
             }
           );
         }
-
+        break;
+      case InteractionCallbackType.PremiumRequired:
+        {
+          this.client.rest.post(
+            Endpoints.interactionCallback(this.id, this.token),
+            {
+              json: {
+                type: options.type,
+              },
+            }
+          );
+        }
         break;
     }
   }
