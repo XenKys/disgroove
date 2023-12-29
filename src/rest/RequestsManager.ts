@@ -39,11 +39,11 @@ export class RequestsManager {
 
       let headers: Record<string, string> = {
         "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.2.7)`,
+        Authorization: `${this.auth} ${this.token}`,
       };
       let body: string | FormData | undefined;
 
-      if (data?.authorization === undefined)
-        headers["Authorization"] = `${this.auth} ${this.token}`;
+      if (!data?.authorization) delete headers["Authorization"];
 
       if (method !== RESTMethods.Get) {
         if (data?.form || (data?.files && data?.files?.length !== 0)) {
