@@ -43,7 +43,7 @@ export class RequestsManager {
       };
       let body: string | FormData | undefined;
 
-      if (!data?.authorization) delete headers["Authorization"];
+      if (data?.authorization === false) delete headers["Authorization"];
 
       if (method !== RESTMethods.Get) {
         if (data?.form || (data?.files && data?.files?.length !== 0)) {
