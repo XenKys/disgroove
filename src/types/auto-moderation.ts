@@ -61,13 +61,11 @@ export interface JSONTriggerMetadata {
   mentionRaidProtection: boolean;
 }
 
-/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-auto-moderation-action-structure */
 export interface JSONAutoModerationAction {
   type: ActionTypes;
   metadata: JSONActionMetadata;
 }
 
-/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-metadata */
 export interface JSONActionMetadata {
   channelId: string;
   durationSeconds: number;
