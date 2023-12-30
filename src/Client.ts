@@ -111,7 +111,7 @@ export interface ClientEvents {
   entitlementCreate: [entitlement: JSONEntitlement];
   entitlementUpdate: [entitlement: JSONEntitlement];
   entitlementDelete: [entitlement: JSONEntitlement];
-  guildCreate: [guild: Guild];
+  guildCreate: [guild: Guild | UnavailableGuild];
   guildUpdate: [guild: Guild];
   guildDelete: [guild: JSONUnavailableGuild];
   guildAuditLogEntryCreate: [auditLogEntry: JSONAuditLogEntry];

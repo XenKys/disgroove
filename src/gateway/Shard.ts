@@ -338,7 +338,9 @@ export class Shard {
       case "GUILD_CREATE":
         this.client.emit(
           GatewayEvents.GuildCreate,
-          new Guild(packet.d, this.client)
+          packet.d.unavailable
+            ? new UnavailableGuild(packet.d, this.client)
+            : new Guild(packet.d, this.client)
         );
         break;
       case "GUILD_UPDATE":
