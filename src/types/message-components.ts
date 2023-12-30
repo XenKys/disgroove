@@ -87,6 +87,7 @@ export interface RawActionRow {
         options?: Array<RawSelectOption>;
         channel_types?: Array<ChannelTypes>;
         placeholder?: string;
+        default_values?: Array<RawDefaultValue>;
         min_values?: number;
         max_values?: number;
         disabled?: boolean;
@@ -180,6 +181,7 @@ export interface JSONActionRow {
         options?: Array<JSONSelectOption>;
         channelTypes?: Array<ChannelTypes>;
         placeholder?: string;
+        defaultValues?: Array<JSONDefaultValue>;
         minValues?: number;
         maxValues?: number;
         disabled?: boolean;
