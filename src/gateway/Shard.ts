@@ -343,7 +343,7 @@ export class Shard {
       case "GUILD_DELETE":
         this.client.emit(
           GatewayEvents.GuildDelete,
-          new UnavailableGuild(packet.d, this.client)
+          new UnavailableGuild(packet.d, this.client).toJSON()
         );
         break;
       case "GUILD_AUDIT_LOG_ENTRY_CREATE":

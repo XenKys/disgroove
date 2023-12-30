@@ -29,7 +29,6 @@ import {
   Emoji,
   Sticker,
   Role,
-  UnavailableGuild,
 } from "./structures";
 import type {
   Activity,
@@ -74,6 +73,7 @@ import type {
   RawUser,
   RawVoiceRegion,
   JSONEntitlement,
+  JSONUnavailableGuild,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardsManager } from "./gateway";
@@ -112,7 +112,7 @@ export interface ClientEvents {
   entitlementDelete: [entitlement: JSONEntitlement];
   guildCreate: [guild: Guild];
   guildUpdate: [guild: Guild];
-  guildDelete: [guild: UnavailableGuild];
+  guildDelete: [guild: JSONUnavailableGuild];
   guildAuditLogEntryCreate: [auditLogEntry: JSONAuditLogEntry];
   guildBanAdd: [ban: GuildBanAddEventFields];
   guildBanRemove: [ban: GuildBanRemoveEventFields];
