@@ -29,6 +29,7 @@ import {
   Emoji,
   Sticker,
   Role,
+  UnavailableGuild,
 } from "./structures";
 import type {
   Activity,
@@ -80,7 +81,7 @@ import { Shard, ShardsManager } from "./gateway";
 
 export interface ClientEvents {
   hello: [];
-  ready: [];
+  ready: [guilds: Array<UnavailableGuild>];
   resumed: [];
   reconnect: [];
   invalidSession: [];

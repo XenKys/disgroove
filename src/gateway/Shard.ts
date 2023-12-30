@@ -35,6 +35,7 @@ import type {
   RawSticker,
   RawThreadMember,
   RawAuditLogChange,
+  RawUnavailableGuild,
 } from "../types";
 import { Client } from "../Client";
 
@@ -138,7 +139,13 @@ export class Shard {
             this.client
           );
 
-          this.client.emit(GatewayEvents.Ready);
+          this.client.emit(
+            GatewayEvents.Ready,
+            packet.d.guilds.map(
+              (guild: RawUnavailableGuild) =>
+                new UnavailableGuild(guild, this.client)
+            )
+          );
         }
         break;
       case "RESUMED":
