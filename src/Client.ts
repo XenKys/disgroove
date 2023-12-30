@@ -365,14 +365,14 @@ export class Client extends EventEmitter {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/sticker#list-nitro-sticker-packs */
-  public async getNitroStickerPacks(): Promise<{
+  /** https://discord.com/developers/docs/resources/sticker#list-sticker-packs */
+  public async getStickerPacks(): Promise<{
     stickerPacks: Array<JSONStickerPack>;
   }> {
     return this.rest
       .get<{
         sticker_packs: Array<RawStickerPack>;
-      }>(Endpoints.nitroStickerPacks())
+      }>(Endpoints.stickerPacks())
       .then((response) => ({
         stickerPacks: response.sticker_packs.map((stickerPack) => ({
           id: stickerPack.id,

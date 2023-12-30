@@ -235,4 +235,4 @@ export const stageInstances = () => "stage-instances" as const;
 export const stageInstance = (channelId: string) =>
   `stage-instances/${channelId}` as const;
 export const sticker = (stickerId: string) => `stickers/${stickerId}` as const;
-export const nitroStickerPacks = () => "sticker-packs" as const;
+export const stickerPacks = () => "sticker-packs" as const;
