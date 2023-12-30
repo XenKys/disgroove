@@ -31,7 +31,9 @@ import {
 
 /** https://discord.com/developers/docs/resources/channel */
 export class Channel extends Base {
-  protected override raw: RawChannel;
+  protected override raw: RawChannel & {
+    newly_created?: boolean;
+  };
   public type: ChannelTypes;
   public guildId?: string;
   public position?: number;
@@ -860,7 +862,9 @@ export class Channel extends Base {
       );
   }
 
-  public override toRaw(): RawChannel {
+  public override toRaw(): RawChannel & {
+    newly_created?: boolean;
+  } {
     return this.raw;
   }
 
