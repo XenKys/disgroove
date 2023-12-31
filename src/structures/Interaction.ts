@@ -341,7 +341,6 @@ export class Interaction extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token),
-
         {
           json: {
             content: options.content,
@@ -468,7 +467,6 @@ export class Interaction extends Base {
     return new Message(
       await this.client.rest.post<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token, messageId),
-
         {
           json: {
             content: options.content,

@@ -320,7 +320,6 @@ export class Webhook extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.webhookMessage(this.id, this.token, messageId),
-
         {
           json: {
             content: options.content,

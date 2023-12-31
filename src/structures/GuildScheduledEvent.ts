@@ -79,7 +79,6 @@ export class GuildScheduledEvent extends Base {
     return new GuildScheduledEvent(
       await this.client.rest.patch<RawGuildScheduledEvent>(
         Endpoints.guildScheduledEvent(this.guildId, this.id),
-
         {
           json: {
             channel_id: options.channelId,

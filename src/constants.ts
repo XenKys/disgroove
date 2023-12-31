@@ -492,7 +492,7 @@ export enum InviteTargetTypes {
 
 /** https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level */
 export enum PrivacyLevel {
-  = 1,
+  Public = 1,
   GuildOnly,
 }
 

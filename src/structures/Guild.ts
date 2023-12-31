@@ -356,7 +356,6 @@ export class Guild extends Base {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationGuildCommands(applicationId, this.id),
-
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -426,7 +425,6 @@ export class Guild extends Base {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
         Endpoints.applicationGuildCommand(applicationId, this.id, commandId),
-
         {
           json: this.client.util.applicationCommandToRaw(options),
         }
@@ -491,7 +489,6 @@ export class Guild extends Base {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
         Endpoints.applicationGuildCommands(applicationId, this.id),
-
         {
           json: commands.map((command) =>
             this.client.util.applicationCommandToRaw(command)
@@ -664,7 +661,6 @@ export class Guild extends Base {
     return new AutoModerationRule(
       await this.client.rest.post<RawAutoModerationRule>(
         Endpoints.guildAutoModerationRules(this.id),
-
         {
           json: {
             name: options.name,
@@ -708,7 +704,6 @@ export class Guild extends Base {
     return new AutoModerationRule(
       await this.client.rest.patch<RawAutoModerationRule>(
         Endpoints.guildAutoModerationRule(this.id, ruleId),
-
         {
           json: {
             name: options.name,
@@ -738,7 +733,6 @@ export class Guild extends Base {
   deleteAutoModerationRule(ruleId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildAutoModerationRule(this.id, ruleId),
-
       {
         reason,
       }
@@ -772,18 +766,14 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Emoji> {
     return new Emoji(
-      await this.client.rest.post<RawEmoji>(
-        Endpoints.guildEmojis(this.id),
-
-        {
-          json: {
-            name: options.name,
-            image: options.image,
-            roles: options.roles,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.post<RawEmoji>(Endpoints.guildEmojis(this.id), {
+        json: {
+          name: options.name,
+          image: options.image,
+          roles: options.roles,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -800,7 +790,6 @@ export class Guild extends Base {
     return new Emoji(
       await this.client.rest.patch<RawEmoji>(
         Endpoints.guildEmoji(this.id, emojiId),
-
         {
           json: {
             name: options.name,
@@ -815,13 +804,9 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
   deleteEmoji(emojiId: string, reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.guildEmoji(this.id, emojiId),
-
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildEmoji(this.id, emojiId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-preview */
@@ -887,36 +872,32 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Guild> {
     return new Guild(
-      await this.client.rest.patch<RawGuild>(
-        Endpoints.guild(this.id),
-
-        {
-          json: {
-            name: options.name,
-            region: options.region,
-            verification_level: options.verificationLevel,
-            default_message_notifications: options.defaultMessageNotifications,
-            explicit_content_filter: options.explicitContentFilter,
-            afk_channel_id: options.afkChannelId,
-            afk_timeout: options.afkTimeout,
-            icon: options.icon,
-            owner_id: options.ownerId,
-            splash: options.splash,
-            discovery_splash: options.discoverySplash,
-            banner: options.banner,
-            system_channel_id: options.systemChannelId,
-            system_channel_flags: options.systemChannelFlags,
-            rules_channel_id: options.rulesChannelId,
-            public_updates_channel_id: options.publicUpdatesChannelId,
-            preferred_locale: options.preferredLocale,
-            features: options.features,
-            description: options.description,
-            premium_progress_bar_enabled: options.premiumProgressBarEnabled,
-            safety_alerts_channel_id: options.safetyAlertsChannelId,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.patch<RawGuild>(Endpoints.guild(this.id), {
+        json: {
+          name: options.name,
+          region: options.region,
+          verification_level: options.verificationLevel,
+          default_message_notifications: options.defaultMessageNotifications,
+          explicit_content_filter: options.explicitContentFilter,
+          afk_channel_id: options.afkChannelId,
+          afk_timeout: options.afkTimeout,
+          icon: options.icon,
+          owner_id: options.ownerId,
+          splash: options.splash,
+          discovery_splash: options.discoverySplash,
+          banner: options.banner,
+          system_channel_id: options.systemChannelId,
+          system_channel_flags: options.systemChannelFlags,
+          rules_channel_id: options.rulesChannelId,
+          public_updates_channel_id: options.publicUpdatesChannelId,
+          preferred_locale: options.preferredLocale,
+          features: options.features,
+          description: options.description,
+          premium_progress_bar_enabled: options.premiumProgressBarEnabled,
+          safety_alerts_channel_id: options.safetyAlertsChannelId,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -962,7 +943,6 @@ export class Guild extends Base {
     return new Channel(
       await this.client.rest.post<RawChannel>(
         Endpoints.guildChannels(this.id),
-
         {
           json: {
             name: options.name,
@@ -1126,22 +1106,18 @@ export class Guild extends Base {
     reason?: string
   ): Promise<GuildMember> {
     return new GuildMember(
-      await this.client.rest.patch(
-        Endpoints.guildMember(this.id, userId),
-
-        {
-          json: {
-            nick: options.nick,
-            roles: options.roles,
-            mute: options.mute,
-            deaf: options.deaf,
-            channel_id: options.channelId,
-            communication_disabled_until: options.communicationDisabledUntil,
-            flags: options.flags,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.patch(Endpoints.guildMember(this.id, userId), {
+        json: {
+          nick: options.nick,
+          roles: options.roles,
+          mute: options.mute,
+          deaf: options.deaf,
+          channel_id: options.channelId,
+          communication_disabled_until: options.communicationDisabledUntil,
+          flags: options.flags,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -1166,20 +1142,15 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
   addMemberRole(userId: string, roleId: string, reason?: string): void {
-    this.client.rest.put(
-      Endpoints.guildMemberRole(this.id, userId, roleId),
-
-      {
-        reason,
-      }
-    );
+    this.client.rest.put(Endpoints.guildMemberRole(this.id, userId, roleId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
   removeMemberRole(userId: string, roleId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildMemberRole(this.id, userId, roleId),
-
       {
         reason,
       }
@@ -1188,13 +1159,9 @@ export class Guild extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
   removeMember(userId: string, reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.guildMember(this.id, userId),
-
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildMember(this.id, userId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-bans */
@@ -1275,22 +1242,18 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Role> {
     return new Role(
-      await this.client.rest.post<RawRole>(
-        Endpoints.guildRoles(this.id),
-
-        {
-          json: {
-            name: options.name,
-            permissions: options.permissions,
-            color: options.color,
-            hoist: options.hoist,
-            icon: options.icon,
-            unicode_emoji: options.unicodeEmoji,
-            mentionable: options.mentionable,
-          },
-          reason,
-        }
-      ),
+      await this.client.rest.post<RawRole>(Endpoints.guildRoles(this.id), {
+        json: {
+          name: options.name,
+          permissions: options.permissions,
+          color: options.color,
+          hoist: options.hoist,
+          icon: options.icon,
+          unicode_emoji: options.unicodeEmoji,
+          mentionable: options.mentionable,
+        },
+        reason,
+      }),
       this.client
     );
   }
@@ -1329,7 +1292,6 @@ export class Guild extends Base {
     return new Role(
       await this.client.rest.patch<RawRole>(
         Endpoints.guildRole(this.id, roleId),
-
         {
           json: {
             name: options?.name,
@@ -1354,16 +1316,12 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<number> {
-    return this.client.rest.post<number>(
-      Endpoints.guildMFA(this.id),
-
-      {
-        json: {
-          level: options.level,
-        },
-        reason,
-      }
-    );
+    return this.client.rest.post<number>(Endpoints.guildMFA(this.id), {
+      json: {
+        level: options.level,
+      },
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
@@ -1396,19 +1354,15 @@ export class Guild extends Base {
     },
     reason?: string
   ): Promise<number> {
-    return this.client.rest.post<number>(
-      Endpoints.guildPrune(this.id),
-
-      {
-        json: {
-          days: options.days,
-          compute_prune_count: options.computePruneCount,
-          include_roles: options.includeRoles,
-          reason: options.reason,
-        },
-        reason,
-      }
-    );
+    return this.client.rest.post<number>(Endpoints.guildPrune(this.id), {
+      json: {
+        days: options.days,
+        compute_prune_count: options.computePruneCount,
+        include_roles: options.includeRoles,
+        reason: options.reason,
+      },
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
@@ -1448,7 +1402,6 @@ export class Guild extends Base {
   deleteIntegration(integrationId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildIntegration(this.id, integrationId),
-
       {
         reason,
       }
@@ -1474,17 +1427,13 @@ export class Guild extends Base {
     reason?: string
   ): Promise<JSONGuildWidgetSettings> {
     return this.client.rest
-      .patch<RawGuildWidgetSettings>(
-        Endpoints.guildWidgetSettings(this.id),
-
-        {
-          json: {
-            enabled: options.enabled,
-            channel_id: options.channelId,
-          },
-          reason,
-        }
-      )
+      .patch<RawGuildWidgetSettings>(Endpoints.guildWidgetSettings(this.id), {
+        json: {
+          enabled: options.enabled,
+          channel_id: options.channelId,
+        },
+        reason,
+      })
       .then((response) => ({
         enabled: response.enabled,
         channelId: response.channel_id,
@@ -1554,18 +1503,14 @@ export class Guild extends Base {
     reason?: string
   ): Promise<JSONWelcomeScreen> {
     return this.client.rest
-      .patch<RawWelcomeScreen>(
-        Endpoints.guildWelcomeScreen(this.id),
-
-        {
-          json: {
-            enabled: options.enabled,
-            welcome_channels: options.welcomeChannels,
-            description: options.description,
-          },
-          reason,
-        }
-      )
+      .patch<RawWelcomeScreen>(Endpoints.guildWelcomeScreen(this.id), {
+        json: {
+          enabled: options.enabled,
+          welcome_channels: options.welcomeChannels,
+          description: options.description,
+        },
+        reason,
+      })
       .then((response) => ({
         description: response.description,
         welcomeChannels: response.welcome_channels.map((data) => ({
@@ -1683,17 +1628,13 @@ export class Guild extends Base {
       requestToSpeakTimestamp?: string | null;
     }
   ): void {
-    this.client.rest.patch(
-      Endpoints.guildVoiceState(this.id, userId),
-
-      {
-        json: {
-          channel_id: options.channelId,
-          suppress: options.suppress,
-          requestToSpeakTimestamp: options.requestToSpeakTimestamp,
-        },
-      }
-    );
+    this.client.rest.patch(Endpoints.guildVoiceState(this.id, userId), {
+      json: {
+        channel_id: options.channelId,
+        suppress: options.suppress,
+        requestToSpeakTimestamp: options.requestToSpeakTimestamp,
+      },
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild */
@@ -1732,7 +1673,6 @@ export class Guild extends Base {
     return new GuildScheduledEvent(
       await this.client.rest.post<RawGuildScheduledEvent>(
         Endpoints.guildScheduledEvents(this.id),
-
         {
           json: {
             channel_id: options.channelId,
@@ -1772,7 +1712,6 @@ export class Guild extends Base {
     return new GuildScheduledEvent(
       await this.client.rest.patch<RawGuildScheduledEvent>(
         Endpoints.guildScheduledEvent(this.id, scheduledEventId),
-
         {
           json: {
             channel_id: options.channelId,
@@ -1861,7 +1800,6 @@ export class Guild extends Base {
     return new GuildTemplate(
       await this.client.rest.post<RawGuildTemplate>(
         Endpoints.guildTemplates(this.id),
-
         {
           json: {
             name: options.name,
@@ -1894,7 +1832,6 @@ export class Guild extends Base {
     return new GuildTemplate(
       await this.client.rest.patch<RawGuildTemplate>(
         Endpoints.guildTemplate(this.id, code),
-
         {
           json: {
             name: options.name,
@@ -1968,30 +1905,22 @@ export class Guild extends Base {
     reason?: string
   ): Promise<Sticker> {
     return this.client.rest
-      .patch<RawSticker>(
-        Endpoints.guildSticker(this.id, stickerId),
-
-        {
-          json: {
-            name: options.name,
-            description: options.description,
-            tags: options.tags,
-          },
-          reason,
-        }
-      )
+      .patch<RawSticker>(Endpoints.guildSticker(this.id, stickerId), {
+        json: {
+          name: options.name,
+          description: options.description,
+          tags: options.tags,
+        },
+        reason,
+      })
       .then((response) => new Sticker(response, this.client));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
   deleteSticker(stickerId: string, reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.guildSticker(this.id, stickerId),
-
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildSticker(this.id, stickerId), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */

@@ -382,7 +382,6 @@ export class Message extends Base {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.channelId, this.id),
-
         {
           json: {
             content: options.content,
@@ -411,35 +410,23 @@ export class Message extends Base {
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
   delete(reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessage(this.channelId, this.id),
-
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.channelMessage(this.channelId, this.id), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
   pin(reason?: string): void {
-    this.client.rest.put(
-      Endpoints.channelPin(this.channelId, this.id),
-
-      {
-        reason,
-      }
-    );
+    this.client.rest.put(Endpoints.channelPin(this.channelId, this.id), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
   unpin(reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelPin(this.channelId, this.id),
-
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.channelPin(this.channelId, this.id), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
@@ -454,7 +441,6 @@ export class Message extends Base {
     return new Channel(
       await this.client.rest.post<RawChannel>(
         Endpoints.threads(this.channelId, this.id),
-
         {
           json: {
             name: options.name,
