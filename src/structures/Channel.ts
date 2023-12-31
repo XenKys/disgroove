@@ -156,10 +156,13 @@ export class Channel extends Base {
       }));
     if (data.applied_tags !== undefined) this.appliedTags = data.applied_tags;
     if (data.default_reaction_emoji !== undefined)
-      this.defaultReactionEmoji = {
-        emojiId: data.default_reaction_emoji?.emoji_id,
-        emojiName: data.default_reaction_emoji?.emoji_name,
-      } as JSONDefaultReaction;
+      this.defaultReactionEmoji =
+        data.default_reaction_emoji !== null
+          ? {
+              emojiId: data.default_reaction_emoji?.emoji_id,
+              emojiName: data.default_reaction_emoji?.emoji_name,
+            }
+          : null;
     if (data.default_thread_rate_limit_per_user !== undefined)
       this.defaultThreadRateLimitPerUser =
         data.default_thread_rate_limit_per_user;
