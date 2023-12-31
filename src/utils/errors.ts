@@ -1,5 +1,5 @@
 export class RESTError extends Error {
-  public override name: string = "RESTError";
+  override name: string = "RESTError";
 
   constructor(message: string) {
     super(message);
@@ -7,7 +7,7 @@ export class RESTError extends Error {
 }
 
 export class HTTPError extends Error {
-  public override name: string = "HTTPError";
+  override name: string = "HTTPError";
 
   constructor(message: string) {
     super(message);
@@ -15,7 +15,7 @@ export class HTTPError extends Error {
 }
 
 export class GatewayError extends Error {
-  public override name: string = "GatewayError";
+  override name: string = "GatewayError";
 
   constructor(message: string) {
     super(message);

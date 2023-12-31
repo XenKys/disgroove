@@ -17,21 +17,21 @@ import type {
 /** https://discord.com/developers/docs/resources/guild-scheduled-event */
 export class GuildScheduledEvent extends Base {
   protected override raw: RawGuildScheduledEvent;
-  public guildId: string;
-  public channelId: string | null;
-  public creatorId?: string | null;
-  public name: string;
-  public description?: string | null;
-  public scheduledStartTime: string;
-  public scheduledEndTime: string | null;
-  public privacyLevel: GuildScheduledEventPrivacyLevel;
-  public status: GuildScheduledEventStatus;
-  public entityType: GuildScheduledEventEntityTypes;
-  public entityId?: string;
-  public entityMetadata: JSONGuildScheduledEventEntityMetadata | null;
-  public creator?: User;
-  public userCount?: number;
-  public image?: string;
+  guildId: string;
+  channelId: string | null;
+  creatorId?: string | null;
+  name: string;
+  description?: string | null;
+  scheduledStartTime: string;
+  scheduledEndTime: string | null;
+  privacyLevel: GuildScheduledEventPrivacyLevel;
+  status: GuildScheduledEventStatus;
+  entityType: GuildScheduledEventEntityTypes;
+  entityId?: string;
+  entityMetadata: JSONGuildScheduledEventEntityMetadata | null;
+  creator?: User;
+  userCount?: number;
+  image?: string;
 
   constructor(data: RawGuildScheduledEvent, client: Client) {
     super(data.id, client);
@@ -61,7 +61,7 @@ export class GuildScheduledEvent extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
-  public async edit(
+  async edit(
     options: {
       channelId?: string | null;
       entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
@@ -101,14 +101,14 @@ export class GuildScheduledEvent extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
-  public delete(): void {
+  delete(): void {
     this.client.rest.delete(
       Endpoints.guildScheduledEvent(this.guildId, this.id)
     );
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users */
-  public async getUsers(options?: {
+  async getUsers(options?: {
     limit?: number;
     withMember?: boolean;
     before?: string;
@@ -138,11 +138,11 @@ export class GuildScheduledEvent extends Base {
       );
   }
 
-  public override toRaw(): RawGuildScheduledEvent {
+  override toRaw(): RawGuildScheduledEvent {
     return this.raw;
   }
 
-  public override toJSON(): JSONGuildScheduledEvent {
+  override toJSON(): JSONGuildScheduledEvent {
     return {
       id: this.id,
       guildId: this.guildId,

@@ -20,21 +20,21 @@ import type {
 /** https://discord.com/developers/docs/resources/user */
 export class User extends Base {
   protected override raw: RawUser;
-  public username: string;
-  public discriminator: string;
-  public avatar: string;
-  public globalName: string | null;
-  public bot?: boolean;
-  public system?: boolean;
-  public mfaEnabled?: boolean;
-  public banner?: string;
-  public accentColor?: number;
-  public locale?: string;
-  public verified?: boolean;
-  public email?: string;
-  public flags?: UserFlags;
-  public premiumType?: number;
-  public publicFlags?: UserFlags;
+  username: string;
+  discriminator: string;
+  avatar: string;
+  globalName: string | null;
+  bot?: boolean;
+  system?: boolean;
+  mfaEnabled?: boolean;
+  banner?: string;
+  accentColor?: number;
+  locale?: string;
+  verified?: boolean;
+  email?: string;
+  flags?: UserFlags;
+  premiumType?: number;
+  publicFlags?: UserFlags;
 
   constructor(data: RawUser, client: Client) {
     super(data.id, client);
@@ -63,7 +63,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#modify-current-user */
-  public async edit(options: {
+  async edit(options: {
     username?: string;
     avatar?: string | null;
   }): Promise<User> {
@@ -79,7 +79,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
-  public async getGuildMember(guildId: string): Promise<GuildMember> {
+  async getGuildMember(guildId: string): Promise<GuildMember> {
     return new GuildMember(
       await this.client.rest.get<RawGuildMember>(
         Endpoints.guildMember(guildId)
@@ -89,12 +89,12 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#leave-guild */
-  public leaveGuild(guildId: string): void {
+  leaveGuild(guildId: string): void {
     this.client.rest.delete(Endpoints.userGuild(guildId));
   }
 
   /** https://discord.com/developers/docs/resources/user#create-dm */
-  public async createDM(options: { recipientId: string }): Promise<Channel> {
+  async createDM(options: { recipientId: string }): Promise<Channel> {
     return new Channel(
       await this.client.rest.post<RawChannel>(Endpoints.userChannels(), {
         json: {
@@ -106,7 +106,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#create-group-dm */
-  public async createGroupDM(options: {
+  async createGroupDM(options: {
     accessTokens: Array<string>;
     nicks: Array<string>;
   }): Promise<Channel> {
@@ -122,7 +122,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user-connections */
-  public async getConnections(): Promise<Array<JSONConnection>> {
+  async getConnections(): Promise<Array<JSONConnection>> {
     return this.client.rest
       .get<Array<RawConnection>>(Endpoints.userConnections())
       .then((response) =>
@@ -144,7 +144,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
-  public async getApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
+  async getApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
     return this.client.rest
       .get<RawApplicationRoleConnection>(
         Endpoints.userApplicationRoleConnection(this.client.application.id)
@@ -164,7 +164,7 @@ export class User extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
-  public async updateApplicationRoleConnection(options: {
+  async updateApplicationRoleConnection(options: {
     platformName?: string;
     platformUsername?: string;
     metadata?: {
@@ -201,11 +201,11 @@ export class User extends Base {
       }));
   }
 
-  public override toRaw(): RawUser {
+  override toRaw(): RawUser {
     return this.raw;
   }
 
-  public override toJSON(): JSONUser {
+  override toJSON(): JSONUser {
     return {
       id: this.id,
       username: this.username,

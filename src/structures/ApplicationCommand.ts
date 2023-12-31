@@ -20,19 +20,19 @@ import { Base } from ".";
 /** https://discord.com/developers/docs/interactions/application-commands */
 export class ApplicationCommand extends Base {
   protected override raw: RawApplicationCommand;
-  public type?: ApplicationCommandTypes;
-  public applicationId: string;
-  public guildId?: string;
-  public name: string;
-  public nameLocalizations?: Partial<Record<Locale, string>> | null;
-  public description: string;
-  public descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-  public options?: Array<JSONApplicationCommandOption>;
-  public defaultMemberPermissions: string | null;
-  public dmPermission?: boolean;
-  public defaultPermission?: boolean | null;
-  public nsfw?: boolean;
-  public version: string;
+  type?: ApplicationCommandTypes;
+  applicationId: string;
+  guildId?: string;
+  name: string;
+  nameLocalizations?: Partial<Record<Locale, string>> | null;
+  description: string;
+  descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+  options?: Array<JSONApplicationCommandOption>;
+  defaultMemberPermissions: string | null;
+  dmPermission?: boolean;
+  defaultPermission?: boolean | null;
+  nsfw?: boolean;
+  version: string;
 
   constructor(data: RawApplicationCommand, client: Client) {
     super(data.id, client);
@@ -63,7 +63,7 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
-  public async edit(options: {
+  async edit(options: {
     name?: string;
     nameLocalizations?: Partial<Record<Locale, string>> | null;
     description?: string;
@@ -122,7 +122,7 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  public delete(): void {
+  delete(): void {
     this.guildId !== undefined
       ? this.client.rest.delete(
           Endpoints.applicationGuildCommand(
@@ -137,7 +137,7 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
-  public async getPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
+  async getPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
       throw new Error(
         "[disgroove] Can't get the permissions of a global application command"
@@ -164,7 +164,7 @@ export class ApplicationCommand extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
-  public async editPermissions(options: {
+  async editPermissions(options: {
     permissions: Array<JSONApplicationCommandPermission>;
   }): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
@@ -197,11 +197,11 @@ export class ApplicationCommand extends Base {
       }));
   }
 
-  public override toRaw(): RawApplicationCommand {
+  override toRaw(): RawApplicationCommand {
     return this.raw;
   }
 
-  public override toJSON(): JSONApplicationCommand {
+  override toJSON(): JSONApplicationCommand {
     return {
       id: this.id,
       type: this.type,

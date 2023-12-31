@@ -12,16 +12,16 @@ import type { EventTypes } from "../constants";
 /** https://discord.com/developers/docs/resources/auto-moderation */
 export class AutoModerationRule extends Base {
   protected override raw: RawAutoModerationRule;
-  public guildId: string;
-  public name: string;
-  public creatorId: string;
-  public eventType: EventTypes;
-  public triggerType: number;
-  public triggerMetadata: JSONTriggerMetadata;
-  public actions: Array<JSONAutoModerationAction>;
-  public enabled: boolean;
-  public exemptRoles: Array<string>;
-  public exemptChannels: Array<string>;
+  guildId: string;
+  name: string;
+  creatorId: string;
+  eventType: EventTypes;
+  triggerType: number;
+  triggerMetadata: JSONTriggerMetadata;
+  actions: Array<JSONAutoModerationAction>;
+  enabled: boolean;
+  exemptRoles: Array<string>;
+  exemptChannels: Array<string>;
 
   constructor(data: RawAutoModerationRule, client: Client) {
     super(data.id, client);
@@ -54,7 +54,7 @@ export class AutoModerationRule extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
-  public async edit(
+  async edit(
     options: {
       name?: string;
       eventType?: number;
@@ -96,7 +96,7 @@ export class AutoModerationRule extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
-  public delete(reason?: string): void {
+  delete(reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildAutoModerationRule(this.guildId, this.id),
       {
@@ -105,11 +105,11 @@ export class AutoModerationRule extends Base {
     );
   }
 
-  public override toRaw(): RawAutoModerationRule {
+  override toRaw(): RawAutoModerationRule {
     return this.raw;
   }
 
-  public override toJSON(): JSONAutoModerationRule {
+  override toJSON(): JSONAutoModerationRule {
     return {
       id: this.id,
       guildId: this.guildId,

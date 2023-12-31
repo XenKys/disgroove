@@ -13,16 +13,16 @@ export interface RequestData {
 }
 
 export class RequestsManager {
-  public token: string;
-  public auth: "Bot" | "Bearer";
-  public globalBlock: boolean = false;
+  token: string;
+  auth: "Bot" | "Bearer";
+  globalBlock: boolean = false;
 
   constructor(token: string, auth: "Bot" | "Bearer") {
     this.token = token;
     this.auth = auth;
   }
 
-  public request<T = unknown>(
+  request<T = unknown>(
     method: string,
     endpoint: string,
     data?: RequestData

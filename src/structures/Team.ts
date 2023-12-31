@@ -5,10 +5,10 @@ import type { JSONTeam, JSONTeamMember, RawTeam } from "../types";
 /** https://discord.com/developers/docs/topics/teams */
 export class Team extends Base {
   protected override raw: RawTeam;
-  public icon: string | null;
-  public members: Array<JSONTeamMember>;
-  public name: string;
-  public ownerUserId: string;
+  icon: string | null;
+  members: Array<JSONTeamMember>;
+  name: string;
+  ownerUserId: string;
 
   constructor(data: RawTeam, client: Client) {
     super(data.id, client);
@@ -25,11 +25,11 @@ export class Team extends Base {
     this.ownerUserId = data.owner_user_id;
   }
 
-  public override toRaw(): RawTeam {
+  override toRaw(): RawTeam {
     return this.raw;
   }
 
-  public override toJSON(): JSONTeam {
+  override toJSON(): JSONTeam {
     return {
       icon: this.icon,
       id: this.id,

@@ -26,26 +26,26 @@ import type {
 /** https://discord.com/developers/docs/resources/application */
 export class Application extends Base {
   protected override raw: RawApplication;
-  public name: string;
-  public icon: string | null;
-  public description: string;
-  public rpcOrigins?: Array<string>;
-  public botPublic: boolean;
-  public botRequireCodeGrant: boolean;
-  public termsOfServiceURL?: string;
-  public privacyPolicyURL?: string;
-  public owner?: User;
-  public verifyKey: string;
-  public team: Team | null;
-  public guildId?: string;
-  public primarySKUId?: string;
-  public slug?: string;
-  public coverImage?: string;
-  public flags?: number;
-  public tags?: Array<string>;
-  public installParams?: JSONInstallParams;
-  public customInstallURL?: string;
-  public roleConnectionsVerificationURL?: string;
+  name: string;
+  icon: string | null;
+  description: string;
+  rpcOrigins?: Array<string>;
+  botPublic: boolean;
+  botRequireCodeGrant: boolean;
+  termsOfServiceURL?: string;
+  privacyPolicyURL?: string;
+  owner?: User;
+  verifyKey: string;
+  team: Team | null;
+  guildId?: string;
+  primarySKUId?: string;
+  slug?: string;
+  coverImage?: string;
+  flags?: number;
+  tags?: Array<string>;
+  installParams?: JSONInstallParams;
+  customInstallURL?: string;
+  roleConnectionsVerificationURL?: string;
 
   constructor(data: RawApplication, client: Client) {
     super(data.id, client);
@@ -87,7 +87,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
-  public async getGlobalApplicationCommands(options: {
+  async getGlobalApplicationCommands(options: {
     withLocalizations?: boolean;
   }): Promise<Array<ApplicationCommand>> {
     return this.client.rest
@@ -105,7 +105,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
-  public async createGlobalApplicationCommand(options: {
+  async createGlobalApplicationCommand(options: {
     name: string;
     nameLocalizations?: Partial<Record<Locale, string>> | null;
     description?: string;
@@ -158,7 +158,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-command */
-  public async getGlobalApplicationCommand(
+  async getGlobalApplicationCommand(
     commandId: string
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
@@ -170,7 +170,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
-  public async editGlobalApplicationCommand(
+  async editGlobalApplicationCommand(
     commandId: string,
     options: {
       name?: string;
@@ -225,12 +225,12 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command */
-  public deleteGlobalApplicationCommand(commandId: string): void {
+  deleteGlobalApplicationCommand(commandId: string): void {
     this.client.rest.delete(Endpoints.applicationCommand(this.id, commandId));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
-  public async bulkOverwriteGlobalApplicationCommands(
+  async bulkOverwriteGlobalApplicationCommands(
     commands: Array<{
       id?: string;
       name: string;
@@ -289,7 +289,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-commands */
-  public async getGuildApplicationCommands(
+  async getGuildApplicationCommands(
     guildId: string,
     options?: {
       withLocalizations?: boolean;
@@ -310,7 +310,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
-  public async createGuildApplicationCommand(
+  async createGuildApplicationCommand(
     guildId: string,
     options: {
       name?: string;
@@ -366,7 +366,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
-  public async getGuildApplicationCommand(
+  async getGuildApplicationCommand(
     guildId: string,
     commandId: string
   ): Promise<ApplicationCommand> {
@@ -379,7 +379,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
-  public async editGuildApplicationCommand(
+  async editGuildApplicationCommand(
     guildId: string,
     commandId: string,
     options: {
@@ -435,17 +435,14 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  public deleteGuildApplicationCommand(
-    guildId: string,
-    commandId: string
-  ): void {
+  deleteGuildApplicationCommand(guildId: string, commandId: string): void {
     this.client.rest.delete(
       Endpoints.applicationGuildCommand(this.id, guildId, commandId)
     );
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
-  public async bulkOverwriteGuildApplicationCommands(
+  async bulkOverwriteGuildApplicationCommands(
     guildId: string,
     commands: Array<{
       id?: string;
@@ -505,7 +502,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
-  public async getGuildApplicationCommandPermissions(
+  async getGuildApplicationCommandPermissions(
     guildId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
@@ -527,7 +524,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
-  public async getApplicationCommandPermissions(
+  async getApplicationCommandPermissions(
     guildId: string,
     commandId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
@@ -550,7 +547,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
-  public async editApplicationCommandPermissions(
+  async editApplicationCommandPermissions(
     guildId: string,
     commandId: string,
     options: {
@@ -588,7 +585,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records */
-  public async getApplicationRoleConnectionMetadataRecords(): Promise<
+  async getApplicationRoleConnectionMetadataRecords(): Promise<
     Array<JSONApplicationRoleConnectionMetadata>
   > {
     return this.client.rest
@@ -608,7 +605,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#update-application-role-connection-metadata-records */
-  public async updateApplicationRoleConnectionMetadataRecords(): Promise<
+  async updateApplicationRoleConnectionMetadataRecords(): Promise<
     Array<JSONApplicationRoleConnectionMetadata>
   > {
     return this.client.rest
@@ -628,7 +625,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/monetization/skus#list-skus */
-  public async getSKUs(): Promise<Array<JSONSKU>> {
+  async getSKUs(): Promise<Array<JSONSKU>> {
     return this.client.rest
       .get<Array<RawSKU>>(Endpoints.applicationSKUs(this.id))
       .then((response) =>
@@ -644,7 +641,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#list-entitlements */
-  public async getEntitlements(options?: {
+  async getEntitlements(options?: {
     userId?: string;
     skuIds?: Array<string>;
     before?: string;
@@ -681,7 +678,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement */
-  public async createTestEntitlement(options: {
+  async createTestEntitlement(options: {
     skuId: string;
     ownerId: string;
     ownerType: number;
@@ -728,17 +725,17 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#delete-test-entitlement */
-  public deleteTestEntitlement(entitlementId: string): void {
+  deleteTestEntitlement(entitlementId: string): void {
     this.client.rest.delete(
       Endpoints.applicationEntitlement(this.id, entitlementId)
     );
   }
 
-  public override toRaw(): RawApplication {
+  override toRaw(): RawApplication {
     return this.raw;
   }
 
-  public override toJSON(): JSONApplication {
+  override toJSON(): JSONApplication {
     return {
       id: this.id,
       name: this.name,

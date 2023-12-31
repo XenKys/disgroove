@@ -13,19 +13,19 @@ import type { GuildMemberFlags } from "../constants";
 export class GuildMember {
   private client: Client;
   private raw: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>;
-  public user?: User;
-  public nick?: string | null;
-  public avatar?: string | null;
-  public roles: Array<string>;
-  public joinedAt: number;
-  public premiumSince?: number | null;
-  public deaf: boolean;
-  public mute: boolean;
-  public flags: GuildMemberFlags;
-  public pending?: boolean;
-  public permissions?: string;
-  public communicationDisabledUntil?: number | null;
-  public guildId?: string;
+  user?: User;
+  nick?: string | null;
+  avatar?: string | null;
+  roles: Array<string>;
+  joinedAt: number;
+  premiumSince?: number | null;
+  deaf: boolean;
+  mute: boolean;
+  flags: GuildMemberFlags;
+  pending?: boolean;
+  permissions?: string;
+  communicationDisabledUntil?: number | null;
+  guildId?: string;
 
   constructor(
     data: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>,
@@ -58,7 +58,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public async edit(
+  async edit(
     options: {
       nick?: string | null;
       roles?: Array<string> | null;
@@ -94,7 +94,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
-  public addRole(roleId: string, reason?: string): void {
+  addRole(roleId: string, reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -109,7 +109,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
-  public removeRole(roleId: string, reason?: string): void {
+  removeRole(roleId: string, reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -124,7 +124,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
-  public remove(reason?: string): void {
+  remove(reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -139,7 +139,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
-  public createBan(
+  createBan(
     options?: {
       deleteMessageDays?: number;
       deleteMessageSeconds?: number;
@@ -164,7 +164,7 @@ export class GuildMember {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
-  public removeBan(reason?: string): void {
+  removeBan(reason?: string): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
@@ -178,16 +178,15 @@ export class GuildMember {
     );
   }
 
-  public toString(): string {
+  toString(): string {
     return `[${this.constructor.name}]`;
   }
 
-  public toRaw(): RawGuildMember & Partial<RawGuildMemberAddEventExtraFields> {
+  toRaw(): RawGuildMember & Partial<RawGuildMemberAddEventExtraFields> {
     return this.raw;
   }
 
-  public toJSON(): JSONGuildMember &
-    Partial<JSONGuildMemberAddEventExtraFields> {
+  toJSON(): JSONGuildMember & Partial<JSONGuildMemberAddEventExtraFields> {
     return {
       user: this.user?.toJSON(),
       nick: this.nick,

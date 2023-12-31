@@ -5,7 +5,7 @@ export abstract class Base {
   protected raw: {
     id: string;
   };
-  public id: string;
+  id: string;
 
   constructor(id: string, client: Client) {
     this.client = client;
@@ -17,11 +17,11 @@ export abstract class Base {
 
   protected patch(data: unknown): void {}
 
-  public toString(): string {
+  toString(): string {
     return `[${this.constructor.name}]`;
   }
 
-  public toRaw(): {
+  toRaw(): {
     id: string;
   } {
     return {
@@ -29,7 +29,7 @@ export abstract class Base {
     };
   }
 
-  public toJSON(): {
+  toJSON(): {
     id: string;
   } {
     return {

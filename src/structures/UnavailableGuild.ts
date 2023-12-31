@@ -88,7 +88,7 @@ import { File as UndiciFile, FormData } from "undici";
 /** https://discord.com/developers/docs/resources/guild */
 export class UnavailableGuild extends Base {
   protected override raw: RawUnavailableGuild;
-  public unavailable: boolean;
+  unavailable: boolean;
 
   constructor(data: RawUnavailableGuild, client: Client) {
     super(data.id, client);
@@ -98,7 +98,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-commands */
-  public async getApplicationCommands(
+  async getApplicationCommands(
     applicationId: string,
     options?: {
       withLocalizations?: boolean;
@@ -119,7 +119,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
-  public async createApplicationCommand(
+  async createApplicationCommand(
     applicationId: string,
     options: {
       name?: string;
@@ -176,7 +176,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
-  public async getApplicationCommand(
+  async getApplicationCommand(
     applicationId: string,
     commandId: string
   ): Promise<ApplicationCommand> {
@@ -189,7 +189,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
-  public async editApplicationCommand(
+  async editApplicationCommand(
     applicationId: string,
     commandId: string,
     options: {
@@ -246,17 +246,14 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  public deleteApplicationCommand(
-    applicationId: string,
-    commandId: string
-  ): void {
+  deleteApplicationCommand(applicationId: string, commandId: string): void {
     this.client.rest.delete(
       Endpoints.applicationGuildCommand(applicationId, this.id, commandId)
     );
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
-  public async bulkOverwriteApplicationCommands(
+  async bulkOverwriteApplicationCommands(
     applicationId: string,
     commands: Array<{
       id?: string;
@@ -317,7 +314,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
-  public async getApplicationCommandsPermissions(
+  async getApplicationCommandsPermissions(
     applicationId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
     return this.client.rest
@@ -339,7 +336,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
-  public async getApplicationCommandPermissions(
+  async getApplicationCommandPermissions(
     applicationId: string,
     commandId: string
   ): Promise<Array<JSONGuildApplicationCommandPermissions>> {
@@ -366,7 +363,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log */
-  public async getAuditLog(options?: {
+  async getAuditLog(options?: {
     userId?: string;
     actionType?: number;
     before?: string;
@@ -440,7 +437,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild */
-  public async getAutoModerationRules(): Promise<Array<AutoModerationRule>> {
+  async getAutoModerationRules(): Promise<Array<AutoModerationRule>> {
     return this.client.rest
       .get<Array<RawAutoModerationRule>>(
         Endpoints.guildAutoModerationRules(this.id)
@@ -451,9 +448,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule */
-  public async getAutoModerationRule(
-    ruleId: string
-  ): Promise<AutoModerationRule> {
+  async getAutoModerationRule(ruleId: string): Promise<AutoModerationRule> {
     return new AutoModerationRule(
       await this.client.rest.get<RawAutoModerationRule>(
         Endpoints.guildAutoModerationRule(this.id, ruleId)
@@ -463,7 +458,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
-  public async createAutoModerationRule(
+  async createAutoModerationRule(
     options: {
       name: string;
       eventType: number;
@@ -506,7 +501,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
-  public async editAutoModerationRule(
+  async editAutoModerationRule(
     ruleId: string,
     options: {
       name?: string;
@@ -550,7 +545,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
-  public deleteAutoModerationRule(ruleId: string, reason?: string): void {
+  deleteAutoModerationRule(ruleId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildAutoModerationRule(this.id, ruleId),
 
@@ -561,14 +556,14 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
-  public async getEmojis(): Promise<Array<Emoji>> {
+  async getEmojis(): Promise<Array<Emoji>> {
     return this.client.rest
       .get<Array<RawEmoji>>(Endpoints.guildEmojis(this.id))
       .then((response) => response.map((data) => new Emoji(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/emoji#get-guild-emoji */
-  public async getEmoji(emojiId: string): Promise<Emoji> {
+  async getEmoji(emojiId: string): Promise<Emoji> {
     return new Emoji(
       await this.client.rest.get<RawEmoji>(
         Endpoints.guildEmoji(this.id, emojiId)
@@ -578,7 +573,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
-  public async createEmoji(
+  async createEmoji(
     options: {
       name: string;
       image: string;
@@ -604,7 +599,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
-  public async editEmoji(
+  async editEmoji(
     emojiId: string,
     options: {
       name?: string;
@@ -629,7 +624,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
-  public deleteEmoji(emojiId: string, reason?: string): void {
+  deleteEmoji(emojiId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildEmoji(this.id, emojiId),
 
@@ -640,7 +635,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-preview */
-  public async getPreview(): Promise<JSONGuildPreview> {
+  async getPreview(): Promise<JSONGuildPreview> {
     return this.client.rest
       .get<RawGuildPreview>(Endpoints.guildPreview(this.id))
       .then((response) => ({
@@ -675,7 +670,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
-  public async edit(
+  async edit(
     options: {
       name?: string;
       region?: string | null;
@@ -733,12 +728,12 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild */
-  public delete(): void {
+  delete(): void {
     this.client.rest.delete(Endpoints.guild(this.id));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-channels */
-  public async getChannels(): Promise<Array<Channel>> {
+  async getChannels(): Promise<Array<Channel>> {
     return this.client.rest
       .get<Array<RawChannel>>(Endpoints.guildChannels(this.id))
       .then((response) =>
@@ -747,7 +742,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-channel */
-  public async createChannel(
+  async createChannel(
     options: {
       name: string | null;
       type?: ChannelTypes;
@@ -807,7 +802,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
-  public editChannelPositions(
+  editChannelPositions(
     options: Array<{
       id: string;
       position: number | null;
@@ -826,7 +821,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-active-guild-threads */
-  public async getActiveThreads(): Promise<
+  async getActiveThreads(): Promise<
     Array<{
       threads: Array<Channel>;
       members: Array<JSONThreadMember>;
@@ -857,7 +852,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-member */
-  public async getMember(userId: string): Promise<GuildMember> {
+  async getMember(userId: string): Promise<GuildMember> {
     return new GuildMember(
       await this.client.rest.get<RawGuildMember>(
         Endpoints.guildMember(this.id, userId)
@@ -867,7 +862,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
-  public async getMembers(): Promise<Array<GuildMember>> {
+  async getMembers(): Promise<Array<GuildMember>> {
     return this.client.rest
       .get<Array<RawGuildMember>>(Endpoints.guildMembers(this.id))
       .then((response) =>
@@ -876,7 +871,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#search-guild-members */
-  public async searchMembers(options: {
+  async searchMembers(options: {
     query: string;
     limit?: number;
   }): Promise<Array<GuildMember>> {
@@ -893,7 +888,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member */
-  public async addMember(
+  async addMember(
     userId: string,
     options: {
       accessToken: string;
@@ -923,7 +918,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
-  public async editMember(
+  async editMember(
     userId: string,
     options: {
       nick?: string | null;
@@ -958,7 +953,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
-  public async editCurrentMember(
+  async editCurrentMember(
     options: {
       nick: string | null;
     },
@@ -976,7 +971,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
-  public addMemberRole(userId: string, roleId: string, reason?: string): void {
+  addMemberRole(userId: string, roleId: string, reason?: string): void {
     this.client.rest.put(
       Endpoints.guildMemberRole(this.id, userId, roleId),
 
@@ -987,11 +982,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
-  public removeMemberRole(
-    userId: string,
-    roleId: string,
-    reason?: string
-  ): void {
+  removeMemberRole(userId: string, roleId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildMemberRole(this.id, userId, roleId),
 
@@ -1002,7 +993,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
-  public removeMember(userId: string, reason?: string): void {
+  removeMember(userId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildMember(this.id, userId),
 
@@ -1013,7 +1004,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-bans */
-  public async getBans(options?: {
+  async getBans(options?: {
     limit?: number;
     before?: string;
     after?: string;
@@ -1035,7 +1026,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-ban */
-  public async getBan(userId: string): Promise<JSONBan> {
+  async getBan(userId: string): Promise<JSONBan> {
     return this.client.rest
       .get<RawBan>(Endpoints.guildBan(this.id, userId))
       .then((response) => ({
@@ -1045,7 +1036,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
-  public createBan(
+  createBan(
     userId: string,
     options?: {
       deleteMessageDays?: number;
@@ -1063,21 +1054,21 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
-  public removeBan(userId: string, reason?: string): void {
+  removeBan(userId: string, reason?: string): void {
     this.client.rest.delete(Endpoints.guildBan(this.id, userId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-roles */
-  public async getRoles(): Promise<Array<Role>> {
+  async getRoles(): Promise<Array<Role>> {
     return this.client.rest
       .get<Array<RawRole>>(Endpoints.guildRoles(this.id))
       .then((response) => response.map((data) => new Role(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
-  public async createRole(
+  async createRole(
     options: {
       name: string;
       permissions: string;
@@ -1111,7 +1102,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
-  public async editRolePositions(
+  async editRolePositions(
     options: Array<{
       id: string;
       position?: number | null;
@@ -1128,7 +1119,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
-  public async editRole(
+  async editRole(
     roleId: string,
     options?: {
       name?: string | null;
@@ -1163,7 +1154,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
-  public async editMFALevel(
+  async editMFALevel(
     options: {
       level: MFALevel;
     },
@@ -1182,14 +1173,14 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
-  public deleteRole(roleId: string, reason?: string): void {
+  deleteRole(roleId: string, reason?: string): void {
     this.client.rest.delete(Endpoints.guildRole(this.id, roleId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-prune-count */
-  public async getPruneCount(options: {
+  async getPruneCount(options: {
     days: number;
     includeRoles: string | Array<string>;
   }): Promise<number> {
@@ -1202,7 +1193,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#begin-guild-prune */
-  public async beginGuildPrune(
+  async beginGuildPrune(
     options: {
       days: number;
       computePruneCount: boolean;
@@ -1227,7 +1218,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
-  public async getVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
+  async getVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
     return this.client.rest
       .get<Array<RawVoiceRegion>>(Endpoints.guildVoiceRegions(this.id))
       .then((response) =>
@@ -1242,7 +1233,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-invites */
-  public async getInvites(): Promise<Array<Invite>> {
+  async getInvites(): Promise<Array<Invite>> {
     return this.client.rest
       .get<Array<RawInvite>>(Endpoints.guildInvites(this.id))
       .then((response) =>
@@ -1251,7 +1242,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-integrations */
-  public async getIntegrations(): Promise<Array<Integration>> {
+  async getIntegrations(): Promise<Array<Integration>> {
     return this.client.rest
       .get<Array<RawIntegration>>(Endpoints.guildIntegrations(this.id))
       .then((response) =>
@@ -1260,7 +1251,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
-  public deleteIntegration(integrationId: string, reason?: string): void {
+  deleteIntegration(integrationId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildIntegration(this.id, integrationId),
 
@@ -1271,7 +1262,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-settings */
-  public async getWidgetSettings(): Promise<JSONGuildWidgetSettings> {
+  async getWidgetSettings(): Promise<JSONGuildWidgetSettings> {
     return this.client.rest
       .get<RawGuildWidgetSettings>(Endpoints.guildWidgetSettings(this.id))
       .then((response) => ({
@@ -1281,7 +1272,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-widget */
-  public async editWidget(
+  async editWidget(
     options: {
       enabled?: boolean;
       channelId?: boolean;
@@ -1307,7 +1298,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget */
-  public async getWidget(): Promise<JSONGuildWidget> {
+  async getWidget(): Promise<JSONGuildWidget> {
     return this.client.rest
       .get<RawGuildWidget>(Endpoints.guildWidgetJSON(this.id))
       .then((response) => ({
@@ -1323,7 +1314,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
-  public getVanityURL(): Promise<{
+  getVanityURL(): Promise<{
     code: string;
     uses: number;
   }> {
@@ -1334,7 +1325,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-image */
-  public async getWidgetImage(options?: {
+  async getWidgetImage(options?: {
     style?: ImageWidgetStyleOptions;
   }): Promise<string> {
     return this.client.rest.get<string>(Endpoints.guildWidgetImage(this.id), {
@@ -1345,7 +1336,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen */
-  public async getWelcomeScreen(): Promise<JSONWelcomeScreen> {
+  async getWelcomeScreen(): Promise<JSONWelcomeScreen> {
     return this.client.rest
       .get<RawWelcomeScreen>(Endpoints.guildWelcomeScreen(this.id))
       .then((response) => ({
@@ -1360,7 +1351,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
-  public async editWelcomeScreen(
+  async editWelcomeScreen(
     options: {
       enabled?: boolean | null;
       welcomeChannels?: Array<JSONWelcomeScreenChannel> | null;
@@ -1393,7 +1384,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-onboarding */
-  public async getOnboarding(): Promise<JSONGuildOnboarding> {
+  async getOnboarding(): Promise<JSONGuildOnboarding> {
     return this.client.rest
       .get<RawGuildOnboarding>(Endpoints.guildOnboarding(this.id))
       .then((response) => ({
@@ -1427,7 +1418,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
-  public editOnboarding(
+  editOnboarding(
     options: {
       prompts: Array<JSONOnboardingPrompt>;
       defaultChannelIds: Array<string>;
@@ -1475,7 +1466,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
-  public editCurrentUserVoiceState(options: {
+  editCurrentUserVoiceState(options: {
     channelId?: string;
     suppress?: boolean;
     requestToSpeakTimestamp?: string | null;
@@ -1490,7 +1481,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
-  public editUserVoiceState(
+  editUserVoiceState(
     userId: string,
     options: {
       channelId?: string;
@@ -1512,7 +1503,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild */
-  public async getScheduledEvents(options?: {
+  async getScheduledEvents(options?: {
     withUserCount?: boolean;
   }): Promise<Array<GuildScheduledEvent>> {
     return this.client.rest
@@ -1530,7 +1521,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event */
-  public async createScheduledEvent(
+  async createScheduledEvent(
     options: {
       channelId?: string | null;
       entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
@@ -1568,7 +1559,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
-  public async editScheduledEvent(
+  async editScheduledEvent(
     scheduledEventId: string,
     options: {
       channelId?: string | null;
@@ -1609,14 +1600,14 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
-  public deleteScheduledEvent(scheduledEventId: string): void {
+  deleteScheduledEvent(scheduledEventId: string): void {
     this.client.rest.delete(
       Endpoints.guildScheduledEvent(this.id, scheduledEventId)
     );
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users */
-  public async getScheduledEventUsers(
+  async getScheduledEventUsers(
     scheduledEventId: string,
     options?: {
       limit?: number;
@@ -1650,7 +1641,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-template */
-  public async getTemplate(code: string): Promise<GuildTemplate> {
+  async getTemplate(code: string): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.get<RawGuildTemplate>(
         Endpoints.guildTemplate(this.id, code)
@@ -1660,7 +1651,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-templates */
-  public async getTemplates(): Promise<Array<GuildTemplate>> {
+  async getTemplates(): Promise<Array<GuildTemplate>> {
     return this.client.rest
       .get<Array<RawGuildTemplate>>(Endpoints.guildTemplates(this.id))
       .then((response) =>
@@ -1669,7 +1660,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-template */
-  public async createTemplate(options: {
+  async createTemplate(options: {
     name: string;
     description?: string | null;
   }): Promise<GuildTemplate> {
@@ -1689,7 +1680,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
-  public async syncTemplate(code: string): Promise<GuildTemplate> {
+  async syncTemplate(code: string): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.put<RawGuildTemplate>(
         Endpoints.guildTemplate(this.id, code)
@@ -1699,7 +1690,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
-  public async editTemplate(
+  async editTemplate(
     code: string,
     options: {
       name?: string;
@@ -1722,14 +1713,14 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
-  public async deleteTemplate(code: string): Promise<JSONGuildTemplate> {
+  async deleteTemplate(code: string): Promise<JSONGuildTemplate> {
     return this.client.rest
       .delete<RawGuildTemplate>(Endpoints.guildTemplate(this.id, code))
       .then((response) => new GuildTemplate(response, this.client).toJSON());
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
-  public async getStickers(): Promise<Array<Sticker>> {
+  async getStickers(): Promise<Array<Sticker>> {
     return this.client.rest
       .get<Array<RawSticker>>(Endpoints.guildStickers(this.id))
       .then((response) =>
@@ -1738,14 +1729,14 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#get-guild-sticker */
-  public async getSticker(stickerId: string): Promise<Sticker> {
+  async getSticker(stickerId: string): Promise<Sticker> {
     return this.client.rest
       .get<RawSticker>(Endpoints.guildSticker(this.id, stickerId))
       .then((response) => new Sticker(response, this.client));
   }
 
   /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
-  public async createSticker(
+  async createSticker(
     options: {
       name: string;
       description: string;
@@ -1773,7 +1764,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
-  public async editSticker(
+  async editSticker(
     stickerId: string,
     options: {
       name?: string;
@@ -1799,7 +1790,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
-  public deleteSticker(stickerId: string, reason?: string): void {
+  deleteSticker(stickerId: string, reason?: string): void {
     this.client.rest.delete(
       Endpoints.guildSticker(this.id, stickerId),
 
@@ -1810,7 +1801,7 @@ export class UnavailableGuild extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */
-  public async getWebhooks(): Promise<Array<Webhook>> {
+  async getWebhooks(): Promise<Array<Webhook>> {
     return this.client.rest
       .get<Array<RawWebhook>>(Endpoints.guildWebhooks(this.id))
       .then((response) =>
@@ -1818,11 +1809,11 @@ export class UnavailableGuild extends Base {
       );
   }
 
-  public override toRaw(): RawUnavailableGuild {
+  override toRaw(): RawUnavailableGuild {
     return this.raw;
   }
 
-  public override toJSON(): JSONUnavailableGuild {
+  override toJSON(): JSONUnavailableGuild {
     return {
       id: this.id,
       unavailable: this.unavailable,

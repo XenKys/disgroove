@@ -34,38 +34,38 @@ import { ComponentTypes, MessageFlags } from "../constants";
 export class Message extends Base {
   protected override raw: RawMessage &
     Partial<RawMessageCreateEventExtraFields>;
-  public channelId: string;
-  public author: User;
-  public content: string;
-  public timestamp: string;
-  public editedTimestamp: string | null;
-  public tts: boolean;
-  public mentionEveryone: boolean;
-  public mentions: Array<User>;
-  public mentionRoles: Array<string>;
-  public mentionChannels?: Array<JSONChannelMention>;
-  public attachments: Array<JSONAttachment>;
-  public embeds: Array<JSONEmbed>;
-  public reactions?: Array<JSONReaction>;
-  public nonce?: number | string;
-  public pinned: boolean;
-  public webhookId?: string;
-  public type: number;
-  public activity?: JSONMessageActivity;
-  public application?: Application;
-  public applicationId?: string;
-  public messageReference?: JSONMessageReference;
-  public flags?: number;
-  public referencedMessage?: Message | null;
-  public interaction?: JSONMessageInteraction;
-  public thread?: Channel;
-  public components?: Array<JSONActionRow>;
-  public stickerItems?: Array<JSONStickerItem>;
-  public stickers?: Array<Sticker>;
-  public position?: number;
-  public roleSubscriptionData?: JSONRoleSubscriptionData;
-  public guildId?: string;
-  public member?: GuildMember;
+  channelId: string;
+  author: User;
+  content: string;
+  timestamp: string;
+  editedTimestamp: string | null;
+  tts: boolean;
+  mentionEveryone: boolean;
+  mentions: Array<User>;
+  mentionRoles: Array<string>;
+  mentionChannels?: Array<JSONChannelMention>;
+  attachments: Array<JSONAttachment>;
+  embeds: Array<JSONEmbed>;
+  reactions?: Array<JSONReaction>;
+  nonce?: number | string;
+  pinned: boolean;
+  webhookId?: string;
+  type: number;
+  activity?: JSONMessageActivity;
+  application?: Application;
+  applicationId?: string;
+  messageReference?: JSONMessageReference;
+  flags?: number;
+  referencedMessage?: Message | null;
+  interaction?: JSONMessageInteraction;
+  thread?: Channel;
+  components?: Array<JSONActionRow>;
+  stickerItems?: Array<JSONStickerItem>;
+  stickers?: Array<Sticker>;
+  position?: number;
+  roleSubscriptionData?: JSONRoleSubscriptionData;
+  guildId?: string;
+  member?: GuildMember;
 
   constructor(
     data: RawMessage & Partial<RawMessageCreateEventExtraFields>,
@@ -318,7 +318,7 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
-  public async crosspost(): Promise<Message> {
+  async crosspost(): Promise<Message> {
     return new Message(
       await this.client.rest.post<RawMessage>(
         Endpoints.channelMessageCrosspost(this.channelId, this.id)
@@ -328,21 +328,21 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public createReaction(emoji: string): void {
+  createReaction(emoji: string): void {
     this.client.rest.put(
       Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  public deleteReaction(emoji: string, userId?: string): void {
+  deleteReaction(emoji: string, userId?: string): void {
     this.client.rest.delete(
       Endpoints.channelMessageReaction(this.channelId, this.id, emoji, userId)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-reactions */
-  public async getReactions(
+  async getReactions(
     emoji: string,
     options?: {
       after?: string;
@@ -363,14 +363,14 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
-  public deleteAllReactions(emoji?: string): void {
+  deleteAllReactions(emoji?: string): void {
     this.client.rest.delete(
       Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji)
     );
   }
 
   /** https://discord.com/developers/docs/resources/channel#edit-message */
-  public async edit(options: {
+  async edit(options: {
     content?: string | null;
     embeds?: Array<JSONEmbed> | null;
     flags?: MessageFlags | null;
@@ -410,7 +410,7 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
-  public delete(reason?: string): void {
+  delete(reason?: string): void {
     this.client.rest.delete(
       Endpoints.channelMessage(this.channelId, this.id),
 
@@ -421,7 +421,7 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
-  public pin(reason?: string): void {
+  pin(reason?: string): void {
     this.client.rest.put(
       Endpoints.channelPin(this.channelId, this.id),
 
@@ -432,7 +432,7 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
-  public unpin(reason?: string): void {
+  unpin(reason?: string): void {
     this.client.rest.delete(
       Endpoints.channelPin(this.channelId, this.id),
 
@@ -443,7 +443,7 @@ export class Message extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
-  public async startThread(
+  async startThread(
     options: {
       name: string;
       autoArchiveDuration?: number;
@@ -468,13 +468,11 @@ export class Message extends Base {
     );
   }
 
-  public override toRaw(): RawMessage &
-    Partial<RawMessageCreateEventExtraFields> {
+  override toRaw(): RawMessage & Partial<RawMessageCreateEventExtraFields> {
     return this.raw;
   }
 
-  public override toJSON(): JSONMessage &
-    Partial<JSONMessageCreateEventExtraFields> {
+  override toJSON(): JSONMessage & Partial<JSONMessageCreateEventExtraFields> {
     return {
       id: this.id,
       channelId: this.channelId,

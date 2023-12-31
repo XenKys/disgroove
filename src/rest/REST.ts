@@ -14,32 +14,32 @@ export enum RESTMethods {
 }
 
 export class REST {
-  public manager: RequestsManager;
+  manager: RequestsManager;
 
   constructor(token: string, auth: "Bot" | "Bearer") {
     this.manager = new RequestsManager(token, auth);
   }
 
-  public get<T>(
+  get<T>(
     endpoint: string,
     data?: Pick<RequestData, "query" | "authorization">
   ): Promise<T> {
     return this.manager.request<T>(RESTMethods.Get, endpoint, data);
   }
 
-  public post<T>(endpoint: string, data?: RequestData): Promise<T> {
+  post<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Post, endpoint, data);
   }
 
-  public delete<T>(endpoint: string, data?: RequestData): Promise<T> {
+  delete<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Delete, endpoint, data);
   }
 
-  public patch<T>(endpoint: string, data?: RequestData): Promise<T> {
+  patch<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Patch, endpoint, data);
   }
 
-  public put<T>(endpoint: string, data?: RequestData): Promise<T> {
+  put<T>(endpoint: string, data?: RequestData): Promise<T> {
     return this.manager.request<T>(RESTMethods.Put, endpoint, data);
   }
 }

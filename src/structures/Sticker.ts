@@ -7,17 +7,17 @@ import type { JSONSticker, RawSticker } from "../types";
 /** https://discord.com/developers/docs/resources/sticker */
 export class Sticker extends Base {
   protected override raw: RawSticker;
-  public packId?: string;
-  public name: string;
-  public description: string | null;
-  public tags: string;
-  public asset?: string;
-  public type: StickerTypes;
-  public formatType: StickerFormatTypes;
-  public available?: boolean;
-  public guildId?: string;
-  public user?: User;
-  public sortValue?: number;
+  packId?: string;
+  name: string;
+  description: string | null;
+  tags: string;
+  asset?: string;
+  type: StickerTypes;
+  formatType: StickerFormatTypes;
+  available?: boolean;
+  guildId?: string;
+  user?: User;
+  sortValue?: number;
 
   constructor(data: RawSticker, client: Client) {
     super(data.id, client);
@@ -42,7 +42,7 @@ export class Sticker extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
-  public async edit(
+  async edit(
     options: {
       name?: string;
       description?: string | null;
@@ -69,7 +69,7 @@ export class Sticker extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
-  public delete(reason?: string): void {
+  delete(reason?: string): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.delete(Endpoints.guildSticker(this.guildId, this.id), {
@@ -77,11 +77,11 @@ export class Sticker extends Base {
     });
   }
 
-  public override toRaw(): RawSticker {
+  override toRaw(): RawSticker {
     return this.raw;
   }
 
-  public override toJSON(): JSONSticker {
+  override toJSON(): JSONSticker {
     return {
       id: this.id,
       packId: this.packId,

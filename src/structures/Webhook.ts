@@ -15,17 +15,17 @@ import type { MessageFlags, WebhookTypes } from "../constants";
 /** https://discord.com/developers/docs/resources/webhook */
 export class Webhook extends Base {
   protected override raw: RawWebhook;
-  public type: WebhookTypes;
-  public guildId?: string | null;
-  public channelId: string | null;
-  public user?: User;
-  public name: string | null;
-  public avatar: string | null;
-  public token?: string;
-  public applicationId: string | null;
-  public sourceGuild?: Guild;
-  public sourceChannel?: Channel;
-  public url?: string;
+  type: WebhookTypes;
+  guildId?: string | null;
+  channelId: string | null;
+  user?: User;
+  name: string | null;
+  avatar: string | null;
+  token?: string;
+  applicationId: string | null;
+  sourceGuild?: Guild;
+  sourceChannel?: Channel;
+  url?: string;
 
   constructor(data: RawWebhook, client: Client) {
     super(data.id, client);
@@ -52,7 +52,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
-  public async edit(
+  async edit(
     options: {
       name?: string;
       avatar?: string | null;
@@ -74,7 +74,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
-  public async editWithToken(
+  async editWithToken(
     options: {
       name?: string;
       avatar?: string | null;
@@ -100,14 +100,14 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
-  public delete(reason?: string): void {
+  delete(reason?: string): void {
     this.client.rest.delete(Endpoints.webhook(this.id), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
-  public deleteWithToken(reason?: string): void {
+  deleteWithToken(reason?: string): void {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
     this.client.rest.delete(Endpoints.webhook(this.id, this.token), {
@@ -117,7 +117,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
-  public async execute(options: {
+  async execute(options: {
     wait?: boolean;
     threadId?: string;
     content?: string | null;
@@ -214,7 +214,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
-  public async executeSlackCompatible(options: {
+  async executeSlackCompatible(options: {
     threadId?: string;
     wait?: boolean;
   }): Promise<Message | void> {
@@ -247,7 +247,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
-  public async executeGitHubCompatible(options: {
+  async executeGitHubCompatible(options: {
     threadId?: string;
     wait?: boolean;
   }): Promise<Message | void> {
@@ -280,7 +280,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
-  public async getMessage(
+  async getMessage(
     messageId: string,
     options?: {
       threadId?: string;
@@ -302,7 +302,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
-  public async editMessage(
+  async editMessage(
     messageId: string,
     options: {
       threadId?: string;
@@ -356,7 +356,7 @@ export class Webhook extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
-  public deleteMessage(
+  deleteMessage(
     messageId: string,
     options?: {
       threadId?: string;
@@ -374,11 +374,11 @@ export class Webhook extends Base {
     );
   }
 
-  public override toRaw(): RawWebhook {
+  override toRaw(): RawWebhook {
     return this.raw;
   }
 
-  public override toJSON(): JSONWebhook {
+  override toJSON(): JSONWebhook {
     return {
       id: this.id,
       type: this.type,

@@ -7,17 +7,17 @@ import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
 export class GuildTemplate {
   private client: Client;
   private raw: RawGuildTemplate;
-  public code: string;
-  public name: string;
-  public description: string | null;
-  public usageCount: number;
-  public creatorId: string;
-  public creator: User;
-  public createdAt: string;
-  public updatedAt: string;
-  public sourceGuildId: string;
-  public serializedSourceGuild: Guild;
-  public isDirty: boolean | null;
+  code: string;
+  name: string;
+  description: string | null;
+  usageCount: number;
+  creatorId: string;
+  creator: User;
+  createdAt: string;
+  updatedAt: string;
+  sourceGuildId: string;
+  serializedSourceGuild: Guild;
+  isDirty: boolean | null;
 
   constructor(data: RawGuildTemplate, client: Client) {
     this.client = client;
@@ -39,7 +39,7 @@ export class GuildTemplate {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
-  public async sync(): Promise<GuildTemplate> {
+  async sync(): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.put<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
@@ -49,7 +49,7 @@ export class GuildTemplate {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
-  public async edit(options: {
+  async edit(options: {
     name?: string;
     description?: string | null;
   }): Promise<GuildTemplate> {
@@ -68,7 +68,7 @@ export class GuildTemplate {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
-  public async delete(): Promise<JSONGuildTemplate> {
+  async delete(): Promise<JSONGuildTemplate> {
     return this.client.rest
       .delete<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
@@ -76,15 +76,15 @@ export class GuildTemplate {
       .then((response) => new GuildTemplate(response, this.client).toJSON());
   }
 
-  public toString(): string {
+  toString(): string {
     return `[${this.constructor.name}]`;
   }
 
-  public toRaw(): RawGuildTemplate {
+  toRaw(): RawGuildTemplate {
     return this.raw;
   }
 
-  public toJSON(): JSONGuildTemplate {
+  toJSON(): JSONGuildTemplate {
     return {
       code: this.code,
       name: this.name,

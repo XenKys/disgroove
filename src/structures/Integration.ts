@@ -20,22 +20,22 @@ export class Integration extends Base {
       | RawIntegrationCreateEventExtraFields
       | RawIntegrationUpdateEventExtraFields
     >;
-  public name: string;
-  public type: string;
-  public enabled: boolean;
-  public syncing?: boolean;
-  public roleId?: string;
-  public enableEmoticons?: boolean;
-  public expireBehavior?: IntegrationExpireBehaviors;
-  public expireGracePeriod?: number;
-  public user?: User;
-  public account: JSONIntegrationAccount;
-  public syncedAt?: number;
-  public subscriberCount?: number;
-  public revoked?: boolean;
-  public application?: JSONIntegrationApplication;
-  public scopes?: Array<OAuth2Scopes>;
-  public guildId?: string;
+  name: string;
+  type: string;
+  enabled: boolean;
+  syncing?: boolean;
+  roleId?: string;
+  enableEmoticons?: boolean;
+  expireBehavior?: IntegrationExpireBehaviors;
+  expireGracePeriod?: number;
+  user?: User;
+  account: JSONIntegrationAccount;
+  syncedAt?: number;
+  subscriberCount?: number;
+  revoked?: boolean;
+  application?: JSONIntegrationApplication;
+  scopes?: Array<OAuth2Scopes>;
+  guildId?: string;
 
   constructor(
     data: RawIntegration &
@@ -92,7 +92,7 @@ export class Integration extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
-  public delete(reason?: string): void {
+  delete(reason?: string): void {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.delete(
@@ -104,7 +104,7 @@ export class Integration extends Base {
     );
   }
 
-  public override toRaw(): RawIntegration &
+  override toRaw(): RawIntegration &
     Partial<
       | RawIntegrationCreateEventExtraFields
       | RawIntegrationUpdateEventExtraFields
@@ -112,7 +112,7 @@ export class Integration extends Base {
     return this.raw;
   }
 
-  public override toJSON(): JSONIntegration &
+  override toJSON(): JSONIntegration &
     Partial<
       | JSONIntegrationCreateEventExtraFields
       | JSONIntegrationUpdateEventExtraFields

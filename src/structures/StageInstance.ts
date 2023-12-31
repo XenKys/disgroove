@@ -7,12 +7,12 @@ import { Base } from ".";
 /** https://discord.com/developers/docs/resources/stage-instance */
 export class StageInstance extends Base {
   protected override raw: RawStageInstance;
-  public guildId: string;
-  public channelId: string;
-  public topic: string;
-  public privacyLevel: number;
-  public discoverableDisabled: boolean;
-  public guildScheduledEventId: string | null;
+  guildId: string;
+  channelId: string;
+  topic: string;
+  privacyLevel: number;
+  discoverableDisabled: boolean;
+  guildScheduledEventId: string | null;
 
   constructor(data: RawStageInstance, client: Client) {
     super(data.id, client);
@@ -27,7 +27,7 @@ export class StageInstance extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
-  public async edit(
+  async edit(
     options: {
       topic?: string;
       privacyLevel?: PrivacyLevel;
@@ -50,17 +50,17 @@ export class StageInstance extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
-  public delete(reason?: string): void {
+  delete(reason?: string): void {
     this.client.rest.delete(Endpoints.stageInstance(this.channelId), {
       reason,
     });
   }
 
-  public override toRaw(): RawStageInstance {
+  override toRaw(): RawStageInstance {
     return this.raw;
   }
 
-  public override toJSON(): JSONStageInstance {
+  override toJSON(): JSONStageInstance {
     return {
       id: this.id,
       guildId: this.guildId,

@@ -6,19 +6,19 @@ import type { JSONVoiceState, RawVoiceState } from "../types";
 export class VoiceState {
   private client: Client;
   private raw: RawVoiceState;
-  public guildId?: string;
-  public channelId: string | null;
-  public userId: string;
-  public member?: GuildMember;
-  public sessionId: string;
-  public deaf: boolean;
-  public mute: boolean;
-  public selfDeaf: boolean;
-  public selfMute: boolean;
-  public selfStream?: boolean;
-  public selfVideo: boolean;
-  public suppress: boolean;
-  public requestToSpeakTimestamp: string | null;
+  guildId?: string;
+  channelId: string | null;
+  userId: string;
+  member?: GuildMember;
+  sessionId: string;
+  deaf: boolean;
+  mute: boolean;
+  selfDeaf: boolean;
+  selfMute: boolean;
+  selfStream?: boolean;
+  selfVideo: boolean;
+  suppress: boolean;
+  requestToSpeakTimestamp: string | null;
 
   constructor(data: RawVoiceState, client: Client) {
     this.client = client;
@@ -44,15 +44,15 @@ export class VoiceState {
     if (data.self_stream !== undefined) this.selfStream = data.self_stream;
   }
 
-  public toString(): string {
+  toString(): string {
     return `[${this.constructor.name}]`;
   }
 
-  public toRaw(): RawVoiceState {
+  toRaw(): RawVoiceState {
     return this.raw;
   }
 
-  public toJSON(): JSONVoiceState {
+  toJSON(): JSONVoiceState {
     return {
       guildId: this.guildId,
       channelId: this.channelId,

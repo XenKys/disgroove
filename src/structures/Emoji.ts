@@ -7,14 +7,14 @@ import type { JSONEmoji, RawEmoji } from "../types";
 export class Emoji {
   private client: Client;
   private raw: RawEmoji;
-  public id: string | null;
-  public name: string | null;
-  public roles?: Array<string>;
-  public user?: User;
-  public requireColons?: boolean;
-  public managed?: boolean;
-  public animated?: boolean;
-  public available?: boolean;
+  id: string | null;
+  name: string | null;
+  roles?: Array<string>;
+  user?: User;
+  requireColons?: boolean;
+  managed?: boolean;
+  animated?: boolean;
+  available?: boolean;
 
   constructor(data: RawEmoji, client: Client) {
     this.client = client;
@@ -36,7 +36,7 @@ export class Emoji {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
-  public async edit(
+  async edit(
     guildId: string,
     options: {
       name?: string;
@@ -62,7 +62,7 @@ export class Emoji {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
-  public delete(guildId: string, reason?: string): void {
+  delete(guildId: string, reason?: string): void {
     if (!this.id) throw new Error("[disgroove] Emoji ID not found");
 
     this.client.rest.delete(Endpoints.guildEmoji(guildId, this.id), {
@@ -70,15 +70,15 @@ export class Emoji {
     });
   }
 
-  public toString(): string {
+  toString(): string {
     return `[${this.constructor.name}]`;
   }
 
-  public toRaw(): RawEmoji {
+  toRaw(): RawEmoji {
     return this.raw;
   }
 
-  public toJSON(): JSONEmoji {
+  toJSON(): JSONEmoji {
     return {
       id: this.id,
       name: this.name,

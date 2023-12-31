@@ -7,17 +7,17 @@ import { RoleFlags } from "../constants";
 /** https://discord.com/developers/docs/topics/permissions */
 export class Role extends Base {
   protected override raw: RawRole;
-  public name: string;
-  public color: number;
-  public hoist: boolean;
-  public icon?: string | null;
-  public unicodeEmoji?: string | null;
-  public position: number;
-  public permissions: string;
-  public managed: boolean;
-  public mentionable: boolean;
-  public tags?: JSONRoleTags;
-  public flags: RoleFlags;
+  name: string;
+  color: number;
+  hoist: boolean;
+  icon?: string | null;
+  unicodeEmoji?: string | null;
+  position: number;
+  permissions: string;
+  managed: boolean;
+  mentionable: boolean;
+  tags?: JSONRoleTags;
+  flags: RoleFlags;
 
   constructor(data: RawRole, client: Client) {
     super(data.id, client);
@@ -51,7 +51,7 @@ export class Role extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
-  public async edit(
+  async edit(
     guildId: string,
     options?: {
       name?: string | null;
@@ -85,19 +85,19 @@ export class Role extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
-  public delete(guildId: string, reason?: string): void {
+  delete(guildId: string, reason?: string): void {
     this.client.rest.delete(Endpoints.guildRole(guildId, this.id), {
       reason,
     });
   }
 
-  public override toRaw(): RawRole & {
+  override toRaw(): RawRole & {
     guild_id?: string;
   } {
     return this.raw;
   }
 
-  public override toJSON(): JSONRole {
+  override toJSON(): JSONRole {
     return {
       id: this.id,
       name: this.name,

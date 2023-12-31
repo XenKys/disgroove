@@ -40,10 +40,10 @@ import type {
 import { Client } from "../Client";
 
 export class Shard {
-  public id: number;
+  id: number;
   private heartbeatInterval!: NodeJS.Timeout | null;
-  public client: Client;
-  public ws: WebSocket;
+  client: Client;
+  ws: WebSocket;
 
   constructor(id: number, client: Client) {
     this.id = id;
@@ -52,7 +52,7 @@ export class Shard {
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
-  public updatePresence(options: {
+  updatePresence(options: {
     activity?: Pick<Activity, "name" | "type" | "url" | "state">;
     status?: StatusTypes;
     afk?: boolean;
@@ -72,14 +72,14 @@ export class Shard {
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
-  public connect(): void {
+  connect(): void {
     this.ws.on("open", () => this.onWebSocketOpen());
     this.ws.on("message", (data) => this.onWebSocketMessage(data));
     this.ws.on("error", (err) => this.onWebSocketError(err));
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
   }
 
-  public disconnect(): void {
+  disconnect(): void {
     if (this.heartbeatInterval) {
       clearInterval(this.heartbeatInterval);
       this.heartbeatInterval = null;

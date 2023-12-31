@@ -14,18 +14,18 @@ import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 export class Invite {
   private client: Client;
   private raw: RawInvite;
-  public code: string;
-  public guild?: Guild;
-  public channel: Channel;
-  public inviter?: User;
-  public targetType?: number;
-  public targetUser?: User;
-  public targetApplication?: Application;
-  public approximatePresenceCount?: number;
-  public approximateMemberCount?: number;
-  public expiresAt?: string | null;
-  public stageInstance?: JSONInviteStageInstance;
-  public guildScheduledEvent?: GuildScheduledEvent;
+  code: string;
+  guild?: Guild;
+  channel: Channel;
+  inviter?: User;
+  targetType?: number;
+  targetUser?: User;
+  targetApplication?: Application;
+  approximatePresenceCount?: number;
+  approximateMemberCount?: number;
+  expiresAt?: string | null;
+  stageInstance?: JSONInviteStageInstance;
+  guildScheduledEvent?: GuildScheduledEvent;
 
   constructor(data: RawInvite, client: Client) {
     this.client = client;
@@ -71,7 +71,7 @@ export class Invite {
   }
 
   /** https://discord.com/developers/docs/resources/invite#delete-invite */
-  public async delete(reason?: string): Promise<JSONInvite> {
+  async delete(reason?: string): Promise<JSONInvite> {
     return this.client.rest
       .delete<RawInvite>(Endpoints.invite(this.code), {
         reason,
@@ -79,15 +79,15 @@ export class Invite {
       .then((response) => new Invite(response, this.client).toJSON());
   }
 
-  public toString(): string {
+  toString(): string {
     return `[${this.constructor.name}]`;
   }
 
-  public toRaw(): RawInvite {
+  toRaw(): RawInvite {
     return this.raw;
   }
 
-  public toJSON(): JSONInvite {
+  toJSON(): JSONInvite {
     return {
       code: this.code,
       guild: this.guild?.toJSON(),

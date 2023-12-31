@@ -25,23 +25,23 @@ import {
 /** https://discord.com/developers/docs/interactions/receiving-and-responding */
 export class Interaction extends Base {
   protected override raw: RawInteraction;
-  public applicationId: string;
-  public type: InteractionType;
-  public data?: JSONApplicationCommandData &
+  applicationId: string;
+  type: InteractionType;
+  data?: JSONApplicationCommandData &
     JSONMessageComponentData &
     JSONModalSubmitData;
-  public guildId?: string;
-  public channel?: Channel;
-  public channelId?: string;
-  public member?: GuildMember;
-  public user?: User;
-  public token: string;
-  public version: number;
-  public message?: Message;
-  public appPermissions?: string;
-  public locale?: string;
-  public guildLocale?: string;
-  public entitlements: Array<JSONEntitlement>;
+  guildId?: string;
+  channel?: Channel;
+  channelId?: string;
+  member?: GuildMember;
+  user?: User;
+  token: string;
+  version: number;
+  message?: Message;
+  appPermissions?: string;
+  locale?: string;
+  guildLocale?: string;
+  entitlements: Array<JSONEntitlement>;
 
   constructor(data: RawInteraction, client: Client) {
     super(data.id, client);
@@ -162,7 +162,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
-  public createResponse(options: {
+  createResponse(options: {
     type: InteractionCallbackType;
     data: {
       tts?: boolean;
@@ -313,7 +313,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response */
-  public async getResponse(options?: { threadId?: string }): Promise<Message> {
+  async getResponse(options?: { threadId?: string }): Promise<Message> {
     return new Message(
       await this.client.rest.get<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token),
@@ -328,7 +328,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
-  public async editResponse(options: {
+  async editResponse(options: {
     threadId?: string;
     content?: string | null;
     embeds?: Array<JSONEmbed> | null;
@@ -377,14 +377,14 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
-  public deleteResponse(): void {
+  deleteResponse(): void {
     this.client.rest.delete(
       Endpoints.webhookMessage(this.applicationId, this.token)
     );
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
-  public async createFollowupMessage(options: {
+  async createFollowupMessage(options: {
     content?: string | null;
     tts?: boolean;
     embeds?: Array<JSONEmbed> | null;
@@ -432,7 +432,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message */
-  public async getFollowupMessage(
+  async getFollowupMessage(
     messageId: string,
     options?: {
       threadId?: string;
@@ -452,7 +452,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message */
-  public async editFollowupMessage(
+  async editFollowupMessage(
     messageId: string,
     options: {
       threadId?: string;
@@ -504,17 +504,17 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message */
-  public deleteFollowupMessage(messageId: string): void {
+  deleteFollowupMessage(messageId: string): void {
     this.client.rest.delete(
       Endpoints.webhookMessage(this.applicationId, this.token, messageId)
     );
   }
 
-  public override toRaw(): RawInteraction {
+  override toRaw(): RawInteraction {
     return this.raw;
   }
 
-  public override toJSON(): JSONInteraction {
+  override toJSON(): JSONInteraction {
     return {
       id: this.id,
       applicationId: this.applicationId,

@@ -21,7 +21,7 @@ import {
 } from "../constants";
 
 export class Util {
-  public applicationCommandToRaw(command: {
+  applicationCommandToRaw(command: {
     id?: string;
     name?: string;
     nameLocalizations?: Partial<Record<Locale, string>> | null;
@@ -112,7 +112,7 @@ export class Util {
     };
   }
 
-  public messageComponentToRaw(components: Array<JSONActionRow>) {
+  messageComponentToRaw(components: Array<JSONActionRow>) {
     return components.map((component) => ({
       type: component.type,
       components: component.components.map((c) => {
@@ -200,7 +200,7 @@ export class Util {
     }));
   }
 
-  public roleToRaw(role: {
+  roleToRaw(role: {
     guildId?: string;
     id?: string;
     name?: string;
@@ -237,7 +237,7 @@ export class Util {
     };
   }
 
-  public userToRaw(user: {
+  userToRaw(user: {
     id?: string;
     username?: string;
     discriminator?: string;
@@ -275,7 +275,7 @@ export class Util {
     };
   }
 
-  public channelToRaw(channel: {
+  channelToRaw(channel: {
     id?: string;
     type?: ChannelTypes;
     guildId?: string;
@@ -397,7 +397,7 @@ export class Util {
     };
   }
 
-  public embedsToRaw(embeds: Array<JSONEmbed>) {
+  embedsToRaw(embeds: Array<JSONEmbed>) {
     return embeds.map((embed) => ({
       title: embed.title,
       type: embed.type,
@@ -454,7 +454,7 @@ export class Util {
     }));
   }
 
-  public emojiToRaw(emoji: JSONEmoji) {
+  emojiToRaw(emoji: JSONEmoji) {
     return {
       id: emoji.id,
       name: emoji.name,
