@@ -60,3 +60,5 @@ client.on("interactionCreate", async (interaction) => {
 
 client.connect(); // Connect the bot to the gateway
 ```
+
+Enjoy the package? Give it a ⭐ on [GitHub repository](https://github.com/XenKys/disgroove)
