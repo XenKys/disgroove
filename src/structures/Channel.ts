@@ -638,11 +638,11 @@ export class Channel extends Base {
         embeds?: Array<JSONEmbed> | null;
         allowedMentions?: JSONAllowedMentions | null;
         components?: Array<JSONActionRow> | null;
-        files?: Array<File> | null;
         attachments?: Array<JSONAttachment> | null;
         flags?: MessageFlags | null;
       };
       appliedTags?: Array<string>;
+      files?: Array<File> | null;
     },
     reason?: string
   ): Promise<Channel> {
@@ -674,7 +674,7 @@ export class Channel extends Base {
           },
           applied_tags: options.appliedTags,
         },
-        files: options.message.files,
+        files: options.files,
         reason,
       }),
       this.client
