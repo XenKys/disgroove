@@ -63,6 +63,7 @@ export interface RawGuild {
   preferred_locale: string;
   public_updates_channel_id: string | null;
   max_video_channel_users?: number;
+  max_stage_video_channel_users?: number;
   approximate_member_count?: number;
   approximate_presence_count?: number;
   welcome_screen?: RawWelcomeScreen;
@@ -249,6 +250,7 @@ export interface JSONGuild {
   preferredLocale: string;
   publicUpdatesChannelId: string | null;
   maxVideoChannelUsers?: number;
+  maxStageVideoChannelUsers?: number;
   approximateMemberCount?: number;
   approximatePresenceCount?: number;
   welcomeScreen?: JSONWelcomeScreen;

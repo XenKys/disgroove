@@ -128,6 +128,7 @@ export class Guild extends Base {
   preferredLocale: string;
   publicUpdatesChannelId: string | null;
   maxVideoChannelUsers?: number;
+  maxStageVideoChannelUsers?: number;
   approximateMemberCount?: number;
   approximatePresenceCount?: number;
   welcomeScreen?: JSONWelcomeScreen;
@@ -203,6 +204,8 @@ export class Guild extends Base {
       this.premiumSubscriptionCount = data.premium_subscription_count;
     if (data.max_video_channel_users !== undefined)
       this.maxVideoChannelUsers = data.max_video_channel_users;
+    if (data.max_stage_video_channel_users !== undefined)
+      this.maxStageVideoChannelUsers = data.max_stage_video_channel_users;
     if (data.approximate_member_count !== undefined)
       this.approximateMemberCount = data.approximate_member_count;
     if (data.approximate_presence_count !== undefined)
