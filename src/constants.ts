@@ -1140,7 +1140,7 @@ export enum RoleFlags {
 
 /** https://discord.com/developers/docs/topics/teams#team-member-roles-team-member-role-types */
 export enum TeamMemberRoleTypes {
-  Owner = "owner",
+  Owner = "",
   Admin = "admin",
   Developer = "developer",
   ReadOnly = "read_only",
