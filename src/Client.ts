@@ -319,16 +319,6 @@ export class Client extends EventEmitter {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/invite#delete-invite */
-  async deleteInvite(code: string, reason?: string): Promise<JSONInvite> {
-    return new Invite(
-      await this.rest.delete<RawInvite>(Endpoints.invite(code), {
-        reason,
-      }),
-      this
-    ).toJSON();
-  }
-
   /** https://discord.com/developers/docs/resources/stage-instance#create-stage-instance */
   async createStageInstance(
     options: {
