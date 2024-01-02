@@ -58,6 +58,7 @@ export interface RawMessageComponentData {
   custom_id: string;
   component_type: number;
   values?: Array<string>;
+  resolved?: RawResolvedData;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
