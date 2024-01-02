@@ -1,4 +1,4 @@
-import { Base, User, ApplicationCommand, Team } from ".";
+import { Base, User, ApplicationCommand, Team, Guild } from ".";
 import type {
   JSONInstallParams,
   JSONGuildApplicationCommandPermissions,
@@ -38,10 +38,12 @@ export class Application extends Base {
   verifyKey: string;
   team: Team | null;
   guildId?: string;
+  guild?: Guild;
   primarySKUId?: string;
   slug?: string;
   coverImage?: string;
   flags?: number;
+  approximateGuildCount?: number;
   tags?: Array<string>;
   installParams?: JSONInstallParams;
   customInstallURL?: string;
@@ -71,11 +73,15 @@ export class Application extends Base {
     if (data.team !== undefined)
       this.team = data.team !== null ? new Team(data.team, this.client) : null;
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
+    if (data.guild !== undefined)
+      this.guild = new Guild(data.guild, this.client);
     if (data.primary_sku_id !== undefined)
       this.primarySKUId = data.primary_sku_id;
     if (data.slug !== undefined) this.slug = data.slug;
     if (data.cover_image !== undefined) this.coverImage = data.cover_image;
     if (data.flags !== undefined) this.flags = data.flags;
+    if (data.approximate_guild_count !== undefined)
+      this.approximateGuildCount = data.approximate_guild_count;
     if (data.tags !== undefined) this.tags = data.tags;
     if (data.install_params !== undefined)
       this.installParams = data.install_params;
@@ -750,10 +756,12 @@ export class Application extends Base {
       verifyKey: this.verifyKey,
       team: this.team?.toJSON() ?? null,
       guildId: this.guildId,
-      primarySkuId: this.primarySKUId,
+      guild: this.guild?.toJSON(),
+      primarySKUId: this.primarySKUId,
       slug: this.slug,
       coverImage: this.coverImage,
       flags: this.flags,
+      approximateGuildCount: this.approximateGuildCount,
       tags: this.tags,
       installParams: this.installParams,
       customInstallURL: this.customInstallURL,

@@ -1,4 +1,11 @@
-import type { RawUser, RawTeam, JSONTeam, JSONUser } from ".";
+import type {
+  RawUser,
+  RawTeam,
+  JSONTeam,
+  JSONUser,
+  RawGuild,
+  JSONGuild,
+} from ".";
 import type { OAuth2Scopes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
@@ -16,10 +23,12 @@ export interface RawApplication {
   verify_key: string;
   team: RawTeam | null;
   guild_id?: string;
+  guild?: RawGuild;
   primary_sku_id?: string;
   slug?: string;
   cover_image?: string;
   flags?: number;
+  approximate_guild_count?: number;
   tags?: Array<string>;
   install_params?: RawInstallParams;
   custom_install_url?: string;
@@ -46,10 +55,12 @@ export interface JSONApplication {
   verifyKey: string;
   team: JSONTeam | null;
   guildId?: string;
-  primarySkuId?: string;
+  guild?: JSONGuild;
+  primarySKUId?: string;
   slug?: string;
   coverImage?: string;
   flags?: number;
+  approximateGuildCount?: number;
   tags?: Array<string>;
   installParams?: JSONInstallParams;
   customInstallURL?: string;
