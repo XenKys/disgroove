@@ -175,6 +175,7 @@ export class Interaction extends Base {
       choices?: Array<JSONApplicationCommandOptionChoice>;
       customId?: string;
       title?: string;
+      files?: Array<File>;
     };
   }): void {
     switch (options.type) {
@@ -208,6 +209,7 @@ export class Interaction extends Base {
                   attachments: options.data.attachments,
                 },
               },
+              files: options.data.files,
             }
           );
         }
