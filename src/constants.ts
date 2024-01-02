@@ -259,6 +259,7 @@ export enum VideoQualityModes {
 export enum ChannelFlags {
   Pinned = 1 << 1,
   RequiredTag = 1 << 4,
+  HideMediaDownloadOptions = 1 << 15,
 }
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-sort-order-types */
