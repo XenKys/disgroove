@@ -382,6 +382,7 @@ export class Shard {
                   messageId: packet.d.options.message_id,
                   roleName: packet.d.options.role_name,
                   type: packet.d.options.type,
+                  integrationType: packet.d.option.integrationType,
                 }
               : undefined,
           reason: packet.d.reason,
@@ -584,14 +585,12 @@ export class Shard {
       case "MESSAGE_UPDATE":
         this.client.emit(
           GatewayEvents.MessageUpdate,
-          packet.d.flags === MessageFlags.HasThread
-            ? {
+          "id" in packet.d && "channel_id" in packet.d && "author" in packet.d
+            ? new Message(packet.d, this.client)
+            : {
                 id: packet.d.id,
-                flags: packet.d.flags,
                 channelId: packet.d.channel_id,
-                guildId: packet.d.guild_id,
               }
-            : new Message(packet.d, this.client)
         );
         break;
       case "MESSAGE_DELETE":

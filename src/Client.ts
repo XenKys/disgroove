@@ -46,7 +46,6 @@ import type {
   GuildMembersChunkEventFields,
   JSONGuildScheduledEvent,
   IntegrationDeleteEventFields,
-  JSONInvite,
   InviteCreateEventFields,
   InviteDeleteEventFields,
   MessageDeleteBulkEventFields,
@@ -152,9 +151,7 @@ export interface ClientEvents {
       | Message
       | {
           id: string;
-          flags: MessageFlags;
           channelId: string;
-          guildId: string;
         }
   ];
   messageDelete: [message: MessageDeleteEventFields];
