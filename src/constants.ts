@@ -332,6 +332,11 @@ export enum MessageFlags {
   IsVoiceMessage = 1 << 13,
 }
 
+/** https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags */
+export enum AttachmentFlags {
+  IsRemix = 1 << 2,
+}
+
 /** https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types */
 export enum AllowedMentionTypes {
   RoleMentions = "roles",

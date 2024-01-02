@@ -1,5 +1,6 @@
 import type {
   AllowedMentionTypes,
+  AttachmentFlags,
   ChannelTypes,
   MessageActivityTypes,
 } from "../constants";
@@ -249,6 +250,9 @@ export interface RawAttachment {
   height?: number;
   width?: number;
   ephemeral?: boolean;
+  duration_secs?: number;
+  waveform?: boolean;
+  flags?: AttachmentFlags;
 }
 
 /** https://discord.com/developers/docs/resources/channel#channel-mention-object-channel-mention-structure */
@@ -480,6 +484,9 @@ export interface JSONAttachment {
   height?: number;
   width?: number;
   ephemeral?: boolean;
+  durationSecs?: number;
+  waveform?: boolean;
+  flags?: AttachmentFlags;
 }
 
 export interface JSONChannelMention {
