@@ -758,7 +758,7 @@ export class Channel extends Base {
   async getArchivedThreads(
     archivedStatus: "public" | "private",
     options?: {
-      before?: number;
+      before?: string;
       limit?: number;
     }
   ): Promise<{
