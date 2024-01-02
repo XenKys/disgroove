@@ -201,6 +201,8 @@ export enum AuditLogEvents {
   AutoModerationBlockMessage,
   AutoModerationFlagToChannel,
   AutoModerationUserCommunicationDisabled,
+  CreatorMonetizationRequestCreated = 150,
+  CreatorMonetizationTermsAccepted,
 }
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types */
