@@ -70,11 +70,13 @@ export class GuildMember {
     },
     reason?: string
   ): Promise<GuildMember> {
+    if (!this.user?.id)
+      throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     return new GuildMember(
       await this.client.rest.patch(
-        Endpoints.guildMember(this.guildId, this.user?.id),
+        Endpoints.guildMember(this.guildId, this.user.id),
         {
           json: {
             nick: options.nick,
@@ -154,9 +156,9 @@ export class GuildMember {
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
   removeBan(reason?: string): void {
-    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
     this.client.rest.delete(Endpoints.guildBan(this.guildId, this.user.id), {
       reason,
