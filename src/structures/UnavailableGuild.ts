@@ -408,6 +408,7 @@ export class UnavailableGuild extends Base {
                   messageId: auditLogEntry.options.message_id,
                   roleName: auditLogEntry.options.role_name,
                   type: auditLogEntry.options.type,
+                  integrationType: auditLogEntry.options.integration_type,
                 }
               : undefined,
           reason: auditLogEntry.reason,

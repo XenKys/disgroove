@@ -52,6 +52,7 @@ export interface RawOptionalAuditLogEntryInfo {
   message_id: string;
   role_name: string;
   type: string;
+  integration_type: string;
 }
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure */
@@ -94,6 +95,7 @@ export interface JSONOptionalAuditLogEntryInfo {
   messageId: string;
   roleName: string;
   type: string;
+  integrationType: string;
 }
 
 export interface JSONAuditLogChange {
