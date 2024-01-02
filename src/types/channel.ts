@@ -1,7 +1,6 @@
 import type {
   AllowedMentionTypes,
   ChannelTypes,
-  ComponentTypes,
   MessageActivityTypes,
 } from "../constants";
 import type {
@@ -19,10 +18,10 @@ import type {
   JSONUser,
   JSONApplication,
   JSONGuildMember,
-  RawSelectOption,
-  JSONSelectOption,
   RawActionRow,
   JSONActionRow,
+  RawResolvedData,
+  JSONResolvedData,
 } from ".";
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
@@ -97,6 +96,7 @@ export interface RawMessage {
   stickers?: Array<RawSticker>;
   position?: number;
   role_subscription_data?: RawRoleSubscriptionData;
+  resolved?: RawResolvedData;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-object-message-activity-structure */
@@ -345,6 +345,7 @@ export interface JSONMessage {
   stickers?: Array<JSONSticker>;
   position?: number;
   roleSubscriptionData?: JSONRoleSubscriptionData;
+  resolved?: JSONResolvedData;
 }
 
 export interface JSONMessageActivity {

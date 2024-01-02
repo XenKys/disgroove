@@ -4,6 +4,7 @@ import {
   Channel,
   Emoji,
   GuildMember,
+  Role,
   Sticker,
   User,
 } from ".";
@@ -21,6 +22,7 @@ import type {
   JSONMessageInteraction,
   JSONMessageReference,
   JSONReaction,
+  JSONResolvedData,
   JSONRoleSubscriptionData,
   JSONStickerItem,
   RawChannel,
@@ -64,6 +66,7 @@ export class Message extends Base {
   stickers?: Array<Sticker>;
   position?: number;
   roleSubscriptionData?: JSONRoleSubscriptionData;
+  resolved?: JSONResolvedData;
   guildId?: string;
   member?: GuildMember;
 
@@ -311,6 +314,54 @@ export class Message extends Base {
         totalMonthsSubscribed:
           data.role_subscription_data.total_months_subscribed,
         isRenewal: data.role_subscription_data.is_renewal,
+      };
+    if (data.resolved !== undefined)
+      this.resolved = {
+        users:
+          data.resolved?.users !== undefined
+            ? Object.values(data.resolved?.users).map(
+                (user) => new User(user, this.client)
+              )
+            : undefined,
+        members:
+          data.resolved?.members !== undefined
+            ? Object.values(data.resolved?.members).map(
+                (member) => new GuildMember(member, this.client)
+              )
+            : undefined,
+        roles:
+          data.resolved?.roles !== undefined
+            ? Object.values(data.resolved?.roles).map(
+                (role) => new Role(role, this.client)
+              )
+            : undefined,
+        channels:
+          data.resolved?.channels !== undefined
+            ? Object.values(data.resolved?.channels).map(
+                (channel) => new Channel(channel, this.client)
+              )
+            : undefined,
+        messages:
+          data.resolved?.messages !== undefined
+            ? Object.values(data.resolved?.messages).map(
+                (message) => new Message(message, this.client)
+              )
+            : undefined,
+        attachments:
+          data.resolved?.attachments !== undefined
+            ? Object.values(data.resolved?.attachments).map((attachment) => ({
+                id: attachment.id,
+                filename: attachment.filename,
+                description: attachment.description,
+                contentType: attachment.content_type,
+                size: attachment.size,
+                url: attachment.url,
+                proxyUrl: attachment.proxy_url,
+                height: attachment.height,
+                width: attachment.width,
+                ephemeral: attachment.ephemeral,
+              }))
+            : undefined,
       };
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.member !== undefined)
