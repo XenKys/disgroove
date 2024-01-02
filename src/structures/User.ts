@@ -35,6 +35,7 @@ export class User extends Base {
   flags?: UserFlags;
   premiumType?: number;
   publicFlags?: UserFlags;
+  avatarDecoration?: string | null;
 
   constructor(data: RawUser, client: Client) {
     super(data.id, client);
@@ -60,6 +61,8 @@ export class User extends Base {
     if (data.flags !== undefined) this.flags = data.flags;
     if (data.premium_type !== undefined) this.premiumType = data.premium_type;
     if (data.public_flags !== undefined) this.publicFlags = data.public_flags;
+    if (data.avatar_decoration !== undefined)
+      this.avatarDecoration = data.avatar_decoration;
   }
 
   /** https://discord.com/developers/docs/resources/user#modify-current-user */

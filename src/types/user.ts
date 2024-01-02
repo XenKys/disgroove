@@ -24,6 +24,7 @@ export interface RawUser {
   flags?: UserFlags;
   premium_type?: number;
   public_flags?: UserFlags;
+  avatar_decoration?: string | null;
 }
 
 /** https://discord.com/developers/docs/resources/user#connection-object-connection-structure */
@@ -64,6 +65,7 @@ export interface JSONUser {
   flags?: UserFlags;
   premiumType?: number;
   publicFlags?: UserFlags;
+  avatarDecoration?: string | null;
 }
 
 export interface JSONConnection {
