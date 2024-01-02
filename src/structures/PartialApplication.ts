@@ -1,4 +1,4 @@
-import { Base, ApplicationCommand } from ".";
+import { Base, ApplicationCommand, Application } from ".";
 import type {
   JSONGuildApplicationCommandPermissions,
   RawApplication,
@@ -12,6 +12,7 @@ import type {
   RawEntitlement,
   JSONEntitlement,
   RawSKU,
+  JSONInstallParams,
 } from "../types";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
@@ -36,6 +37,40 @@ export class PartialApplication extends Base {
 
   protected override patch(data: Pick<RawApplication, "id" | "flags">) {
     if (data.flags !== undefined) this.flags = data.flags;
+  }
+
+  /** https://discord.com/developers/docs/resources/application#edit-current-application */
+  async edit(options: {
+    customInstallURL?: string;
+    description?: string;
+    roleConnectionsVerificationURL?: string;
+    installParams?: JSONInstallParams;
+    flags?: number;
+    icon?: string;
+    coverImage?: string;
+    interactionsEndpointURL?: string;
+    tags?: Array<string>;
+  }): Promise<Application> {
+    return new Application(
+      await this.client.rest.patch<RawApplication>(
+        Endpoints.applicationCurrentUser(),
+        {
+          json: {
+            custom_install_url: options.customInstallURL,
+            description: options.description,
+            role_connections_verification_url:
+              options.roleConnectionsVerificationURL,
+            install_params: options.installParams,
+            flags: options.flags,
+            icon: options.icon,
+            cover_image: options.coverImage,
+            interactions_endpoint_url: options.interactionsEndpointURL,
+            tags: options.tags,
+          },
+        }
+      ),
+      this.client
+    );
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */

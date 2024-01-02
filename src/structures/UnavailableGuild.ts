@@ -790,9 +790,9 @@ export class UnavailableGuild extends Base {
   editChannelPositions(
     options: Array<{
       id: string;
-      position: number | null;
-      lockPermissions: boolean | null;
-      parentId: string | null;
+      position?: number | null;
+      lockPermissions?: boolean | null;
+      parentId?: string | null;
     }>
   ): void {
     this.client.rest.patch(Endpoints.guildChannels(this.id), {
