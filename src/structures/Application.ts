@@ -44,10 +44,12 @@ export class Application extends Base {
   coverImage?: string;
   flags?: number;
   approximateGuildCount?: number;
+  redirectURIs?: Array<string>;
+  interactionsEndpointURL?: string;
+  roleConnectionsVerificationURL?: string;
   tags?: Array<string>;
   installParams?: JSONInstallParams;
   customInstallURL?: string;
-  roleConnectionsVerificationURL?: string;
 
   constructor(data: RawApplication, client: Client) {
     super(data.id, client);
@@ -82,14 +84,18 @@ export class Application extends Base {
     if (data.flags !== undefined) this.flags = data.flags;
     if (data.approximate_guild_count !== undefined)
       this.approximateGuildCount = data.approximate_guild_count;
+    if (data.redirect_uris !== undefined)
+      this.redirectURIs = data.redirect_uris;
+    if (data.interactions_endpoint_url !== undefined)
+      this.interactionsEndpointURL = data.interactions_endpoint_url;
+    if (data.role_connections_verification_url !== undefined)
+      this.roleConnectionsVerificationURL =
+        data.role_connections_verification_url;
     if (data.tags !== undefined) this.tags = data.tags;
     if (data.install_params !== undefined)
       this.installParams = data.install_params;
     if (data.custom_install_url !== undefined)
       this.customInstallURL = data.custom_install_url;
-    if (data.role_connections_verification_url !== undefined)
-      this.roleConnectionsVerificationURL =
-        data.role_connections_verification_url;
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
@@ -762,10 +768,12 @@ export class Application extends Base {
       coverImage: this.coverImage,
       flags: this.flags,
       approximateGuildCount: this.approximateGuildCount,
+      redirectURIs: this.redirectURIs,
+      interactionsEndpointURL: this.interactionsEndpointURL,
+      roleConnectionsVerificationURL: this.roleConnectionsVerificationURL,
       tags: this.tags,
       installParams: this.installParams,
       customInstallURL: this.customInstallURL,
-      roleConnectionsVerificationURL: this.roleConnectionsVerificationURL,
     };
   }
 }

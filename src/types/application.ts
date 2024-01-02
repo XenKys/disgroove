@@ -29,10 +29,12 @@ export interface RawApplication {
   cover_image?: string;
   flags?: number;
   approximate_guild_count?: number;
+  redirect_uris?: Array<string>;
+  interactions_endpoint_url?: string;
+  role_connections_verification_url?: string;
   tags?: Array<string>;
   install_params?: RawInstallParams;
   custom_install_url?: string;
-  role_connections_verification_url?: string;
 }
 
 /** https://discord.com/developers/docs/resources/application#install-params-object-install-params-structure */
@@ -61,10 +63,12 @@ export interface JSONApplication {
   coverImage?: string;
   flags?: number;
   approximateGuildCount?: number;
+  redirectURIs?: Array<string>;
+  interactionsEndpointURL?: string;
+  roleConnectionsVerificationURL?: string;
   tags?: Array<string>;
   installParams?: JSONInstallParams;
   customInstallURL?: string;
-  roleConnectionsVerificationURL?: string;
 }
 
 export interface JSONInstallParams {
