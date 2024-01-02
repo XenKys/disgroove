@@ -327,6 +327,7 @@ export enum MessageFlags {
   Loading = 1 << 7,
   FailedToMentionSomeRolesInThread = 1 << 8,
   SuppressNotifications = 1 << 12,
+  IsVoiceMessage = 1 << 13,
 }
 
 /** https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types */
