@@ -98,6 +98,40 @@ export class Application extends Base {
       this.customInstallURL = data.custom_install_url;
   }
 
+  /** https://discord.com/developers/docs/resources/application#edit-current-application */
+  async edit(options: {
+    customInstallURL?: string;
+    description?: string;
+    roleConnectionsVerificationURL?: string;
+    installParams?: JSONInstallParams;
+    flags?: number;
+    icon?: string;
+    coverImage?: string;
+    interactionsEndpointURL?: string;
+    tags?: Array<string>;
+  }): Promise<Application> {
+    return new Application(
+      await this.client.rest.patch<RawApplication>(
+        Endpoints.applicationCurrentUser(),
+        {
+          json: {
+            custom_install_url: options.customInstallURL,
+            description: options.description,
+            role_connections_verification_url:
+              options.roleConnectionsVerificationURL,
+            install_params: options.installParams,
+            flags: options.flags,
+            icon: options.icon,
+            cover_image: options.coverImage,
+            interactions_endpoint_url: options.interactionsEndpointURL,
+            tags: options.tags,
+          },
+        }
+      ),
+      this.client
+    );
+  }
+
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
   async getGlobalApplicationCommands(options: {
     withLocalizations?: boolean;
