@@ -1977,6 +1977,7 @@ export class Guild extends Base {
       preferredLocale: this.preferredLocale,
       publicUpdatesChannelId: this.publicUpdatesChannelId,
       maxVideoChannelUsers: this.maxVideoChannelUsers,
+      maxStageVideoChannelUsers: this.maxStageVideoChannelUsers,
       approximateMemberCount: this.approximateMemberCount,
       approximatePresenceCount: this.approximatePresenceCount,
       welcomeScreen: this.welcomeScreen,
