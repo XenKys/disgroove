@@ -38,7 +38,7 @@ export class RequestsManager {
         }
 
       let headers: Record<string, string> = {
-        "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.2.7)`,
+        "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.2.9)`,
         Authorization: `${this.auth} ${this.token}`,
       };
       let body: string | FormData | undefined;
