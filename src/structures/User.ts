@@ -226,6 +226,7 @@ export class User extends Base {
       flags: this.flags,
       premiumType: this.premiumType,
       publicFlags: this.publicFlags,
+      avatarDecoration: this.avatarDecoration,
     };
   }
 }
