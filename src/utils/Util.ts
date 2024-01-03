@@ -18,8 +18,8 @@ import { ComponentTypes } from "../constants";
 
 export class Util {
   applicationCommandToRaw(
-    command: JSONApplicationCommand
-  ): RawApplicationCommand {
+    command: Partial<JSONApplicationCommand>
+  ): Partial<RawApplicationCommand> {
     return {
       id: command.id,
       type: command.type,
