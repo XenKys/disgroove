@@ -73,7 +73,7 @@ export interface JSONButton {
   type: ComponentTypes.Button;
   style: ButtonStyles;
   label?: string;
-  emoji?: Partial<Pick<JSONEmoji, "name" | "id" | "animated">>;
+  emoji?: Pick<JSONEmoji, "name" | "id" | "animated">;
   customId?: string;
   url?: string;
   disabled?: boolean;
@@ -100,7 +100,7 @@ export interface JSONSelectOption {
   label: string;
   value: string;
   description?: string;
-  emoji?: Partial<Pick<JSONEmoji, "name" | "id" | "animated">>;
+  emoji?: Pick<JSONEmoji, "name" | "id" | "animated">;
   default?: boolean;
 }
 
