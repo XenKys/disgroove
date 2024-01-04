@@ -576,7 +576,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
-  async startThreadFromMessage(
+  async createThreadFromMessage(
     messageId: string,
     options: {
       name: string;
@@ -602,7 +602,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
-  async startThreadWithoutMessage(
+  async createThreadWithoutMessage(
     options: {
       name: string;
       autoArchiveDuration?: number;
@@ -628,7 +628,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel */
-  async startThreadInForumChannel(
+  async createThreadInForumChannel(
     options: {
       name: string;
       autoArchiveDuration?: number;
