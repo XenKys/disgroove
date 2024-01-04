@@ -368,6 +368,13 @@ export class Message extends Base {
       this.member = new GuildMember(data.member, this.client);
   }
 
+  /** https://discord.com/developers/docs/resources/channel#create-reaction */
+  createReaction(emoji: string): void {
+    this.client.rest.put(
+      Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   async crosspost(): Promise<Message> {
     return new Message(
@@ -378,45 +385,27 @@ export class Message extends Base {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  createReaction(emoji: string): void {
-    this.client.rest.put(
-      Endpoints.channelMessageReaction(this.channelId, this.id, emoji)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  deleteReaction(emoji: string, userId?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessageReaction(this.channelId, this.id, emoji, userId)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#get-reactions */
-  async getReactions(
-    emoji: string,
-    options?: {
-      after?: string;
-      limit?: number;
-    }
-  ): Promise<Array<User>> {
-    return this.client.rest
-      .get<Array<RawUser>>(
-        Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji),
-        {
-          query: {
-            after: options?.after,
-            limit: options?.limit,
-          },
-        }
-      )
-      .then((response) => response.map((data) => new User(data, this.client)));
+  /** https://discord.com/developers/docs/resources/channel#delete-message */
+  delete(reason?: string): void {
+    this.client.rest.delete(Endpoints.channelMessage(this.channelId, this.id), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
   deleteAllReactions(emoji?: string): void {
     this.client.rest.delete(
       Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji)
+    );
+  }
+
+  /**
+   * https://discord.com/developers/docs/resources/channel#delete-own-reaction
+   * https://discord.com/developers/docs/resources/channel#delete-user-reaction
+   */
+  deleteReaction(emoji: string, userId?: string): void {
+    this.client.rest.delete(
+      Endpoints.channelMessageReaction(this.channelId, this.id, emoji, userId)
     );
   }
 
@@ -459,11 +448,25 @@ export class Message extends Base {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#delete-message */
-  delete(reason?: string): void {
-    this.client.rest.delete(Endpoints.channelMessage(this.channelId, this.id), {
-      reason,
-    });
+  /** https://discord.com/developers/docs/resources/channel#get-reactions */
+  async getReactions(
+    emoji: string,
+    options?: {
+      after?: string;
+      limit?: number;
+    }
+  ): Promise<Array<User>> {
+    return this.client.rest
+      .get<Array<RawUser>>(
+        Endpoints.channelMessageAllReactions(this.channelId, this.id, emoji),
+        {
+          query: {
+            after: options?.after,
+            limit: options?.limit,
+          },
+        }
+      )
+      .then((response) => response.map((data) => new User(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
@@ -473,15 +476,8 @@ export class Message extends Base {
     });
   }
 
-  /** https://discord.com/developers/docs/resources/channel#unpin-message */
-  unpin(reason?: string): void {
-    this.client.rest.delete(Endpoints.channelPin(this.channelId, this.id), {
-      reason,
-    });
-  }
-
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
-  async startThread(
+  async createThread(
     options: {
       name: string;
       autoArchiveDuration?: number;
@@ -503,6 +499,13 @@ export class Message extends Base {
       ),
       this.client
     );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#unpin-message */
+  unpin(reason?: string): void {
+    this.client.rest.delete(Endpoints.channelPin(this.channelId, this.id), {
+      reason,
+    });
   }
 
   override toRaw(): RawMessage & Partial<RawMessageCreateEventExtraFields> {

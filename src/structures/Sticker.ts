@@ -41,6 +41,15 @@ export class Sticker extends Base {
     if (data.sort_value !== undefined) this.sortValue = data.sort_value;
   }
 
+  /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
+  delete(reason?: string): void {
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
+    this.client.rest.delete(Endpoints.guildSticker(this.guildId, this.id), {
+      reason,
+    });
+  }
+
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
   async edit(
     options: {
@@ -66,15 +75,6 @@ export class Sticker extends Base {
       ),
       this.client
     );
-  }
-
-  /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
-  delete(reason?: string): void {
-    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
-
-    this.client.rest.delete(Endpoints.guildSticker(this.guildId, this.id), {
-      reason,
-    });
   }
 
   override toRaw(): RawSticker {

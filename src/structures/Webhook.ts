@@ -51,6 +51,42 @@ export class Webhook extends Base {
     if (data.url !== undefined) this.url = data.url;
   }
 
+  /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
+  delete(reason?: string): void {
+    this.client.rest.delete(Endpoints.webhook(this.id), {
+      reason,
+    });
+  }
+
+  /** https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
+  deleteMessage(
+    messageId: string,
+    options?: {
+      threadId?: string;
+    }
+  ): void {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
+    this.client.rest.delete(
+      Endpoints.webhookMessage(this.id, this.token, messageId),
+      {
+        query: {
+          thread_id: options?.threadId,
+        },
+      }
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
+  deleteWithToken(reason?: string): void {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
+    this.client.rest.delete(Endpoints.webhook(this.id, this.token), {
+      reason,
+      authorization: false,
+    });
+  }
+
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
   async edit(
     options: {
@@ -69,6 +105,59 @@ export class Webhook extends Base {
         },
         reason,
       }),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
+  async editMessage(
+    messageId: string,
+    options: {
+      threadId?: string;
+      content?: string | null;
+      embeds?: Array<JSONEmbed> | null;
+      flags?: MessageFlags | null;
+      allowedMentions?: JSONAllowedMentions | null;
+      components?: Array<JSONActionRow> | null;
+      files?: Array<File> | null;
+      attachments?: Array<JSONAttachment> | null;
+    }
+  ): Promise<Message> {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
+    return new Message(
+      await this.client.rest.patch<RawMessage>(
+        Endpoints.webhookMessage(this.id, this.token, messageId),
+        {
+          json: {
+            content: options.content,
+            embeds:
+              options.embeds !== undefined
+                ? options.embeds !== null
+                  ? this.client.util.embedsToRaw(options.embeds)
+                  : null
+                : undefined,
+            allowed_mentions: {
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
+            },
+            components:
+              options.components !== undefined
+                ? options.components !== null
+                  ? this.client.util.messageComponentToRaw(options.components)
+                  : null
+                : undefined,
+            attachments: options.attachments,
+            flags: options.flags,
+          },
+          files: options.files,
+          query: {
+            thread_id: options.threadId,
+          },
+        }
+      ),
       this.client
     );
   }
@@ -97,23 +186,6 @@ export class Webhook extends Base {
       ),
       this.client
     );
-  }
-
-  /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
-  delete(reason?: string): void {
-    this.client.rest.delete(Endpoints.webhook(this.id), {
-      reason,
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
-  deleteWithToken(reason?: string): void {
-    if (!this.token) throw new Error("[disgroove] Webhook token not found");
-
-    this.client.rest.delete(Endpoints.webhook(this.id, this.token), {
-      reason,
-      authorization: false,
-    });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
@@ -213,39 +285,6 @@ export class Webhook extends Base {
     }
   }
 
-  /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
-  async executeSlackCompatible(options: {
-    threadId?: string;
-    wait?: boolean;
-  }): Promise<Message | void> {
-    if (!this.token) throw new Error("[disgroove] Webhook token not found");
-
-    if (options.wait || options.wait === undefined) {
-      return new Message(
-        await this.client.rest.post<RawMessage>(
-          Endpoints.webhookPlatform(this.id, this.token, "slack"),
-          {
-            query: {
-              thread_id: options.threadId,
-              wait: options.wait,
-            },
-          }
-        ),
-        this.client
-      );
-    } else {
-      this.client.rest.post<RawMessage>(
-        Endpoints.webhookPlatform(this.id, this.token, "slack"),
-        {
-          query: {
-            thread_id: options.threadId,
-            wait: options.wait,
-          },
-        }
-      );
-    }
-  }
-
   /** https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
   async executeGitHubCompatible(options: {
     threadId?: string;
@@ -279,6 +318,39 @@ export class Webhook extends Base {
     }
   }
 
+  /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
+  async executeSlackCompatible(options: {
+    threadId?: string;
+    wait?: boolean;
+  }): Promise<Message | void> {
+    if (!this.token) throw new Error("[disgroove] Webhook token not found");
+
+    if (options.wait || options.wait === undefined) {
+      return new Message(
+        await this.client.rest.post<RawMessage>(
+          Endpoints.webhookPlatform(this.id, this.token, "slack"),
+          {
+            query: {
+              thread_id: options.threadId,
+              wait: options.wait,
+            },
+          }
+        ),
+        this.client
+      );
+    } else {
+      this.client.rest.post<RawMessage>(
+        Endpoints.webhookPlatform(this.id, this.token, "slack"),
+        {
+          query: {
+            thread_id: options.threadId,
+            wait: options.wait,
+          },
+        }
+      );
+    }
+  }
+
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
   async getMessage(
     messageId: string,
@@ -298,78 +370,6 @@ export class Webhook extends Base {
         }
       ),
       this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
-  async editMessage(
-    messageId: string,
-    options: {
-      threadId?: string;
-      content?: string | null;
-      embeds?: Array<JSONEmbed> | null;
-      flags?: MessageFlags | null;
-      allowedMentions?: JSONAllowedMentions | null;
-      components?: Array<JSONActionRow> | null;
-      files?: Array<File> | null;
-      attachments?: Array<JSONAttachment> | null;
-    }
-  ): Promise<Message> {
-    if (!this.token) throw new Error("[disgroove] Webhook token not found");
-
-    return new Message(
-      await this.client.rest.patch<RawMessage>(
-        Endpoints.webhookMessage(this.id, this.token, messageId),
-        {
-          json: {
-            content: options.content,
-            embeds:
-              options.embeds !== undefined
-                ? options.embeds !== null
-                  ? this.client.util.embedsToRaw(options.embeds)
-                  : null
-                : undefined,
-            allowed_mentions: {
-              parse: options.allowedMentions?.parse,
-              roles: options.allowedMentions?.roles,
-              users: options.allowedMentions?.users,
-              replied_user: options.allowedMentions?.repliedUser,
-            },
-            components:
-              options.components !== undefined
-                ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
-                  : null
-                : undefined,
-            attachments: options.attachments,
-            flags: options.flags,
-          },
-          files: options.files,
-          query: {
-            thread_id: options.threadId,
-          },
-        }
-      ),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
-  deleteMessage(
-    messageId: string,
-    options?: {
-      threadId?: string;
-    }
-  ): void {
-    if (!this.token) throw new Error("[disgroove] Webhook token not found");
-
-    this.client.rest.delete(
-      Endpoints.webhookMessage(this.id, this.token, messageId),
-      {
-        query: {
-          thread_id: options?.threadId,
-        },
-      }
     );
   }
 

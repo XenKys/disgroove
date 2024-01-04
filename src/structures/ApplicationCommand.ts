@@ -62,6 +62,21 @@ export class ApplicationCommand extends Base {
     if (data.nsfw !== undefined) this.nsfw = data.nsfw;
   }
 
+  /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
+  delete(): void {
+    this.guildId !== undefined
+      ? this.client.rest.delete(
+          Endpoints.applicationGuildCommand(
+            this.applicationId,
+            this.guildId,
+            this.id
+          )
+        )
+      : this.client.rest.delete(
+          Endpoints.applicationCommand(this.applicationId, this.id)
+        );
+  }
+
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
   async edit(options: {
     name?: string;
@@ -121,48 +136,6 @@ export class ApplicationCommand extends Base {
     );
   }
 
-  /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
-  delete(): void {
-    this.guildId !== undefined
-      ? this.client.rest.delete(
-          Endpoints.applicationGuildCommand(
-            this.applicationId,
-            this.guildId,
-            this.id
-          )
-        )
-      : this.client.rest.delete(
-          Endpoints.applicationCommand(this.applicationId, this.id)
-        );
-  }
-
-  /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
-  async getPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
-    if (!this.guildId)
-      throw new Error(
-        "[disgroove] Can't get the permissions of a global application command"
-      );
-
-    return this.client.rest
-      .get<RawGuildApplicationCommandPermissions>(
-        Endpoints.applicationCommandPermissions(
-          this.applicationId,
-          this.guildId,
-          this.id
-        )
-      )
-      .then((response) => ({
-        id: response.id,
-        applicationId: response.application_id,
-        guildId: response.guild_id,
-        permissions: response.permissions.map((permission) => ({
-          id: permission.id,
-          type: permission.type,
-          permission: permission.permission,
-        })),
-      }));
-  }
-
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
   async editPermissions(options: {
     permissions: Array<JSONApplicationCommandPermission>;
@@ -184,6 +157,33 @@ export class ApplicationCommand extends Base {
             permissions: options.permissions,
           },
         }
+      )
+      .then((response) => ({
+        id: response.id,
+        applicationId: response.application_id,
+        guildId: response.guild_id,
+        permissions: response.permissions.map((permission) => ({
+          id: permission.id,
+          type: permission.type,
+          permission: permission.permission,
+        })),
+      }));
+  }
+
+  /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
+  async getPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
+    if (!this.guildId)
+      throw new Error(
+        "[disgroove] Can't get the permissions of a global application command"
+      );
+
+    return this.client.rest
+      .get<RawGuildApplicationCommandPermissions>(
+        Endpoints.applicationCommandPermissions(
+          this.applicationId,
+          this.guildId,
+          this.id
+        )
       )
       .then((response) => ({
         id: response.id,

@@ -60,6 +60,13 @@ export class GuildScheduledEvent extends Base {
     if (data.image !== undefined) this.image = data.image;
   }
 
+  /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
+  delete(): void {
+    this.client.rest.delete(
+      Endpoints.guildScheduledEvent(this.guildId, this.id)
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
   async edit(
     options: {
@@ -96,13 +103,6 @@ export class GuildScheduledEvent extends Base {
         }
       ),
       this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
-  delete(): void {
-    this.client.rest.delete(
-      Endpoints.guildScheduledEvent(this.guildId, this.id)
     );
   }
 

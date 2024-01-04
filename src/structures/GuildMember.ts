@@ -57,6 +57,41 @@ export class GuildMember {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
   }
 
+  /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
+  addRole(roleId: string, reason?: string): void {
+    if (!this.user?.id)
+      throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
+    this.client.rest.put(
+      Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
+      {
+        reason,
+      }
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
+  createBan(
+    options?: {
+      deleteMessageDays?: number;
+      deleteMessageSeconds?: number;
+    },
+    reason?: string
+  ): void {
+    if (!this.user?.id)
+      throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
+    this.client.rest.put(Endpoints.guildBan(this.guildId, this.user.id), {
+      json: {
+        delete_message_days: options?.deleteMessageDays,
+        delete_message_seconds: options?.deleteMessageSeconds,
+      },
+      reason,
+    });
+  }
+
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
   async edit(
     options: {
@@ -94,18 +129,26 @@ export class GuildMember {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
-  addRole(roleId: string, reason?: string): void {
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
+  remove(reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
 
-    this.client.rest.put(
-      Endpoints.guildMemberRole(this.guildId, this.user.id, roleId),
-      {
-        reason,
-      }
-    );
+    this.client.rest.delete(Endpoints.guildMember(this.guildId, this.user.id), {
+      reason,
+    });
+  }
+
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
+  removeBan(reason?: string): void {
+    if (!this.user?.id)
+      throw new Error("[disgroove] Guild member ID not found");
+    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
+
+    this.client.rest.delete(Endpoints.guildBan(this.guildId, this.user.id), {
+      reason,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
@@ -120,49 +163,6 @@ export class GuildMember {
         reason,
       }
     );
-  }
-
-  /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
-  remove(reason?: string): void {
-    if (!this.user?.id)
-      throw new Error("[disgroove] Guild member ID not found");
-    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
-
-    this.client.rest.delete(Endpoints.guildMember(this.guildId, this.user.id), {
-      reason,
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
-  createBan(
-    options?: {
-      deleteMessageDays?: number;
-      deleteMessageSeconds?: number;
-    },
-    reason?: string
-  ): void {
-    if (!this.user?.id)
-      throw new Error("[disgroove] Guild member ID not found");
-    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
-
-    this.client.rest.put(Endpoints.guildBan(this.guildId, this.user.id), {
-      json: {
-        delete_message_days: options?.deleteMessageDays,
-        delete_message_seconds: options?.deleteMessageSeconds,
-      },
-      reason,
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
-  removeBan(reason?: string): void {
-    if (!this.user?.id)
-      throw new Error("[disgroove] Guild member ID not found");
-    if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
-
-    this.client.rest.delete(Endpoints.guildBan(this.guildId, this.user.id), {
-      reason,
-    });
   }
 
   toString(): string {

@@ -26,6 +26,13 @@ export class StageInstance extends Base {
     this.guildScheduledEventId = data.guild_scheduled_event_id;
   }
 
+  /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
+  delete(reason?: string): void {
+    this.client.rest.delete(Endpoints.stageInstance(this.channelId), {
+      reason,
+    });
+  }
+
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
   async edit(
     options: {
@@ -47,13 +54,6 @@ export class StageInstance extends Base {
       ),
       this.client
     );
-  }
-
-  /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
-  delete(reason?: string): void {
-    this.client.rest.delete(Endpoints.stageInstance(this.channelId), {
-      reason,
-    });
   }
 
   override toRaw(): RawStageInstance {

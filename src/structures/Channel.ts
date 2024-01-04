@@ -174,6 +174,307 @@ export class Channel extends Base {
       this.newlyCreated = data.newly_created;
   }
 
+  /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
+  addRecipient(
+    userId: string,
+    options: {
+      accessToken: string;
+      nick: string;
+    }
+  ): void {
+    this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
+      json: {
+        access_token: options.accessToken,
+        nick: options.nick,
+      },
+    });
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#add-thread-member */
+  addThreadMember(userId: string): void {
+    this.client.rest.put(Endpoints.threadMembers(this.id, userId));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
+  bulkDeleteMessages(
+    options?: {
+      messagesIds?: Array<string>;
+    },
+    reason?: string
+  ): void {
+    this.client.rest.post(Endpoints.channelBulkDelete(this.id), {
+      json: {
+        messages: options?.messagesIds,
+      },
+      reason,
+    });
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
+  async createInvite(
+    options: {
+      maxAge?: number;
+      maxUses?: number;
+      temporary?: boolean;
+      unique?: boolean;
+      targetType?: InviteTargetTypes;
+      targetUserId?: string;
+      targetApplicationId?: string;
+    },
+    reason?: string
+  ): Promise<Invite> {
+    return new Invite(
+      await this.client.rest.post<RawInvite>(
+        Endpoints.channelInvites(this.id),
+        {
+          json: {
+            max_age: options.maxAge,
+            max_uses: options.maxUses,
+            temporary: options.temporary,
+            unique: options.unique,
+            target_type: options.targetType,
+            target_user_id: options.targetUserId,
+            target_application_id: options.targetApplicationId,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#create-message */
+  async createMessage(options: {
+    content?: string;
+    nonce?: string | number;
+    tts?: boolean;
+    embeds?: Array<JSONEmbed>;
+    allowedMentions?: JSONAllowedMentions;
+    messageReference?: JSONMessageReference;
+    components?: Array<JSONActionRow>;
+    stickersIds?: Array<string>;
+    files?: Array<File>;
+    attachments?: Array<JSONAttachment>;
+    flags?: MessageFlags;
+  }): Promise<Message> {
+    return new Message(
+      await this.client.rest.post<RawMessage>(
+        Endpoints.channelMessages(this.id),
+        {
+          json: {
+            content: options.content,
+            nonce: options.nonce,
+            tts: options.tts,
+            embeds:
+              options.embeds !== undefined
+                ? this.client.util.embedsToRaw(options.embeds)
+                : undefined,
+            allowed_mentions: {
+              parse: options.allowedMentions?.parse,
+              roles: options.allowedMentions?.roles,
+              users: options.allowedMentions?.users,
+              replied_user: options.allowedMentions?.repliedUser,
+            },
+            message_reference: options.messageReference,
+            components:
+              options.components !== undefined
+                ? this.client.util.messageComponentToRaw(options.components)
+                : undefined,
+            stickers_ids: options.stickersIds,
+            attachments: options.attachments,
+            flags: options.flags,
+          },
+          files: options.files,
+        }
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#create-reaction */
+  createReaction(messageId: string, emoji: string): void {
+    this.client.rest.put(
+      Endpoints.channelMessageReaction(this.id, messageId, emoji)
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
+  async createThreadFromMessage(
+    messageId: string,
+    options: {
+      name: string;
+      autoArchiveDuration?: number;
+      rateLimitPerUser?: number | null;
+    },
+    reason?: string
+  ): Promise<Channel> {
+    return new Channel(
+      await this.client.rest.post<RawChannel>(
+        Endpoints.threads(this.id, messageId),
+        {
+          json: {
+            name: options.name,
+            auto_archive_duration: options.autoArchiveDuration,
+            rate_limit_per_user: options.rateLimitPerUser,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel */
+  async createThreadInForumOrMediaChannel(
+    options: {
+      name: string;
+      autoArchiveDuration?: number;
+      rateLimitPerUser?: number | null;
+      message: {
+        content?: string | null;
+        embeds?: Array<JSONEmbed> | null;
+        allowedMentions?: JSONAllowedMentions | null;
+        components?: Array<JSONActionRow> | null;
+        attachments?: Array<JSONAttachment> | null;
+        flags?: MessageFlags | null;
+      };
+      appliedTags?: Array<string>;
+      files?: Array<File> | null;
+    },
+    reason?: string
+  ): Promise<Channel> {
+    return new Channel(
+      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
+        json: {
+          name: options.name,
+          auto_archive_duration: options.autoArchiveDuration,
+          rate_limit_per_user: options.rateLimitPerUser,
+          message: {
+            content: options.message.content,
+            embeds: options.message.embeds,
+            flags: options.message.flags,
+            allowed_mentions: {
+              parse: options.message.allowedMentions?.parse,
+              roles: options.message.allowedMentions?.roles,
+              users: options.message.allowedMentions?.users,
+              replied_user: options.message.allowedMentions?.repliedUser,
+            },
+            components:
+              options.message.components !== undefined
+                ? options.message.components !== null
+                  ? this.client.util.messageComponentToRaw(
+                      options.message.components
+                    )
+                  : null
+                : undefined,
+            attachments: options.message.attachments,
+          },
+          applied_tags: options.appliedTags,
+        },
+        files: options.files,
+        reason,
+      }),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
+  async createThreadWithoutMessage(
+    options: {
+      name: string;
+      autoArchiveDuration?: number;
+      type?: ChannelTypes;
+      invitable?: boolean;
+      rateLimitPerUser?: number | null;
+    },
+    reason?: string
+  ): Promise<Channel> {
+    return new Channel(
+      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
+        json: {
+          name: options.name,
+          auto_archive_duration: options.autoArchiveDuration,
+          type: options.type,
+          invitable: options.invitable,
+          rate_limit_per_user: options.rateLimitPerUser,
+        },
+        reason,
+      }),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/webhook#create-webhook */
+  async createWebhook(
+    options: {
+      name: string;
+      avatar?: string | null;
+    },
+    reason?: string
+  ): Promise<Webhook> {
+    return new Webhook(
+      await this.client.rest.post<RawWebhook>(
+        Endpoints.channelWebhooks(this.id),
+        {
+          json: {
+            name: options.name,
+            avatar: options.avatar,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#crosspost-message */
+  async crosspostMessage(messageId: string): Promise<Message> {
+    return new Message(
+      await this.client.rest.post<RawMessage>(
+        Endpoints.channelMessage(this.id, messageId)
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
+  async delete(reason?: string): Promise<JSONChannel> {
+    return new Channel(
+      await this.client.rest.delete<RawChannel>(Endpoints.channel(this.id), {
+        reason,
+      }),
+      this.client
+    ).toJSON();
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
+  deleteAllReactions(messageId: string, emoji?: string): void {
+    this.client.rest.delete(
+      Endpoints.channelMessageAllReactions(this.id, messageId, emoji)
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#delete-message */
+  deleteMessage(messageId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.channelMessage(this.id, messageId), {
+      reason,
+    });
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
+  deletePermission(overwriteId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.channelPermission(this.id, overwriteId), {
+      reason,
+    });
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
+  deleteReaction(messageId: string, emoji: string, userId?: string): void {
+    this.client.rest.delete(
+      Endpoints.channelMessageReaction(this.id, messageId, emoji, userId)
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
   async edit(
     options: {
@@ -239,148 +540,6 @@ export class Channel extends Base {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
-  async delete(reason?: string): Promise<JSONChannel> {
-    return new Channel(
-      await this.client.rest.delete<RawChannel>(Endpoints.channel(this.id), {
-        reason,
-      }),
-      this.client
-    ).toJSON();
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#get-channel-messages */
-  async getMessages(options: {
-    around?: string;
-    before?: string;
-    after?: string;
-    limit?: number;
-  }): Promise<Array<Message>> {
-    return this.client.rest
-      .get<Array<RawMessage>>(Endpoints.channelMessages(this.id), {
-        query: {
-          around: options.around,
-          before: options.before,
-          after: options.after,
-          limit: options.limit,
-        },
-      })
-      .then((response) =>
-        response.map((data) => new Message(data, this.client))
-      );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#get-channel-message */
-  async getMessage(messageId: string): Promise<Message> {
-    return new Message(
-      await this.client.rest.get<RawMessage>(
-        Endpoints.channelMessage(this.id, messageId)
-      ),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#create-message */
-  async createMessage(options: {
-    content?: string;
-    nonce?: string | number;
-    tts?: boolean;
-    embeds?: Array<JSONEmbed>;
-    allowedMentions?: JSONAllowedMentions;
-    messageReference?: JSONMessageReference;
-    components?: Array<JSONActionRow>;
-    stickersIds?: Array<string>;
-    files?: Array<File>;
-    attachments?: Array<JSONAttachment>;
-    flags?: MessageFlags;
-  }): Promise<Message> {
-    return new Message(
-      await this.client.rest.post<RawMessage>(
-        Endpoints.channelMessages(this.id),
-        {
-          json: {
-            content: options.content,
-            nonce: options.nonce,
-            tts: options.tts,
-            embeds:
-              options.embeds !== undefined
-                ? this.client.util.embedsToRaw(options.embeds)
-                : undefined,
-            allowed_mentions: {
-              parse: options.allowedMentions?.parse,
-              roles: options.allowedMentions?.roles,
-              users: options.allowedMentions?.users,
-              replied_user: options.allowedMentions?.repliedUser,
-            },
-            message_reference: options.messageReference,
-            components:
-              options.components !== undefined
-                ? this.client.util.messageComponentToRaw(options.components)
-                : undefined,
-            stickers_ids: options.stickersIds,
-            attachments: options.attachments,
-            flags: options.flags,
-          },
-          files: options.files,
-        }
-      ),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#crosspost-message */
-  async crosspostMessage(messageId: string): Promise<Message> {
-    return new Message(
-      await this.client.rest.post<RawMessage>(
-        Endpoints.channelMessage(this.id, messageId)
-      ),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  createReaction(messageId: string, emoji: string): void {
-    this.client.rest.put(
-      Endpoints.channelMessageReaction(this.id, messageId, emoji)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
-  deleteReaction(messageId: string, emoji: string, userId?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessageReaction(this.id, messageId, emoji, userId)
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#get-reactions */
-  async getReactions(
-    messageId: string,
-    emoji: string,
-    options?: {
-      after?: string;
-      limit?: number;
-    }
-  ): Promise<Array<User>> {
-    return this.client.rest
-      .get<Array<RawUser>>(
-        Endpoints.channelMessageAllReactions(this.id, messageId, emoji),
-        {
-          query: {
-            after: options?.after,
-            limit: options?.limit,
-          },
-        }
-      )
-      .then((response) => response.map((data) => new User(data, this.client)));
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
-  deleteAllReactions(messageId: string, emoji?: string): void {
-    this.client.rest.delete(
-      Endpoints.channelMessageAllReactions(this.id, messageId, emoji)
-    );
-  }
-
   /** https://discord.com/developers/docs/resources/channel#edit-message */
   async editMessage(
     messageId: string,
@@ -423,28 +582,6 @@ export class Channel extends Base {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#delete-message */
-  deleteMessage(messageId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.channelMessage(this.id, messageId), {
-      reason,
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
-  bulkDeleteMessages(
-    options?: {
-      messagesIds?: Array<string>;
-    },
-    reason?: string
-  ): void {
-    this.client.rest.post(Endpoints.channelBulkDelete(this.id), {
-      json: {
-        messages: options?.messagesIds,
-      },
-      reason,
-    });
-  }
-
   /** https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
   editPermissions(
     overwriteId: string,
@@ -457,55 +594,6 @@ export class Channel extends Base {
   ): void {
     this.client.rest.put(Endpoints.channelPermission(this.id, overwriteId), {
       json: options,
-      reason,
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
-  async getInvites(): Promise<Array<Invite>> {
-    return this.client.rest
-      .get<Array<RawInvite>>(Endpoints.channelInvites(this.id))
-      .then((response) =>
-        response.map((data) => new Invite(data, this.client))
-      );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
-  async createInvite(
-    options: {
-      maxAge?: number;
-      maxUses?: number;
-      temporary?: boolean;
-      unique?: boolean;
-      targetType?: InviteTargetTypes;
-      targetUserId?: string;
-      targetApplicationId?: string;
-    },
-    reason?: string
-  ): Promise<Invite> {
-    return new Invite(
-      await this.client.rest.post<RawInvite>(
-        Endpoints.channelInvites(this.id),
-        {
-          json: {
-            max_age: options.maxAge,
-            max_uses: options.maxUses,
-            temporary: options.temporary,
-            unique: options.unique,
-            target_type: options.targetType,
-            target_user_id: options.targetUserId,
-            target_application_id: options.targetApplicationId,
-          },
-          reason,
-        }
-      ),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
-  deletePermission(overwriteId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.channelPermission(this.id, overwriteId), {
       reason,
     });
   }
@@ -526,9 +614,119 @@ export class Channel extends Base {
       }));
   }
 
-  /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
-  triggerTypingIndicator(): void {
-    this.client.rest.post(Endpoints.channelTyping(this.id));
+  /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
+  async getArchivedThreads(
+    archivedStatus: "public" | "private",
+    options?: {
+      before?: string;
+      limit?: number;
+    }
+  ): Promise<{
+    threads: Array<Channel>;
+    members: Array<JSONThreadMember>;
+    hasMore: boolean;
+  }> {
+    return this.client.rest
+      .get<{
+        threads: Array<RawChannel>;
+        members: Array<RawThreadMember>;
+        has_more: boolean;
+      }>(Endpoints.channelThreads(this.id, archivedStatus, false), {
+        query: {
+          before: options?.before,
+          limit: options?.limit,
+        },
+      })
+      .then((response) => ({
+        threads: response.threads.map((data) => new Channel(data, this.client)),
+        members: response.members.map((data) => ({
+          id: data.id,
+          userId: data.user_id,
+          joinTimestamp: data.join_timestamp,
+          flags: data.flags,
+          member:
+            data.member !== undefined
+              ? new GuildMember(data.member, this.client)
+              : undefined,
+        })),
+        hasMore: response.has_more,
+      }));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
+  async getInvites(): Promise<Array<Invite>> {
+    return this.client.rest
+      .get<Array<RawInvite>>(Endpoints.channelInvites(this.id))
+      .then((response) =>
+        response.map((data) => new Invite(data, this.client))
+      );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
+  async getJoinedPrivateArchivedThreads(options?: {
+    before?: string;
+    limit?: number;
+  }): Promise<{
+    threads: Array<Channel>;
+    members: Array<JSONThreadMember>;
+    hasMore: boolean;
+  }> {
+    return this.client.rest
+      .get<{
+        threads: Array<RawChannel>;
+        members: Array<RawThreadMember>;
+        has_more: boolean;
+      }>(Endpoints.channelThreads(this.id, "private", true), {
+        query: {
+          before: options?.before,
+          limit: options?.limit,
+        },
+      })
+      .then((response) => ({
+        threads: response.threads.map((data) => new Channel(data, this.client)),
+        members: response.members.map((data) => ({
+          id: data.id,
+          userId: data.user_id,
+          joinTimestamp: data.join_timestamp,
+          flags: data.flags,
+          member:
+            data.member !== undefined
+              ? new GuildMember(data.member, this.client)
+              : undefined,
+        })),
+        hasMore: response.has_more,
+      }));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#get-channel-message */
+  async getMessage(messageId: string): Promise<Message> {
+    return new Message(
+      await this.client.rest.get<RawMessage>(
+        Endpoints.channelMessage(this.id, messageId)
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#get-channel-messages */
+  async getMessages(options: {
+    around?: string;
+    before?: string;
+    after?: string;
+    limit?: number;
+  }): Promise<Array<Message>> {
+    return this.client.rest
+      .get<Array<RawMessage>>(Endpoints.channelMessages(this.id), {
+        query: {
+          around: options.around,
+          before: options.before,
+          after: options.after,
+          limit: options.limit,
+        },
+      })
+      .then((response) =>
+        response.map((data) => new Message(data, this.client))
+      );
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
@@ -540,165 +738,26 @@ export class Channel extends Base {
       );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#pin-message */
-  pinMessage(messageId: string, reason?: string): void {
-    this.client.rest.put(Endpoints.channelPin(this.id, messageId), {
-      reason,
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#unpin-message */
-  unpinMessage(messageId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.channelPin(this.id, messageId), {
-      reason,
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
-  addRecipient(
-    userId: string,
-    options: {
-      accessToken: string;
-      nick: string;
-    }
-  ): void {
-    this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
-      json: {
-        access_token: options.accessToken,
-        nick: options.nick,
-      },
-    });
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
-  removeRecipient(userId: string): void {
-    this.client.rest.delete(Endpoints.channelRecipient(this.id, userId));
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
-  async createThreadFromMessage(
+  /** https://discord.com/developers/docs/resources/channel#get-reactions */
+  async getReactions(
     messageId: string,
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      rateLimitPerUser?: number | null;
-    },
-    reason?: string
-  ): Promise<Channel> {
-    return new Channel(
-      await this.client.rest.post<RawChannel>(
-        Endpoints.threads(this.id, messageId),
+    emoji: string,
+    options?: {
+      after?: string;
+      limit?: number;
+    }
+  ): Promise<Array<User>> {
+    return this.client.rest
+      .get<Array<RawUser>>(
+        Endpoints.channelMessageAllReactions(this.id, messageId, emoji),
         {
-          json: {
-            name: options.name,
-            auto_archive_duration: options.autoArchiveDuration,
-            rate_limit_per_user: options.rateLimitPerUser,
+          query: {
+            after: options?.after,
+            limit: options?.limit,
           },
-          reason,
         }
-      ),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
-  async createThreadWithoutMessage(
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      type?: ChannelTypes;
-      invitable?: boolean;
-      rateLimitPerUser?: number | null;
-    },
-    reason?: string
-  ): Promise<Channel> {
-    return new Channel(
-      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
-        json: {
-          name: options.name,
-          auto_archive_duration: options.autoArchiveDuration,
-          type: options.type,
-          invitable: options.invitable,
-          rate_limit_per_user: options.rateLimitPerUser,
-        },
-        reason,
-      }),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel */
-  async createThreadInForumOrMediaChannel(
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      rateLimitPerUser?: number | null;
-      message: {
-        content?: string | null;
-        embeds?: Array<JSONEmbed> | null;
-        allowedMentions?: JSONAllowedMentions | null;
-        components?: Array<JSONActionRow> | null;
-        attachments?: Array<JSONAttachment> | null;
-        flags?: MessageFlags | null;
-      };
-      appliedTags?: Array<string>;
-      files?: Array<File> | null;
-    },
-    reason?: string
-  ): Promise<Channel> {
-    return new Channel(
-      await this.client.rest.post<RawChannel>(Endpoints.threads(this.id), {
-        json: {
-          name: options.name,
-          auto_archive_duration: options.autoArchiveDuration,
-          rate_limit_per_user: options.rateLimitPerUser,
-          message: {
-            content: options.message.content,
-            embeds: options.message.embeds,
-            flags: options.message.flags,
-            allowed_mentions: {
-              parse: options.message.allowedMentions?.parse,
-              roles: options.message.allowedMentions?.roles,
-              users: options.message.allowedMentions?.users,
-              replied_user: options.message.allowedMentions?.repliedUser,
-            },
-            components:
-              options.message.components !== undefined
-                ? options.message.components !== null
-                  ? this.client.util.messageComponentToRaw(
-                      options.message.components
-                    )
-                  : null
-                : undefined,
-            attachments: options.message.attachments,
-          },
-          applied_tags: options.appliedTags,
-        },
-        files: options.files,
-        reason,
-      }),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#join-thread */
-  joinThread(): void {
-    this.client.rest.put(Endpoints.threadMembers(this.id, "@me"));
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#add-thread-member */
-  addThreadMember(userId: string): void {
-    this.client.rest.put(Endpoints.threadMembers(this.id, userId));
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#leave-thread */
-  leaveThread(): void {
-    this.client.rest.delete(Endpoints.threadMembers(this.id, "@me"));
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#remove-thread-member */
-  removeThreadMember(userId: string): void {
-    this.client.rest.delete(Endpoints.threadMembers(this.id, userId));
+      )
+      .then((response) => response.map((data) => new User(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-thread-member */
@@ -754,104 +813,6 @@ export class Channel extends Base {
       );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
-  async getArchivedThreads(
-    archivedStatus: "public" | "private",
-    options?: {
-      before?: string;
-      limit?: number;
-    }
-  ): Promise<{
-    threads: Array<Channel>;
-    members: Array<JSONThreadMember>;
-    hasMore: boolean;
-  }> {
-    return this.client.rest
-      .get<{
-        threads: Array<RawChannel>;
-        members: Array<RawThreadMember>;
-        has_more: boolean;
-      }>(Endpoints.channelThreads(this.id, archivedStatus, false), {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
-      })
-      .then((response) => ({
-        threads: response.threads.map((data) => new Channel(data, this.client)),
-        members: response.members.map((data) => ({
-          id: data.id,
-          userId: data.user_id,
-          joinTimestamp: data.join_timestamp,
-          flags: data.flags,
-          member:
-            data.member !== undefined
-              ? new GuildMember(data.member, this.client)
-              : undefined,
-        })),
-        hasMore: response.has_more,
-      }));
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
-  async getJoinedPrivateArchivedThreads(options?: {
-    before?: string;
-    limit?: number;
-  }): Promise<{
-    threads: Array<Channel>;
-    members: Array<JSONThreadMember>;
-    hasMore: boolean;
-  }> {
-    return this.client.rest
-      .get<{
-        threads: Array<RawChannel>;
-        members: Array<RawThreadMember>;
-        has_more: boolean;
-      }>(Endpoints.channelThreads(this.id, "private", true), {
-        query: {
-          before: options?.before,
-          limit: options?.limit,
-        },
-      })
-      .then((response) => ({
-        threads: response.threads.map((data) => new Channel(data, this.client)),
-        members: response.members.map((data) => ({
-          id: data.id,
-          userId: data.user_id,
-          joinTimestamp: data.join_timestamp,
-          flags: data.flags,
-          member:
-            data.member !== undefined
-              ? new GuildMember(data.member, this.client)
-              : undefined,
-        })),
-        hasMore: response.has_more,
-      }));
-  }
-
-  /** https://discord.com/developers/docs/resources/webhook#create-webhook */
-  async createWebhook(
-    options: {
-      name: string;
-      avatar?: string | null;
-    },
-    reason?: string
-  ): Promise<Webhook> {
-    return new Webhook(
-      await this.client.rest.post<RawWebhook>(
-        Endpoints.channelWebhooks(this.id),
-        {
-          json: {
-            name: options.name,
-            avatar: options.avatar,
-          },
-          reason,
-        }
-      ),
-      this.client
-    );
-  }
-
   /** https://discord.com/developers/docs/resources/webhook#get-channel-webhooks */
   async getWebhooks(): Promise<Array<Webhook>> {
     return this.client.rest
@@ -859,6 +820,45 @@ export class Channel extends Base {
       .then((response) =>
         response.map((data) => new Webhook(data, this.client))
       );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#join-thread */
+  joinThread(): void {
+    this.client.rest.put(Endpoints.threadMembers(this.id, "@me"));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#leave-thread */
+  leaveThread(): void {
+    this.client.rest.delete(Endpoints.threadMembers(this.id, "@me"));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#pin-message */
+  pinMessage(messageId: string, reason?: string): void {
+    this.client.rest.put(Endpoints.channelPin(this.id, messageId), {
+      reason,
+    });
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
+  removeRecipient(userId: string): void {
+    this.client.rest.delete(Endpoints.channelRecipient(this.id, userId));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#remove-thread-member */
+  removeThreadMember(userId: string): void {
+    this.client.rest.delete(Endpoints.threadMembers(this.id, userId));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
+  triggerTypingIndicator(): void {
+    this.client.rest.post(Endpoints.channelTyping(this.id));
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#unpin-message */
+  unpinMessage(messageId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.channelPin(this.id, messageId), {
+      reason,
+    });
   }
 
   override toRaw(): RawChannel & {

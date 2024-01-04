@@ -53,6 +53,16 @@ export class AutoModerationRule extends Base {
     this.exemptChannels = data.exempt_channels;
   }
 
+  /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
+  delete(reason?: string): void {
+    this.client.rest.delete(
+      Endpoints.guildAutoModerationRule(this.guildId, this.id),
+      {
+        reason,
+      }
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
   async edit(
     options: {
@@ -92,16 +102,6 @@ export class AutoModerationRule extends Base {
         }
       ),
       this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
-  delete(reason?: string): void {
-    this.client.rest.delete(
-      Endpoints.guildAutoModerationRule(this.guildId, this.id),
-      {
-        reason,
-      }
     );
   }
 

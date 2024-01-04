@@ -38,14 +38,13 @@ export class GuildTemplate {
     this.isDirty = data.is_dirty;
   }
 
-  /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
-  async sync(): Promise<GuildTemplate> {
-    return new GuildTemplate(
-      await this.client.rest.put<RawGuildTemplate>(
+  /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
+  async delete(): Promise<JSONGuildTemplate> {
+    return this.client.rest
+      .delete<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
-      ),
-      this.client
-    );
+      )
+      .then((response) => new GuildTemplate(response, this.client).toJSON());
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
@@ -67,13 +66,14 @@ export class GuildTemplate {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
-  async delete(): Promise<JSONGuildTemplate> {
-    return this.client.rest
-      .delete<RawGuildTemplate>(
+  /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
+  async sync(): Promise<GuildTemplate> {
+    return new GuildTemplate(
+      await this.client.rest.put<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
-      )
-      .then((response) => new GuildTemplate(response, this.client).toJSON());
+      ),
+      this.client
+    );
   }
 
   toString(): string {

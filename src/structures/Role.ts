@@ -50,6 +50,13 @@ export class Role extends Base {
       };
   }
 
+  /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
+  delete(guildId: string, reason?: string): void {
+    this.client.rest.delete(Endpoints.guildRole(guildId, this.id), {
+      reason,
+    });
+  }
+
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   async edit(
     guildId: string,
@@ -82,13 +89,6 @@ export class Role extends Base {
       ),
       this.client
     );
-  }
-
-  /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
-  delete(guildId: string, reason?: string): void {
-    this.client.rest.delete(Endpoints.guildRole(guildId, this.id), {
-      reason,
-    });
   }
 
   override toRaw(): RawRole & {

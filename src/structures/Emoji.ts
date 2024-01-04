@@ -35,6 +35,15 @@ export class Emoji {
     if (data.available !== undefined) this.available = data.available;
   }
 
+  /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
+  delete(guildId: string, reason?: string): void {
+    if (!this.id) throw new Error("[disgroove] Emoji ID not found");
+
+    this.client.rest.delete(Endpoints.guildEmoji(guildId, this.id), {
+      reason,
+    });
+  }
+
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
   async edit(
     guildId: string,
@@ -59,15 +68,6 @@ export class Emoji {
       ),
       this.client
     );
-  }
-
-  /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
-  delete(guildId: string, reason?: string): void {
-    if (!this.id) throw new Error("[disgroove] Emoji ID not found");
-
-    this.client.rest.delete(Endpoints.guildEmoji(guildId, this.id), {
-      reason,
-    });
   }
 
   toString(): string {

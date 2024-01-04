@@ -65,37 +65,6 @@ export class User extends Base {
       this.avatarDecoration = data.avatar_decoration;
   }
 
-  /** https://discord.com/developers/docs/resources/user#modify-current-user */
-  async edit(options: {
-    username?: string;
-    avatar?: string | null;
-  }): Promise<User> {
-    return new User(
-      await this.client.rest.patch<RawUser>(Endpoints.user(), {
-        json: {
-          username: options.username,
-          avatar: options.avatar,
-        },
-      }),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
-  async getGuildMember(guildId: string): Promise<GuildMember> {
-    return new GuildMember(
-      await this.client.rest.get<RawGuildMember>(
-        Endpoints.guildMember(guildId)
-      ),
-      this.client
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/user#leave-guild */
-  leaveGuild(guildId: string): void {
-    this.client.rest.delete(Endpoints.userGuild(guildId));
-  }
-
   /** https://discord.com/developers/docs/resources/user#create-dm */
   async createDM(options: { recipientId: string }): Promise<Channel> {
     return new Channel(
@@ -124,6 +93,42 @@ export class User extends Base {
     );
   }
 
+  /** https://discord.com/developers/docs/resources/user#modify-current-user */
+  async edit(options: {
+    username?: string;
+    avatar?: string | null;
+  }): Promise<User> {
+    return new User(
+      await this.client.rest.patch<RawUser>(Endpoints.user(), {
+        json: {
+          username: options.username,
+          avatar: options.avatar,
+        },
+      }),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
+  async getApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
+    return this.client.rest
+      .get<RawApplicationRoleConnection>(
+        Endpoints.userApplicationRoleConnection(this.client.application.id)
+      )
+      .then((response) => ({
+        platformName: response.platform_name,
+        platformUsername: response.platform_username,
+        metadata: {
+          type: response.metadata.type,
+          key: response.metadata.key,
+          name: response.metadata.name,
+          nameLocalizations: response.metadata.name_localizations,
+          description: response.metadata.description,
+          descriptionLocalizations: response.metadata.description_localizations,
+        },
+      }));
+  }
+
   /** https://discord.com/developers/docs/resources/user#get-user-connections */
   async getConnections(): Promise<Array<JSONConnection>> {
     return this.client.rest
@@ -146,24 +151,19 @@ export class User extends Base {
       );
   }
 
-  /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
-  async getApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
-    return this.client.rest
-      .get<RawApplicationRoleConnection>(
-        Endpoints.userApplicationRoleConnection(this.client.application.id)
-      )
-      .then((response) => ({
-        platformName: response.platform_name,
-        platformUsername: response.platform_username,
-        metadata: {
-          type: response.metadata.type,
-          key: response.metadata.key,
-          name: response.metadata.name,
-          nameLocalizations: response.metadata.name_localizations,
-          description: response.metadata.description,
-          descriptionLocalizations: response.metadata.description_localizations,
-        },
-      }));
+  /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
+  async getGuildMember(guildId: string): Promise<GuildMember> {
+    return new GuildMember(
+      await this.client.rest.get<RawGuildMember>(
+        Endpoints.guildMember(guildId)
+      ),
+      this.client
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/user#leave-guild */
+  leaveGuild(guildId: string): void {
+    this.client.rest.delete(Endpoints.userGuild(guildId));
   }
 
   /** https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
