@@ -627,8 +627,8 @@ export class Channel extends Base {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel */
-  async createThreadInForumChannel(
+  /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel */
+  async createThreadInForumOrMediaChannel(
     options: {
       name: string;
       autoArchiveDuration?: number;
