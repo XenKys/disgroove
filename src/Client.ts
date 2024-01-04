@@ -205,22 +205,6 @@ export class Client extends EventEmitter {
     this.util = new Util();
   }
 
-  /** https://discord.com/developers/docs/resources/application#get-current-application */
-  async getApplication(): Promise<Application> {
-    return new Application(
-      await this.rest.get<RawApplication>(Endpoints.applicationCurrentUser()),
-      this
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#get-channel */
-  async getChannel(channelId: string): Promise<Channel> {
-    return new Channel(
-      await this.rest.get<RawChannel>(Endpoints.channel(channelId)),
-      this
-    );
-  }
-
   /** https://discord.com/developers/docs/resources/guild#create-guild */
   async createGuild(options: {
     name: string;
@@ -259,23 +243,6 @@ export class Client extends EventEmitter {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/guild#get-guild */
-  async getGuild(
-    guildId: string,
-    options?: {
-      withCounts?: boolean;
-    }
-  ): Promise<Guild> {
-    return new Guild(
-      await this.rest.get<RawGuild>(Endpoints.guild(guildId), {
-        query: {
-          with_counts: options?.withCounts,
-        },
-      }),
-      this
-    );
-  }
-
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template */
   async createGuildFromTemplate(
     code: string,
@@ -289,27 +256,6 @@ export class Client extends EventEmitter {
         json: {
           name: options.name,
           icon: options.icon,
-        },
-      }),
-      this
-    );
-  }
-
-  /** https://discord.com/developers/docs/resources/invite#get-invite */
-  async getInvite(
-    code: string,
-    options?: {
-      withCounts?: boolean;
-      withExpiration?: boolean;
-      guildScheduledEventId?: string;
-    }
-  ): Promise<Invite> {
-    return new Invite(
-      await this.rest.get<RawInvite>(Endpoints.invite(code), {
-        query: {
-          with_counts: options?.withCounts,
-          with_expiration: options?.withExpiration,
-          guild_scheduled_event_id: options?.guildScheduledEventId,
         },
       }),
       this
@@ -340,6 +286,151 @@ export class Client extends EventEmitter {
       }),
       this
     );
+  }
+
+  /** https://discord.com/developers/docs/resources/application#get-current-application */
+  async getApplication(): Promise<Application> {
+    return new Application(
+      await this.rest.get<RawApplication>(Endpoints.applicationCurrentUser()),
+      this
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/channel#get-channel */
+  async getChannel(channelId: string): Promise<Channel> {
+    return new Channel(
+      await this.rest.get<RawChannel>(Endpoints.channel(channelId)),
+      this
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/guild#get-guild */
+  async getGuild(
+    guildId: string,
+    options?: {
+      withCounts?: boolean;
+    }
+  ): Promise<Guild> {
+    return new Guild(
+      await this.rest.get<RawGuild>(Endpoints.guild(guildId), {
+        query: {
+          with_counts: options?.withCounts,
+        },
+      }),
+      this
+    );
+  }
+
+  /** https://discord.com/developers/docs/topics/gateway#get-gateway */
+  async getGateway(): Promise<{ url: string }> {
+    return this.rest.get<{ url: string }>(Endpoints.gateway());
+  }
+
+  /** https://discord.com/developers/docs/topics/gateway#get-gateway-bot */
+  async getGatewayBot(): Promise<{
+    url: string;
+    shards: number;
+    sessionStartLimit: {
+      total: number;
+      remaining: number;
+      resetAfter: number;
+      maxConcurrency: number;
+    };
+  }> {
+    return this.rest
+      .get<{
+        url: string;
+        shards: number;
+        session_start_limit: {
+          total: number;
+          remaining: number;
+          reset_after: number;
+          max_concurrency: number;
+        };
+      }>(Endpoints.gatewayBot())
+      .then((response) => ({
+        url: response.url,
+        shards: response.shards,
+        sessionStartLimit: {
+          total: response.session_start_limit.total,
+          remaining: response.session_start_limit.remaining,
+          resetAfter: response.session_start_limit.reset_after,
+          maxConcurrency: response.session_start_limit.max_concurrency,
+        },
+      }));
+  }
+
+  /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */
+  async getGuilds(options?: {
+    before?: string;
+    after?: string;
+    limit?: number;
+    withCounts?: boolean;
+  }): Promise<Array<Guild>> {
+    return this.rest
+      .get<Array<RawGuild>>(Endpoints.userGuilds(), {
+        query: {
+          before: options?.before,
+          after: options?.after,
+          limit: options?.limit,
+          with_counts: options?.withCounts,
+        },
+      })
+      .then((response) => response.map((data) => new Guild(data, this)));
+  }
+
+  /** https://discord.com/developers/docs/resources/invite#get-invite */
+  async getInvite(
+    code: string,
+    options?: {
+      withCounts?: boolean;
+      withExpiration?: boolean;
+      guildScheduledEventId?: string;
+    }
+  ): Promise<Invite> {
+    return new Invite(
+      await this.rest.get<RawInvite>(Endpoints.invite(code), {
+        query: {
+          with_counts: options?.withCounts,
+          with_expiration: options?.withExpiration,
+          guild_scheduled_event_id: options?.guildScheduledEventId,
+        },
+      }),
+      this
+    );
+  }
+
+  /** https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
+  async getOAuth2Application(): Promise<Application> {
+    return new Application(
+      await this.rest.get<RawApplication>(Endpoints.oauth2CurrentApplication()),
+      this
+    );
+  }
+
+  /** https://discord.com/developers/docs/topics/oauth2#get-current-authorization-information */
+  async getOAuth2Authorization(): Promise<{
+    application: Application;
+    scopes: Array<OAuth2Scopes>;
+    expires: number;
+    user?: User;
+  }> {
+    return this.rest
+      .get<{
+        application: RawApplication;
+        scopes: Array<OAuth2Scopes>;
+        expires: number;
+        user?: RawUser;
+      }>(Endpoints.oauth2Authorization())
+      .then((response) => ({
+        application: new Application(response.application, this),
+        scopes: response.scopes,
+        expires: response.expires,
+        user:
+          response.user !== undefined
+            ? new User(response.user, this)
+            : undefined,
+      }));
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#get-stage-instance */
@@ -392,25 +483,6 @@ export class Client extends EventEmitter {
     return new User(await this.rest.get<RawUser>(Endpoints.user(userId)), this);
   }
 
-  /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */
-  async getGuilds(options?: {
-    before?: string;
-    after?: string;
-    limit?: number;
-    withCounts?: boolean;
-  }): Promise<Array<Guild>> {
-    return this.rest
-      .get<Array<RawGuild>>(Endpoints.userGuilds(), {
-        query: {
-          before: options?.before,
-          after: options?.after,
-          limit: options?.limit,
-          with_counts: options?.withCounts,
-        },
-      })
-      .then((response) => response.map((data) => new Guild(data, this)));
-  }
-
   /** https://discord.com/developers/docs/resources/voice#list-voice-regions */
   async getVoiceRegions(): Promise<Array<JSONVoiceRegion>> {
     return this.rest
@@ -426,45 +498,6 @@ export class Client extends EventEmitter {
       );
   }
 
-  /** https://discord.com/developers/docs/topics/gateway#get-gateway */
-  async getGateway(): Promise<{ url: string }> {
-    return this.rest.get<{ url: string }>(Endpoints.gateway());
-  }
-
-  /** https://discord.com/developers/docs/topics/gateway#get-gateway-bot */
-  async getGatewayBot(): Promise<{
-    url: string;
-    shards: number;
-    sessionStartLimit: {
-      total: number;
-      remaining: number;
-      resetAfter: number;
-      maxConcurrency: number;
-    };
-  }> {
-    return this.rest
-      .get<{
-        url: string;
-        shards: number;
-        session_start_limit: {
-          total: number;
-          remaining: number;
-          reset_after: number;
-          max_concurrency: number;
-        };
-      }>(Endpoints.gatewayBot())
-      .then((response) => ({
-        url: response.url,
-        shards: response.shards,
-        sessionStartLimit: {
-          total: response.session_start_limit.total,
-          remaining: response.session_start_limit.remaining,
-          resetAfter: response.session_start_limit.reset_after,
-          maxConcurrency: response.session_start_limit.max_concurrency,
-        },
-      }));
-  }
-
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
   updatePresence(options: {
     activity?: Pick<Activity, "name" | "type" | "url" | "state">;
@@ -472,39 +505,6 @@ export class Client extends EventEmitter {
     afk?: boolean;
   }): void {
     for (const [id, shard] of this.shards) shard.updatePresence(options);
-  }
-
-  /** https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
-  async getOAuth2Application(): Promise<Application> {
-    return new Application(
-      await this.rest.get<RawApplication>(Endpoints.oauth2CurrentApplication()),
-      this
-    );
-  }
-
-  /** https://discord.com/developers/docs/topics/oauth2#get-current-authorization-information */
-  async getOAuth2Authorization(): Promise<{
-    application: Application;
-    scopes: Array<OAuth2Scopes>;
-    expires: number;
-    user?: User;
-  }> {
-    return this.rest
-      .get<{
-        application: RawApplication;
-        scopes: Array<OAuth2Scopes>;
-        expires: number;
-        user?: RawUser;
-      }>(Endpoints.oauth2Authorization())
-      .then((response) => ({
-        application: new Application(response.application, this),
-        scopes: response.scopes,
-        expires: response.expires,
-        user:
-          response.user !== undefined
-            ? new User(response.user, this)
-            : undefined,
-      }));
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
