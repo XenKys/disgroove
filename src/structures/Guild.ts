@@ -444,7 +444,7 @@ export class Guild extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
-  async bulkOverwriteApplicationCommands(
+  async bulkEditApplicationCommands(
     applicationId: string,
     commands: Array<{
       id?: string;

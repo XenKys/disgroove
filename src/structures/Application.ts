@@ -276,7 +276,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
-  async bulkOverwriteGlobalApplicationCommands(
+  async bulkEditGlobalApplicationCommands(
     commands: Array<{
       id?: string;
       name: string;
@@ -488,7 +488,7 @@ export class Application extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
-  async bulkOverwriteGuildApplicationCommands(
+  async bulkEditGuildApplicationCommands(
     guildId: string,
     commands: Array<{
       id?: string;
