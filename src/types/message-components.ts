@@ -11,7 +11,7 @@ export interface RawButton {
   type: ComponentTypes.Button;
   style: ButtonStyles;
   label?: string;
-  emoji?: Partial<Pick<RawEmoji, "name" | "id" | "animated">>;
+  emoji?: Pick<RawEmoji, "name" | "id" | "animated">;
   custom_id?: string;
   url?: string;
   disabled?: boolean;
@@ -40,7 +40,7 @@ export interface RawSelectOption {
   label: string;
   value: string;
   description?: string;
-  emoji?: Partial<Pick<RawEmoji, "name" | "id" | "animated">>;
+  emoji?: Pick<RawEmoji, "name" | "id" | "animated">;
   default?: boolean;
 }
 
