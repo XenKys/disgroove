@@ -401,6 +401,31 @@ export class Message extends Base {
     );
   }
 
+  /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
+  async createThread(
+    options: {
+      name: string;
+      autoArchiveDuration?: number;
+      rateLimitPerUser?: number | null;
+    },
+    reason?: string
+  ): Promise<Channel> {
+    return new Channel(
+      await this.client.rest.post<RawChannel>(
+        Endpoints.threads(this.channelId, this.id),
+        {
+          json: {
+            name: options.name,
+            auto_archive_duration: options.autoArchiveDuration,
+            rate_limit_per_user: options.rateLimitPerUser,
+          },
+          reason,
+        }
+      ),
+      this.client
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
   async crosspost(): Promise<Message> {
     return new Message(
@@ -500,31 +525,6 @@ export class Message extends Base {
     this.client.rest.put(Endpoints.channelPin(this.channelId, this.id), {
       reason,
     });
-  }
-
-  /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
-  async createThread(
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      rateLimitPerUser?: number | null;
-    },
-    reason?: string
-  ): Promise<Channel> {
-    return new Channel(
-      await this.client.rest.post<RawChannel>(
-        Endpoints.threads(this.channelId, this.id),
-        {
-          json: {
-            name: options.name,
-            auto_archive_duration: options.autoArchiveDuration,
-            rate_limit_per_user: options.rateLimitPerUser,
-          },
-          reason,
-        }
-      ),
-      this.client
-    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
