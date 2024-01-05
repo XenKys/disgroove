@@ -142,7 +142,7 @@ export class ApplicationCommand extends Base {
   }): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
       throw new Error(
-        "[disgroove] Can't edit the permissions of a global application command"
+        "[disgroove] Cannot edit the permissions of a global application command"
       );
 
     return this.client.rest
@@ -174,7 +174,7 @@ export class ApplicationCommand extends Base {
   async getPermissions(): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
       throw new Error(
-        "[disgroove] Can't get the permissions of a global application command"
+        "[disgroove] Cannot get the permissions of a global application command"
       );
 
     return this.client.rest

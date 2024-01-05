@@ -37,7 +37,8 @@ export class Emoji {
 
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
   delete(guildId: string, reason?: string): void {
-    if (!this.id) throw new Error("[disgroove] Emoji ID not found");
+    if (!this.id)
+      throw new Error("[disgroove] Cannot delete a default Discord emoji");
 
     this.client.rest.delete(Endpoints.guildEmoji(guildId, this.id), {
       reason,
@@ -53,7 +54,8 @@ export class Emoji {
     },
     reason?: string
   ): Promise<Emoji> {
-    if (!this.id) throw new Error("[disgroove] Emoji ID not found");
+    if (!this.id)
+      throw new Error("[disgroove] Cannot edit a default Discord emoji");
 
     return new Emoji(
       await this.client.rest.patch<RawEmoji>(
