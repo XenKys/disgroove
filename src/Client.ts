@@ -7,7 +7,6 @@ import {
   StatusTypes,
   type SystemChannelFlags,
   type VerificationLevel,
-  MessageFlags,
 } from "./constants";
 import { Util } from "./utils";
 import { Endpoints, REST } from "./rest";

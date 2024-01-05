@@ -41,7 +41,6 @@ import type {
   JSONVoiceRegion,
   JSONWelcomeScreen,
   JSONWelcomeScreenChannel,
-  RawActivity,
   RawApplicationCommand,
   RawAuditLog,
   RawAutoModerationRule,

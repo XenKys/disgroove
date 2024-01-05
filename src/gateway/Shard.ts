@@ -1,10 +1,5 @@
 import WebSocket, { type RawData } from "ws";
-import {
-  GatewayEvents,
-  GatewayOPCodes,
-  MessageFlags,
-  StatusTypes,
-} from "../constants";
+import { GatewayEvents, GatewayOPCodes, StatusTypes } from "../constants";
 import { GatewayError } from "../utils";
 import {
   Application,
