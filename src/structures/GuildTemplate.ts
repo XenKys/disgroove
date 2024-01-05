@@ -91,7 +91,7 @@ export class GuildTemplate {
       description: this.description,
       usageCount: this.usageCount,
       creatorId: this.creatorId,
-      creator: this.creator,
+      creator: this.creator.toJSON(),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       sourceGuildId: this.sourceGuildId,

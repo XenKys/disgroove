@@ -56,8 +56,8 @@ export class Invite {
     if (data.expires_at !== undefined) this.expiresAt = data.expires_at;
     if (data.stage_instance !== undefined)
       this.stageInstance = {
-        members: data.stage_instance.members.map(
-          (member) => new GuildMember(member, this.client)
+        members: data.stage_instance.members.map((member) =>
+          new GuildMember(member, this.client).toJSON()
         ),
         participantCount: data.stage_instance.participant_count,
         speakerCount: data.stage_instance.speaker_count,

@@ -137,7 +137,7 @@ export class Channel extends Base {
         flags: data.member.flags,
         member:
           data.member.member !== undefined
-            ? new GuildMember(data.member.member, this.client)
+            ? new GuildMember(data.member.member, this.client).toJSON()
             : undefined,
       };
     if (data.default_auto_archive_duration !== undefined)
@@ -159,8 +159,8 @@ export class Channel extends Base {
       this.defaultReactionEmoji =
         data.default_reaction_emoji !== null
           ? {
-              emojiId: data.default_reaction_emoji?.emoji_id,
-              emojiName: data.default_reaction_emoji?.emoji_name,
+              emojiId: data.default_reaction_emoji.emoji_id,
+              emojiName: data.default_reaction_emoji.emoji_name,
             }
           : null;
     if (data.default_thread_rate_limit_per_user !== undefined)
@@ -871,7 +871,7 @@ export class Channel extends Base {
     newlyCreated?: boolean;
   } {
     return {
-      ...super.toJSON(),
+      id: this.id,
       type: this.type,
       guildId: this.guildId,
       position: this.position,

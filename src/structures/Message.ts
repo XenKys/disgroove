@@ -81,7 +81,8 @@ export class Message extends Base {
     this.author = new User(data.author, this.client);
     this.content = data.content;
     this.timestamp = data.timestamp;
-    this.editedTimestamp = null;
+    this.editedTimestamp =
+      data.edited_timestamp !== null ? data.edited_timestamp : null;
     this.mentions = data.mentions.map((user) => new User(user, this.client));
     this.mentionRoles = data.mention_roles;
     this.attachments = data.attachments.map((attachment) => ({
@@ -164,8 +165,6 @@ export class Message extends Base {
   protected override patch(
     data: RawMessage & Partial<RawMessageCreateEventExtraFields>
   ): void {
-    this.editedTimestamp =
-      data.edited_timestamp !== null ? data.edited_timestamp : null;
     if (data.mention_channels !== undefined)
       this.mentionChannels = data.mention_channels.map((mentionChannel) => ({
         id: mentionChannel.id,
@@ -177,7 +176,7 @@ export class Message extends Base {
       this.reactions = data.reactions.map((reaction) => ({
         count: reaction.count,
         me: reaction.me,
-        emoji: new Emoji(reaction.emoji, this.client),
+        emoji: new Emoji(reaction.emoji, this.client).toJSON(),
       }));
     if (data.nonce !== undefined) this.nonce = data.nonce;
     if (data.webhook_id !== undefined) this.webhookId = data.webhook_id;

@@ -84,7 +84,7 @@ export class Integration extends Base {
         description: data.application.description,
         bot:
           data.application.bot !== undefined
-            ? new User(data.application.bot, this.client)
+            ? new User(data.application.bot, this.client).toJSON()
             : undefined,
       };
     if (data.scopes !== undefined) this.scopes = data.scopes;

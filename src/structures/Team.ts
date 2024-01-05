@@ -18,7 +18,7 @@ export class Team extends Base {
     this.members = data.members.map((teamMember) => ({
       membershipState: teamMember.membership_state,
       teamId: teamMember.team_id,
-      user: new User(teamMember.user, client),
+      user: new User(teamMember.user, client).toJSON(),
       role: teamMember.role,
     }));
     this.name = data.name;
