@@ -165,12 +165,12 @@ export interface JSONModalSubmitData {
 }
 
 export interface JSONResolvedData {
-  users?: Array<JSONUser>;
-  members?: Array<JSONGuildMember>;
-  roles?: Array<JSONRole>;
-  channels?: Array<JSONChannel>;
-  messages?: Array<JSONMessage>;
-  attachments?: Array<JSONAttachment>;
+  users?: Map<string, JSONUser>;
+  members?: Map<string, JSONGuildMember>;
+  roles?: Map<string, JSONRole>;
+  channels?: Map<string, JSONChannel>;
+  messages?: Map<string, JSONMessage>;
+  attachments?: Map<string, JSONAttachment>;
 }
 
 export interface JSONApplicationCommandInteractionDataOption {

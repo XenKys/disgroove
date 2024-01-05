@@ -79,49 +79,67 @@ export class Interaction extends Base {
         resolved: {
           users:
             data.data.resolved?.users !== undefined
-              ? Object.values(data.data.resolved?.users).map(
-                  (user) => new User(user, this.client)
+              ? new Map(
+                  Array.from(data.data.resolved.users, ([key, value]) => [
+                    key,
+                    new User(value, this.client).toJSON(),
+                  ])
                 )
               : undefined,
           members:
             data.data.resolved?.members !== undefined
-              ? Object.values(data.data.resolved?.members).map(
-                  (member) => new GuildMember(member, this.client)
+              ? new Map(
+                  Array.from(data.data.resolved.members, ([key, value]) => [
+                    key,
+                    new GuildMember(value, this.client).toJSON(),
+                  ])
                 )
               : undefined,
           roles:
             data.data.resolved?.roles !== undefined
-              ? Object.values(data.data.resolved?.roles).map(
-                  (role) => new Role(role, this.client)
+              ? new Map(
+                  Array.from(data.data.resolved.roles, ([key, value]) => [
+                    key,
+                    new Role(value, this.client).toJSON(),
+                  ])
                 )
               : undefined,
           channels:
             data.data.resolved?.channels !== undefined
-              ? Object.values(data.data.resolved?.channels).map(
-                  (channel) => new Channel(channel, this.client)
+              ? new Map(
+                  Array.from(data.data.resolved.channels, ([key, value]) => [
+                    key,
+                    new Channel(value, this.client).toJSON(),
+                  ])
                 )
               : undefined,
           messages:
             data.data.resolved?.messages !== undefined
-              ? Object.values(data.data.resolved?.messages).map(
-                  (message) => new Message(message, this.client)
+              ? new Map(
+                  Array.from(data.data.resolved.messages, ([key, value]) => [
+                    key,
+                    new Message(value, this.client).toJSON(),
+                  ])
                 )
               : undefined,
           attachments:
             data.data.resolved?.attachments !== undefined
-              ? Object.values(data.data.resolved?.attachments).map(
-                  (attachment) => ({
-                    id: attachment.id,
-                    filename: attachment.filename,
-                    description: attachment.description,
-                    contentType: attachment.content_type,
-                    size: attachment.size,
-                    url: attachment.url,
-                    proxyUrl: attachment.proxy_url,
-                    height: attachment.height,
-                    width: attachment.width,
-                    ephemeral: attachment.ephemeral,
-                  })
+              ? new Map(
+                  Array.from(data.data.resolved.attachments, ([key, value]) => [
+                    key,
+                    {
+                      id: value.id,
+                      filename: value.filename,
+                      description: value.description,
+                      contentType: value.content_type,
+                      size: value.size,
+                      url: value.url,
+                      proxyUrl: value.proxy_url,
+                      height: value.height,
+                      width: value.width,
+                      ephemeral: value.ephemeral,
+                    },
+                  ])
                 )
               : undefined,
         },
