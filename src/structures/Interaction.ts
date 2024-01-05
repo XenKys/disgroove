@@ -537,7 +537,7 @@ export class Interaction extends Base {
 
   override toJSON(): JSONInteraction {
     return {
-      id: this.id,
+      ...super.toJSON(),
       applicationId: this.applicationId,
       type: this.type,
       data: this.data,

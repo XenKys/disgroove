@@ -32,7 +32,7 @@ export class Team extends Base {
   override toJSON(): JSONTeam {
     return {
       icon: this.icon,
-      id: this.id,
+      ...super.toJSON(),
       members: this.members,
       name: this.name,
       ownerUserId: this.ownerUserId,

@@ -203,7 +203,7 @@ export class ApplicationCommand extends Base {
 
   override toJSON(): JSONApplicationCommand {
     return {
-      id: this.id,
+      ...super.toJSON(),
       type: this.type,
       applicationId: this.applicationId,
       guildId: this.guildId,

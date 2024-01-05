@@ -99,7 +99,7 @@ export class Role extends Base {
 
   override toJSON(): JSONRole {
     return {
-      id: this.id,
+      ...super.toJSON(),
       name: this.name,
       color: this.color,
       hoist: this.hoist,

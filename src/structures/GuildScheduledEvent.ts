@@ -143,7 +143,7 @@ export class GuildScheduledEvent extends Base {
 
   override toJSON(): JSONGuildScheduledEvent {
     return {
-      id: this.id,
+      ...super.toJSON(),
       guildId: this.guildId,
       channelId: this.channelId,
       creatorId: this.creatorId,

@@ -540,7 +540,7 @@ export class Message extends Base {
 
   override toJSON(): JSONMessage & Partial<JSONMessageCreateEventExtraFields> {
     return {
-      id: this.id,
+      ...super.toJSON(),
       channelId: this.channelId,
       author: this.author.toJSON(),
       content: this.content,

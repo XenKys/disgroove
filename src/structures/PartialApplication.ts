@@ -724,7 +724,7 @@ export class PartialApplication extends Base {
 
   override toJSON(): Pick<JSONApplication, "id" | "flags"> {
     return {
-      id: this.id,
+      ...super.toJSON(),
       flags: this.flags,
     };
   }

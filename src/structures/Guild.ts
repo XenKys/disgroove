@@ -1935,7 +1935,7 @@ export class Guild extends Base {
 
   override toJSON(): JSONGuild & Partial<JSONGuildCreateEventExtraFields> {
     return {
-      id: this.id,
+      ...super.toJSON(),
       name: this.name,
       icon: this.icon,
       iconHash: this.iconHash,

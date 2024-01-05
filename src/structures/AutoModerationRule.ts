@@ -111,7 +111,7 @@ export class AutoModerationRule extends Base {
 
   override toJSON(): JSONAutoModerationRule {
     return {
-      id: this.id,
+      ...super.toJSON(),
       guildId: this.guildId,
       name: this.name,
       creatorId: this.creatorId,

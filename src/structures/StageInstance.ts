@@ -62,7 +62,7 @@ export class StageInstance extends Base {
 
   override toJSON(): JSONStageInstance {
     return {
-      id: this.id,
+      ...super.toJSON(),
       guildId: this.guildId,
       channelId: this.channelId,
       topic: this.topic,

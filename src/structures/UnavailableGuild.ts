@@ -1747,7 +1747,7 @@ export class UnavailableGuild extends Base {
 
   override toJSON(): JSONUnavailableGuild {
     return {
-      id: this.id,
+      ...super.toJSON(),
       unavailable: this.unavailable,
     };
   }

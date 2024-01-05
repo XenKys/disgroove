@@ -83,7 +83,7 @@ export class Sticker extends Base {
 
   override toJSON(): JSONSticker {
     return {
-      id: this.id,
+      ...super.toJSON(),
       packId: this.packId,
       name: this.name,
       description: this.description,

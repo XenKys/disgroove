@@ -210,7 +210,7 @@ export class User extends Base {
 
   override toJSON(): JSONUser {
     return {
-      id: this.id,
+      ...super.toJSON(),
       username: this.username,
       discriminator: this.discriminator,
       globalName: this.globalName,

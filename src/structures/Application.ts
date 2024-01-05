@@ -783,7 +783,7 @@ export class Application extends Base {
 
   override toJSON(): JSONApplication {
     return {
-      id: this.id,
+      ...super.toJSON(),
       name: this.name,
       icon: this.icon,
       description: this.description,

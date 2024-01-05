@@ -114,7 +114,7 @@ export class Integration extends Base {
       | JSONIntegrationUpdateEventExtraFields
     > {
     return {
-      id: this.id,
+      ...super.toJSON(),
       name: this.name,
       type: this.type,
       enabled: this.enabled,

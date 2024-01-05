@@ -324,7 +324,7 @@ export class Webhook extends Base {
 
   override toJSON(): JSONWebhook {
     return {
-      id: this.id,
+      ...super.toJSON(),
       type: this.type,
       guildId: this.guildId,
       channelId: this.channelId,
