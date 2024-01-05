@@ -95,6 +95,9 @@ export class Message extends Base {
       height: attachment.height,
       width: attachment.width,
       ephemeral: attachment.ephemeral,
+      durationSecs: attachment.duration_secs,
+      waveform: attachment.waveform,
+      flags: attachment.flags,
     }));
     this.embeds = data.embeds.map((embed) => ({
       title: embed.title,
