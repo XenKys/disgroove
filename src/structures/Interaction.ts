@@ -138,6 +138,9 @@ export class Interaction extends Base {
                       height: value.height,
                       width: value.width,
                       ephemeral: value.ephemeral,
+                      durationSecs: value.duration_secs,
+                      waveform: value.waveform,
+                      flags: value.flags,
                     },
                   ])
                 )
