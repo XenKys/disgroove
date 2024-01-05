@@ -303,23 +303,6 @@ export class Client extends EventEmitter {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/guild#get-guild */
-  async getGuild(
-    guildId: string,
-    options?: {
-      withCounts?: boolean;
-    }
-  ): Promise<Guild> {
-    return new Guild(
-      await this.rest.get<RawGuild>(Endpoints.guild(guildId), {
-        query: {
-          with_counts: options?.withCounts,
-        },
-      }),
-      this
-    );
-  }
-
   /** https://discord.com/developers/docs/topics/gateway#get-gateway */
   async getGateway(): Promise<{ url: string }> {
     return this.rest.get<{ url: string }>(Endpoints.gateway());
@@ -357,6 +340,23 @@ export class Client extends EventEmitter {
           maxConcurrency: response.session_start_limit.max_concurrency,
         },
       }));
+  }
+
+  /** https://discord.com/developers/docs/resources/guild#get-guild */
+  async getGuild(
+    guildId: string,
+    options?: {
+      withCounts?: boolean;
+    }
+  ): Promise<Guild> {
+    return new Guild(
+      await this.rest.get<RawGuild>(Endpoints.guild(guildId), {
+        query: {
+          with_counts: options?.withCounts,
+        },
+      }),
+      this
+    );
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */
