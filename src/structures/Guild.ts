@@ -213,12 +213,14 @@ export class Guild extends Base {
     if (data.welcome_screen !== undefined)
       this.welcomeScreen = {
         description: data.welcome_screen.description,
-        welcomeChannels: data.welcome_screen.welcome_channels.map((data) => ({
-          channelId: data.channel_id,
-          description: data.description,
-          emojiId: data.emoji_id,
-          emojiName: data.emoji_name,
-        })),
+        welcomeChannels: data.welcome_screen.welcome_channels.map(
+          (welcomeChannel) => ({
+            channelId: welcomeChannel.channel_id,
+            description: welcomeChannel.description,
+            emojiId: welcomeChannel.emoji_id,
+            emojiName: welcomeChannel.emoji_name,
+          })
+        ),
       };
     if (data.stickers !== undefined)
       this.stickers = data.stickers.map(
@@ -249,7 +251,7 @@ export class Guild extends Base {
         user: new User(presence.user, this.client),
         guildId: presence.guild_id,
         status: presence.status,
-        activities: presence.activities.map((activity: RawActivity) => ({
+        activities: presence.activities.map((activity) => ({
           name: activity.name,
           type: activity.type,
           url: activity.url,
@@ -268,16 +270,9 @@ export class Guild extends Base {
           secrets: activity.secrets,
           instance: activity.instance,
           flags: activity.flags,
-          buttons: activity.buttons?.map((button: any) => ({
-            label: button.label,
-            url: button.url,
-          })),
+          buttons: activity.buttons,
         })),
-        clientStatus: {
-          desktop: presence.client_status.desktop,
-          mobile: presence.client_status.mobile,
-          web: presence.client_status.web,
-        },
+        clientStatus: presence.client_status,
       }));
     if (data.stage_instances !== undefined)
       this.stageInstances = data.stage_instances.map(

@@ -36,6 +36,7 @@ import type {
   RawThreadMember,
   RawAuditLogChange,
   RawUnavailableGuild,
+  RawPresenceUpdateEventFields,
 } from "../types";
 import { Client } from "../Client";
 
@@ -460,7 +461,35 @@ export class Shard {
           chunkIndex: packet.d.chunk_index,
           chunkCount: packet.d.chunk_count,
           notFound: packet.d.not_found,
-          presences: packet.d.presences,
+          presences: packet.d.presences.map(
+            (presence: RawPresenceUpdateEventFields) => ({
+              user: new User(presence.user, this.client),
+              guildId: presence.guild_id,
+              status: presence.status,
+              activities: presence.activities.map((activity) => ({
+                name: activity.name,
+                type: activity.type,
+                url: activity.url,
+                createdAt: activity.created_at,
+                timestamps: activity.timestamps,
+                applicationId: activity.application_id,
+                details: activity.details,
+                state: activity.state,
+                party: activity.party,
+                assets: {
+                  largeImage: activity.assets?.large_image,
+                  largeText: activity.assets?.large_text,
+                  smallImage: activity.assets?.small_image,
+                  smallText: activity.assets?.small_text,
+                },
+                secrets: activity.secrets,
+                instance: activity.instance,
+                flags: activity.flags,
+                buttons: activity.buttons,
+              })),
+              clientStatus: presence.client_status,
+            })
+          ),
           nonce: packet.d.nonce,
         });
         break;
