@@ -309,9 +309,7 @@ export class Guild extends Base {
       .then((response) => {
         if (response !== null) {
           return new GuildMember(response, this.client);
-        } else {
-          return null;
-        }
+        } else return null;
       });
   }
 

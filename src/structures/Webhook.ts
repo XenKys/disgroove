@@ -203,52 +203,11 @@ export class Webhook extends Base {
     attachments?: Array<JSONAttachment> | null;
     flags?: MessageFlags | null;
     threadName?: string;
-  }): Promise<Message | void> {
+  }): Promise<Message | null> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
-    if (options.wait || options.wait === undefined) {
-      return new Message(
-        await this.client.rest.post<RawMessage>(
-          Endpoints.webhook(this.id, this.token),
-          {
-            json: {
-              content: options.content,
-              tts: options.tts,
-              embeds:
-                options.embeds !== undefined
-                  ? options.embeds !== null
-                    ? this.client.util.embedsToRaw(options.embeds)
-                    : null
-                  : undefined,
-              allowed_mentions: {
-                parse: options.allowedMentions?.parse,
-                roles: options.allowedMentions?.roles,
-                users: options.allowedMentions?.users,
-                replied_user: options.allowedMentions?.repliedUser,
-              },
-              components:
-                options.components !== undefined
-                  ? options.components !== null
-                    ? this.client.util.messageComponentToRaw(options.components)
-                    : null
-                  : undefined,
-              attachments: options.attachments,
-              flags: options.flags,
-              thread_name: options.threadName,
-            },
-            files: options.files,
-            query: {
-              wait: options.wait,
-              thread_id: options.threadId,
-              username: options.username,
-              avatarURL: options.avatarURL,
-            },
-          }
-        ),
-        this.client
-      );
-    } else {
-      this.client.rest.post(Endpoints.webhook(this.id, this.token), {
+    return this.client.rest
+      .post<RawMessage | null>(Endpoints.webhook(this.id, this.token), {
         json: {
           content: options.content,
           tts: options.tts,
@@ -281,32 +240,23 @@ export class Webhook extends Base {
           username: options.username,
           avatarURL: options.avatarURL,
         },
+      })
+      .then((response) => {
+        if (response !== null) {
+          return new Message(response, this.client);
+        } else return null;
       });
-    }
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
   async executeGitHubCompatible(options: {
     threadId?: string;
     wait?: boolean;
-  }): Promise<Message | void> {
+  }): Promise<Message | null> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
-    if (options.wait || options.wait === undefined) {
-      return new Message(
-        await this.client.rest.post<RawMessage>(
-          Endpoints.webhookPlatform(this.id, this.token, "github"),
-          {
-            query: {
-              thread_id: options.threadId,
-              wait: options.wait,
-            },
-          }
-        ),
-        this.client
-      );
-    } else {
-      this.client.rest.post<RawMessage>(
+    return this.client.rest
+      .post<RawMessage | null>(
         Endpoints.webhookPlatform(this.id, this.token, "github"),
         {
           query: {
@@ -314,32 +264,23 @@ export class Webhook extends Base {
             wait: options.wait,
           },
         }
-      );
-    }
+      )
+      .then((response) => {
+        if (response !== null) {
+          return new Message(response, this.client);
+        } else return null;
+      });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
   async executeSlackCompatible(options: {
     threadId?: string;
     wait?: boolean;
-  }): Promise<Message | void> {
+  }): Promise<Message | null> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
-    if (options.wait || options.wait === undefined) {
-      return new Message(
-        await this.client.rest.post<RawMessage>(
-          Endpoints.webhookPlatform(this.id, this.token, "slack"),
-          {
-            query: {
-              thread_id: options.threadId,
-              wait: options.wait,
-            },
-          }
-        ),
-        this.client
-      );
-    } else {
-      this.client.rest.post<RawMessage>(
+    return this.client.rest
+      .post<RawMessage | null>(
         Endpoints.webhookPlatform(this.id, this.token, "slack"),
         {
           query: {
@@ -347,8 +288,12 @@ export class Webhook extends Base {
             wait: options.wait,
           },
         }
-      );
-    }
+      )
+      .then((response) => {
+        if (response !== null) {
+          return new Message(response, this.client);
+        } else return null;
+      });
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
