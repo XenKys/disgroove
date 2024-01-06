@@ -322,69 +322,71 @@ export class Message extends Base {
         users:
           data.resolved?.users !== undefined
             ? new Map(
-                Array.from(data.resolved.users, ([key, value]) => [
-                  key,
-                  new User(value, this.client).toJSON(),
+                Object.entries(data.resolved.users).map(([id, user]) => [
+                  id,
+                  new User(user, this.client).toJSON(),
                 ])
               )
             : undefined,
         members:
           data.resolved?.members !== undefined
             ? new Map(
-                Array.from(data.resolved.members, ([key, value]) => [
-                  key,
-                  new GuildMember(value, this.client).toJSON(),
+                Object.entries(data.resolved.members).map(([id, member]) => [
+                  id,
+                  new GuildMember(member, this.client).toJSON(),
                 ])
               )
             : undefined,
         roles:
           data.resolved?.roles !== undefined
             ? new Map(
-                Array.from(data.resolved.roles, ([key, value]) => [
-                  key,
-                  new Role(value, this.client).toJSON(),
+                Object.entries(data.resolved.roles).map(([id, role]) => [
+                  id,
+                  new Role(role, this.client).toJSON(),
                 ])
               )
             : undefined,
         channels:
           data.resolved?.channels !== undefined
             ? new Map(
-                Array.from(data.resolved.channels, ([key, value]) => [
-                  key,
-                  new Channel(value, this.client).toJSON(),
+                Object.entries(data.resolved.channels).map(([id, channel]) => [
+                  id,
+                  new Channel(channel, this.client).toJSON(),
                 ])
               )
             : undefined,
         messages:
           data.resolved?.messages !== undefined
             ? new Map(
-                Array.from(data.resolved.messages, ([key, value]) => [
-                  key,
-                  new Message(value, this.client).toJSON(),
+                Object.entries(data.resolved.messages).map(([id, message]) => [
+                  id,
+                  new Message(message, this.client).toJSON(),
                 ])
               )
             : undefined,
         attachments:
           data.resolved?.attachments !== undefined
             ? new Map(
-                Array.from(data.resolved.attachments, ([key, value]) => [
-                  key,
-                  {
-                    id: value.id,
-                    filename: value.filename,
-                    description: value.description,
-                    contentType: value.content_type,
-                    size: value.size,
-                    url: value.url,
-                    proxyUrl: value.proxy_url,
-                    height: value.height,
-                    width: value.width,
-                    ephemeral: value.ephemeral,
-                    durationSecs: value.duration_secs,
-                    waveform: value.waveform,
-                    flags: value.flags,
-                  },
-                ])
+                Object.entries(data.resolved.attachments).map(
+                  ([id, attachment]) => [
+                    id,
+                    {
+                      id: attachment.id,
+                      filename: attachment.filename,
+                      description: attachment.description,
+                      contentType: attachment.content_type,
+                      size: attachment.size,
+                      url: attachment.url,
+                      proxyUrl: attachment.proxy_url,
+                      height: attachment.height,
+                      width: attachment.width,
+                      ephemeral: attachment.ephemeral,
+                      durationSecs: attachment.duration_secs,
+                      waveform: attachment.waveform,
+                      flags: attachment.flags,
+                    },
+                  ]
+                )
               )
             : undefined,
       };

@@ -82,12 +82,12 @@ export interface RawModalSubmitData {
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
 export interface RawResolvedData {
-  users?: Map<string, RawUser>;
-  members?: Map<string, RawGuildMember>;
-  roles?: Map<string, RawRole>;
-  channels?: Map<string, RawChannel>;
-  messages?: Map<string, RawMessage>;
-  attachments?: Map<string, RawAttachment>;
+  users?: Record<string, RawUser>;
+  members?: Record<string, RawGuildMember>;
+  roles?: Record<string, RawRole>;
+  channels?: Record<string, RawChannel>;
+  messages?: Record<string, RawMessage>;
+  attachments?: Record<string, RawAttachment>;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
