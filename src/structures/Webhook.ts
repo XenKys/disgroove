@@ -146,7 +146,7 @@ export class Webhook extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentsToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,
@@ -226,7 +226,7 @@ export class Webhook extends Base {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? this.client.util.messageComponentToRaw(options.components)
+                ? this.client.util.messageComponentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments,

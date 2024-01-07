@@ -250,7 +250,9 @@ export class Util {
     };
   }
 
-  messageComponentToRaw(components: Array<JSONActionRow>): Array<RawActionRow> {
+  messageComponentsToRaw(
+    components: Array<JSONActionRow>
+  ): Array<RawActionRow> {
     return components.map((component) => ({
       type: component.type,
       components: component.components.map((c) => {

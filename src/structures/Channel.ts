@@ -278,7 +278,7 @@ export class Channel extends Base {
             message_reference: options.messageReference,
             components:
               options.components !== undefined
-                ? this.client.util.messageComponentToRaw(options.components)
+                ? this.client.util.messageComponentsToRaw(options.components)
                 : undefined,
             stickers_ids: options.stickersIds,
             attachments: options.attachments,
@@ -362,7 +362,7 @@ export class Channel extends Base {
             components:
               options.message.components !== undefined
                 ? options.message.components !== null
-                  ? this.client.util.messageComponentToRaw(
+                  ? this.client.util.messageComponentsToRaw(
                       options.message.components
                     )
                   : null
@@ -569,7 +569,7 @@ export class Channel extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentsToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,

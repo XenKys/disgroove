@@ -218,7 +218,7 @@ export class Interaction extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentsToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,
@@ -258,7 +258,7 @@ export class Interaction extends Base {
                   flags: options.data?.flags,
                   components:
                     options.data?.components !== undefined
-                      ? this.client.util.messageComponentToRaw(
+                      ? this.client.util.messageComponentsToRaw(
                           options.data.components
                         )
                       : undefined,
@@ -316,7 +316,7 @@ export class Interaction extends Base {
                   custom_id: options.data?.customId,
                   components:
                     options.data?.components !== undefined
-                      ? this.client.util.messageComponentToRaw(
+                      ? this.client.util.messageComponentsToRaw(
                           options.data.components
                         )
                       : undefined,
@@ -392,7 +392,7 @@ export class Interaction extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentsToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,
@@ -440,7 +440,7 @@ export class Interaction extends Base {
             components:
               options.components !== undefined
                 ? options.components !== null
-                  ? this.client.util.messageComponentToRaw(options.components)
+                  ? this.client.util.messageComponentsToRaw(options.components)
                   : null
                 : undefined,
             attachments: options.attachments,
