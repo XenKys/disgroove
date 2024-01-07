@@ -17,6 +17,7 @@ import type {
   JSONAttachment,
   JSONEmbed,
   JSONInteraction,
+  JSONInteractionResponse,
   JSONMessageComponentData,
   JSONModalSubmitData,
   RawInteraction,
@@ -234,22 +235,7 @@ export class Interaction extends Base {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
-  createResponse(options: {
-    type: InteractionCallbackType;
-    data: {
-      tts?: boolean;
-      content?: string;
-      embeds?: Array<JSONEmbed>;
-      allowedMentions?: JSONAllowedMentions;
-      flags?: MessageFlags;
-      components?: Array<JSONActionRow>;
-      attachments?: Array<JSONAttachment>;
-      choices?: Array<JSONApplicationCommandOptionChoice>;
-      customId?: string;
-      title?: string;
-      files?: Array<File>;
-    };
-  }): void {
+  createResponse(options: JSONInteractionResponse): void {
     switch (options.type) {
       case InteractionCallbackType.ChannelMessageWithSource:
       case InteractionCallbackType.UpdateMessage:
@@ -260,47 +246,33 @@ export class Interaction extends Base {
               json: {
                 type: options.type,
                 data: {
-                  content: options.data.content,
+                  content: options.data?.content,
                   embeds:
-                    options.data.embeds !== undefined
+                    options.data?.embeds !== undefined
                       ? this.client.util.embedsToRaw(options.data.embeds)
                       : undefined,
                   allowed_mentions: {
-                    parse: options.data.allowedMentions?.parse,
-                    roles: options.data.allowedMentions?.roles,
-                    users: options.data.allowedMentions?.users,
-                    replied_user: options.data.allowedMentions?.repliedUser,
+                    parse: options.data?.allowedMentions?.parse,
+                    roles: options.data?.allowedMentions?.roles,
+                    users: options.data?.allowedMentions?.users,
+                    replied_user: options.data?.allowedMentions?.repliedUser,
                   },
-                  flags: options.data.flags,
+                  flags: options.data?.flags,
                   components:
-                    options.data.components !== undefined
+                    options.data?.components !== undefined
                       ? this.client.util.messageComponentToRaw(
                           options.data.components
                         )
                       : undefined,
-                  attachments: options.data.attachments,
+                  attachments: options.data?.attachments,
                 },
               },
-              files: options.data.files,
+              files: options.data?.files,
             }
           );
         }
         break;
       case InteractionCallbackType.DeferredChannelMessageWithSource:
-        {
-          this.client.rest.post(
-            Endpoints.interactionCallback(this.id, this.token),
-            {
-              json: {
-                type: options.type,
-                data: {
-                  flags: options.data.flags,
-                },
-              },
-            }
-          );
-        }
-        break;
       case InteractionCallbackType.DeferredUpdateMessage:
         {
           this.client.rest.post(
@@ -308,6 +280,9 @@ export class Interaction extends Base {
             {
               json: {
                 type: options.type,
+                data: {
+                  flags: options.data?.flags,
+                },
               },
             }
           );
@@ -321,7 +296,7 @@ export class Interaction extends Base {
               json: {
                 type: options.type,
                 data: {
-                  choices: options.data.choices?.map((choice) => ({
+                  choices: options.data?.choices?.map((choice) => ({
                     name: choice.name,
                     name_localizations: choice.nameLocalizations,
                     value: choice.value,
@@ -340,31 +315,14 @@ export class Interaction extends Base {
               json: {
                 type: options.type,
                 data: {
-                  custom_id: options.data.customId,
+                  custom_id: options.data?.customId,
                   components:
-                    options.data.components !== undefined
-                      ? options.data.components.map((component) => ({
-                          type: component.type,
-                          components: component.components.map((c) => {
-                            switch (c.type) {
-                              case ComponentTypes.TextInput: {
-                                return {
-                                  type: c.type,
-                                  custom_id: c.customId,
-                                  style: c.style,
-                                  label: c.label,
-                                  min_length: c.minLength,
-                                  max_length: c.maxLength,
-                                  required: c.required,
-                                  value: c.value,
-                                  placeholder: c.placeholder,
-                                };
-                              }
-                            }
-                          }),
-                        }))
+                    options.data?.components !== undefined
+                      ? this.client.util.messageComponentToRaw(
+                          options.data.components
+                        )
                       : undefined,
-                  title: options.data.title,
+                  title: options.data?.title,
                 },
               },
             }
@@ -378,6 +336,7 @@ export class Interaction extends Base {
             {
               json: {
                 type: options.type,
+                data: {},
               },
             }
           );

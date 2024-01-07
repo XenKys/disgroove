@@ -13,12 +13,23 @@ import type {
   JSONChannel,
   JSONEntitlement,
   RawEntitlement,
+  RawEmbed,
+  RawAllowedMentions,
+  RawActionRow,
+  RawApplicationCommandOptionChoice,
+  JSONEmbed,
+  JSONAllowedMentions,
+  JSONActionRow,
+  JSONApplicationCommandOptionChoice,
 } from ".";
 import type {
   ApplicationCommandTypes,
   ComponentTypes,
+  InteractionCallbackType,
   InteractionType,
+  MessageFlags,
 } from "../constants";
+import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {
@@ -108,6 +119,27 @@ export interface RawMessageInteraction {
   member?: RawGuildMember;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-response-structure */
+export interface RawInteractionResponse {
+  type: InteractionCallbackType;
+  data?: RawInteractionCallbackData;
+}
+
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-data-structure */
+export interface RawInteractionCallbackData {
+  tts?: boolean;
+  content?: string;
+  embeds?: Array<RawEmbed>;
+  allowed_mentions?: RawAllowedMentions;
+  flags?: MessageFlags;
+  components?: Array<RawActionRow>;
+  attachments?: Array<RawAttachment>;
+  files?: Array<File>;
+  choices?: Array<RawApplicationCommandOptionChoice>;
+  custom_id?: string;
+  title?: string;
+}
+
 export interface JSONInteraction {
   id: string;
   applicationId: string;
@@ -187,4 +219,23 @@ export interface JSONMessageInteraction {
   name: string;
   user: JSONUser;
   member?: JSONGuildMember;
+}
+
+export interface JSONInteractionResponse {
+  type: InteractionCallbackType;
+  data?: JSONInteractionCallbackData;
+}
+
+export interface JSONInteractionCallbackData {
+  tts?: boolean;
+  content?: string;
+  embeds?: Array<JSONEmbed>;
+  allowedMentions?: JSONAllowedMentions;
+  flags?: MessageFlags;
+  components?: Array<JSONActionRow>;
+  attachments?: Array<JSONAttachment>;
+  files?: Array<File>;
+  choices?: Array<JSONApplicationCommandOptionChoice>;
+  customId?: string;
+  title?: string;
 }
