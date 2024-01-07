@@ -128,21 +128,7 @@ export class Interaction extends Base {
                   Object.entries(data.data.resolved.attachments).map(
                     ([id, attachment]) => [
                       id,
-                      {
-                        id: attachment.id,
-                        filename: attachment.filename,
-                        description: attachment.description,
-                        contentType: attachment.content_type,
-                        size: attachment.size,
-                        url: attachment.url,
-                        proxyURL: attachment.proxy_url,
-                        height: attachment.height,
-                        width: attachment.width,
-                        ephemeral: attachment.ephemeral,
-                        durationSecs: attachment.duration_secs,
-                        waveform: attachment.waveform,
-                        flags: attachment.flags,
-                      },
+                      this.client.util.attachmentToJSON(attachment),
                     ]
                   )
                 )

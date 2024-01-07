@@ -1,6 +1,7 @@
 import type {
   JSONActionRow,
   JSONApplicationCommand,
+  JSONAttachment,
   JSONChannel,
   JSONEmbed,
   JSONEmoji,
@@ -8,6 +9,7 @@ import type {
   JSONUser,
   RawActionRow,
   RawApplicationCommand,
+  RawAttachment,
   RawChannel,
   RawEmbed,
   RawEmoji,
@@ -72,6 +74,24 @@ export class Util {
       default_permission: command.defaultPermission,
       nsfw: command.nsfw,
       version: command.version,
+    };
+  }
+
+  attachmentToJSON(attachment: RawAttachment): JSONAttachment {
+    return {
+      id: attachment.id,
+      filename: attachment.filename,
+      description: attachment.description,
+      contentType: attachment.content_type,
+      size: attachment.size,
+      url: attachment.url,
+      proxyURL: attachment.proxy_url,
+      height: attachment.height,
+      width: attachment.width,
+      ephemeral: attachment.ephemeral,
+      durationSecs: attachment.duration_secs,
+      waveform: attachment.waveform,
+      flags: attachment.flags,
     };
   }
 
@@ -176,6 +196,67 @@ export class Util {
     };
   }
 
+  embedsToJSON(embeds: Array<RawEmbed>): Array<JSONEmbed> {
+    return embeds.map((embed) => ({
+      title: embed.title,
+      type: embed.type,
+      description: embed.description,
+      url: embed.url,
+      timestamp: embed.timestamp,
+      color: embed.color,
+      footer:
+        embed.footer !== undefined
+          ? {
+              text: embed.footer.text,
+              iconURL: embed.footer.icon_url,
+              proxyIconURL: embed.footer.proxy_icon_url,
+            }
+          : undefined,
+      image:
+        embed.image !== undefined
+          ? {
+              url: embed.image.url,
+              proxyURL: embed.image.proxy_url,
+              height: embed.image.height,
+              width: embed.image.width,
+            }
+          : undefined,
+      thumbnail:
+        embed.thumbnail !== undefined
+          ? {
+              url: embed.thumbnail.url,
+              proxyURL: embed.thumbnail.proxy_url,
+              height: embed.thumbnail.height,
+              width: embed.thumbnail.width,
+            }
+          : undefined,
+      video: {
+        url: embed.video?.url,
+        proxyURL: embed.video?.proxy_url,
+        height: embed.video?.height,
+        width: embed.video?.width,
+      },
+      provider: {
+        name: embed.provider?.name,
+        url: embed.provider?.url,
+      },
+      author:
+        embed.author !== undefined
+          ? {
+              name: embed.author.name,
+              url: embed.author.url,
+              iconURL: embed.author.icon_url,
+              proxyIconURL: embed.author.proxy_icon_url,
+            }
+          : undefined,
+      fields: embed.fields?.map((field) => ({
+        name: field.name,
+        value: field.value,
+        inline: field.inline,
+      })),
+    }));
+  }
+
   embedsToRaw(embeds: Array<JSONEmbed>): Array<RawEmbed> {
     return embeds.map((embed) => ({
       title: embed.title,
@@ -250,6 +331,98 @@ export class Util {
     };
   }
 
+  messageComponentsToJSON(
+    components: Array<RawActionRow>
+  ): Array<JSONActionRow> {
+    return components.map((component) => ({
+      type: component.type,
+      components: component.components.map((c) => {
+        switch (c.type) {
+          case ComponentTypes.Button: {
+            return {
+              type: c.type,
+              style: c.style,
+              label: c.label,
+              emoji:
+                c.emoji !== undefined
+                  ? {
+                      name: c.emoji.name,
+                      id: c.emoji.id,
+                      animated: c.emoji.animated,
+                    }
+                  : undefined,
+              customId: c.custom_id,
+              url: c.url,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.TextInput: {
+            return {
+              type: c.type,
+              customId: c.custom_id,
+              style: c.style,
+              label: c.label,
+              minLength: c.min_length,
+              maxLength: c.max_length,
+              required: c.required,
+              value: c.value,
+              placeholder: c.placeholder,
+            };
+          }
+          case ComponentTypes.ChannelSelect: {
+            return {
+              type: c.type,
+              customId: c.custom_id,
+              channelTypes: c.channel_types,
+              placeholder: c.placeholder,
+              defaultValues: c.default_values,
+              minValues: c.min_values,
+              maxValues: c.max_values,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.StringSelect: {
+            return {
+              type: c.type,
+              customId: c.custom_id,
+              placeholder: c.placeholder,
+              options: c.options?.map((option) => ({
+                label: option.label,
+                value: option.value,
+                description: option.description,
+                emoji:
+                  option.emoji !== undefined
+                    ? {
+                        name: option.emoji.name,
+                        id: option.emoji.id,
+                        animated: option.emoji.animated,
+                      }
+                    : undefined,
+                default: option.default,
+              })),
+              minValues: c.min_values,
+              maxValues: c.max_values,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.MentionableSelect:
+          case ComponentTypes.RoleSelect:
+          case ComponentTypes.UserSelect: {
+            return {
+              type: c.type,
+              customId: c.custom_id,
+              placeholder: c.placeholder,
+              defaultValues: c.default_values,
+              minValues: c.min_values,
+              maxValues: c.max_values,
+              disabled: c.disabled,
+            };
+          }
+        }
+      }),
+    }));
+  }
+
   messageComponentsToRaw(
     components: Array<JSONActionRow>
   ): Array<RawActionRow> {
@@ -305,7 +478,6 @@ export class Util {
               type: c.type,
               custom_id: c.customId,
               placeholder: c.placeholder,
-              default_values: c.defaultValues,
               options: c.options?.map((option) => ({
                 label: option.label,
                 value: option.value,
