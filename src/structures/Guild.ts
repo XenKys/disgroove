@@ -1884,7 +1884,7 @@ export class Guild extends Base {
     });
   }
 
-  /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
+  /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
   removeMember(userId: string, reason?: string): void {
     this.client.rest.delete(Endpoints.guildMember(this.id, userId), {
       reason,
