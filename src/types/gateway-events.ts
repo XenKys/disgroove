@@ -83,7 +83,7 @@ export interface RawChannelPinsUpdateEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-create-guild-create-extra-fields */
 export interface RawGuildCreateEventExtraFields {
-  joined_at?: number;
+  joined_at?: string;
   large?: boolean;
   unavailable?: boolean;
   member_count?: number;
@@ -143,7 +143,7 @@ export interface RawGuildMemberUpdateEventFields {
   user: RawUser;
   nick?: string | null;
   avatar: string | null;
-  joined_at?: number | null;
+  joined_at?: string | null;
   premium_since?: number | null;
   deaf?: boolean;
   mute?: boolean;
@@ -215,7 +215,7 @@ export interface RawIntegrationDeleteEventFields {
 export interface RawInviteCreateEventFields {
   channel_id: string;
   code: string;
-  created_at: number;
+  created_at: string;
   guild_id?: string;
   inviter?: RawUser;
   max_age: number;
@@ -311,7 +311,7 @@ export interface RawActivity {
   name: string;
   type: ActivityType;
   url?: string | null;
-  created_at: number;
+  created_at: string;
   timestamps?: RawActivityTimestamps;
   application_id?: string;
   details?: string | null;
@@ -415,7 +415,7 @@ export interface JSONChannelPinsUpdateEventFields {
 }
 
 export interface JSONGuildCreateEventExtraFields {
-  joinedAt?: number;
+  joinedAt?: string;
   large?: boolean;
   unavailable?: boolean;
   memberCount?: number;
@@ -467,7 +467,7 @@ export interface JSONGuildMemberUpdateEventFields {
   user: JSONUser;
   nick?: string | null;
   avatar: string | null;
-  joinedAt?: number | null;
+  joinedAt?: string | null;
   premiumSince?: number | null;
   deaf?: boolean;
   mute?: boolean;
@@ -529,7 +529,7 @@ export interface JSONIntegrationDeleteEventFields {
 export interface JSONInviteCreateEventFields {
   channelId: string;
   code: string;
-  createdAt: number;
+  createdAt: string;
   guildId?: string;
   inviter?: JSONUser;
   maxAge: number;
@@ -614,7 +614,7 @@ export interface JSONActivity {
   name: string;
   type: ActivityType;
   url?: string | null;
-  createdAt: number;
+  createdAt: string;
   timestamps?: JSONActivityTimestamps;
   applicationId?: string;
   details?: string | null;
@@ -710,7 +710,7 @@ export interface ChannelPinsUpdateEventFields {
 }
 
 export interface GuildCreateEventExtraFields {
-  joinedAt?: number;
+  joinedAt?: string;
   large?: boolean;
   unavailable?: boolean;
   memberCount?: number;
@@ -762,7 +762,7 @@ export interface GuildMemberUpdateEventFields {
   user: User;
   nick?: string | null;
   avatar: string | null;
-  joinedAt?: number | null;
+  joinedAt?: string | null;
   premiumSince?: number | null;
   deaf?: boolean;
   mute?: boolean;
@@ -824,7 +824,7 @@ export interface IntegrationDeleteEventFields {
 export interface InviteCreateEventFields {
   channelId: string;
   code: string;
-  createdAt: number;
+  createdAt: string;
   guildId?: string;
   inviter?: User;
   maxAge: number;
@@ -909,7 +909,7 @@ export interface Activity {
   name: string;
   type: ActivityType;
   url?: string | null;
-  createdAt: number;
+  createdAt: string;
   timestamps?: ActivityTimestamps;
   applicationId?: string;
   details?: string | null;

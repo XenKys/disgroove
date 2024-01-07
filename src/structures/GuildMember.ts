@@ -17,7 +17,7 @@ export class GuildMember {
   nick?: string | null;
   avatar?: string | null;
   roles: Array<string>;
-  joinedAt: number;
+  joinedAt: string;
   premiumSince?: number | null;
   deaf: boolean;
   mute: boolean;

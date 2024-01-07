@@ -135,7 +135,7 @@ export class Guild extends Base {
   stickers?: Array<Sticker>;
   premiumProgressBarEnabled: boolean;
   safetyAlertsChannelId: string | null;
-  joinedAt?: number;
+  joinedAt?: string;
   large?: boolean;
   unavailable?: boolean;
   memberCount?: number;

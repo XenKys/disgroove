@@ -116,7 +116,7 @@ export interface RawGuildMember {
   nick?: string | null;
   avatar?: string | null;
   roles: Array<string>;
-  joined_at: number;
+  joined_at: string;
   premium_since?: number | null;
   deaf: boolean;
   mute: boolean;
@@ -298,7 +298,7 @@ export interface JSONGuildMember {
   nick?: string | null;
   avatar?: string | null;
   roles: Array<string>;
-  joinedAt: number;
+  joinedAt: string;
   premiumSince?: number | null;
   deaf: boolean;
   mute: boolean;
