@@ -7,7 +7,7 @@ import type {
   RawAutoModerationRule,
 } from "../types";
 import { Base } from ".";
-import type { EventTypes } from "../constants";
+import type { EventTypes, TriggerTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/auto-moderation */
 export class AutoModerationRule extends Base {
@@ -16,7 +16,7 @@ export class AutoModerationRule extends Base {
   name: string;
   creatorId: string;
   eventType: EventTypes;
-  triggerType: number;
+  triggerType: TriggerTypes;
   triggerMetadata: JSONTriggerMetadata;
   actions: Array<JSONAutoModerationAction>;
   enabled: boolean;

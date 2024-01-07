@@ -1,4 +1,9 @@
-import type { KeywordPresetTypes, ActionTypes, EventTypes } from "../constants";
+import type {
+  KeywordPresetTypes,
+  ActionTypes,
+  EventTypes,
+  TriggerTypes,
+} from "../constants";
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-auto-moderation-rule-structure */
 export interface RawAutoModerationRule {
@@ -7,7 +12,7 @@ export interface RawAutoModerationRule {
   name: string;
   creator_id: string;
   event_type: EventTypes;
-  trigger_type: number;
+  trigger_type: TriggerTypes;
   trigger_metadata: RawTriggerMetadata;
   actions: Array<RawAutoModerationAction>;
   enabled: boolean;
@@ -44,7 +49,7 @@ export interface JSONAutoModerationRule {
   name: string;
   creatorId: string;
   eventType: EventTypes;
-  triggerType: number;
+  triggerType: TriggerTypes;
   triggerMetadata: JSONTriggerMetadata;
   actions: Array<JSONAutoModerationAction>;
   enabled: boolean;
