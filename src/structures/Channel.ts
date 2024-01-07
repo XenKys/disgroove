@@ -292,7 +292,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
-  createReaction(messageId: string, emoji: string): void {
+  createMessageReaction(messageId: string, emoji: string): void {
     this.client.rest.put(
       Endpoints.channelMessageReaction(this.id, messageId, emoji)
     );
@@ -448,7 +448,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
-  deleteAllReactions(messageId: string, emoji?: string): void {
+  deleteAllMessageReactions(messageId: string, emoji?: string): void {
     this.client.rest.delete(
       Endpoints.channelMessageAllReactions(this.id, messageId, emoji)
     );
@@ -469,7 +469,11 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
-  deleteReaction(messageId: string, emoji: string, userId?: string): void {
+  deleteMessageReaction(
+    messageId: string,
+    emoji: string,
+    userId?: string
+  ): void {
     this.client.rest.delete(
       Endpoints.channelMessageReaction(this.id, messageId, emoji, userId)
     );
@@ -739,7 +743,7 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-reactions */
-  async getReactions(
+  async getMessageReactions(
     messageId: string,
     emoji: string,
     options?: {
