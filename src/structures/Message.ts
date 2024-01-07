@@ -175,8 +175,11 @@ export class Message extends Base {
     if (data.reactions !== undefined)
       this.reactions = data.reactions.map((reaction) => ({
         count: reaction.count,
+        countDetails: reaction.count_details,
         me: reaction.me,
+        meBurst: reaction.me_burst,
         emoji: new Emoji(reaction.emoji, this.client).toJSON(),
+        burstColors: reaction.burst_colors,
       }));
     if (data.nonce !== undefined) this.nonce = data.nonce;
     if (data.webhook_id !== undefined) this.webhookId = data.webhook_id;
