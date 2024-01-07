@@ -871,7 +871,7 @@ export class Channel extends Base {
     newlyCreated?: boolean;
   } {
     return {
-      id: this.id,
+      ...super.toJSON(),
       type: this.type,
       guildId: this.guildId,
       position: this.position,
