@@ -1,5 +1,6 @@
 import {
   ApplicationCommand,
+  AuditLog,
   AutoModerationRule,
   Base,
   Channel,
@@ -20,7 +21,6 @@ import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
   JSONApplicationCommandOptionChoice,
-  JSONAuditLog,
   JSONAutoModerationAction,
   JSONBan,
   JSONDefaultReaction,
@@ -1430,72 +1430,22 @@ export class Guild extends Base {
     before?: string;
     after?: string;
     limit?: number;
-  }): Promise<JSONAuditLog> {
-    return this.client.rest
-      .get<RawAuditLog>(Endpoints.guildAuditLog(this.id), {
-        query: {
-          user_id: options?.userId,
-          action_type: options?.actionType,
-          before: options?.before,
-          after: options?.after,
-          limit: options?.limit,
-        },
-      })
-      .then((response) => ({
-        applicationCommands: response.application_commands.map(
-          (applicationCommand) =>
-            new ApplicationCommand(applicationCommand, this.client)
-        ),
-        auditLogEntries: response.audit_log_entries.map((auditLogEntry) => ({
-          targetId: auditLogEntry.target_id,
-          changes: auditLogEntry.changes?.map((change) => ({
-            newValue: change.new_value,
-            oldValue: change.old_value,
-            key: change.key,
-          })),
-          userId: auditLogEntry.user_id,
-          id: auditLogEntry.id,
-          actionType: auditLogEntry.action_type,
-          options:
-            auditLogEntry.options !== undefined
-              ? {
-                  applicationId: auditLogEntry.options.application_id,
-                  autoModerationRuleName:
-                    auditLogEntry.options.auto_moderation_rule_name,
-                  autoModerationRuleTriggerType:
-                    auditLogEntry.options.auto_moderation_rule_trigger_type,
-                  channelId: auditLogEntry.options.channel_id,
-                  count: auditLogEntry.options.count,
-                  deleteMemberDays: auditLogEntry.options.delete_member_days,
-                  id: auditLogEntry.options.id,
-                  membersRemoved: auditLogEntry.options.members_removed,
-                  messageId: auditLogEntry.options.message_id,
-                  roleName: auditLogEntry.options.role_name,
-                  type: auditLogEntry.options.type,
-                  integrationType: auditLogEntry.options.integration_type,
-                }
-              : undefined,
-          reason: auditLogEntry.reason,
-        })),
-        autoModerationRules: response.auto_moderation_rules.map(
-          (autoModerationRule) =>
-            new AutoModerationRule(autoModerationRule, this.client)
-        ),
-        guildScheduledEvents: response.guild_scheduled_events.map(
-          (guildScheduledEvent) =>
-            new GuildScheduledEvent(guildScheduledEvent, this.client)
-        ),
-        integrations: response.integrations.map(
-          (integration) => new Integration(integration, this.client)
-        ),
-        threads: response.threads.map(
-          (thread) => new Channel(thread, this.client)
-        ),
-        users: response.users.map((user) => new User(user, this.client)),
-        webhooks: response.webhooks.map(
-          (webhook) => new Webhook(webhook, this.client)
-        ),
-      }));
+  }): Promise<AuditLog> {
+    return new AuditLog(
+      await this.client.rest.get<RawAuditLog>(
+        Endpoints.guildAuditLog(this.id),
+        {
+          query: {
+            user_id: options?.userId,
+            action_type: options?.actionType,
+            before: options?.before,
+            after: options?.after,
+            limit: options?.limit,
+          },
+        }
+      ),
+      this.client
+    );
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule */

@@ -1,6 +1,7 @@
 export * from "./Base";
 export * from "./Application";
 export * from "./ApplicationCommand";
+export * from "./AuditLog";
 export * from "./AutoModerationRule";
 export * from "./Channel";
 export * from "./Emoji";
