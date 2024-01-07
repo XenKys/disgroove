@@ -24,7 +24,7 @@ import {
   StageInstance,
   User,
   VoiceState,
-  PartialApplication,
+  ClientApplication,
   Emoji,
   Sticker,
   Role,
@@ -186,7 +186,7 @@ export class Client extends EventEmitter {
   rest: REST;
   util: Util;
   user!: User;
-  application!: PartialApplication;
+  application!: ClientApplication;
 
   constructor(token: string, options?: ClientOptions) {
     super();

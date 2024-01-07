@@ -16,7 +16,7 @@ import {
   StageInstance,
   User,
   VoiceState,
-  PartialApplication,
+  ClientApplication,
   Sticker,
   UnavailableGuild,
   Entitlement,
@@ -131,7 +131,7 @@ export class Shard {
       case "READY":
         {
           this.client.user = new User(packet.d.user, this.client);
-          this.client.application = new PartialApplication(
+          this.client.application = new ClientApplication(
             packet.d.application,
             this.client
           );

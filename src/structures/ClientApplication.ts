@@ -28,7 +28,7 @@ import type {
   Locale,
 } from "../constants";
 
-export class PartialApplication extends Base {
+export class ClientApplication extends Base {
   protected override raw: Pick<RawApplication, "id" | "flags">;
   flags?: number;
 
