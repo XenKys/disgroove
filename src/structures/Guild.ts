@@ -115,7 +115,7 @@ export class Guild extends Base {
   mfaLevel: MFALevel;
   applicationId: string | null;
   systemChannelId: string | null;
-  systemChannelFlags: number;
+  systemChannelFlags: SystemChannelFlags;
   rulesChannelId: string | null;
   maxPresences?: number | null;
   maxMembers?: number;

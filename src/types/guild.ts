@@ -51,7 +51,7 @@ export interface RawGuild {
   mfa_level: MFALevel;
   application_id: string | null;
   system_channel_id: string | null;
-  system_channel_flags: number;
+  system_channel_flags: SystemChannelFlags;
   rules_channel_id: string | null;
   max_presences?: number | null;
   max_members?: number;
