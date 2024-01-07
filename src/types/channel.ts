@@ -447,21 +447,21 @@ export interface JSONEmbed {
 
 export interface JSONEmbedThumbnail {
   url: string;
-  proxyUrl?: string;
+  proxyURL?: string;
   height?: number;
   width?: number;
 }
 
 export interface JSONEmbedVideo {
   url?: string;
-  proxyUrl?: string;
+  proxyURL?: string;
   height?: number;
   width?: number;
 }
 
 export interface JSONEmbedImage {
   url: string;
-  proxyUrl?: string;
+  proxyURL?: string;
   height?: number;
   width?: number;
 }
@@ -474,14 +474,14 @@ export interface JSONEmbedProvider {
 export interface JSONEmbedAuthor {
   name: string;
   url?: string;
-  iconUrl?: string;
-  proxyIconUrl?: string;
+  iconURL?: string;
+  proxyIconURL?: string;
 }
 
 export interface JSONEmbedFooter {
   text: string;
-  iconUrl?: string;
-  proxyIconUrl?: string;
+  iconURL?: string;
+  proxyIconURL?: string;
 }
 
 export interface JSONEmbedField {
@@ -497,7 +497,7 @@ export interface JSONAttachment {
   contentType?: string;
   size: number;
   url: string;
-  proxyUrl: string;
+  proxyURL: string;
   height?: number;
   width?: number;
   ephemeral?: boolean;

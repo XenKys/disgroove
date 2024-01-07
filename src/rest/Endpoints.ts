@@ -50,7 +50,7 @@ export const guildWidgetSettings = (guildId: string) =>
   `guilds/${guildId}/widget` as const;
 export const guildWidgetJSON = (guildId: string) =>
   `guilds/${guildId}/widget.json` as const;
-export const guildVanityUrl = (guildId: string) =>
+export const guildVanityURL = (guildId: string) =>
   `guilds/${guildId}/vanity-url` as const;
 export const guildWidgetImage = (guildId: string) =>
   `guilds/${guildId}/widget.png` as const;

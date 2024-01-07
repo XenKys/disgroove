@@ -1611,7 +1611,7 @@ export class UnavailableGuild extends Base {
     return this.client.rest.get<{
       code: string;
       uses: number;
-    }>(Endpoints.guildVanityUrl(this.id));
+    }>(Endpoints.guildVanityURL(this.id));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */

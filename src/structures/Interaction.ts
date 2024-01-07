@@ -135,7 +135,7 @@ export class Interaction extends Base {
                         contentType: attachment.content_type,
                         size: attachment.size,
                         url: attachment.url,
-                        proxyUrl: attachment.proxy_url,
+                        proxyURL: attachment.proxy_url,
                         height: attachment.height,
                         width: attachment.width,
                         ephemeral: attachment.ephemeral,

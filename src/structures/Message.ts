@@ -92,7 +92,7 @@ export class Message extends Base {
       contentType: attachment.content_type,
       size: attachment.size,
       url: attachment.url,
-      proxyUrl: attachment.proxy_url,
+      proxyURL: attachment.proxy_url,
       height: attachment.height,
       width: attachment.width,
       ephemeral: attachment.ephemeral,
@@ -110,14 +110,14 @@ export class Message extends Base {
       footer: embed.footer
         ? {
             text: embed.footer.text,
-            iconUrl: embed.footer.icon_url,
-            proxyIconUrl: embed.footer.proxy_icon_url,
+            iconURL: embed.footer.icon_url,
+            proxyIconURL: embed.footer.proxy_icon_url,
           }
         : undefined,
       image: embed.image
         ? {
             url: embed.image.url,
-            proxyUrl: embed.image.proxy_url,
+            proxyURL: embed.image.proxy_url,
             height: embed.image.height,
             width: embed.image.width,
           }
@@ -125,14 +125,14 @@ export class Message extends Base {
       thumbnail: embed.thumbnail
         ? {
             url: embed.thumbnail.url,
-            proxyUrl: embed.thumbnail.proxy_url,
+            proxyURL: embed.thumbnail.proxy_url,
             height: embed.thumbnail.height,
             width: embed.thumbnail.width,
           }
         : undefined,
       video: {
         url: embed.video?.url,
-        proxyUrl: embed.video?.proxy_url,
+        proxyURL: embed.video?.proxy_url,
         height: embed.video?.height,
         width: embed.video?.width,
       },
@@ -144,8 +144,8 @@ export class Message extends Base {
         ? {
             name: embed.author.name,
             url: embed.author.url,
-            iconUrl: embed.author.icon_url,
-            proxyIconUrl: embed.author.proxy_icon_url,
+            iconURL: embed.author.icon_url,
+            proxyIconURL: embed.author.proxy_icon_url,
           }
         : undefined,
       fields: embed.fields?.map((field) => ({
@@ -380,7 +380,7 @@ export class Message extends Base {
                       contentType: attachment.content_type,
                       size: attachment.size,
                       url: attachment.url,
-                      proxyUrl: attachment.proxy_url,
+                      proxyURL: attachment.proxy_url,
                       height: attachment.height,
                       width: attachment.width,
                       ephemeral: attachment.ephemeral,

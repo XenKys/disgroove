@@ -188,15 +188,15 @@ export class Util {
         embed.footer !== undefined
           ? {
               text: embed.footer.text,
-              icon_url: embed.footer.iconUrl,
-              proxy_icon_url: embed.footer.proxyIconUrl,
+              icon_url: embed.footer.iconURL,
+              proxy_icon_url: embed.footer.proxyIconURL,
             }
           : undefined,
       image:
         embed.image !== undefined
           ? {
               url: embed.image.url,
-              proxy_url: embed.image.proxyUrl,
+              proxy_url: embed.image.proxyURL,
               height: embed.image.height,
               width: embed.image.width,
             }
@@ -205,14 +205,14 @@ export class Util {
         embed.thumbnail !== undefined
           ? {
               url: embed.thumbnail.url,
-              proxy_url: embed.thumbnail.proxyUrl,
+              proxy_url: embed.thumbnail.proxyURL,
               height: embed.thumbnail.height,
               width: embed.thumbnail.width,
             }
           : undefined,
       video: {
         url: embed.video?.url,
-        proxy_url: embed.video?.proxyUrl,
+        proxy_url: embed.video?.proxyURL,
         height: embed.video?.height,
         width: embed.video?.width,
       },
@@ -225,8 +225,8 @@ export class Util {
           ? {
               name: embed.author.name,
               url: embed.author.url,
-              icon_url: embed.author.iconUrl,
-              proxy_icon_url: embed.author.proxyIconUrl,
+              icon_url: embed.author.iconURL,
+              proxy_icon_url: embed.author.proxyIconURL,
             }
           : undefined,
       fields: embed.fields?.map((field) => ({
