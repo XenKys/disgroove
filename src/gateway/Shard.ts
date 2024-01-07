@@ -19,6 +19,7 @@ import {
   PartialApplication,
   Sticker,
   UnavailableGuild,
+  Entitlement,
 } from "../structures";
 import type {
   Activity,
@@ -293,43 +294,22 @@ export class Shard {
         });
         break;
       case "ENTITLEMENT_CREATE":
-        this.client.emit(GatewayEvents.EntitlementCreate, {
-          id: packet.d.id,
-          skuId: packet.d.sku_id,
-          applicationId: packet.d.application_id,
-          userId: packet.d.user_id,
-          type: packet.d.type,
-          deleted: packet.d.deleted,
-          startsAt: packet.d.starts_at,
-          endsAt: packet.d.ends_at,
-          guildId: packet.d.guild_id,
-        });
+        this.client.emit(
+          GatewayEvents.EntitlementCreate,
+          new Entitlement(packet.d, this.client)
+        );
         break;
       case "ENTITLEMENT_UPDATE":
-        this.client.emit(GatewayEvents.EntitlementUpdate, {
-          id: packet.d.id,
-          skuId: packet.d.sku_id,
-          applicationId: packet.d.application_id,
-          userId: packet.d.user_id,
-          type: packet.d.type,
-          deleted: packet.d.deleted,
-          startsAt: packet.d.starts_at,
-          endsAt: packet.d.ends_at,
-          guildId: packet.d.guild_id,
-        });
+        this.client.emit(
+          GatewayEvents.EntitlementUpdate,
+          new Entitlement(packet.d, this.client)
+        );
         break;
       case "ENTITLEMENT_DELETE":
-        this.client.emit(GatewayEvents.EntitlementDelete, {
-          id: packet.d.id,
-          skuId: packet.d.sku_id,
-          applicationId: packet.d.application_id,
-          userId: packet.d.user_id,
-          type: packet.d.type,
-          deleted: packet.d.deleted,
-          startsAt: packet.d.starts_at,
-          endsAt: packet.d.ends_at,
-          guildId: packet.d.guild_id,
-        });
+        this.client.emit(
+          GatewayEvents.EntitlementDelete,
+          new Entitlement(packet.d, this.client).toJSON()
+        );
         break;
       case "GUILD_CREATE":
         this.client.emit(

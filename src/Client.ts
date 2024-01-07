@@ -29,6 +29,7 @@ import {
   Sticker,
   Role,
   UnavailableGuild,
+  Entitlement,
 } from "./structures";
 import type {
   Activity,
@@ -106,8 +107,8 @@ export interface ClientEvents {
     }
   ];
   threadMembersUpdate: [thread: ThreadMembersUpdateEventFields];
-  entitlementCreate: [entitlement: JSONEntitlement];
-  entitlementUpdate: [entitlement: JSONEntitlement];
+  entitlementCreate: [entitlement: Entitlement];
+  entitlementUpdate: [entitlement: Entitlement];
   entitlementDelete: [entitlement: JSONEntitlement];
   guildCreate: [guild: Guild | UnavailableGuild];
   guildUpdate: [guild: Guild];

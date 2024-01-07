@@ -1,4 +1,11 @@
-import { Base, ApplicationCommand, Application } from ".";
+import {
+  Base,
+  ApplicationCommand,
+  Application,
+  SKU,
+  Entitlement,
+  TestEntitlement,
+} from ".";
 import type {
   JSONGuildApplicationCommandPermissions,
   RawApplication,
@@ -8,9 +15,7 @@ import type {
   JSONApplicationCommandOptionChoice,
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,
-  JSONSKU,
   RawEntitlement,
-  JSONEntitlement,
   RawSKU,
   JSONInstallParams,
 } from "../types";
@@ -272,46 +277,19 @@ export class PartialApplication extends Base {
     skuId: string;
     ownerId: string;
     ownerType: number;
-  }): Promise<
-    Pick<
-      JSONEntitlement,
-      | "id"
-      | "applicationId"
-      | "deleted"
-      | "guildId"
-      | "skuId"
-      | "type"
-      | "userId"
-    >
-  > {
-    return this.client.rest
-      .post<
-        Pick<
-          RawEntitlement,
-          | "id"
-          | "application_id"
-          | "deleted"
-          | "guild_id"
-          | "sku_id"
-          | "type"
-          | "user_id"
-        >
+  }): Promise<TestEntitlement> {
+    return new TestEntitlement(
+      await this.client.rest.post<
+        Omit<RawEntitlement, "starts_at" | "ends_at" | "subscription_id">
       >(Endpoints.applicationEntitlements(this.id), {
         json: {
           sku_id: options.skuId,
           owner_id: options.ownerId,
           owner_type: options.ownerType,
         },
-      })
-      .then((response) => ({
-        id: response.id,
-        applicationId: response.application_id,
-        deleted: response.deleted,
-        guildId: response.guild_id,
-        skuId: response.sku_id,
-        type: response.type,
-        userId: response.user_id,
-      }));
+      }),
+      this.client
+    );
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command */
@@ -548,7 +526,7 @@ export class PartialApplication extends Base {
     limit?: number;
     guildId?: string;
     excludeEnded?: boolean;
-  }): Promise<Array<JSONEntitlement>> {
+  }): Promise<Array<Entitlement>> {
     return this.client.rest
       .get<Array<RawEntitlement>>(Endpoints.applicationEntitlements(this.id), {
         query: {
@@ -562,17 +540,7 @@ export class PartialApplication extends Base {
         },
       })
       .then((response) =>
-        response.map((data) => ({
-          id: data.id,
-          applicationId: data.application_id,
-          deleted: data.deleted,
-          guildId: data.guild_id,
-          skuId: data.sku_id,
-          type: data.type,
-          userId: data.user_id,
-          startsAt: data.starts_at,
-          endsAt: data.ends_at,
-        }))
+        response.map((data) => new Entitlement(data, this.client))
       );
   }
 
@@ -683,19 +651,10 @@ export class PartialApplication extends Base {
   }
 
   /** https://discord.com/developers/docs/monetization/skus#list-skus */
-  async getSKUs(): Promise<Array<JSONSKU>> {
+  async getSKUs(): Promise<Array<SKU>> {
     return this.client.rest
       .get<Array<RawSKU>>(Endpoints.applicationSKUs(this.id))
-      .then((response) =>
-        response.map((data) => ({
-          id: data.id,
-          type: data.type,
-          applicationId: data.application_id,
-          name: data.name,
-          slug: data.slug,
-          flags: data.flags,
-        }))
-      );
+      .then((response) => response.map((data) => new SKU(data, this.client)));
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#update-application-role-connection-metadata-records */
