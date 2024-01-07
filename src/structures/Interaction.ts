@@ -13,7 +13,6 @@ import type {
   JSONActionRow,
   JSONAllowedMentions,
   JSONApplicationCommandData,
-  JSONApplicationCommandOptionChoice,
   JSONAttachment,
   JSONEmbed,
   JSONInteraction,
@@ -24,7 +23,6 @@ import type {
   RawMessage,
 } from "../types";
 import {
-  ComponentTypes,
   InteractionCallbackType,
   type InteractionType,
   type MessageFlags,
