@@ -823,12 +823,12 @@ export class Channel extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/channel#join-thread */
-  joinThread(): void {
+  join(): void {
     this.client.rest.put(Endpoints.threadMembers(this.id, "@me"));
   }
 
   /** https://discord.com/developers/docs/resources/channel#leave-thread */
-  leaveThread(): void {
+  leave(): void {
     this.client.rest.delete(Endpoints.threadMembers(this.id, "@me"));
   }
 
