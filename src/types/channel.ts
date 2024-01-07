@@ -123,8 +123,17 @@ export interface RawFollowedChannel {
 /** https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure */
 export interface RawReaction {
   count: number;
+  count_details: RawReactionCountDetails;
   me: boolean;
+  me_burst: boolean;
   emoji: RawEmoji;
+  burst_colors: Array<string>;
+}
+
+/** https://discord.com/developers/docs/resources/channel#reaction-count-details-object-reaction-count-details-structure */
+export interface RawReactionCountDetails {
+  burst: number;
+  normal: number;
 }
 
 /** https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure */
@@ -371,8 +380,16 @@ export interface JSONFollowedChannel {
 
 export interface JSONReaction {
   count: number;
+  countDetails: JSONReactionCountDetails;
   me: boolean;
+  meBurst: boolean;
   emoji: JSONEmoji;
+  burstColors: Array<string>;
+}
+
+export interface JSONReactionCountDetails {
+  burst: number;
+  normal: number;
 }
 
 export interface JSONOverwrite {
