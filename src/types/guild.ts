@@ -139,7 +139,7 @@ export interface RawIntegration {
   expire_grace_period?: number;
   user?: RawUser;
   account: RawIntegrationAccount;
-  synced_at?: number;
+  synced_at?: string;
   subscriber_count?: number;
   revoked?: boolean;
   application?: RawIntegrationApplication;
@@ -320,7 +320,7 @@ export interface JSONIntegration {
   expireGracePeriod?: number;
   user?: JSONUser;
   account: JSONIntegrationAccount;
-  syncedAt?: number;
+  syncedAt?: string;
   subscriberCount?: number;
   revoked?: boolean;
   application?: JSONIntegrationApplication;

@@ -412,14 +412,14 @@ export class Client extends EventEmitter {
   async getOAuth2Authorization(): Promise<{
     application: Application;
     scopes: Array<OAuth2Scopes>;
-    expires: number;
+    expires: string;
     user?: User;
   }> {
     return this.rest
       .get<{
         application: RawApplication;
         scopes: Array<OAuth2Scopes>;
-        expires: number;
+        expires: string;
         user?: RawUser;
       }>(Endpoints.oauth2Authorization())
       .then((response) => ({

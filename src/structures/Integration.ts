@@ -30,7 +30,7 @@ export class Integration extends Base {
   expireGracePeriod?: number;
   user?: User;
   account: JSONIntegrationAccount;
-  syncedAt?: number;
+  syncedAt?: string;
   subscriberCount?: number;
   revoked?: boolean;
   application?: JSONIntegrationApplication;
