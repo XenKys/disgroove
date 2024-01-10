@@ -12,6 +12,7 @@ import type {
   RawGuildScheduledEvent,
   RawUser,
 } from ".";
+import { InviteTargetTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
 export interface RawInvite {
@@ -19,7 +20,7 @@ export interface RawInvite {
   guild?: RawGuild;
   channel: RawChannel;
   inviter?: RawUser;
-  target_type?: number;
+  target_type?: InviteTargetTypes;
   target_user?: RawUser;
   target_application?: RawApplication;
   approximate_presence_count?: number;
@@ -51,7 +52,7 @@ export interface JSONInvite {
   guild?: JSONGuild;
   channel: JSONChannel;
   inviter?: JSONUser;
-  targetType?: number;
+  targetType?: InviteTargetTypes;
   targetUser?: JSONUser;
   targetApplication?: JSONApplication;
   approximatePresenceCount?: number;

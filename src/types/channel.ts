@@ -1,8 +1,14 @@
 import type {
   AllowedMentionTypes,
   AttachmentFlags,
+  ChannelFlags,
   ChannelTypes,
+  ForumLayoutTypes,
   MessageActivityTypes,
+  MessageFlags,
+  MessageTypes,
+  SortOrderTypes,
+  VideoQualityModes,
 } from "../constants";
 import type {
   RawApplication,
@@ -47,21 +53,21 @@ export interface RawChannel {
   parent_id?: string | null;
   last_pin_timestamp?: string | null;
   rtc_region?: string | null;
-  video_quality_mode?: number;
+  video_quality_mode?: VideoQualityModes;
   message_count?: number;
   member_count?: number;
   thread_metadata?: RawThreadMetadata;
   member?: RawThreadMember;
   default_auto_archive_duration?: number;
   permissions?: string;
-  flags?: number;
+  flags?: ChannelFlags;
   total_message_sent?: number;
   available_tags?: Array<RawForumTag>;
   applied_tags?: Array<string>;
   default_reaction_emoji?: RawDefaultReaction | null;
   default_thread_rate_limit_per_user?: number;
-  default_sort_order?: number | null;
-  default_forum_layout?: number;
+  default_sort_order?: SortOrderTypes | null;
+  default_forum_layout?: ForumLayoutTypes;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-object-message-structure */
@@ -83,12 +89,12 @@ export interface RawMessage {
   nonce?: number | string;
   pinned: boolean;
   webhook_id?: string;
-  type: number;
+  type: MessageTypes;
   activity?: RawMessageActivity;
   application?: RawApplication;
   application_id?: string;
   message_reference?: RawMessageReference;
-  flags?: number;
+  flags?: MessageFlags;
   referenced_message?: RawMessage | null;
   interaction?: RawMessageInteraction;
   thread?: RawChannel;
@@ -309,21 +315,21 @@ export interface JSONChannel {
   parentId?: string | null;
   lastPinTimestamp?: string | null;
   rtcRegion?: string | null;
-  videoQualityMode?: number;
+  videoQualityMode?: VideoQualityModes;
   messageCount?: number;
   memberCount?: number;
   threadMetadata?: JSONThreadMetadata;
   member?: JSONThreadMember;
   defaultAutoArchiveDuration?: number;
   permissions?: string;
-  flags?: number;
+  flags?: ChannelFlags;
   totalMessageSent?: number;
   availableTags?: Array<JSONForumTag>;
   appliedTags?: Array<string>;
   defaultReactionEmoji?: JSONDefaultReaction | null;
   defaultThreadRateLimitPerUser?: number;
-  defaultSortOrder?: number | null;
-  defaultForumLayout?: number;
+  defaultSortOrder?: SortOrderTypes | null;
+  defaultForumLayout?: ForumLayoutTypes;
 }
 
 export interface JSONMessage {
@@ -344,12 +350,12 @@ export interface JSONMessage {
   nonce?: number | string;
   pinned: boolean;
   webhookId?: string;
-  type: number;
+  type: MessageTypes;
   activity?: JSONMessageActivity;
   application?: JSONApplication;
   applicationId?: string;
   messageReference?: JSONMessageReference;
-  flags?: number;
+  flags?: MessageFlags;
   referencedMessage?: JSONMessage | null;
   interaction?: JSONMessageInteraction;
   thread?: JSONChannel;

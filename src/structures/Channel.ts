@@ -27,6 +27,9 @@ import {
   type InviteTargetTypes,
   type MessageFlags,
   ChannelFlags,
+  VideoQualityModes,
+  SortOrderTypes,
+  ForumLayoutTypes,
 } from "../constants";
 
 /** https://discord.com/developers/docs/resources/channel */
@@ -53,21 +56,21 @@ export class Channel extends Base {
   parentId?: string | null;
   lastPinTimestamp?: string | null;
   rtcRegion?: string | null;
-  videoQualityMode?: number;
+  videoQualityMode?: VideoQualityModes;
   messageCount?: number;
   memberCount?: number;
   threadMetadata?: JSONThreadMetadata;
   member?: JSONThreadMember;
   defaultAutoArchiveDuration?: number;
   permissions?: string;
-  flags?: number;
+  flags?: ChannelFlags;
   totalMessageSent?: number;
   availableTags?: Array<JSONForumTag>;
   appliedTags?: Array<string>;
   defaultReactionEmoji?: JSONDefaultReaction | null;
   defaultThreadRateLimitPerUser?: number;
-  defaultSortOrder?: number | null;
-  defaultForumLayout?: number;
+  defaultSortOrder?: SortOrderTypes | null;
+  defaultForumLayout?: ForumLayoutTypes;
   newlyCreated?: boolean;
 
   constructor(

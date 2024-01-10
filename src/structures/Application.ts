@@ -26,6 +26,7 @@ import { Endpoints } from "../rest";
 import type {
   ApplicationCommandOptionType,
   ApplicationCommandTypes,
+  ApplicationFlags,
   ChannelTypes,
   Locale,
 } from "../constants";
@@ -49,7 +50,7 @@ export class Application extends Base {
   primarySKUId?: string;
   slug?: string;
   coverImage?: string;
-  flags?: number;
+  flags?: ApplicationFlags;
   approximateGuildCount?: number;
   redirectURIs?: Array<string>;
   interactionsEndpointURL?: string;

@@ -1,4 +1,9 @@
-import type { UserFlags, Services, VisibilityTypes } from "../constants";
+import type {
+  UserFlags,
+  Services,
+  VisibilityTypes,
+  PremiumTypes,
+} from "../constants";
 import type {
   JSONApplicationRoleConnectionMetadata,
   JSONIntegration,
@@ -22,7 +27,7 @@ export interface RawUser {
   verified?: boolean;
   email?: string;
   flags?: UserFlags;
-  premium_type?: number;
+  premium_type?: PremiumTypes;
   public_flags?: UserFlags;
   avatar_decoration?: string | null;
 }
@@ -63,7 +68,7 @@ export interface JSONUser {
   verified?: boolean;
   email?: string;
   flags?: UserFlags;
-  premiumType?: number;
+  premiumType?: PremiumTypes;
   publicFlags?: UserFlags;
   avatarDecoration?: string | null;
 }

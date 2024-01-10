@@ -6,7 +6,8 @@ import type {
   RawGuild,
   JSONGuild,
 } from ".";
-import type { OAuth2Scopes } from "../constants";
+import type { ApplicationFlags, OAuth2Scopes } from "../constants";
+import { Application } from "../structures";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface RawApplication {
@@ -27,7 +28,7 @@ export interface RawApplication {
   primary_sku_id?: string;
   slug?: string;
   cover_image?: string;
-  flags?: number;
+  flags?: ApplicationFlags;
   approximate_guild_count?: number;
   redirect_uris?: Array<string>;
   interactions_endpoint_url?: string;
@@ -61,7 +62,7 @@ export interface JSONApplication {
   primarySKUId?: string;
   slug?: string;
   coverImage?: string;
-  flags?: number;
+  flags?: ApplicationFlags;
   approximateGuildCount?: number;
   redirectURIs?: Array<string>;
   interactionsEndpointURL?: string;

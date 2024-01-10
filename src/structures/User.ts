@@ -14,6 +14,7 @@ import type {
 import type {
   ApplicationRoleConnectionMetadataType,
   Locale,
+  PremiumTypes,
   UserFlags,
 } from "../constants";
 
@@ -33,7 +34,7 @@ export class User extends Base {
   verified?: boolean;
   email?: string;
   flags?: UserFlags;
-  premiumType?: number;
+  premiumType?: PremiumTypes;
   publicFlags?: UserFlags;
   avatarDecoration?: string | null;
 

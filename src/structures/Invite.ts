@@ -7,6 +7,7 @@ import {
   User,
 } from ".";
 import type { Client } from "../Client";
+import { InviteTargetTypes } from "../constants";
 import { Endpoints } from "../rest";
 import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 
@@ -18,7 +19,7 @@ export class Invite {
   guild?: Guild;
   channel: Channel;
   inviter?: User;
-  targetType?: number;
+  targetType?: InviteTargetTypes;
   targetUser?: User;
   targetApplication?: Application;
   approximatePresenceCount?: number;

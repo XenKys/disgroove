@@ -30,7 +30,7 @@ import type {
   RawMessageCreateEventExtraFields,
   RawUser,
 } from "../types";
-import { MessageFlags } from "../constants";
+import { MessageFlags, MessageTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/channel */
 export class Message extends Base {
@@ -52,12 +52,12 @@ export class Message extends Base {
   nonce?: number | string;
   pinned: boolean;
   webhookId?: string;
-  type: number;
+  type: MessageTypes;
   activity?: JSONMessageActivity;
   application?: Application;
   applicationId?: string;
   messageReference?: JSONMessageReference;
-  flags?: number;
+  flags?: MessageFlags;
   referencedMessage?: Message | null;
   interaction?: JSONMessageInteraction;
   thread?: Channel;
