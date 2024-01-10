@@ -10,7 +10,7 @@ export class StageInstance extends Base {
   guildId: string;
   channelId: string;
   topic: string;
-  privacyLevel: number;
+  privacyLevel: PrivacyLevel;
   discoverableDisabled: boolean;
   guildScheduledEventId: string | null;
 
