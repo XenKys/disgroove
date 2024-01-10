@@ -23,15 +23,19 @@ client.on("interactionCreate", (interaction) => {
     interaction.createResponse({
       type: InteractionCallbackType.ChannelMessageWithSource,
       data: {
-        content:
-          (BigInt(interaction.member.permissions) &
-            BitwisePermissionFlags.SendMessages) ===
+        content: hasPermission(
+          interaction.member.permissions,
           BitwisePermissionFlags.SendMessages
-            ? "Yes"
-            : "No",
+        )
+          ? "Has the 'Send Messages' permission"
+          : "Hasn't the 'Send Messages' permission",
       },
     });
   }
 });
 
 client.connect();
+
+function hasPermission(userPermissions, permission) {
+  return (BigInt(userPermissions) & permission) === permission;
+}
