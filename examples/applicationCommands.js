@@ -7,7 +7,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.bulkOverwriteGlobalApplicationCommands([
+  client.application.bulkEditGlobalApplicationCommands([
     {
       name: "echo",
       description: "Responds with your provided text",

@@ -1,20 +1,34 @@
-const { Client, GatewayIntents } = require("disgroove");
-const client = new Client("token", {
-  intents: [GatewayIntents.GuildMessages, GatewayIntents.MessageContent],
-});
+const {
+  Client,
+  InteractionType,
+  InteractionCallbackType,
+} = require("disgroove");
+const client = new Client("token");
 const fs = require("fs");
 
-client.on("messageCreate", async (message) => {
-  if (message.content === "!file") {
-    const channel = await client.getChannel(message.channelId);
+client.once("ready", () =>
+  client.application.bulkEditGlobalApplicationCommands([
+    {
+      name: "file",
+      description: "Responds with a file",
+    },
+  ])
+);
 
-    channel.createMessage({
-      files: [
-        {
-          name: "text.txt",
-          contents: fs.readFileSync(`${__dirname}/text.txt`),
-        },
-      ],
+client.on("interactionCreate", (interaction) => {
+  if (interaction.type !== InteractionType.ApplicationCommand) return;
+
+  if (interaction.data.name === "file") {
+    interaction.createResponse({
+      type: InteractionCallbackType.ChannelMessageWithSource,
+      data: {
+        files: [
+          {
+            name: "text.txt",
+            contents: fs.readFileSync(`${__dirname}/text.txt`),
+          },
+        ],
+      },
     });
   }
 });

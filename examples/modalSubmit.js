@@ -8,10 +8,10 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.bulkOverwriteGlobalApplicationCommands([
+  client.application.bulkEditGlobalApplicationCommands([
     {
       name: "modal",
-      description: "Open a modal submit",
+      description: "Opens a modal submit",
     },
   ])
 );

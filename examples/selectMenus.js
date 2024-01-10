@@ -7,7 +7,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.bulkOverwriteGlobalApplicationCommands([
+  client.application.bulkEditGlobalApplicationCommands([
     {
       name: "string-menu",
       description: "Responds with a string select menu",
