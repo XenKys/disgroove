@@ -140,8 +140,8 @@ export class User extends Base {
           name: data.name,
           type: data.type,
           revoked: data.revoked,
-          integrations: data.integrations?.map(
-            (integration) => new Integration(integration, this.client)
+          integrations: data.integrations?.map((integration) =>
+            new Integration(integration, this.client).toJSON()
           ),
           verified: data.verified,
           friendSync: data.friend_sync,

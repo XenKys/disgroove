@@ -814,7 +814,7 @@ export class Channel extends Base {
           flags: data.flags,
           member:
             data.member !== undefined
-              ? new GuildMember(data.member, this.client)
+              ? new GuildMember(data.member, this.client).toJSON()
               : undefined,
         }))
       );

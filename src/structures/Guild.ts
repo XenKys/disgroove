@@ -1503,7 +1503,7 @@ export class Guild extends Base {
       .then((response) =>
         response.map((data) => ({
           reason: data.reason,
-          user: new User(data.user, this.client),
+          user: new User(data.user, this.client).toJSON(),
         }))
       );
   }
@@ -1703,10 +1703,10 @@ export class Guild extends Base {
       .then((response) =>
         response.map((data) => ({
           guildScheduledEventId: data.guild_scheduled_event_id,
-          user: new User(data.user, this.client),
+          user: new User(data.user, this.client).toJSON(),
           member:
             data.member !== undefined
-              ? new GuildMember(data.member, this.client)
+              ? new GuildMember(data.member, this.client).toJSON()
               : undefined,
         }))
       );

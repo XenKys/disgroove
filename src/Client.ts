@@ -465,7 +465,7 @@ export class Client extends EventEmitter {
             guildId: sticker.guild_id,
             user:
               sticker.user !== undefined
-                ? new User(sticker.user, this)
+                ? new User(sticker.user, this).toJSON()
                 : undefined,
             sortValue: sticker.sort_value,
           })),
