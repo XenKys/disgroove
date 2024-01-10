@@ -40,11 +40,12 @@ export class GuildTemplate {
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
   async delete(): Promise<JSONGuildTemplate> {
-    return this.client.rest
-      .delete<RawGuildTemplate>(
+    return new GuildTemplate(
+      await this.client.rest.delete<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code)
-      )
-      .then((response) => new GuildTemplate(response, this.client).toJSON());
+      ),
+      this.client
+    ).toJSON();
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
