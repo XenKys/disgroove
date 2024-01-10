@@ -67,13 +67,17 @@ import type {
   RawWelcomeScreen,
   RawGuildCreateEventExtraFields,
   JSONGuildCreateEventExtraFields,
+  JSONTriggerMetadata,
 } from "../types";
 import type {
+  ActionTypes,
   ApplicationCommandOptionType,
   ApplicationCommandTypes,
   ChannelTypes,
   DefaultMessageNotificationLevel,
+  EventTypes,
   ExplicitContentFilterLevel,
+  ForumLayoutTypes,
   GuildFeatures,
   GuildMemberFlags,
   GuildNSFWLevel,
@@ -85,8 +89,11 @@ import type {
   MFALevel,
   OnboardingMode,
   PremiumTier,
+  SortOrderTypes,
   SystemChannelFlags,
+  TriggerTypes,
   VerificationLevel,
+  VideoQualityModes,
 } from "../constants";
 import { File as UndiciFile, FormData } from "undici";
 
@@ -460,9 +467,9 @@ export class Guild extends Base {
   async createAutoModerationRule(
     options: {
       name: string;
-      eventType: number;
-      triggerType: number;
-      triggerMetadata?: object;
+      eventType: EventTypes;
+      triggerType: TriggerTypes;
+      triggerMetadata?: JSONTriggerMetadata;
       actions: Array<JSONAutoModerationAction>;
       enabled?: boolean;
       exemptRoles?: Array<string>;
@@ -530,12 +537,12 @@ export class Guild extends Base {
       parentId?: string | null;
       nsfw?: boolean;
       rtcRegion?: string | null;
-      videoQualityMode?: number;
+      videoQualityMode?: VideoQualityModes;
       defaultAutoArchiveDuration?: number;
       defaultReactionEmoji?: JSONDefaultReaction | null;
       availableTags?: Array<JSONForumTag>;
-      defaultSortOrder?: number | null;
-      defaultForumLayout?: number;
+      defaultSortOrder?: SortOrderTypes | null;
+      defaultForumLayout?: ForumLayoutTypes;
       defaultThreadRateLimitPerUser?: number;
     },
     reason?: string
@@ -897,9 +904,9 @@ export class Guild extends Base {
     ruleId: string,
     options: {
       name?: string;
-      eventType?: number;
-      triggerType?: number;
-      triggerMetadata?: object;
+      eventType?: EventTypes;
+      triggerType?: TriggerTypes;
+      triggerMetadata?: JSONTriggerMetadata;
       actions?: Array<JSONAutoModerationAction>;
       enabled?: boolean;
       exemptRoles?: Array<string>;
@@ -1426,7 +1433,7 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log */
   async getAuditLog(options?: {
     userId?: string;
-    actionType?: number;
+    actionType?: ActionTypes;
     before?: string;
     after?: string;
     limit?: number;

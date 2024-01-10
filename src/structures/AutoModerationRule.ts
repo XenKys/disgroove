@@ -67,9 +67,9 @@ export class AutoModerationRule extends Base {
   async edit(
     options: {
       name?: string;
-      eventType?: number;
-      triggerType?: number;
-      triggerMetadata?: object;
+      eventType?: EventTypes;
+      triggerType?: TriggerTypes;
+      triggerMetadata?: JSONTriggerMetadata;
       actions?: Array<JSONAutoModerationAction>;
       enabled?: boolean;
       exemptRoles?: Array<string>;

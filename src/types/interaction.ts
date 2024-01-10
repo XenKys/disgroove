@@ -21,13 +21,17 @@ import type {
   JSONAllowedMentions,
   JSONActionRow,
   JSONApplicationCommandOptionChoice,
+  RawTextInput,
+  JSONTextInput,
 } from ".";
 import type {
+  ApplicationCommandOptionType,
   ApplicationCommandTypes,
   ComponentTypes,
   InteractionCallbackType,
   InteractionType,
   MessageFlags,
+  TextInputStyles,
 } from "../constants";
 import type { File } from "../rest";
 
@@ -67,7 +71,7 @@ export interface RawApplicationCommandData {
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure */
 export interface RawMessageComponentData {
   custom_id: string;
-  component_type: number;
+  component_type: ComponentTypes;
   values?: Array<string>;
   resolved?: RawResolvedData;
 }
@@ -77,17 +81,7 @@ export interface RawModalSubmitData {
   custom_id: string;
   components: Array<{
     type: ComponentTypes.ActionRow;
-    components: Array<{
-      type: ComponentTypes.TextInput;
-      custom_id: string;
-      style: number;
-      label: string;
-      min_length?: number;
-      max_length?: number;
-      required?: boolean;
-      value?: string;
-      placeholder?: string;
-    }>;
+    components: Array<RawTextInput>;
   }>;
 }
 
@@ -104,7 +98,7 @@ export interface RawResolvedData {
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
 export interface RawApplicationCommandInteractionDataOption {
   name: string;
-  type: number;
+  type: ApplicationCommandOptionType;
   value?: string | number | boolean;
   options?: Array<RawApplicationCommandInteractionDataOption>;
   focused?: boolean;
@@ -173,7 +167,7 @@ export interface JSONApplicationCommandData {
 
 export interface JSONMessageComponentData {
   customId: string;
-  componentType: number;
+  componentType: ComponentTypes;
   values?: Array<string>;
   resolved?: JSONResolvedData;
 }
@@ -182,17 +176,7 @@ export interface JSONModalSubmitData {
   customId: string;
   components: Array<{
     type: ComponentTypes.ActionRow;
-    components: Array<{
-      type: ComponentTypes.TextInput;
-      customId: string;
-      style: number;
-      label: string;
-      minLength?: number;
-      maxLength?: number;
-      required?: boolean;
-      value?: string;
-      placeholder?: string;
-    }>;
+    components: Array<JSONTextInput>;
   }>;
 }
 
@@ -207,7 +191,7 @@ export interface JSONResolvedData {
 
 export interface JSONApplicationCommandInteractionDataOption {
   name: string;
-  type: number;
+  type: ApplicationCommandOptionType;
   value?: string | number | boolean;
   options?: Array<JSONApplicationCommandInteractionDataOption>;
   focused?: boolean;

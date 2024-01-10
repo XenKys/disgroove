@@ -497,14 +497,14 @@ export class Channel extends Base {
       permissionOverwrites?: Array<JSONOverwrite>;
       parentId?: string | null;
       rtcRegion?: string | null;
-      videoQualityMode?: number;
+      videoQualityMode?: VideoQualityModes;
       defaultAutoArchiveDuration?: number;
       flags?: ChannelFlags;
       availableTags?: Array<JSONForumTag>;
       defaultReactionEmoji?: JSONDefaultReaction | null;
       defaultThreadRateLimitPerUser?: number;
-      defaultSortOrder?: number | null;
-      defaultForumLayout?: number;
+      defaultSortOrder?: SortOrderTypes | null;
+      defaultForumLayout?: ForumLayoutTypes;
       archived?: boolean;
       autoArchiveDuration?: number;
       locked?: boolean;

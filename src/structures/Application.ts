@@ -379,7 +379,7 @@ export class Application extends Base {
     description?: string;
     roleConnectionsVerificationURL?: string;
     installParams?: JSONInstallParams;
-    flags?: number;
+    flags?: ApplicationFlags;
     icon?: string;
     coverImage?: string;
     interactionsEndpointURL?: string;
