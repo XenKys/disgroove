@@ -19,7 +19,7 @@ export interface RawSKU {
 export interface JSONSKU {
   id: string;
   type: SKUTypes;
-  dependentSkuId?: string | null; // Undocumented
+  dependentSKUId?: string | null; // Undocumented
   applicationId: string;
   manifestLabels?: null; // Undocumented
   accessType?: number; // Undocumented

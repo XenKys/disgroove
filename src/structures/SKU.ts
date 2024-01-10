@@ -7,7 +7,7 @@ import type { SKUFlags, SKUTypes } from "../constants";
 export class SKU extends Base {
   protected override raw: RawSKU;
   type: SKUTypes;
-  dependentSkuId?: string | null; // Undocumented
+  dependentSKUId?: string | null; // Undocumented
   applicationId: string;
   manifestLabels?: null; // Undocumented
   accessType?: number; // Undocumented
@@ -31,7 +31,7 @@ export class SKU extends Base {
 
   protected override patch(data: RawSKU): void {
     if (data.dependent_sku_id !== undefined)
-      this.dependentSkuId = data.dependent_sku_id;
+      this.dependentSKUId = data.dependent_sku_id;
     if (data.manifest_labels !== undefined)
       this.manifestLabels = data.manifest_labels;
     if (data.access_type !== undefined) this.accessType = data.access_type;
@@ -48,7 +48,7 @@ export class SKU extends Base {
     return {
       id: this.id,
       type: this.type,
-      dependentSkuId: this.dependentSkuId,
+      dependentSKUId: this.dependentSKUId,
       applicationId: this.applicationId,
       manifestLabels: this.manifestLabels,
       accessType: this.accessType,
