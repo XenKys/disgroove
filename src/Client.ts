@@ -187,6 +187,7 @@ export class Client extends EventEmitter {
   util: Util;
   user!: User;
   application!: ClientApplication;
+  guildSharding: Record<string, number>;
 
   constructor(token: string, options?: ClientOptions) {
     super();
@@ -203,6 +204,7 @@ export class Client extends EventEmitter {
     this.shards = new ShardsManager();
     this.rest = new REST(token, this.auth);
     this.util = new Util();
+    this.guildSharding = {};
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild */

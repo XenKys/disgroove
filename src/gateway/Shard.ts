@@ -307,12 +307,16 @@ export class Shard {
         );
         break;
       case "GUILD_CREATE":
-        this.client.emit(
-          GatewayEvents.GuildCreate,
-          packet.d.unavailable
-            ? new UnavailableGuild(packet.d, this.client)
-            : new Guild(packet.d, this.client)
-        );
+        {
+          this.client.guildSharding[packet.d.id] = this.id;
+
+          this.client.emit(
+            GatewayEvents.GuildCreate,
+            packet.d.unavailable
+              ? new UnavailableGuild(packet.d, this.client)
+              : new Guild(packet.d, this.client)
+          );
+        }
         break;
       case "GUILD_UPDATE":
         this.client.emit(
@@ -321,10 +325,14 @@ export class Shard {
         );
         break;
       case "GUILD_DELETE":
-        this.client.emit(
-          GatewayEvents.GuildDelete,
-          new UnavailableGuild(packet.d, this.client).toJSON()
-        );
+        {
+          delete this.client.guildSharding[packet.d.id];
+
+          this.client.emit(
+            GatewayEvents.GuildDelete,
+            new UnavailableGuild(packet.d, this.client).toJSON()
+          );
+        }
         break;
       case "GUILD_AUDIT_LOG_ENTRY_CREATE":
         this.client.emit(GatewayEvents.GuildAuditLogEntryCreate, {
