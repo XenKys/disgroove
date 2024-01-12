@@ -31,7 +31,6 @@ import type {
   RawSticker,
   RawThreadMember,
   RawAuditLogChange,
-  RawUnavailableGuild,
   RawPresenceUpdateEventFields,
 } from "../types";
 import { Client } from "../Client";
@@ -41,6 +40,7 @@ export class Shard {
   private heartbeatInterval!: NodeJS.Timeout | null;
   client: Client;
   ws: WebSocket;
+  sessionId!: string;
 
   constructor(id: number, client: Client) {
     this.id = id;
@@ -135,6 +135,7 @@ export class Shard {
             packet.d.application,
             this.client
           );
+          this.sessionId = packet.d.session_id;
 
           this.client.emit(GatewayEvents.Ready);
         }
