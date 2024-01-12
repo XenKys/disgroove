@@ -24,13 +24,14 @@ import { Endpoints } from "../rest";
 import type {
   ApplicationCommandOptionType,
   ApplicationCommandTypes,
+  ApplicationFlags,
   ChannelTypes,
   Locale,
 } from "../constants";
 
 export class ClientApplication extends Base {
   protected override raw: Pick<RawApplication, "id" | "flags">;
-  flags?: number;
+  flags?: ApplicationFlags;
 
   constructor(data: Pick<RawApplication, "id" | "flags">, client: Client) {
     super(data.id, client);
@@ -317,7 +318,7 @@ export class ClientApplication extends Base {
     description?: string;
     roleConnectionsVerificationURL?: string;
     installParams?: JSONInstallParams;
-    flags?: number;
+    flags?: ApplicationFlags;
     icon?: string;
     coverImage?: string;
     interactionsEndpointURL?: string;
