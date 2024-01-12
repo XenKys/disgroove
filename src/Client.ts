@@ -7,6 +7,7 @@ import {
   StatusTypes,
   type SystemChannelFlags,
   type VerificationLevel,
+  GatewayOPCodes,
 } from "./constants";
 import { Util } from "./utils";
 import { Endpoints, REST } from "./rest";
@@ -498,6 +499,43 @@ export class Client extends EventEmitter {
           custom: data.custom,
         }))
       );
+  }
+
+  /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
+  joinVoiceChannel(
+    guildId: string,
+    channelId: string,
+    options?: {
+      selfMute?: boolean;
+      selfDeaf?: boolean;
+    }
+  ): void {
+    this.shards.get(this.guildSharding[guildId])?.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.VoiceStateUpdate,
+        d: {
+          guild_id: guildId,
+          channel_id: channelId,
+          self_mute: !!options?.selfMute,
+          self_deaf: !!options?.selfDeaf,
+        },
+      })
+    );
+  }
+
+  /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
+  leaveVoiceChannel(guildId: string): void {
+    this.shards.get(this.guildSharding[guildId])?.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.VoiceStateUpdate,
+        d: {
+          guild_id: guildId,
+          channel_id: null,
+          self_mute: false,
+          self_deaf: false,
+        },
+      })
+    );
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
