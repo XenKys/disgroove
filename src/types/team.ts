@@ -1,5 +1,5 @@
 import type { JSONUser, RawUser } from ".";
-import { TeamMemberRoleTypes } from "../constants";
+import type { TeamMemberRoleTypes } from "../constants";
 
 /** https://discord.com/developers/docs/topics/teams#data-models-team-object */
 export interface RawTeam {

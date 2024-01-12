@@ -31,7 +31,6 @@ import type {
   InteractionCallbackType,
   InteractionType,
   MessageFlags,
-  TextInputStyles,
 } from "../constants";
 import type { File } from "../rest";
 

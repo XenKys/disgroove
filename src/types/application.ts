@@ -7,7 +7,6 @@ import type {
   JSONGuild,
 } from ".";
 import type { ApplicationFlags, OAuth2Scopes } from "../constants";
-import { Application } from "../structures";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface RawApplication {
