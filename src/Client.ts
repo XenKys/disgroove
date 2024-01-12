@@ -80,7 +80,7 @@ import { Shard, ShardsManager } from "./gateway";
 
 export interface ClientEvents {
   hello: [];
-  ready: [guilds: Array<UnavailableGuild>];
+  ready: [];
   resumed: [];
   reconnect: [];
   invalidSession: [];

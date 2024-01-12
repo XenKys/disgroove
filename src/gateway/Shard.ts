@@ -136,13 +136,7 @@ export class Shard {
             this.client
           );
 
-          this.client.emit(
-            GatewayEvents.Ready,
-            packet.d.guilds.map(
-              (guild: RawUnavailableGuild) =>
-                new UnavailableGuild(guild, this.client)
-            )
-          );
+          this.client.emit(GatewayEvents.Ready);
         }
         break;
       case "RESUMED":
