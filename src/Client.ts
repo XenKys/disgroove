@@ -217,7 +217,10 @@ export class Client extends EventEmitter {
     defaultMessageNotifications?: DefaultMessageNotificationLevel;
     explicitContentFilter?: ExplicitContentFilterLevel;
     roles?: Array<JSONRole>;
-    channels?: Array<JSONChannel>;
+    channels?: Array<
+      Partial<Pick<JSONChannel, "id" | "name" | "parentId" | "type">> &
+        Required<Pick<JSONChannel, "name" | "type">>
+    >;
     afkChannelId?: string;
     afkTimeout?: number;
     systemChannelId?: string;
@@ -233,9 +236,12 @@ export class Client extends EventEmitter {
           default_message_notifications: options.defaultMessageNotifications,
           explicit_content_filter: options.explicitContentFilter,
           roles: options.roles?.map((role) => this.util.roleToRaw(role)),
-          channels: options.channels?.map((channel) =>
-            this.util.channelToRaw(channel)
-          ),
+          channels: options.channels?.map((channel) => ({
+            id: channel.id,
+            type: channel.name,
+            parent_id: channel.parentId,
+            name: channel.name,
+          })),
           afk_channel_id: options.afkChannelId,
           afk_timeout: options.afkTimeout,
           system_channel_id: options.systemChannelId,
