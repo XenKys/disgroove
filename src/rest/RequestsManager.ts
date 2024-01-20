@@ -23,7 +23,7 @@ export class RequestsManager {
   }
 
   request<T = unknown>(
-    method: string,
+    method: RESTMethods,
     endpoint: string,
     data?: RequestData
   ): Promise<T> {
@@ -33,9 +33,8 @@ export class RequestsManager {
       let url: URL = new URL(`https://discord.com/api/v10/${endpoint}`);
 
       if (data?.query)
-        for (const [key, value] of Object.entries(data.query)) {
+        for (const [key, value] of Object.entries(data.query))
           if (value !== undefined) url.searchParams.set(key, String(value));
-        }
 
       let headers: Record<string, string> = {
         "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.3.0)`,
