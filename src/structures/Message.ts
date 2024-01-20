@@ -31,6 +31,7 @@ import type {
   RawUser,
 } from "../types";
 import { MessageFlags, MessageTypes } from "../constants";
+import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/resources/channel */
 export class Message extends Base {
@@ -177,7 +178,7 @@ export class Message extends Base {
       this.resolved = {
         users:
           data.resolved?.users !== undefined
-            ? new Map(
+            ? new Collection(
                 Object.entries(data.resolved.users).map(([id, user]) => [
                   id,
                   new User(user, this.client).toJSON(),
@@ -186,7 +187,7 @@ export class Message extends Base {
             : undefined,
         members:
           data.resolved?.members !== undefined
-            ? new Map(
+            ? new Collection(
                 Object.entries(data.resolved.members).map(([id, member]) => [
                   id,
                   new GuildMember(member, this.client).toJSON(),
@@ -195,7 +196,7 @@ export class Message extends Base {
             : undefined,
         roles:
           data.resolved?.roles !== undefined
-            ? new Map(
+            ? new Collection(
                 Object.entries(data.resolved.roles).map(([id, role]) => [
                   id,
                   new Role(role, this.client).toJSON(),
@@ -204,7 +205,7 @@ export class Message extends Base {
             : undefined,
         channels:
           data.resolved?.channels !== undefined
-            ? new Map(
+            ? new Collection(
                 Object.entries(data.resolved.channels).map(([id, channel]) => [
                   id,
                   new Channel(channel, this.client).toJSON(),
@@ -213,7 +214,7 @@ export class Message extends Base {
             : undefined,
         messages:
           data.resolved?.messages !== undefined
-            ? new Map(
+            ? new Collection(
                 Object.entries(data.resolved.messages).map(([id, message]) => [
                   id,
                   new Message(message, this.client).toJSON(),
@@ -222,7 +223,7 @@ export class Message extends Base {
             : undefined,
         attachments:
           data.resolved?.attachments !== undefined
-            ? new Map(
+            ? new Collection(
                 Object.entries(data.resolved.attachments).map(
                   ([id, attachment]) => [
                     id,
