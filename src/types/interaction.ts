@@ -33,6 +33,7 @@ import type {
   MessageFlags,
 } from "../constants";
 import type { File } from "../rest";
+import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {
@@ -180,12 +181,12 @@ export interface JSONModalSubmitData {
 }
 
 export interface JSONResolvedData {
-  users?: Map<string, JSONUser>;
-  members?: Map<string, JSONGuildMember>;
-  roles?: Map<string, JSONRole>;
-  channels?: Map<string, JSONChannel>;
-  messages?: Map<string, JSONMessage>;
-  attachments?: Map<string, JSONAttachment>;
+  users?: Collection<string, JSONUser>;
+  members?: Collection<string, JSONGuildMember>;
+  roles?: Collection<string, JSONRole>;
+  channels?: Collection<string, JSONChannel>;
+  messages?: Collection<string, JSONMessage>;
+  attachments?: Collection<string, JSONAttachment>;
 }
 
 export interface JSONApplicationCommandInteractionDataOption {
