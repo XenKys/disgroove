@@ -9,7 +9,7 @@ import {
   type VerificationLevel,
   GatewayOPCodes,
 } from "./constants";
-import { Util } from "./utils";
+import { Collection, Util } from "./utils";
 import { Endpoints, REST } from "./rest";
 import {
   Application,
@@ -188,6 +188,7 @@ export class Client extends EventEmitter {
   util: Util;
   user!: User;
   application!: ClientApplication;
+  guilds: Collection<string, Guild>;
   guildSharding: Record<string, number>;
 
   constructor(token: string, options?: ClientOptions) {
@@ -205,6 +206,7 @@ export class Client extends EventEmitter {
     this.shards = new ShardsManager();
     this.rest = new REST(token, this.auth);
     this.util = new Util();
+    this.guilds = new Collection();
     this.guildSharding = {};
   }
 
