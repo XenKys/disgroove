@@ -7,7 +7,7 @@ const client = new Client("token");
 const fs = require("fs");
 
 client.once("ready", () =>
-  client.application.bulkEditGlobalApplicationCommands([
+  client.application.setGlobalApplicationCommands([
     {
       name: "file",
       description: "Responds with a file",

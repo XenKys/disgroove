@@ -8,7 +8,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.bulkEditGlobalApplicationCommands([
+  client.application.setGlobalApplicationCommands([
     {
       name: "modal",
       description: "Opens a modal submit",
