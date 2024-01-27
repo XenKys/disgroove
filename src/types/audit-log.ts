@@ -15,7 +15,6 @@ import type {
   JSONWebhook,
 } from ".";
 import type { AuditLogEvents } from "../constants";
-import type { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
 export interface RawAuditLog {
@@ -64,14 +63,14 @@ export interface RawAuditLogChange {
 }
 
 export interface JSONAuditLog {
-  applicationCommands: Collection<string, JSONApplicationCommand>;
-  auditLogEntries: Collection<string, JSONAuditLogEntry>;
-  autoModerationRules: Collection<string, JSONAutoModerationRule>;
-  guildScheduledEvents: Collection<string, JSONGuildScheduledEvent>;
-  integrations: Collection<string, JSONIntegration>;
-  threads: Collection<string, JSONChannel>;
-  users: Collection<string, JSONUser>;
-  webhooks: Collection<string, JSONWebhook>;
+  applicationCommands: Array<JSONApplicationCommand>;
+  auditLogEntries: Array<JSONAuditLogEntry>;
+  autoModerationRules: Array<JSONAutoModerationRule>;
+  guildScheduledEvents: Array<JSONGuildScheduledEvent>;
+  integrations: Array<JSONIntegration>;
+  threads: Array<JSONChannel>;
+  users: Array<JSONUser>;
+  webhooks: Array<JSONWebhook>;
 }
 
 export interface JSONAuditLogEntry {

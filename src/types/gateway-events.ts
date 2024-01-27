@@ -41,7 +41,6 @@ import type {
   JSONGuildScheduledEvent,
 } from ".";
 import type { Emoji, Sticker } from "../structures";
-import type { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {
@@ -420,13 +419,13 @@ export interface JSONGuildCreateEventExtraFields {
   large?: boolean;
   unavailable?: boolean;
   memberCount?: number;
-  voiceStates?: Collection<string, JSONVoiceState>;
-  members?: Collection<string, JSONGuildMember>;
-  channels?: Collection<string, JSONChannel>;
-  threads?: Collection<string, JSONChannel>;
-  presences?: Collection<string, JSONPresenceUpdateEventFields>;
-  stageInstances?: Collection<string, JSONStageInstance>;
-  guildScheduledEvents?: Collection<string, JSONGuildScheduledEvent>;
+  voiceStates?: Array<JSONVoiceState>;
+  members?: Array<JSONGuildMember>;
+  channels?: Array<JSONChannel>;
+  threads?: Array<JSONChannel>;
+  presences?: Array<JSONPresenceUpdateEventFields>;
+  stageInstances?: Array<JSONStageInstance>;
+  guildScheduledEvents?: Array<JSONGuildScheduledEvent>;
 }
 
 export interface JSONGuildBanAddEventFields {
