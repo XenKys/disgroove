@@ -326,66 +326,6 @@ export class Guild extends Base {
     });
   }
 
-  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
-  async bulkEditApplicationCommands(
-    applicationId: string,
-    commands: Array<{
-      id?: string;
-      name?: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
-      description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }>
-  ): Promise<Array<ApplicationCommand>> {
-    return this.client.rest
-      .put<Array<RawApplicationCommand>>(
-        Endpoints.applicationGuildCommands(applicationId, this.id),
-        {
-          json: commands.map((command) =>
-            this.client.util.applicationCommandToRaw(command)
-          ),
-        }
-      )
-      .then((response) =>
-        response.map((data) => new ApplicationCommand(data, this.client))
-      );
-  }
-
   /** https://discord.com/developers/docs/resources/guild#begin-guild-prune */
   async beginGuildPrune(
     options: {
@@ -1872,6 +1812,66 @@ export class Guild extends Base {
       })
       .then((response) =>
         response.map((data) => new GuildMember(data, this.client))
+      );
+  }
+
+  /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
+  async setApplicationCommands(
+    applicationId: string,
+    commands: Array<{
+      id?: string;
+      name?: string;
+      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      description?: string;
+      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      options?: Array<{
+        type: ApplicationCommandOptionType;
+        name: string;
+        nameLocalizations?: Partial<Record<Locale, string>>;
+        description: string;
+        descriptionLocalizations?: Partial<Record<Locale, string>>;
+        required?: boolean;
+        choices?: Array<JSONApplicationCommandOptionChoice>;
+        options: Array<{
+          type: ApplicationCommandOptionType;
+          name: string;
+          nameLocalizations?: Partial<Record<Locale, string>>;
+          description: string;
+          descriptionLocalizations?: Partial<Record<Locale, string>>;
+          required?: boolean;
+          choices?: Array<JSONApplicationCommandOptionChoice>;
+          channelTypes?: Array<ChannelTypes>;
+          minValue?: number;
+          maxValue?: number;
+          minLength?: number;
+          maxLength?: number;
+          autocomplete?: boolean;
+        }>;
+        channelTypes?: Array<ChannelTypes>;
+        minValue?: number;
+        maxValue?: number;
+        minLength?: number;
+        maxLength?: number;
+        autocomplete?: boolean;
+      }>;
+      defaultMemberPermissions?: string | null;
+      dmPermission?: boolean;
+      defaultPermission?: boolean | null;
+      type: ApplicationCommandTypes;
+      nsfw?: boolean;
+    }>
+  ): Promise<Array<ApplicationCommand>> {
+    return this.client.rest
+      .put<Array<RawApplicationCommand>>(
+        Endpoints.applicationGuildCommands(applicationId, this.id),
+        {
+          json: commands.map((command) =>
+            this.client.util.applicationCommandToRaw(command)
+          ),
+        }
+      )
+      .then((response) =>
+        response.map((data) => new ApplicationCommand(data, this.client))
       );
   }
 
