@@ -1,7 +1,6 @@
 import { Shard } from ".";
-import { Collection } from "../utils";
 
-export class ShardsManager extends Collection<number, Shard> {
+export class ShardsManager extends Map<number, Shard> {
   connect(): void {
     this.forEach((shard) => shard.connect());
   }
