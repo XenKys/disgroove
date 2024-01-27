@@ -308,12 +308,6 @@ export class Shard {
         break;
       case "GUILD_CREATE":
         {
-          if (!packet.d.unavailable)
-            this.client.guilds.set(
-              packet.d.id,
-              new Guild(packet.d, this.client)
-            );
-
           this.client.guildSharding[packet.d.id] = this.id;
 
           this.client.emit(
@@ -325,19 +319,13 @@ export class Shard {
         }
         break;
       case "GUILD_UPDATE":
-        {
-          this.client.guilds.set(packet.d.id, new Guild(packet.d, this.client));
-
-          this.client.emit(
-            GatewayEvents.GuildUpdate,
-            new Guild(packet.d, this.client)
-          );
-        }
+        this.client.emit(
+          GatewayEvents.GuildUpdate,
+          new Guild(packet.d, this.client)
+        );
         break;
       case "GUILD_DELETE":
         {
-          this.client.guilds.delete(packet.d.id);
-
           delete this.client.guildSharding[packet.d.id];
 
           this.client.emit(
