@@ -5,18 +5,23 @@ import type {
   JSONChannel,
   JSONEmbed,
   JSONEmoji,
+  JSONPresenceUpdateEventFields,
   JSONRole,
   JSONUser,
+  PresenceUpdateEventFields,
   RawActionRow,
   RawApplicationCommand,
   RawAttachment,
   RawChannel,
   RawEmbed,
   RawEmoji,
+  RawPresenceUpdateEventFields,
   RawRole,
   RawUser,
 } from "../types";
 import { ComponentTypes } from "../constants";
+import { User } from "../structures";
+import type { Client } from "../Client";
 
 export class Util {
   applicationCommandToRaw(
@@ -513,6 +518,39 @@ export class Util {
         }
       }),
     }));
+  }
+
+  presenceToREST(
+    presence: RawPresenceUpdateEventFields,
+    client: Client
+  ): PresenceUpdateEventFields {
+    return {
+      user: new User(presence.user, client),
+      guildId: presence.guild_id,
+      status: presence.status,
+      activities: presence.activities.map((activity) => ({
+        name: activity.name,
+        type: activity.type,
+        url: activity.url,
+        createdAt: activity.created_at,
+        timestamps: activity.timestamps,
+        applicationId: activity.application_id,
+        details: activity.details,
+        state: activity.state,
+        party: activity.party,
+        assets: {
+          largeImage: activity.assets?.large_image,
+          largeText: activity.assets?.large_text,
+          smallImage: activity.assets?.small_image,
+          smallText: activity.assets?.small_text,
+        },
+        secrets: activity.secrets,
+        instance: activity.instance,
+        flags: activity.flags,
+        buttons: activity.buttons,
+      })),
+      clientStatus: presence.client_status,
+    };
   }
 
   roleToRaw(role: JSONRole): RawRole {
