@@ -68,6 +68,7 @@ import type {
   RawGuildCreateEventExtraFields,
   JSONGuildCreateEventExtraFields,
   JSONTriggerMetadata,
+  JSONApplicationCommandOption,
 } from "../types";
 import type {
   ActionTypes,
@@ -327,40 +328,11 @@ export class Guild extends Base {
   async createApplicationCommand(
     applicationId: string,
     options: {
-      name?: string;
+      name: string;
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;
@@ -768,36 +740,7 @@ export class Guild extends Base {
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
       dmPermission?: boolean;
@@ -1796,40 +1739,11 @@ export class Guild extends Base {
     applicationId: string,
     commands: Array<{
       id?: string;
-      name?: string;
+      name: string;
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;

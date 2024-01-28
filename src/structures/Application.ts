@@ -20,6 +20,7 @@ import type {
   RawApplicationRoleConnectionMetadata,
   RawSKU,
   RawEntitlement,
+  JSONApplicationCommandOption,
 } from "../types";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
@@ -112,36 +113,7 @@ export class Application extends Base {
     nameLocalizations?: Partial<Record<Locale, string>> | null;
     description?: string;
     descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-    options?: Array<{
-      type: ApplicationCommandOptionType;
-      name: string;
-      nameLocalizations?: Partial<Record<Locale, string>>;
-      description: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>>;
-      required?: boolean;
-      choices?: Array<JSONApplicationCommandOptionChoice>;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
-      channelTypes?: Array<ChannelTypes>;
-      minValue?: number;
-      maxValue?: number;
-      minLength?: number;
-      maxLength?: number;
-      autocomplete?: boolean;
-    }>;
+    options?: Array<JSONApplicationCommandOption>;
     defaultMemberPermissions?: string | null;
     dmPermission?: boolean;
     defaultPermission?: boolean | null;
@@ -163,40 +135,11 @@ export class Application extends Base {
   async createGuildApplicationCommand(
     guildId: string,
     options: {
-      name?: string;
+      name: string;
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options?: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;
@@ -334,36 +277,7 @@ export class Application extends Base {
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options?: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
       dmPermission?: boolean;
@@ -390,36 +304,7 @@ export class Application extends Base {
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options?: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
       dmPermission?: boolean;
@@ -608,36 +493,7 @@ export class Application extends Base {
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options?: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;
@@ -664,40 +520,11 @@ export class Application extends Base {
     guildId: string,
     commands: Array<{
       id?: string;
-      name?: string;
+      name: string;
       nameLocalizations?: Partial<Record<Locale, string>> | null;
       description?: string;
       descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-      options?: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        options?: Array<{
-          type: ApplicationCommandOptionType;
-          name: string;
-          nameLocalizations?: Partial<Record<Locale, string>>;
-          description: string;
-          descriptionLocalizations?: Partial<Record<Locale, string>>;
-          required?: boolean;
-          choices?: Array<JSONApplicationCommandOptionChoice>;
-          channelTypes?: Array<ChannelTypes>;
-          minValue?: number;
-          maxValue?: number;
-          minLength?: number;
-          maxLength?: number;
-          autocomplete?: boolean;
-        }>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
+      options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;

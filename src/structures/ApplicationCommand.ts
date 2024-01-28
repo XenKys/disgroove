@@ -83,36 +83,7 @@ export class ApplicationCommand extends Base {
     nameLocalizations?: Partial<Record<Locale, string>> | null;
     description?: string;
     descriptionLocalizations?: Partial<Record<Locale, string>> | null;
-    options?: Array<{
-      type: ApplicationCommandOptionType;
-      name: string;
-      nameLocalizations?: Partial<Record<Locale, string>>;
-      description: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>>;
-      required?: boolean;
-      choices?: Array<JSONApplicationCommandOptionChoice>;
-      options: Array<{
-        type: ApplicationCommandOptionType;
-        name: string;
-        nameLocalizations?: Partial<Record<Locale, string>>;
-        description: string;
-        descriptionLocalizations?: Partial<Record<Locale, string>>;
-        required?: boolean;
-        choices?: Array<JSONApplicationCommandOptionChoice>;
-        channelTypes?: Array<ChannelTypes>;
-        minValue?: number;
-        maxValue?: number;
-        minLength?: number;
-        maxLength?: number;
-        autocomplete?: boolean;
-      }>;
-      channelTypes?: Array<ChannelTypes>;
-      minValue?: number;
-      maxValue?: number;
-      minLength?: number;
-      maxLength?: number;
-      autocomplete?: boolean;
-    }>;
+    options?: Array<JSONApplicationCommandOption>;
     defaultMemberPermissions?: string | null;
     defaultPermission?: boolean | null;
     dmPermission?: boolean;
