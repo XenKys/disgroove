@@ -1,3 +1,4 @@
 examples/
 lib/
+test/
 tsconfig.json
