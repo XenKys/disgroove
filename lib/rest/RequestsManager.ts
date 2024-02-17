@@ -2,6 +2,7 @@ import { File, RESTMethods } from ".";
 import { fetch, FormData, File as UndiciFile } from "undici";
 import { HTTPResponseCodes } from "../constants";
 import { HTTPError, RESTError } from "../utils";
+import * as pkg from "../../package.json";
 
 export interface RequestData {
   json?: unknown;
@@ -37,7 +38,7 @@ export class RequestsManager {
           if (value !== undefined) url.searchParams.set(key, String(value));
 
       let headers: Record<string, string> = {
-        "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, 1.3.0)`,
+        "User-Agent": `DiscordBot (https://github.com/XenKys/disgroove, ${pkg.version})`,
         Authorization: `${this.auth} ${this.token}`,
       };
       let body: string | FormData | undefined;

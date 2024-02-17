@@ -34,6 +34,7 @@ import type {
   RawPresenceUpdateEventFields,
 } from "../types";
 import { Client } from "../Client";
+import * as pkg from "../../package.json";
 
 export class Shard {
   id: number;
@@ -93,8 +94,8 @@ export class Shard {
           intents: this.client.intents,
           properties: {
             os: process.platform,
-            browser: "disgroove",
-            device: "disgroove",
+            browser: pkg.name,
+            device: pkg.name,
           },
         },
       })
