@@ -259,6 +259,7 @@ export class Channel extends Base {
     files?: Array<File>;
     attachments?: Array<JSONAttachment>;
     flags?: MessageFlags;
+    enforceNonce?: boolean;
   }): Promise<Message> {
     return new Message(
       await this.client.rest.post<RawMessage>(
@@ -286,6 +287,7 @@ export class Channel extends Base {
             stickers_ids: options.stickersIds,
             attachments: options.attachments,
             flags: options.flags,
+            enforce_nonce: options.enforceNonce,
           },
           files: options.files,
         }
