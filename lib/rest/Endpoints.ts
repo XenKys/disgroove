@@ -3,7 +3,7 @@ export const guild = (guildId: string) => `guilds/${guildId}` as const;
 export const guilds = () => "guilds" as const;
 export const guildActiveThreads = (guildId: string) =>
   `guilds/${guildId}/threads/active` as const;
-export const guildAuditLogs = (guildId: string) =>
+export const guildAuditLog = (guildId: string) =>
   `guilds/${guildId}/audit-logs` as const;
 export const guildAutoModerationRule = (guildId: string, ruleId: string) =>
   `guilds/${guildId}/auto-moderation/rules/${ruleId}` as const;
