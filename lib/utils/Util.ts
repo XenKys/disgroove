@@ -553,7 +553,7 @@ export class Util {
     };
   }
 
-  roleToRaw(role: JSONRole): RawRole {
+  roleToRaw(role: JSONRole | Partial<JSONRole>): RawRole | Partial<RawRole> {
     return {
       id: role.id,
       name: role.name,

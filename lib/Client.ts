@@ -8,6 +8,7 @@ import {
   type SystemChannelFlags,
   type VerificationLevel,
   GatewayOPCodes,
+  ChannelTypes,
 } from "./constants";
 import { Util } from "./utils";
 import { Endpoints, REST } from "./rest";
@@ -216,11 +217,15 @@ export class Client extends EventEmitter {
     verificationLevel?: VerificationLevel;
     defaultMessageNotifications?: DefaultMessageNotificationLevel;
     explicitContentFilter?: ExplicitContentFilterLevel;
-    roles?: Array<JSONRole>;
-    channels?: Array<
-      Partial<Pick<JSONChannel, "id" | "name" | "parentId" | "type">> &
-        Required<Pick<JSONChannel, "name" | "type">>
+    roles?: Array<
+      Partial<Omit<JSONRole, "id" | "position" | "tags" | "flags" | "managed">>
     >;
+    channels?: Array<{
+      name: string;
+      type: ChannelTypes;
+      id?: number;
+      parentId?: number;
+    }>;
     afkChannelId?: string;
     afkTimeout?: number;
     systemChannelId?: string;
