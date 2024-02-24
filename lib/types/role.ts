@@ -1,4 +1,4 @@
-import { RoleFlags } from "../constants";
+import type { RoleFlags } from "../constants";
 
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-structure */
 export interface RawRole {

@@ -1,4 +1,4 @@
-import { PrivacyLevel } from "../constants";
+import type { PrivacyLevel } from "../constants";
 
 /** https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-stage-instance-structure */
 export interface RawStageInstance {
