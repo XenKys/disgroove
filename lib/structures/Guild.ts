@@ -20,7 +20,6 @@ import {
 import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
-  JSONApplicationCommandOptionChoice,
   JSONAutoModerationAction,
   JSONBan,
   JSONDefaultReaction,
@@ -72,7 +71,6 @@ import type {
 } from "../types";
 import type {
   ActionTypes,
-  ApplicationCommandOptionType,
   ApplicationCommandTypes,
   ChannelTypes,
   DefaultMessageNotificationLevel,

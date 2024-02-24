@@ -5,7 +5,6 @@ import type {
   JSONChannel,
   JSONEmbed,
   JSONEmoji,
-  JSONPresenceUpdateEventFields,
   JSONRole,
   JSONUser,
   PresenceUpdateEventFields,

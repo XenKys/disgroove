@@ -23,7 +23,6 @@ import {
 } from "../structures";
 import type {
   Activity,
-  RawActivity,
   RawApplicationCommandPermission,
   RawChannel,
   RawEmoji,

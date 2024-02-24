@@ -3,18 +3,12 @@ import { Endpoints } from "../rest";
 import type {
   JSONApplicationCommand,
   JSONApplicationCommandOption,
-  JSONApplicationCommandOptionChoice,
   JSONApplicationCommandPermission,
   JSONGuildApplicationCommandPermissions,
   RawApplicationCommand,
   RawGuildApplicationCommandPermissions,
 } from "../types";
-import type {
-  ApplicationCommandOptionType,
-  ApplicationCommandTypes,
-  ChannelTypes,
-  Locale,
-} from "../constants";
+import type { ApplicationCommandTypes, Locale } from "../constants";
 import { Base } from ".";
 
 /** https://discord.com/developers/docs/interactions/application-commands */

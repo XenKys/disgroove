@@ -12,7 +12,6 @@ import type {
   RawGuildApplicationCommandPermissions,
   RawApplicationCommand,
   JSONApplication,
-  JSONApplicationCommandOptionChoice,
   JSONApplicationRoleConnectionMetadata,
   RawApplicationRoleConnectionMetadata,
   RawEntitlement,
@@ -23,10 +22,8 @@ import type {
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
-  ApplicationCommandOptionType,
   ApplicationCommandTypes,
   ApplicationFlags,
-  ChannelTypes,
   Locale,
 } from "../constants";
 
