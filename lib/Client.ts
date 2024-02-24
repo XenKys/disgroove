@@ -550,12 +550,12 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
-  updatePresence(options: {
+  setPresence(options: {
     activity?: Pick<Activity, "name" | "type" | "url" | "state">;
     status?: StatusTypes;
     afk?: boolean;
   }): void {
-    for (const [id, shard] of this.shards) shard.updatePresence(options);
+    for (const [id, shard] of this.shards) shard.setPresence(options);
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */

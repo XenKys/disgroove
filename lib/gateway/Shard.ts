@@ -49,7 +49,7 @@ export class Shard {
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
-  updatePresence(options: {
+  setPresence(options: {
     activity?: Pick<Activity, "name" | "type" | "url" | "state">;
     status?: StatusTypes;
     afk?: boolean;
