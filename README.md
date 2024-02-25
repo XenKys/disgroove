@@ -1,6 +1,6 @@
 # disgroove
 
-An NPM package to interact with the Discord API
+A module to interact with the Discord API
 
 ## Installation
 
