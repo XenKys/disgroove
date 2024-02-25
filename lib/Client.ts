@@ -189,7 +189,7 @@ export class Client extends EventEmitter {
   util: Util;
   user!: User;
   application!: ClientApplication;
-  guildSharding: Record<string, number>;
+  guildShardMap: Record<string, number>;
 
   constructor(token: string, options?: ClientOptions) {
     super();
@@ -206,7 +206,7 @@ export class Client extends EventEmitter {
     this.shards = new ShardsManager();
     this.rest = new REST(token, this.auth);
     this.util = new Util();
-    this.guildSharding = {};
+    this.guildShardMap = {};
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild */
@@ -521,7 +521,7 @@ export class Client extends EventEmitter {
       selfDeaf?: boolean;
     }
   ): void {
-    this.shards.get(this.guildSharding[guildId])?.ws.send(
+    this.shards.get(this.guildShardMap[guildId])?.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.VoiceStateUpdate,
         d: {
@@ -536,7 +536,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   leaveVoiceChannel(guildId: string): void {
-    this.shards.get(this.guildSharding[guildId])?.ws.send(
+    this.shards.get(this.guildShardMap[guildId])?.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.VoiceStateUpdate,
         d: {
