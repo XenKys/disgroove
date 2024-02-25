@@ -1,3 +1,5 @@
 examples/
+lib/
+!dist/lib/
 test/
 tsconfig.json
