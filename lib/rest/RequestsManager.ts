@@ -1,5 +1,4 @@
 import { File, RESTMethods } from ".";
-import { fetch, FormData, File as UndiciFile } from "undici";
 import { HTTPResponseCodes } from "../constants";
 import { HTTPError, RESTError } from "../utils";
 import * as pkg from "../../package.json";
@@ -55,7 +54,8 @@ export class RequestsManager {
 
               formData?.set(
                 `files[${i}]`,
-                new UndiciFile([file.contents], file.name)
+                new Blob([file.contents]),
+                file.name
               );
             }
 

@@ -94,7 +94,6 @@ import type {
   VerificationLevel,
   VideoQualityModes,
 } from "../constants";
-import { File as UndiciFile, FormData } from "undici";
 
 /** https://discord.com/developers/docs/resources/guild */
 export class Guild extends Base {
@@ -572,10 +571,7 @@ export class Guild extends Base {
     formData.set("name", options.name);
     formData.set("description", options.description);
     formData.set("tags", options.tags);
-    formData.set(
-      "file",
-      new UndiciFile([options.file.contents], options.file.name)
-    );
+    formData.set("file", new Blob([options.file.contents]), options.file.name);
 
     return this.client.rest
       .post<RawSticker>(Endpoints.guildStickers(this.id), {
