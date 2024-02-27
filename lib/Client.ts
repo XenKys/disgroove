@@ -217,9 +217,15 @@ export class Client extends EventEmitter {
     verificationLevel?: VerificationLevel;
     defaultMessageNotifications?: DefaultMessageNotificationLevel;
     explicitContentFilter?: ExplicitContentFilterLevel;
-    roles?: Array<
-      Partial<Omit<JSONRole, "id" | "position" | "tags" | "flags" | "managed">>
-    >;
+    roles?: Array<{
+      name?: string;
+      permissions?: string;
+      color?: number;
+      hoist?: boolean;
+      icon?: string | null;
+      unicodeEmoji?: string | null;
+      mentionable?: boolean;
+    }>;
     channels?: Array<{
       name: string;
       type: ChannelTypes;
