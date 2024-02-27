@@ -57,7 +57,6 @@ import type {
   MessageReactionRemoveEmojiEventFields,
   MessageReactionRemoveEventFields,
   PresenceUpdateEventFields,
-  JSONRole,
   JSONStageInstance,
   JSONStickerPack,
   ThreadListSyncEventFields,
