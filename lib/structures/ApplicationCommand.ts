@@ -8,7 +8,7 @@ import type {
   RawApplicationCommand,
   RawGuildApplicationCommandPermissions,
 } from "../types";
-import type { ApplicationCommandTypes, Locale } from "../constants";
+import type { ApplicationCommandTypes, Locales } from "../constants";
 import { Base } from ".";
 
 /** https://discord.com/developers/docs/interactions/application-commands */
@@ -18,9 +18,9 @@ export class ApplicationCommand extends Base {
   applicationId: string;
   guildId?: string;
   name: string;
-  nameLocalizations?: Partial<Record<Locale, string>> | null;
+  nameLocalizations?: Partial<Record<Locales, string>> | null;
   description: string;
-  descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+  descriptionLocalizations?: Partial<Record<Locales, string>> | null;
   options?: Array<JSONApplicationCommandOption>;
   defaultMemberPermissions: string | null;
   dmPermission?: boolean;
@@ -74,9 +74,9 @@ export class ApplicationCommand extends Base {
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
   async edit(options: {
     name?: string;
-    nameLocalizations?: Partial<Record<Locale, string>> | null;
+    nameLocalizations?: Partial<Record<Locales, string>> | null;
     description?: string;
-    descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+    descriptionLocalizations?: Partial<Record<Locales, string>> | null;
     options?: Array<JSONApplicationCommandOption>;
     defaultMemberPermissions?: string | null;
     defaultPermission?: boolean | null;

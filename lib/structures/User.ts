@@ -13,7 +13,7 @@ import type {
 } from "../types";
 import type {
   ApplicationRoleConnectionMetadataType,
-  Locale,
+  Locales,
   PremiumTypes,
   UserFlags,
 } from "../constants";
@@ -175,9 +175,9 @@ export class User extends Base {
       type: ApplicationRoleConnectionMetadataType;
       key: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
     };
   }): Promise<JSONApplicationRoleConnection> {
     return this.client.rest

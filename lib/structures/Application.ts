@@ -26,7 +26,7 @@ import { Endpoints } from "../rest";
 import type {
   ApplicationCommandTypes,
   ApplicationFlags,
-  Locale,
+  Locales,
 } from "../constants";
 
 /** https://discord.com/developers/docs/resources/application */
@@ -107,9 +107,9 @@ export class Application extends Base {
   /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
   async createGlobalApplicationCommand(options: {
     name: string;
-    nameLocalizations?: Partial<Record<Locale, string>> | null;
+    nameLocalizations?: Partial<Record<Locales, string>> | null;
     description?: string;
-    descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+    descriptionLocalizations?: Partial<Record<Locales, string>> | null;
     options?: Array<JSONApplicationCommandOption>;
     defaultMemberPermissions?: string | null;
     dmPermission?: boolean;
@@ -133,9 +133,9 @@ export class Application extends Base {
     guildId: string,
     options: {
       name: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
@@ -271,9 +271,9 @@ export class Application extends Base {
     commandId: string,
     options: {
       name?: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
@@ -298,9 +298,9 @@ export class Application extends Base {
     commandId: string,
     options: {
       name?: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
@@ -487,9 +487,9 @@ export class Application extends Base {
     commands: Array<{
       id?: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
@@ -518,9 +518,9 @@ export class Application extends Base {
     commands: Array<{
       id?: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;

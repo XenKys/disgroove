@@ -84,7 +84,7 @@ import type {
   GuildScheduledEventPrivacyLevel,
   GuildScheduledEventStatus,
   ImageWidgetStyleOptions,
-  Locale,
+  Locales,
   MFALevel,
   OnboardingMode,
   PremiumTier,
@@ -326,9 +326,9 @@ export class Guild extends Base {
     applicationId: string,
     options: {
       name: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
@@ -731,9 +731,9 @@ export class Guild extends Base {
     commandId: string,
     options: {
       name?: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
@@ -1734,9 +1734,9 @@ export class Guild extends Base {
     commands: Array<{
       id?: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locale, string>> | null;
+      nameLocalizations?: Partial<Record<Locales, string>> | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locale, string>> | null;
+      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;

@@ -9,7 +9,7 @@ export enum ImageFormats {
 }
 
 /** https://discord.com/developers/docs/reference#locales */
-export enum Locale {
+export enum Locales {
   Indonesian = "id",
   Danish = "da",
   German = "de",
