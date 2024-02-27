@@ -16,7 +16,7 @@ export enum Locale {
   EnglishGB = "en-GB",
   EnglishUS = "en-US",
   SpanishES = "es-ES",
-  SpanishLatam = "es-419",
+  SpanishLATAM = "es-419",
   French = "fr",
   Croatian = "hr",
   Italian = "it",
