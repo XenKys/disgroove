@@ -493,13 +493,13 @@ export class Guild extends Base {
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
   async createRole(
     options: {
-      name: string;
-      permissions: string;
-      color: number;
-      hoist: boolean;
-      icon: string | null;
-      unicodeEmoji: string | null;
-      mentionable: boolean;
+      name?: string;
+      permissions?: string;
+      color?: number;
+      hoist?: boolean;
+      icon?: string | null;
+      unicodeEmoji?: string | null;
+      mentionable?: boolean;
     },
     reason?: string
   ): Promise<Role> {
