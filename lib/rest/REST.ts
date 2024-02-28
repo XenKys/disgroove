@@ -1,10 +1,5 @@
 import { RequestData, RequestsManager } from ".";
 
-export interface File {
-  contents: Buffer;
-  name: string;
-}
-
 export enum RESTMethods {
   Get = "GET",
   Post = "POST",

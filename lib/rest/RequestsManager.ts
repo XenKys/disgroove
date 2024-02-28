@@ -1,4 +1,4 @@
-import { File, RESTMethods } from ".";
+import { RESTMethods } from ".";
 import { HTTPResponseCodes } from "../constants";
 import { HTTPError, RESTError } from "../utils";
 import * as pkg from "../../package.json";
@@ -10,6 +10,11 @@ export interface RequestData {
   reason?: string;
   query?: Partial<Record<string, string | number | boolean | Array<string>>>;
   authorization?: boolean;
+}
+
+export interface File {
+  contents: Buffer;
+  name: string;
 }
 
 export class RequestsManager {
