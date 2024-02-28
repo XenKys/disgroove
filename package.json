@@ -10,9 +10,8 @@
   },
   "keywords": [
     "discord",
-    "discord-api",
-    "discord-wrapper",
-    "discord.js"
+    "api",
+    "wrapper"
   ],
   "author": "XenKys",
   "license": "MIT",
