@@ -1,4 +1,4 @@
-import { Base, User } from ".";
+import { IdentifiableBase, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
@@ -14,7 +14,7 @@ import type {
 import type { IntegrationExpireBehaviors, OAuth2Scopes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/guild */
-export class Integration extends Base {
+export class Integration extends IdentifiableBase {
   protected override raw: RawIntegration &
     Partial<
       | RawIntegrationCreateEventExtraFields

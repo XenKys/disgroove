@@ -1,4 +1,4 @@
-import { Base, Channel, Guild, Message, User } from ".";
+import { IdentifiableBase, Channel, Guild, Message, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
@@ -13,7 +13,7 @@ import type {
 import type { MessageFlags, WebhookTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/webhook */
-export class Webhook extends Base {
+export class Webhook extends IdentifiableBase {
   protected override raw: RawWebhook;
 
   type: WebhookTypes;

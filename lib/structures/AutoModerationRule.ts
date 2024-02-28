@@ -6,11 +6,11 @@ import type {
   JSONTriggerMetadata,
   RawAutoModerationRule,
 } from "../types";
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 import type { EventTypes, TriggerTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/auto-moderation */
-export class AutoModerationRule extends Base {
+export class AutoModerationRule extends IdentifiableBase {
   protected override raw: RawAutoModerationRule;
 
   guildId: string;

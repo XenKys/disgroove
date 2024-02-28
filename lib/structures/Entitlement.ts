@@ -1,10 +1,10 @@
 import type { Client } from "../Client";
 import type { JSONEntitlement, RawEntitlement } from "../types";
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 import type { EntitlementTypes } from "../constants";
 
 /** https://discord.com/developers/docs/monetization/entitlements */
-export class Entitlement extends Base {
+export class Entitlement extends IdentifiableBase {
   protected override raw: RawEntitlement;
 
   skuId: string;

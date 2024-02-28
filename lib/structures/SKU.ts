@@ -1,10 +1,10 @@
 import type { Client } from "../Client";
 import type { JSONSKU, RawSKU } from "../types";
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 import type { SKUFlags, SKUTypes } from "../constants";
 
 /** https://discord.com/developers/docs/monetization/skus */
-export class SKU extends Base {
+export class SKU extends IdentifiableBase {
   protected override raw: RawSKU;
 
   type: SKUTypes;

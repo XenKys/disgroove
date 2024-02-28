@@ -2,7 +2,7 @@ import {
   ApplicationCommand,
   AuditLog,
   AutoModerationRule,
-  Base,
+  IdentifiableBase,
   Channel,
   Emoji,
   GuildMember,
@@ -96,7 +96,7 @@ import type {
 } from "../constants";
 
 /** https://discord.com/developers/docs/resources/guild */
-export class Guild extends Base {
+export class Guild extends IdentifiableBase {
   protected override raw: RawGuild & Partial<RawGuildCreateEventExtraFields>;
 
   name: string;

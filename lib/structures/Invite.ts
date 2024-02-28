@@ -1,5 +1,6 @@
 import {
   Application,
+  Base,
   Channel,
   Guild,
   GuildMember,
@@ -12,9 +13,8 @@ import { Endpoints } from "../rest";
 import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 
 /** https://discord.com/developers/docs/resources/invite */
-export class Invite {
-  private client: Client;
-  private raw: RawInvite;
+export class Invite extends Base {
+  protected override raw: RawInvite;
 
   code: string;
   guild?: Guild;
@@ -30,7 +30,8 @@ export class Invite {
   guildScheduledEvent?: GuildScheduledEvent;
 
   constructor(data: RawInvite, client: Client) {
-    this.client = client;
+    super(client);
+
     this.raw = data;
     this.code = data.code;
     this.channel = new Channel(data.channel, client);
@@ -38,7 +39,7 @@ export class Invite {
     this.patch(data);
   }
 
-  private patch(data: RawInvite): void {
+  protected override patch(data: RawInvite): void {
     if (data.guild !== undefined)
       this.guild = new Guild(data.guild, this.client);
     if (data.inviter !== undefined)
@@ -82,15 +83,11 @@ export class Invite {
     ).toJSON();
   }
 
-  toString(): string {
-    return `[${this.constructor.name}]`;
-  }
-
-  toRaw(): RawInvite {
+  override toRaw(): RawInvite {
     return this.raw;
   }
 
-  toJSON(): JSONInvite {
+  override toJSON(): JSONInvite {
     return {
       code: this.code,
       guild: this.guild?.toJSON(),

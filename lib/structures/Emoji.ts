@@ -1,12 +1,11 @@
-import { User } from ".";
+import { Base, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONEmoji, RawEmoji } from "../types";
 
 /** https://discord.com/developers/docs/resources/emoji */
-export class Emoji {
-  private client: Client;
-  private raw: RawEmoji;
+export class Emoji extends Base {
+  protected override raw: RawEmoji;
 
   id: string | null;
   name: string | null;
@@ -18,7 +17,8 @@ export class Emoji {
   available?: boolean;
 
   constructor(data: RawEmoji, client: Client) {
-    this.client = client;
+    super(client);
+
     this.raw = data;
     this.id = data.id;
     this.name = data.name;
@@ -26,7 +26,7 @@ export class Emoji {
     this.patch(data);
   }
 
-  private patch(data: RawEmoji) {
+  protected override patch(data: RawEmoji) {
     if (data.roles !== undefined) this.roles = data.roles;
     if (data.user !== undefined) this.user = new User(data.user, this.client);
     if (data.require_colons !== undefined)
@@ -73,15 +73,11 @@ export class Emoji {
     );
   }
 
-  toString(): string {
-    return `[${this.constructor.name}]`;
-  }
-
-  toRaw(): RawEmoji {
+  override toRaw(): RawEmoji {
     return this.raw;
   }
 
-  toJSON(): JSONEmoji {
+  override toJSON(): JSONEmoji {
     return {
       id: this.id,
       name: this.name,

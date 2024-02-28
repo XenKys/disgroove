@@ -1,6 +1,6 @@
 import {
   Application,
-  Base,
+  IdentifiableBase,
   Channel,
   Emoji,
   GuildMember,
@@ -33,7 +33,7 @@ import type {
 import { MessageFlags, MessageTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/channel */
-export class Message extends Base {
+export class Message extends IdentifiableBase {
   protected override raw: RawMessage &
     Partial<RawMessageCreateEventExtraFields>;
 

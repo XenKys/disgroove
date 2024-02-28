@@ -1,5 +1,5 @@
 import {
-  Base,
+  IdentifiableBase,
   Channel,
   Entitlement,
   GuildMember,
@@ -29,7 +29,7 @@ import {
 } from "../constants";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding */
-export class Interaction extends Base {
+export class Interaction extends IdentifiableBase {
   protected override raw: RawInteraction;
 
   applicationId: string;

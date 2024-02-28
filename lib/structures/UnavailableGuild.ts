@@ -1,9 +1,9 @@
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 import type { Client } from "../Client";
 import type { RawUnavailableGuild, JSONUnavailableGuild } from "../types";
 
 /** https://discord.com/developers/docs/resources/guild */
-export class UnavailableGuild extends Base {
+export class UnavailableGuild extends IdentifiableBase {
   protected override raw: RawUnavailableGuild;
 
   unavailable: boolean;

@@ -1,5 +1,5 @@
 import {
-  Base,
+  IdentifiableBase,
   User,
   ApplicationCommand,
   Team,
@@ -30,7 +30,7 @@ import type {
 } from "../constants";
 
 /** https://discord.com/developers/docs/resources/application */
-export class Application extends Base {
+export class Application extends IdentifiableBase {
   protected override raw: RawApplication;
 
   name: string;

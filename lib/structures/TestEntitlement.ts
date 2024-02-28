@@ -1,11 +1,11 @@
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONEntitlement, RawEntitlement } from "../types";
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 import type { EntitlementTypes } from "../constants";
 
 /** https://discord.com/developers/docs/monetization/entitlements */
-export class TestEntitlement extends Base {
+export class TestEntitlement extends IdentifiableBase {
   protected override raw: Omit<
     RawEntitlement,
     "starts_at" | "ends_at" | "subscription_id"

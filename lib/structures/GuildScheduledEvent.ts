@@ -1,4 +1,4 @@
-import { Base, GuildMember, User } from ".";
+import { IdentifiableBase, GuildMember, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
@@ -15,7 +15,7 @@ import type {
 } from "../constants";
 
 /** https://discord.com/developers/docs/resources/guild-scheduled-event */
-export class GuildScheduledEvent extends Base {
+export class GuildScheduledEvent extends IdentifiableBase {
   protected override raw: RawGuildScheduledEvent;
 
   guildId: string;

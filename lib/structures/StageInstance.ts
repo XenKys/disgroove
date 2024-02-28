@@ -2,10 +2,10 @@ import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONStageInstance, RawStageInstance } from "../types";
 import type { PrivacyLevel } from "../constants";
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 
 /** https://discord.com/developers/docs/resources/stage-instance */
-export class StageInstance extends Base {
+export class StageInstance extends IdentifiableBase {
   protected override raw: RawStageInstance;
 
   guildId: string;

@@ -1,12 +1,11 @@
-import { Guild, User } from ".";
+import { Base, Guild, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
 
 /** https://discord.com/developers/docs/resources/guild-template */
-export class GuildTemplate {
-  private client: Client;
-  private raw: RawGuildTemplate;
+export class GuildTemplate extends Base {
+  protected override raw: RawGuildTemplate;
 
   code: string;
   name: string;
@@ -21,7 +20,8 @@ export class GuildTemplate {
   isDirty: boolean | null;
 
   constructor(data: RawGuildTemplate, client: Client) {
-    this.client = client;
+    super(client);
+
     this.raw = data;
     this.code = data.code;
     this.name = data.name;
@@ -78,15 +78,11 @@ export class GuildTemplate {
     );
   }
 
-  toString(): string {
-    return `[${this.constructor.name}]`;
-  }
-
-  toRaw(): RawGuildTemplate {
+  override toRaw(): RawGuildTemplate {
     return this.raw;
   }
 
-  toJSON(): JSONGuildTemplate {
+  override toJSON(): JSONGuildTemplate {
     return {
       code: this.code,
       name: this.name,

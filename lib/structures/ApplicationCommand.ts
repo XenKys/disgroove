@@ -9,10 +9,10 @@ import type {
   RawGuildApplicationCommandPermissions,
 } from "../types";
 import type { ApplicationCommandTypes, Locales } from "../constants";
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 
 /** https://discord.com/developers/docs/interactions/application-commands */
-export class ApplicationCommand extends Base {
+export class ApplicationCommand extends IdentifiableBase {
   protected override raw: RawApplicationCommand;
 
   type?: ApplicationCommandTypes;

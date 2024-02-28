@@ -1,4 +1,5 @@
 export * from "./Base";
+export * from "./IdentifiableBase";
 export * from "./Application";
 export * from "./ApplicationCommand";
 export * from "./AuditLog";

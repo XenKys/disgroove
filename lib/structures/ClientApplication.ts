@@ -1,5 +1,5 @@
 import {
-  Base,
+  IdentifiableBase,
   ApplicationCommand,
   Application,
   SKU,
@@ -27,7 +27,7 @@ import type {
   Locales,
 } from "../constants";
 
-export class ClientApplication extends Base {
+export class ClientApplication extends IdentifiableBase {
   protected override raw: Pick<RawApplication, "id" | "flags">;
 
   flags?: ApplicationFlags;

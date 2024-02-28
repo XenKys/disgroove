@@ -1,11 +1,11 @@
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type { JSONRole, JSONRoleTags, RawRole } from "../types";
-import { Base } from ".";
+import { IdentifiableBase } from ".";
 import { RoleFlags } from "../constants";
 
 /** https://discord.com/developers/docs/topics/permissions */
-export class Role extends Base {
+export class Role extends IdentifiableBase {
   protected override raw: RawRole;
 
   name: string;

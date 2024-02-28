@@ -2,17 +2,11 @@ import type { Client } from "../Client";
 
 export abstract class Base {
   protected client: Client;
-  protected raw: {
-    id: string;
-  };
-  id: string;
+  protected raw: unknown;
 
-  constructor(id: string, client: Client) {
+  constructor(client: Client) {
     this.client = client;
-    this.raw = {
-      id,
-    };
-    this.id = id;
+    this.raw = {};
   }
 
   protected patch(data: unknown): void {}
@@ -21,19 +15,11 @@ export abstract class Base {
     return `[${this.constructor.name}]`;
   }
 
-  toRaw(): {
-    id: string;
-  } {
-    return {
-      id: this.id,
-    };
+  toRaw(): unknown {
+    return this.raw;
   }
 
-  toJSON(): {
-    id: string;
-  } {
-    return {
-      id: this.id,
-    };
+  toJSON(): unknown {
+    return {};
   }
 }

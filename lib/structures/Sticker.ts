@@ -1,11 +1,11 @@
-import { Base, User } from ".";
+import { IdentifiableBase, User } from ".";
 import type { Client } from "../Client";
 import type { StickerFormatTypes, StickerTypes } from "../constants";
 import { Endpoints } from "../rest";
 import type { JSONSticker, RawSticker } from "../types";
 
 /** https://discord.com/developers/docs/resources/sticker */
-export class Sticker extends Base {
+export class Sticker extends IdentifiableBase {
   protected override raw: RawSticker;
 
   packId?: string;

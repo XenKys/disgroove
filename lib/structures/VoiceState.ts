@@ -1,11 +1,10 @@
-import { GuildMember } from ".";
+import { Base, GuildMember } from ".";
 import type { Client } from "../Client";
 import type { JSONVoiceState, RawVoiceState } from "../types";
 
 /** https://discord.com/developers/docs/resources/voice */
-export class VoiceState {
-  private client: Client;
-  private raw: RawVoiceState;
+export class VoiceState extends Base {
+  protected override raw: RawVoiceState;
 
   guildId?: string;
   channelId: string | null;
@@ -22,7 +21,8 @@ export class VoiceState {
   requestToSpeakTimestamp: string | null;
 
   constructor(data: RawVoiceState, client: Client) {
-    this.client = client;
+    super(client);
+
     this.raw = data;
     this.channelId = data.channel_id;
     this.userId = data.user_id;
@@ -38,22 +38,18 @@ export class VoiceState {
     this.patch(data);
   }
 
-  private patch(data: RawVoiceState) {
+  protected override patch(data: RawVoiceState) {
     if (data.guild_id !== undefined) this.guildId = data.guild_id;
     if (data.member !== undefined)
       this.member = new GuildMember(data.member, this.client);
     if (data.self_stream !== undefined) this.selfStream = data.self_stream;
   }
 
-  toString(): string {
-    return `[${this.constructor.name}]`;
-  }
-
-  toRaw(): RawVoiceState {
+  override toRaw(): RawVoiceState {
     return this.raw;
   }
 
-  toJSON(): JSONVoiceState {
+  override toJSON(): JSONVoiceState {
     return {
       guildId: this.guildId,
       channelId: this.channelId,

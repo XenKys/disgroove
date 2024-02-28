@@ -1,4 +1,4 @@
-import { Base, Channel, GuildMember, Integration } from ".";
+import { IdentifiableBase, Channel, GuildMember, Integration } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
@@ -19,7 +19,7 @@ import type {
 } from "../constants";
 
 /** https://discord.com/developers/docs/resources/user */
-export class User extends Base {
+export class User extends IdentifiableBase {
   protected override raw: RawUser;
 
   username: string;

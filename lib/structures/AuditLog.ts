@@ -1,6 +1,7 @@
 import {
   ApplicationCommand,
   AutoModerationRule,
+  Base,
   Channel,
   GuildScheduledEvent,
   Integration,
@@ -11,9 +12,8 @@ import type { Client } from "../Client";
 import type { JSONAuditLog, JSONAuditLogEntry, RawAuditLog } from "../types";
 
 /** https://discord.com/developers/docs/resources/audit-log */
-export class AuditLog {
-  private client: Client;
-  private raw: RawAuditLog;
+export class AuditLog extends Base {
+  protected override raw: RawAuditLog;
 
   applicationCommands: Array<ApplicationCommand>;
   auditLogEntries: Array<JSONAuditLogEntry>;
@@ -25,7 +25,8 @@ export class AuditLog {
   webhooks: Array<Webhook>;
 
   constructor(data: RawAuditLog, client: Client) {
-    this.client = client;
+    super(client);
+
     this.raw = data;
     this.applicationCommands = data.application_commands.map(
       (applicationCommand) =>
@@ -82,15 +83,11 @@ export class AuditLog {
     );
   }
 
-  toString(): string {
-    return `[${this.constructor.name}]`;
-  }
-
-  toRaw(): RawAuditLog {
+  override toRaw(): RawAuditLog {
     return this.raw;
   }
 
-  toJSON(): JSONAuditLog {
+  override toJSON(): JSONAuditLog {
     return {
       applicationCommands: this.applicationCommands.map((applicationCommand) =>
         applicationCommand.toJSON()

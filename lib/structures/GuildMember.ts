@@ -1,4 +1,4 @@
-import { User } from ".";
+import { Base, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
@@ -10,9 +10,9 @@ import type {
 import type { GuildMemberFlags } from "../constants";
 
 /** https://discord.com/developers/docs/resources/guild */
-export class GuildMember {
-  private client: Client;
-  private raw: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>;
+export class GuildMember extends Base {
+  protected override raw: RawGuildMember &
+    Partial<RawGuildMemberAddEventExtraFields>;
 
   user?: User;
   nick?: string | null;
@@ -34,7 +34,8 @@ export class GuildMember {
     data: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>,
     client: Client
   ) {
-    this.client = client;
+    super(client);
+
     this.raw = data;
     this.roles = data.roles;
     this.joinedAt = data.joined_at;
@@ -45,7 +46,7 @@ export class GuildMember {
     this.patch(data);
   }
 
-  private patch(
+  protected override patch(
     data: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>
   ): void {
     if (data.user !== undefined) this.user = new User(data.user, this.client);
@@ -168,15 +169,13 @@ export class GuildMember {
     );
   }
 
-  toString(): string {
-    return `[${this.constructor.name}]`;
-  }
-
-  toRaw(): RawGuildMember & Partial<RawGuildMemberAddEventExtraFields> {
+  override toRaw(): RawGuildMember &
+    Partial<RawGuildMemberAddEventExtraFields> {
     return this.raw;
   }
 
-  toJSON(): JSONGuildMember & Partial<JSONGuildMemberAddEventExtraFields> {
+  override toJSON(): JSONGuildMember &
+    Partial<JSONGuildMemberAddEventExtraFields> {
     return {
       user: this.user?.toJSON(),
       nick: this.nick,

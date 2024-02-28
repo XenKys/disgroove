@@ -1,4 +1,11 @@
-import { Base, GuildMember, Invite, Message, User, Webhook } from ".";
+import {
+  IdentifiableBase,
+  GuildMember,
+  Invite,
+  Message,
+  User,
+  Webhook,
+} from ".";
 import type { Client } from "../Client";
 import { Endpoints, type File } from "../rest";
 import type {
@@ -33,7 +40,7 @@ import {
 } from "../constants";
 
 /** https://discord.com/developers/docs/resources/channel */
-export class Channel extends Base {
+export class Channel extends IdentifiableBase {
   protected override raw: RawChannel & {
     newly_created?: boolean;
   };
