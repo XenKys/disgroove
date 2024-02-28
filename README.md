@@ -4,7 +4,7 @@ A module to interface with Discord
 
 ## Installation
 
-[**Node.js**](https://nodejs.org) v16 or higher required
+[**Node.js**](https://nodejs.org) v18 or higher required
 
 ```
 npm install disgroove
