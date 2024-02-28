@@ -35,7 +35,7 @@ client.on("ready", async () => {
     description: "Responds with Pong! 🏓",
   }); // Create a global application command named "ping"
 
-  client.updatePresence({
+  client.setPresence({
     activity: {
       name: "/ping",
       type: ActivityType.Watching,
