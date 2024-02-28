@@ -14,6 +14,7 @@ import { Base } from ".";
 /** https://discord.com/developers/docs/interactions/application-commands */
 export class ApplicationCommand extends Base {
   protected override raw: RawApplicationCommand;
+
   type?: ApplicationCommandTypes;
   applicationId: string;
   guildId?: string;

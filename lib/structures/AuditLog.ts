@@ -14,6 +14,7 @@ import type { JSONAuditLog, JSONAuditLogEntry, RawAuditLog } from "../types";
 export class AuditLog {
   private client: Client;
   private raw: RawAuditLog;
+
   applicationCommands: Array<ApplicationCommand>;
   auditLogEntries: Array<JSONAuditLogEntry>;
   autoModerationRules: Array<AutoModerationRule>;

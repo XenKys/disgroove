@@ -20,6 +20,7 @@ export class Integration extends Base {
       | RawIntegrationCreateEventExtraFields
       | RawIntegrationUpdateEventExtraFields
     >;
+
   name: string;
   type: string;
   enabled: boolean;
@@ -35,6 +36,8 @@ export class Integration extends Base {
   revoked?: boolean;
   application?: JSONIntegrationApplication;
   scopes?: Array<OAuth2Scopes>;
+
+  /** Only for INTEGRATION_CREATE and INTEGRATION_UPDATE gateway event */
   guildId?: string;
 
   constructor(

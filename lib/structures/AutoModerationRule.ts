@@ -12,6 +12,7 @@ import type { EventTypes, TriggerTypes } from "../constants";
 /** https://discord.com/developers/docs/resources/auto-moderation */
 export class AutoModerationRule extends Base {
   protected override raw: RawAutoModerationRule;
+
   guildId: string;
   name: string;
   creatorId: string;

@@ -36,6 +36,7 @@ import { MessageFlags, MessageTypes } from "../constants";
 export class Message extends Base {
   protected override raw: RawMessage &
     Partial<RawMessageCreateEventExtraFields>;
+
   channelId: string;
   author: User;
   content: string;
@@ -67,7 +68,10 @@ export class Message extends Base {
   position?: number;
   roleSubscriptionData?: JSONRoleSubscriptionData;
   resolved?: JSONResolvedData;
+
+  /** Only for MESSAGE_CREATE and MESSAGE_UPDATE gateway event */
   guildId?: string;
+  /** Only for MESSAGE_CREATE and MESSAGE_UPDATE gateway event */
   member?: GuildMember;
 
   constructor(

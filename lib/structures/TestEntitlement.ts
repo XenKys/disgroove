@@ -10,6 +10,7 @@ export class TestEntitlement extends Base {
     RawEntitlement,
     "starts_at" | "ends_at" | "subscription_id"
   >;
+
   skuId: string;
   applicationId: string;
   userId?: string;

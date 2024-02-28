@@ -7,6 +7,7 @@ import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
 export class GuildTemplate {
   private client: Client;
   private raw: RawGuildTemplate;
+
   code: string;
   name: string;
   description: string | null;

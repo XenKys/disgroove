@@ -7,6 +7,7 @@ import { Base } from ".";
 /** https://discord.com/developers/docs/resources/stage-instance */
 export class StageInstance extends Base {
   protected override raw: RawStageInstance;
+
   guildId: string;
   channelId: string;
   topic: string;

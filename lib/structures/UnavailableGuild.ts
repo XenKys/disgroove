@@ -5,6 +5,7 @@ import type { RawUnavailableGuild, JSONUnavailableGuild } from "../types";
 /** https://discord.com/developers/docs/resources/guild */
 export class UnavailableGuild extends Base {
   protected override raw: RawUnavailableGuild;
+
   unavailable: boolean;
 
   constructor(data: RawUnavailableGuild, client: Client) {

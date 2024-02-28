@@ -29,6 +29,7 @@ import type {
 
 export class ClientApplication extends Base {
   protected override raw: Pick<RawApplication, "id" | "flags">;
+
   flags?: ApplicationFlags;
 
   constructor(data: Pick<RawApplication, "id" | "flags">, client: Client) {

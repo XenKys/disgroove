@@ -5,6 +5,7 @@ import type { JSONTeam, JSONTeamMember, RawTeam } from "../types";
 /** https://discord.com/developers/docs/topics/teams */
 export class Team extends Base {
   protected override raw: RawTeam;
+
   icon: string | null;
   members: Array<JSONTeamMember>;
   name: string;

@@ -21,6 +21,7 @@ import type {
 /** https://discord.com/developers/docs/resources/user */
 export class User extends Base {
   protected override raw: RawUser;
+
   username: string;
   discriminator: string;
   avatar: string;

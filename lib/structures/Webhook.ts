@@ -15,6 +15,7 @@ import type { MessageFlags, WebhookTypes } from "../constants";
 /** https://discord.com/developers/docs/resources/webhook */
 export class Webhook extends Base {
   protected override raw: RawWebhook;
+
   type: WebhookTypes;
   guildId?: string | null;
   channelId: string | null;

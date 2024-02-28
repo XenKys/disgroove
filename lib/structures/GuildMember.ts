@@ -13,6 +13,7 @@ import type { GuildMemberFlags } from "../constants";
 export class GuildMember {
   private client: Client;
   private raw: RawGuildMember & Partial<RawGuildMemberAddEventExtraFields>;
+
   user?: User;
   nick?: string | null;
   avatar?: string | null;
@@ -25,6 +26,8 @@ export class GuildMember {
   pending?: boolean;
   permissions?: string;
   communicationDisabledUntil?: number | null;
+
+  /** Only for GUILD_MEMBER_ADD and GUILD_MEMBER_UPDATE gateway event */
   guildId?: string;
 
   constructor(

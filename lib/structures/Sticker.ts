@@ -7,6 +7,7 @@ import type { JSONSticker, RawSticker } from "../types";
 /** https://discord.com/developers/docs/resources/sticker */
 export class Sticker extends Base {
   protected override raw: RawSticker;
+
   packId?: string;
   name: string;
   description: string | null;

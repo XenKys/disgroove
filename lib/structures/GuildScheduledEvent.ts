@@ -17,6 +17,7 @@ import type {
 /** https://discord.com/developers/docs/resources/guild-scheduled-event */
 export class GuildScheduledEvent extends Base {
   protected override raw: RawGuildScheduledEvent;
+
   guildId: string;
   channelId: string | null;
   creatorId?: string | null;

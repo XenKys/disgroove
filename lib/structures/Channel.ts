@@ -37,6 +37,7 @@ export class Channel extends Base {
   protected override raw: RawChannel & {
     newly_created?: boolean;
   };
+
   type: ChannelTypes;
   guildId?: string;
   position?: number;
@@ -71,6 +72,8 @@ export class Channel extends Base {
   defaultThreadRateLimitPerUser?: number;
   defaultSortOrder?: SortOrderTypes | null;
   defaultForumLayout?: ForumLayoutTypes;
+
+  /** Only for THREAD_UPDATE gateway event */
   newlyCreated?: boolean;
 
   constructor(

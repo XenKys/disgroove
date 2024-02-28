@@ -98,6 +98,7 @@ import type {
 /** https://discord.com/developers/docs/resources/guild */
 export class Guild extends Base {
   protected override raw: RawGuild & Partial<RawGuildCreateEventExtraFields>;
+
   name: string;
   icon: string | null;
   iconHash?: string | null;
@@ -140,16 +141,28 @@ export class Guild extends Base {
   stickers?: Array<Sticker>;
   premiumProgressBarEnabled: boolean;
   safetyAlertsChannelId: string | null;
+
+  /** Only for GUILD_CREATE gateway event */
   joinedAt?: string;
+  /** Only for GUILD_CREATE gateway event */
   large?: boolean;
+  /** Only for GUILD_CREATE gateway event */
   unavailable?: boolean;
+  /** Only for GUILD_CREATE gateway event */
   memberCount?: number;
+  /** Only for GUILD_CREATE gateway event */
   voiceStates?: Array<VoiceState>;
+  /** Only for GUILD_CREATE gateway event */
   members?: Array<GuildMember>;
+  /** Only for GUILD_CREATE gateway event */
   channels?: Array<Channel>;
+  /** Only for GUILD_CREATE gateway event */
   threads?: Array<Channel>;
+  /** Only for GUILD_CREATE gateway event */
   presences?: Array<PresenceUpdateEventFields>;
+  /** Only for GUILD_CREATE gateway event */
   stageInstances?: Array<StageInstance>;
+  /** Only for GUILD_CREATE gateway event */
   guildScheduledEvents?: Array<GuildScheduledEvent>;
 
   constructor(

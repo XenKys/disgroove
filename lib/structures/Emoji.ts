@@ -7,6 +7,7 @@ import type { JSONEmoji, RawEmoji } from "../types";
 export class Emoji {
   private client: Client;
   private raw: RawEmoji;
+
   id: string | null;
   name: string | null;
   roles?: Array<string>;

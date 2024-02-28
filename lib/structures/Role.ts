@@ -7,6 +7,7 @@ import { RoleFlags } from "../constants";
 /** https://discord.com/developers/docs/topics/permissions */
 export class Role extends Base {
   protected override raw: RawRole;
+
   name: string;
   color: number;
   hoist: boolean;

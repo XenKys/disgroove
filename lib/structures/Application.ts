@@ -32,6 +32,7 @@ import type {
 /** https://discord.com/developers/docs/resources/application */
 export class Application extends Base {
   protected override raw: RawApplication;
+
   name: string;
   icon: string | null;
   description: string;

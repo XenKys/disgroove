@@ -6,6 +6,7 @@ import type { JSONVoiceState, RawVoiceState } from "../types";
 export class VoiceState {
   private client: Client;
   private raw: RawVoiceState;
+
   guildId?: string;
   channelId: string | null;
   userId: string;

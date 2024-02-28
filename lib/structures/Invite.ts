@@ -15,6 +15,7 @@ import type { JSONInvite, JSONInviteStageInstance, RawInvite } from "../types";
 export class Invite {
   private client: Client;
   private raw: RawInvite;
+
   code: string;
   guild?: Guild;
   channel: Channel;

@@ -6,6 +6,7 @@ import type { SKUFlags, SKUTypes } from "../constants";
 /** https://discord.com/developers/docs/monetization/skus */
 export class SKU extends Base {
   protected override raw: RawSKU;
+
   type: SKUTypes;
   dependentSKUId?: string | null; // Undocumented
   applicationId: string;

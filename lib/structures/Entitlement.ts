@@ -6,6 +6,7 @@ import type { EntitlementTypes } from "../constants";
 /** https://discord.com/developers/docs/monetization/entitlements */
 export class Entitlement extends Base {
   protected override raw: RawEntitlement;
+
   skuId: string;
   applicationId: string;
   userId?: string;
