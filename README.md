@@ -1,6 +1,6 @@
 # disgroove
 
-A module to interact with the Discord API
+A module to interface with Discord
 
 ## Installation
 
