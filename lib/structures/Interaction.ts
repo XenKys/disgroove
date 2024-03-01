@@ -27,6 +27,7 @@ import {
   type InteractionType,
   type MessageFlags,
 } from "../constants";
+import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding */
 export class Interaction extends IdentifiableBase {
@@ -74,7 +75,7 @@ export class Interaction extends IdentifiableBase {
         resolved: {
           users:
             data.data.resolved?.users !== undefined
-              ? new Map(
+              ? new Collection(
                   Object.entries(data.data.resolved.users).map(([id, user]) => [
                     id,
                     new User(user, this.client).toJSON(),
@@ -83,7 +84,7 @@ export class Interaction extends IdentifiableBase {
               : undefined,
           members:
             data.data.resolved?.members !== undefined
-              ? new Map(
+              ? new Collection(
                   Object.entries(data.data.resolved.members).map(
                     ([id, member]) => [
                       id,
@@ -94,7 +95,7 @@ export class Interaction extends IdentifiableBase {
               : undefined,
           roles:
             data.data.resolved?.roles !== undefined
-              ? new Map(
+              ? new Collection(
                   Object.entries(data.data.resolved.roles).map(([id, role]) => [
                     id,
                     new Role(role, this.client).toJSON(),
@@ -103,7 +104,7 @@ export class Interaction extends IdentifiableBase {
               : undefined,
           channels:
             data.data.resolved?.channels !== undefined
-              ? new Map(
+              ? new Collection(
                   Object.entries(data.data.resolved.channels).map(
                     ([id, channel]) => [
                       id,
@@ -114,7 +115,7 @@ export class Interaction extends IdentifiableBase {
               : undefined,
           messages:
             data.data.resolved?.messages !== undefined
-              ? new Map(
+              ? new Collection(
                   Object.entries(data.data.resolved.messages).map(
                     ([id, message]) => [
                       id,
@@ -125,7 +126,7 @@ export class Interaction extends IdentifiableBase {
               : undefined,
           attachments:
             data.data.resolved?.attachments !== undefined
-              ? new Map(
+              ? new Collection(
                   Object.entries(data.data.resolved.attachments).map(
                     ([id, attachment]) => [
                       id,
