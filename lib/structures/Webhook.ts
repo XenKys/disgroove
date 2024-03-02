@@ -249,40 +249,22 @@ export class Webhook extends IdentifiableBase {
       });
   }
 
-  /** https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook */
-  async executeGitHubCompatible(options: {
-    threadId?: string;
-    wait?: boolean;
-  }): Promise<Message | null> {
+  /**
+   * https://discord.com/developers/docs/resources/webhook#execute-githubcompatible-webhook
+   * https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook
+   */
+  async executePlatform(
+    platform: "github" | "slack",
+    options: {
+      threadId?: string;
+      wait?: boolean;
+    }
+  ): Promise<Message | null> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
     return this.client.rest
       .post<RawMessage | null>(
-        Endpoints.webhookPlatform(this.id, this.token, "github"),
-        {
-          query: {
-            thread_id: options.threadId,
-            wait: options.wait,
-          },
-        }
-      )
-      .then((response) => {
-        if (response !== null) {
-          return new Message(response, this.client);
-        } else return null;
-      });
-  }
-
-  /** https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook */
-  async executeSlackCompatible(options: {
-    threadId?: string;
-    wait?: boolean;
-  }): Promise<Message | null> {
-    if (!this.token) throw new Error("[disgroove] Webhook token not found");
-
-    return this.client.rest
-      .post<RawMessage | null>(
-        Endpoints.webhookPlatform(this.id, this.token, "slack"),
+        Endpoints.webhookPlatform(this.id, this.token, platform),
         {
           query: {
             thread_id: options.threadId,
