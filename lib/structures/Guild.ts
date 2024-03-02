@@ -94,6 +94,7 @@ import type {
   VerificationLevel,
   VideoQualityModes,
 } from "../constants";
+import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/resources/guild */
 export class Guild extends IdentifiableBase {
@@ -115,8 +116,8 @@ export class Guild extends IdentifiableBase {
   verificationLevel: VerificationLevel;
   defaultMessageNotifications: DefaultMessageNotificationLevel;
   explicitContentFilter: ExplicitContentFilterLevel;
-  roles: Array<Role>;
-  emojis: Array<Emoji>;
+  roles: Collection<string, Role>;
+  emojis: Collection<string, Emoji>;
   features: Array<GuildFeatures>;
   mfaLevel: MFALevel;
   applicationId: string | null;
@@ -151,19 +152,19 @@ export class Guild extends IdentifiableBase {
   /** Only for GUILD_CREATE gateway event */
   memberCount?: number;
   /** Only for GUILD_CREATE gateway event */
-  voiceStates?: Array<VoiceState>;
+  voiceStates?: Collection<string, VoiceState>;
   /** Only for GUILD_CREATE gateway event */
-  members?: Array<GuildMember>;
+  members?: Collection<string, GuildMember>;
   /** Only for GUILD_CREATE gateway event */
-  channels?: Array<Channel>;
+  channels?: Collection<string, Channel>;
   /** Only for GUILD_CREATE gateway event */
-  threads?: Array<Channel>;
+  threads?: Collection<string, Channel>;
   /** Only for GUILD_CREATE gateway event */
-  presences?: Array<PresenceUpdateEventFields>;
+  presences?: Collection<string, PresenceUpdateEventFields>;
   /** Only for GUILD_CREATE gateway event */
-  stageInstances?: Array<StageInstance>;
+  stageInstances?: Collection<string, StageInstance>;
   /** Only for GUILD_CREATE gateway event */
-  guildScheduledEvents?: Array<GuildScheduledEvent>;
+  guildScheduledEvents?: Collection<string, GuildScheduledEvent>;
 
   constructor(
     data: RawGuild & Partial<RawGuildCreateEventExtraFields>,
@@ -182,8 +183,8 @@ export class Guild extends IdentifiableBase {
     this.verificationLevel = data.verification_level;
     this.defaultMessageNotifications = data.default_message_notifications;
     this.explicitContentFilter = data.explicit_content_filter;
-    this.roles = data.roles?.map((role) => new Role(role, client));
-    this.emojis = data.emojis?.map((emoji) => new Emoji(emoji, client));
+    this.roles = new Collection();
+    this.emojis = new Collection();
     this.features = data.features;
     this.mfaLevel = data.mfa_level;
     this.applicationId = data.application_id;
@@ -199,6 +200,12 @@ export class Guild extends IdentifiableBase {
     this.nsfwLevel = data.nsfw_level;
     this.premiumProgressBarEnabled = data.premium_progress_bar_enabled;
     this.safetyAlertsChannelId = data.safety_alerts_channel_id;
+
+    for (const role of data.roles)
+      this.roles.set(role.id, new Role(role, this.client));
+    for (const emoji of data.emojis)
+      if (emoji.id !== null)
+        this.emojis.set(emoji.id, new Emoji(emoji, this.client));
 
     this.patch(data);
   }
@@ -247,35 +254,60 @@ export class Guild extends IdentifiableBase {
     if (data.large !== undefined) this.large = data.large;
     if (data.unavailable !== undefined) this.unavailable = data.unavailable;
     if (data.member_count !== undefined) this.memberCount = data.member_count;
-    if (data.voice_states !== undefined)
-      this.voiceStates = data.voice_states.map(
-        (voiceState) => new VoiceState(voiceState, this.client)
-      );
-    if (data.members !== undefined)
-      this.members = data.members.map(
-        (member) => new GuildMember(member, this.client)
-      );
-    if (data.channels !== undefined)
-      this.channels = data.channels.map(
-        (channel) => new Channel(channel, this.client)
-      );
-    if (data.threads !== undefined)
-      this.threads = data.threads.map(
-        (thread) => new Channel(thread, this.client)
-      );
-    if (data.presences !== undefined)
-      this.presences = data.presences.map((presence) =>
-        this.client.util.presenceToREST(presence, this.client)
-      );
-    if (data.stage_instances !== undefined)
-      this.stageInstances = data.stage_instances.map(
-        (stageIntance) => new StageInstance(stageIntance, this.client)
-      );
-    if (data.guild_scheduled_events !== undefined)
-      this.guildScheduledEvents = data.guild_scheduled_events.map(
-        (guildScheduledEvent) =>
+    if (data.voice_states !== undefined) {
+      this.voiceStates = new Collection();
+
+      for (const voiceState of data.voice_states)
+        this.voiceStates?.set(
+          voiceState.user_id,
+          new VoiceState(voiceState, this.client)
+        );
+    }
+    if (data.members !== undefined) {
+      this.members = new Collection();
+
+      for (const member of data.members)
+        this.members.set(member.user!.id, new GuildMember(member, this.client));
+    }
+    if (data.channels !== undefined) {
+      this.channels = new Collection();
+
+      for (const channel of data.channels)
+        this.channels.set(channel.id, new Channel(channel, this.client));
+    }
+    if (data.threads !== undefined) {
+      this.threads = new Collection();
+
+      for (const thread of data.threads)
+        this.threads.set(thread.id, new Channel(thread, this.client));
+    }
+    if (data.presences !== undefined) {
+      this.presences = new Collection();
+
+      for (const presence of data.presences)
+        this.presences.set(
+          presence.user.id,
+          this.client.util.presenceToREST(presence, this.client)
+        );
+    }
+    if (data.stage_instances !== undefined) {
+      this.stageInstances = new Collection();
+
+      for (const stageInstance of data.stage_instances)
+        this.stageInstances.set(
+          stageInstance.id,
+          new StageInstance(stageInstance, this.client)
+        );
+    }
+    if (data.guild_scheduled_events !== undefined) {
+      this.guildScheduledEvents = new Collection();
+
+      for (const guildScheduledEvent of data.guild_scheduled_events)
+        this.guildScheduledEvents.set(
+          guildScheduledEvent.id,
           new GuildScheduledEvent(guildScheduledEvent, this.client)
-      );
+        );
+    }
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member */
@@ -1805,8 +1837,12 @@ export class Guild extends IdentifiableBase {
       verificationLevel: this.verificationLevel,
       defaultMessageNotifications: this.defaultMessageNotifications,
       explicitContentFilter: this.explicitContentFilter,
-      roles: this.roles,
-      emojis: this.emojis,
+      roles: new Collection(
+        this.roles?.map((role) => [role.id, role.toJSON()])
+      ),
+      emojis: new Collection(
+        this.emojis?.map((emoji) => [emoji.id!, emoji.toJSON()])
+      ),
       features: this.features,
       mfaLevel: this.mfaLevel,
       applicationId: this.applicationId,
@@ -1835,16 +1871,33 @@ export class Guild extends IdentifiableBase {
       large: this.large,
       unavailable: this.unavailable,
       memberCount: this.memberCount,
-      voiceStates: this.voiceStates?.map((voiceState) => voiceState.toJSON()),
-      members: this.members?.map((member) => member.toJSON()),
-      channels: this.channels?.map((channel) => channel.toJSON()),
-      threads: this.threads?.map((thread) => thread.toJSON()),
-      presences: this.presences,
-      stageInstances: this.stageInstances?.map((stageInstance) =>
-        stageInstance.toJSON()
+      voiceStates: new Collection(
+        this.voiceStates?.map((voiceState) => [
+          voiceState.userId,
+          voiceState.toJSON(),
+        ])
       ),
-      guildScheduledEvents: this.guildScheduledEvents?.map(
-        (guildScheduledEvent) => guildScheduledEvent.toJSON()
+      members: new Collection(
+        this.members?.map((member) => [member.user!.id, member.toJSON()])
+      ),
+      channels: new Collection(
+        this.channels?.map((channel) => [channel.id, channel.toJSON()])
+      ),
+      threads: new Collection(
+        this.threads?.map((thread) => [thread.id, thread.toJSON()])
+      ),
+      presences: this.presences,
+      stageInstances: new Collection(
+        this.stageInstances?.map((stageInstance) => [
+          stageInstance.id,
+          stageInstance.toJSON(),
+        ])
+      ),
+      guildScheduledEvents: new Collection(
+        this.guildScheduledEvents?.map((guildScheduledEvent) => [
+          guildScheduledEvent.id,
+          guildScheduledEvent.toJSON(),
+        ])
       ),
     };
   }

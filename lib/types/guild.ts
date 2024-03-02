@@ -25,6 +25,7 @@ import type {
   JSONRole,
   JSONChannel,
 } from ".";
+import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface RawGuild {
@@ -232,8 +233,8 @@ export interface JSONGuild {
   verificationLevel: VerificationLevel;
   defaultMessageNotifications: DefaultMessageNotificationLevel;
   explicitContentFilter: ExplicitContentFilterLevel;
-  roles: Array<JSONRole>;
-  emojis: Array<JSONEmoji>;
+  roles: Collection<string, JSONRole>;
+  emojis: Collection<string, JSONEmoji>;
   features: Array<GuildFeatures>;
   mfaLevel: MFALevel;
   applicationId: string | null;
