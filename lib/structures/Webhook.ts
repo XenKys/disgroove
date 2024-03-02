@@ -242,11 +242,9 @@ export class Webhook extends IdentifiableBase {
           avatarURL: options.avatarURL,
         },
       })
-      .then((response) => {
-        if (response !== null) {
-          return new Message(response, this.client);
-        } else return null;
-      });
+      .then((response) =>
+        response !== null ? new Message(response, this.client) : null
+      );
   }
 
   /**
@@ -270,13 +268,12 @@ export class Webhook extends IdentifiableBase {
             thread_id: options.threadId,
             wait: options.wait,
           },
+          json: options,
         }
       )
-      .then((response) => {
-        if (response !== null) {
-          return new Message(response, this.client);
-        } else return null;
-      });
+      .then((response) =>
+        response !== null ? new Message(response, this.client) : null
+      );
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
