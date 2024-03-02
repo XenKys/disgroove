@@ -2,6 +2,12 @@
 
 A module to interface with Discord
 
+## Features
+
+- No cache: For large bots the cache might be a RAM memory management issue, this module does not include it
+- Very rough style: Using a rough style for methods will always allow you to use the latest Discord change-log, even if the module had not yet been updated to that change-log
+- Documentation-based: The module is based entirely on the Official Discord Documentation, so it does not add custom methods or properties, to avoid future problems
+
 ## Installation
 
 [**Node.js**](https://nodejs.org) v18 or higher required
