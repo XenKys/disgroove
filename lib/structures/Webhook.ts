@@ -255,7 +255,7 @@ export class Webhook extends IdentifiableBase {
    */
   async executePlatform(
     platform: "github" | "slack",
-    options: {
+    options: Record<string, unknown> & {
       threadId?: string;
       wait?: boolean;
     }
