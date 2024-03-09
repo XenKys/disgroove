@@ -18,28 +18,21 @@ import {
   Webhook,
 } from ".";
 import type { Client } from "../Client";
-import { Endpoints, type File } from "../rest";
+import { Endpoints } from "../rest";
 import type {
-  JSONAutoModerationAction,
   JSONBan,
-  JSONDefaultReaction,
-  JSONForumTag,
   JSONGuild,
   JSONGuildApplicationCommandPermissions,
   JSONGuildOnboarding,
   JSONGuildPreview,
-  JSONGuildScheduledEventEntityMetadata,
   JSONGuildScheduledEventUser,
   JSONGuildTemplate,
   JSONGuildWidget,
   JSONGuildWidgetSettings,
-  JSONOnboardingPrompt,
-  JSONOverwrite,
   PresenceUpdateEventFields,
   JSONThreadMember,
   JSONVoiceRegion,
   JSONWelcomeScreen,
-  JSONWelcomeScreenChannel,
   RawApplicationCommand,
   RawAuditLog,
   RawAutoModerationRule,
@@ -66,33 +59,46 @@ import type {
   RawWelcomeScreen,
   RawGuildCreateEventExtraFields,
   JSONGuildCreateEventExtraFields,
-  JSONTriggerMetadata,
-  JSONApplicationCommandOption,
-  LocaleMap,
+  AddGuildMemberParams,
+  BeginGuildPruneParams,
+  CreateGuildApplicationCommandParams,
+  CreateAutoModerationRuleParams,
+  CreateGuildBanParams,
+  CreateGuildChannelParams,
+  CreateGuildEmojiParams,
+  CreateGuildRoleParams,
+  CreateGuildScheduledEventParams,
+  CreateGuildStickerParams,
+  CreateGuildTemplateParams,
+  EditGuildParams,
+  EditGuildApplicationCommandParams,
+  EditAutoModerationRuleParams,
+  EditGuildChannelPositionsParams,
+  EditCurrentGuildMemberParams,
+  EditCurrentUserVoiceStateParams,
+  EditGuildEmojiParams,
+  EditGuildMemberParams,
+  EditGuildMFALevelParams,
+  EditGuildOnboardingParams,
+  EditGuildRoleParams,
+  EditGuildRolePositionsParams,
+  EditGuildScheduledEventParams,
+  EditGuildStickerParams,
+  EditGuildTemplateParams,
+  EditGuildWelcomeScreenParams,
+  BulkEditGuildApplicationCommandsParams,
 } from "../types";
 import type {
   ActionTypes,
-  ApplicationCommandTypes,
-  ChannelTypes,
   DefaultMessageNotificationLevel,
-  EventTypes,
   ExplicitContentFilterLevel,
-  ForumLayoutTypes,
   GuildFeatures,
-  GuildMemberFlags,
   GuildNSFWLevel,
-  GuildScheduledEventEntityTypes,
-  GuildScheduledEventPrivacyLevel,
-  GuildScheduledEventStatus,
   ImageWidgetStyleOptions,
   MFALevel,
-  OnboardingMode,
   PremiumTier,
-  SortOrderTypes,
   SystemChannelFlags,
-  TriggerTypes,
   VerificationLevel,
-  VideoQualityModes,
 } from "../constants";
 import { Collection } from "../utils";
 
@@ -313,13 +319,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild#add-guild-member */
   async addMember(
     userId: string,
-    options: {
-      accessToken: string;
-      nick?: string;
-      roles?: Array<string>;
-      mute?: boolean;
-      deaf?: boolean;
-    }
+    options: AddGuildMemberParams
   ): Promise<GuildMember | null> {
     return this.client.rest
       .put<RawGuildMember>(Endpoints.guildMember(this.id, userId), {
@@ -347,12 +347,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild#begin-guild-prune */
   async beginGuildPrune(
-    options: {
-      days: number;
-      computePruneCount: boolean;
-      includeRoles: Array<string>;
-      reason?: string;
-    },
+    options: BeginGuildPruneParams,
     reason?: string
   ): Promise<number> {
     return this.client.rest.post<number>(Endpoints.guildPrune(this.id), {
@@ -369,18 +364,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
   async createApplicationCommand(
     applicationId: string,
-    options: {
-      name: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type?: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }
+    options: CreateGuildApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
@@ -395,16 +379,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
   async createAutoModerationRule(
-    options: {
-      name: string;
-      eventType: EventTypes;
-      triggerType: TriggerTypes;
-      triggerMetadata?: JSONTriggerMetadata;
-      actions: Array<JSONAutoModerationAction>;
-      enabled?: boolean;
-      exemptRoles?: Array<string>;
-      exemptChannels?: Array<string>;
-    },
+    options: CreateAutoModerationRuleParams,
     reason?: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
@@ -438,10 +413,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
   createBan(
     userId: string,
-    options?: {
-      deleteMessageDays?: number;
-      deleteMessageSeconds?: number;
-    },
+    options?: CreateGuildBanParams,
     reason?: string
   ): void {
     this.client.rest.put(Endpoints.guildBan(this.id, userId), {
@@ -455,26 +427,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-channel */
   async createChannel(
-    options: {
-      name: string | null;
-      type?: ChannelTypes;
-      topic?: string | null;
-      bitrate?: number;
-      userLimit?: number;
-      rateLimitPerUser?: number;
-      position?: number;
-      permissionOverwrites?: Array<JSONOverwrite>;
-      parentId?: string | null;
-      nsfw?: boolean;
-      rtcRegion?: string | null;
-      videoQualityMode?: VideoQualityModes;
-      defaultAutoArchiveDuration?: number;
-      defaultReactionEmoji?: JSONDefaultReaction | null;
-      availableTags?: Array<JSONForumTag>;
-      defaultSortOrder?: SortOrderTypes | null;
-      defaultForumLayout?: ForumLayoutTypes;
-      defaultThreadRateLimitPerUser?: number;
-    },
+    options: CreateGuildChannelParams,
     reason?: string
   ): Promise<Channel> {
     return new Channel(
@@ -514,11 +467,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
   async createEmoji(
-    options: {
-      name: string;
-      image: string;
-      roles: Array<string>;
-    },
+    options: CreateGuildEmojiParams,
     reason?: string
   ): Promise<Emoji> {
     return new Emoji(
@@ -536,15 +485,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
   async createRole(
-    options: {
-      name?: string;
-      permissions?: string;
-      color?: number;
-      hoist?: boolean;
-      icon?: string | null;
-      unicodeEmoji?: string | null;
-      mentionable?: boolean;
-    },
+    options: CreateGuildRoleParams,
     reason?: string
   ): Promise<Role> {
     return new Role(
@@ -566,17 +507,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event */
   async createScheduledEvent(
-    options: {
-      channelId?: string | null;
-      entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
-      name: string;
-      privacyLevel: GuildScheduledEventPrivacyLevel;
-      scheduledStartTime: string;
-      scheduledEndTime?: string | null;
-      description?: string | null;
-      entityType: GuildScheduledEventEntityTypes;
-      image?: string;
-    },
+    options: CreateGuildScheduledEventParams,
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return new GuildScheduledEvent(
@@ -603,12 +534,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
   async createSticker(
-    options: {
-      name: string;
-      description: string;
-      tags: string;
-      file: File;
-    },
+    options: CreateGuildStickerParams,
     reason?: string
   ): Promise<Sticker> {
     const formData = new FormData();
@@ -627,10 +553,9 @@ export class Guild extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-template */
-  async createTemplate(options: {
-    name: string;
-    description?: string | null;
-  }): Promise<GuildTemplate> {
+  async createTemplate(
+    options: CreateGuildTemplateParams
+  ): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.post<RawGuildTemplate>(
         Endpoints.guildTemplates(this.id),
@@ -713,32 +638,7 @@ export class Guild extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
-  async edit(
-    options: {
-      name?: string;
-      region?: string | null;
-      verificationLevel?: VerificationLevel;
-      defaultMessageNotifications?: DefaultMessageNotificationLevel;
-      explicitContentFilter?: ExplicitContentFilterLevel;
-      afkChannelId?: string | null;
-      afkTimeout?: number;
-      icon?: string | null;
-      ownerId?: string;
-      splash?: string | null;
-      discoverySplash?: string | null;
-      banner?: string | null;
-      systemChannelId?: string | null;
-      systemChannelFlags?: SystemChannelFlags;
-      rulesChannelId?: string | null;
-      publicUpdatesChannelId?: string | null;
-      preferredLocale?: string;
-      features?: Array<GuildFeatures>;
-      description?: string | null;
-      premiumProgressBarEnabled?: boolean;
-      safetyAlertsChannelId?: string | null;
-    },
-    reason?: string
-  ): Promise<Guild> {
+  async edit(options: EditGuildParams, reason?: string): Promise<Guild> {
     return new Guild(
       await this.client.rest.patch<RawGuild>(Endpoints.guild(this.id), {
         json: {
@@ -774,17 +674,7 @@ export class Guild extends IdentifiableBase {
   async editApplicationCommand(
     applicationId: string,
     commandId: string,
-    options: {
-      name?: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
-      dmPermission?: boolean;
-      nsfw?: boolean;
-    }
+    options: EditGuildApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
@@ -800,16 +690,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
   async editAutoModerationRule(
     ruleId: string,
-    options: {
-      name?: string;
-      eventType?: EventTypes;
-      triggerType?: TriggerTypes;
-      triggerMetadata?: JSONTriggerMetadata;
-      actions?: Array<JSONAutoModerationAction>;
-      enabled?: boolean;
-      exemptRoles?: Array<string>;
-      exemptChannels?: Array<string>;
-    },
+    options: EditAutoModerationRuleParams,
     reason?: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
@@ -841,14 +722,7 @@ export class Guild extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
-  editChannelPositions(
-    options: Array<{
-      id: string;
-      position?: number | null;
-      lockPermissions?: boolean | null;
-      parentId?: string | null;
-    }>
-  ): void {
+  editChannelPositions(options: EditGuildChannelPositionsParams): void {
     this.client.rest.patch(Endpoints.guildChannels(this.id), {
       json: options.map((data) => ({
         id: data.id,
@@ -861,9 +735,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
   async editCurrentMember(
-    options: {
-      nick: string | null;
-    },
+    options: EditCurrentGuildMemberParams,
     reason?: string
   ): Promise<GuildMember> {
     return new GuildMember(
@@ -878,11 +750,7 @@ export class Guild extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
-  editCurrentUserVoiceState(options: {
-    channelId?: string;
-    suppress?: boolean;
-    requestToSpeakTimestamp?: string | null;
-  }): void {
+  editCurrentUserVoiceState(options: EditCurrentUserVoiceStateParams): void {
     this.client.rest.patch(Endpoints.guildVoiceState(this.id), {
       json: {
         channel_id: options.channelId,
@@ -895,10 +763,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
   async editEmoji(
     emojiId: string,
-    options: {
-      name?: string;
-      roles?: Array<string> | null;
-    },
+    options: EditGuildEmojiParams,
     reason?: string
   ): Promise<Emoji> {
     return new Emoji(
@@ -919,15 +784,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
   async editMember(
     userId: string,
-    options: {
-      nick?: string | null;
-      roles?: Array<string> | null;
-      mute?: boolean | null;
-      deaf?: boolean | null;
-      channelId?: string | null;
-      communicationDisabledUntil?: number | null;
-      flags?: GuildMemberFlags;
-    },
+    options: EditGuildMemberParams,
     reason?: string
   ): Promise<GuildMember> {
     return new GuildMember(
@@ -949,9 +806,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
   async editMFALevel(
-    options: {
-      level: MFALevel;
-    },
+    options: EditGuildMFALevelParams,
     reason?: string
   ): Promise<number> {
     return this.client.rest.post<number>(Endpoints.guildMFA(this.id), {
@@ -963,15 +818,7 @@ export class Guild extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
-  editOnboarding(
-    options: {
-      prompts: Array<JSONOnboardingPrompt>;
-      defaultChannelIds: Array<string>;
-      enabled: boolean;
-      mode: OnboardingMode;
-    },
-    reason?: string
-  ): void {
+  editOnboarding(options: EditGuildOnboardingParams, reason?: string): void {
     this.client.rest.patch(Endpoints.guildOnboarding(this.id), {
       json: {
         prompts: options.prompts.map((prompt) => ({
@@ -1013,15 +860,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   async editRole(
     roleId: string,
-    options?: {
-      name?: string | null;
-      permissions?: string | null;
-      color?: number | null;
-      hoist?: boolean | null;
-      icon?: string | null;
-      unicodeEmoji?: string | null;
-      mentionable?: boolean | null;
-    },
+    options?: EditGuildRoleParams,
     reason?: string
   ): Promise<Role> {
     return new Role(
@@ -1046,10 +885,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
   async editRolePositions(
-    options: Array<{
-      id: string;
-      position?: number | null;
-    }>
+    options: EditGuildRolePositionsParams
   ): Promise<Array<Role>> {
     return this.client.rest
       .patch<Array<RawRole>>(Endpoints.guildRoles(this.id), {
@@ -1064,18 +900,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
   async editScheduledEvent(
     scheduledEventId: string,
-    options: {
-      channelId?: string | null;
-      entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
-      name?: string;
-      privacyLevel?: GuildScheduledEventPrivacyLevel;
-      scheduledStartTime?: string;
-      scheduledEndTime?: string;
-      description?: string | null;
-      entityType?: GuildScheduledEventEntityTypes;
-      status?: GuildScheduledEventStatus;
-      image?: string;
-    },
+    options: EditGuildScheduledEventParams,
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return new GuildScheduledEvent(
@@ -1104,11 +929,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
   async editSticker(
     stickerId: string,
-    options: {
-      name?: string;
-      description?: string;
-      tags?: string;
-    },
+    options: EditGuildStickerParams,
     reason?: string
   ): Promise<Sticker> {
     return this.client.rest
@@ -1126,10 +947,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
   async editTemplate(
     code: string,
-    options: {
-      name?: string;
-      description?: string | null;
-    }
+    options: EditGuildTemplateParams
   ): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.patch<RawGuildTemplate>(
@@ -1148,11 +966,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
   editUserVoiceState(
     userId: string,
-    options: {
-      channelId?: string;
-      suppress?: boolean;
-      requestToSpeakTimestamp?: string | null;
-    }
+    options: EditCurrentUserVoiceStateParams
   ): void {
     this.client.rest.patch(Endpoints.guildVoiceState(this.id, userId), {
       json: {
@@ -1165,11 +979,7 @@ export class Guild extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
   async editWelcomeScreen(
-    options: {
-      enabled?: boolean | null;
-      welcomeChannels?: Array<JSONWelcomeScreenChannel> | null;
-      description?: string | null;
-    },
+    options: EditGuildWelcomeScreenParams,
     reason?: string
   ): Promise<JSONWelcomeScreen> {
     return this.client.rest
@@ -1776,19 +1586,7 @@ export class Guild extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
   async setApplicationCommands(
     applicationId: string,
-    commands: Array<{
-      id?: string;
-      name: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }>
+    commands: BulkEditGuildApplicationCommandsParams
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(

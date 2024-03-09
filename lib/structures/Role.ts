@@ -1,6 +1,11 @@
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
-import type { JSONRole, JSONRoleTags, RawRole } from "../types";
+import type {
+  EditGuildRoleParams,
+  JSONRole,
+  JSONRoleTags,
+  RawRole,
+} from "../types";
 import { IdentifiableBase } from ".";
 import { RoleFlags } from "../constants";
 
@@ -61,15 +66,7 @@ export class Role extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   async edit(
     guildId: string,
-    options?: {
-      name?: string | null;
-      permissions?: string | null;
-      color?: number | null;
-      hoist?: boolean | null;
-      icon?: string | null;
-      unicodeEmoji?: string | null;
-      mentionable?: boolean | null;
-    },
+    options?: EditGuildRoleParams,
     reason?: string
   ): Promise<Role> {
     return new Role(

@@ -2,6 +2,7 @@ import { IdentifiableBase, GuildMember, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
+  EditGuildScheduledEventParams,
   JSONGuildScheduledEvent,
   JSONGuildScheduledEventEntityMetadata,
   JSONGuildScheduledEventUser,
@@ -70,18 +71,7 @@ export class GuildScheduledEvent extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
   async edit(
-    options: {
-      channelId?: string | null;
-      entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
-      name?: string;
-      privacyLevel?: GuildScheduledEventPrivacyLevel;
-      scheduledStartTime?: string;
-      scheduledEndTime?: string;
-      description?: string | null;
-      entityType?: GuildScheduledEventEntityTypes;
-      status?: GuildScheduledEventStatus;
-      image?: string;
-    },
+    options: EditGuildScheduledEventParams,
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return new GuildScheduledEvent(

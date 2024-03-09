@@ -116,3 +116,83 @@ export interface JSONApplicationCommandPermission {
   type: ApplicationCommandPermissionType;
   permission: boolean;
 }
+
+export interface CreateGlobalApplicationCommandParams {
+  name: string;
+  nameLocalizations?: LocaleMap | null;
+  description?: string;
+  descriptionLocalizations?: LocaleMap | null;
+  options?: Array<JSONApplicationCommandOption>;
+  defaultMemberPermissions?: string | null;
+  dmPermission?: boolean;
+  defaultPermission?: boolean | null;
+  type?: ApplicationCommandTypes;
+  nsfw?: boolean;
+}
+
+export interface EditGlobalApplicationCommandParams {
+  name?: string;
+  nameLocalizations?: LocaleMap | null;
+  description?: string;
+  descriptionLocalizations?: LocaleMap | null;
+  options?: Array<JSONApplicationCommandOption>;
+  defaultMemberPermissions?: string | null;
+  defaultPermission?: boolean | null;
+  dmPermission?: boolean;
+  nsfw?: boolean;
+}
+
+export type BulkEditGlobalApplicationCommandsParams = Array<{
+  id?: string;
+  name: string;
+  nameLocalizations?: LocaleMap | null;
+  description?: string;
+  descriptionLocalizations?: LocaleMap | null;
+  options?: Array<JSONApplicationCommandOption>;
+  defaultMemberPermissions?: string | null;
+  dmPermission?: boolean;
+  defaultPermission?: boolean | null;
+  type?: ApplicationCommandTypes;
+  nsfw?: boolean;
+}>;
+
+export interface CreateGuildApplicationCommandParams {
+  name: string;
+  nameLocalizations?: LocaleMap | null;
+  description?: string;
+  descriptionLocalizations?: LocaleMap | null;
+  options?: Array<JSONApplicationCommandOption>;
+  defaultMemberPermissions?: string | null;
+  defaultPermission?: boolean | null;
+  type?: ApplicationCommandTypes;
+  nsfw?: boolean;
+}
+
+export interface EditGuildApplicationCommandParams {
+  name?: string;
+  nameLocalizations?: LocaleMap | null;
+  description?: string;
+  descriptionLocalizations?: LocaleMap | null;
+  options?: Array<JSONApplicationCommandOption>;
+  defaultMemberPermissions?: string | null;
+  defaultPermission?: boolean | null;
+  nsfw?: boolean;
+}
+
+export type BulkEditGuildApplicationCommandsParams = Array<{
+  id?: string;
+  name: string;
+  nameLocalizations?: LocaleMap | null;
+  description?: string;
+  descriptionLocalizations?: LocaleMap | null;
+  options?: Array<JSONApplicationCommandOption>;
+  defaultMemberPermissions?: string | null;
+  dmPermission?: boolean;
+  defaultPermission?: boolean | null;
+  type: ApplicationCommandTypes;
+  nsfw?: boolean;
+}>;
+
+export interface EditApplicationCommandPermissionsParams {
+  permissions: Array<JSONGuildApplicationCommandPermissions>;
+}

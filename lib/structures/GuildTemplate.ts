@@ -1,7 +1,11 @@
 import { Base, Guild, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
-import type { JSONGuildTemplate, RawGuildTemplate } from "../types";
+import type {
+  EditGuildTemplateParams,
+  JSONGuildTemplate,
+  RawGuildTemplate,
+} from "../types";
 
 /** https://discord.com/developers/docs/resources/guild-template */
 export class GuildTemplate extends Base {
@@ -50,10 +54,7 @@ export class GuildTemplate extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
-  async edit(options: {
-    name?: string;
-    description?: string | null;
-  }): Promise<GuildTemplate> {
+  async edit(options: EditGuildTemplateParams): Promise<GuildTemplate> {
     return new GuildTemplate(
       await this.client.rest.patch<RawGuildTemplate>(
         Endpoints.guildTemplate(this.sourceGuildId, this.code),

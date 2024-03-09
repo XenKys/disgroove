@@ -4,6 +4,7 @@ import type {
   ChannelFlags,
   ChannelTypes,
   ForumLayoutTypes,
+  InviteTargetTypes,
   MessageActivityTypes,
   MessageFlags,
   MessageTypes,
@@ -30,6 +31,7 @@ import type {
   RawResolvedData,
   JSONResolvedData,
 } from ".";
+import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
 export interface RawChannel {
@@ -531,4 +533,118 @@ export interface JSONRoleSubscriptionData {
   tierName: string;
   totalMonthsSubscribed: number;
   isRenewal: boolean;
+}
+
+export interface EditChannelParams {
+  name?: string;
+  icon?: string;
+
+  type?: ChannelTypes;
+  position?: number | null;
+  topic?: string | null;
+  nsfw?: boolean | null;
+  rateLimitPerUser?: number | null;
+  bitrate?: number | null;
+  userLimit?: number | null;
+  permissionOverwrites?: Array<JSONOverwrite> | null;
+  parentId?: string | null;
+  rtcRegion?: string | null;
+  videoQualityMode?: VideoQualityModes | null;
+  defaultAutoArchiveDuration?: number | null;
+  flags?: ChannelFlags;
+  availableTags?: Array<JSONForumTag>;
+  defaultReactionEmoji?: JSONDefaultReaction | null;
+  defaultThreadRateLimitPerUser?: number;
+  defaultSortOrder?: SortOrderTypes | null;
+  defaultForumLayout?: ForumLayoutTypes;
+
+  archived?: boolean;
+  autoArchiveDuration?: number;
+  locked?: boolean;
+  invitable?: boolean;
+  appliedTags?: Array<string>;
+}
+
+export interface CreateMessageParams {
+  content?: string;
+  nonce?: string | number;
+  tts?: boolean;
+  embeds?: Array<JSONEmbed>;
+  allowedMentions?: JSONAllowedMentions;
+  messageReference?: JSONMessageReference;
+  components?: Array<JSONActionRow>;
+  stickersIds?: Array<string>;
+  files?: Array<File>;
+  attachments?: Array<JSONAttachment>;
+  flags?: MessageFlags;
+  enforceNonce?: boolean;
+}
+
+export interface EditMessageParams {
+  content?: string | null;
+  embeds?: Array<JSONEmbed> | null;
+  flags?: MessageFlags | null;
+  allowedMentions?: JSONAllowedMentions | null;
+  components?: Array<JSONActionRow> | null;
+  files?: Array<File> | null;
+  attachments?: Array<JSONAttachment> | null;
+}
+
+export interface BulkDeleteMessagesParams {
+  messages: Array<string>;
+}
+
+export interface EditChannelPermissionsParams {
+  allow?: string | null;
+  deny?: string | null;
+  type: number;
+}
+
+export interface CreateChannelInviteParams {
+  maxAge?: number;
+  maxUses?: number;
+  temporary?: boolean;
+  unique?: boolean;
+  targetType?: InviteTargetTypes;
+  targetUserId?: string;
+  targetApplicationId?: string;
+}
+
+export interface FollowAnnouncementChannelParams {
+  webhookChannelId: boolean;
+}
+
+export interface AddChannelRecipientParams {
+  accessToken: string;
+  nick: string;
+}
+
+export interface CreateThreadFromMessageParams {
+  name: string;
+  autoArchiveDuration?: number;
+  rateLimitPerUser?: number | null;
+}
+
+export interface CreateThreadWithoutMessageParams {
+  name: string;
+  autoArchiveDuration?: number;
+  type?: ChannelTypes;
+  invitable?: boolean;
+  rateLimitPerUser?: number | null;
+}
+
+export interface CreateThreadParams {
+  name: string;
+  autoArchiveDuration?: number;
+  rateLimitPerUser?: number | null;
+  message: {
+    content?: string | null;
+    embeds?: Array<JSONEmbed> | null;
+    allowedMentions?: JSONAllowedMentions | null;
+    components?: Array<JSONActionRow> | null;
+    attachments?: Array<JSONAttachment> | null;
+    flags?: MessageFlags | null;
+  };
+  appliedTags?: Array<string>;
+  files?: Array<File> | null;
 }

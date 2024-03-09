@@ -23,6 +23,8 @@ import type {
   JSONApplicationCommandOptionChoice,
   RawTextInput,
   JSONTextInput,
+  ExecuteWebhookParams,
+  EditWebhookMessageParams,
 } from ".";
 import type {
   ApplicationCommandOptionType,
@@ -223,3 +225,8 @@ export interface JSONInteractionCallbackData {
   customId?: string;
   title?: string;
 }
+
+export type CreateInteractionFollowupMessageParams = Omit<
+  ExecuteWebhookParams,
+  "threadId" | "avatarUrl" | "username"
+>;

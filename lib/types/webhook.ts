@@ -1,12 +1,17 @@
-import type { WebhookTypes } from "../constants";
+import type { MessageFlags, WebhookTypes } from "../constants";
 import type {
+  JSONActionRow,
+  JSONAllowedMentions,
+  JSONAttachment,
   JSONChannel,
+  JSONEmbed,
   JSONGuild,
   JSONUser,
   RawChannel,
   RawGuild,
   RawUser,
 } from ".";
+import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
 export interface RawWebhook {
@@ -37,4 +42,39 @@ export interface JSONWebhook {
   sourceGuild?: JSONGuild;
   sourceChannel?: JSONChannel;
   url?: string;
+}
+
+export interface CreateWebhookParams {
+  name: string;
+  avatar?: string | null;
+}
+
+export interface EditWebhookParams {
+  name?: string;
+  avatar?: string | null;
+  channelId?: string;
+}
+
+export interface ExecuteWebhookParams {
+  content?: string | null;
+  username?: string;
+  avatarURL?: string;
+  tts?: boolean;
+  embeds?: Array<JSONEmbed> | null;
+  allowedMentions?: JSONAllowedMentions | null;
+  components?: Array<JSONActionRow> | null;
+  files?: Array<File> | null;
+  attachments?: Array<JSONAttachment> | null;
+  flags?: MessageFlags | null;
+  threadName?: string;
+}
+
+export interface EditWebhookMessageParams {
+  content?: string | null;
+  embeds?: Array<JSONEmbed> | null;
+  flags?: MessageFlags | null;
+  allowedMentions?: JSONAllowedMentions | null;
+  components?: Array<JSONActionRow> | null;
+  files?: Array<File> | null;
+  attachments?: Array<JSONAttachment> | null;
 }

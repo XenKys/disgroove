@@ -2,6 +2,8 @@ import { Base, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
+  CreateGuildBanParams,
+  EditGuildMemberParams,
   JSONGuildMember,
   JSONGuildMemberAddEventExtraFields,
   RawGuildMember,
@@ -76,13 +78,7 @@ export class GuildMember extends Base {
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
-  createBan(
-    options?: {
-      deleteMessageDays?: number;
-      deleteMessageSeconds?: number;
-    },
-    reason?: string
-  ): void {
+  createBan(options?: CreateGuildBanParams, reason?: string): void {
     if (!this.user?.id)
       throw new Error("[disgroove] Guild member ID not found");
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");
@@ -98,15 +94,7 @@ export class GuildMember extends Base {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
   async edit(
-    options: {
-      nick?: string | null;
-      roles?: Array<string> | null;
-      mute?: boolean | null;
-      deaf?: boolean | null;
-      channelId?: string | null;
-      communicationDisabledUntil?: number | null;
-      flags?: GuildMemberFlags;
-    },
+    options: EditGuildMemberParams,
     reason?: string
   ): Promise<GuildMember> {
     if (!this.user?.id)

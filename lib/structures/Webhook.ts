@@ -1,16 +1,15 @@
 import { IdentifiableBase, Channel, Guild, Message, User } from ".";
 import type { Client } from "../Client";
-import { Endpoints, type File } from "../rest";
+import { Endpoints } from "../rest";
 import type {
-  JSONActionRow,
-  JSONAllowedMentions,
-  JSONAttachment,
-  JSONEmbed,
+  EditWebhookMessageParams,
+  EditWebhookParams,
+  ExecuteWebhookParams,
   JSONWebhook,
   RawMessage,
   RawWebhook,
 } from "../types";
-import type { MessageFlags, WebhookTypes } from "../constants";
+import type { WebhookTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/webhook */
 export class Webhook extends IdentifiableBase {
@@ -89,14 +88,7 @@ export class Webhook extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
-  async edit(
-    options: {
-      name?: string;
-      avatar?: string | null;
-      channelId?: string;
-    },
-    reason?: string
-  ): Promise<Webhook> {
+  async edit(options: EditWebhookParams, reason?: string): Promise<Webhook> {
     return new Webhook(
       await this.client.rest.patch<RawWebhook>(Endpoints.webhook(this.id), {
         json: {
@@ -113,15 +105,8 @@ export class Webhook extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
   async editMessage(
     messageId: string,
-    options: {
-      threadId?: string;
-      content?: string | null;
-      embeds?: Array<JSONEmbed> | null;
-      flags?: MessageFlags | null;
-      allowedMentions?: JSONAllowedMentions | null;
-      components?: Array<JSONActionRow> | null;
-      files?: Array<File> | null;
-      attachments?: Array<JSONAttachment> | null;
+    options: EditWebhookMessageParams & {
+      threadId: string;
     }
   ): Promise<Message> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
@@ -165,10 +150,7 @@ export class Webhook extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
   async editWithToken(
-    options: {
-      name?: string;
-      avatar?: string | null;
-    },
+    options: Omit<EditWebhookParams, "channelId">,
     reason?: string
   ): Promise<Webhook> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
@@ -190,21 +172,9 @@ export class Webhook extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
-  async execute(options: {
-    wait?: boolean;
-    threadId?: string;
-    content?: string | null;
-    username?: string;
-    avatarURL?: string;
-    tts?: boolean;
-    embeds?: Array<JSONEmbed> | null;
-    allowedMentions?: JSONAllowedMentions | null;
-    components?: Array<JSONActionRow> | null;
-    files?: Array<File> | null;
-    attachments?: Array<JSONAttachment> | null;
-    flags?: MessageFlags | null;
-    threadName?: string;
-  }): Promise<Message | null> {
+  async execute(
+    options: ExecuteWebhookParams & { wait: boolean; threadId: string }
+  ): Promise<Message | null> {
     if (!this.token) throw new Error("[disgroove] Webhook token not found");
 
     return this.client.rest

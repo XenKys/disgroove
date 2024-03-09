@@ -3,10 +3,12 @@ import type {
   Services,
   VisibilityTypes,
   PremiumTypes,
+  ApplicationRoleConnectionMetadataType,
 } from "../constants";
 import type {
   JSONApplicationRoleConnectionMetadata,
   JSONIntegration,
+  LocaleMap,
   RawApplicationRoleConnectionMetadata,
   RawIntegration,
 } from ".";
@@ -90,4 +92,31 @@ export interface JSONApplicationRoleConnection {
   platformName: string | null;
   platformUsername: string | null;
   metadata: JSONApplicationRoleConnectionMetadata;
+}
+
+export interface EditCurrentUserParams {
+  username?: string;
+  avatar?: string | null;
+}
+
+export interface CreateDMParams {
+  recipientId: string;
+}
+
+export interface CreateGrupDMParams {
+  accessTokens: Array<string>;
+  nicks: Array<string>;
+}
+
+export interface UpdateCurrentUserApplicationRoleConnection {
+  platformName?: string;
+  platformUsername?: string;
+  metadata?: {
+    type: ApplicationRoleConnectionMetadataType;
+    key: string;
+    name: string;
+    nameLocalizations?: LocaleMap | null;
+    description: string;
+    descriptionLocalizations?: LocaleMap | null;
+  };
 }

@@ -7,17 +7,24 @@ import {
   Webhook,
 } from ".";
 import type { Client } from "../Client";
-import { Endpoints, type File } from "../rest";
+import { Endpoints } from "../rest";
 import type {
-  JSONActionRow,
-  JSONAllowedMentions,
-  JSONAttachment,
+  AddChannelRecipientParams,
+  BulkDeleteMessagesParams,
+  CreateChannelInviteParams,
+  CreateMessageParams,
+  CreateThreadFromMessageParams,
+  CreateThreadParams,
+  CreateThreadWithoutMessageParams,
+  CreateWebhookParams,
+  EditChannelParams,
+  EditChannelPermissionsParams,
+  EditMessageParams,
+  FollowAnnouncementChannelParams,
   JSONChannel,
   JSONDefaultReaction,
-  JSONEmbed,
   JSONFollowedChannel,
   JSONForumTag,
-  JSONMessageReference,
   JSONOverwrite,
   JSONThreadMember,
   JSONThreadMetadata,
@@ -31,8 +38,6 @@ import type {
 } from "../types";
 import {
   type ChannelTypes,
-  type InviteTargetTypes,
-  type MessageFlags,
   ChannelFlags,
   VideoQualityModes,
   SortOrderTypes,
@@ -188,13 +193,7 @@ export class Channel extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
-  addRecipient(
-    userId: string,
-    options: {
-      accessToken: string;
-      nick: string;
-    }
-  ): void {
+  addRecipient(userId: string, options: AddChannelRecipientParams): void {
     this.client.rest.put(Endpoints.channelRecipient(this.id, userId), {
       json: {
         access_token: options.accessToken,
@@ -210,14 +209,12 @@ export class Channel extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
   bulkDeleteMessages(
-    options?: {
-      messagesIds?: Array<string>;
-    },
+    options?: BulkDeleteMessagesParams,
     reason?: string
   ): void {
     this.client.rest.post(Endpoints.channelBulkDelete(this.id), {
       json: {
-        messages: options?.messagesIds,
+        messages: options?.messages,
       },
       reason,
     });
@@ -225,15 +222,7 @@ export class Channel extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
   async createInvite(
-    options: {
-      maxAge?: number;
-      maxUses?: number;
-      temporary?: boolean;
-      unique?: boolean;
-      targetType?: InviteTargetTypes;
-      targetUserId?: string;
-      targetApplicationId?: string;
-    },
+    options: CreateChannelInviteParams,
     reason?: string
   ): Promise<Invite> {
     return new Invite(
@@ -257,20 +246,7 @@ export class Channel extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-message */
-  async createMessage(options: {
-    content?: string;
-    nonce?: string | number;
-    tts?: boolean;
-    embeds?: Array<JSONEmbed>;
-    allowedMentions?: JSONAllowedMentions;
-    messageReference?: JSONMessageReference;
-    components?: Array<JSONActionRow>;
-    stickersIds?: Array<string>;
-    files?: Array<File>;
-    attachments?: Array<JSONAttachment>;
-    flags?: MessageFlags;
-    enforceNonce?: boolean;
-  }): Promise<Message> {
+  async createMessage(options: CreateMessageParams): Promise<Message> {
     return new Message(
       await this.client.rest.post<RawMessage>(
         Endpoints.channelMessages(this.id),
@@ -316,11 +292,7 @@ export class Channel extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
   async createThreadFromMessage(
     messageId: string,
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      rateLimitPerUser?: number | null;
-    },
+    options: CreateThreadFromMessageParams,
     reason?: string
   ): Promise<Channel> {
     return new Channel(
@@ -341,21 +313,7 @@ export class Channel extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel */
   async createThreadInForumOrMediaChannel(
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      rateLimitPerUser?: number | null;
-      message: {
-        content?: string | null;
-        embeds?: Array<JSONEmbed> | null;
-        allowedMentions?: JSONAllowedMentions | null;
-        components?: Array<JSONActionRow> | null;
-        attachments?: Array<JSONAttachment> | null;
-        flags?: MessageFlags | null;
-      };
-      appliedTags?: Array<string>;
-      files?: Array<File> | null;
-    },
+    options: CreateThreadParams,
     reason?: string
   ): Promise<Channel> {
     return new Channel(
@@ -395,13 +353,7 @@ export class Channel extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
   async createThreadWithoutMessage(
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      type?: ChannelTypes;
-      invitable?: boolean;
-      rateLimitPerUser?: number | null;
-    },
+    options: CreateThreadWithoutMessageParams,
     reason?: string
   ): Promise<Channel> {
     return new Channel(
@@ -421,10 +373,7 @@ export class Channel extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/webhook#create-webhook */
   async createWebhook(
-    options: {
-      name: string;
-      avatar?: string | null;
-    },
+    options: CreateWebhookParams,
     reason?: string
   ): Promise<Webhook> {
     return new Webhook(
@@ -495,36 +444,7 @@ export class Channel extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
-  async edit(
-    options: {
-      name?: string | null;
-      type?: ChannelTypes;
-      position?: number;
-      topic?: string | null;
-      nsfw?: boolean;
-      rateLimitPerUser?: number;
-      icon?: string | null;
-      bitrate?: number;
-      userLimit?: number;
-      permissionOverwrites?: Array<JSONOverwrite>;
-      parentId?: string | null;
-      rtcRegion?: string | null;
-      videoQualityMode?: VideoQualityModes;
-      defaultAutoArchiveDuration?: number;
-      flags?: ChannelFlags;
-      availableTags?: Array<JSONForumTag>;
-      defaultReactionEmoji?: JSONDefaultReaction | null;
-      defaultThreadRateLimitPerUser?: number;
-      defaultSortOrder?: SortOrderTypes | null;
-      defaultForumLayout?: ForumLayoutTypes;
-      archived?: boolean;
-      autoArchiveDuration?: number;
-      locked?: boolean;
-      invitable?: boolean;
-      appliedTags?: Array<string>;
-    },
-    reason?: string
-  ): Promise<Channel> {
+  async edit(options: EditChannelParams, reason?: string): Promise<Channel> {
     return new Channel(
       await this.client.rest.patch<RawChannel>(Endpoints.channel(this.id), {
         json: {
@@ -562,15 +482,7 @@ export class Channel extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/channel#edit-message */
   async editMessage(
     messageId: string,
-    options: {
-      content?: string | null;
-      embeds?: Array<JSONEmbed> | null;
-      flags?: MessageFlags | null;
-      allowedMentions?: JSONAllowedMentions | null;
-      components?: Array<JSONActionRow> | null;
-      files?: Array<File> | null;
-      attachments?: Array<JSONAttachment> | null;
-    }
+    options: EditMessageParams
   ): Promise<Message> {
     return new Message(
       await this.client.rest.patch<RawMessage>(
@@ -604,11 +516,7 @@ export class Channel extends IdentifiableBase {
   /** https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
   editPermissions(
     overwriteId: string,
-    options: {
-      allow?: string | null;
-      deny?: string | null;
-      type: number;
-    },
+    options: EditChannelPermissionsParams,
     reason?: string
   ): void {
     this.client.rest.put(Endpoints.channelPermission(this.id, overwriteId), {
@@ -618,9 +526,9 @@ export class Channel extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
-  async follow(options: {
-    webhookChannelId: string;
-  }): Promise<JSONFollowedChannel> {
+  async follow(
+    options: FollowAnnouncementChannelParams
+  ): Promise<JSONFollowedChannel> {
     return this.client.rest
       .post<RawFollowedChannel>(Endpoints.channelFollowers(this.id), {
         json: {

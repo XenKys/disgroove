@@ -1,9 +1,11 @@
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
+  EditApplicationCommandPermissionsParams,
+  EditGlobalApplicationCommandParams,
+  EditGuildApplicationCommandParams,
   JSONApplicationCommand,
   JSONApplicationCommandOption,
-  JSONApplicationCommandPermission,
   JSONGuildApplicationCommandPermissions,
   LocaleMap,
   RawApplicationCommand,
@@ -74,17 +76,11 @@ export class ApplicationCommand extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
-  async edit(options: {
-    name?: string;
-    nameLocalizations?: LocaleMap | null;
-    description?: string;
-    descriptionLocalizations?: LocaleMap | null;
-    options?: Array<JSONApplicationCommandOption>;
-    defaultMemberPermissions?: string | null;
-    defaultPermission?: boolean | null;
-    dmPermission?: boolean;
-    nsfw?: boolean;
-  }): Promise<ApplicationCommand> {
+  async edit(
+    options:
+      | EditGlobalApplicationCommandParams
+      | EditGuildApplicationCommandParams
+  ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       this.guildId !== undefined
         ? await this.client.rest.patch<RawApplicationCommand>(
@@ -104,9 +100,9 @@ export class ApplicationCommand extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
-  async editPermissions(options: {
-    permissions: Array<JSONApplicationCommandPermission>;
-  }): Promise<JSONGuildApplicationCommandPermissions> {
+  async editPermissions(
+    options: EditApplicationCommandPermissionsParams
+  ): Promise<JSONGuildApplicationCommandPermissions> {
     if (!this.guildId)
       throw new Error(
         "[disgroove] Cannot edit the permissions of a global application command"

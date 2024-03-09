@@ -8,13 +8,11 @@ import {
   User,
 } from ".";
 import type { Client } from "../Client";
-import { Endpoints, type File } from "../rest";
+import { Endpoints } from "../rest";
 import type {
-  JSONActionRow,
-  JSONAllowedMentions,
+  CreateInteractionFollowupMessageParams,
+  EditWebhookMessageParams,
   JSONApplicationCommandData,
-  JSONAttachment,
-  JSONEmbed,
   JSONInteraction,
   JSONInteractionResponse,
   JSONMessageComponentData,
@@ -22,11 +20,7 @@ import type {
   RawInteraction,
   RawMessage,
 } from "../types";
-import {
-  InteractionCallbackType,
-  type InteractionType,
-  type MessageFlags,
-} from "../constants";
+import { InteractionCallbackType, type InteractionType } from "../constants";
 import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding */
@@ -173,17 +167,9 @@ export class Interaction extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
-  async createFollowupMessage(options: {
-    content?: string | null;
-    tts?: boolean;
-    embeds?: Array<JSONEmbed> | null;
-    allowedMentions?: JSONAllowedMentions | null;
-    components?: Array<JSONActionRow> | null;
-    files?: Array<File> | null;
-    attachments?: Array<JSONAttachment> | null;
-    flags?: MessageFlags | null;
-    threadName?: string;
-  }): Promise<Message> {
+  async createFollowupMessage(
+    options: CreateInteractionFollowupMessageParams
+  ): Promise<Message> {
     return new Message(
       await this.client.rest.post(
         Endpoints.webhook(this.applicationId, this.token),
@@ -348,15 +334,8 @@ export class Interaction extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message */
   async editFollowupMessage(
     messageId: string,
-    options: {
-      threadId?: string;
-      content?: string | null;
-      embeds?: Array<JSONEmbed> | null;
-      flags?: MessageFlags | null;
-      allowedMentions?: JSONAllowedMentions | null;
-      components?: Array<JSONActionRow> | null;
-      files?: Array<File> | null;
-      attachments?: Array<JSONAttachment> | null;
+    options: EditWebhookMessageParams & {
+      threadId: string;
     }
   ): Promise<Message> {
     return new Message(
@@ -397,16 +376,11 @@ export class Interaction extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
-  async editResponse(options: {
-    threadId?: string;
-    content?: string | null;
-    embeds?: Array<JSONEmbed> | null;
-    flags?: MessageFlags | null;
-    allowedMentions?: JSONAllowedMentions | null;
-    components?: Array<JSONActionRow> | null;
-    files?: Array<File> | null;
-    attachments?: Array<JSONAttachment> | null;
-  }): Promise<Message> {
+  async editResponse(
+    options: EditWebhookMessageParams & {
+      threadId: string;
+    }
+  ): Promise<Message> {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.webhookMessage(this.applicationId, this.token),

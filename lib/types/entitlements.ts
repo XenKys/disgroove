@@ -32,3 +32,9 @@ export interface JSONEntitlement {
   guildId?: string;
   subscriptionId?: string; // Undocumented
 }
+
+export interface CreateTestEntitlementParams {
+  skuId: string;
+  ownerId: string;
+  ownerType: number;
+}

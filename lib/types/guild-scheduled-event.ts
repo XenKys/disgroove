@@ -65,3 +65,28 @@ export interface JSONGuildScheduledEventUser {
   user: JSONUser;
   member?: JSONGuildMember;
 }
+
+export interface CreateGuildScheduledEventParams {
+  channelId?: string | null;
+  entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
+  name: string;
+  privacyLevel: GuildScheduledEventPrivacyLevel;
+  scheduledStartTime: string;
+  scheduledEndTime?: string | null;
+  description?: string | null;
+  entityType: GuildScheduledEventEntityTypes;
+  image?: string;
+}
+
+export interface EditGuildScheduledEventParams {
+  channelId?: string | null;
+  entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
+  name?: string;
+  privacyLevel?: GuildScheduledEventPrivacyLevel;
+  scheduledStartTime?: string;
+  scheduledEndTime?: string;
+  description?: string | null;
+  entityType?: GuildScheduledEventEntityTypes;
+  status?: GuildScheduledEventStatus;
+  image?: string;
+}

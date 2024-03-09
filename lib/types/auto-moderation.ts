@@ -76,3 +76,25 @@ export interface JSONActionMetadata {
   durationSeconds: number;
   customMessage?: string;
 }
+
+export interface CreateAutoModerationRuleParams {
+  name: string;
+  eventType: EventTypes;
+  triggerType: TriggerTypes;
+  triggerMetadata?: JSONTriggerMetadata;
+  actions: Array<JSONAutoModerationAction>;
+  enabled?: boolean;
+  exemptRoles?: Array<string>;
+  exemptChannels?: Array<string>;
+}
+
+export interface EditAutoModerationRuleParams {
+  name?: string;
+  eventType?: EventTypes;
+  triggerType?: TriggerTypes;
+  triggerMetadata?: JSONTriggerMetadata;
+  actions?: Array<JSONAutoModerationAction>;
+  enabled?: boolean;
+  exemptRoles?: Array<string>;
+  exemptChannels?: Array<string>;
+}

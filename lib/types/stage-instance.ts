@@ -20,3 +20,16 @@ export interface JSONStageInstance {
   discoverableDisabled: boolean;
   guildScheduledEventId: string | null;
 }
+
+export interface CreateStageInstanceParams {
+  channelId: string;
+  topic: string;
+  privacyLevel?: PrivacyLevel;
+  sendStartNotifications?: boolean;
+  guildScheduledEventId?: string;
+}
+
+export interface EditStageInstanceParams {
+  topic?: string;
+  privacyLevel?: PrivacyLevel;
+}

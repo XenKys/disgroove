@@ -2,21 +2,20 @@ import { IdentifiableBase, Channel, GuildMember, Integration } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
+  CreateDMParams,
+  CreateGrupDMParams,
+  EditCurrentUserParams,
   JSONApplicationRoleConnection,
   JSONConnection,
   JSONUser,
-  LocaleMap,
   RawApplicationRoleConnection,
   RawChannel,
   RawConnection,
   RawGuildMember,
   RawUser,
+  UpdateCurrentUserApplicationRoleConnection,
 } from "../types";
-import type {
-  ApplicationRoleConnectionMetadataType,
-  PremiumTypes,
-  UserFlags,
-} from "../constants";
+import type { PremiumTypes, UserFlags } from "../constants";
 
 /** https://discord.com/developers/docs/resources/user */
 export class User extends IdentifiableBase {
@@ -68,7 +67,7 @@ export class User extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/user#create-dm */
-  async createDM(options: { recipientId: string }): Promise<Channel> {
+  async createDM(options: CreateDMParams): Promise<Channel> {
     return new Channel(
       await this.client.rest.post<RawChannel>(Endpoints.userChannels(), {
         json: {
@@ -80,10 +79,7 @@ export class User extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/user#create-group-dm */
-  async createGroupDM(options: {
-    accessTokens: Array<string>;
-    nicks: Array<string>;
-  }): Promise<Channel> {
+  async createGroupDM(options: CreateGrupDMParams): Promise<Channel> {
     return new Channel(
       await this.client.rest.post<RawChannel>(Endpoints.userChannels(), {
         json: {
@@ -96,10 +92,7 @@ export class User extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/user#modify-current-user */
-  async edit(options: {
-    username?: string;
-    avatar?: string | null;
-  }): Promise<User> {
+  async edit(options: EditCurrentUserParams): Promise<User> {
     return new User(
       await this.client.rest.patch<RawUser>(Endpoints.user(), {
         json: {
@@ -111,7 +104,7 @@ export class User extends IdentifiableBase {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
+  /** https://discord.com/developers/docs/resources/user#get-current-user-application-role-connection */
   async getApplicationRoleConnection(): Promise<JSONApplicationRoleConnection> {
     return this.client.rest
       .get<RawApplicationRoleConnection>(
@@ -131,7 +124,7 @@ export class User extends IdentifiableBase {
       }));
   }
 
-  /** https://discord.com/developers/docs/resources/user#get-user-connections */
+  /** https://discord.com/developers/docs/resources/user#get-current-user-connections */
   async getConnections(): Promise<Array<JSONConnection>> {
     return this.client.rest
       .get<Array<RawConnection>>(Endpoints.userConnections())
@@ -168,19 +161,10 @@ export class User extends IdentifiableBase {
     this.client.rest.delete(Endpoints.userGuild(guildId));
   }
 
-  /** https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
-  async updateApplicationRoleConnection(options: {
-    platformName?: string;
-    platformUsername?: string;
-    metadata?: {
-      type: ApplicationRoleConnectionMetadataType;
-      key: string;
-      name: string;
-      nameLocalizations?: LocaleMap | null;
-      description: string;
-      descriptionLocalizations?: LocaleMap | null;
-    };
-  }): Promise<JSONApplicationRoleConnection> {
+  /** https://discord.com/developers/docs/resources/user#update-current-user-application-role-connection */
+  async updateApplicationRoleConnection(
+    options: UpdateCurrentUserApplicationRoleConnection
+  ): Promise<JSONApplicationRoleConnection> {
     return this.client.rest
       .put<RawApplicationRoleConnection>(
         Endpoints.userApplicationRoleConnection(this.client.application.id),

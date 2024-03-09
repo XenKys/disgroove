@@ -75,3 +75,15 @@ export interface JSONInstallParams {
   scopes: Array<OAuth2Scopes>;
   permissions: string;
 }
+
+export interface EditCurrentApplicationParams {
+  customInstallURL?: string;
+  description?: string;
+  roleConnectionsVerificationURL?: string;
+  installParams?: JSONInstallParams;
+  flags?: ApplicationFlags;
+  icon?: string;
+  coverImage?: string;
+  interactionsEndpointURL?: string;
+  tags?: Array<string>;
+}

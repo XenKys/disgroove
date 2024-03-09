@@ -1,7 +1,7 @@
 import { Base, User } from ".";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
-import type { JSONEmoji, RawEmoji } from "../types";
+import type { EditGuildEmojiParams, JSONEmoji, RawEmoji } from "../types";
 
 /** https://discord.com/developers/docs/resources/emoji */
 export class Emoji extends Base {
@@ -49,10 +49,7 @@ export class Emoji extends Base {
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
   async edit(
     guildId: string,
-    options: {
-      name?: string;
-      roles?: Array<string> | null;
-    },
+    options: EditGuildEmojiParams,
     reason?: string
   ): Promise<Emoji> {
     if (!this.id)

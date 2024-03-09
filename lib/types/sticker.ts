@@ -1,5 +1,6 @@
 import type { StickerTypes, StickerFormatTypes } from "../constants";
 import type { JSONUser, RawUser } from ".";
+import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
 export interface RawSticker {
@@ -64,4 +65,17 @@ export interface JSONStickerPack {
   coverStickerId?: string;
   description: string;
   bannerAssetId?: string;
+}
+
+export interface CreateGuildStickerParams {
+  name: string;
+  description: string;
+  tags: string;
+  file: File;
+}
+
+export interface EditGuildStickerParams {
+  name?: string;
+  description?: string | null;
+  tags?: string;
 }

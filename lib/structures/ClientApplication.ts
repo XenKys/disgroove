@@ -16,9 +16,15 @@ import type {
   RawApplicationRoleConnectionMetadata,
   RawEntitlement,
   RawSKU,
-  JSONInstallParams,
-  JSONApplicationCommandOption,
-  LocaleMap,
+  BulkEditGuildApplicationCommandsParams,
+  BulkEditGlobalApplicationCommandsParams,
+  EditGuildApplicationCommandParams,
+  EditGlobalApplicationCommandParams,
+  EditApplicationCommandPermissionsParams,
+  EditCurrentApplicationParams,
+  CreateTestEntitlementParams,
+  CreateGuildApplicationCommandParams,
+  CreateGlobalApplicationCommandParams,
 } from "../types";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
@@ -42,18 +48,9 @@ export class ClientApplication extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
-  async createGlobalApplicationCommand(options: {
-    name: string;
-    nameLocalizations?: LocaleMap | null;
-    description?: string;
-    descriptionLocalizations?: LocaleMap | null;
-    options?: Array<JSONApplicationCommandOption>;
-    defaultMemberPermissions?: string | null;
-    dmPermission?: boolean;
-    defaultPermission?: boolean | null;
-    type?: ApplicationCommandTypes;
-    nsfw?: boolean;
-  }): Promise<ApplicationCommand> {
+  async createGlobalApplicationCommand(
+    options: CreateGlobalApplicationCommandParams
+  ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
         Endpoints.applicationCommands(this.id),
@@ -68,18 +65,7 @@ export class ClientApplication extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
   async createGuildApplicationCommand(
     guildId: string,
-    options: {
-      name?: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type?: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }
+    options: CreateGuildApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       await this.client.rest.post<RawApplicationCommand>(
@@ -93,11 +79,9 @@ export class ClientApplication extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement */
-  async createTestEntitlement(options: {
-    skuId: string;
-    ownerId: string;
-    ownerType: number;
-  }): Promise<TestEntitlement> {
+  async createTestEntitlement(
+    options: CreateTestEntitlementParams
+  ): Promise<TestEntitlement> {
     return new TestEntitlement(
       await this.client.rest.post<
         Omit<RawEntitlement, "starts_at" | "ends_at" | "subscription_id">
@@ -132,17 +116,7 @@ export class ClientApplication extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/application#edit-current-application */
-  async edit(options: {
-    customInstallURL?: string;
-    description?: string;
-    roleConnectionsVerificationURL?: string;
-    installParams?: JSONInstallParams;
-    flags?: ApplicationFlags;
-    icon?: string;
-    coverImage?: string;
-    interactionsEndpointURL?: string;
-    tags?: Array<string>;
-  }): Promise<Application> {
+  async edit(options: EditCurrentApplicationParams): Promise<Application> {
     return new Application(
       await this.client.rest.patch<RawApplication>(
         Endpoints.applicationCurrentUser(),
@@ -169,9 +143,7 @@ export class ClientApplication extends IdentifiableBase {
   async editApplicationCommandPermissions(
     guildId: string,
     commandId: string,
-    options: {
-      permissions: Array<JSONGuildApplicationCommandPermissions>;
-    }
+    options: EditApplicationCommandPermissionsParams
   ): Promise<JSONGuildApplicationCommandPermissions> {
     return this.client.rest
       .put<RawGuildApplicationCommandPermissions>(
@@ -206,17 +178,7 @@ export class ClientApplication extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
   async editGlobalApplicationCommand(
     commandId: string,
-    options: {
-      name?: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
-      dmPermission?: boolean;
-      nsfw?: boolean;
-    }
+    options: EditGlobalApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
@@ -233,17 +195,7 @@ export class ClientApplication extends IdentifiableBase {
   async editGuildApplicationCommand(
     guildId: string,
     commandId: string,
-    options: {
-      name?: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
-      dmPermission?: boolean;
-      nsfw?: boolean;
-    }
+    options: EditGuildApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return new ApplicationCommand(
       await this.client.rest.patch<RawApplicationCommand>(
@@ -421,19 +373,7 @@ export class ClientApplication extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
   async setGlobalApplicationCommands(
-    commands: Array<{
-      id?: string;
-      name: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type?: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }>
+    commands: BulkEditGlobalApplicationCommandsParams
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(
@@ -452,19 +392,7 @@ export class ClientApplication extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
   async setGuildApplicationCommands(
     guildId: string,
-    commands: Array<{
-      id?: string;
-      name?: string;
-      nameLocalizations?: LocaleMap | null;
-      description?: string;
-      descriptionLocalizations?: LocaleMap | null;
-      options?: Array<JSONApplicationCommandOption>;
-      defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
-      defaultPermission?: boolean | null;
-      type: ApplicationCommandTypes;
-      nsfw?: boolean;
-    }>
+    commands: BulkEditGuildApplicationCommandsParams
   ): Promise<Array<ApplicationCommand>> {
     return this.client.rest
       .put<Array<RawApplicationCommand>>(

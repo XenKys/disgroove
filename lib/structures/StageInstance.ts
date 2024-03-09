@@ -1,6 +1,10 @@
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
-import type { JSONStageInstance, RawStageInstance } from "../types";
+import type {
+  EditStageInstanceParams,
+  JSONStageInstance,
+  RawStageInstance,
+} from "../types";
 import type { PrivacyLevel } from "../constants";
 import { IdentifiableBase } from ".";
 
@@ -36,10 +40,7 @@ export class StageInstance extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
   async edit(
-    options: {
-      topic?: string;
-      privacyLevel?: PrivacyLevel;
-    },
+    options: EditStageInstanceParams,
     reason?: string
   ): Promise<StageInstance> {
     return new StageInstance(

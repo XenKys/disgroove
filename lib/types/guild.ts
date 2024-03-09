@@ -12,6 +12,10 @@ import type {
   SystemChannelFlags,
   OnboardingMode,
   PromptTypes,
+  ChannelTypes,
+  VideoQualityModes,
+  SortOrderTypes,
+  ForumLayoutTypes,
 } from "../constants";
 import type {
   RawChannel,
@@ -24,6 +28,9 @@ import type {
   JSONUser,
   JSONRole,
   JSONChannel,
+  JSONDefaultReaction,
+  JSONOverwrite,
+  JSONForumTag,
 } from ".";
 import { Collection } from "../utils";
 
@@ -386,4 +393,176 @@ export interface JSONPromptOption {
   emojiAnimated?: boolean;
   title: string;
   description: string | null;
+}
+
+export interface CreateGuildParams {
+  name: string;
+  region?: string | null;
+  icon?: string;
+  verificationLevel?: VerificationLevel;
+  defaultMessageNotifications?: DefaultMessageNotificationLevel;
+  explicitContentFilter?: ExplicitContentFilterLevel;
+  roles?: Array<{
+    name?: string;
+    permissions?: string;
+    color?: number;
+    hoist?: boolean;
+    icon?: string | null;
+    unicodeEmoji?: string | null;
+    mentionable?: boolean;
+  }>;
+  channels?: Array<{
+    name: string;
+    type: ChannelTypes;
+    id?: number;
+    parentId?: number;
+  }>;
+  afkChannelId?: string;
+  afkTimeout?: number;
+  systemChannelId?: string;
+  systemChannelFlags?: SystemChannelFlags;
+}
+
+export interface EditGuildParams {
+  name?: string;
+  region?: string | null;
+  verificationLevel?: VerificationLevel;
+  defaultMessageNotifications?: DefaultMessageNotificationLevel;
+  explicitContentFilter?: ExplicitContentFilterLevel;
+  afkChannelId?: string | null;
+  afkTimeout?: number;
+  icon?: string | null;
+  ownerId?: string;
+  splash?: string | null;
+  discoverySplash?: string | null;
+  banner?: string | null;
+  systemChannelId?: string | null;
+  systemChannelFlags?: SystemChannelFlags;
+  rulesChannelId?: string | null;
+  publicUpdatesChannelId?: string | null;
+  preferredLocale?: string;
+  features?: Array<GuildFeatures>;
+  description?: string | null;
+  premiumProgressBarEnabled?: boolean;
+  safetyAlertsChannelId?: string | null;
+}
+
+export interface CreateGuildChannelParams {
+  name: string | null;
+  type?: ChannelTypes;
+  topic?: string | null;
+  bitrate?: number;
+  userLimit?: number;
+  rateLimitPerUser?: number;
+  position?: number;
+  permissionOverwrites?: Array<JSONOverwrite>;
+  parentId?: string | null;
+  nsfw?: boolean;
+  rtcRegion?: string | null;
+  videoQualityMode?: VideoQualityModes;
+  defaultAutoArchiveDuration?: number;
+  defaultReactionEmoji?: JSONDefaultReaction | null;
+  availableTags?: Array<JSONForumTag>;
+  defaultSortOrder?: SortOrderTypes | null;
+  defaultForumLayout?: ForumLayoutTypes;
+  defaultThreadRateLimitPerUser?: number;
+}
+
+export type EditGuildChannelPositionsParams = Array<{
+  id: string;
+  position?: number | null;
+  lockPermissions?: boolean | null;
+  parentId?: string | null;
+}>;
+
+export interface AddGuildMemberParams {
+  accessToken: string;
+  nick?: string;
+  roles?: Array<string>;
+  mute?: boolean;
+  deaf?: boolean;
+}
+
+export interface EditCurrentGuildMemberParams {
+  nick?: string;
+}
+
+export interface EditGuildMemberParams {
+  nick?: string | null;
+  roles?: Array<string> | null;
+  mute?: boolean | null;
+  deaf?: boolean | null;
+  channelId?: string | null;
+  communicationDisabledUntil?: number | null;
+  flags?: GuildMemberFlags;
+}
+
+export interface EditGuildMemberParams {
+  nick?: string | null;
+}
+
+export interface CreateGuildBanParams {
+  deleteMessageDays?: number;
+  deleteMessageSeconds?: number;
+}
+
+export interface CreateGuildRoleParams {
+  name?: string;
+  permissions?: string;
+  color?: number;
+  hoist?: boolean;
+  icon?: string | null;
+  unicodeEmoji?: string | null;
+  mentionable?: boolean;
+}
+
+export type EditGuildRolePositionsParams = Array<{
+  id: string;
+  position?: number | null;
+}>;
+
+export interface EditGuildRoleParams {
+  name?: string | null;
+  permissions?: string | null;
+  color?: number | null;
+  hoist?: boolean | null;
+  icon?: string | null;
+  unicodeEmoji?: string | null;
+  mentionable?: boolean | null;
+}
+
+export interface EditGuildMFALevelParams {
+  level: MFALevel;
+}
+
+export interface BeginGuildPruneParams {
+  days: number;
+  computePruneCount: boolean;
+  includeRoles: Array<string>;
+  reason?: string;
+}
+
+export interface EditGuildWelcomeScreenParams {
+  enabled?: boolean | null;
+  welcomeChannels?: Array<JSONWelcomeScreenChannel> | null;
+  description?: string | null;
+}
+
+export interface EditGuildOnboardingParams {
+  prompts: Array<JSONOnboardingPrompt>;
+  defaultChannelIds: Array<string>;
+  enabled: boolean;
+  mode: OnboardingMode;
+}
+
+export interface EditCurrentUserVoiceStateParams {
+  channelId?: string;
+  suppress?: boolean;
+  requestToSpeakTimestamp?: string | null;
+}
+
+export interface EditUserVoiceStateParams {
+  channelId?: string;
+  suppress?: boolean;
+  requestToSpeakTimestamp?: string | null;
 }

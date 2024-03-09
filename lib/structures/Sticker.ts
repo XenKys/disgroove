@@ -2,7 +2,7 @@ import { IdentifiableBase, User } from ".";
 import type { Client } from "../Client";
 import type { StickerFormatTypes, StickerTypes } from "../constants";
 import { Endpoints } from "../rest";
-import type { JSONSticker, RawSticker } from "../types";
+import type { EditGuildStickerParams, JSONSticker, RawSticker } from "../types";
 
 /** https://discord.com/developers/docs/resources/sticker */
 export class Sticker extends IdentifiableBase {
@@ -53,11 +53,7 @@ export class Sticker extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
   async edit(
-    options: {
-      name?: string;
-      description?: string | null;
-      tags?: string;
-    },
+    options: EditGuildStickerParams,
     reason?: string
   ): Promise<Sticker> {
     if (!this.guildId) throw new Error("[disgroove] Guild ID not found");

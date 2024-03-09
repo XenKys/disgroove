@@ -9,10 +9,11 @@ import {
   User,
 } from ".";
 import type { Client } from "../Client";
-import { Endpoints, type File } from "../rest";
+import { Endpoints } from "../rest";
 import type {
+  CreateThreadFromMessageParams,
+  EditMessageParams,
   JSONActionRow,
-  JSONAllowedMentions,
   JSONAttachment,
   JSONChannelMention,
   JSONEmbed,
@@ -251,11 +252,7 @@ export class Message extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
   async createThread(
-    options: {
-      name: string;
-      autoArchiveDuration?: number;
-      rateLimitPerUser?: number | null;
-    },
+    options: CreateThreadFromMessageParams,
     reason?: string
   ): Promise<Channel> {
     return new Channel(
@@ -309,15 +306,7 @@ export class Message extends IdentifiableBase {
   }
 
   /** https://discord.com/developers/docs/resources/channel#edit-message */
-  async edit(options: {
-    content?: string | null;
-    embeds?: Array<JSONEmbed> | null;
-    flags?: MessageFlags | null;
-    allowedMentions?: JSONAllowedMentions | null;
-    components?: Array<JSONActionRow> | null;
-    files?: Array<File> | null;
-    attachments?: Array<JSONAttachment> | null;
-  }): Promise<Message> {
+  async edit(options: EditMessageParams): Promise<Message> {
     return new Message(
       await this.client.rest.patch<RawMessage>(
         Endpoints.channelMessage(this.channelId, this.id),

@@ -1,6 +1,7 @@
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
 import type {
+  EditAutoModerationRuleParams,
   JSONAutoModerationAction,
   JSONAutoModerationRule,
   JSONTriggerMetadata,
@@ -66,16 +67,7 @@ export class AutoModerationRule extends IdentifiableBase {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
   async edit(
-    options: {
-      name?: string;
-      eventType?: EventTypes;
-      triggerType?: TriggerTypes;
-      triggerMetadata?: JSONTriggerMetadata;
-      actions?: Array<JSONAutoModerationAction>;
-      enabled?: boolean;
-      exemptRoles?: Array<string>;
-      exemptChannels?: Array<string>;
-    },
+    options: EditAutoModerationRuleParams,
     reason?: string
   ): Promise<AutoModerationRule> {
     return new AutoModerationRule(
