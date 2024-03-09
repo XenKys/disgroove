@@ -8,7 +8,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.setGlobalApplicationCommands([
+  client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "modal",
       description: "Opens a modal submit",
@@ -19,7 +19,7 @@ client.once("ready", () =>
 client.on("interactionCreate", (interaction) => {
   if (interaction.type === InteractionType.ApplicationCommand) {
     if (interaction.data.name === "modal") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.Modal,
         data: {
           customId: "modal-submit",
@@ -49,7 +49,7 @@ client.on("interactionCreate", (interaction) => {
         (component) => component.customId === "text-input"
       );
 
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           content: `Text input: ${textInput}`,

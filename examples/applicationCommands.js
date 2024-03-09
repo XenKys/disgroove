@@ -7,7 +7,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.setGlobalApplicationCommands([
+  client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "echo",
       description: "Responds with your provided text",
@@ -31,7 +31,7 @@ client.on("interactionCreate", (interaction) => {
       (option) => option.name === "text"
     ).value;
 
-    interaction.createResponse({
+    client.createInteractionResponse(interaction.id, interaction.token, {
       type: InteractionCallbackType.ChannelMessageWithSource,
       data: {
         content: text,

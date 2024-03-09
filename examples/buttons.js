@@ -8,7 +8,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.setGlobalApplicationCommands([
+  client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "buttons",
       description: "Responds with some buttons",
@@ -19,7 +19,7 @@ client.once("ready", () =>
 client.on("interactionCreate", (interaction) => {
   if (interaction.type === InteractionType.ApplicationCommand) {
     if (interaction.data.name === "button") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           components: [
@@ -58,7 +58,7 @@ client.on("interactionCreate", (interaction) => {
     )
       return;
 
-    interaction.createResponse({
+    client.createInteractionResponse(interaction.id, interaction.token, {
       type: InteractionCallbackType.ChannelMessageWithSource,
       data: {
         content: "You've clicked the normal green button",

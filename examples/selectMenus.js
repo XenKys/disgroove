@@ -7,7 +7,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.setGlobalApplicationCommands([
+  client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "string-menu",
       description: "Responds with a string select menu",
@@ -30,7 +30,7 @@ client.once("ready", () =>
 client.on("interactionCreate", (interaction) => {
   if (interaction.type === InteractionType.ApplicationCommand) {
     if (interaction.data.name === "string-menu") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           components: [
@@ -65,7 +65,7 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     } else if (interaction.data.name === "user-menu") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           components: [
@@ -83,7 +83,7 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     } else if (interaction.data.name === "role-menu") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           components: [
@@ -101,7 +101,7 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     } else if (interaction.data.name === "channel-menu") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           components: [
@@ -122,7 +122,7 @@ client.on("interactionCreate", (interaction) => {
     }
   } else if (interaction.type === InteractionType.MessageComponent) {
     if (interaction.data.customId === "string") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           content: `Clicked option value: ${interaction.data.values[0]}`,
@@ -130,7 +130,7 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     } else if (interaction.data.customId === "user") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           content: `Clicked user: <@${interaction.data.values[0]}>`,
@@ -138,7 +138,7 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     } else if (interaction.data.customId === "role") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           content: `Clicked role: <@&${interaction.data.values[0]}>`,
@@ -146,7 +146,7 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     } else if (interaction.data.customId === "channel") {
-      interaction.createResponse({
+      client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
           content: `Clicked channel: <#${interaction.data.values[0]}>`,

@@ -6,7 +6,7 @@ const {
 const client = new Client("token");
 
 client.once("ready", () =>
-  client.application.setGlobalApplicationCommands([
+  client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "embed",
       description: "Responds with an embed",
@@ -18,7 +18,7 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return;
 
   if (interaction.data.name === "embed") {
-    interaction.createResponse({
+    client.createInteractionResponse(interaction.id, interaction.token, {
       type: InteractionCallbackType.ChannelMessageWithSource,
       data: {
         embeds: [
