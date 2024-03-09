@@ -67,7 +67,7 @@ import type {
   RawApplicationRoleConnectionMetadata,
   RawSku,
   Sku,
-  BulkEditGlobalApplicationCommandParams,
+  BulkEditGlobalApplicationCommandsParams,
   BulkEditGuildApplicationCommandsParams,
   CreateGuildParams,
   CreateGuildFromGuildTemplateParams,
@@ -334,7 +334,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
   bulkEditGlobalApplicationCommands(
     applicationId: string,
-    commands: Array<BulkEditGlobalApplicationCommandParams>
+    commands: BulkEditGlobalApplicationCommandsParams
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
@@ -355,7 +355,7 @@ export class Client extends EventEmitter {
   bulkEditGuildApplicationCommands(
     applicationId: string,
     guildId: string,
-    commands: Array<BulkEditGuildApplicationCommandsParams>
+    commands: BulkEditGuildApplicationCommandsParams
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
@@ -1490,7 +1490,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
   editChannelPositions(
     guildId: string,
-    options: Array<EditGuildChannelPositionsParams>
+    options: EditGuildChannelPositionsParams
   ): void {
     this.rest.request(RestMethods.Patch, Endpoints.guildChannels(guildId), {
       json: options.map((data) => ({
@@ -1789,7 +1789,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
   editGuildRolePositions(
     guildId: string,
-    options: Array<EditGuildRolePositionsParams>
+    options: EditGuildRolePositionsParams
   ): Promise<Array<Role>> {
     return this.rest
       .request<Array<RawRole>>(
@@ -2448,20 +2448,6 @@ export class Client extends EventEmitter {
       );
   }
 
-  /** https://discord.com/developers/docs/resources/user#get-user-application-role-connection */
-  getApplicationRoleConnection(
-    applicationId: string
-  ): Promise<ApplicationRoleConnection> {
-    return this.rest
-      .request<RawApplicationRoleConnection>(
-        RestMethods.Get,
-        Endpoints.userApplicationRoleConnection(applicationId)
-      )
-      .then((response) =>
-        this.util.toCamelCase<ApplicationRoleConnection>(response)
-      );
-  }
-
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records */
   getApplicationRoleConnectionMetadataRecords(
     applicationId: string
@@ -2523,20 +2509,6 @@ export class Client extends EventEmitter {
       );
   }
 
-  /** https://discord.com/developers/docs/resources/user#get-user-connections */
-  getConnections(): Promise<Array<Connection>> {
-    return this.rest
-      .request<Array<RawConnection>>(
-        RestMethods.Get,
-        Endpoints.userConnections()
-      )
-      .then((response) =>
-        response.map((connection) =>
-          this.util.toCamelCase<Connection>(connection)
-        )
-      );
-  }
-
   /** https://discord.com/developers/docs/resources/application#get-current-application */
   getCurrentApplication(): Promise<Application> {
     return this.rest
@@ -2547,11 +2519,39 @@ export class Client extends EventEmitter {
       .then((response) => this.util.toCamelCase<Application>(response));
   }
 
+  /** https://discord.com/developers/docs/resources/user#get-current-user-application-role-connection */
+  getCurrentApplicationRoleConnection(
+    applicationId: string
+  ): Promise<ApplicationRoleConnection> {
+    return this.rest
+      .request<RawApplicationRoleConnection>(
+        RestMethods.Get,
+        Endpoints.userApplicationRoleConnection(applicationId)
+      )
+      .then((response) =>
+        this.util.toCamelCase<ApplicationRoleConnection>(response)
+      );
+  }
+
   /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
   getCurrentGuildMember(guildId: string): Promise<GuildMember> {
     return this.rest
       .request<RawGuildMember>(RestMethods.Get, Endpoints.guildMember(guildId))
       .then((response) => this.util.toCamelCase<GuildMember>(response));
+  }
+
+  /** https://discord.com/developers/docs/resources/user#get-current-user-connections */
+  getCurrentUserConnections(): Promise<Array<Connection>> {
+    return this.rest
+      .request<Array<RawConnection>>(
+        RestMethods.Get,
+        Endpoints.userConnections()
+      )
+      .then((response) =>
+        response.map((connection) =>
+          this.util.toCamelCase<Connection>(connection)
+        )
+      );
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#list-entitlements */
@@ -3608,7 +3608,7 @@ export class Client extends EventEmitter {
       );
   }
 
-  /** https://discord.com/developers/docs/resources/user#update-user-application-role-connection */
+  /** https://discord.com/developers/docs/resources/user#update-current-user-application-role-connection */
   updateCurrentApplicationRoleConnection(
     options: UpdateCurrentUserApplicationRoleConnection
   ): Promise<ApplicationRoleConnection> {

@@ -179,12 +179,12 @@ export interface ModalSubmitData {
 }
 
 export interface ResolvedData {
-  users?: Array<User>;
-  members?: Array<GuildMember>;
-  roles?: Array<Role>;
-  channels?: Array<Channel>;
-  messages?: Array<Message>;
-  attachments?: Array<Attachment>;
+  users?: Record<string, User>;
+  members?: Record<string, GuildMember>;
+  roles?: Record<string, Role>;
+  channels?: Record<string, Channel>;
+  messages?: Record<string, Message>;
+  attachments?: Record<string, Attachment>;
 }
 
 export interface ApplicationCommandInteractionDataOption {

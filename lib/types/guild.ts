@@ -467,12 +467,12 @@ export interface CreateGuildChannelParams {
   defaultThreadRateLimitPerUser?: number;
 }
 
-export interface EditGuildChannelPositionsParams {
+export type EditGuildChannelPositionsParams = Array<{
   id: string;
   position?: number | null;
   lockPermissions?: boolean | null;
   parentId?: string | null;
-}
+}>;
 
 export interface AddGuildMemberParams {
   accessToken: string;
@@ -515,10 +515,10 @@ export interface CreateGuildRoleParams {
   mentionable?: boolean;
 }
 
-export interface EditGuildRolePositionsParams {
+export type EditGuildRolePositionsParams = Array<{
   id: string;
   position?: number | null;
-}
+}>;
 
 export interface EditGuildRoleParams {
   name?: string | null;

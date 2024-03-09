@@ -142,7 +142,7 @@ export interface EditGlobalApplicationCommandParams {
   nsfw?: boolean;
 }
 
-export interface BulkEditGlobalApplicationCommandParams {
+export type BulkEditGlobalApplicationCommandsParams = Array<{
   id?: string;
   name: string;
   nameLocalizations?: LocaleMap | null;
@@ -154,7 +154,7 @@ export interface BulkEditGlobalApplicationCommandParams {
   defaultPermission?: boolean | null;
   type?: ApplicationCommandTypes;
   nsfw?: boolean;
-}
+}>;
 
 export interface CreateGuildApplicationCommandParams {
   name: string;
@@ -179,7 +179,7 @@ export interface EditGuildApplicationCommandParams {
   nsfw?: boolean;
 }
 
-export interface BulkEditGuildApplicationCommandsParams {
+export type BulkEditGuildApplicationCommandsParams = Array<{
   id?: string;
   name: string;
   nameLocalizations?: LocaleMap | null;
@@ -191,8 +191,8 @@ export interface BulkEditGuildApplicationCommandsParams {
   defaultPermission?: boolean | null;
   type: ApplicationCommandTypes;
   nsfw?: boolean;
-}
+}>;
 
-export interface EditApplicationCommandPermissions {
+export interface EditApplicationCommandPermissionsParams {
   permissions: Array<GuildApplicationCommandPermissions>;
 }
