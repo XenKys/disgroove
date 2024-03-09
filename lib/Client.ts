@@ -77,7 +77,7 @@ import type {
   JSONUnavailableGuild,
 } from "./types";
 import EventEmitter from "node:events";
-import { Shard, ShardsManager } from "./gateway";
+import { Shard, ShardManager } from "./gateway";
 
 export interface ClientEvents {
   hello: [];
@@ -183,7 +183,7 @@ export class Client extends EventEmitter {
   intents: GatewayIntents | number;
   shardsCount: number | "auto";
   auth: "Bot" | "Bearer";
-  shards: ShardsManager;
+  shards: ShardManager;
   rest: REST;
   util: Util;
   user!: User;
@@ -202,7 +202,7 @@ export class Client extends EventEmitter {
         : GatewayIntents.AllNonPrivileged;
     this.shardsCount = options?.shardsCount ?? "auto";
     this.auth = options?.auth ?? "Bot";
-    this.shards = new ShardsManager();
+    this.shards = new ShardManager();
     this.rest = new REST(token, this.auth);
     this.util = new Util();
     this.guildShardMap = {};

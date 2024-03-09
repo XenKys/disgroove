@@ -17,7 +17,7 @@ export interface File {
   name: string;
 }
 
-export class RequestsManager {
+export class RequestManager {
   token: string;
   auth: "Bot" | "Bearer";
   globalBlock: boolean = false;

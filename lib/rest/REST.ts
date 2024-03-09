@@ -1,4 +1,4 @@
-import { RequestData, RequestsManager } from ".";
+import { RequestData, RequestManager } from ".";
 
 export enum RESTMethods {
   Get = "GET",
@@ -9,10 +9,10 @@ export enum RESTMethods {
 }
 
 export class REST {
-  manager: RequestsManager;
+  manager: RequestManager;
 
   constructor(token: string, auth: "Bot" | "Bearer") {
-    this.manager = new RequestsManager(token, auth);
+    this.manager = new RequestManager(token, auth);
   }
 
   get<T>(

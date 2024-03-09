@@ -1,2 +1,2 @@
 export * from "./Shard";
-export * from "./ShardsManager";
+export * from "./ShardManager";
