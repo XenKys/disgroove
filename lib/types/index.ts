@@ -1,3 +1,5 @@
+import type { Locales } from "../constants";
+
 export * from "./application-command";
 export * from "./application-role-connection-metadata";
 export * from "./application";
@@ -21,3 +23,4 @@ export * from "./team";
 export * from "./user";
 export * from "./voice";
 export * from "./webhook";
+export type LocaleMap = Partial<Record<Locales, string>>;

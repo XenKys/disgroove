@@ -1,8 +1,8 @@
+import type { LocaleMap } from ".";
 import type {
   ApplicationCommandTypes,
   ApplicationCommandOptionType,
   ChannelTypes,
-  Locales,
   ApplicationCommandPermissionType,
 } from "../constants";
 
@@ -13,9 +13,9 @@ export interface RawApplicationCommand {
   application_id: string;
   guild_id?: string;
   name: string;
-  name_localizations?: Partial<Record<Locales, string>> | null;
+  name_localizations?: LocaleMap | null;
   description: string;
-  description_localizations?: Partial<Record<Locales, string>> | null;
+  description_localizations?: LocaleMap | null;
   options?: Array<RawApplicationCommandOption>;
   default_member_permissions: string | null;
   dm_permission?: boolean;
@@ -28,9 +28,9 @@ export interface RawApplicationCommand {
 export interface RawApplicationCommandOption {
   type: ApplicationCommandOptionType;
   name: string;
-  name_localizations?: Partial<Record<Locales, string>> | null;
+  name_localizations?: LocaleMap | null;
   description: string;
-  description_localizations?: Partial<Record<Locales, string>> | null;
+  description_localizations?: LocaleMap | null;
   required?: boolean;
   choices?: Array<RawApplicationCommandOptionChoice>;
   options?: Array<RawApplicationCommandOption>;
@@ -45,7 +45,7 @@ export interface RawApplicationCommandOption {
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure */
 export interface RawApplicationCommandOptionChoice {
   name: string;
-  name_localizations?: Partial<Record<Locales, string>> | null;
+  name_localizations?: LocaleMap | null;
   value: string;
 }
 
@@ -70,9 +70,9 @@ export interface JSONApplicationCommand {
   applicationId: string;
   guildId?: string;
   name: string;
-  nameLocalizations?: Partial<Record<Locales, string>> | null;
+  nameLocalizations?: LocaleMap | null;
   description: string;
-  descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+  descriptionLocalizations?: LocaleMap | null;
   options?: Array<JSONApplicationCommandOption>;
   defaultMemberPermissions: string | null;
   dmPermission?: boolean;
@@ -84,9 +84,9 @@ export interface JSONApplicationCommand {
 export interface JSONApplicationCommandOption {
   type: ApplicationCommandOptionType;
   name: string;
-  nameLocalizations?: Partial<Record<Locales, string>> | null;
+  nameLocalizations?: LocaleMap | null;
   description: string;
-  descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+  descriptionLocalizations?: LocaleMap | null;
   required?: boolean;
   choices?: Array<JSONApplicationCommandOptionChoice>;
   options?: Array<JSONApplicationCommandOption>;
@@ -100,7 +100,7 @@ export interface JSONApplicationCommandOption {
 
 export interface JSONApplicationCommandOptionChoice {
   name: string;
-  nameLocalizations?: Partial<Record<Locales, string>> | null;
+  nameLocalizations?: LocaleMap | null;
   value: string;
 }
 

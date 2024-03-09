@@ -5,10 +5,11 @@ import type {
   JSONApplicationCommandOption,
   JSONApplicationCommandPermission,
   JSONGuildApplicationCommandPermissions,
+  LocaleMap,
   RawApplicationCommand,
   RawGuildApplicationCommandPermissions,
 } from "../types";
-import type { ApplicationCommandTypes, Locales } from "../constants";
+import type { ApplicationCommandTypes } from "../constants";
 import { IdentifiableBase } from ".";
 
 /** https://discord.com/developers/docs/interactions/application-commands */
@@ -19,9 +20,9 @@ export class ApplicationCommand extends IdentifiableBase {
   applicationId: string;
   guildId?: string;
   name: string;
-  nameLocalizations?: Partial<Record<Locales, string>> | null;
+  nameLocalizations?: LocaleMap | null;
   description: string;
-  descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+  descriptionLocalizations?: LocaleMap | null;
   options?: Array<JSONApplicationCommandOption>;
   defaultMemberPermissions: string | null;
   dmPermission?: boolean;
@@ -75,9 +76,9 @@ export class ApplicationCommand extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
   async edit(options: {
     name?: string;
-    nameLocalizations?: Partial<Record<Locales, string>> | null;
+    nameLocalizations?: LocaleMap | null;
     description?: string;
-    descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+    descriptionLocalizations?: LocaleMap | null;
     options?: Array<JSONApplicationCommandOption>;
     defaultMemberPermissions?: string | null;
     defaultPermission?: boolean | null;

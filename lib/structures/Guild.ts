@@ -68,6 +68,7 @@ import type {
   JSONGuildCreateEventExtraFields,
   JSONTriggerMetadata,
   JSONApplicationCommandOption,
+  LocaleMap,
 } from "../types";
 import type {
   ActionTypes,
@@ -84,7 +85,6 @@ import type {
   GuildScheduledEventPrivacyLevel,
   GuildScheduledEventStatus,
   ImageWidgetStyleOptions,
-  Locales,
   MFALevel,
   OnboardingMode,
   PremiumTier,
@@ -371,9 +371,9 @@ export class Guild extends IdentifiableBase {
     applicationId: string,
     options: {
       name: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
@@ -776,9 +776,9 @@ export class Guild extends IdentifiableBase {
     commandId: string,
     options: {
       name?: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
@@ -1779,9 +1779,9 @@ export class Guild extends IdentifiableBase {
     commands: Array<{
       id?: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;

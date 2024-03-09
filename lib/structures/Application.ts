@@ -20,14 +20,11 @@ import type {
   RawSKU,
   RawEntitlement,
   JSONApplicationCommandOption,
+  LocaleMap,
 } from "../types";
 import type { Client } from "../Client";
 import { Endpoints } from "../rest";
-import type {
-  ApplicationCommandTypes,
-  ApplicationFlags,
-  Locales,
-} from "../constants";
+import type { ApplicationCommandTypes, ApplicationFlags } from "../constants";
 
 /** https://discord.com/developers/docs/resources/application */
 export class Application extends IdentifiableBase {
@@ -108,9 +105,9 @@ export class Application extends IdentifiableBase {
   /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
   async createGlobalApplicationCommand(options: {
     name: string;
-    nameLocalizations?: Partial<Record<Locales, string>> | null;
+    nameLocalizations?: LocaleMap | null;
     description?: string;
-    descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+    descriptionLocalizations?: LocaleMap | null;
     options?: Array<JSONApplicationCommandOption>;
     defaultMemberPermissions?: string | null;
     dmPermission?: boolean;
@@ -134,9 +131,9 @@ export class Application extends IdentifiableBase {
     guildId: string,
     options: {
       name: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
@@ -272,9 +269,9 @@ export class Application extends IdentifiableBase {
     commandId: string,
     options: {
       name?: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
@@ -299,9 +296,9 @@ export class Application extends IdentifiableBase {
     commandId: string,
     options: {
       name?: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
@@ -488,9 +485,9 @@ export class Application extends IdentifiableBase {
     commands: Array<{
       id?: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
@@ -519,9 +516,9 @@ export class Application extends IdentifiableBase {
     commands: Array<{
       id?: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description?: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
       options?: Array<JSONApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;

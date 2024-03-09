@@ -5,6 +5,7 @@ import type {
   JSONApplicationRoleConnection,
   JSONConnection,
   JSONUser,
+  LocaleMap,
   RawApplicationRoleConnection,
   RawChannel,
   RawConnection,
@@ -13,7 +14,6 @@ import type {
 } from "../types";
 import type {
   ApplicationRoleConnectionMetadataType,
-  Locales,
   PremiumTypes,
   UserFlags,
 } from "../constants";
@@ -176,9 +176,9 @@ export class User extends IdentifiableBase {
       type: ApplicationRoleConnectionMetadataType;
       key: string;
       name: string;
-      nameLocalizations?: Partial<Record<Locales, string>> | null;
+      nameLocalizations?: LocaleMap | null;
       description: string;
-      descriptionLocalizations?: Partial<Record<Locales, string>> | null;
+      descriptionLocalizations?: LocaleMap | null;
     };
   }): Promise<JSONApplicationRoleConnection> {
     return this.client.rest
