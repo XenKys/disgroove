@@ -19,17 +19,17 @@ import type {
   RawSticker,
   RawStickerItem,
   RawMessageInteraction,
-  JSONMessageInteraction,
-  JSONStickerItem,
-  JSONSticker,
-  JSONEmoji,
-  JSONUser,
-  JSONApplication,
-  JSONGuildMember,
+  MessageInteraction,
+  StickerItem,
+  Sticker,
+  Emoji,
+  User,
+  Application,
+  GuildMember,
   RawActionRow,
-  JSONActionRow,
+  ActionRow,
   RawResolvedData,
-  JSONResolvedData,
+  ResolvedData,
 } from ".";
 import type { File } from "../rest";
 
@@ -296,12 +296,12 @@ export interface RawRoleSubscriptionData {
   is_renewal: boolean;
 }
 
-export interface JSONChannel {
+export interface Channel {
   id: string;
   type: ChannelTypes;
   guildId?: string;
   position?: number;
-  permissionOverwrites?: Array<JSONOverwrite>;
+  permissionOverwrites?: Array<Overwrite>;
   name?: string | null;
   topic?: string | null;
   nsfw?: boolean;
@@ -309,7 +309,7 @@ export interface JSONChannel {
   bitrate?: number;
   userLimit?: number;
   rateLimitPerUser?: number;
-  recipients?: Array<JSONUser>;
+  recipients?: Array<User>;
   icon?: string | null;
   ownerId?: string;
   applicationId?: string;
@@ -320,94 +320,94 @@ export interface JSONChannel {
   videoQualityMode?: VideoQualityModes;
   messageCount?: number;
   memberCount?: number;
-  threadMetadata?: JSONThreadMetadata;
-  member?: JSONThreadMember;
+  threadMetadata?: ThreadMetadata;
+  member?: ThreadMember;
   defaultAutoArchiveDuration?: number;
   permissions?: string;
   flags?: ChannelFlags;
   totalMessageSent?: number;
-  availableTags?: Array<JSONForumTag>;
+  availableTags?: Array<ForumTag>;
   appliedTags?: Array<string>;
-  defaultReactionEmoji?: JSONDefaultReaction | null;
+  defaultReactionEmoji?: DefaultReaction | null;
   defaultThreadRateLimitPerUser?: number;
   defaultSortOrder?: SortOrderTypes | null;
   defaultForumLayout?: ForumLayoutTypes;
 }
 
-export interface JSONMessage {
+export interface Message {
   id: string;
   channelId: string;
-  author: JSONUser;
+  author: User;
   content: string;
   timestamp: string;
   editedTimestamp: string | null;
   tts: boolean;
   mentionEveryone: boolean;
-  mentions: Array<JSONUser>;
+  mentions: Array<User>;
   mentionRoles: Array<string>;
-  mentionChannels?: Array<JSONChannelMention>;
-  attachments: Array<JSONAttachment>;
-  embeds: Array<JSONEmbed>;
-  reactions?: Array<JSONReaction>;
+  mentionChannels?: Array<ChannelMention>;
+  attachments: Array<Attachment>;
+  embeds: Array<Embed>;
+  reactions?: Array<Reaction>;
   nonce?: number | string;
   pinned: boolean;
   webhookId?: string;
   type: MessageTypes;
-  activity?: JSONMessageActivity;
-  application?: JSONApplication;
+  activity?: MessageActivity;
+  application?: Application;
   applicationId?: string;
-  messageReference?: JSONMessageReference;
+  messageReference?: MessageReference;
   flags?: MessageFlags;
-  referencedMessage?: JSONMessage | null;
-  interaction?: JSONMessageInteraction;
-  thread?: JSONChannel;
-  components?: Array<JSONActionRow>;
-  stickerItems?: Array<JSONStickerItem>;
-  stickers?: Array<JSONSticker>;
+  referencedMessage?: Message | null;
+  interaction?: MessageInteraction;
+  thread?: Channel;
+  components?: Array<ActionRow>;
+  stickerItems?: Array<StickerItem>;
+  stickers?: Array<Sticker>;
   position?: number;
-  roleSubscriptionData?: JSONRoleSubscriptionData;
-  resolved?: JSONResolvedData;
+  roleSubscriptionData?: RoleSubscriptionData;
+  resolved?: ResolvedData;
 }
 
-export interface JSONMessageActivity {
+export interface MessageActivity {
   type: MessageActivityTypes;
   partyId?: string;
 }
 
-export interface JSONMessageReference {
+export interface MessageReference {
   messageId?: string;
   channelId?: string;
   guildId?: string;
   failIfNotExists?: boolean;
 }
 
-export interface JSONFollowedChannel {
+export interface FollowedChannel {
   channelId: string;
   webhookId: string;
 }
 
-export interface JSONReaction {
+export interface Reaction {
   count: number;
-  countDetails: JSONReactionCountDetails;
+  countDetails: ReactionCountDetails;
   me: boolean;
   meBurst: boolean;
-  emoji: JSONEmoji;
+  emoji: Emoji;
   burstColors: Array<string>;
 }
 
-export interface JSONReactionCountDetails {
+export interface ReactionCountDetails {
   burst: number;
   normal: number;
 }
 
-export interface JSONOverwrite {
+export interface Overwrite {
   id: string;
   type: number;
   allow: string;
   deny: string;
 }
 
-export interface JSONThreadMetadata {
+export interface ThreadMetadata {
   archived: boolean;
   autoArchiveDuration: number;
   archiveTimestamp: string;
@@ -416,20 +416,20 @@ export interface JSONThreadMetadata {
   createTimestamp?: string | null;
 }
 
-export interface JSONThreadMember {
+export interface ThreadMember {
   id?: string;
   userId?: string;
   joinTimestamp: string;
   flags: number;
-  member?: JSONGuildMember;
+  member?: GuildMember;
 }
 
-export interface JSONDefaultReaction {
+export interface DefaultReaction {
   emojiId: string | null;
   emojiName: string | null;
 }
 
-export interface JSONForumTag {
+export interface ForumTag {
   id: string;
   name: string;
   moderated: boolean;
@@ -437,75 +437,75 @@ export interface JSONForumTag {
   emojiName?: string;
 }
 
-export interface JSONEmbed {
+export interface Embed {
   title?: string;
   type?: string;
   description?: string;
   url?: string;
   timestamp?: string;
   color?: number;
-  footer?: JSONEmbedFooter;
-  image?: JSONEmbedImage;
-  thumbnail?: JSONEmbedThumbnail;
-  video?: JSONEmbedVideo;
-  provider?: JSONEmbedProvider;
-  author?: JSONEmbedAuthor;
-  fields?: Array<JSONEmbedField>;
+  footer?: EmbedFooter;
+  image?: EmbedImage;
+  thumbnail?: EmbedThumbnail;
+  video?: EmbedVideo;
+  provider?: EmbedProvider;
+  author?: EmbedAuthor;
+  fields?: Array<EmbedField>;
 }
 
-export interface JSONEmbedThumbnail {
+export interface EmbedThumbnail {
   url: string;
-  proxyURL?: string;
+  proxyUrl?: string;
   height?: number;
   width?: number;
 }
 
-export interface JSONEmbedVideo {
+export interface EmbedVideo {
   url?: string;
-  proxyURL?: string;
+  proxyUrl?: string;
   height?: number;
   width?: number;
 }
 
-export interface JSONEmbedImage {
+export interface EmbedImage {
   url: string;
-  proxyURL?: string;
+  proxyUrl?: string;
   height?: number;
   width?: number;
 }
 
-export interface JSONEmbedProvider {
+export interface EmbedProvider {
   name?: string;
   url?: string;
 }
 
-export interface JSONEmbedAuthor {
+export interface EmbedAuthor {
   name: string;
   url?: string;
-  iconURL?: string;
-  proxyIconURL?: string;
+  iconUrl?: string;
+  proxyIconUrl?: string;
 }
 
-export interface JSONEmbedFooter {
+export interface EmbedFooter {
   text: string;
-  iconURL?: string;
-  proxyIconURL?: string;
+  iconUrl?: string;
+  proxyIconUrl?: string;
 }
 
-export interface JSONEmbedField {
+export interface EmbedField {
   name: string;
   value: string;
   inline?: boolean;
 }
 
-export interface JSONAttachment {
+export interface Attachment {
   id: string;
   filename: string;
   description?: string;
   contentType?: string;
   size: number;
   url: string;
-  proxyURL: string;
+  proxyUrl: string;
   height?: number;
   width?: number;
   ephemeral?: boolean;
@@ -514,21 +514,21 @@ export interface JSONAttachment {
   flags?: AttachmentFlags;
 }
 
-export interface JSONChannelMention {
+export interface ChannelMention {
   id: string;
   guildId: string;
   type: ChannelTypes;
   name: string;
 }
 
-export interface JSONAllowedMentions {
+export interface AllowedMentions {
   parse: Array<AllowedMentionTypes>;
   roles: Array<string>;
   users: Array<string>;
   repliedUser: boolean;
 }
 
-export interface JSONRoleSubscriptionData {
+export interface RoleSubscriptionData {
   roleSubscriptionListingId: string;
   tierName: string;
   totalMonthsSubscribed: number;
@@ -546,14 +546,14 @@ export interface EditChannelParams {
   rateLimitPerUser?: number | null;
   bitrate?: number | null;
   userLimit?: number | null;
-  permissionOverwrites?: Array<JSONOverwrite> | null;
+  permissionOverwrites?: Array<Overwrite> | null;
   parentId?: string | null;
   rtcRegion?: string | null;
   videoQualityMode?: VideoQualityModes | null;
   defaultAutoArchiveDuration?: number | null;
   flags?: ChannelFlags;
-  availableTags?: Array<JSONForumTag>;
-  defaultReactionEmoji?: JSONDefaultReaction | null;
+  availableTags?: Array<ForumTag>;
+  defaultReactionEmoji?: DefaultReaction | null;
   defaultThreadRateLimitPerUser?: number;
   defaultSortOrder?: SortOrderTypes | null;
   defaultForumLayout?: ForumLayoutTypes;
@@ -569,25 +569,25 @@ export interface CreateMessageParams {
   content?: string;
   nonce?: string | number;
   tts?: boolean;
-  embeds?: Array<JSONEmbed>;
-  allowedMentions?: JSONAllowedMentions;
-  messageReference?: JSONMessageReference;
-  components?: Array<JSONActionRow>;
+  embeds?: Array<Embed>;
+  allowedMentions?: AllowedMentions;
+  messageReference?: MessageReference;
+  components?: Array<ActionRow>;
   stickersIds?: Array<string>;
   files?: Array<File>;
-  attachments?: Array<JSONAttachment>;
+  attachments?: Array<Attachment>;
   flags?: MessageFlags;
   enforceNonce?: boolean;
 }
 
 export interface EditMessageParams {
   content?: string | null;
-  embeds?: Array<JSONEmbed> | null;
+  embeds?: Array<Embed> | null;
   flags?: MessageFlags | null;
-  allowedMentions?: JSONAllowedMentions | null;
-  components?: Array<JSONActionRow> | null;
+  allowedMentions?: AllowedMentions | null;
+  components?: Array<ActionRow> | null;
   files?: Array<File> | null;
-  attachments?: Array<JSONAttachment> | null;
+  attachments?: Array<Attachment> | null;
 }
 
 export interface BulkDeleteMessagesParams {
@@ -639,10 +639,10 @@ export interface CreateThreadParams {
   rateLimitPerUser?: number | null;
   message: {
     content?: string | null;
-    embeds?: Array<JSONEmbed> | null;
-    allowedMentions?: JSONAllowedMentions | null;
-    components?: Array<JSONActionRow> | null;
-    attachments?: Array<JSONAttachment> | null;
+    embeds?: Array<Embed> | null;
+    allowedMentions?: AllowedMentions | null;
+    components?: Array<ActionRow> | null;
+    attachments?: Array<Attachment> | null;
     flags?: MessageFlags | null;
   };
   appliedTags?: Array<string>;

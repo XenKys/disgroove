@@ -1,9 +1,9 @@
-import type { SKUFlags, SKUTypes } from "../constants";
+import type { SkuFlags, SkuTypes } from "../constants";
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-structure */
-export interface RawSKU {
+export interface RawSku {
   id: string;
-  type: SKUTypes;
+  type: SkuTypes;
   dependent_sku_id?: string | null; // Undocumented
   application_id: string;
   manifest_labels?: null; // Undocumented
@@ -12,14 +12,14 @@ export interface RawSKU {
   features?: []; // Undocumented
   release_date?: null; // Undocumented
   slug: string;
-  flags: SKUFlags;
+  flags: SkuFlags;
   show_age_gate?: boolean; // Undocumented
 }
 
-export interface JSONSKU {
+export interface Sku {
   id: string;
-  type: SKUTypes;
-  dependentSKUId?: string | null; // Undocumented
+  type: SkuTypes;
+  dependentSkuId?: string | null; // Undocumented
   applicationId: string;
   manifestLabels?: null; // Undocumented
   accessType?: number; // Undocumented
@@ -27,6 +27,6 @@ export interface JSONSKU {
   features?: []; // Undocumented
   releaseDate?: null; // Undocumented
   slug: string;
-  flags: SKUFlags;
+  flags: SkuFlags;
   showAgeGate?: boolean; // Undocumented
 }

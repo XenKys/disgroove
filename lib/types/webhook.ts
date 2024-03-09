@@ -1,12 +1,12 @@
 import type { MessageFlags, WebhookTypes } from "../constants";
 import type {
-  JSONActionRow,
-  JSONAllowedMentions,
-  JSONAttachment,
-  JSONChannel,
-  JSONEmbed,
-  JSONGuild,
-  JSONUser,
+  ActionRow,
+  AllowedMentions,
+  Attachment,
+  Channel,
+  Embed,
+  Guild,
+  User,
   RawChannel,
   RawGuild,
   RawUser,
@@ -29,18 +29,18 @@ export interface RawWebhook {
   url?: string;
 }
 
-export interface JSONWebhook {
+export interface Webhook {
   id: string;
   type: WebhookTypes;
   guildId?: string | null;
   channelId: string | null;
-  user?: JSONUser;
+  user?: User;
   name: string | null;
   avatar: string | null;
   token?: string;
   applicationId: string | null;
-  sourceGuild?: JSONGuild;
-  sourceChannel?: JSONChannel;
+  sourceGuild?: Guild;
+  sourceChannel?: Channel;
   url?: string;
 }
 
@@ -58,23 +58,23 @@ export interface EditWebhookParams {
 export interface ExecuteWebhookParams {
   content?: string | null;
   username?: string;
-  avatarURL?: string;
+  avatarUrl?: string;
   tts?: boolean;
-  embeds?: Array<JSONEmbed> | null;
-  allowedMentions?: JSONAllowedMentions | null;
-  components?: Array<JSONActionRow> | null;
+  embeds?: Array<Embed> | null;
+  allowedMentions?: AllowedMentions | null;
+  components?: Array<ActionRow> | null;
   files?: Array<File> | null;
-  attachments?: Array<JSONAttachment> | null;
+  attachments?: Array<Attachment> | null;
   flags?: MessageFlags | null;
   threadName?: string;
 }
 
 export interface EditWebhookMessageParams {
   content?: string | null;
-  embeds?: Array<JSONEmbed> | null;
+  embeds?: Array<Embed> | null;
   flags?: MessageFlags | null;
-  allowedMentions?: JSONAllowedMentions | null;
-  components?: Array<JSONActionRow> | null;
+  allowedMentions?: AllowedMentions | null;
+  components?: Array<ActionRow> | null;
   files?: Array<File> | null;
-  attachments?: Array<JSONAttachment> | null;
+  attachments?: Array<Attachment> | null;
 }

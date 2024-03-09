@@ -69,7 +69,7 @@ export const guildTemplate = (guildId: string, code: string) =>
   `guilds/${guildId}/templates/${code}` as const;
 export const guildTemplates = (guildId: string) =>
   `guilds/${guildId}/templates` as const;
-export const guildVanityURL = (guildId: string) =>
+export const guildVanityUrl = (guildId: string) =>
   `guilds/${guildId}/vanity-url` as const;
 export const guildVoiceRegions = (guildId: string) =>
   `guilds/${guildId}/regions` as const;
@@ -84,7 +84,7 @@ export const guildWelcomeScreen = (guildId: string) =>
 export const guildWidgetImage = (guildId: string) =>
   `guilds/${guildId}/widget.png` as const;
 
-export const guildWidgetJSON = (guildId: string) =>
+export const guildWidgetJson = (guildId: string) =>
   `guilds/${guildId}/widget.json` as const;
 export const guildWidgetSettings = (guildId: string) =>
   `guilds/${guildId}/widget` as const;
@@ -190,7 +190,7 @@ export const applicationGuildCommands = (
 ) => `applications/${applicationId}/guilds/${guildId}/commands` as const;
 export const applicationRoleConnectionMetadata = (applicationId: string) =>
   `applications/${applicationId}/role-connections/metadata` as const;
-export const applicationSKUs = (applicationId: string) =>
+export const applicationSkus = (applicationId: string) =>
   `applications/${applicationId}/skus` as const;
 export const guildApplicationCommandsPermissions = (
   applicationId: string,
@@ -220,7 +220,6 @@ export const gatewayBot = () => "gateway/bot" as const;
 
 // OAuth2
 export const oauth2Authorization = () => "oauth2/authorize" as const;
-
 export const oauth2CurrentApplication = () =>
   `oauth2/applications/@me` as const;
 export const oauth2CurrentAuthorization = () => "oauth2/@me" as const;

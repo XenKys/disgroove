@@ -17,7 +17,7 @@ export interface RawEntitlement {
   subscription_id?: string; // Undocumented
 }
 
-export interface JSONEntitlement {
+export interface Entitlement {
   id: string;
   skuId: string;
   applicationId: string;

@@ -26,7 +26,7 @@ export interface RawRoleTags {
   guild_connections?: null;
 }
 
-export interface JSONRole {
+export interface Role {
   id: string;
   name: string;
   color: number;
@@ -37,11 +37,11 @@ export interface JSONRole {
   permissions: string;
   managed: boolean;
   mentionable: boolean;
-  tags?: JSONRoleTags;
+  tags?: RoleTags;
   flags: RoleFlags;
 }
 
-export interface JSONRoleTags {
+export interface RoleTags {
   botId?: string;
   integrationId?: string;
   premiumSubscriber?: null;

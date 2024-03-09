@@ -1,10 +1,10 @@
 import type {
-  JSONApplication,
-  JSONChannel,
-  JSONGuild,
-  JSONGuildMember,
-  JSONGuildScheduledEvent,
-  JSONUser,
+  Application,
+  Channel,
+  Guild,
+  GuildMember,
+  GuildScheduledEvent,
+  User,
   RawApplication,
   RawChannel,
   RawGuild,
@@ -47,22 +47,22 @@ export interface RawInviteStageInstance {
   topic: string;
 }
 
-export interface JSONInvite {
+export interface Invite {
   code: string;
-  guild?: JSONGuild;
-  channel: JSONChannel;
-  inviter?: JSONUser;
+  guild?: Guild;
+  channel: Channel;
+  inviter?: User;
   targetType?: InviteTargetTypes;
-  targetUser?: JSONUser;
-  targetApplication?: JSONApplication;
+  targetUser?: User;
+  targetApplication?: Application;
   approximatePresenceCount?: number;
   approximateMemberCount?: number;
   expiresAt?: string | null;
-  stageInstance?: JSONInviteStageInstance;
-  guildScheduledEvent?: JSONGuildScheduledEvent;
+  stageInstance?: InviteStageInstance;
+  guildScheduledEvent?: GuildScheduledEvent;
 }
 
-export interface JSONInviteMetadata {
+export interface InviteMetadata {
   uses: number;
   maxUses: number;
   maxAge: number;
@@ -70,8 +70,8 @@ export interface JSONInviteMetadata {
   createdAt: string;
 }
 
-export interface JSONInviteStageInstance {
-  members: Array<JSONGuildMember>;
+export interface InviteStageInstance {
+  members: Array<GuildMember>;
   participantCount: number;
   speakerCount: number;
   topic: string;

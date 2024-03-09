@@ -23,16 +23,15 @@ import type {
   RawSticker,
   RawUser,
   RawRole,
-  JSONEmoji,
-  JSONSticker,
-  JSONUser,
-  JSONRole,
-  JSONChannel,
-  JSONDefaultReaction,
-  JSONOverwrite,
-  JSONForumTag,
+  Emoji,
+  Sticker,
+  User,
+  Role,
+  Channel,
+  Overwrite,
+  DefaultReaction,
+  ForumTag,
 } from ".";
-import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface RawGuild {
@@ -222,7 +221,7 @@ export interface RawPromptOption {
   description: string | null;
 }
 
-export interface JSONGuild {
+export interface Guild {
   id: string;
   name: string;
   icon: string | null;
@@ -240,8 +239,8 @@ export interface JSONGuild {
   verificationLevel: VerificationLevel;
   defaultMessageNotifications: DefaultMessageNotificationLevel;
   explicitContentFilter: ExplicitContentFilterLevel;
-  roles: Collection<string, JSONRole>;
-  emojis: Collection<string, JSONEmoji>;
+  roles: Array<Role>;
+  emojis: Array<Emoji>;
   features: Array<GuildFeatures>;
   mfaLevel: MFALevel;
   applicationId: string | null;
@@ -250,7 +249,7 @@ export interface JSONGuild {
   rulesChannelId: string | null;
   maxPresences?: number | null;
   maxMembers?: number;
-  vanityURLCode: string | null;
+  vanityUrlCode: string | null;
   description: string | null;
   banner: string | null;
   premiumTier: PremiumTier;
@@ -261,48 +260,48 @@ export interface JSONGuild {
   maxStageVideoChannelUsers?: number;
   approximateMemberCount?: number;
   approximatePresenceCount?: number;
-  welcomeScreen?: JSONWelcomeScreen;
+  welcomeScreen?: WelcomeScreen;
   nsfwLevel: GuildNSFWLevel;
-  stickers?: Array<JSONSticker>;
+  stickers?: Array<Sticker>;
   premiumProgressBarEnabled: boolean;
   safetyAlertsChannelId: string | null;
 }
 
-export interface JSONUnavailableGuild {
+export interface UnavailableGuild {
   id: string;
   unavailable: boolean;
 }
 
-export interface JSONGuildPreview {
+export interface GuildPreview {
   id: string;
   name: string;
   icon: string | null;
   splash: string | null;
   discoverySplash: string | null;
-  emojis: Array<JSONEmoji>;
+  emojis: Array<Emoji>;
   features: Array<GuildFeatures>;
   approximateMemberCount?: number;
   approximatePresenceCount?: number;
   description: string | null;
-  stickers?: Array<JSONSticker>;
+  stickers?: Array<Sticker>;
 }
 
-export interface JSONGuildWidgetSettings {
+export interface GuildWidgetSettings {
   enabled: boolean;
   channelId: string | null;
 }
 
-export interface JSONGuildWidget {
+export interface GuildWidget {
   id: string;
   name: string;
   instantInvite: string | null;
-  channels: Array<JSONChannel>;
-  members: Array<JSONUser>;
+  channels: Array<Channel>;
+  members: Array<User>;
   presenceCount: number;
 }
 
-export interface JSONGuildMember {
-  user?: JSONUser;
+export interface GuildMember {
+  user?: User;
   nick?: string | null;
   avatar?: string | null;
   roles: Array<string>;
@@ -316,7 +315,7 @@ export interface JSONGuildMember {
   communicationDisabledUntil?: number | null;
 }
 
-export interface JSONIntegration {
+export interface Integration {
   id: string;
   name: string;
   type: string;
@@ -326,68 +325,68 @@ export interface JSONIntegration {
   enableEmoticons?: boolean;
   expireBehavior?: IntegrationExpireBehaviors;
   expireGracePeriod?: number;
-  user?: JSONUser;
-  account: JSONIntegrationAccount;
+  user?: User;
+  account: IntegrationAccount;
   syncedAt?: string;
   subscriberCount?: number;
   revoked?: boolean;
-  application?: JSONIntegrationApplication;
+  application?: IntegrationApplication;
   scopes?: Array<OAuth2Scopes>;
 }
 
-export interface JSONIntegrationAccount {
+export interface IntegrationAccount {
   id: string;
   name: string;
 }
 
-export interface JSONIntegrationApplication {
+export interface IntegrationApplication {
   id: string;
   name: string;
   icon: string | null;
   description: string;
-  bot?: JSONUser;
+  bot?: User;
 }
 
-export interface JSONBan {
+export interface Ban {
   reason: string | null;
-  user: JSONUser;
+  user: User;
 }
 
-export interface JSONWelcomeScreen {
+export interface WelcomeScreen {
   description: string | null;
-  welcomeChannels: Array<JSONWelcomeScreenChannel>;
+  welcomeChannels: Array<WelcomeScreenChannel>;
 }
 
-export interface JSONWelcomeScreenChannel {
+export interface WelcomeScreenChannel {
   channelId: string;
   description: string;
   emojiId: string | null;
   emojiName: string | null;
 }
 
-export interface JSONGuildOnboarding {
+export interface GuildOnboarding {
   guildId: string;
-  prompts: Array<JSONOnboardingPrompt>;
+  prompts: Array<OnboardingPrompt>;
   defaultChannelIds: Array<string>;
   enabled: boolean;
   mode: OnboardingMode;
 }
 
-export interface JSONOnboardingPrompt {
+export interface OnboardingPrompt {
   id: string;
   type: PromptTypes;
-  options: Array<JSONPromptOption>;
+  options: Array<PromptOption>;
   title: string;
   singleSelect: boolean;
   required: boolean;
   inOnboarding: boolean;
 }
 
-export interface JSONPromptOption {
+export interface PromptOption {
   id: string;
   channelIds: Array<string>;
   roleIds: Array<string>;
-  emoji?: JSONEmoji;
+  emoji?: Emoji;
   emojiId?: string;
   emojiName?: string;
   emojiAnimated?: boolean;
@@ -455,25 +454,25 @@ export interface CreateGuildChannelParams {
   userLimit?: number;
   rateLimitPerUser?: number;
   position?: number;
-  permissionOverwrites?: Array<JSONOverwrite>;
+  permissionOverwrites?: Array<Overwrite>;
   parentId?: string | null;
   nsfw?: boolean;
   rtcRegion?: string | null;
   videoQualityMode?: VideoQualityModes;
   defaultAutoArchiveDuration?: number;
-  defaultReactionEmoji?: JSONDefaultReaction | null;
-  availableTags?: Array<JSONForumTag>;
+  defaultReactionEmoji?: DefaultReaction | null;
+  availableTags?: Array<ForumTag>;
   defaultSortOrder?: SortOrderTypes | null;
   defaultForumLayout?: ForumLayoutTypes;
   defaultThreadRateLimitPerUser?: number;
 }
 
-export type EditGuildChannelPositionsParams = Array<{
+export interface EditGuildChannelPositionsParams {
   id: string;
   position?: number | null;
   lockPermissions?: boolean | null;
   parentId?: string | null;
-}>;
+}
 
 export interface AddGuildMemberParams {
   accessToken: string;
@@ -516,10 +515,10 @@ export interface CreateGuildRoleParams {
   mentionable?: boolean;
 }
 
-export type EditGuildRolePositionsParams = Array<{
+export interface EditGuildRolePositionsParams {
   id: string;
   position?: number | null;
-}>;
+}
 
 export interface EditGuildRoleParams {
   name?: string | null;
@@ -544,12 +543,12 @@ export interface BeginGuildPruneParams {
 
 export interface EditGuildWelcomeScreenParams {
   enabled?: boolean | null;
-  welcomeChannels?: Array<JSONWelcomeScreenChannel> | null;
+  welcomeChannels?: Array<WelcomeScreenChannel> | null;
   description?: string | null;
 }
 
 export interface EditGuildOnboardingParams {
-  prompts: Array<JSONOnboardingPrompt>;
+  prompts: Array<OnboardingPrompt>;
   defaultChannelIds: Array<string>;
   enabled: boolean;
   mode: OnboardingMode;

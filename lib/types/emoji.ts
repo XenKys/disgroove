@@ -1,4 +1,4 @@
-import type { JSONUser, RawUser } from ".";
+import type { User, RawUser } from ".";
 
 /** https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure */
 export interface RawEmoji {
@@ -12,11 +12,11 @@ export interface RawEmoji {
   available?: boolean;
 }
 
-export interface JSONEmoji {
+export interface Emoji {
   id: string | null;
   name: string | null;
   roles?: Array<string>;
-  user?: JSONUser;
+  user?: User;
   requireColons?: boolean;
   managed?: boolean;
   animated?: boolean;

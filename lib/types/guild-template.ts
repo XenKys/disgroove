@@ -1,4 +1,4 @@
-import type { JSONGuild, JSONUser, RawGuild, RawUser } from ".";
+import type { Guild, User, RawGuild, RawUser } from ".";
 
 /** https://discord.com/developers/docs/resources/guild-template#guild-template-object-guild-template-structure */
 export interface RawGuildTemplate {
@@ -15,17 +15,17 @@ export interface RawGuildTemplate {
   is_dirty: boolean | null;
 }
 
-export interface JSONGuildTemplate {
+export interface GuildTemplate {
   code: string;
   name: string;
   description: string | null;
   usageCount: number;
   creatorId: string;
-  creator: JSONUser;
+  creator: User;
   createdAt: string;
   updatedAt: string;
   sourceGuildId: string;
-  serializedSourceGuild: JSONGuild;
+  serializedSourceGuild: Guild;
   isDirty: boolean | null;
 }
 

@@ -1,4 +1,4 @@
-import type { JSONUser, RawUser } from ".";
+import type { User, RawUser } from ".";
 import type { TeamMemberRoleTypes } from "../constants";
 
 /** https://discord.com/developers/docs/topics/teams#data-models-team-object */
@@ -18,17 +18,17 @@ export interface RawTeamMember {
   role: TeamMemberRoleTypes;
 }
 
-export interface JSONTeam {
+export interface Team {
   icon: string | null;
   id: string;
-  members: Array<JSONTeamMember>;
+  members: Array<TeamMember>;
   name: string;
   ownerUserId: string;
 }
 
-export interface JSONTeamMember {
+export interface TeamMember {
   membershipState: number;
   teamId: string;
-  user: JSONUser;
+  user: User;
   role: TeamMemberRoleTypes;
 }

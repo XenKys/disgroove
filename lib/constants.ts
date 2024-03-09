@@ -848,7 +848,7 @@ export enum HTTPResponseCodes {
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes */
-export enum JSONErrorCodes {
+export enum JsonErrorCodes {
   GeneralError,
   UnknownAccount = 10001,
   UnknownApplication,
@@ -868,7 +868,7 @@ export enum JSONErrorCodes {
   UnknownWebhookService,
   UnknownSession = 10020,
   UnknownBan = 10026,
-  UnknownSKU,
+  UnknownSku,
   UnknownStoreListing,
   UnknownEntitlement,
   UnknownBuild,
@@ -992,7 +992,7 @@ export enum JSONErrorCodes {
   InvalidFileUploaded,
   CannotSelfRedeemThisGift = 50054,
   InvalidGuild,
-  InvalidSKU = 50057,
+  InvalidSku = 50057,
   InvalidRequestOrigin = 50067,
   InvalidMessageType,
   PaymentSourceRequiredToRedeemGift = 50070,
@@ -1008,7 +1008,7 @@ export enum JSONErrorCodes {
   ServerNotAvailableInYourLocation = 50095,
   ServerNeedsMonetizationEnabledToPerformThisAction = 50097,
   ServerNeedsMoreBoostsToPerformThisAction = 50101,
-  RequestBodyContainsInvalidJSON = 50109,
+  RequestBodyContainsInvalidJson = 50109,
   OwnerCannotBePendingMember = 50131,
   OwnershipCannotBeMovedToABotUser,
   FailedToResizeAssetBelowTheMinimumSize = 50138,
@@ -1034,7 +1034,7 @@ export enum JSONErrorCodes {
   ThreadLocked,
   MaximumActiveThreads,
   MaximumActiveAnnouncementThreads,
-  InvalidJSONForUploadedLottieFile = 170001,
+  InvalidJsonForUploadedLottieFile = 170001,
   UploadedLottiesCannotContainRasterizedImages,
   StickerMaximumFramerateExceeded,
   StickerFrameCountExceedsMaximumOf1000Frames,
@@ -1155,13 +1155,13 @@ export enum MembershipState {
 }
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-types */
-export enum SKUTypes {
+export enum SkuTypes {
   Subscription = 5,
   SubscriptionGroup,
 }
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags */
-export enum SKUFlags {
+export enum SkuFlags {
   Available = 1 << 2,
   GuildSubscription = 1 << 7,
   UserSubscription = 1 << 8,

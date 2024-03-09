@@ -11,7 +11,7 @@ export interface RawStageInstance {
   guild_scheduled_event_id: string | null;
 }
 
-export interface JSONStageInstance {
+export interface StageInstance {
   id: string;
   guildId: string;
   channelId: string;

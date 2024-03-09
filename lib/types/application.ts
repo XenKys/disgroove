@@ -1,11 +1,4 @@
-import type {
-  RawUser,
-  RawTeam,
-  JSONTeam,
-  JSONUser,
-  RawGuild,
-  JSONGuild,
-} from ".";
+import type { RawUser, RawTeam, Team, User, RawGuild, Guild } from ".";
 import type { ApplicationFlags, OAuth2Scopes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
@@ -43,7 +36,7 @@ export interface RawInstallParams {
   permissions: string;
 }
 
-export interface JSONApplication {
+export interface Application {
   id: string;
   name: string;
   icon: string | null;
@@ -51,39 +44,39 @@ export interface JSONApplication {
   rpcOrigins?: Array<string>;
   botPublic: boolean;
   botRequireCodeGrant: boolean;
-  termsOfServiceURL?: string;
-  privacyPolicyURL?: string;
-  owner?: JSONUser;
+  termsOfServiceUrl?: string;
+  privacyPolicyUrl?: string;
+  owner?: User;
   verifyKey: string;
-  team: JSONTeam | null;
+  team: Team | null;
   guildId?: string;
-  guild?: JSONGuild;
-  primarySKUId?: string;
+  guild?: Guild;
+  primarySkuId?: string;
   slug?: string;
   coverImage?: string;
   flags?: ApplicationFlags;
   approximateGuildCount?: number;
   redirectURIs?: Array<string>;
-  interactionsEndpointURL?: string;
-  roleConnectionsVerificationURL?: string;
+  interactionsEndpointUrl?: string;
+  roleConnectionsVerificationUrl?: string;
   tags?: Array<string>;
-  installParams?: JSONInstallParams;
-  customInstallURL?: string;
+  installParams?: InstallParams;
+  customInstallUrl?: string;
 }
 
-export interface JSONInstallParams {
+export interface InstallParams {
   scopes: Array<OAuth2Scopes>;
   permissions: string;
 }
 
 export interface EditCurrentApplicationParams {
-  customInstallURL?: string;
+  customInstallUrl?: string;
   description?: string;
-  roleConnectionsVerificationURL?: string;
-  installParams?: JSONInstallParams;
+  roleConnectionsVerificationUrl?: string;
+  installParams?: InstallParams;
   flags?: ApplicationFlags;
   icon?: string;
   coverImage?: string;
-  interactionsEndpointURL?: string;
+  interactionsEndpointUrl?: string;
   tags?: Array<string>;
 }

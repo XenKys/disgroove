@@ -3,7 +3,7 @@ import type {
   GuildScheduledEventStatus,
   GuildScheduledEventEntityTypes,
 } from "../constants";
-import type { JSONGuildMember, JSONUser, RawGuildMember, RawUser } from ".";
+import type { GuildMember, User, RawGuildMember, RawUser } from ".";
 
 /** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
 export interface RawGuildScheduledEvent {
@@ -37,7 +37,7 @@ export interface RawGuildScheduledEventUser {
   member?: RawGuildMember;
 }
 
-export interface JSONGuildScheduledEvent {
+export interface GuildScheduledEvent {
   id: string;
   guildId: string;
   channelId: string | null;
@@ -50,25 +50,25 @@ export interface JSONGuildScheduledEvent {
   status: GuildScheduledEventStatus;
   entityType: GuildScheduledEventEntityTypes;
   entityId?: string;
-  entityMetadata: JSONGuildScheduledEventEntityMetadata | null;
-  creator?: JSONUser;
+  entityMetadata: GuildScheduledEventEntityMetadata | null;
+  creator?: User;
   userCount?: number;
   image?: string;
 }
 
-export interface JSONGuildScheduledEventEntityMetadata {
+export interface GuildScheduledEventEntityMetadata {
   location?: string;
 }
 
-export interface JSONGuildScheduledEventUser {
+export interface GuildScheduledEventUser {
   guildScheduledEventId: string;
-  user: JSONUser;
-  member?: JSONGuildMember;
+  user: User;
+  member?: GuildMember;
 }
 
 export interface CreateGuildScheduledEventParams {
   channelId?: string | null;
-  entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
+  entityMetadata?: GuildScheduledEventEntityMetadata | null;
   name: string;
   privacyLevel: GuildScheduledEventPrivacyLevel;
   scheduledStartTime: string;
@@ -80,7 +80,7 @@ export interface CreateGuildScheduledEventParams {
 
 export interface EditGuildScheduledEventParams {
   channelId?: string | null;
-  entityMetadata?: JSONGuildScheduledEventEntityMetadata | null;
+  entityMetadata?: GuildScheduledEventEntityMetadata | null;
   name?: string;
   privacyLevel?: GuildScheduledEventPrivacyLevel;
   scheduledStartTime?: string;

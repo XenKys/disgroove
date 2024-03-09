@@ -1,5 +1,5 @@
 import type { StickerTypes, StickerFormatTypes } from "../constants";
-import type { JSONUser, RawUser } from ".";
+import type { User, RawUser } from ".";
 import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
@@ -36,7 +36,7 @@ export interface RawStickerPack {
   banner_asset_id?: string;
 }
 
-export interface JSONSticker {
+export interface Sticker {
   id: string;
   packId?: string;
   name: string;
@@ -47,19 +47,19 @@ export interface JSONSticker {
   formatType: StickerFormatTypes;
   available?: boolean;
   guildId?: string;
-  user?: JSONUser;
+  user?: User;
   sortValue?: number;
 }
 
-export interface JSONStickerItem {
+export interface StickerItem {
   id: string;
   name: string;
   formatType: StickerFormatTypes;
 }
 
-export interface JSONStickerPack {
+export interface StickerPack {
   id: string;
-  stickers: Array<JSONSticker>;
+  stickers: Array<Sticker>;
   name: string;
   skuId: string;
   coverStickerId?: string;

@@ -6,16 +6,15 @@ import type {
   RawChannel,
   RawUser,
   RawWebhook,
-  JSONUser,
-  JSONApplicationCommand,
-  JSONAutoModerationRule,
-  JSONGuildScheduledEvent,
-  JSONIntegration,
-  JSONChannel,
-  JSONWebhook,
+  User,
+  ApplicationCommand,
+  AutoModerationRule,
+  GuildScheduledEvent,
+  Integration,
+  Channel,
+  Webhook,
 } from ".";
 import type { AuditLogEvents } from "../constants";
-import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
 export interface RawAuditLog {
@@ -63,28 +62,28 @@ export interface RawAuditLogChange {
   key: string;
 }
 
-export interface JSONAuditLog {
-  applicationCommands: Collection<string, JSONApplicationCommand>;
-  auditLogEntries: Collection<string, JSONAuditLogEntry>;
-  autoModerationRules: Collection<string, JSONAutoModerationRule>;
-  guildScheduledEvents: Collection<string, JSONGuildScheduledEvent>;
-  integrations: Collection<string, JSONIntegration>;
-  threads: Collection<string, JSONChannel>;
-  users: Collection<string, JSONUser>;
-  webhooks: Collection<string, JSONWebhook>;
+export interface AuditLog {
+  applicationCommands: Array<ApplicationCommand>;
+  auditLogEntries: Array<AuditLogEntry>;
+  autoModerationRules: Array<AutoModerationRule>;
+  guildScheduledEvents: Array<GuildScheduledEvent>;
+  integrations: Array<Integration>;
+  threads: Array<Channel>;
+  users: Array<User>;
+  webhooks: Array<Webhook>;
 }
 
-export interface JSONAuditLogEntry {
+export interface AuditLogEntry {
   targetId: string | null;
-  changes?: Array<JSONAuditLogChange>;
+  changes?: Array<AuditLogChange>;
   userId: string | null;
   id: string;
   actionType: AuditLogEvents;
-  options?: JSONOptionalAuditLogEntryInfo;
+  options?: OptionalAuditLogEntryInfo;
   reason?: string;
 }
 
-export interface JSONOptionalAuditLogEntryInfo {
+export interface OptionalAuditLogEntryInfo {
   applicationId: string;
   autoModerationRuleName: string;
   autoModerationRuleTriggerType: string;
@@ -99,7 +98,7 @@ export interface JSONOptionalAuditLogEntryInfo {
   integrationType: string;
 }
 
-export interface JSONAuditLogChange {
+export interface AuditLogChange {
   newValue?: any;
   oldValue?: any;
   key: string;

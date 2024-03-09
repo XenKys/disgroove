@@ -5,26 +5,25 @@ import type {
   RawMessage,
   RawUser,
   RawRole,
-  JSONAttachment,
-  JSONUser,
-  JSONGuildMember,
-  JSONMessage,
-  JSONRole,
-  JSONChannel,
-  JSONEntitlement,
+  Attachment,
+  User,
+  GuildMember,
+  Message,
+  Role,
+  Channel,
+  Entitlement,
   RawEntitlement,
   RawEmbed,
   RawAllowedMentions,
   RawActionRow,
   RawApplicationCommandOptionChoice,
-  JSONEmbed,
-  JSONAllowedMentions,
-  JSONActionRow,
-  JSONApplicationCommandOptionChoice,
+  Embed,
+  AllowedMentions,
+  ActionRow,
+  ApplicationCommandOptionChoice,
   RawTextInput,
-  JSONTextInput,
+  TextInput,
   ExecuteWebhookParams,
-  EditWebhookMessageParams,
 } from ".";
 import type {
   ApplicationCommandOptionType,
@@ -35,7 +34,6 @@ import type {
   MessageFlags,
 } from "../constants";
 import type { File } from "../rest";
-import { Collection } from "../utils";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {
@@ -136,97 +134,93 @@ export interface RawInteractionCallbackData {
   title?: string;
 }
 
-export interface JSONInteraction {
+export interface Interaction {
   id: string;
   applicationId: string;
   type: InteractionType;
-  data?: JSONApplicationCommandData &
-    JSONMessageComponentData &
-    JSONModalSubmitData;
+  data?: ApplicationCommandData & MessageComponentData & ModalSubmitData;
   guildId?: string;
-  channel?: JSONChannel;
+  channel?: Channel;
   channelId?: string;
-  member?: JSONGuildMember;
-  user?: JSONUser;
+  member?: GuildMember;
+  user?: User;
   token: string;
   version: number;
-  message?: JSONMessage;
+  message?: Message;
   appPermissions?: string;
   locale?: string;
   guildLocale?: string;
-  entitlements: Array<JSONEntitlement>;
+  entitlements: Array<Entitlement>;
 }
 
-export interface JSONApplicationCommandData {
+export interface ApplicationCommandData {
   id: string;
   name: string;
   type: ApplicationCommandTypes;
-  resolved?: JSONResolvedData;
-  options?: Array<JSONApplicationCommandInteractionDataOption>;
+  resolved?: ResolvedData;
+  options?: Array<ApplicationCommandInteractionDataOption>;
   guildId?: string;
   targetId?: string;
 }
 
-export interface JSONMessageComponentData {
+export interface MessageComponentData {
   customId: string;
   componentType: ComponentTypes;
   values?: Array<string>;
-  resolved?: JSONResolvedData;
+  resolved?: ResolvedData;
 }
 
-export interface JSONModalSubmitData {
+export interface ModalSubmitData {
   customId: string;
   components: Array<{
     type: ComponentTypes.ActionRow;
-    components: Array<JSONTextInput>;
+    components: Array<TextInput>;
   }>;
 }
 
-export interface JSONResolvedData {
-  users?: Collection<string, JSONUser>;
-  members?: Collection<string, JSONGuildMember>;
-  roles?: Collection<string, JSONRole>;
-  channels?: Collection<string, JSONChannel>;
-  messages?: Collection<string, JSONMessage>;
-  attachments?: Collection<string, JSONAttachment>;
+export interface ResolvedData {
+  users?: Array<User>;
+  members?: Array<GuildMember>;
+  roles?: Array<Role>;
+  channels?: Array<Channel>;
+  messages?: Array<Message>;
+  attachments?: Array<Attachment>;
 }
 
-export interface JSONApplicationCommandInteractionDataOption {
+export interface ApplicationCommandInteractionDataOption {
   name: string;
   type: ApplicationCommandOptionType;
   value?: string | number | boolean;
-  options?: Array<JSONApplicationCommandInteractionDataOption>;
+  options?: Array<ApplicationCommandInteractionDataOption>;
   focused?: boolean;
 }
 
-export interface JSONMessageInteraction {
+export interface MessageInteraction {
   id: string;
   type: InteractionType;
   name: string;
-  user: JSONUser;
-  member?: JSONGuildMember;
+  user: User;
+  member?: GuildMember;
 }
 
-export interface JSONInteractionResponse {
+export interface InteractionResponse {
   type: InteractionCallbackType;
-  data?: JSONInteractionCallbackData;
+  data?: InteractionCallbackData;
 }
 
-export interface JSONInteractionCallbackData {
+export interface InteractionCallbackData {
   tts?: boolean;
   content?: string;
-  embeds?: Array<JSONEmbed>;
-  allowedMentions?: JSONAllowedMentions;
+  embeds?: Array<Embed>;
+  allowedMentions?: AllowedMentions;
   flags?: MessageFlags;
-  components?: Array<JSONActionRow>;
-  attachments?: Array<JSONAttachment>;
+  components?: Array<ActionRow>;
+  attachments?: Array<Attachment>;
   files?: Array<File>;
-  choices?: Array<JSONApplicationCommandOptionChoice>;
+  choices?: Array<ApplicationCommandOptionChoice>;
   customId?: string;
   title?: string;
 }
 
-export type CreateInteractionFollowupMessageParams = Omit<
-  ExecuteWebhookParams,
-  "threadId" | "avatarUrl" | "username"
->;
+export interface CreateInteractionFollowupMessageParams
+  extends Omit<ExecuteWebhookParams, "threadId" | "avatarUrl" | "username"> {}

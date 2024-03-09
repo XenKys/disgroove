@@ -43,21 +43,21 @@ export interface RawActionMetadata {
   custom_message?: string;
 }
 
-export interface JSONAutoModerationRule {
+export interface AutoModerationRule {
   id: string;
   guildId: string;
   name: string;
   creatorId: string;
   eventType: EventTypes;
   triggerType: TriggerTypes;
-  triggerMetadata: JSONTriggerMetadata;
-  actions: Array<JSONAutoModerationAction>;
+  triggerMetadata: TriggerMetadata;
+  actions: Array<AutoModerationAction>;
   enabled: boolean;
   exemptRoles: Array<string>;
   exemptChannels: Array<string>;
 }
 
-export interface JSONTriggerMetadata {
+export interface TriggerMetadata {
   keywordFilter: Array<string>;
   regexPatterns: Array<string>;
   presets: KeywordPresetTypes;
@@ -66,12 +66,12 @@ export interface JSONTriggerMetadata {
   mentionRaidProtection: boolean;
 }
 
-export interface JSONAutoModerationAction {
+export interface AutoModerationAction {
   type: ActionTypes;
-  metadata: JSONActionMetadata;
+  metadata: ActionMetadata;
 }
 
-export interface JSONActionMetadata {
+export interface ActionMetadata {
   channelId: string;
   durationSeconds: number;
   customMessage?: string;
@@ -81,8 +81,8 @@ export interface CreateAutoModerationRuleParams {
   name: string;
   eventType: EventTypes;
   triggerType: TriggerTypes;
-  triggerMetadata?: JSONTriggerMetadata;
-  actions: Array<JSONAutoModerationAction>;
+  triggerMetadata?: TriggerMetadata;
+  actions: Array<AutoModerationAction>;
   enabled?: boolean;
   exemptRoles?: Array<string>;
   exemptChannels?: Array<string>;
@@ -92,8 +92,8 @@ export interface EditAutoModerationRuleParams {
   name?: string;
   eventType?: EventTypes;
   triggerType?: TriggerTypes;
-  triggerMetadata?: JSONTriggerMetadata;
-  actions?: Array<JSONAutoModerationAction>;
+  triggerMetadata?: TriggerMetadata;
+  actions?: Array<AutoModerationAction>;
   enabled?: boolean;
   exemptRoles?: Array<string>;
   exemptChannels?: Array<string>;

@@ -1,4 +1,4 @@
-import type { JSONGuildMember, RawGuildMember } from ".";
+import type { GuildMember, RawGuildMember } from ".";
 
 /** https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure */
 export interface RawVoiceState {
@@ -26,11 +26,11 @@ export interface RawVoiceRegion {
   custom: boolean;
 }
 
-export interface JSONVoiceState {
+export interface VoiceState {
   guildId?: string;
   channelId: string | null;
   userId: string;
-  member?: JSONGuildMember;
+  member?: GuildMember;
   sessionId: string;
   deaf: boolean;
   mute: boolean;
@@ -42,7 +42,7 @@ export interface JSONVoiceState {
   requestToSpeakTimestamp: string | null;
 }
 
-export interface JSONVoiceRegion {
+export interface VoiceRegion {
   id: string;
   name: string;
   optimal: boolean;

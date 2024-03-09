@@ -11,7 +11,7 @@ export interface RawApplicationRoleConnectionMetadata {
   description_localizations?: LocaleMap | null;
 }
 
-export interface JSONApplicationRoleConnectionMetadata {
+export interface ApplicationRoleConnectionMetadata {
   type: ApplicationRoleConnectionMetadataType;
   key: string;
   name: string;

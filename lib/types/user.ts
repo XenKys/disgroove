@@ -6,8 +6,8 @@ import type {
   ApplicationRoleConnectionMetadataType,
 } from "../constants";
 import type {
-  JSONApplicationRoleConnectionMetadata,
-  JSONIntegration,
+  ApplicationRoleConnectionMetadata,
+  Integration,
   LocaleMap,
   RawApplicationRoleConnectionMetadata,
   RawIntegration,
@@ -55,7 +55,7 @@ export interface RawApplicationRoleConnection {
   metadata: RawApplicationRoleConnectionMetadata;
 }
 
-export interface JSONUser {
+export interface User {
   id: string;
   username: string;
   discriminator: string;
@@ -75,12 +75,12 @@ export interface JSONUser {
   avatarDecoration?: string | null;
 }
 
-export interface JSONConnection {
+export interface Connection {
   id: string;
   name: string;
   type: Services;
   revoked?: boolean;
-  integrations?: Array<JSONIntegration>;
+  integrations?: Array<Integration>;
   verified: boolean;
   friendSync: boolean;
   showActivity: boolean;
@@ -88,10 +88,10 @@ export interface JSONConnection {
   visibility: VisibilityTypes;
 }
 
-export interface JSONApplicationRoleConnection {
+export interface ApplicationRoleConnection {
   platformName: string | null;
   platformUsername: string | null;
-  metadata: JSONApplicationRoleConnectionMetadata;
+  metadata: ApplicationRoleConnectionMetadata;
 }
 
 export interface EditCurrentUserParams {

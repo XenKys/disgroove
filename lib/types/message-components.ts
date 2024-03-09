@@ -1,4 +1,4 @@
-import type { JSONEmoji, RawEmoji } from ".";
+import type { Emoji, RawEmoji } from ".";
 import type {
   ButtonStyles,
   ChannelTypes,
@@ -69,17 +69,17 @@ export interface RawActionRow {
   components: Array<RawButton | RawSelectMenu | RawTextInput>;
 }
 
-export interface JSONButton {
+export interface Button {
   type: ComponentTypes.Button;
   style: ButtonStyles;
   label?: string;
-  emoji?: Pick<JSONEmoji, "name" | "id" | "animated">;
+  emoji?: Pick<Emoji, "name" | "id" | "animated">;
   customId?: string;
   url?: string;
   disabled?: boolean;
 }
 
-export interface JSONSelectMenu {
+export interface SelectMenu {
   type:
     | ComponentTypes.ChannelSelect
     | ComponentTypes.MentionableSelect
@@ -87,29 +87,29 @@ export interface JSONSelectMenu {
     | ComponentTypes.StringSelect
     | ComponentTypes.UserSelect;
   customId: string;
-  options?: Array<JSONSelectOption>;
+  options?: Array<SelectOption>;
   channelTypes?: Array<ChannelTypes>;
   placeholder?: string;
-  defaultValues?: Array<JSONDefaultValue>;
+  defaultValues?: Array<DefaultValue>;
   minValues?: number;
   maxValues?: number;
   disabled?: boolean;
 }
 
-export interface JSONSelectOption {
+export interface SelectOption {
   label: string;
   value: string;
   description?: string;
-  emoji?: Pick<JSONEmoji, "name" | "id" | "animated">;
+  emoji?: Pick<Emoji, "name" | "id" | "animated">;
   default?: boolean;
 }
 
-export interface JSONDefaultValue {
+export interface DefaultValue {
   id: string;
   type: string;
 }
 
-export interface JSONTextInput {
+export interface TextInput {
   type: ComponentTypes.TextInput;
   customId: string;
   style: TextInputStyles;
@@ -121,7 +121,7 @@ export interface JSONTextInput {
   placeholder?: string;
 }
 
-export interface JSONActionRow {
+export interface ActionRow {
   type: ComponentTypes.ActionRow;
-  components: Array<JSONButton | JSONSelectMenu | JSONTextInput>;
+  components: Array<Button | SelectMenu | TextInput>;
 }
