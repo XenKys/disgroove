@@ -119,16 +119,16 @@ export class RequestManager {
               5 * 1000
             );
           } else {
-            const responseJson = await response.json();
+            const responseJSON = await response.json();
 
             reject(
-              responseJson &&
-                typeof responseJson === "object" &&
-                "code" in responseJson &&
-                "message" in responseJson &&
-                responseJson.code !== 0
+              responseJSON &&
+                typeof responseJSON === "object" &&
+                "code" in responseJSON &&
+                "message" in responseJSON &&
+                responseJSON.code !== 0
                 ? new RestError(
-                    `[${responseJson.code}] ${responseJson.message}`
+                    `[${responseJSON.code}] ${responseJSON.message}`
                   )
                 : new HTTPError(`[${response.status}] ${response.statusText}`)
             );

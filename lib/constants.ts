@@ -848,7 +848,7 @@ export enum HTTPResponseCodes {
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes */
-export enum JsonErrorCodes {
+export enum JSONErrorCodes {
   GeneralError,
   UnknownAccount = 10001,
   UnknownApplication,
@@ -1008,7 +1008,7 @@ export enum JsonErrorCodes {
   ServerNotAvailableInYourLocation = 50095,
   ServerNeedsMonetizationEnabledToPerformThisAction = 50097,
   ServerNeedsMoreBoostsToPerformThisAction = 50101,
-  RequestBodyContainsInvalidJson = 50109,
+  RequestBodyContainsInvalidJSON = 50109,
   OwnerCannotBePendingMember = 50131,
   OwnershipCannotBeMovedToABotUser,
   FailedToResizeAssetBelowTheMinimumSize = 50138,
@@ -1034,7 +1034,7 @@ export enum JsonErrorCodes {
   ThreadLocked,
   MaximumActiveThreads,
   MaximumActiveAnnouncementThreads,
-  InvalidJsonForUploadedLottieFile = 170001,
+  InvalidJSONForUploadedLottieFile = 170001,
   UploadedLottiesCannotContainRasterizedImages,
   StickerMaximumFramerateExceeded,
   StickerFrameCountExceedsMaximumOf1000Frames,

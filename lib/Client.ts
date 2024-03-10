@@ -3043,7 +3043,7 @@ export class Client extends EventEmitter {
     return this.rest
       .request<RawGuildWidget>(
         RestMethods.Get,
-        Endpoints.guildWidgetJson(guildId)
+        Endpoints.guildWidgetJSON(guildId)
       )
       .then((response) => this.util.toCamelCase<GuildWidget>(response));
   }

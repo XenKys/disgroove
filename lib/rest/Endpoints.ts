@@ -84,7 +84,7 @@ export const guildWelcomeScreen = (guildId: string) =>
 export const guildWidgetImage = (guildId: string) =>
   `guilds/${guildId}/widget.png` as const;
 
-export const guildWidgetJson = (guildId: string) =>
+export const guildWidgetJSON = (guildId: string) =>
   `guilds/${guildId}/widget.json` as const;
 export const guildWidgetSettings = (guildId: string) =>
   `guilds/${guildId}/widget` as const;
