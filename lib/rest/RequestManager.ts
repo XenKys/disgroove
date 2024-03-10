@@ -1,8 +1,8 @@
 import { HTTPResponseCodes } from "../constants";
-import { HTTPError, RestError } from "../utils";
+import { HTTPError, RESTError } from "../utils";
 import * as pkg from "../../package.json";
 
-export enum RestMethods {
+export enum RESTMethods {
   Get = "GET",
   Post = "POST",
   Delete = "DELETE",
@@ -35,7 +35,7 @@ export class RequestManager {
   }
 
   request<T = unknown>(
-    method: RestMethods,
+    method: RESTMethods,
     endpoint: string,
     data?: RequestData
   ): Promise<T> {
@@ -56,7 +56,7 @@ export class RequestManager {
 
       if (data?.authorization === false) delete headers["Authorization"];
 
-      if (method !== RestMethods.Get) {
+      if (method !== RESTMethods.Get) {
         if (data?.form || (data?.files && data?.files?.length !== 0)) {
           const formData = data.form ?? new FormData();
 
@@ -127,7 +127,7 @@ export class RequestManager {
                 "code" in responseJSON &&
                 "message" in responseJSON &&
                 responseJSON.code !== 0
-                ? new RestError(
+                ? new RESTError(
                     `[${responseJSON.code}] ${responseJSON.message}`
                   )
                 : new HTTPError(`[${response.status}] ${response.statusText}`)

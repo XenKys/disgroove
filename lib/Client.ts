@@ -9,7 +9,7 @@ import {
   type MFALevel,
 } from "./constants";
 import { Util } from "./utils";
-import { Endpoints, RequestManager, RestMethods } from "./rest";
+import { Endpoints, RequestManager, RESTMethods } from "./rest";
 import type {
   Activity,
   AuditLogEntry,
@@ -224,7 +224,7 @@ export class Client extends EventEmitter {
     }
   ): void {
     this.rest.request(
-      RestMethods.Put,
+      RESTMethods.Put,
       Endpoints.channelRecipient(channelId, userId),
       {
         json: {
@@ -243,7 +243,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildMember | null> {
     return this.rest
       .request<RawGuildMember>(
-        RestMethods.Put,
+        RESTMethods.Put,
         Endpoints.guildMember(guildId, userId),
         {
           json: {
@@ -268,7 +268,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Put,
+      RESTMethods.Put,
       Endpoints.guildMemberRole(guildId, userId, roleId),
       {
         reason,
@@ -279,7 +279,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#add-thread-member */
   addThreadMember(channelId: string, userId: string): void {
     this.rest.request(
-      RestMethods.Put,
+      RESTMethods.Put,
       Endpoints.threadMembers(channelId, userId)
     );
   }
@@ -295,7 +295,7 @@ export class Client extends EventEmitter {
     return this.rest
       .request<{
         pruned: number;
-      }>(RestMethods.Post, Endpoints.guildPrune(guildId), {
+      }>(RESTMethods.Post, Endpoints.guildPrune(guildId), {
         json: {
           days: options.days,
           compute_prune_count: options.computePruneCount,
@@ -320,7 +320,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Post,
+      RESTMethods.Post,
       Endpoints.channelBulkDelete(channelId),
       {
         json: {
@@ -338,7 +338,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
-        RestMethods.Put,
+        RESTMethods.Put,
         Endpoints.applicationCommands(applicationId),
         {
           json: commands.map((command) => this.util.toSnakeCase(command)),
@@ -359,7 +359,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
-        RestMethods.Put,
+        RESTMethods.Put,
         Endpoints.applicationGuildCommands(applicationId, guildId),
         {
           json: commands.map((command) => this.util.toSnakeCase(command)),
@@ -393,7 +393,7 @@ export class Client extends EventEmitter {
   ): Promise<AutoModerationRule> {
     return this.rest
       .request<RawAutoModerationRule>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.guildAutoModerationRules(guildId),
         {
           json: {
@@ -421,7 +421,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Post, Endpoints.guildChannels(guildId), {
+      .request<RawChannel>(RESTMethods.Post, Endpoints.guildChannels(guildId), {
         json: {
           name: options.name,
           type: options.type,
@@ -463,7 +463,7 @@ export class Client extends EventEmitter {
   ): Promise<Invite> {
     return this.rest
       .request<RawInvite>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.channelInvites(channelId),
         {
           json: {
@@ -492,7 +492,7 @@ export class Client extends EventEmitter {
   ): Promise<Webhook> {
     return this.rest
       .request<RawWebhook>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.channelWebhooks(channelId),
         {
           json: {
@@ -508,7 +508,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/user#create-dm */
   createDM(options: CreateDMParams): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Post, Endpoints.userChannels(), {
+      .request<RawChannel>(RESTMethods.Post, Endpoints.userChannels(), {
         json: {
           recipient_id: options.recipientId,
         },
@@ -523,7 +523,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.applicationCommands(applicationId),
         {
           json: {
@@ -551,7 +551,7 @@ export class Client extends EventEmitter {
     nicks: Array<string>;
   }): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Post, Endpoints.userChannels(), {
+      .request<RawChannel>(RESTMethods.Post, Endpoints.userChannels(), {
         json: {
           access_tokens: options.accessTokens,
           nicks: options.nicks,
@@ -563,7 +563,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#create-guild */
   createGuild(options: CreateGuildParams): Promise<Guild> {
     return this.rest
-      .request<RawGuild>(RestMethods.Post, Endpoints.guilds(), {
+      .request<RawGuild>(RESTMethods.Post, Endpoints.guilds(), {
         json: {
           name: options.name,
           region: options.region,
@@ -592,7 +592,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.applicationGuildCommands(applicationId, guildId),
         {
           json: {
@@ -620,7 +620,7 @@ export class Client extends EventEmitter {
     options?: CreateGuildBanParams,
     reason?: string
   ): void {
-    this.rest.request(RestMethods.Put, Endpoints.guildBan(guildId, userId), {
+    this.rest.request(RESTMethods.Put, Endpoints.guildBan(guildId, userId), {
       json: {
         delete_message_days: options?.deleteMessageDays,
         delete_message_seconds: options?.deleteMessageSeconds,
@@ -636,7 +636,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Emoji> {
     return this.rest
-      .request<RawEmoji>(RestMethods.Post, Endpoints.guildEmojis(guildId), {
+      .request<RawEmoji>(RESTMethods.Post, Endpoints.guildEmojis(guildId), {
         json: {
           name: options.name,
           image: options.image,
@@ -653,7 +653,7 @@ export class Client extends EventEmitter {
     options: CreateGuildFromGuildTemplateParams
   ): Promise<Guild> {
     return this.rest
-      .request<RawGuild>(RestMethods.Post, Endpoints.template(code), {
+      .request<RawGuild>(RESTMethods.Post, Endpoints.template(code), {
         json: {
           name: options.name,
           icon: options.icon,
@@ -669,7 +669,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Role> {
     return this.rest
-      .request<RawRole>(RestMethods.Post, Endpoints.guildRoles(guildId), {
+      .request<RawRole>(RESTMethods.Post, Endpoints.guildRoles(guildId), {
         json: {
           name: options.name,
           permissions: options.permissions,
@@ -692,7 +692,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildScheduledEvent> {
     return this.rest
       .request<RawGuildScheduledEvent>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.guildScheduledEvents(guildId),
         {
           json: {
@@ -726,7 +726,7 @@ export class Client extends EventEmitter {
     formData.set("file", new Blob([options.file.contents]), options.file.name);
 
     return this.rest
-      .request<RawSticker>(RestMethods.Post, Endpoints.guildStickers(guildId), {
+      .request<RawSticker>(RESTMethods.Post, Endpoints.guildStickers(guildId), {
         form: formData,
         reason,
       })
@@ -740,7 +740,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.guildTemplates(guildId),
         {
           json: {
@@ -760,7 +760,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.webhook(applicationId, interactionToken),
         {
           json: {
@@ -813,7 +813,7 @@ export class Client extends EventEmitter {
       case InteractionCallbackType.UpdateMessage:
         {
           this.rest.request(
-            RestMethods.Post,
+            RESTMethods.Post,
             Endpoints.interactionCallback(interactionId, interactionToken),
             {
               json: {
@@ -851,7 +851,7 @@ export class Client extends EventEmitter {
       case InteractionCallbackType.DeferredUpdateMessage:
         {
           this.rest.request(
-            RestMethods.Post,
+            RESTMethods.Post,
             Endpoints.interactionCallback(interactionId, interactionToken),
             {
               json: {
@@ -867,7 +867,7 @@ export class Client extends EventEmitter {
       case InteractionCallbackType.ApplicationCommandAutocompleteResult:
         {
           this.rest.request(
-            RestMethods.Post,
+            RESTMethods.Post,
             Endpoints.interactionCallback(interactionId, interactionToken),
             {
               json: {
@@ -887,7 +887,7 @@ export class Client extends EventEmitter {
       case InteractionCallbackType.Modal:
         {
           this.rest.request(
-            RestMethods.Post,
+            RESTMethods.Post,
             Endpoints.interactionCallback(interactionId, interactionToken),
             {
               json: {
@@ -910,7 +910,7 @@ export class Client extends EventEmitter {
       case InteractionCallbackType.PremiumRequired:
         {
           this.rest.request(
-            RestMethods.Post,
+            RESTMethods.Post,
             Endpoints.interactionCallback(interactionId, interactionToken),
             {
               json: {
@@ -931,7 +931,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.channelMessages(channelId),
         {
           json: {
@@ -975,7 +975,7 @@ export class Client extends EventEmitter {
     emoji: string
   ): void {
     this.rest.request(
-      RestMethods.Put,
+      RESTMethods.Put,
       Endpoints.channelMessageReaction(channelId, messageId, emoji)
     );
   }
@@ -986,7 +986,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<StageInstance> {
     return this.rest
-      .request<RawStageInstance>(RestMethods.Post, Endpoints.stageInstances(), {
+      .request<RawStageInstance>(RESTMethods.Post, Endpoints.stageInstances(), {
         json: {
           channel_id: options.channelId,
           topic: options.topic,
@@ -1007,7 +1007,7 @@ export class Client extends EventEmitter {
     return this.rest
       .request<
         Omit<RawEntitlement, "starts_at" | "ends_at" | "subscription_id">
-      >(RestMethods.Post, Endpoints.applicationEntitlements(applicationId), {
+      >(RESTMethods.Post, Endpoints.applicationEntitlements(applicationId), {
         json: {
           sku_id: options.skuId,
           owner_id: options.ownerId,
@@ -1028,7 +1028,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Post, Endpoints.threads(channelId), {
+      .request<RawChannel>(RESTMethods.Post, Endpoints.threads(channelId), {
         json: {
           name: options.name,
           auto_archive_duration: options.autoArchiveDuration,
@@ -1051,7 +1051,7 @@ export class Client extends EventEmitter {
   ): Promise<Channel> {
     return this.rest
       .request<RawChannel>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.threads(channelId, messageId),
         {
           json: {
@@ -1072,7 +1072,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Post, Endpoints.threads(channelId), {
+      .request<RawChannel>(RESTMethods.Post, Endpoints.threads(channelId), {
         json: {
           name: options.name,
           auto_archive_duration: options.autoArchiveDuration,
@@ -1089,7 +1089,7 @@ export class Client extends EventEmitter {
   crosspostMessage(channelId: string, messageId: string): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.channelMessage(channelId, messageId)
       )
       .then((response) => this.util.toCamelCase<Message>(response));
@@ -1102,7 +1102,7 @@ export class Client extends EventEmitter {
     emoji?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.channelMessageAllReactions(channelId, messageId, emoji)
     );
   }
@@ -1114,7 +1114,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildAutoModerationRule(guildId, autoModerationRuleId),
       {
         reason,
@@ -1125,7 +1125,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
   deleteChannel(channelId: string, reason?: string): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Delete, Endpoints.channel(channelId), {
+      .request<RawChannel>(RESTMethods.Delete, Endpoints.channel(channelId), {
         reason,
       })
       .then((response) => this.util.toCamelCase<Channel>(response));
@@ -1138,7 +1138,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.channelPermission(channelId, overwriteId),
       {
         reason,
@@ -1152,14 +1152,14 @@ export class Client extends EventEmitter {
     commandId: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.applicationCommand(applicationId, commandId)
     );
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild */
   deleteGuild(guildId: string): void {
-    this.rest.request(RestMethods.Delete, Endpoints.guild(guildId));
+    this.rest.request(RESTMethods.Delete, Endpoints.guild(guildId));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
@@ -1169,7 +1169,7 @@ export class Client extends EventEmitter {
     commandId: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.applicationGuildCommand(applicationId, guildId, commandId)
     );
   }
@@ -1177,7 +1177,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
   deleteGuildEmoji(guildId: string, emojiId: string, reason?: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildEmoji(guildId, emojiId),
       {
         reason,
@@ -1192,7 +1192,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildIntegration(guildId, integrationId),
       {
         reason,
@@ -1203,7 +1203,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
   deleteGuildRole(guildId: string, roleId: string, reason?: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildRole(guildId, roleId),
       {
         reason,
@@ -1217,7 +1217,7 @@ export class Client extends EventEmitter {
     guildScheduledEventId: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildScheduledEvent(guildId, guildScheduledEventId)
     );
   }
@@ -1229,7 +1229,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildSticker(guildId, stickerId),
       {
         reason,
@@ -1241,7 +1241,7 @@ export class Client extends EventEmitter {
   deleteGuildTemplate(guildId: string, code: string): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
-        RestMethods.Delete,
+        RESTMethods.Delete,
         Endpoints.guildTemplate(guildId, code)
       )
       .then((response) => this.util.toCamelCase<GuildTemplate>(response));
@@ -1250,7 +1250,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/invite#delete-invite */
   deleteInvite(code: string, reason?: string): Promise<Invite> {
     return this.rest
-      .request<RawInvite>(RestMethods.Delete, Endpoints.invite(code), {
+      .request<RawInvite>(RESTMethods.Delete, Endpoints.invite(code), {
         reason,
       })
       .then((response) => this.util.toCamelCase<Invite>(response));
@@ -1263,7 +1263,7 @@ export class Client extends EventEmitter {
     messageId: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.webhookMessage(applicationId, interactionToken, messageId)
     );
   }
@@ -1274,7 +1274,7 @@ export class Client extends EventEmitter {
     interactionToken: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.webhookMessage(applicationId, interactionToken)
     );
   }
@@ -1282,7 +1282,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#delete-message */
   deleteMessage(channelId: string, messageId: string, reason?: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.channelMessage(channelId, messageId),
       {
         reason,
@@ -1298,14 +1298,14 @@ export class Client extends EventEmitter {
     userId?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.channelMessageReaction(channelId, messageId, emoji, userId)
     );
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
   deleteStageInstance(channelId: string, reason?: string): void {
-    this.rest.request(RestMethods.Delete, Endpoints.stageInstance(channelId), {
+    this.rest.request(RESTMethods.Delete, Endpoints.stageInstance(channelId), {
       reason,
     });
   }
@@ -1313,14 +1313,14 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/monetization/entitlements#delete-test-entitlement */
   deleteTestEntitlement(applicationId: string, entitlementId: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.applicationEntitlement(applicationId, entitlementId)
     );
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
   deleteWebhook(webhookId: string, reason?: string): void {
-    this.rest.request(RestMethods.Delete, Endpoints.webhook(webhookId), {
+    this.rest.request(RESTMethods.Delete, Endpoints.webhook(webhookId), {
       reason,
     });
   }
@@ -1335,7 +1335,7 @@ export class Client extends EventEmitter {
     }
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.webhookMessage(webhookId, webhookToken, messageId),
       {
         query: {
@@ -1352,7 +1352,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.webhook(webhookId, webhookToken),
       {
         reason,
@@ -1374,7 +1374,7 @@ export class Client extends EventEmitter {
   ): Promise<AutoModerationRule> {
     return this.rest
       .request<RawAutoModerationRule>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildAutoModerationRule(guildId, autoModerationRuleId),
         {
           json: {
@@ -1406,7 +1406,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildApplicationCommandPermissions> {
     return this.rest
       .request<RawGuildApplicationCommandPermissions>(
-        RestMethods.Put,
+        RESTMethods.Put,
         Endpoints.applicationCommandPermissions(
           applicationId,
           guildId,
@@ -1434,7 +1434,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Patch, Endpoints.channel(channelId), {
+      .request<RawChannel>(RESTMethods.Patch, Endpoints.channel(channelId), {
         json: {
           name: options.name,
           type: options.type,
@@ -1478,7 +1478,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Put,
+      RESTMethods.Put,
       Endpoints.channelPermission(channelId, overwriteId),
       {
         json: options,
@@ -1492,7 +1492,7 @@ export class Client extends EventEmitter {
     guildId: string,
     options: EditGuildChannelPositionsParams
   ): void {
-    this.rest.request(RestMethods.Patch, Endpoints.guildChannels(guildId), {
+    this.rest.request(RESTMethods.Patch, Endpoints.guildChannels(guildId), {
       json: options.map((data) => ({
         id: data.id,
         position: data.position,
@@ -1505,7 +1505,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/user#modify-current-user */
   editCurrentUser(options: EditCurrentUserParams): Promise<User> {
     return this.rest
-      .request<RawUser>(RestMethods.Patch, Endpoints.user(), {
+      .request<RawUser>(RESTMethods.Patch, Endpoints.user(), {
         json: {
           username: options.username,
           avatar: options.avatar,
@@ -1522,7 +1522,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildMember> {
     return this.rest
       .request<RawGuildMember>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildMember(guildId),
         {
           json: {
@@ -1539,7 +1539,7 @@ export class Client extends EventEmitter {
     guildId: string,
     options: EditCurrentUserVoiceStateParams
   ): void {
-    this.rest.request(RestMethods.Patch, Endpoints.guildVoiceState(guildId), {
+    this.rest.request(RESTMethods.Patch, Endpoints.guildVoiceState(guildId), {
       json: {
         channel_id: options.channelId,
         suppress: options.suppress,
@@ -1554,7 +1554,7 @@ export class Client extends EventEmitter {
   ): Promise<Application> {
     return this.rest
       .request<RawApplication>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.applicationCurrentUser(),
         {
           json: {
@@ -1582,7 +1582,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.applicationCommand(applicationId, commandId),
         {
           json: {
@@ -1610,7 +1610,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Guild> {
     return this.rest
-      .request<RawGuild>(RestMethods.Patch, Endpoints.guild(guildId), {
+      .request<RawGuild>(RESTMethods.Patch, Endpoints.guild(guildId), {
         json: {
           name: options.name,
           region: options.region,
@@ -1648,7 +1648,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.applicationGuildCommand(applicationId, guildId, commandId),
         {
           json: {
@@ -1677,7 +1677,7 @@ export class Client extends EventEmitter {
   ): Promise<Emoji> {
     return this.rest
       .request<RawEmoji>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildEmoji(guildId, emojiId),
         {
           json: {
@@ -1699,7 +1699,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildMember> {
     return this.rest
       .request<RawGuildMember>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildMember(guildId, userId),
         {
           json: {
@@ -1724,7 +1724,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<MFALevel> {
     return this.rest.request<MFALevel>(
-      RestMethods.Post,
+      RESTMethods.Post,
       Endpoints.guildMFA(guildId),
       {
         json: {
@@ -1741,7 +1741,7 @@ export class Client extends EventEmitter {
     options: EditGuildOnboardingParams,
     reason?: string
   ): void {
-    this.rest.request(RestMethods.Patch, Endpoints.guildOnboarding(guildId), {
+    this.rest.request(RESTMethods.Patch, Endpoints.guildOnboarding(guildId), {
       json: {
         prompts: options.prompts.map((prompt) =>
           this.util.toSnakeCase<RawOnboardingPrompt>(prompt)
@@ -1768,7 +1768,7 @@ export class Client extends EventEmitter {
   ): Promise<Role> {
     return this.rest
       .request<RawRole>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildRole(guildId, roleId),
         {
           json: {
@@ -1793,7 +1793,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<Role>> {
     return this.rest
       .request<Array<RawRole>>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildRoles(guildId),
         {
           json: options.map((role) => this.util.toSnakeCase(role)),
@@ -1813,7 +1813,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildScheduledEvent> {
     return this.rest
       .request<RawGuildScheduledEvent>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildScheduledEvent(guildId, guildScheduledEventId),
         {
           json: {
@@ -1843,7 +1843,7 @@ export class Client extends EventEmitter {
   ): Promise<Sticker> {
     return this.rest
       .request<RawSticker>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildSticker(guildId, stickerId),
         {
           json: {
@@ -1865,7 +1865,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildTemplate(guildId, code),
         {
           json: {
@@ -1885,7 +1885,7 @@ export class Client extends EventEmitter {
   ): Promise<WelcomeScreen> {
     return this.rest
       .request<RawWelcomeScreen>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildWelcomeScreen(guildId),
         {
           json: {
@@ -1910,7 +1910,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildWidgetSettings> {
     return this.rest
       .request<RawGuildWidgetSettings>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.guildWidgetSettings(guildId),
         {
           json: {
@@ -1931,7 +1931,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.channelMessage(channelId, messageId),
         {
           json: {
@@ -1979,7 +1979,7 @@ export class Client extends EventEmitter {
   ): Promise<StageInstance> {
     return this.rest
       .request<RawStageInstance>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.stageInstance(channelId),
         {
           json: {
@@ -2001,7 +2001,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.webhookMessage(applicationId, interactionToken, messageId),
         {
           json: {
@@ -2052,7 +2052,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.webhookMessage(applicationId, interactionToken),
         {
           json: {
@@ -2106,7 +2106,7 @@ export class Client extends EventEmitter {
     }
   ): void {
     this.rest.request(
-      RestMethods.Patch,
+      RESTMethods.Patch,
       Endpoints.guildVoiceState(guildId, userId),
       {
         json: {
@@ -2125,7 +2125,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): Promise<Webhook> {
     return this.rest
-      .request<RawWebhook>(RestMethods.Patch, Endpoints.webhook(webhookId), {
+      .request<RawWebhook>(RESTMethods.Patch, Endpoints.webhook(webhookId), {
         json: {
           name: options.name,
           avatar: options.avatar,
@@ -2145,7 +2145,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.webhookMessage(webhookId, webhookToken, messageId),
         {
           json: {
@@ -2197,7 +2197,7 @@ export class Client extends EventEmitter {
   ): Promise<Webhook> {
     return this.rest
       .request<RawWebhook>(
-        RestMethods.Patch,
+        RESTMethods.Patch,
         Endpoints.webhook(webhookId, webhookToken),
         {
           json: {
@@ -2219,7 +2219,7 @@ export class Client extends EventEmitter {
   ): Promise<Message | null> {
     return this.rest
       .request<RawMessage | null>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.webhook(webhookId, webhookToken),
         {
           json: {
@@ -2285,7 +2285,7 @@ export class Client extends EventEmitter {
   ): Promise<Message | null> {
     return this.rest
       .request<RawMessage | null>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.webhookPlatform(webhookId, webhookToken, platform),
         {
           query: {
@@ -2309,7 +2309,7 @@ export class Client extends EventEmitter {
   ): Promise<FollowedChannel> {
     return this.rest
       .request<RawFollowedChannel>(
-        RestMethods.Post,
+        RESTMethods.Post,
         Endpoints.channelFollowers(channelId),
         {
           json: {
@@ -2331,7 +2331,7 @@ export class Client extends EventEmitter {
           threads: Array<RawChannel>;
           members: Array<RawThreadMember>;
         }>
-      >(RestMethods.Get, Endpoints.guildActiveThreads(guildId))
+      >(RESTMethods.Get, Endpoints.guildActiveThreads(guildId))
       .then((response) =>
         this.util.toCamelCase<{
           threads: Array<Channel>;
@@ -2359,7 +2359,7 @@ export class Client extends EventEmitter {
         members: Array<RawThreadMember>;
         has_more: boolean;
       }>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelThreads(channelId, archivedStatus, false),
         {
           query: {
@@ -2389,7 +2389,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<AuditLog> {
     return this.rest
-      .request<RawAuditLog>(RestMethods.Get, Endpoints.guildAuditLog(guildId), {
+      .request<RawAuditLog>(RESTMethods.Get, Endpoints.guildAuditLog(guildId), {
         query: {
           user_id: options?.userId,
           action_type: options?.actionType,
@@ -2408,7 +2408,7 @@ export class Client extends EventEmitter {
   ): Promise<AutoModerationRule> {
     return this.rest
       .request<RawAutoModerationRule>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildAutoModerationRule(guildId, ruleId)
       )
       .then((response) => this.util.toCamelCase<AutoModerationRule>(response));
@@ -2418,7 +2418,7 @@ export class Client extends EventEmitter {
   getAutoModerationRules(guildId: string): Promise<Array<AutoModerationRule>> {
     return this.rest
       .request<Array<RawAutoModerationRule>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildAutoModerationRules(guildId)
       )
       .then((response) =>
@@ -2436,7 +2436,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildApplicationCommandPermissions> {
     return this.rest
       .request<Array<RawGuildApplicationCommandPermissions>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationCommandPermissions(
           applicationId,
           guildId,
@@ -2454,7 +2454,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<ApplicationRoleConnectionMetadata>> {
     return this.rest
       .request<Array<RawApplicationRoleConnectionMetadata>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationRoleConnectionMetadata(applicationId)
       )
       .then((response) =>
@@ -2469,7 +2469,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#get-channel */
   getChannel(channelId: string): Promise<Channel> {
     return this.rest
-      .request<RawChannel>(RestMethods.Get, Endpoints.channel(channelId))
+      .request<RawChannel>(RESTMethods.Get, Endpoints.channel(channelId))
       .then((response) => this.util.toCamelCase<Channel>(response));
   }
 
@@ -2477,7 +2477,7 @@ export class Client extends EventEmitter {
   getChannels(guildId: string): Promise<Array<Channel>> {
     return this.rest
       .request<Array<RawChannel>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildChannels(guildId)
       )
       .then((response) =>
@@ -2489,7 +2489,7 @@ export class Client extends EventEmitter {
   getChannelInvites(channelId: string): Promise<Array<Invite>> {
     return this.rest
       .request<Array<RawInvite>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelInvites(channelId)
       )
       .then((response) =>
@@ -2501,7 +2501,7 @@ export class Client extends EventEmitter {
   getChannelWebhooks(channelId: string): Promise<Array<Webhook>> {
     return this.rest
       .request<Array<RawWebhook>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelWebhooks(channelId)
       )
       .then((response) =>
@@ -2513,7 +2513,7 @@ export class Client extends EventEmitter {
   getCurrentApplication(): Promise<Application> {
     return this.rest
       .request<RawApplication>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationCurrentUser()
       )
       .then((response) => this.util.toCamelCase<Application>(response));
@@ -2525,7 +2525,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationRoleConnection> {
     return this.rest
       .request<RawApplicationRoleConnection>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.userApplicationRoleConnection(applicationId)
       )
       .then((response) =>
@@ -2536,7 +2536,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
   getCurrentGuildMember(guildId: string): Promise<GuildMember> {
     return this.rest
-      .request<RawGuildMember>(RestMethods.Get, Endpoints.guildMember(guildId))
+      .request<RawGuildMember>(RESTMethods.Get, Endpoints.guildMember(guildId))
       .then((response) => this.util.toCamelCase<GuildMember>(response));
   }
 
@@ -2544,7 +2544,7 @@ export class Client extends EventEmitter {
   getCurrentUserConnections(): Promise<Array<Connection>> {
     return this.rest
       .request<Array<RawConnection>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.userConnections()
       )
       .then((response) =>
@@ -2569,7 +2569,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<Entitlement>> {
     return this.rest
       .request<Array<RawEntitlement>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationEntitlements(applicationId),
         {
           query: {
@@ -2593,7 +2593,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/topics/gateway#get-gateway */
   getGateway(): Promise<{ url: string }> {
     return this.rest.request<{ url: string }>(
-      RestMethods.Get,
+      RESTMethods.Get,
       Endpoints.gateway()
     );
   }
@@ -2619,7 +2619,7 @@ export class Client extends EventEmitter {
           reset_after: number;
           max_concurrency: number;
         };
-      }>(RestMethods.Get, Endpoints.gatewayBot())
+      }>(RESTMethods.Get, Endpoints.gatewayBot())
       .then((response) => this.util.toCamelCase(response));
   }
 
@@ -2630,7 +2630,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationCommand(applicationId, commandId)
       )
       .then((response) => this.util.toCamelCase<ApplicationCommand>(response));
@@ -2645,7 +2645,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationCommands(applicationId),
         {
           query: {
@@ -2668,7 +2668,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<Guild> {
     return this.rest
-      .request<RawGuild>(RestMethods.Get, Endpoints.guild(guildId), {
+      .request<RawGuild>(RESTMethods.Get, Endpoints.guild(guildId), {
         query: {
           with_counts: options?.withCounts,
         },
@@ -2684,7 +2684,7 @@ export class Client extends EventEmitter {
     withCounts?: boolean;
   }): Promise<Array<Guild>> {
     return this.rest
-      .request<Array<RawGuild>>(RestMethods.Get, Endpoints.userGuilds(), {
+      .request<Array<RawGuild>>(RESTMethods.Get, Endpoints.userGuilds(), {
         query: {
           before: options?.before,
           after: options?.after,
@@ -2705,7 +2705,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationGuildCommand(applicationId, guildId, commandId)
       )
       .then((response) => this.util.toCamelCase<ApplicationCommand>(response));
@@ -2721,7 +2721,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationGuildCommands(applicationId, guildId),
         {
           query: {
@@ -2743,7 +2743,7 @@ export class Client extends EventEmitter {
   ): Promise<GuildApplicationCommandPermissions> {
     return this.rest
       .request<RawGuildApplicationCommandPermissions>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildApplicationCommandsPermissions(applicationId, guildId)
       )
       .then((response) =>
@@ -2754,7 +2754,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#get-guild-ban */
   getGuildBan(guildId: string, userId: string): Promise<Ban> {
     return this.rest
-      .request<RawBan>(RestMethods.Get, Endpoints.guildBan(guildId, userId))
+      .request<RawBan>(RESTMethods.Get, Endpoints.guildBan(guildId, userId))
       .then((response) => this.util.toCamelCase<Ban>(response));
   }
 
@@ -2768,7 +2768,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<Array<Ban>> {
     return this.rest
-      .request<Array<RawBan>>(RestMethods.Get, Endpoints.guildBans(guildId), {
+      .request<Array<RawBan>>(RESTMethods.Get, Endpoints.guildBans(guildId), {
         query: {
           limit: options?.limit,
           before: options?.before,
@@ -2784,7 +2784,7 @@ export class Client extends EventEmitter {
   getGuildEmoji(guildId: string, emojiId: string): Promise<Emoji> {
     return this.rest
       .request<RawEmoji>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildEmoji(guildId, emojiId)
       )
       .then((response) => this.util.toCamelCase<Emoji>(response));
@@ -2793,7 +2793,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
   getGuildEmojis(guildId: string): Promise<Array<Emoji>> {
     return this.rest
-      .request<Array<RawEmoji>>(RestMethods.Get, Endpoints.guildEmojis(guildId))
+      .request<Array<RawEmoji>>(RESTMethods.Get, Endpoints.guildEmojis(guildId))
       .then((response) =>
         response.map((emoji) => this.util.toCamelCase<Emoji>(emoji))
       );
@@ -2803,7 +2803,7 @@ export class Client extends EventEmitter {
   getGuildIntegrations(guildId: string): Promise<Array<Integration>> {
     return this.rest
       .request<Array<RawIntegration>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildIntegrations(guildId)
       )
       .then((response) =>
@@ -2817,7 +2817,7 @@ export class Client extends EventEmitter {
   getGuildInvites(guildId: string): Promise<Array<Invite>> {
     return this.rest
       .request<Array<RawInvite>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildInvites(guildId)
       )
       .then((response) =>
@@ -2829,7 +2829,7 @@ export class Client extends EventEmitter {
   getGuildMember(guildId: string, userId: string): Promise<GuildMember> {
     return this.rest
       .request<RawGuildMember>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildMember(guildId, userId)
       )
       .then((response) => this.util.toCamelCase<GuildMember>(response));
@@ -2839,7 +2839,7 @@ export class Client extends EventEmitter {
   getGuildMembers(guildId: string): Promise<Array<GuildMember>> {
     return this.rest
       .request<Array<RawGuildMember>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildMembers(guildId)
       )
       .then((response) =>
@@ -2853,7 +2853,7 @@ export class Client extends EventEmitter {
   getGuildOnboarding(guildId: string): Promise<GuildOnboarding> {
     return this.rest
       .request<RawGuildOnboarding>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildOnboarding(guildId)
       )
       .then((response) => this.util.toCamelCase<GuildOnboarding>(response));
@@ -2863,7 +2863,7 @@ export class Client extends EventEmitter {
   getGuildPreview(guildId: string): Promise<GuildPreview> {
     return this.rest
       .request<RawGuildPreview>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildPreview(guildId)
       )
       .then((response) => this.util.toCamelCase<GuildPreview>(response));
@@ -2879,7 +2879,7 @@ export class Client extends EventEmitter {
   ): Promise<{ pruned: number }> {
     return this.rest
       .request<{ pruned: number }>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildPrune(guildId),
         {
           query: {
@@ -2894,7 +2894,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#get-guild-roles */
   getGuildRoles(guildId: string): Promise<Array<Role>> {
     return this.rest
-      .request<Array<RawRole>>(RestMethods.Get, Endpoints.guildRoles(guildId))
+      .request<Array<RawRole>>(RESTMethods.Get, Endpoints.guildRoles(guildId))
       .then((response) =>
         response.map((role) => this.util.toCamelCase<Role>(role))
       );
@@ -2909,7 +2909,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<GuildScheduledEvent>> {
     return this.rest
       .request<Array<RawGuildScheduledEvent>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildScheduledEvents(guildId),
         {
           query: {
@@ -2937,7 +2937,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<GuildScheduledEventUser>> {
     return this.rest
       .request<Array<RawGuildScheduledEventUser>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildScheduledEvent(guildId, guildScheduledEventId),
         {
           query: {
@@ -2961,7 +2961,7 @@ export class Client extends EventEmitter {
   getGuildSticker(guildId: string, stickerId: string): Promise<Sticker> {
     return this.rest
       .request<RawSticker>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildSticker(guildId, stickerId)
       )
       .then((response) => this.util.toCamelCase<Sticker>(response));
@@ -2971,7 +2971,7 @@ export class Client extends EventEmitter {
   getGuildStickers(guildId: string): Promise<Array<Sticker>> {
     return this.rest
       .request<Array<RawSticker>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildStickers(guildId)
       )
       .then((response) =>
@@ -2983,7 +2983,7 @@ export class Client extends EventEmitter {
   getGuildTemplate(guildId: string, code: string): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildTemplate(guildId, code)
       )
       .then((response) => this.util.toCamelCase<GuildTemplate>(response));
@@ -2993,7 +2993,7 @@ export class Client extends EventEmitter {
   getGuildTemplates(guildId: string): Promise<Array<GuildTemplate>> {
     return this.rest
       .request<Array<RawGuildTemplate>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildTemplates(guildId)
       )
       .then((response) =>
@@ -3011,14 +3011,14 @@ export class Client extends EventEmitter {
     return this.rest.request<{
       code: string;
       uses: number;
-    }>(RestMethods.Get, Endpoints.guildVanityUrl(guildId));
+    }>(RESTMethods.Get, Endpoints.guildVanityUrl(guildId));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
   getGuildVoiceRegions(guildId: string): Promise<Array<VoiceRegion>> {
     return this.rest
       .request<Array<RawVoiceRegion>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildVoiceRegions(guildId)
       )
       .then((response) =>
@@ -3032,7 +3032,7 @@ export class Client extends EventEmitter {
   getGuildWelcomeScreen(guildId: string): Promise<WelcomeScreen> {
     return this.rest
       .request<RawWelcomeScreen>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildWelcomeScreen(guildId)
       )
       .then((response) => this.util.toCamelCase<WelcomeScreen>(response));
@@ -3042,7 +3042,7 @@ export class Client extends EventEmitter {
   getGuildWidget(guildId: string): Promise<GuildWidget> {
     return this.rest
       .request<RawGuildWidget>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildWidgetJSON(guildId)
       )
       .then((response) => this.util.toCamelCase<GuildWidget>(response));
@@ -3056,7 +3056,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<string> {
     return this.rest.request<string>(
-      RestMethods.Get,
+      RESTMethods.Get,
       Endpoints.guildWidgetImage(guildId),
       {
         query: {
@@ -3070,7 +3070,7 @@ export class Client extends EventEmitter {
   getGuildWidgetSettings(guildId: string): Promise<GuildWidgetSettings> {
     return this.rest
       .request<RawGuildWidgetSettings>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildWidgetSettings(guildId)
       )
       .then((response) => this.util.toCamelCase<GuildWidgetSettings>(response));
@@ -3087,7 +3087,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.webhookMessage(applicationId, interactionToken, messageId),
         {
           query: {
@@ -3106,7 +3106,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.webhookMessage(applicationId, interactionToken),
         {
           query: {
@@ -3127,7 +3127,7 @@ export class Client extends EventEmitter {
     }
   ): Promise<Invite> {
     return this.rest
-      .request<RawInvite>(RestMethods.Get, Endpoints.invite(code), {
+      .request<RawInvite>(RESTMethods.Get, Endpoints.invite(code), {
         query: {
           with_counts: options?.withCounts,
           with_expiration: options?.withExpiration,
@@ -3155,7 +3155,7 @@ export class Client extends EventEmitter {
         members: Array<RawThreadMember>;
         has_more: boolean;
       }>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelThreads(channelId, "private", true),
         {
           query: {
@@ -3177,7 +3177,7 @@ export class Client extends EventEmitter {
   getMessage(channelId: string, messageId: string): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelMessage(channelId, messageId)
       )
       .then((response) => this.util.toCamelCase<Message>(response));
@@ -3195,7 +3195,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<User>> {
     return this.rest
       .request<Array<RawUser>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelMessageAllReactions(channelId, messageId, emoji),
         {
           query: {
@@ -3221,7 +3221,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<Message>> {
     return this.rest
       .request<Array<RawMessage>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelMessages(channelId),
         {
           query: {
@@ -3241,7 +3241,7 @@ export class Client extends EventEmitter {
   getOAuth2Application(): Promise<Application> {
     return this.rest
       .request<RawApplication>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.oauth2CurrentApplication()
       )
       .then((response) => this.util.toCamelCase<Application>(response));
@@ -3260,7 +3260,7 @@ export class Client extends EventEmitter {
         scopes: Array<OAuth2Scopes>;
         expires: string;
         user?: RawUser;
-      }>(RestMethods.Get, Endpoints.oauth2Authorization())
+      }>(RESTMethods.Get, Endpoints.oauth2Authorization())
       .then((response) =>
         this.util.toCamelCase<{
           application: Application;
@@ -3275,7 +3275,7 @@ export class Client extends EventEmitter {
   getPinnedMessages(channelId: string): Promise<Array<Message>> {
     return this.rest
       .request<Array<RawMessage>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.channelPins(channelId)
       )
       .then((response) =>
@@ -3287,7 +3287,7 @@ export class Client extends EventEmitter {
   getSkus(applicationId: string): Promise<Array<Sku>> {
     return this.rest
       .request<Array<RawSku>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.applicationSkus(applicationId)
       )
       .then((response) =>
@@ -3299,7 +3299,7 @@ export class Client extends EventEmitter {
   getStageInstance(channelId: string): Promise<StageInstance> {
     return this.rest
       .request<RawStageInstance>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.stageInstance(channelId)
       )
       .then((response) => this.util.toCamelCase<StageInstance>(response));
@@ -3312,7 +3312,7 @@ export class Client extends EventEmitter {
     return this.rest
       .request<{
         sticker_packs: Array<RawStickerPack>;
-      }>(RestMethods.Get, Endpoints.stickerPacks())
+      }>(RESTMethods.Get, Endpoints.stickerPacks())
       .then((response) =>
         this.util.toCamelCase<{
           stickerPacks: Array<StickerPack>;
@@ -3330,7 +3330,7 @@ export class Client extends EventEmitter {
   ): Promise<ThreadMember> {
     return this.rest
       .request<RawThreadMember>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.threadMembers(channelId, userId),
         {
           query: {
@@ -3352,7 +3352,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<ThreadMember>> {
     return this.rest
       .request<Array<RawThreadMember>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.threadMembers(channelId),
         {
           query: {
@@ -3372,14 +3372,14 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/user#get-user */
   getUser(userId?: string): Promise<User> {
     return this.rest
-      .request<RawUser>(RestMethods.Get, Endpoints.user(userId))
+      .request<RawUser>(RESTMethods.Get, Endpoints.user(userId))
       .then((response) => this.util.toCamelCase<User>(response));
   }
 
   /** https://discord.com/developers/docs/resources/voice#list-voice-regions */
   getVoiceRegions(): Promise<Array<VoiceRegion>> {
     return this.rest
-      .request<Array<RawVoiceRegion>>(RestMethods.Get, Endpoints.voiceRegions())
+      .request<Array<RawVoiceRegion>>(RESTMethods.Get, Endpoints.voiceRegions())
       .then((response) =>
         response.map((voiceRegion) =>
           this.util.toCamelCase<VoiceRegion>(voiceRegion)
@@ -3398,7 +3398,7 @@ export class Client extends EventEmitter {
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.webhookMessage(webhookId, webhookToken, messageId),
         {
           query: {
@@ -3413,7 +3413,7 @@ export class Client extends EventEmitter {
   getWebhooks(guildId: string): Promise<Array<Webhook>> {
     return this.rest
       .request<Array<RawWebhook>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildWebhooks(guildId)
       )
       .then((response) =>
@@ -3424,7 +3424,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#join-thread */
   joinThread(channelId: string): void {
     this.rest.request(
-      RestMethods.Put,
+      RESTMethods.Put,
       Endpoints.threadMembers(channelId, "@me")
     );
   }
@@ -3453,13 +3453,13 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/user#leave-guild */
   leaveGuild(guildId: string): void {
-    this.rest.request(RestMethods.Delete, Endpoints.userGuild(guildId));
+    this.rest.request(RESTMethods.Delete, Endpoints.userGuild(guildId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#leave-thread */
   leaveThread(channelId: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.threadMembers(channelId, "@me")
     );
   }
@@ -3482,7 +3482,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#pin-message */
   pinMessage(channelId: string, messageId: string, reason?: string): void {
     this.rest.request(
-      RestMethods.Put,
+      RESTMethods.Put,
       Endpoints.channelPin(channelId, messageId),
       {
         reason,
@@ -3492,7 +3492,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
   removeBan(guildId: string, userId: string, reason?: string): void {
-    this.rest.request(RestMethods.Delete, Endpoints.guildBan(guildId, userId), {
+    this.rest.request(RESTMethods.Delete, Endpoints.guildBan(guildId, userId), {
       reason,
     });
   }
@@ -3500,7 +3500,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
   removeGroupRecipient(channelId: string, userId: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.channelRecipient(channelId, userId)
     );
   }
@@ -3508,7 +3508,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
   removeGuildMember(guildId: string, userId: string, reason?: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildMember(guildId, userId),
       {
         reason,
@@ -3524,7 +3524,7 @@ export class Client extends EventEmitter {
     reason?: string
   ): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.guildMemberRole(guildId, userId, roleId),
       {
         reason,
@@ -3535,7 +3535,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#remove-thread-member */
   removeThreadMember(channelId: string, userId: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.threadMembers(channelId, userId)
     );
   }
@@ -3550,7 +3550,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<GuildMember>> {
     return this.rest
       .request<Array<RawGuildMember>>(
-        RestMethods.Get,
+        RESTMethods.Get,
         Endpoints.guildMembersSearch(guildId),
         {
           query: {
@@ -3579,7 +3579,7 @@ export class Client extends EventEmitter {
   syncGuildTemplate(guildId: string, code: string): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
-        RestMethods.Put,
+        RESTMethods.Put,
         Endpoints.guildTemplate(guildId, code)
       )
       .then((response) => this.util.toCamelCase<GuildTemplate>(response));
@@ -3587,7 +3587,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
   triggerTypingIndicator(channelId: string): void {
-    this.rest.request(RestMethods.Post, Endpoints.channelTyping(channelId));
+    this.rest.request(RESTMethods.Post, Endpoints.channelTyping(channelId));
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#update-application-role-connection-metadata-records */
@@ -3596,7 +3596,7 @@ export class Client extends EventEmitter {
   ): Promise<Array<ApplicationRoleConnectionMetadata>> {
     return this.rest
       .request<Array<RawApplicationRoleConnectionMetadata>>(
-        RestMethods.Put,
+        RESTMethods.Put,
         Endpoints.applicationRoleConnectionMetadata(applicationId)
       )
       .then((response) =>
@@ -3614,7 +3614,7 @@ export class Client extends EventEmitter {
   ): Promise<ApplicationRoleConnection> {
     return this.rest
       .request<RawApplicationRoleConnection>(
-        RestMethods.Put,
+        RESTMethods.Put,
         Endpoints.userApplicationRoleConnection(this.application.id),
         {
           json: {
@@ -3632,7 +3632,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
   unpinMessage(channelId: string, messageId: string, reason?: string): void {
     this.rest.request(
-      RestMethods.Delete,
+      RESTMethods.Delete,
       Endpoints.channelPin(channelId, messageId),
       {
         reason,

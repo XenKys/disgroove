@@ -1,5 +1,5 @@
-export class RestError extends Error {
-  override name: string = "RestError";
+export class RESTError extends Error {
+  override name: string = "RESTError";
 
   constructor(message: string) {
     super(message);
