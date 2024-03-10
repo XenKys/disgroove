@@ -160,7 +160,6 @@ export const userGuild = (guildId: string) =>
 export const userGuilds = () => "users/@me/guilds" as const;
 
 // Applications
-
 export const applicationCommand = (applicationId: string, commandId: string) =>
   `applications/${applicationId}/commands/${commandId}` as const;
 export const applicationCommands = (applicationId: string) =>
