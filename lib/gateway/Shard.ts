@@ -50,6 +50,8 @@ import type {
   MessageReactionRemoveEventFields,
   MessageReactionRemoveAllEventFields,
   ThreadMemberUpdateEventExtraFields,
+  MessagePollVoteAddFields,
+  MessagePollVoteRemoveFields,
 } from "../types";
 import { Client } from "../Client";
 import * as pkg from "../../package.json";
@@ -583,6 +585,18 @@ export class Shard {
           GatewayEvents.WebhooksUpdate,
           packet.d.channel_id,
           packet.d.guild_id
+        );
+        break;
+      case "MESSAGE_POLL_VOTE_ADD":
+        this.client.emit(
+          GatewayEvents.MessagePollVoteAdd,
+          this.client.util.toCamelCase<MessagePollVoteAddFields>(packet.d)
+        );
+        break;
+      case "MESSAGE_POLL_VOTE_REMOVE":
+        this.client.emit(
+          GatewayEvents.MessagePollVoteRemove,
+          this.client.util.toCamelCase<MessagePollVoteRemoveFields>(packet.d)
         );
         break;
     }

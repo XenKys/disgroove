@@ -320,6 +320,22 @@ export interface RawVoiceServerUpdateEventFields {
   endpoint: string | null;
 }
 
+export interface RawMessagePollVoteAddFields {
+  user_id: string;
+  channel_id: string;
+  message_id: string;
+  guild_id?: string;
+  answer_id: number;
+}
+
+export interface RawMessagePollVoteRemoveFields {
+  user_id: string;
+  channel_id: string;
+  message_id: string;
+  guild_id?: string;
+  answer_id: number;
+}
+
 export interface AutoModerationActionExecutionEventFields {
   guildId: string;
   action: AutoModerationAction;
@@ -575,4 +591,20 @@ export interface VoiceServerUpdateEventFields {
   token: string;
   guildId: string;
   endpoint: string | null;
+}
+
+export interface MessagePollVoteAddFields {
+  userId: string;
+  channelId: string;
+  messageId: string;
+  guildId?: string;
+  answerId: number;
+}
+
+export interface MessagePollVoteRemoveFields {
+  userId: string;
+  channelId: string;
+  messageId: string;
+  guildId?: string;
+  answerId: number;
 }

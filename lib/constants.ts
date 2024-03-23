@@ -501,6 +501,10 @@ export enum InviteTargetTypes {
   EmbeddedApplication,
 }
 
+export enum LayoutType {
+  Default = 1,
+}
+
 /** https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-privacy-level */
 export enum PrivacyLevel {
   Public = 1,
@@ -710,6 +714,8 @@ export enum GatewayEvents {
   VoiceStateUpdate = "voiceStateUpdate",
   VoiceServerUpdate = "voiceServerUpdate",
   WebhooksUpdate = "webhooksUpdate",
+  MessagePollVoteAdd = "messagePollVoteAdd",
+  MessagePollVoteRemove = "messagePollVoteRemove",
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types */
@@ -1052,6 +1058,13 @@ export enum JSONErrorCodes {
   MessageBlockedByHarmfulLinksFilter = 240000,
   CannotEnableOnboardingRequirementsAreNotMet = 350000,
   CannotUpdateOnboardingWhileBelowRequirements,
+  PollVotingBlocked = 520000,
+  PollExpired,
+  InvalidChannelTypeForPollCreation,
+  CannotEditAPollMessage,
+  CannotUseAnEmojiIncludedWithThePoll,
+  CannotExpireANonPollMessage = 520006,
+  PollIsAlreadyExpired,
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#rpc-rpc-error-codes */

@@ -173,6 +173,8 @@ import type {
   RawAllowedMentions,
   RawApplicationCommandOptionChoice,
   RawAttachment,
+  MessagePollVoteAddFields,
+  MessagePollVoteRemoveFields,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
@@ -2300,6 +2302,15 @@ export class Client extends EventEmitter {
       );
   }
 
+  expirePoll(channelId: string, messageId: string): Promise<Message> {
+    return this.rest
+      .request<RawMessage>(
+        RESTMethods.Post,
+        Endpoints.pollExpire(channelId, messageId)
+      )
+      .then((response) => this.util.toCamelCase<Message>(response));
+  }
+
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
   followChannel(
     channelId: string,
@@ -3283,6 +3294,37 @@ export class Client extends EventEmitter {
       );
   }
 
+  getPollAnswerVoters(
+    channelId: string,
+    messageId: string,
+    answerId: string,
+    options?: {
+      after?: string;
+      limit?: number;
+    }
+  ): Promise<{
+    users: Array<User>;
+  }> {
+    return this.rest
+      .request<{
+        users: Array<User>;
+      }>(
+        RESTMethods.Get,
+        Endpoints.pollAnswerVoters(channelId, messageId, answerId),
+        {
+          query: {
+            after: options?.after,
+            limit: options?.limit,
+          },
+        }
+      )
+      .then((response) =>
+        this.util.toCamelCase<{
+          users: Array<User>;
+        }>(response)
+      );
+  }
+
   /** https://discord.com/developers/docs/monetization/skus#list-skus */
   getSkus(applicationId: string): Promise<Array<Sku>> {
     return this.rest
@@ -3775,4 +3817,6 @@ export interface ClientEvents {
   voiceStateUpdate: [voiceState: VoiceState];
   voiceServerUpdate: [voiceServer: VoiceServerUpdateEventFields];
   webhooksUpdate: [channelId: string, guildId: string];
+  messagePollVoteAdd: [vote: MessagePollVoteAddFields];
+  messagePollVoteRemove: [vote: MessagePollVoteRemoveFields];
 }

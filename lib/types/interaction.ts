@@ -34,6 +34,7 @@ import type {
   MessageFlags,
 } from "../constants";
 import type { File } from "../rest";
+import type { Poll, RawPoll } from "./poll";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {
@@ -128,6 +129,7 @@ export interface RawInteractionCallbackData {
   flags?: MessageFlags;
   components?: Array<RawActionRow>;
   attachments?: Array<RawAttachment>;
+  poll?: RawPoll;
   files?: Array<File>;
   choices?: Array<RawApplicationCommandOptionChoice>;
   custom_id?: string;
@@ -216,6 +218,7 @@ export interface InteractionCallbackData {
   flags?: MessageFlags;
   components?: Array<ActionRow>;
   attachments?: Array<Attachment>;
+  poll?: Poll;
   files?: Array<File>;
   choices?: Array<ApplicationCommandOptionChoice>;
   customId?: string;

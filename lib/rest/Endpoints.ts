@@ -147,6 +147,13 @@ export const threadMembers = (threadId: string, userId?: string | "@me") =>
   userId
     ? (`channels/${threadId}/thread-members` as const)
     : (`channels/${threadId}/thread-members/${userId}` as const);
+export const pollAnswerVoters = (
+  channelId: string,
+  messageId: string,
+  answerId: string
+) => `channels/${channelId}/polls/${messageId}/answers/${answerId}` as const;
+export const pollExpire = (channelId: string, messageId: string) =>
+  `channels/${channelId}/polls/${messageId}/expire` as const;
 
 // Users
 export const user = (userId: string | "@me" = "@me") =>

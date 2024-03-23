@@ -32,6 +32,7 @@ import type {
   ResolvedData,
 } from ".";
 import type { File } from "../rest";
+import type { Poll, RawPoll } from "./poll";
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
 export interface RawChannel {
@@ -106,6 +107,7 @@ export interface RawMessage {
   position?: number;
   role_subscription_data?: RawRoleSubscriptionData;
   resolved?: RawResolvedData;
+  poll?: RawPoll;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-object-message-activity-structure */
@@ -367,6 +369,7 @@ export interface Message {
   position?: number;
   roleSubscriptionData?: RoleSubscriptionData;
   resolved?: ResolvedData;
+  poll?: Poll;
 }
 
 export interface MessageActivity {
@@ -578,6 +581,7 @@ export interface CreateMessageParams {
   attachments?: Array<Attachment>;
   flags?: MessageFlags;
   enforceNonce?: boolean;
+  poll?: Poll;
 }
 
 export interface EditMessageParams {
