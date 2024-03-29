@@ -27,7 +27,16 @@ export interface RawApplication {
   role_connections_verification_url?: string;
   tags?: Array<string>;
   install_params?: RawInstallParams;
+  integration_types_config?: Record<
+    string,
+    RawApplicationIntegrationTypeConfiguration
+  >;
   custom_install_url?: string;
+}
+
+/** https://discord.com/developers/docs/resources/application#application-object-application-integration-type-configuration-object */
+export interface RawApplicationIntegrationTypeConfiguration {
+  oauth2_install_params: RawInstallParams;
 }
 
 /** https://discord.com/developers/docs/resources/application#install-params-object-install-params-structure */
@@ -61,7 +70,15 @@ export interface Application {
   roleConnectionsVerificationUrl?: string;
   tags?: Array<string>;
   installParams?: InstallParams;
+  integrationTypesConfig?: Record<
+    string,
+    ApplicationIntegrationTypeConfiguration
+  >;
   customInstallUrl?: string;
+}
+
+export interface ApplicationIntegrationTypeConfiguration {
+  oauth2InstallParams: InstallParams;
 }
 
 export interface InstallParams {
@@ -74,6 +91,10 @@ export interface EditCurrentApplicationParams {
   description?: string;
   roleConnectionsVerificationUrl?: string;
   installParams?: InstallParams;
+  integrationTypesConfig?: Record<
+    string,
+    ApplicationIntegrationTypeConfiguration
+  >;
   flags?: ApplicationFlags;
   icon?: string;
   coverImage?: string;
