@@ -1,5 +1,9 @@
 import type { RawUser, RawTeam, Team, User, RawGuild, Guild } from ".";
-import type { ApplicationFlags, OAuth2Scopes } from "../constants";
+import type {
+  ApplicationFlags,
+  ApplicationIntegrationTypes,
+  OAuth2Scopes,
+} from "../constants";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface RawApplication {
@@ -71,7 +75,7 @@ export interface Application {
   tags?: Array<string>;
   installParams?: InstallParams;
   integrationTypesConfig?: Record<
-    string,
+    ApplicationIntegrationTypes,
     ApplicationIntegrationTypeConfiguration
   >;
   customInstallUrl?: string;
@@ -92,7 +96,7 @@ export interface EditCurrentApplicationParams {
   roleConnectionsVerificationUrl?: string;
   installParams?: InstallParams;
   integrationTypesConfig?: Record<
-    string,
+    ApplicationIntegrationTypes,
     ApplicationIntegrationTypeConfiguration
   >;
   flags?: ApplicationFlags;

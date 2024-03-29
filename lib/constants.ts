@@ -121,6 +121,12 @@ export enum TextInputStyles {
   Paragraph,
 }
 
+/** https://discord.com/developers/docs/resources/application#application-object-application-integration-types */
+export enum ApplicationIntegrationTypes {
+  GuildInstall,
+  UserInstall,
+}
+
 /** https://discord.com/developers/docs/resources/application#application-object-application-flags */
 export enum ApplicationFlags {
   ApplicationAutoModerationRuleCreateBadge = 1 << 6,
