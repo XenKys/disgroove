@@ -15,6 +15,7 @@ export * from "./guild";
 export * from "./interaction";
 export * from "./invite";
 export * from "./message-components";
+export * from "./poll";
 export * from "./role";
 export * from "./sku";
 export * from "./stage-instance";

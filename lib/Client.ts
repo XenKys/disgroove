@@ -177,6 +177,7 @@ import type {
   MessagePollVoteRemoveFields,
   BulkGuildBanParams,
   BulkDeleteMessagesParams,
+  RawPollCreateParams,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
@@ -870,6 +871,12 @@ export class Client extends EventEmitter {
                   attachments: options.data?.attachments?.map((attachment) =>
                     this.util.toSnakeCase<RawAttachment>(attachment)
                   ),
+                  poll:
+                    options.data?.poll !== undefined
+                      ? this.util.toSnakeCase<RawPollCreateParams>(
+                          options.data?.poll
+                        )
+                      : undefined,
                 },
               },
               files: options.data?.files,
@@ -991,6 +998,10 @@ export class Client extends EventEmitter {
             ),
             flags: options.flags,
             enforce_nonce: options.enforceNonce,
+            poll:
+              options.poll !== undefined
+                ? this.util.toSnakeCase<RawPollCreateParams>(options.poll)
+                : undefined,
           },
           files: options.files,
         }
@@ -2286,6 +2297,11 @@ export class Client extends EventEmitter {
             ),
             flags: options.flags,
             thread_name: options.threadName,
+            applied_tags: options.appliedTags,
+            poll:
+              options.poll !== undefined
+                ? this.util.toSnakeCase<RawPollCreateParams>(options.poll)
+                : undefined,
           },
           files: options.files,
           query: {

@@ -10,9 +10,9 @@ import type {
   RawChannel,
   RawGuild,
   RawUser,
+  PollCreateParams,
 } from ".";
 import type { File } from "../rest";
-import type { Poll } from "./poll";
 
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
 export interface RawWebhook {
@@ -69,7 +69,7 @@ export interface ExecuteWebhookParams {
   flags?: MessageFlags | null;
   threadName?: string;
   appliedTags?: Array<string>;
-  poll?: Poll;
+  poll?: PollCreateParams;
 }
 
 export interface EditWebhookMessageParams {

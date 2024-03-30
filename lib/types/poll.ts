@@ -31,6 +31,14 @@ export interface RawPollAnswerCount {
   me_voted: boolean;
 }
 
+export interface RawPollCreateParams {
+  question: RawPollMedia;
+  answers: Array<RawPollAnswer>;
+  duration: number;
+  allow_multiselect: boolean;
+  layout_type?: LayoutType;
+}
+
 export interface Poll {
   question: PollMedia;
   answers: Array<PollAnswer>;
@@ -59,4 +67,12 @@ export interface PollAnswerCount {
   id: number;
   count: number;
   meVoted: boolean;
+}
+
+export interface PollCreateParams {
+  question: PollMedia;
+  answers: Array<PollAnswer>;
+  duration: number;
+  allowMultiselect: boolean;
+  layoutType?: LayoutType;
 }
