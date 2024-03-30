@@ -32,7 +32,7 @@ export interface RawApplication {
   tags?: Array<string>;
   install_params?: RawInstallParams;
   integration_types_config?: Record<
-    string,
+    ApplicationIntegrationTypes,
     RawApplicationIntegrationTypeConfiguration
   >;
   custom_install_url?: string;
