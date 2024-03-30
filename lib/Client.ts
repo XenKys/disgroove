@@ -176,6 +176,7 @@ import type {
   MessagePollVoteAddFields,
   MessagePollVoteRemoveFields,
   BulkGuildBanParams,
+  BulkDeleteMessagesParams,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
@@ -345,9 +346,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
   bulkDeleteMessages(
     channelId: string,
-    options?: {
-      messagesIds?: Array<string>;
-    },
+    options?: BulkDeleteMessagesParams,
     reason?: string
   ): void {
     this.rest.request(
@@ -355,7 +354,7 @@ export class Client extends EventEmitter {
       Endpoints.channelBulkDelete(channelId),
       {
         json: {
-          messages: options?.messagesIds,
+          messages: options?.messages,
         },
         reason,
       }
