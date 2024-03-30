@@ -1064,6 +1064,7 @@ export enum JSONErrorCodes {
   MessageBlockedByHarmfulLinksFilter = 240000,
   CannotEnableOnboardingRequirementsAreNotMet = 350000,
   CannotUpdateOnboardingWhileBelowRequirements,
+  FailedToBanUsers = 500000,
   PollVotingBlocked = 520000,
   PollExpired,
   InvalidChannelTypeForPollCreation,
