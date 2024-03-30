@@ -505,6 +505,11 @@ export interface CreateGuildBanParams {
   deleteMessageSeconds?: number;
 }
 
+export interface BulkGuildBanParams {
+  userIds: Array<string>;
+  deleteMessageSeconds?: number;
+}
+
 export interface CreateGuildRoleParams {
   name?: string;
   permissions?: string;

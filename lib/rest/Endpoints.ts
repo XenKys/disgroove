@@ -1,4 +1,6 @@
 // Guilds
+export const bulkGuildBan = (guildId: string) =>
+  `guilds/${guildId}/bulk-ban` as const;
 export const guild = (guildId: string) => `guilds/${guildId}` as const;
 export const guilds = () => "guilds" as const;
 export const guildActiveThreads = (guildId: string) =>

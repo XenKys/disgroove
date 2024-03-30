@@ -175,6 +175,7 @@ import type {
   RawAttachment,
   MessagePollVoteAddFields,
   MessagePollVoteRemoveFields,
+  BulkGuildBanParams,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
@@ -309,6 +310,34 @@ export class Client extends EventEmitter {
       .then((response) =>
         this.util.toCamelCase<{
           pruned: number;
+        }>(response)
+      );
+  }
+
+  /** https://discord.com/developers/docs/resources/guild#bulk-guild-ban */
+  bulkGuildBan(
+    guildId: string,
+    options: BulkGuildBanParams,
+    reason?: string
+  ): Promise<{
+    bannedUsers: Array<string>;
+    failedUsers: Array<string>;
+  }> {
+    return this.rest
+      .request<{
+        banned_users: Array<string>;
+        failed_users: Array<string>;
+      }>(RESTMethods.Post, Endpoints.bulkGuildBan(guildId), {
+        json: {
+          user_ids: options.userIds,
+          delete_message_seconds: options.deleteMessageSeconds,
+        },
+        reason,
+      })
+      .then((response) =>
+        this.util.toCamelCase<{
+          bannedUsers: Array<string>;
+          failedUsers: Array<string>;
         }>(response)
       );
   }
