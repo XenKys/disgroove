@@ -82,6 +82,13 @@ export enum InteractionType {
   ModalSubmit,
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types */
+export enum InterationContextTypes {
+  Guild,
+  BotDM,
+  PrivateChannel,
+}
+
 /** https://discord.com/developers/docs/interactions/message-components#component-object-component-types */
 export enum ComponentTypes {
   ActionRow = 1,
