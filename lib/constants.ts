@@ -629,6 +629,8 @@ export enum GatewayIntents {
   GuildScheduledEvents = 1 << 16,
   AutoModerationConfiguration = 1 << 20,
   AutoModerationActionExecution = 1 << 21,
+  GuildMessagePolls = 1 << 24,
+  DirectMessagePolls = 1 << 25,
   AllNonPrivileged = Guilds |
     GuildModeration |
     GuildEmojisAndStickers |
@@ -644,7 +646,9 @@ export enum GatewayIntents {
     DirectMessageTyping |
     GuildScheduledEvents |
     AutoModerationConfiguration |
-    AutoModerationActionExecution,
+    AutoModerationActionExecution |
+    GuildMessagePolls |
+    DirectMessagePolls,
   AllPrivileged = GuildMembers | GuildPresences | MessageContent,
   All = AllNonPrivileged | AllPrivileged,
 }
