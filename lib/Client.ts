@@ -2252,6 +2252,15 @@ export class Client extends EventEmitter {
       .then((response) => this.util.toCamelCase<Webhook>(response));
   }
 
+  endPoll(channelId: string, messageId: string): Promise<Message> {
+    return this.rest
+      .request<RawMessage>(
+        RESTMethods.Post,
+        Endpoints.pollExpire(channelId, messageId)
+      )
+      .then((response) => this.util.toCamelCase<Message>(response));
+  }
+
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
   executeWebhook(
     webhookId: string,
@@ -2344,15 +2353,6 @@ export class Client extends EventEmitter {
       .then((response) =>
         response !== null ? this.util.toCamelCase<Message>(response) : null
       );
-  }
-
-  expirePoll(channelId: string, messageId: string): Promise<Message> {
-    return this.rest
-      .request<RawMessage>(
-        RESTMethods.Post,
-        Endpoints.pollExpire(channelId, messageId)
-      )
-      .then((response) => this.util.toCamelCase<Message>(response));
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
