@@ -2252,6 +2252,7 @@ export class Client extends EventEmitter {
       .then((response) => this.util.toCamelCase<Webhook>(response));
   }
 
+  /** https://discord.com/developers/docs/resources/poll#end-poll */
   endPoll(channelId: string, messageId: string): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -3338,6 +3339,7 @@ export class Client extends EventEmitter {
       );
   }
 
+  /** https://discord.com/developers/docs/resources/poll#get-answer-voters */
   getPollAnswerVoters(
     channelId: string,
     messageId: string,

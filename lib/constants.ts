@@ -514,6 +514,7 @@ export enum InviteTargetTypes {
   EmbeddedApplication,
 }
 
+/** https://discord.com/developers/docs/resources/poll#layout-type */
 export enum LayoutType {
   Default = 1,
 }

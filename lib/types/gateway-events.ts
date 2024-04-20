@@ -320,6 +320,7 @@ export interface RawVoiceServerUpdateEventFields {
   endpoint: string | null;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#message-poll-vote-add-message-poll-vote-add-fields */
 export interface RawMessagePollVoteAddFields {
   user_id: string;
   channel_id: string;
@@ -328,6 +329,7 @@ export interface RawMessagePollVoteAddFields {
   answer_id: number;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#message-poll-vote-remove */
 export interface RawMessagePollVoteRemoveFields {
   user_id: string;
   channel_id: string;
