@@ -5,10 +5,10 @@ import type { Emoji, RawEmoji } from "./emoji";
 export interface RawPoll {
   question: RawPollMedia;
   answers: Array<RawPollAnswer>;
-  expiry: string;
+  expiry: string | null;
   allow_multiselect: boolean;
   layout_type: LayoutType;
-  results: RawPollResults;
+  results?: RawPollResults;
 }
 
 /** https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure */
@@ -48,10 +48,10 @@ export interface RawPollAnswerCount {
 export interface Poll {
   question: PollMedia;
   answers: Array<PollAnswer>;
-  expiry: string;
+  expiry: string | null;
   allowMultiselect: boolean;
   layoutType: LayoutType;
-  results: PollResults;
+  results?: PollResults;
 }
 
 export interface PollCreateParams {
