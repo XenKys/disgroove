@@ -1,9 +1,11 @@
 import type {
   AllowedMentionTypes,
+  ApplicationIntegrationTypes,
   AttachmentFlags,
   ChannelFlags,
   ChannelTypes,
   ForumLayoutTypes,
+  InteractionType,
   InviteTargetTypes,
   MessageActivityTypes,
   MessageFlags,
@@ -100,6 +102,7 @@ export interface RawMessage {
   message_reference?: RawMessageReference;
   flags?: MessageFlags;
   referenced_message?: RawMessage | null;
+  interaction_metadata?: RawMessageInteractionMetadata;
   interaction?: RawMessageInteraction;
   thread?: RawChannel;
   components?: Array<RawActionRow>;
@@ -115,6 +118,17 @@ export interface RawMessage {
 export interface RawMessageActivity {
   type: MessageActivityTypes;
   party_id?: string;
+}
+
+/** https://discord.com/developers/docs/resources/channel#message-interaction-metadata-object-message-interaction-metadata-structure */
+export interface RawMessageInteractionMetadata {
+  id: string;
+  type: InteractionType;
+  user: RawUser;
+  authorizing_integration_owners: Record<ApplicationIntegrationTypes, string>;
+  original_response_message_id?: string;
+  interacted_message_id?: string;
+  triggering_interaction_metadata?: RawMessageInteractionMetadata;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-reference-object-message-reference-structure */
@@ -362,6 +376,7 @@ export interface Message {
   messageReference?: MessageReference;
   flags?: MessageFlags;
   referencedMessage?: Message | null;
+  interactionMetadata?: MessageInteractionMetadata;
   interaction?: MessageInteraction;
   thread?: Channel;
   components?: Array<ActionRow>;
@@ -376,6 +391,15 @@ export interface Message {
 export interface MessageActivity {
   type: MessageActivityTypes;
   partyId?: string;
+}
+
+export interface MessageInteractionMetadata {
+  id: string;
+  type: InteractionType;
+  user: User;
+  authorizingIntegrationOwners: Record<ApplicationIntegrationTypes, string>;
+  originalResponseMessageId?: string;
+  interactedMessageId?: string;
 }
 
 export interface MessageReference {
