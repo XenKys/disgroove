@@ -416,7 +416,7 @@ export class Client extends EventEmitter {
     this.shards.connect();
   }
 
-  /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
+  /** https://discord.com/developers/docs/monetization/entitlements#consume-an-entitlement */
   consumeEntitlement(applicationId: string, entitlementId: string): void {
     this.rest.request(
       RESTMethods.Post,
