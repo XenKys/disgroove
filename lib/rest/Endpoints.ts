@@ -184,6 +184,11 @@ export const applicationEntitlement = (
   applicationId: string,
   entitlementId: string
 ) => `applications/${applicationId}/entitlements/${entitlementId}` as const;
+export const applicationEntitlementConsume = (
+  applicationId: string,
+  entitlementId: string
+) =>
+  `applications/${applicationId}/entitlements/${entitlementId}/consume` as const;
 export const applicationEntitlements = (applicationId: string) =>
   `applications/${applicationId}/entitlements` as const;
 export const applicationGuildCommand = (

@@ -10,7 +10,7 @@ export interface RawEntitlement {
   type: EntitlementTypes;
   deleted: boolean;
   gift_code_flags?: number; // Undocumented
-  consumed?: boolean; // Undocumented
+  consumed?: boolean;
   starts_at?: string;
   ends_at?: string;
   guild_id?: string;
@@ -26,7 +26,7 @@ export interface Entitlement {
   type: EntitlementTypes;
   deleted: boolean;
   giftCodeFlags?: number; // Undocumented
-  consumed?: boolean; // Undocumented
+  consumed?: boolean;
   startsAt?: string;
   endsAt?: string;
   guildId?: string;

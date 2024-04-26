@@ -417,6 +417,14 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
+  consumeEntitlement(applicationId: string, entitlementId: string): void {
+    this.rest.request(
+      RESTMethods.Post,
+      Endpoints.applicationEntitlementConsume(applicationId, entitlementId)
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
   createAutoModerationRule(
     guildId: string,
     options: CreateAutoModerationRuleParams,
