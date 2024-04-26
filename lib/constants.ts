@@ -1189,6 +1189,8 @@ export enum MembershipState {
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-types */
 export enum SkuTypes {
+  Durable = 2,
+  Consumable,
   Subscription = 5,
   SubscriptionGroup,
 }
@@ -1203,11 +1205,11 @@ export enum SkuFlags {
 /** https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types */
 export enum EntitlementTypes {
   Purchase = 1,
-  PremiumSubscription = 2,
-  DeveloperGift = 3,
-  TestModePurchase = 4,
-  FreePurchase = 5,
-  UserGift = 6,
-  PremiumPurchase = 7,
-  ApplicationSubscription = 8,
+  PremiumSubscription,
+  DeveloperGift,
+  TestModePurchase,
+  FreePurchase,
+  UserGift,
+  PremiumPurchase,
+  ApplicationSubscription,
 }
