@@ -348,6 +348,11 @@ export enum MessageFlags {
   IsVoiceMessage = 1 << 13,
 }
 
+export enum MessageReferenceTypes {
+  Default,
+  Forward,
+}
+
 /** https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags */
 export enum AttachmentFlags {
   IsRemix = 1 << 2,
