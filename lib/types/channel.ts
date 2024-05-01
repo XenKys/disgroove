@@ -141,6 +141,11 @@ export interface RawMessageReference {
   fail_if_not_exists?: boolean;
 }
 
+export interface RawMessageSnapshot {
+  message: RawMessage;
+  guild_id?: string;
+}
+
 /** https://discord.com/developers/docs/resources/channel#followed-channel-object-followed-channel-structure */
 export interface RawFollowedChannel {
   channel_id: string;
@@ -410,6 +415,11 @@ export interface MessageReference {
   channelId?: string;
   guildId?: string;
   failIfNotExists?: boolean;
+}
+
+export interface MessageSnapshot {
+  message: Message;
+  guildId?: string;
 }
 
 export interface FollowedChannel {
