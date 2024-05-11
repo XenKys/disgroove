@@ -9,7 +9,6 @@ import type {
   InviteTargetTypes,
   MessageActivityTypes,
   MessageFlags,
-  MessageReferenceTypes,
   MessageTypes,
   SortOrderTypes,
   VideoQualityModes,
@@ -134,7 +133,6 @@ export interface RawMessageInteractionMetadata {
 
 /** https://discord.com/developers/docs/resources/channel#message-reference-object-message-reference-structure */
 export interface RawMessageReference {
-  type?: MessageReferenceTypes;
   message_id?: string;
   channel_id?: string;
   guild_id?: string;
@@ -405,7 +403,6 @@ export interface MessageInteractionMetadata {
 }
 
 export interface MessageReference {
-  type?: MessageReferenceTypes;
   messageId?: string;
   channelId?: string;
   guildId?: string;
