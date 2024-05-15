@@ -981,6 +981,7 @@ export enum JSONErrorCodes {
   ThereAreNoTagsAvailableThatCanBeSetByNonModerators = 40066,
   TagRequiredToCreateAForumPostInThisChannel,
   AnEntitlementHasAlreadyBeenGrantedForThisResource = 40074,
+  CloudflareIsBlockingYourRequestThisCanOftenBeResolvedBySettingAProperUserAgent = 40333,
   MissingAccess = 50001,
   InvalidAccountType,
   CannotExecuteActionOnDMChannel,
