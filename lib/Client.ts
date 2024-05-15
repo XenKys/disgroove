@@ -2369,7 +2369,8 @@ export class Client extends EventEmitter {
     channelId: string,
     options: {
       webhookChannelId: string;
-    }
+    },
+    reason?: string
   ): Promise<FollowedChannel> {
     return this.rest
       .request<RawFollowedChannel>(
@@ -2379,6 +2380,7 @@ export class Client extends EventEmitter {
           json: {
             webhook_channel_id: options.webhookChannelId,
           },
+          reason,
         }
       )
       .then((response) => this.util.toCamelCase<FollowedChannel>(response));
