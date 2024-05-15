@@ -52,6 +52,7 @@ import type {
   ThreadMemberUpdateEventExtraFields,
   MessagePollVoteAddFields,
   MessagePollVoteRemoveFields,
+  GuildAuditLogEntryCreateExtraFields,
 } from "../types";
 import { Client } from "../Client";
 import * as pkg from "../../package.json";
@@ -316,7 +317,9 @@ export class Shard {
       case "GUILD_AUDIT_LOG_ENTRY_CREATE":
         this.client.emit(
           GatewayEvents.GuildAuditLogEntryCreate,
-          this.client.util.toCamelCase<AuditLogEntry>(packet.d)
+          this.client.util.toCamelCase<
+            AuditLogEntry & GuildAuditLogEntryCreateExtraFields
+          >(packet.d)
         );
         break;
       case "GUILD_BAN_ADD":
