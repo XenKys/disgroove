@@ -97,6 +97,7 @@ export interface ApplicationRoleConnection {
 export interface EditCurrentUserParams {
   username?: string;
   avatar?: string | null;
+  banner?: string | null;
 }
 
 export interface CreateDMParams {

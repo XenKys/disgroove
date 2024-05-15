@@ -1559,6 +1559,7 @@ export class Client extends EventEmitter {
         json: {
           username: options.username,
           avatar: options.avatar,
+          banner: options.banner,
         },
       })
       .then((response) => this.util.toCamelCase<User>(response));
