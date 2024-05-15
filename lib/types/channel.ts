@@ -113,6 +113,7 @@ export interface RawMessage {
   role_subscription_data?: RawRoleSubscriptionData;
   resolved?: RawResolvedData;
   poll?: RawPoll;
+  call?: RawMessageCall;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-object-message-activity-structure */
@@ -130,6 +131,12 @@ export interface RawMessageInteractionMetadata {
   original_response_message_id?: string;
   interacted_message_id?: string;
   triggering_interaction_metadata?: RawMessageInteractionMetadata;
+}
+
+/** https://discord.com/developers/docs/resources/channel#message-call-object-message-call-structure */
+export interface RawMessageCall {
+  partecipants: Array<string>;
+  ended_timestamp?: string | null;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-reference-object-message-reference-structure */
@@ -387,6 +394,7 @@ export interface Message {
   roleSubscriptionData?: RoleSubscriptionData;
   resolved?: ResolvedData;
   poll?: Poll;
+  call?: MessageCall;
 }
 
 export interface MessageActivity {
@@ -401,6 +409,12 @@ export interface MessageInteractionMetadata {
   authorizingIntegrationOwners: Record<ApplicationIntegrationTypes, string>;
   originalResponseMessageId?: string;
   interactedMessageId?: string;
+  triggeringInteractionMetadata?: MessageInteractionMetadata;
+}
+
+export interface MessageCall {
+  partecipants: Array<string>;
+  endedTimestamp?: string | null;
 }
 
 export interface MessageReference {
