@@ -178,6 +178,7 @@ import type {
   BulkGuildBanParams,
   BulkDeleteMessagesParams,
   RawPollCreateParams,
+  GuildAuditLogEntryCreateExtraFields,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
@@ -3813,7 +3814,9 @@ export interface ClientEvents {
   ];
   guildUpdate: [guild: Guild];
   guildDelete: [guild: UnavailableGuild];
-  guildAuditLogEntryCreate: [auditLogEntry: AuditLogEntry];
+  guildAuditLogEntryCreate: [
+    auditLogEntry: AuditLogEntry & GuildAuditLogEntryCreateExtraFields
+  ];
   guildBanAdd: [ban: GuildBanAddEventFields];
   guildBanRemove: [ban: GuildBanRemoveEventFields];
   guildEmojisUpdate: [emojis: Array<Emoji>, guildId: string];

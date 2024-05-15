@@ -87,6 +87,11 @@ export interface RawGuildCreateEventExtraFields {
   guild_scheduled_events?: Array<RawGuildScheduledEvent>;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#guild-audit-log-entry-create-guild-audit-log-entry-create-extra-fields */
+export interface RawGuildAuditLogEntryCreateExtraFields {
+  guild_id: string;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#guild-ban-add-guild-ban-add-event-fields */
 export interface RawGuildBanAddEventFields {
   guild_id: string;
@@ -389,6 +394,10 @@ export interface GuildCreateEventExtraFields {
   presences?: Array<PresenceUpdateEventFields>;
   stageInstances?: Array<StageInstance>;
   guildScheduledEvents?: Array<GuildScheduledEvent>;
+}
+
+export interface GuildAuditLogEntryCreateExtraFields {
+  guildId: string;
 }
 
 export interface GuildBanAddEventFields {
