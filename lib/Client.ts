@@ -7,6 +7,7 @@ import {
   type ImageWidgetStyleOptions,
   InteractionCallbackType,
   type MFALevel,
+  type ReactionTypes,
 } from "./constants";
 import { Util } from "./utils";
 import { Endpoints, RequestManager, RESTMethods } from "./rest";
@@ -3257,6 +3258,7 @@ export class Client extends EventEmitter {
     messageId: string,
     emoji: string,
     options?: {
+      type?: ReactionTypes;
       after?: string;
       limit?: number;
     }
@@ -3267,6 +3269,7 @@ export class Client extends EventEmitter {
         Endpoints.channelMessageAllReactions(channelId, messageId, emoji),
         {
           query: {
+            type: options?.type,
             after: options?.after,
             limit: options?.limit,
           },

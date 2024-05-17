@@ -3,6 +3,7 @@ import type {
   ActivityType,
   GuildMemberFlags,
   InviteTargetTypes,
+  ReactionTypes,
   StatusTypes,
   TriggerTypes,
 } from "../constants";
@@ -218,6 +219,7 @@ export interface RawMessageReactionAddEventFields {
   member?: RawGuildMember;
   emoji: RawEmoji;
   message_author_id?: string;
+  type: ReactionTypes;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-message-reaction-remove-event-fields */
@@ -227,6 +229,7 @@ export interface RawMessageReactionRemoveEventFields {
   message_id: string;
   guild_id?: string;
   emoji: RawEmoji;
+  type: ReactionTypes;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-all-message-reaction-remove-all-event-fields */

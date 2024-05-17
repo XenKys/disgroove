@@ -360,6 +360,12 @@ export enum AllowedMentionTypes {
   EveryoneMentions = "everyone",
 }
 
+/** https://discord.com/developers/docs/resources/channel#get-reactions-reaction-types */
+export enum ReactionTypes {
+  Normal,
+  Burst,
+}
+
 /** https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level */
 export enum DefaultMessageNotificationLevel {
   AllMessages,
