@@ -12,10 +12,11 @@ import type {
   RawGuildScheduledEvent,
   RawUser,
 } from ".";
-import type { InviteTargetTypes } from "../constants";
+import type { InviteTargetTypes, InviteTypes } from "../constants";
 
 /** https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
 export interface RawInvite {
+  type: InviteTypes;
   code: string;
   guild?: RawGuild;
   channel: RawChannel;
@@ -48,6 +49,7 @@ export interface RawInviteStageInstance {
 }
 
 export interface Invite {
+  type: InviteTypes;
   code: string;
   guild?: Guild;
   channel: Channel;
