@@ -219,6 +219,8 @@ export interface RawMessageReactionAddEventFields {
   member?: RawGuildMember;
   emoji: RawEmoji;
   message_author_id?: string;
+  burst: boolean;
+  burst_colors?: Array<string>;
   type: ReactionTypes;
 }
 
@@ -229,6 +231,7 @@ export interface RawMessageReactionRemoveEventFields {
   message_id: string;
   guild_id?: string;
   emoji: RawEmoji;
+  burst: boolean;
   type: ReactionTypes;
 }
 
@@ -514,6 +517,9 @@ export interface MessageReactionAddEventFields {
   member?: GuildMember;
   emoji: Emoji;
   messageAuthorId?: string;
+  burst: boolean;
+  burstColors?: Array<string>;
+  type: ReactionTypes;
 }
 
 export interface MessageReactionRemoveEventFields {
@@ -522,6 +528,8 @@ export interface MessageReactionRemoveEventFields {
   messageId: string;
   guildId?: string;
   emoji: Emoji;
+  burst: boolean;
+  type: ReactionTypes;
 }
 
 export interface MessageReactionRemoveAllEventFields {
