@@ -218,6 +218,13 @@ export enum AuditLogEvents {
   AutoModerationUserCommunicationDisabled,
   CreatorMonetizationRequestCreated = 150,
   CreatorMonetizationTermsAccepted,
+  OnboardingPromptCreate = 163,
+  OnboardingPromptUpdate,
+  OnboardingPromptDelete,
+  OnboardingCreate,
+  OnboardingUpdate,
+  HomeSettingsCreate = 190,
+  HomeSettingsUpdate,
 }
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types */
