@@ -1,6 +1,7 @@
 import type {
   ActivityFlags,
   ActivityType,
+  GuildMemberFlags,
   InviteTargetTypes,
   StatusTypes,
   TriggerTypes,
@@ -133,6 +134,7 @@ export interface RawGuildMemberUpdateEventFields {
   mute?: boolean;
   pending?: boolean;
   communication_disabled_until?: number | null;
+  flags?: GuildMemberFlags;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-members-chunk-guild-members-chunk-event-fields */
@@ -435,6 +437,7 @@ export interface GuildMemberUpdateEventFields {
   mute?: boolean;
   pending?: boolean;
   communicationDisabledUntil?: number | null;
+  flags?: GuildMemberFlags;
 }
 
 export interface GuildMembersChunkEventFields {
