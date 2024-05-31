@@ -233,6 +233,7 @@ export enum TriggerTypes {
   Spam = 3,
   KeywordPreset,
   MentionSpam,
+  MemberProfile,
 }
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-keyword-preset-types */
@@ -245,6 +246,7 @@ export enum KeywordPresetTypes {
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-event-types */
 export enum EventTypes {
   MessageSend = 1,
+  MemberUpdate,
 }
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-types */
@@ -252,6 +254,7 @@ export enum ActionTypes {
   BlockMessage = 1,
   SendAlertMessage,
   Timeout,
+  BlockMemberInteraction,
 }
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-types */
