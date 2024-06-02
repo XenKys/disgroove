@@ -1,6 +1,6 @@
 {
   "name": "disgroove",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A module to interface with Discord",
   "main": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/XenKys/disgroove#readme",
   "devDependencies": {
-    "@types/node": "^20.12.11",
+    "@types/node": "^20.13.0",
     "@types/ws": "^8.5.10",
     "typescript": "^5.4.5"
   },
