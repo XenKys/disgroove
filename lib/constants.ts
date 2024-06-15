@@ -1195,6 +1195,7 @@ export const BitwisePermissionFlags = {
   UseExternalSounds: 1n << 45n,
   SendVoiceMessages: 1n << 46n,
   SendPolls: 1n << 49n,
+  UseExternalApps: 1n << 50n,
 } as const;
 
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-flags */
