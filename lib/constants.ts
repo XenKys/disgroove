@@ -337,6 +337,7 @@ export enum MessageTypes {
   GuildIncidentAlertModeDisabled,
   GuildIncidentReportRaid,
   GuildIncidentReportFalseAlarm,
+  PurchaseNotification = 44,
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-object-message-activity-types */
