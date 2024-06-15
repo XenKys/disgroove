@@ -34,6 +34,12 @@ export interface RawUser {
   avatar_decoration?: string | null;
 }
 
+/** https://discord.com/developers/docs/resources/user#avatar-decoration-data-object-avatar-decoration-data-structure */
+export interface RawAvatarDecorationData {
+  asset: string;
+  sku_id: string;
+}
+
 /** https://discord.com/developers/docs/resources/user#connection-object-connection-structure */
 export interface RawConnection {
   id: string;
@@ -73,6 +79,11 @@ export interface User {
   premiumType?: PremiumTypes;
   publicFlags?: UserFlags;
   avatarDecoration?: string | null;
+}
+
+export interface AvatarDecorationData {
+  asset: string;
+  skuId: string;
 }
 
 export interface Connection {

@@ -28,6 +28,8 @@ import type {
   StageInstance,
   GuildScheduledEvent,
   Application,
+  RawAvatarDecorationData,
+  AvatarDecorationData,
 } from ".";
 
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
@@ -136,6 +138,7 @@ export interface RawGuildMemberUpdateEventFields {
   pending?: boolean;
   communication_disabled_until?: number | null;
   flags?: GuildMemberFlags;
+  avatar_decoration_data?: RawAvatarDecorationData | null;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-members-chunk-guild-members-chunk-event-fields */
@@ -444,6 +447,7 @@ export interface GuildMemberUpdateEventFields {
   pending?: boolean;
   communicationDisabledUntil?: number | null;
   flags?: GuildMemberFlags;
+  avatarDecorationData?: AvatarDecorationData | null;
 }
 
 export interface GuildMembersChunkEventFields {
