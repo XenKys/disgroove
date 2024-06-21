@@ -25,7 +25,7 @@ export interface RawGuildScheduledEvent {
   privacy_level: GuildScheduledEventPrivacyLevel;
   status: GuildScheduledEventStatus;
   entity_type: GuildScheduledEventEntityTypes;
-  entity_id?: snowflake;
+  entity_id: snowflake | null;
   entity_metadata: RawGuildScheduledEventEntityMetadata | null;
   creator?: RawUser;
   user_count?: number;
@@ -56,7 +56,7 @@ export interface GuildScheduledEvent {
   privacyLevel: GuildScheduledEventPrivacyLevel;
   status: GuildScheduledEventStatus;
   entityType: GuildScheduledEventEntityTypes;
-  entityId?: snowflake;
+  entityId: snowflake | null;
   entityMetadata: GuildScheduledEventEntityMetadata | null;
   creator?: User;
   userCount?: number;
