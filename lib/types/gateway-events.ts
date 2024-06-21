@@ -30,18 +30,20 @@ import type {
   Application,
   RawAvatarDecorationData,
   AvatarDecorationData,
+  snowflake,
+  timestamp,
 } from ".";
 
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {
-  guild_id: string;
+  guild_id: snowflake;
   action: RawAutoModerationAction;
-  rule_id: string;
+  rule_id: snowflake;
   rule_trigger_type: TriggerTypes;
-  user_id: string;
-  channel_id?: string;
-  message_id?: string;
-  alert_system_message_id?: string;
+  user_id: snowflake;
+  channel_id?: snowflake;
+  message_id?: snowflake;
+  alert_system_message_id?: snowflake;
   content: string;
   matched_keyword: string | null;
   matched_content: string | null;
@@ -49,36 +51,36 @@ export interface RawAutoModerationActionExectionEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#thread-list-sync-thread-list-sync-event-fields */
 export interface RawThreadListSyncEventFields {
-  guild_id: string;
-  channel_ids?: Array<string>;
+  guild_id: snowflake;
+  channel_ids?: Array<snowflake>;
   threads: Array<RawChannel>;
   members: Array<RawThreadMember>;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#thread-member-update-thread-member-update-event-extra-fields */
 export interface RawThreadMemberUpdateEventExtraFields {
-  guild_id: string;
+  guild_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#thread-members-update-thread-members-update-event-fields */
 export interface RawThreadMembersUpdateEventFields {
-  id: string;
-  guild_id: string;
+  id: snowflake;
+  guild_id: snowflake;
   member_count: number;
   added_members?: Array<RawThreadMember>;
-  removed_member_ids?: Array<string>;
+  removed_member_ids?: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#channel-pins-update-channel-pins-update-event-fields */
 export interface RawChannelPinsUpdateEventFields {
-  guild_id?: string;
-  channel_id: string;
-  last_pin_timestamp?: string | null;
+  guild_id?: snowflake;
+  channel_id: snowflake;
+  last_pin_timestamp?: timestamp | null;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-create-guild-create-extra-fields */
 export interface RawGuildCreateEventExtraFields {
-  joined_at?: string;
+  joined_at?: timestamp;
   large?: boolean;
   unavailable?: boolean;
   member_count?: number;
@@ -93,45 +95,45 @@ export interface RawGuildCreateEventExtraFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-audit-log-entry-create-guild-audit-log-entry-create-extra-fields */
 export interface RawGuildAuditLogEntryCreateExtraFields {
-  guild_id: string;
+  guild_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-ban-add-guild-ban-add-event-fields */
 export interface RawGuildBanAddEventFields {
-  guild_id: string;
+  guild_id: snowflake;
   user: RawUser;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-ban-remove-guild-ban-remove-event-fields */
 export interface RawGuildBanRemoveEventFields {
-  guild_id: string;
+  guild_id: snowflake;
   user: RawUser;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-integrations-update-guild-integrations-update-event-fields */
 export interface RawGuildIntegrationsUpdateEventFields {
-  guild_id: string;
+  guild_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-member-add-guild-member-add-extra-fields */
 export interface RawGuildMemberAddEventExtraFields {
-  guild_id: string;
+  guild_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-member-remove-guild-member-remove-event-fields */
 export interface RawGuildMemberRemoveEventFields {
-  guild_id: string;
+  guild_id: snowflake;
   user: RawUser;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-member-update-guild-member-update-event-fields */
 export interface RawGuildMemberUpdateEventFields {
-  guild_id: string;
-  roles: Array<string>;
+  guild_id: snowflake;
+  roles: Array<snowflake>;
   user: RawUser;
   nick?: string | null;
   avatar: string | null;
-  joined_at?: string | null;
+  joined_at?: timestamp | null;
   premium_since?: number | null;
   deaf?: boolean;
   mute?: boolean;
@@ -143,7 +145,7 @@ export interface RawGuildMemberUpdateEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-members-chunk-guild-members-chunk-event-fields */
 export interface RawGuildMembersChunkEventFields {
-  guild_id: string;
+  guild_id: snowflake;
   members: Array<RawGuildMember>;
   chunk_index: number;
   chunk_count: number;
@@ -154,27 +156,27 @@ export interface RawGuildMembersChunkEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#integration-create-integration-create-event-additional-fields */
 export interface RawIntegrationCreateEventExtraFields {
-  guild_id: string;
+  guild_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#integration-update-integration-update-event-additional-fields */
 export interface RawIntegrationUpdateEventExtraFields {
-  guild_id: string;
+  guild_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#integration-delete-integration-delete-event-fields */
 export interface RawIntegrationDeleteEventFields {
-  id: string;
-  guild_id: string;
-  application_id?: string;
+  id: snowflake;
+  guild_id: snowflake;
+  application_id?: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#invite-create-invite-create-event-fields */
 export interface RawInviteCreateEventFields {
-  channel_id: string;
+  channel_id: snowflake;
   code: string;
-  created_at: string;
-  guild_id?: string;
+  created_at: timestamp;
+  guild_id?: snowflake;
   inviter?: RawUser;
   max_age: number;
   max_uses: number;
@@ -187,41 +189,41 @@ export interface RawInviteCreateEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#invite-delete-invite-delete-event-fields */
 export interface RawInviteDeleteEventFields {
-  channel_id: string;
-  guild_id?: string;
+  channel_id: snowflake;
+  guild_id?: snowflake;
   code: string;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-create-message-create-extra-fields */
 export interface RawMessageCreateEventExtraFields {
-  guild_id?: string;
+  guild_id?: snowflake;
   member?: RawGuildMember;
   mentions: Array<RawUser>;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-delete-message-delete-event-fields */
 export interface RawMessageDeleteEventFields {
-  id: string;
-  channel_id: string;
-  guild_id?: string;
+  id: snowflake;
+  channel_id: snowflake;
+  guild_id?: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-delete-bulk-message-delete-bulk-event-fields */
 export interface RawMessageDeleteBulkEventFields {
-  ids: Array<string>;
-  channel_id: string;
-  guild_id?: string;
+  ids: Array<snowflake>;
+  channel_id: snowflake;
+  guild_id?: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-reaction-add-message-reaction-add-event-fields */
 export interface RawMessageReactionAddEventFields {
-  user_id: string;
-  channel_id: string;
-  message_id: string;
-  guild_id?: string;
+  user_id: snowflake;
+  channel_id: snowflake;
+  message_id: snowflake;
+  guild_id?: snowflake;
   member?: RawGuildMember;
   emoji: RawEmoji;
-  message_author_id?: string;
+  message_author_id?: snowflake;
   burst: boolean;
   burst_colors?: Array<string>;
   type: ReactionTypes;
@@ -229,10 +231,10 @@ export interface RawMessageReactionAddEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-message-reaction-remove-event-fields */
 export interface RawMessageReactionRemoveEventFields {
-  user_id: string;
-  channel_id: string;
-  message_id: string;
-  guild_id?: string;
+  user_id: snowflake;
+  channel_id: snowflake;
+  message_id: snowflake;
+  guild_id?: snowflake;
   emoji: RawEmoji;
   burst: boolean;
   type: ReactionTypes;
@@ -240,23 +242,23 @@ export interface RawMessageReactionRemoveEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-all-message-reaction-remove-all-event-fields */
 export interface RawMessageReactionRemoveAllEventFields {
-  channel_id: string;
-  message_id: string;
-  guild_id?: string;
+  channel_id: snowflake;
+  message_id: snowflake;
+  guild_id?: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-reaction-remove-emoji-message-reaction-remove-emoji-event-fields */
 export interface RawMessageReactionRemoveEmojiEventFields {
-  channel_id: string;
-  guild_id?: string;
-  message_id: string;
+  channel_id: snowflake;
+  guild_id?: snowflake;
+  message_id: snowflake;
   emoji: RawEmoji;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#presence-update-presence-update-event-fields */
 export interface RawPresenceUpdateEventFields {
   user: RawUser;
-  guild_id: string;
+  guild_id: snowflake;
   status: StatusTypes;
   activities: Array<RawActivity>;
   client_status: RawClientStatus;
@@ -274,9 +276,9 @@ export interface RawActivity {
   name: string;
   type: ActivityType;
   url?: string | null;
-  created_at: string;
+  created_at: timestamp;
   timestamps?: RawActivityTimestamps;
-  application_id?: string;
+  application_id?: snowflake;
   details?: string | null;
   state?: string | null;
   party?: RawActivityParty;
@@ -322,79 +324,79 @@ export interface RawActivityButton {
 
 /** https://discord.com/developers/docs/topics/gateway-events#typing-start-typing-start-event-fields */
 export interface RawTypingStartEventFields {
-  channel_id: string;
-  guild_id?: string;
-  user_id: string;
-  timestamp: string;
+  channel_id: snowflake;
+  guild_id?: snowflake;
+  user_id: snowflake;
+  timestamp: timestamp;
   member?: RawGuildMember;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#voice-server-update-voice-server-update-event-fields */
 export interface RawVoiceServerUpdateEventFields {
   token: string;
-  guild_id: string;
+  guild_id: snowflake;
   endpoint: string | null;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-poll-vote-add-message-poll-vote-add-fields */
 export interface RawMessagePollVoteAddFields {
-  user_id: string;
-  channel_id: string;
-  message_id: string;
-  guild_id?: string;
+  user_id: snowflake;
+  channel_id: snowflake;
+  message_id: snowflake;
+  guild_id?: snowflake;
   answer_id: number;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#message-poll-vote-remove */
 export interface RawMessagePollVoteRemoveFields {
-  user_id: string;
-  channel_id: string;
-  message_id: string;
-  guild_id?: string;
+  user_id: snowflake;
+  channel_id: snowflake;
+  message_id: snowflake;
+  guild_id?: snowflake;
   answer_id: number;
 }
 
 export interface AutoModerationActionExecutionEventFields {
-  guildId: string;
+  guildId: snowflake;
   action: AutoModerationAction;
-  ruleId: string;
+  ruleId: snowflake;
   ruleTriggerType: TriggerTypes;
-  userId: string;
-  channelId?: string;
-  messageId?: string;
-  alertSystemMessageId?: string;
+  userId: snowflake;
+  channelId?: snowflake;
+  messageId?: snowflake;
+  alertSystemMessageId?: snowflake;
   content: string;
   matchedKeyword: string | null;
   matchedContent: string | null;
 }
 
 export interface ThreadListSyncEventFields {
-  guildId: string;
-  channelIds?: Array<string>;
+  guildId: snowflake;
+  channelIds?: Array<snowflake>;
   threads: Array<Channel>;
   members: Array<ThreadMember>;
 }
 
 export interface ThreadMemberUpdateEventExtraFields {
-  guildId: string;
+  guildId: snowflake;
 }
 
 export interface ThreadMembersUpdateEventFields {
-  id: string;
-  guildId: string;
+  id: snowflake;
+  guildId: snowflake;
   memberCount: number;
   addedMembers?: Array<ThreadMember>;
-  removedMemberIds?: Array<string>;
+  removedMemberIds?: Array<snowflake>;
 }
 
 export interface ChannelPinsUpdateEventFields {
-  guildId?: string;
-  channelId: string;
-  lastPinTimestamp?: string | null;
+  guildId?: snowflake;
+  channelId: snowflake;
+  lastPinTimestamp?: timestamp | null;
 }
 
 export interface GuildCreateEventExtraFields {
-  joinedAt?: string;
+  joinedAt?: timestamp;
   large?: boolean;
   unavailable?: boolean;
   memberCount?: number;
@@ -408,39 +410,39 @@ export interface GuildCreateEventExtraFields {
 }
 
 export interface GuildAuditLogEntryCreateExtraFields {
-  guildId: string;
+  guildId: snowflake;
 }
 
 export interface GuildBanAddEventFields {
-  guildId: string;
+  guildId: snowflake;
   user: User;
 }
 
 export interface GuildBanRemoveEventFields {
-  guildId: string;
+  guildId: snowflake;
   user: User;
 }
 
 export interface GuildIntegrationsUpdateEventFields {
-  guildId: string;
+  guildId: snowflake;
 }
 
 export interface GuildMemberAddEventExtraFields {
-  guildId: string;
+  guildId: snowflake;
 }
 
 export interface GuildMemberRemoveEventFields {
-  guildId: string;
+  guildId: snowflake;
   user: User;
 }
 
 export interface GuildMemberUpdateEventFields {
-  guildId: string;
-  roles: Array<string>;
+  guildId: snowflake;
+  roles: Array<snowflake>;
   user: User;
   nick?: string | null;
   avatar: string | null;
-  joinedAt?: string | null;
+  joinedAt?: timestamp | null;
   premiumSince?: number | null;
   deaf?: boolean;
   mute?: boolean;
@@ -451,7 +453,7 @@ export interface GuildMemberUpdateEventFields {
 }
 
 export interface GuildMembersChunkEventFields {
-  guildId: string;
+  guildId: snowflake;
   members: Array<GuildMember>;
   chunkIndex: number;
   chunkCount: number;
@@ -461,24 +463,24 @@ export interface GuildMembersChunkEventFields {
 }
 
 export interface IntegrationCreateEventExtraFields {
-  guildId: string;
+  guildId: snowflake;
 }
 
 export interface IntegrationUpdateEventExtraFields {
-  guildId: string;
+  guildId: snowflake;
 }
 
 export interface IntegrationDeleteEventFields {
-  id: string;
-  guildId: string;
-  applicationId?: string;
+  id: snowflake;
+  guildId: snowflake;
+  applicationId?: snowflake;
 }
 
 export interface InviteCreateEventFields {
-  channelId: string;
+  channelId: snowflake;
   code: string;
-  createdAt: string;
-  guildId?: string;
+  createdAt: timestamp;
+  guildId?: snowflake;
   inviter?: User;
   maxAge: number;
   maxUses: number;
@@ -490,68 +492,68 @@ export interface InviteCreateEventFields {
 }
 
 export interface InviteDeleteEventFields {
-  channelId: string;
-  guildId?: string;
+  channelId: snowflake;
+  guildId?: snowflake;
   code: string;
 }
 
 export interface MessageCreateEventExtraFields {
-  guildId?: string;
+  guildId?: snowflake;
   member?: GuildMember;
   mentions: Array<User>;
 }
 
 export interface MessageDeleteEventFields {
-  id: string;
-  channelId: string;
-  guildId?: string;
+  id: snowflake;
+  channelId: snowflake;
+  guildId?: snowflake;
 }
 
 export interface MessageDeleteBulkEventFields {
-  ids: Array<string>;
-  channelId: string;
-  guildId?: string;
+  ids: Array<snowflake>;
+  channelId: snowflake;
+  guildId?: snowflake;
 }
 
 export interface MessageReactionAddEventFields {
-  userId: string;
-  channelId: string;
-  messageId: string;
-  guildId?: string;
+  userId: snowflake;
+  channelId: snowflake;
+  messageId: snowflake;
+  guildId?: snowflake;
   member?: GuildMember;
   emoji: Emoji;
-  messageAuthorId?: string;
+  messageAuthorId?: snowflake;
   burst: boolean;
   burstColors?: Array<string>;
   type: ReactionTypes;
 }
 
 export interface MessageReactionRemoveEventFields {
-  userId: string;
-  channelId: string;
-  messageId: string;
-  guildId?: string;
+  userId: snowflake;
+  channelId: snowflake;
+  messageId: snowflake;
+  guildId?: snowflake;
   emoji: Emoji;
   burst: boolean;
   type: ReactionTypes;
 }
 
 export interface MessageReactionRemoveAllEventFields {
-  channelId: string;
-  messageId: string;
-  guildId?: string;
+  channelId: snowflake;
+  messageId: snowflake;
+  guildId?: snowflake;
 }
 
 export interface MessageReactionRemoveEmojiEventFields {
-  channelId: string;
-  guildId?: string;
-  messageId: string;
+  channelId: snowflake;
+  guildId?: snowflake;
+  messageId: snowflake;
   emoji: Emoji;
 }
 
 export interface PresenceUpdateEventFields {
   user: User;
-  guildId: string;
+  guildId: snowflake;
   status: StatusTypes;
   activities: Array<Activity>;
   clientStatus: ClientStatus;
@@ -567,9 +569,9 @@ export interface Activity {
   name: string;
   type: ActivityType;
   url?: string | null;
-  createdAt: string;
+  createdAt: timestamp;
   timestamps?: ActivityTimestamps;
-  applicationId?: string;
+  applicationId?: snowflake;
   details?: string | null;
   state?: string | null;
   party?: ActivityParty;
@@ -609,31 +611,31 @@ export interface ActivityButton {
 }
 
 export interface TypingStartEventFields {
-  channelId: string;
-  guildId?: string;
-  userId: string;
-  timestamp: string;
+  channelId: snowflake;
+  guildId?: snowflake;
+  userId: snowflake;
+  timestamp: timestamp;
   member?: GuildMember;
 }
 
 export interface VoiceServerUpdateEventFields {
   token: string;
-  guildId: string;
+  guildId: snowflake;
   endpoint: string | null;
 }
 
 export interface MessagePollVoteAddFields {
-  userId: string;
-  channelId: string;
-  messageId: string;
-  guildId?: string;
+  userId: snowflake;
+  channelId: snowflake;
+  messageId: snowflake;
+  guildId?: snowflake;
   answerId: number;
 }
 
 export interface MessagePollVoteRemoveFields {
-  userId: string;
-  channelId: string;
-  messageId: string;
-  guildId?: string;
+  userId: snowflake;
+  channelId: snowflake;
+  messageId: snowflake;
+  guildId?: snowflake;
   answerId: number;
 }

@@ -1,10 +1,10 @@
-import type { User, RawUser } from ".";
+import type { User, RawUser, snowflake } from ".";
 
 /** https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure */
 export interface RawEmoji {
-  id: string | null;
+  id: snowflake | null;
   name: string | null;
-  roles?: Array<string>;
+  roles?: Array<snowflake>;
   user?: RawUser;
   require_colons?: boolean;
   managed?: boolean;
@@ -13,9 +13,9 @@ export interface RawEmoji {
 }
 
 export interface Emoji {
-  id: string | null;
+  id: snowflake | null;
   name: string | null;
-  roles?: Array<string>;
+  roles?: Array<snowflake>;
   user?: User;
   requireColons?: boolean;
   managed?: boolean;

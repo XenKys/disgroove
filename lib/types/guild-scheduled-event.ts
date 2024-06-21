@@ -3,22 +3,29 @@ import type {
   GuildScheduledEventStatus,
   GuildScheduledEventEntityTypes,
 } from "../constants";
-import type { GuildMember, User, RawGuildMember, RawUser } from ".";
+import type {
+  GuildMember,
+  User,
+  RawGuildMember,
+  RawUser,
+  snowflake,
+  timestamp,
+} from ".";
 
 /** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
 export interface RawGuildScheduledEvent {
-  id: string;
-  guild_id: string;
-  channel_id: string | null;
-  creator_id?: string | null;
+  id: snowflake;
+  guild_id: snowflake;
+  channel_id: snowflake | null;
+  creator_id?: snowflake | null;
   name: string;
   description?: string | null;
-  scheduled_start_time: string;
-  scheduled_end_time: string | null;
+  scheduled_start_time: timestamp;
+  scheduled_end_time: timestamp | null;
   privacy_level: GuildScheduledEventPrivacyLevel;
   status: GuildScheduledEventStatus;
   entity_type: GuildScheduledEventEntityTypes;
-  entity_id?: string;
+  entity_id?: snowflake;
   entity_metadata: RawGuildScheduledEventEntityMetadata | null;
   creator?: RawUser;
   user_count?: number;
@@ -32,24 +39,24 @@ export interface RawGuildScheduledEventEntityMetadata {
 
 /** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object-guild-scheduled-event-user-structure */
 export interface RawGuildScheduledEventUser {
-  guild_scheduled_event_id: string;
+  guild_scheduled_event_id: snowflake;
   user: RawUser;
   member?: RawGuildMember;
 }
 
 export interface GuildScheduledEvent {
-  id: string;
-  guildId: string;
-  channelId: string | null;
-  creatorId?: string | null;
+  id: snowflake;
+  guildId: snowflake;
+  channelId: snowflake | null;
+  creatorId?: snowflake | null;
   name: string;
   description?: string | null;
-  scheduledStartTime: string;
-  scheduledEndTime: string | null;
+  scheduledStartTime: timestamp;
+  scheduledEndTime: timestamp | null;
   privacyLevel: GuildScheduledEventPrivacyLevel;
   status: GuildScheduledEventStatus;
   entityType: GuildScheduledEventEntityTypes;
-  entityId?: string;
+  entityId?: snowflake;
   entityMetadata: GuildScheduledEventEntityMetadata | null;
   creator?: User;
   userCount?: number;
@@ -61,13 +68,13 @@ export interface GuildScheduledEventEntityMetadata {
 }
 
 export interface GuildScheduledEventUser {
-  guildScheduledEventId: string;
+  guildScheduledEventId: snowflake;
   user: User;
   member?: GuildMember;
 }
 
 export interface CreateGuildScheduledEventParams {
-  channelId?: string | null;
+  channelId?: snowflake | null;
   entityMetadata?: GuildScheduledEventEntityMetadata | null;
   name: string;
   privacyLevel: GuildScheduledEventPrivacyLevel;
@@ -79,7 +86,7 @@ export interface CreateGuildScheduledEventParams {
 }
 
 export interface EditGuildScheduledEventParams {
-  channelId?: string | null;
+  channelId?: snowflake | null;
   entityMetadata?: GuildScheduledEventEntityMetadata | null;
   name?: string;
   privacyLevel?: GuildScheduledEventPrivacyLevel;

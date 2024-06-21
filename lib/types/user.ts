@@ -11,11 +11,12 @@ import type {
   LocaleMap,
   RawApplicationRoleConnectionMetadata,
   RawIntegration,
+  snowflake,
 } from ".";
 
 /** https://discord.com/developers/docs/resources/user#user-object-user-structure */
 export interface RawUser {
-  id: string;
+  id: snowflake;
   username: string;
   discriminator: string;
   global_name: string | null;
@@ -37,12 +38,12 @@ export interface RawUser {
 /** https://discord.com/developers/docs/resources/user#avatar-decoration-data-object-avatar-decoration-data-structure */
 export interface RawAvatarDecorationData {
   asset: string;
-  sku_id: string;
+  sku_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/resources/user#connection-object-connection-structure */
 export interface RawConnection {
-  id: string;
+  id: snowflake;
   name: string;
   type: Services;
   revoked?: boolean;
@@ -62,7 +63,7 @@ export interface RawApplicationRoleConnection {
 }
 
 export interface User {
-  id: string;
+  id: snowflake;
   username: string;
   discriminator: string;
   globalName: string | null;
@@ -83,11 +84,11 @@ export interface User {
 
 export interface AvatarDecorationData {
   asset: string;
-  skuId: string;
+  skuId: snowflake;
 }
 
 export interface Connection {
-  id: string;
+  id: snowflake;
   name: string;
   type: Services;
   revoked?: boolean;
@@ -112,7 +113,7 @@ export interface EditCurrentUserParams {
 }
 
 export interface CreateDMParams {
-  recipientId: string;
+  recipientId: snowflake;
 }
 
 export interface CreateGroupDMParams {

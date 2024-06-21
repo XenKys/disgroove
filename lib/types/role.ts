@@ -1,8 +1,9 @@
 import type { RoleFlags } from "../constants";
+import type { snowflake } from "./common";
 
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-structure */
 export interface RawRole {
-  id: string;
+  id: snowflake;
   name: string;
   color: number;
   hoist: boolean;
@@ -18,16 +19,16 @@ export interface RawRole {
 
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure */
 export interface RawRoleTags {
-  bot_id?: string;
-  integration_id?: string;
+  bot_id?: snowflake;
+  integration_id?: snowflake;
   premium_subscriber?: null;
-  subscription_listing_id?: string;
+  subscription_listing_id?: snowflake;
   available_for_purchase?: null;
   guild_connections?: null;
 }
 
 export interface Role {
-  id: string;
+  id: snowflake;
   name: string;
   color: number;
   hoist: boolean;
@@ -42,10 +43,10 @@ export interface Role {
 }
 
 export interface RoleTags {
-  botId?: string;
-  integrationId?: string;
+  botId?: snowflake;
+  integrationId?: snowflake;
   premiumSubscriber?: null;
-  subscriptionListingId?: string;
+  subscriptionListingId?: snowflake;
   availableForPurchase?: null;
   guildConnections?: null;
 }

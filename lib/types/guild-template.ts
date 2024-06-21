@@ -1,4 +1,4 @@
-import type { Guild, User, RawGuild, RawUser } from ".";
+import type { Guild, User, RawGuild, RawUser, snowflake, timestamp } from ".";
 
 /** https://discord.com/developers/docs/resources/guild-template#guild-template-object-guild-template-structure */
 export interface RawGuildTemplate {
@@ -6,11 +6,11 @@ export interface RawGuildTemplate {
   name: string;
   description: string | null;
   usage_count: number;
-  creator_id: string;
+  creator_id: snowflake;
   creator: RawUser;
-  created_at: string;
-  updated_at: string;
-  source_guild_id: string;
+  created_at: timestamp;
+  updated_at: timestamp;
+  source_guild_id: snowflake;
   serialized_source_guild: RawGuild;
   is_dirty: boolean | null;
 }
@@ -20,11 +20,11 @@ export interface GuildTemplate {
   name: string;
   description: string | null;
   usageCount: number;
-  creatorId: string;
+  creatorId: snowflake;
   creator: User;
-  createdAt: string;
-  updatedAt: string;
-  sourceGuildId: string;
+  createdAt: timestamp;
+  updatedAt: timestamp;
+  sourceGuildId: snowflake;
   serializedSourceGuild: Guild;
   isDirty: boolean | null;
 }

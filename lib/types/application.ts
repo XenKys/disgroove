@@ -1,4 +1,12 @@
-import type { RawUser, RawTeam, Team, User, RawGuild, Guild } from ".";
+import type {
+  RawUser,
+  RawTeam,
+  Team,
+  User,
+  RawGuild,
+  Guild,
+  snowflake,
+} from ".";
 import type {
   ApplicationFlags,
   ApplicationIntegrationTypes,
@@ -7,7 +15,7 @@ import type {
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface RawApplication {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   description: string;
@@ -19,9 +27,9 @@ export interface RawApplication {
   owner?: RawUser;
   verify_key: string;
   team: RawTeam | null;
-  guild_id?: string;
+  guild_id?: snowflake;
   guild?: RawGuild;
-  primary_sku_id?: string;
+  primary_sku_id?: snowflake;
   slug?: string;
   cover_image?: string;
   flags?: ApplicationFlags;
@@ -50,7 +58,7 @@ export interface RawInstallParams {
 }
 
 export interface Application {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   description: string;
@@ -62,9 +70,9 @@ export interface Application {
   owner?: User;
   verifyKey: string;
   team: Team | null;
-  guildId?: string;
+  guildId?: snowflake;
   guild?: Guild;
-  primarySkuId?: string;
+  primarySkuId?: snowflake;
   slug?: string;
   coverImage?: string;
   flags?: ApplicationFlags;

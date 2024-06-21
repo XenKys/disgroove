@@ -180,6 +180,8 @@ import type {
   BulkDeleteMessagesParams,
   RawPollCreateParams,
   GuildAuditLogEntryCreateExtraFields,
+  timestamp,
+  snowflake,
 } from "./types";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
@@ -223,8 +225,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
   addGroupRecipient(
-    channelId: string,
-    userId: string,
+    channelId: snowflake,
+    userId: snowflake,
     options: {
       accessToken: string;
       nick: string;
@@ -244,8 +246,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member */
   addGuildMember(
-    guildId: string,
-    userId: string,
+    guildId: snowflake,
+    userId: snowflake,
     options: AddGuildMemberParams
   ): Promise<GuildMember | null> {
     return this.rest
@@ -269,9 +271,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
   addGuildMemberRole(
-    guildId: string,
-    userId: string,
-    roleId: string,
+    guildId: snowflake,
+    userId: snowflake,
+    roleId: snowflake,
     reason?: string
   ): void {
     this.rest.request(
@@ -284,7 +286,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#add-thread-member */
-  addThreadMember(channelId: string, userId: string): void {
+  addThreadMember(channelId: snowflake, userId: snowflake): void {
     this.rest.request(
       RESTMethods.Put,
       Endpoints.threadMembers(channelId, userId)
@@ -293,7 +295,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#begin-guild-prune */
   beginGuildPrune(
-    guildId: string,
+    guildId: snowflake,
     options: BeginGuildPruneParams,
     reason?: string
   ): Promise<{
@@ -320,7 +322,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#bulk-guild-ban */
   bulkGuildBan(
-    guildId: string,
+    guildId: snowflake,
     options: BulkGuildBanParams,
     reason?: string
   ): Promise<{
@@ -348,7 +350,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
   bulkDeleteMessages(
-    channelId: string,
+    channelId: snowflake,
     options?: BulkDeleteMessagesParams,
     reason?: string
   ): void {
@@ -366,7 +368,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
   bulkEditGlobalApplicationCommands(
-    applicationId: string,
+    applicationId: snowflake,
     commands: BulkEditGlobalApplicationCommandsParams
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
@@ -386,8 +388,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
   bulkEditGuildApplicationCommands(
-    applicationId: string,
-    guildId: string,
+    applicationId: snowflake,
+    guildId: snowflake,
     commands: BulkEditGuildApplicationCommandsParams
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
@@ -419,7 +421,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#consume-an-entitlement */
-  consumeEntitlement(applicationId: string, entitlementId: string): void {
+  consumeEntitlement(applicationId: snowflake, entitlementId: snowflake): void {
     this.rest.request(
       RESTMethods.Post,
       Endpoints.applicationEntitlementConsume(applicationId, entitlementId)
@@ -428,7 +430,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
   createAutoModerationRule(
-    guildId: string,
+    guildId: snowflake,
     options: CreateAutoModerationRuleParams,
     reason?: string
   ): Promise<AutoModerationRule> {
@@ -457,7 +459,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-channel */
   createChannel(
-    guildId: string,
+    guildId: snowflake,
     options: CreateGuildChannelParams,
     reason?: string
   ): Promise<Channel> {
@@ -498,7 +500,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
   createChannelInvite(
-    channelId: string,
+    channelId: snowflake,
     options: CreateChannelInviteParams,
     reason?: string
   ): Promise<Invite> {
@@ -524,7 +526,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#create-webhook */
   createChannelWebhook(
-    channelId: string,
+    channelId: snowflake,
     options: {
       name: string;
       avatar?: string | null;
@@ -559,7 +561,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
   createGlobalApplicationCommand(
-    applicationId: string,
+    applicationId: snowflake,
     options: CreateGlobalApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return this.rest
@@ -627,8 +629,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
   createGuildApplicationCommand(
-    applicationId: string,
-    guildId: string,
+    applicationId: snowflake,
+    guildId: snowflake,
     options: CreateGuildApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return this.rest
@@ -656,8 +658,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
   createGuildBan(
-    guildId: string,
-    userId: string,
+    guildId: snowflake,
+    userId: snowflake,
     options?: CreateGuildBanParams,
     reason?: string
   ): void {
@@ -672,7 +674,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
   createGuildEmoji(
-    guildId: string,
+    guildId: snowflake,
     options: CreateGuildEmojiParams,
     reason?: string
   ): Promise<Emoji> {
@@ -705,7 +707,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
   createGuildRole(
-    guildId: string,
+    guildId: snowflake,
     options: CreateGuildRoleParams,
     reason?: string
   ): Promise<Role> {
@@ -727,7 +729,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event */
   createGuildScheduledEvent(
-    guildId: string,
+    guildId: snowflake,
     options: CreateGuildScheduledEventParams,
     reason?: string
   ): Promise<GuildScheduledEvent> {
@@ -755,7 +757,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
   createGuildSticker(
-    guildId: string,
+    guildId: snowflake,
     options: CreateGuildStickerParams,
     reason?: string
   ): Promise<Sticker> {
@@ -776,7 +778,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-template */
   createGuildTemplate(
-    guildId: string,
+    guildId: snowflake,
     options: CreateGuildTemplateParams
   ): Promise<GuildTemplate> {
     return this.rest
@@ -795,7 +797,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
   createInteractionFollowupMessage(
-    applicationId: string,
+    applicationId: snowflake,
     interactionToken: string,
     options: CreateInteractionFollowupMessageParams
   ): Promise<Message> {
@@ -845,7 +847,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
   createInteractionResponse(
-    interactionId: string,
+    interactionId: snowflake,
     interactionToken: string,
     options: InteractionResponse
   ): void {
@@ -973,7 +975,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#create-message */
   createMessage(
-    channelId: string,
+    channelId: snowflake,
     options: CreateMessageParams
   ): Promise<Message> {
     return this.rest
@@ -1021,8 +1023,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
   createMessageReaction(
-    channelId: string,
-    messageId: string,
+    channelId: snowflake,
+    messageId: snowflake,
     emoji: string
   ): void {
     this.rest.request(
@@ -1052,7 +1054,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement */
   createTestEntitlement(
-    applicationId: string,
+    applicationId: snowflake,
     options: CreateTestEntitlementParams
   ): Promise<Omit<Entitlement, "startsAt" | "endsAt" | "subscriptionId">> {
     return this.rest
@@ -1074,7 +1076,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel */
   createThread(
-    channelId: string,
+    channelId: snowflake,
     options: CreateThreadParams,
     reason?: string
   ): Promise<Channel> {
@@ -1095,8 +1097,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
   createThreadFromMessage(
-    channelId: string,
-    messageId: string,
+    channelId: snowflake,
+    messageId: snowflake,
     options: CreateThreadFromMessageParams,
     reason?: string
   ): Promise<Channel> {
@@ -1118,7 +1120,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
   createThreadWithoutMessage(
-    channelId: string,
+    channelId: snowflake,
     options: CreateThreadWithoutMessageParams,
     reason?: string
   ): Promise<Channel> {
@@ -1137,7 +1139,10 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
-  crosspostMessage(channelId: string, messageId: string): Promise<Message> {
+  crosspostMessage(
+    channelId: snowflake,
+    messageId: snowflake
+  ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
         RESTMethods.Post,
@@ -1148,8 +1153,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
   deleteAllMessageReactions(
-    channelId: string,
-    messageId: string,
+    channelId: snowflake,
+    messageId: snowflake,
     emoji?: string
   ): void {
     this.rest.request(
@@ -1160,8 +1165,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#delete-auto-moderation-rule */
   deleteAutoModerationRule(
-    guildId: string,
-    autoModerationRuleId: string,
+    guildId: snowflake,
+    autoModerationRuleId: snowflake,
     reason?: string
   ): void {
     this.rest.request(
@@ -1174,7 +1179,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
-  deleteChannel(channelId: string, reason?: string): Promise<Channel> {
+  deleteChannel(channelId: snowflake, reason?: string): Promise<Channel> {
     return this.rest
       .request<RawChannel>(RESTMethods.Delete, Endpoints.channel(channelId), {
         reason,
@@ -1184,8 +1189,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
   deleteChannelPermission(
-    channelId: string,
-    overwriteId: string,
+    channelId: snowflake,
+    overwriteId: snowflake,
     reason?: string
   ): void {
     this.rest.request(
@@ -1199,8 +1204,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command */
   deleteGlobalApplicationCommand(
-    applicationId: string,
-    commandId: string
+    applicationId: snowflake,
+    commandId: snowflake
   ): void {
     this.rest.request(
       RESTMethods.Delete,
@@ -1209,15 +1214,15 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild */
-  deleteGuild(guildId: string): void {
+  deleteGuild(guildId: snowflake): void {
     this.rest.request(RESTMethods.Delete, Endpoints.guild(guildId));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
   deleteGuildApplicationCommand(
-    applicationId: string,
-    guildId: string,
-    commandId: string
+    applicationId: snowflake,
+    guildId: snowflake,
+    commandId: snowflake
   ): void {
     this.rest.request(
       RESTMethods.Delete,
@@ -1226,7 +1231,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#delete-guild-emoji */
-  deleteGuildEmoji(guildId: string, emojiId: string, reason?: string): void {
+  deleteGuildEmoji(
+    guildId: snowflake,
+    emojiId: snowflake,
+    reason?: string
+  ): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.guildEmoji(guildId, emojiId),
@@ -1238,8 +1247,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-integration */
   deleteGuildIntegration(
-    guildId: string,
-    integrationId: string,
+    guildId: snowflake,
+    integrationId: snowflake,
     reason?: string
   ): void {
     this.rest.request(
@@ -1252,7 +1261,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#delete-guild-role */
-  deleteGuildRole(guildId: string, roleId: string, reason?: string): void {
+  deleteGuildRole(
+    guildId: snowflake,
+    roleId: snowflake,
+    reason?: string
+  ): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.guildRole(guildId, roleId),
@@ -1264,8 +1277,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#delete-guild-scheduled-event */
   deleteGuildScheduledEvent(
-    guildId: string,
-    guildScheduledEventId: string
+    guildId: snowflake,
+    guildScheduledEventId: snowflake
   ): void {
     this.rest.request(
       RESTMethods.Delete,
@@ -1275,8 +1288,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/sticker#delete-guild-sticker */
   deleteGuildSticker(
-    guildId: string,
-    stickerId: string,
+    guildId: snowflake,
+    stickerId: snowflake,
     reason?: string
   ): void {
     this.rest.request(
@@ -1289,7 +1302,10 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#delete-guild-template */
-  deleteGuildTemplate(guildId: string, code: string): Promise<GuildTemplate> {
+  deleteGuildTemplate(
+    guildId: snowflake,
+    code: string
+  ): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
         RESTMethods.Delete,
@@ -1309,9 +1325,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message */
   deleteInteractionFollowupMessage(
-    applicationId: string,
+    applicationId: snowflake,
     interactionToken: string,
-    messageId: string
+    messageId: snowflake
   ): void {
     this.rest.request(
       RESTMethods.Delete,
@@ -1321,7 +1337,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response */
   deleteInteractionResponse(
-    applicationId: string,
+    applicationId: snowflake,
     interactionToken: string
   ): void {
     this.rest.request(
@@ -1331,7 +1347,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-message */
-  deleteMessage(channelId: string, messageId: string, reason?: string): void {
+  deleteMessage(
+    channelId: snowflake,
+    messageId: snowflake,
+    reason?: string
+  ): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.channelMessage(channelId, messageId),
@@ -1343,10 +1363,10 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
   deleteMessageReaction(
-    channelId: string,
-    messageId: string,
+    channelId: snowflake,
+    messageId: snowflake,
     emoji: string,
-    userId?: string
+    userId?: snowflake
   ): void {
     this.rest.request(
       RESTMethods.Delete,
@@ -1355,14 +1375,17 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#delete-stage-instance */
-  deleteStageInstance(channelId: string, reason?: string): void {
+  deleteStageInstance(channelId: snowflake, reason?: string): void {
     this.rest.request(RESTMethods.Delete, Endpoints.stageInstance(channelId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#delete-test-entitlement */
-  deleteTestEntitlement(applicationId: string, entitlementId: string): void {
+  deleteTestEntitlement(
+    applicationId: snowflake,
+    entitlementId: snowflake
+  ): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.applicationEntitlement(applicationId, entitlementId)
@@ -1370,7 +1393,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook */
-  deleteWebhook(webhookId: string, reason?: string): void {
+  deleteWebhook(webhookId: snowflake, reason?: string): void {
     this.rest.request(RESTMethods.Delete, Endpoints.webhook(webhookId), {
       reason,
     });
@@ -1378,11 +1401,11 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-message */
   deleteWebhookMessage(
-    webhookId: string,
+    webhookId: snowflake,
     webhookToken: string,
-    messageId: string,
+    messageId: snowflake,
     options?: {
-      threadId?: string;
+      threadId?: snowflake;
     }
   ): void {
     this.rest.request(
@@ -1398,7 +1421,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#delete-webhook-with-token */
   deleteWebhookWithToken(
-    webhookId: string,
+    webhookId: snowflake,
     webhookToken: string,
     reason?: string
   ): void {
@@ -1418,8 +1441,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
   editAutoModerationRule(
-    guildId: string,
-    autoModerationRuleId: string,
+    guildId: snowflake,
+    autoModerationRuleId: snowflake,
     options: EditAutoModerationRuleParams,
     reason?: string
   ): Promise<AutoModerationRule> {
@@ -1448,9 +1471,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
   editApplicationCommandPermissions(
-    applicationId: string,
-    guildId: string,
-    commandId: string,
+    applicationId: snowflake,
+    guildId: snowflake,
+    commandId: snowflake,
     options: {
       permissions: Array<GuildApplicationCommandPermissions>;
     }
@@ -1480,7 +1503,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
   editChannel(
-    channelId: string,
+    channelId: snowflake,
     options: EditChannelParams,
     reason?: string
   ): Promise<Channel> {
@@ -1519,8 +1542,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
   editChannelPermissions(
-    channelId: string,
-    overwriteId: string,
+    channelId: snowflake,
+    overwriteId: snowflake,
     options: {
       allow?: string | null;
       deny?: string | null;
@@ -1540,7 +1563,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
   editChannelPositions(
-    guildId: string,
+    guildId: snowflake,
     options: EditGuildChannelPositionsParams
   ): void {
     this.rest.request(RESTMethods.Patch, Endpoints.guildChannels(guildId), {
@@ -1568,7 +1591,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
   editCurrentGuildMember(
-    guildId: string,
+    guildId: snowflake,
     options: EditCurrentGuildMemberParams,
     reason?: string
   ): Promise<GuildMember> {
@@ -1588,7 +1611,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
   editCurrentUserVoiceState(
-    guildId: string,
+    guildId: snowflake,
     options: EditCurrentUserVoiceStateParams
   ): void {
     this.rest.request(RESTMethods.Patch, Endpoints.guildVoiceState(guildId), {
@@ -1628,8 +1651,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
   editGlobalApplicationCommand(
-    applicationId: string,
-    commandId: string,
+    applicationId: snowflake,
+    commandId: snowflake,
     options: EditGlobalApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return this.rest
@@ -1657,7 +1680,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
   editGuild(
-    guildId: string,
+    guildId: snowflake,
     options: EditGuildParams,
     reason?: string
   ): Promise<Guild> {
@@ -1693,9 +1716,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
   editGuildApplicationCommand(
-    applicationId: string,
-    guildId: string,
-    commandId: string,
+    applicationId: snowflake,
+    guildId: snowflake,
+    commandId: snowflake,
     options: EditGuildApplicationCommandParams
   ): Promise<ApplicationCommand> {
     return this.rest
@@ -1722,8 +1745,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
   editGuildEmoji(
-    guildId: string,
-    emojiId: string,
+    guildId: snowflake,
+    emojiId: snowflake,
     options: EditGuildEmojiParams,
     reason?: string
   ): Promise<Emoji> {
@@ -1744,8 +1767,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
   editGuildMember(
-    guildId: string,
-    userId: string,
+    guildId: snowflake,
+    userId: snowflake,
     options: EditGuildMemberParams,
     reason?: string
   ): Promise<GuildMember> {
@@ -1771,7 +1794,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
   editGuildMFALevel(
-    guildId: string,
+    guildId: snowflake,
     options: EditGuildMFALevelParams,
     reason?: string
   ): Promise<MFALevel> {
@@ -1789,7 +1812,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
   editGuildOnboarding(
-    guildId: string,
+    guildId: snowflake,
     options: EditGuildOnboardingParams,
     reason?: string
   ): void {
@@ -1805,8 +1828,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role */
   editGuildRole(
-    guildId: string,
-    roleId: string,
+    guildId: snowflake,
+    roleId: snowflake,
     options?: {
       name?: string | null;
       permissions?: string | null;
@@ -1840,7 +1863,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
   editGuildRolePositions(
-    guildId: string,
+    guildId: snowflake,
     options: EditGuildRolePositionsParams
   ): Promise<Array<Role>> {
     return this.rest
@@ -1858,8 +1881,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
   editGuildScheduledEvent(
-    guildId: string,
-    guildScheduledEventId: string,
+    guildId: snowflake,
+    guildScheduledEventId: snowflake,
     options: EditGuildScheduledEventParams,
     reason?: string
   ): Promise<GuildScheduledEvent> {
@@ -1888,8 +1911,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
   editGuildSticker(
-    guildId: string,
-    stickerId: string,
+    guildId: snowflake,
+    stickerId: snowflake,
     options: EditGuildStickerParams,
     reason?: string
   ): Promise<Sticker> {
@@ -1911,7 +1934,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
   editGuildTemplate(
-    guildId: string,
+    guildId: snowflake,
     code: string,
     options: EditGuildTemplateParams
   ): Promise<GuildTemplate> {
@@ -1931,7 +1954,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
   editGuildWelcomeScreen(
-    guildId: string,
+    guildId: snowflake,
     options: EditGuildWelcomeScreenParams,
     reason?: string
   ): Promise<WelcomeScreen> {
@@ -1953,7 +1976,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-widget */
   editGuildWidget(
-    guildId: string,
+    guildId: snowflake,
     options: {
       enabled?: boolean;
       channelId?: boolean;
@@ -1977,8 +2000,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#edit-message */
   editMessage(
-    channelId: string,
-    messageId: string,
+    channelId: snowflake,
+    messageId: snowflake,
     options: EditMessageParams
   ): Promise<Message> {
     return this.rest
@@ -2025,7 +2048,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
   editStageInstance(
-    channelId: string,
+    channelId: snowflake,
     options: EditStageInstanceParams,
     reason?: string
   ): Promise<StageInstance> {
@@ -2046,10 +2069,10 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message */
   editInteractionFollowupMessage(
-    applicationId: string,
+    applicationId: snowflake,
     interactionToken: string,
-    messageId: string,
-    options: EditWebhookMessageParams & { threadId: string }
+    messageId: snowflake,
+    options: EditWebhookMessageParams & { threadId: snowflake }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -2098,9 +2121,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
   editInteractionResponse(
-    applicationId: string,
+    applicationId: snowflake,
     interactionToken: string,
-    options: EditWebhookMessageParams & { threadId: string }
+    options: EditWebhookMessageParams & { threadId: snowflake }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -2149,12 +2172,12 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
   editUserVoiceState(
-    guildId: string,
-    userId: string,
+    guildId: snowflake,
+    userId: snowflake,
     options: {
-      channelId?: string;
+      channelId?: snowflake;
       suppress?: boolean;
-      requestToSpeakTimestamp?: string | null;
+      requestToSpeakTimestamp?: timestamp | null;
     }
   ): void {
     this.rest.request(
@@ -2172,7 +2195,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
   editWebhook(
-    webhookId: string,
+    webhookId: snowflake,
     options: EditWebhookParams,
     reason?: string
   ): Promise<Webhook> {
@@ -2190,10 +2213,10 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
   editWebhookMessage(
-    webhookId: string,
+    webhookId: snowflake,
     webhookToken: string,
-    messageId: string,
-    options: EditWebhookMessageParams & { threadId: string }
+    messageId: snowflake,
+    options: EditWebhookMessageParams & { threadId: snowflake }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -2242,7 +2265,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
   editWebhookWithToken(
-    webhookId: string,
+    webhookId: snowflake,
     webhookToken: string,
     options: Omit<EditWebhookParams, "channelId">,
     reason?: string
@@ -2264,7 +2287,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/poll#end-poll */
-  endPoll(channelId: string, messageId: string): Promise<Message> {
+  endPoll(channelId: snowflake, messageId: snowflake): Promise<Message> {
     return this.rest
       .request<RawMessage>(
         RESTMethods.Post,
@@ -2275,9 +2298,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
   executeWebhook(
-    webhookId: string,
+    webhookId: snowflake,
     webhookToken: string,
-    options: ExecuteWebhookParams & { wait: boolean; threadId: string }
+    options: ExecuteWebhookParams & { wait: boolean; threadId: snowflake }
   ): Promise<Message | null> {
     return this.rest
       .request<RawMessage | null>(
@@ -2342,11 +2365,11 @@ export class Client extends EventEmitter {
    * https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook
    */
   executeWebhookPlatform(
-    webhookId: string,
+    webhookId: snowflake,
     webhookToken: string,
     platform: "github" | "slack",
     options: Record<string, unknown> & {
-      threadId?: string;
+      threadId?: snowflake;
       wait?: boolean;
     }
   ): Promise<Message | null> {
@@ -2369,9 +2392,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
   followChannel(
-    channelId: string,
+    channelId: snowflake,
     options: {
-      webhookChannelId: string;
+      webhookChannelId: snowflake;
     },
     reason?: string
   ): Promise<FollowedChannel> {
@@ -2390,7 +2413,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-active-guild-threads */
-  getActiveGuildThreads(guildId: string): Promise<{
+  getActiveGuildThreads(guildId: snowflake): Promise<{
     threads: Array<Channel>;
     members: Array<ThreadMember>;
   }> {
@@ -2411,7 +2434,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#list-public-archived-threads */
   getArchivedThreads(
-    channelId: string,
+    channelId: snowflake,
     archivedStatus: "public" | "private",
     options?: {
       before?: string;
@@ -2448,9 +2471,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log */
   getAuditLog(
-    guildId: string,
+    guildId: snowflake,
     options?: {
-      userId?: string;
+      userId?: snowflake;
       actionType?: ActionTypes;
       before?: string;
       after?: string;
@@ -2472,8 +2495,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule */
   getAutoModerationRule(
-    guildId: string,
-    ruleId: string
+    guildId: snowflake,
+    ruleId: snowflake
   ): Promise<AutoModerationRule> {
     return this.rest
       .request<RawAutoModerationRule>(
@@ -2484,7 +2507,9 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild */
-  getAutoModerationRules(guildId: string): Promise<Array<AutoModerationRule>> {
+  getAutoModerationRules(
+    guildId: snowflake
+  ): Promise<Array<AutoModerationRule>> {
     return this.rest
       .request<Array<RawAutoModerationRule>>(
         RESTMethods.Get,
@@ -2499,9 +2524,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */
   getApplicationCommandPermissions(
-    applicationId: string,
-    guildId: string,
-    commandId: string
+    applicationId: snowflake,
+    guildId: snowflake,
+    commandId: snowflake
   ): Promise<GuildApplicationCommandPermissions> {
     return this.rest
       .request<Array<RawGuildApplicationCommandPermissions>>(
@@ -2519,7 +2544,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records */
   getApplicationRoleConnectionMetadataRecords(
-    applicationId: string
+    applicationId: snowflake
   ): Promise<Array<ApplicationRoleConnectionMetadata>> {
     return this.rest
       .request<Array<RawApplicationRoleConnectionMetadata>>(
@@ -2536,14 +2561,14 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel */
-  getChannel(channelId: string): Promise<Channel> {
+  getChannel(channelId: snowflake): Promise<Channel> {
     return this.rest
       .request<RawChannel>(RESTMethods.Get, Endpoints.channel(channelId))
       .then((response) => this.util.toCamelCase<Channel>(response));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-channels */
-  getChannels(guildId: string): Promise<Array<Channel>> {
+  getChannels(guildId: snowflake): Promise<Array<Channel>> {
     return this.rest
       .request<Array<RawChannel>>(
         RESTMethods.Get,
@@ -2555,7 +2580,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
-  getChannelInvites(channelId: string): Promise<Array<Invite>> {
+  getChannelInvites(channelId: snowflake): Promise<Array<Invite>> {
     return this.rest
       .request<Array<RawInvite>>(
         RESTMethods.Get,
@@ -2567,7 +2592,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-channel-webhooks */
-  getChannelWebhooks(channelId: string): Promise<Array<Webhook>> {
+  getChannelWebhooks(channelId: snowflake): Promise<Array<Webhook>> {
     return this.rest
       .request<Array<RawWebhook>>(
         RESTMethods.Get,
@@ -2590,7 +2615,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-application-role-connection */
   getCurrentApplicationRoleConnection(
-    applicationId: string
+    applicationId: snowflake
   ): Promise<ApplicationRoleConnection> {
     return this.rest
       .request<RawApplicationRoleConnection>(
@@ -2603,7 +2628,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guild-member */
-  getCurrentGuildMember(guildId: string): Promise<GuildMember> {
+  getCurrentGuildMember(guildId: snowflake): Promise<GuildMember> {
     return this.rest
       .request<RawGuildMember>(RESTMethods.Get, Endpoints.guildMember(guildId))
       .then((response) => this.util.toCamelCase<GuildMember>(response));
@@ -2625,14 +2650,14 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/monetization/entitlements#list-entitlements */
   getEntitlements(
-    applicationId: string,
+    applicationId: snowflake,
     options?: {
-      userId?: string;
+      userId?: snowflake;
       skuIds?: Array<string>;
       before?: string;
       after?: string;
       limit?: number;
-      guildId?: string;
+      guildId?: snowflake;
       excludeEnded?: boolean;
     }
   ): Promise<Array<Entitlement>> {
@@ -2694,8 +2719,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-command */
   getGlobalApplicationCommand(
-    applicationId: string,
-    commandId: string
+    applicationId: snowflake,
+    commandId: snowflake
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
@@ -2707,7 +2732,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
   getGlobalApplicationCommands(
-    applicationId: string,
+    applicationId: snowflake,
     options: {
       withLocalizations?: boolean;
     }
@@ -2731,7 +2756,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild */
   getGuild(
-    guildId: string,
+    guildId: snowflake,
     options?: {
       withCounts?: boolean;
     }
@@ -2768,9 +2793,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
   getGuildApplicationCommand(
-    applicationId: string,
-    guildId: string,
-    commandId: string
+    applicationId: snowflake,
+    guildId: snowflake,
+    commandId: snowflake
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
@@ -2782,8 +2807,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-commands */
   getGuildApplicationCommands(
-    applicationId: string,
-    guildId: string,
+    applicationId: snowflake,
+    guildId: snowflake,
     options?: {
       withLocalizations?: boolean;
     }
@@ -2807,8 +2832,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command-permissions */
   getGuildApplicationCommandPermissions(
-    applicationId: string,
-    guildId: string
+    applicationId: snowflake,
+    guildId: snowflake
   ): Promise<GuildApplicationCommandPermissions> {
     return this.rest
       .request<RawGuildApplicationCommandPermissions>(
@@ -2821,7 +2846,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-ban */
-  getGuildBan(guildId: string, userId: string): Promise<Ban> {
+  getGuildBan(guildId: snowflake, userId: snowflake): Promise<Ban> {
     return this.rest
       .request<RawBan>(RESTMethods.Get, Endpoints.guildBan(guildId, userId))
       .then((response) => this.util.toCamelCase<Ban>(response));
@@ -2829,7 +2854,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-bans */
   getGuildBans(
-    guildId: string,
+    guildId: snowflake,
     options?: {
       limit?: number;
       before?: string;
@@ -2850,7 +2875,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#get-guild-emoji */
-  getGuildEmoji(guildId: string, emojiId: string): Promise<Emoji> {
+  getGuildEmoji(guildId: snowflake, emojiId: snowflake): Promise<Emoji> {
     return this.rest
       .request<RawEmoji>(
         RESTMethods.Get,
@@ -2860,7 +2885,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
-  getGuildEmojis(guildId: string): Promise<Array<Emoji>> {
+  getGuildEmojis(guildId: snowflake): Promise<Array<Emoji>> {
     return this.rest
       .request<Array<RawEmoji>>(RESTMethods.Get, Endpoints.guildEmojis(guildId))
       .then((response) =>
@@ -2869,7 +2894,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-integrations */
-  getGuildIntegrations(guildId: string): Promise<Array<Integration>> {
+  getGuildIntegrations(guildId: snowflake): Promise<Array<Integration>> {
     return this.rest
       .request<Array<RawIntegration>>(
         RESTMethods.Get,
@@ -2883,7 +2908,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-invites */
-  getGuildInvites(guildId: string): Promise<Array<Invite>> {
+  getGuildInvites(guildId: snowflake): Promise<Array<Invite>> {
     return this.rest
       .request<Array<RawInvite>>(
         RESTMethods.Get,
@@ -2895,7 +2920,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-member */
-  getGuildMember(guildId: string, userId: string): Promise<GuildMember> {
+  getGuildMember(guildId: snowflake, userId: snowflake): Promise<GuildMember> {
     return this.rest
       .request<RawGuildMember>(
         RESTMethods.Get,
@@ -2905,7 +2930,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
-  getGuildMembers(guildId: string): Promise<Array<GuildMember>> {
+  getGuildMembers(guildId: snowflake): Promise<Array<GuildMember>> {
     return this.rest
       .request<Array<RawGuildMember>>(
         RESTMethods.Get,
@@ -2919,7 +2944,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-onboarding */
-  getGuildOnboarding(guildId: string): Promise<GuildOnboarding> {
+  getGuildOnboarding(guildId: snowflake): Promise<GuildOnboarding> {
     return this.rest
       .request<RawGuildOnboarding>(
         RESTMethods.Get,
@@ -2929,7 +2954,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-preview */
-  getGuildPreview(guildId: string): Promise<GuildPreview> {
+  getGuildPreview(guildId: snowflake): Promise<GuildPreview> {
     return this.rest
       .request<RawGuildPreview>(
         RESTMethods.Get,
@@ -2940,7 +2965,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-prune-count */
   getGuildPruneCount(
-    guildId: string,
+    guildId: snowflake,
     options: {
       days: number;
       includeRoles: string | Array<string>;
@@ -2961,7 +2986,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-roles */
-  getGuildRoles(guildId: string): Promise<Array<Role>> {
+  getGuildRoles(guildId: snowflake): Promise<Array<Role>> {
     return this.rest
       .request<Array<RawRole>>(RESTMethods.Get, Endpoints.guildRoles(guildId))
       .then((response) =>
@@ -2971,7 +2996,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild */
   getGuildScheduledEvents(
-    guildId: string,
+    guildId: snowflake,
     options?: {
       withUserCount?: boolean;
     }
@@ -2995,8 +3020,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users */
   getGuildScheduledEventUsers(
-    guildId: string,
-    guildScheduledEventId: string,
+    guildId: snowflake,
+    guildScheduledEventId: snowflake,
     options?: {
       limit?: number;
       withMember?: boolean;
@@ -3027,7 +3052,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#get-guild-sticker */
-  getGuildSticker(guildId: string, stickerId: string): Promise<Sticker> {
+  getGuildSticker(guildId: snowflake, stickerId: snowflake): Promise<Sticker> {
     return this.rest
       .request<RawSticker>(
         RESTMethods.Get,
@@ -3037,7 +3062,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
-  getGuildStickers(guildId: string): Promise<Array<Sticker>> {
+  getGuildStickers(guildId: snowflake): Promise<Array<Sticker>> {
     return this.rest
       .request<Array<RawSticker>>(
         RESTMethods.Get,
@@ -3049,7 +3074,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-template */
-  getGuildTemplate(guildId: string, code: string): Promise<GuildTemplate> {
+  getGuildTemplate(guildId: snowflake, code: string): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
         RESTMethods.Get,
@@ -3059,7 +3084,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-templates */
-  getGuildTemplates(guildId: string): Promise<Array<GuildTemplate>> {
+  getGuildTemplates(guildId: snowflake): Promise<Array<GuildTemplate>> {
     return this.rest
       .request<Array<RawGuildTemplate>>(
         RESTMethods.Get,
@@ -3073,7 +3098,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
-  getGuildVanityUrl(guildId: string): Promise<{
+  getGuildVanityUrl(guildId: snowflake): Promise<{
     code: string;
     uses: number;
   }> {
@@ -3084,7 +3109,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */
-  getGuildVoiceRegions(guildId: string): Promise<Array<VoiceRegion>> {
+  getGuildVoiceRegions(guildId: snowflake): Promise<Array<VoiceRegion>> {
     return this.rest
       .request<Array<RawVoiceRegion>>(
         RESTMethods.Get,
@@ -3098,7 +3123,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen */
-  getGuildWelcomeScreen(guildId: string): Promise<WelcomeScreen> {
+  getGuildWelcomeScreen(guildId: snowflake): Promise<WelcomeScreen> {
     return this.rest
       .request<RawWelcomeScreen>(
         RESTMethods.Get,
@@ -3108,7 +3133,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget */
-  getGuildWidget(guildId: string): Promise<GuildWidget> {
+  getGuildWidget(guildId: snowflake): Promise<GuildWidget> {
     return this.rest
       .request<RawGuildWidget>(
         RESTMethods.Get,
@@ -3119,7 +3144,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-image */
   getGuildWidgetImage(
-    guildId: string,
+    guildId: snowflake,
     options?: {
       style?: ImageWidgetStyleOptions;
     }
@@ -3136,7 +3161,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-widget-settings */
-  getGuildWidgetSettings(guildId: string): Promise<GuildWidgetSettings> {
+  getGuildWidgetSettings(guildId: snowflake): Promise<GuildWidgetSettings> {
     return this.rest
       .request<RawGuildWidgetSettings>(
         RESTMethods.Get,
@@ -3147,11 +3172,11 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message */
   getInteractionFollowupMessage(
-    applicationId: string,
+    applicationId: snowflake,
     interactionToken: string,
-    messageId: string,
+    messageId: snowflake,
     options?: {
-      threadId?: string;
+      threadId?: snowflake;
     }
   ): Promise<Message> {
     return this.rest
@@ -3169,9 +3194,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response */
   getInteractionResponse(
-    applicationId: string,
+    applicationId: snowflake,
     interactionToken: string,
-    options?: { threadId?: string }
+    options?: { threadId?: snowflake }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -3192,7 +3217,7 @@ export class Client extends EventEmitter {
     options?: {
       withCounts?: boolean;
       withExpiration?: boolean;
-      guildScheduledEventId?: string;
+      guildScheduledEventId?: snowflake;
     }
   ): Promise<Invite> {
     return this.rest
@@ -3208,7 +3233,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
   getJoinedPrivateArchivedThreads(
-    channelId: string,
+    channelId: snowflake,
     options?: {
       before?: string;
       limit?: number;
@@ -3243,7 +3268,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-message */
-  getMessage(channelId: string, messageId: string): Promise<Message> {
+  getMessage(channelId: snowflake, messageId: snowflake): Promise<Message> {
     return this.rest
       .request<RawMessage>(
         RESTMethods.Get,
@@ -3254,8 +3279,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#get-reactions */
   getMessageReactions(
-    channelId: string,
-    messageId: string,
+    channelId: snowflake,
+    messageId: snowflake,
     emoji: string,
     options?: {
       type?: ReactionTypes;
@@ -3282,7 +3307,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-messages */
   getMessages(
-    channelId: string,
+    channelId: snowflake,
     options: {
       around?: string;
       before?: string;
@@ -3343,7 +3368,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
-  getPinnedMessages(channelId: string): Promise<Array<Message>> {
+  getPinnedMessages(channelId: snowflake): Promise<Array<Message>> {
     return this.rest
       .request<Array<RawMessage>>(
         RESTMethods.Get,
@@ -3356,9 +3381,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/poll#get-answer-voters */
   getPollAnswerVoters(
-    channelId: string,
-    messageId: string,
-    answerId: string,
+    channelId: snowflake,
+    messageId: snowflake,
+    answerId: snowflake,
     options?: {
       after?: string;
       limit?: number;
@@ -3387,7 +3412,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/monetization/skus#list-skus */
-  getSkus(applicationId: string): Promise<Array<Sku>> {
+  getSkus(applicationId: snowflake): Promise<Array<Sku>> {
     return this.rest
       .request<Array<RawSku>>(
         RESTMethods.Get,
@@ -3399,7 +3424,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#get-stage-instance */
-  getStageInstance(channelId: string): Promise<StageInstance> {
+  getStageInstance(channelId: snowflake): Promise<StageInstance> {
     return this.rest
       .request<RawStageInstance>(
         RESTMethods.Get,
@@ -3425,8 +3450,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#get-thread-member */
   getThreadMember(
-    channelId: string,
-    userId: string,
+    channelId: snowflake,
+    userId: snowflake,
     options?: {
       withMember?: boolean;
     }
@@ -3446,7 +3471,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#list-thread-members */
   getThreadMembers(
-    channelId: string,
+    channelId: snowflake,
     options?: {
       withMember?: boolean;
       after?: string;
@@ -3473,7 +3498,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user */
-  getUser(userId?: string): Promise<User> {
+  getUser(userId?: snowflake): Promise<User> {
     return this.rest
       .request<RawUser>(RESTMethods.Get, Endpoints.user(userId))
       .then((response) => this.util.toCamelCase<User>(response));
@@ -3492,11 +3517,11 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
   getWebhookMessage(
-    webhookId: string,
+    webhookId: snowflake,
     webhookToken: string,
-    messageId: string,
+    messageId: snowflake,
     options?: {
-      threadId?: string;
+      threadId?: snowflake;
     }
   ): Promise<Message> {
     return this.rest
@@ -3513,7 +3538,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */
-  getWebhooks(guildId: string): Promise<Array<Webhook>> {
+  getWebhooks(guildId: snowflake): Promise<Array<Webhook>> {
     return this.rest
       .request<Array<RawWebhook>>(
         RESTMethods.Get,
@@ -3525,7 +3550,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#join-thread */
-  joinThread(channelId: string): void {
+  joinThread(channelId: snowflake): void {
     this.rest.request(
       RESTMethods.Put,
       Endpoints.threadMembers(channelId, "@me")
@@ -3534,8 +3559,8 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   joinVoiceChannel(
-    guildId: string,
-    channelId: string,
+    guildId: snowflake,
+    channelId: snowflake,
     options?: {
       selfMute?: boolean;
       selfDeaf?: boolean;
@@ -3555,12 +3580,12 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#leave-guild */
-  leaveGuild(guildId: string): void {
+  leaveGuild(guildId: snowflake): void {
     this.rest.request(RESTMethods.Delete, Endpoints.userGuild(guildId));
   }
 
   /** https://discord.com/developers/docs/resources/channel#leave-thread */
-  leaveThread(channelId: string): void {
+  leaveThread(channelId: snowflake): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.threadMembers(channelId, "@me")
@@ -3568,7 +3593,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
-  leaveVoiceChannel(guildId: string): void {
+  leaveVoiceChannel(guildId: snowflake): void {
     this.shards.get(this.guildShardMap[guildId])?.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.VoiceStateUpdate,
@@ -3583,7 +3608,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
-  pinMessage(channelId: string, messageId: string, reason?: string): void {
+  pinMessage(
+    channelId: snowflake,
+    messageId: snowflake,
+    reason?: string
+  ): void {
     this.rest.request(
       RESTMethods.Put,
       Endpoints.channelPin(channelId, messageId),
@@ -3594,14 +3623,14 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-ban */
-  removeBan(guildId: string, userId: string, reason?: string): void {
+  removeBan(guildId: snowflake, userId: snowflake, reason?: string): void {
     this.rest.request(RESTMethods.Delete, Endpoints.guildBan(guildId, userId), {
       reason,
     });
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-remove-recipient */
-  removeGroupRecipient(channelId: string, userId: string): void {
+  removeGroupRecipient(channelId: snowflake, userId: snowflake): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.channelRecipient(channelId, userId)
@@ -3609,7 +3638,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member */
-  removeGuildMember(guildId: string, userId: string, reason?: string): void {
+  removeGuildMember(
+    guildId: snowflake,
+    userId: snowflake,
+    reason?: string
+  ): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.guildMember(guildId, userId),
@@ -3621,9 +3654,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#remove-guild-member-role */
   removeGuildMemberRole(
-    guildId: string,
-    userId: string,
-    roleId: string,
+    guildId: snowflake,
+    userId: snowflake,
+    roleId: snowflake,
     reason?: string
   ): void {
     this.rest.request(
@@ -3636,7 +3669,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#remove-thread-member */
-  removeThreadMember(channelId: string, userId: string): void {
+  removeThreadMember(channelId: snowflake, userId: snowflake): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.threadMembers(channelId, userId)
@@ -3645,7 +3678,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/guild#search-guild-members */
   searchGuildMembers(
-    guildId: string,
+    guildId: snowflake,
     options: {
       query: string;
       limit?: number;
@@ -3679,7 +3712,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
-  syncGuildTemplate(guildId: string, code: string): Promise<GuildTemplate> {
+  syncGuildTemplate(guildId: snowflake, code: string): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
         RESTMethods.Put,
@@ -3689,13 +3722,13 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
-  triggerTypingIndicator(channelId: string): void {
+  triggerTypingIndicator(channelId: snowflake): void {
     this.rest.request(RESTMethods.Post, Endpoints.channelTyping(channelId));
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#update-application-role-connection-metadata-records */
   updateApplicationRoleConnectionMetadataRecords(
-    applicationId: string
+    applicationId: snowflake
   ): Promise<Array<ApplicationRoleConnectionMetadata>> {
     return this.rest
       .request<Array<RawApplicationRoleConnectionMetadata>>(
@@ -3733,7 +3766,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
-  unpinMessage(channelId: string, messageId: string, reason?: string): void {
+  unpinMessage(
+    channelId: snowflake,
+    messageId: snowflake,
+    reason?: string
+  ): void {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.channelPin(channelId, messageId),
@@ -3823,28 +3860,28 @@ export interface ClientEvents {
   ];
   guildBanAdd: [ban: GuildBanAddEventFields];
   guildBanRemove: [ban: GuildBanRemoveEventFields];
-  guildEmojisUpdate: [emojis: Array<Emoji>, guildId: string];
-  guildStickersUpdate: [stickers: Array<Sticker>, guildId: string];
-  guildIntegrationsUpdate: [guildId: string];
+  guildEmojisUpdate: [emojis: Array<Emoji>, guildId: snowflake];
+  guildStickersUpdate: [stickers: Array<Sticker>, guildId: snowflake];
+  guildIntegrationsUpdate: [guildId: snowflake];
   guildMemberAdd: [guildMember: GuildMember & GuildMemberAddEventExtraFields];
   guildMemberRemove: [guildMember: GuildMemberRemoveEventFields];
   guildMemberUpdate: [guildMember: GuildMemberUpdateEventFields];
   guildMembersChunk: [request: GuildMembersChunkEventFields];
-  guildRoleCreate: [role: Role, guildId: string];
-  guildRoleUpdate: [role: Role, guildId: string];
-  guildRoleDelete: [roleId: string, guildId: string];
+  guildRoleCreate: [role: Role, guildId: snowflake];
+  guildRoleUpdate: [role: Role, guildId: snowflake];
+  guildRoleDelete: [roleId: snowflake, guildId: snowflake];
   guildScheduledEventCreate: [guildScheduledEvent: GuildScheduledEvent];
   guildScheduledEventUpdate: [guildScheduledEvent: GuildScheduledEvent];
   guildScheduledEventDelete: [guildScheduledEvent: GuildScheduledEvent];
   guildScheduledEventUserAdd: [
-    userId: string,
-    guildScheduledEventId: string,
-    guildId: string
+    userId: snowflake,
+    guildScheduledEventId: snowflake,
+    guildId: snowflake
   ];
   guildScheduledEventUserRemove: [
-    userId: string,
-    guildScheduledEventId: string,
-    guildId: string
+    userId: snowflake,
+    guildScheduledEventId: snowflake,
+    guildId: snowflake
   ];
   integrationCreate: [
     integration: Integration & IntegrationCreateEventExtraFields
@@ -3874,7 +3911,7 @@ export interface ClientEvents {
   userUpdate: [user: User];
   voiceStateUpdate: [voiceState: VoiceState];
   voiceServerUpdate: [voiceServer: VoiceServerUpdateEventFields];
-  webhooksUpdate: [channelId: string, guildId: string];
+  webhooksUpdate: [channelId: snowflake, guildId: snowflake];
   messagePollVoteAdd: [vote: MessagePollVoteAddFields];
   messagePollVoteRemove: [vote: MessagePollVoteRemoveFields];
 }

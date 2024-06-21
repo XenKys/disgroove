@@ -1,4 +1,4 @@
-import type { Emoji, RawEmoji } from ".";
+import type { Emoji, RawEmoji, snowflake } from ".";
 import type {
   ButtonStyles,
   ChannelTypes,
@@ -46,7 +46,7 @@ export interface RawSelectOption {
 
 /** https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-default-value-structure */
 export interface RawDefaultValue {
-  id: string;
+  id: snowflake;
   type: string;
 }
 
@@ -105,7 +105,7 @@ export interface SelectOption {
 }
 
 export interface DefaultValue {
-  id: string;
+  id: snowflake;
   type: string;
 }
 

@@ -26,6 +26,7 @@ import type {
   ExecuteWebhookParams,
   RawPollCreateParams,
   PollCreateParams,
+  snowflake,
 } from ".";
 import type {
   ApplicationCommandOptionType,
@@ -39,15 +40,15 @@ import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {
-  id: string;
-  application_id: string;
+  id: snowflake;
+  application_id: snowflake;
   type: InteractionType;
   data?: RawApplicationCommandData &
     RawMessageComponentData &
     RawModalSubmitData;
-  guild_id?: string;
+  guild_id?: snowflake;
   channel?: RawChannel;
-  channel_id?: string;
+  channel_id?: snowflake;
   member?: RawGuildMember;
   user?: RawUser;
   token: string;
@@ -61,13 +62,13 @@ export interface RawInteraction {
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
 export interface RawApplicationCommandData {
-  id: string;
+  id: snowflake;
   name: string;
   type: ApplicationCommandTypes;
   resolved?: RawResolvedData;
   options?: Array<RawApplicationCommandInteractionDataOption>;
-  guild_id?: string;
-  target_id?: string;
+  guild_id?: snowflake;
+  target_id?: snowflake;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure */
@@ -89,12 +90,12 @@ export interface RawModalSubmitData {
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
 export interface RawResolvedData {
-  users?: Record<string, RawUser>;
-  members?: Record<string, RawGuildMember>;
-  roles?: Record<string, RawRole>;
-  channels?: Record<string, RawChannel>;
-  messages?: Record<string, RawMessage>;
-  attachments?: Record<string, RawAttachment>;
+  users?: Record<snowflake, RawUser>;
+  members?: Record<snowflake, RawGuildMember>;
+  roles?: Record<snowflake, RawRole>;
+  channels?: Record<snowflake, RawChannel>;
+  messages?: Record<snowflake, RawMessage>;
+  attachments?: Record<snowflake, RawAttachment>;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
@@ -108,7 +109,7 @@ export interface RawApplicationCommandInteractionDataOption {
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object-message-interaction-structure */
 export interface RawMessageInteraction {
-  id: string;
+  id: snowflake;
   type: InteractionType;
   name: string;
   user: RawUser;
@@ -138,13 +139,13 @@ export interface RawInteractionCallbackData {
 }
 
 export interface Interaction {
-  id: string;
-  applicationId: string;
+  id: snowflake;
+  applicationId: snowflake;
   type: InteractionType;
   data?: ApplicationCommandData & MessageComponentData & ModalSubmitData;
-  guildId?: string;
+  guildId?: snowflake;
   channel?: Channel;
-  channelId?: string;
+  channelId?: snowflake;
   member?: GuildMember;
   user?: User;
   token: string;
@@ -157,13 +158,13 @@ export interface Interaction {
 }
 
 export interface ApplicationCommandData {
-  id: string;
+  id: snowflake;
   name: string;
   type: ApplicationCommandTypes;
   resolved?: ResolvedData;
   options?: Array<ApplicationCommandInteractionDataOption>;
-  guildId?: string;
-  targetId?: string;
+  guildId?: snowflake;
+  targetId?: snowflake;
 }
 
 export interface MessageComponentData {
@@ -182,12 +183,12 @@ export interface ModalSubmitData {
 }
 
 export interface ResolvedData {
-  users?: Record<string, User>;
-  members?: Record<string, GuildMember>;
-  roles?: Record<string, Role>;
-  channels?: Record<string, Channel>;
-  messages?: Record<string, Message>;
-  attachments?: Record<string, Attachment>;
+  users?: Record<snowflake, User>;
+  members?: Record<snowflake, GuildMember>;
+  roles?: Record<snowflake, Role>;
+  channels?: Record<snowflake, Channel>;
+  messages?: Record<snowflake, Message>;
+  attachments?: Record<snowflake, Attachment>;
 }
 
 export interface ApplicationCommandInteractionDataOption {
@@ -199,7 +200,7 @@ export interface ApplicationCommandInteractionDataOption {
 }
 
 export interface MessageInteraction {
-  id: string;
+  id: snowflake;
   type: InteractionType;
   name: string;
   user: User;

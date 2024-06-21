@@ -1,10 +1,10 @@
-import type { GuildMember, RawGuildMember } from ".";
+import type { GuildMember, RawGuildMember, snowflake, timestamp } from ".";
 
 /** https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure */
 export interface RawVoiceState {
-  guild_id?: string;
-  channel_id: string | null;
-  user_id: string;
+  guild_id?: snowflake;
+  channel_id: snowflake | null;
+  user_id: snowflake;
   member?: RawGuildMember;
   session_id: string;
   deaf: boolean;
@@ -14,12 +14,12 @@ export interface RawVoiceState {
   self_stream?: boolean;
   self_video: boolean;
   suppress: boolean;
-  request_to_speak_timestamp: string | null;
+  request_to_speak_timestamp: timestamp | null;
 }
 
 /** https://discord.com/developers/docs/resources/voice#voice-region-object-voice-region-structure */
 export interface RawVoiceRegion {
-  id: string;
+  id: snowflake;
   name: string;
   optimal: boolean;
   deprecated: boolean;
@@ -27,9 +27,9 @@ export interface RawVoiceRegion {
 }
 
 export interface VoiceState {
-  guildId?: string;
-  channelId: string | null;
-  userId: string;
+  guildId?: snowflake;
+  channelId: snowflake | null;
+  userId: snowflake;
   member?: GuildMember;
   sessionId: string;
   deaf: boolean;
@@ -39,11 +39,11 @@ export interface VoiceState {
   selfStream?: boolean;
   selfVideo: boolean;
   suppress: boolean;
-  requestToSpeakTimestamp: string | null;
+  requestToSpeakTimestamp: timestamp | null;
 }
 
 export interface VoiceRegion {
-  id: string;
+  id: snowflake;
   name: string;
   optimal: boolean;
   deprecated: boolean;

@@ -1,40 +1,41 @@
 import type { EntitlementTypes } from "../constants";
+import type { snowflake, timestamp } from ".";
 
 /** https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-structure */
 export interface RawEntitlement {
-  id: string;
-  sku_id: string;
-  application_id: string;
-  user_id?: string;
-  promotion_id?: string | null; // Undocumented
+  id: snowflake;
+  sku_id: snowflake;
+  application_id: snowflake;
+  user_id?: snowflake;
+  promotion_id?: snowflake | null; // Undocumented
   type: EntitlementTypes;
   deleted: boolean;
   gift_code_flags?: number; // Undocumented
   consumed?: boolean;
-  starts_at?: string;
-  ends_at?: string;
-  guild_id?: string;
+  starts_at?: timestamp;
+  ends_at?: timestamp;
+  guild_id?: snowflake;
   subscription_id?: string; // Undocumented
 }
 
 export interface Entitlement {
-  id: string;
-  skuId: string;
-  applicationId: string;
-  userId?: string;
-  promotionId?: string | null; // Undocumented
+  id: snowflake;
+  skuId: snowflake;
+  applicationId: snowflake;
+  userId?: snowflake;
+  promotionId?: snowflake | null; // Undocumented
   type: EntitlementTypes;
   deleted: boolean;
   giftCodeFlags?: number; // Undocumented
   consumed?: boolean;
-  startsAt?: string;
-  endsAt?: string;
-  guildId?: string;
+  startsAt?: timestamp;
+  endsAt?: timestamp;
+  guildId?: snowflake;
   subscriptionId?: string; // Undocumented
 }
 
 export interface CreateTestEntitlementParams {
-  skuId: string;
-  ownerId: string;
+  skuId: snowflake;
+  ownerId: snowflake;
   ownerType: number;
 }

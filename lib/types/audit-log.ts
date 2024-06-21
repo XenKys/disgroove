@@ -13,6 +13,7 @@ import type {
   Integration,
   Channel,
   Webhook,
+  snowflake,
 } from ".";
 import type { AuditLogEvents } from "../constants";
 
@@ -32,8 +33,8 @@ export interface RawAuditLog {
 export interface RawAuditLogEntry {
   target_id: string | null;
   changes?: Array<RawAuditLogChange>;
-  user_id: string | null;
-  id: string;
+  user_id: snowflake | null;
+  id: snowflake;
   action_type: AuditLogEvents;
   options?: RawOptionalAuditLogEntryInfo;
   reason?: string;
@@ -41,15 +42,15 @@ export interface RawAuditLogEntry {
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info */
 export interface RawOptionalAuditLogEntryInfo {
-  application_id: string;
+  application_id: snowflake;
   auto_moderation_rule_name: string;
   auto_moderation_rule_trigger_type: string;
-  channel_id: string;
+  channel_id: snowflake;
   count: string;
   delete_member_days: string;
-  id: string;
+  id: snowflake;
   members_removed: string;
-  message_id: string;
+  message_id: snowflake;
   role_name: string;
   type: string;
   integration_type: string;
@@ -74,25 +75,25 @@ export interface AuditLog {
 }
 
 export interface AuditLogEntry {
-  targetId: string | null;
+  targetId: snowflake | null;
   changes?: Array<AuditLogChange>;
-  userId: string | null;
-  id: string;
+  userId: snowflake | null;
+  id: snowflake;
   actionType: AuditLogEvents;
   options?: OptionalAuditLogEntryInfo;
   reason?: string;
 }
 
 export interface OptionalAuditLogEntryInfo {
-  applicationId: string;
+  applicationId: snowflake;
   autoModerationRuleName: string;
   autoModerationRuleTriggerType: string;
-  channelId: string;
+  channelId: snowflake;
   count: string;
   deleteMemberDays: string;
-  id: string;
+  id: snowflake;
   membersRemoved: string;
-  messageId: string;
+  messageId: snowflake;
   roleName: string;
   type: string;
   integrationType: string;

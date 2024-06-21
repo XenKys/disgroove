@@ -31,24 +31,26 @@ import type {
   Overwrite,
   DefaultReaction,
   ForumTag,
+  snowflake,
+  timestamp,
 } from ".";
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface RawGuild {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   icon_hash?: string | null;
   splash: string | null;
   discovery_splash: string | null;
   owner?: boolean;
-  owner_id: string;
+  owner_id: snowflake;
   permissions?: string;
   region?: string | null;
-  afk_channel_id: string | null;
+  afk_channel_id: snowflake | null;
   afk_timeout: number;
   widget_enabled?: boolean;
-  widget_channel_id?: string | null;
+  widget_channel_id?: snowflake | null;
   verification_level: VerificationLevel;
   default_message_notifications: DefaultMessageNotificationLevel;
   explicit_content_filter: ExplicitContentFilterLevel;
@@ -56,10 +58,10 @@ export interface RawGuild {
   emojis: Array<RawEmoji>;
   features: Array<GuildFeatures>;
   mfa_level: MFALevel;
-  application_id: string | null;
-  system_channel_id: string | null;
+  application_id: snowflake | null;
+  system_channel_id: snowflake | null;
   system_channel_flags: SystemChannelFlags;
-  rules_channel_id: string | null;
+  rules_channel_id: snowflake | null;
   max_presences?: number | null;
   max_members?: number;
   vanity_url_code: string | null;
@@ -68,7 +70,7 @@ export interface RawGuild {
   premium_tier: PremiumTier;
   premium_subscription_count?: number;
   preferred_locale: string;
-  public_updates_channel_id: string | null;
+  public_updates_channel_id: snowflake | null;
   max_video_channel_users?: number;
   max_stage_video_channel_users?: number;
   approximate_member_count?: number;
@@ -77,18 +79,18 @@ export interface RawGuild {
   nsfw_level: GuildNSFWLevel;
   stickers?: Array<RawSticker>;
   premium_progress_bar_enabled: boolean;
-  safety_alerts_channel_id: string | null;
+  safety_alerts_channel_id: snowflake | null;
 }
 
 /** https://discord.com/developers/docs/resources/guild#unavailable-guild-object */
 export interface RawUnavailableGuild {
-  id: string;
+  id: snowflake;
   unavailable: boolean;
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure */
 export interface RawGuildPreview {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   splash: string | null;
@@ -104,12 +106,12 @@ export interface RawGuildPreview {
 /** https://discord.com/developers/docs/resources/guild#guild-widget-settings-object-guild-widget-settings-structure */
 export interface RawGuildWidgetSettings {
   enabled: boolean;
-  channel_id: string | null;
+  channel_id: snowflake | null;
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-widget-object-guild-widget-structure */
 export interface RawGuildWidget {
-  id: string;
+  id: snowflake;
   name: string;
   instant_invite: string | null;
   channels: Array<RawChannel>;
@@ -122,8 +124,8 @@ export interface RawGuildMember {
   user?: RawUser;
   nick?: string | null;
   avatar?: string | null;
-  roles: Array<string>;
-  joined_at: string;
+  roles: Array<snowflake>;
+  joined_at: timestamp;
   premium_since?: number | null;
   deaf: boolean;
   mute: boolean;
@@ -135,18 +137,18 @@ export interface RawGuildMember {
 
 /** https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
 export interface RawIntegration {
-  id: string;
+  id: snowflake;
   name: string;
   type: string;
   enabled: boolean;
   syncing?: boolean;
-  role_id?: string;
+  role_id?: snowflake;
   enable_emoticons?: boolean;
   expire_behavior?: IntegrationExpireBehaviors;
   expire_grace_period?: number;
   user?: RawUser;
   account: RawIntegrationAccount;
-  synced_at?: string;
+  synced_at?: timestamp;
   subscriber_count?: number;
   revoked?: boolean;
   application?: RawIntegrationApplication;
@@ -155,13 +157,13 @@ export interface RawIntegration {
 
 /** https://discord.com/developers/docs/resources/guild#integration-account-object-integration-account-structure */
 export interface RawIntegrationAccount {
-  id: string;
+  id: snowflake;
   name: string;
 }
 
 /** https://discord.com/developers/docs/resources/guild#integration-application-object-integration-application-structure */
 export interface RawIntegrationApplication {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   description: string;
@@ -182,24 +184,24 @@ export interface RawWelcomeScreen {
 
 /** https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure */
 export interface RawWelcomeScreenChannel {
-  channel_id: string;
+  channel_id: snowflake;
   description: string;
-  emoji_id: string | null;
+  emoji_id: snowflake | null;
   emoji_name: string | null;
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-guild-onboarding-structure */
 export interface RawGuildOnboarding {
-  guild_id: string;
+  guild_id: snowflake;
   prompts: Array<RawOnboardingPrompt>;
-  default_channel_ids: Array<string>;
+  default_channel_ids: Array<snowflake>;
   enabled: boolean;
   mode: OnboardingMode;
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-prompt-structure */
 export interface RawOnboardingPrompt {
-  id: string;
+  id: snowflake;
   type: PromptTypes;
   options: Array<RawPromptOption>;
   title: string;
@@ -210,11 +212,11 @@ export interface RawOnboardingPrompt {
 
 /** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-option-structure */
 export interface RawPromptOption {
-  id: string;
-  channel_ids: Array<string>;
-  role_ids: Array<string>;
+  id: snowflake;
+  channel_ids: Array<snowflake>;
+  role_ids: Array<snowflake>;
   emoji?: RawEmoji;
-  emoji_id?: string;
+  emoji_id?: snowflake;
   emoji_name?: string;
   emoji_animated?: boolean;
   title: string;
@@ -222,20 +224,20 @@ export interface RawPromptOption {
 }
 
 export interface Guild {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   iconHash?: string | null;
   splash: string | null;
   discoverySplash: string | null;
   owner?: boolean;
-  ownerId: string;
+  ownerId: snowflake;
   permissions?: string;
   region?: string | null;
-  afkChannelId: string | null;
+  afkChannelId: snowflake | null;
   afkTimeout: number;
   widgetEnabled?: boolean;
-  widgetChannelId?: string | null;
+  widgetChannelId?: snowflake | null;
   verificationLevel: VerificationLevel;
   defaultMessageNotifications: DefaultMessageNotificationLevel;
   explicitContentFilter: ExplicitContentFilterLevel;
@@ -243,10 +245,10 @@ export interface Guild {
   emojis: Array<Emoji>;
   features: Array<GuildFeatures>;
   mfaLevel: MFALevel;
-  applicationId: string | null;
-  systemChannelId: string | null;
+  applicationId: snowflake | null;
+  systemChannelId: snowflake | null;
   systemChannelFlags: SystemChannelFlags;
-  rulesChannelId: string | null;
+  rulesChannelId: snowflake | null;
   maxPresences?: number | null;
   maxMembers?: number;
   vanityUrlCode: string | null;
@@ -255,7 +257,7 @@ export interface Guild {
   premiumTier: PremiumTier;
   premiumSubscriptionCount?: number;
   preferredLocale: string;
-  publicUpdatesChannelId: string | null;
+  publicUpdatesChannelId: snowflake | null;
   maxVideoChannelUsers?: number;
   maxStageVideoChannelUsers?: number;
   approximateMemberCount?: number;
@@ -264,16 +266,16 @@ export interface Guild {
   nsfwLevel: GuildNSFWLevel;
   stickers?: Array<Sticker>;
   premiumProgressBarEnabled: boolean;
-  safetyAlertsChannelId: string | null;
+  safetyAlertsChannelId: snowflake | null;
 }
 
 export interface UnavailableGuild {
-  id: string;
+  id: snowflake;
   unavailable: boolean;
 }
 
 export interface GuildPreview {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   splash: string | null;
@@ -288,11 +290,11 @@ export interface GuildPreview {
 
 export interface GuildWidgetSettings {
   enabled: boolean;
-  channelId: string | null;
+  channelId: snowflake | null;
 }
 
 export interface GuildWidget {
-  id: string;
+  id: snowflake;
   name: string;
   instantInvite: string | null;
   channels: Array<Channel>;
@@ -304,7 +306,7 @@ export interface GuildMember {
   user?: User;
   nick?: string | null;
   avatar?: string | null;
-  roles: Array<string>;
+  roles: Array<snowflake>;
   joinedAt: string;
   premiumSince?: number | null;
   deaf: boolean;
@@ -316,18 +318,18 @@ export interface GuildMember {
 }
 
 export interface Integration {
-  id: string;
+  id: snowflake;
   name: string;
   type: string;
   enabled: boolean;
   syncing?: boolean;
-  roleId?: string;
+  roleId?: snowflake;
   enableEmoticons?: boolean;
   expireBehavior?: IntegrationExpireBehaviors;
   expireGracePeriod?: number;
   user?: User;
   account: IntegrationAccount;
-  syncedAt?: string;
+  syncedAt?: timestamp;
   subscriberCount?: number;
   revoked?: boolean;
   application?: IntegrationApplication;
@@ -335,12 +337,12 @@ export interface Integration {
 }
 
 export interface IntegrationAccount {
-  id: string;
+  id: snowflake;
   name: string;
 }
 
 export interface IntegrationApplication {
-  id: string;
+  id: snowflake;
   name: string;
   icon: string | null;
   description: string;
@@ -358,22 +360,22 @@ export interface WelcomeScreen {
 }
 
 export interface WelcomeScreenChannel {
-  channelId: string;
+  channelId: snowflake;
   description: string;
-  emojiId: string | null;
+  emojiId: snowflake | null;
   emojiName: string | null;
 }
 
 export interface GuildOnboarding {
-  guildId: string;
+  guildId: snowflake;
   prompts: Array<OnboardingPrompt>;
-  defaultChannelIds: Array<string>;
+  defaultChannelIds: Array<snowflake>;
   enabled: boolean;
   mode: OnboardingMode;
 }
 
 export interface OnboardingPrompt {
-  id: string;
+  id: snowflake;
   type: PromptTypes;
   options: Array<PromptOption>;
   title: string;
@@ -383,11 +385,11 @@ export interface OnboardingPrompt {
 }
 
 export interface PromptOption {
-  id: string;
-  channelIds: Array<string>;
-  roleIds: Array<string>;
+  id: snowflake;
+  channelIds: Array<snowflake>;
+  roleIds: Array<snowflake>;
   emoji?: Emoji;
-  emojiId?: string;
+  emojiId?: snowflake;
   emojiName?: string;
   emojiAnimated?: boolean;
   title: string;
@@ -416,9 +418,9 @@ export interface CreateGuildParams {
     id?: number;
     parentId?: number;
   }>;
-  afkChannelId?: string;
+  afkChannelId?: snowflake;
   afkTimeout?: number;
-  systemChannelId?: string;
+  systemChannelId?: snowflake;
   systemChannelFlags?: SystemChannelFlags;
 }
 
@@ -428,22 +430,22 @@ export interface EditGuildParams {
   verificationLevel?: VerificationLevel;
   defaultMessageNotifications?: DefaultMessageNotificationLevel;
   explicitContentFilter?: ExplicitContentFilterLevel;
-  afkChannelId?: string | null;
+  afkChannelId?: snowflake | null;
   afkTimeout?: number;
   icon?: string | null;
-  ownerId?: string;
+  ownerId?: snowflake;
   splash?: string | null;
   discoverySplash?: string | null;
   banner?: string | null;
-  systemChannelId?: string | null;
+  systemChannelId?: snowflake | null;
   systemChannelFlags?: SystemChannelFlags;
-  rulesChannelId?: string | null;
-  publicUpdatesChannelId?: string | null;
+  rulesChannelId?: snowflake | null;
+  publicUpdatesChannelId?: snowflake | null;
   preferredLocale?: string;
   features?: Array<GuildFeatures>;
   description?: string | null;
   premiumProgressBarEnabled?: boolean;
-  safetyAlertsChannelId?: string | null;
+  safetyAlertsChannelId?: snowflake | null;
 }
 
 export interface CreateGuildChannelParams {
@@ -455,7 +457,7 @@ export interface CreateGuildChannelParams {
   rateLimitPerUser?: number;
   position?: number;
   permissionOverwrites?: Array<Overwrite>;
-  parentId?: string | null;
+  parentId?: snowflake | null;
   nsfw?: boolean;
   rtcRegion?: string | null;
   videoQualityMode?: VideoQualityModes;
@@ -468,10 +470,10 @@ export interface CreateGuildChannelParams {
 }
 
 export type EditGuildChannelPositionsParams = Array<{
-  id: string;
+  id: snowflake;
   position?: number | null;
   lockPermissions?: boolean | null;
-  parentId?: string | null;
+  parentId?: snowflake | null;
 }>;
 
 export interface AddGuildMemberParams {
@@ -488,10 +490,10 @@ export interface EditCurrentGuildMemberParams {
 
 export interface EditGuildMemberParams {
   nick?: string | null;
-  roles?: Array<string> | null;
+  roles?: Array<snowflake> | null;
   mute?: boolean | null;
   deaf?: boolean | null;
-  channelId?: string | null;
+  channelId?: snowflake | null;
   communicationDisabledUntil?: number | null;
   flags?: GuildMemberFlags;
 }
@@ -506,7 +508,7 @@ export interface CreateGuildBanParams {
 }
 
 export interface BulkGuildBanParams {
-  userIds: Array<string>;
+  userIds: Array<snowflake>;
   deleteMessageSeconds?: number;
 }
 
@@ -521,7 +523,7 @@ export interface CreateGuildRoleParams {
 }
 
 export type EditGuildRolePositionsParams = Array<{
-  id: string;
+  id: snowflake;
   position?: number | null;
 }>;
 
@@ -542,7 +544,7 @@ export interface EditGuildMFALevelParams {
 export interface BeginGuildPruneParams {
   days: number;
   computePruneCount: boolean;
-  includeRoles: Array<string>;
+  includeRoles: Array<snowflake>;
   reason?: string;
 }
 
@@ -554,19 +556,19 @@ export interface EditGuildWelcomeScreenParams {
 
 export interface EditGuildOnboardingParams {
   prompts: Array<OnboardingPrompt>;
-  defaultChannelIds: Array<string>;
+  defaultChannelIds: Array<snowflake>;
   enabled: boolean;
   mode: OnboardingMode;
 }
 
 export interface EditCurrentUserVoiceStateParams {
-  channelId?: string;
+  channelId?: snowflake;
   suppress?: boolean;
-  requestToSpeakTimestamp?: string | null;
+  requestToSpeakTimestamp?: timestamp | null;
 }
 
 export interface EditUserVoiceStateParams {
-  channelId?: string;
+  channelId?: snowflake;
   suppress?: boolean;
-  requestToSpeakTimestamp?: string | null;
+  requestToSpeakTimestamp?: timestamp | null;
 }

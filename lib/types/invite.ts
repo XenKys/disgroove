@@ -11,6 +11,7 @@ import type {
   RawGuildMember,
   RawGuildScheduledEvent,
   RawUser,
+  timestamp,
 } from ".";
 import type { InviteTargetTypes, InviteTypes } from "../constants";
 
@@ -26,7 +27,7 @@ export interface RawInvite {
   target_application?: RawApplication;
   approximate_presence_count?: number;
   approximate_member_count?: number;
-  expires_at?: string | null;
+  expires_at?: timestamp | null;
   stage_instance?: RawInviteStageInstance;
   guild_scheduled_event?: RawGuildScheduledEvent;
 }
@@ -37,7 +38,7 @@ export interface RawInviteMetadata {
   max_uses: number;
   max_age: number;
   temporary: boolean;
-  created_at: string;
+  created_at: timestamp;
 }
 
 /** https://discord.com/developers/docs/resources/invite#invite-stage-instance-object-invite-stage-instance-structure */
@@ -59,7 +60,7 @@ export interface Invite {
   targetApplication?: Application;
   approximatePresenceCount?: number;
   approximateMemberCount?: number;
-  expiresAt?: string | null;
+  expiresAt?: timestamp | null;
   stageInstance?: InviteStageInstance;
   guildScheduledEvent?: GuildScheduledEvent;
 }

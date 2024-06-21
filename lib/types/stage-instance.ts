@@ -1,32 +1,33 @@
 import type { PrivacyLevel } from "../constants";
+import type { snowflake } from "./common";
 
 /** https://discord.com/developers/docs/resources/stage-instance#stage-instance-object-stage-instance-structure */
 export interface RawStageInstance {
-  id: string;
-  guild_id: string;
-  channel_id: string;
+  id: snowflake;
+  guild_id: snowflake;
+  channel_id: snowflake;
   topic: string;
   privacy_level: PrivacyLevel;
   discoverable_disabled: boolean;
-  guild_scheduled_event_id: string | null;
+  guild_scheduled_event_id: snowflake | null;
 }
 
 export interface StageInstance {
-  id: string;
-  guildId: string;
-  channelId: string;
+  id: snowflake;
+  guildId: snowflake;
+  channelId: snowflake;
   topic: string;
   privacyLevel: PrivacyLevel;
   discoverableDisabled: boolean;
-  guildScheduledEventId: string | null;
+  guildScheduledEventId: snowflake | null;
 }
 
 export interface CreateStageInstanceParams {
-  channelId: string;
+  channelId: snowflake;
   topic: string;
   privacyLevel?: PrivacyLevel;
   sendStartNotifications?: boolean;
-  guildScheduledEventId?: string;
+  guildScheduledEventId?: snowflake;
 }
 
 export interface EditStageInstanceParams {

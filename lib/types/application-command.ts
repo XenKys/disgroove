@@ -1,4 +1,4 @@
-import type { LocaleMap } from ".";
+import type { LocaleMap, snowflake } from ".";
 import type {
   ApplicationCommandTypes,
   ApplicationCommandOptionType,
@@ -10,10 +10,10 @@ import type {
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure */
 export interface RawApplicationCommand {
-  id: string;
+  id: snowflake;
   type?: ApplicationCommandTypes;
-  application_id: string;
-  guild_id?: string;
+  application_id: snowflake;
+  guild_id?: snowflake;
   name: string;
   name_localizations?: LocaleMap | null;
   description: string;
@@ -25,7 +25,7 @@ export interface RawApplicationCommand {
   integration_types?: Array<ApplicationIntegrationTypes>;
   contexts?: Array<InteractionContextTypes>;
   nsfw?: boolean;
-  version: string;
+  version: snowflake;
 }
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure */
@@ -55,24 +55,24 @@ export interface RawApplicationCommandOptionChoice {
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure */
 export interface RawGuildApplicationCommandPermissions {
-  id: string;
-  application_id: string;
-  guild_id: string;
+  id: snowflake;
+  application_id: snowflake;
+  guild_id: snowflake;
   permissions: Array<RawApplicationCommandPermission>;
 }
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure */
 export interface RawApplicationCommandPermission {
-  id: string;
+  id: snowflake;
   type: ApplicationCommandPermissionType;
   permission: boolean;
 }
 
 export interface ApplicationCommand {
-  id: string;
+  id: snowflake;
   type?: ApplicationCommandTypes;
-  applicationId: string;
-  guildId?: string;
+  applicationId: snowflake;
+  guildId?: snowflake;
   name: string;
   nameLocalizations?: LocaleMap | null;
   description: string;
@@ -111,14 +111,14 @@ export interface ApplicationCommandOptionChoice {
 }
 
 export interface GuildApplicationCommandPermissions {
-  id: string;
-  applicationId: string;
-  guildId: string;
+  id: snowflake;
+  applicationId: snowflake;
+  guildId: snowflake;
   permissions: Array<ApplicationCommandPermission>;
 }
 
 export interface ApplicationCommandPermission {
-  id: string;
+  id: snowflake;
   type: ApplicationCommandPermissionType;
   permission: boolean;
 }
@@ -149,7 +149,7 @@ export interface EditGlobalApplicationCommandParams {
 }
 
 export type BulkEditGlobalApplicationCommandsParams = Array<{
-  id?: string;
+  id?: snowflake;
   name: string;
   nameLocalizations?: LocaleMap | null;
   description?: string;
@@ -186,7 +186,7 @@ export interface EditGuildApplicationCommandParams {
 }
 
 export type BulkEditGuildApplicationCommandsParams = Array<{
-  id?: string;
+  id?: snowflake;
   name: string;
   nameLocalizations?: LocaleMap | null;
   description?: string;

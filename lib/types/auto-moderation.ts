@@ -4,20 +4,21 @@ import type {
   EventTypes,
   TriggerTypes,
 } from "../constants";
+import type { snowflake } from ".";
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-auto-moderation-rule-structure */
 export interface RawAutoModerationRule {
-  id: string;
-  guild_id: string;
+  id: snowflake;
+  guild_id: snowflake;
   name: string;
-  creator_id: string;
+  creator_id: snowflake;
   event_type: EventTypes;
   trigger_type: TriggerTypes;
   trigger_metadata: RawTriggerMetadata;
   actions: Array<RawAutoModerationAction>;
   enabled: boolean;
-  exempt_roles: Array<string>;
-  exempt_channels: Array<string>;
+  exempt_roles: Array<snowflake>;
+  exempt_channels: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-metadata */
@@ -38,23 +39,23 @@ export interface RawAutoModerationAction {
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-metadata */
 export interface RawActionMetadata {
-  channel_id: string;
+  channel_id: snowflake;
   duration_seconds: number;
   custom_message?: string;
 }
 
 export interface AutoModerationRule {
-  id: string;
-  guildId: string;
+  id: snowflake;
+  guildId: snowflake;
   name: string;
-  creatorId: string;
+  creatorId: snowflake;
   eventType: EventTypes;
   triggerType: TriggerTypes;
   triggerMetadata: TriggerMetadata;
   actions: Array<AutoModerationAction>;
   enabled: boolean;
-  exemptRoles: Array<string>;
-  exemptChannels: Array<string>;
+  exemptRoles: Array<snowflake>;
+  exemptChannels: Array<snowflake>;
 }
 
 export interface TriggerMetadata {
@@ -72,7 +73,7 @@ export interface AutoModerationAction {
 }
 
 export interface ActionMetadata {
-  channelId: string;
+  channelId: snowflake;
   durationSeconds: number;
   customMessage?: string;
 }

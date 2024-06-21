@@ -1,11 +1,11 @@
 import type { StickerTypes, StickerFormatTypes } from "../constants";
-import type { User, RawUser } from ".";
+import type { User, RawUser, snowflake } from ".";
 import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
 export interface RawSticker {
-  id: string;
-  pack_id?: string;
+  id: snowflake;
+  pack_id?: snowflake;
   name: string;
   description: string | null;
   tags: string;
@@ -13,32 +13,32 @@ export interface RawSticker {
   type: StickerTypes;
   format_type: StickerFormatTypes;
   available?: boolean;
-  guild_id?: string;
+  guild_id?: snowflake;
   user?: RawUser;
   sort_value?: number;
 }
 
 /** https://discord.com/developers/docs/resources/sticker#sticker-item-object-sticker-item-structure */
 export interface RawStickerItem {
-  id: string;
+  id: snowflake;
   name: string;
   format_type: StickerFormatTypes;
 }
 
 /** https://discord.com/developers/docs/resources/sticker#sticker-pack-object-sticker-pack-structure */
 export interface RawStickerPack {
-  id: string;
+  id: snowflake;
   stickers: Array<RawSticker>;
   name: string;
-  sku_id: string;
-  cover_sticker_id?: string;
+  sku_id: snowflake;
+  cover_sticker_id?: snowflake;
   description: string;
-  banner_asset_id?: string;
+  banner_asset_id?: snowflake;
 }
 
 export interface Sticker {
-  id: string;
-  packId?: string;
+  id: snowflake;
+  packId?: snowflake;
   name: string;
   description: string | null;
   tags: string;
@@ -46,25 +46,25 @@ export interface Sticker {
   type: StickerTypes;
   formatType: StickerFormatTypes;
   available?: boolean;
-  guildId?: string;
+  guildId?: snowflake;
   user?: User;
   sortValue?: number;
 }
 
 export interface StickerItem {
-  id: string;
+  id: snowflake;
   name: string;
   formatType: StickerFormatTypes;
 }
 
 export interface StickerPack {
-  id: string;
+  id: snowflake;
   stickers: Array<Sticker>;
   name: string;
-  skuId: string;
-  coverStickerId?: string;
+  skuId: snowflake;
+  coverStickerId?: snowflake;
   description: string;
-  bannerAssetId?: string;
+  bannerAssetId?: snowflake;
 }
 
 export interface CreateGuildStickerParams {

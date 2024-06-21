@@ -35,30 +35,32 @@ import type {
   PollCreateParams,
   Poll,
   RawPoll,
+  snowflake,
+  timestamp,
 } from ".";
 import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
 export interface RawChannel {
-  id: string;
+  id: snowflake;
   type: ChannelTypes;
-  guild_id?: string;
+  guild_id?: snowflake;
   position?: number;
   permission_overwrites?: Array<RawOverwrite>;
   name?: string | null;
   topic?: string | null;
   nsfw?: boolean;
-  last_message_id?: string | null;
+  last_message_id?: snowflake | null;
   bitrate?: number;
   user_limit?: number;
   rate_limit_per_user?: number;
   recipients?: Array<RawUser>;
   icon?: string | null;
-  owner_id?: string;
-  application_id?: string;
+  owner_id?: snowflake;
+  application_id?: snowflake;
   managed?: boolean;
-  parent_id?: string | null;
-  last_pin_timestamp?: string | null;
+  parent_id?: snowflake | null;
+  last_pin_timestamp?: timestamp | null;
   rtc_region?: string | null;
   video_quality_mode?: VideoQualityModes;
   message_count?: number;
@@ -79,27 +81,27 @@ export interface RawChannel {
 
 /** https://discord.com/developers/docs/resources/channel#message-object-message-structure */
 export interface RawMessage {
-  id: string;
-  channel_id: string;
+  id: snowflake;
+  channel_id: snowflake;
   author: RawUser;
   content: string;
-  timestamp: string;
-  edited_timestamp: string | null;
+  timestamp: timestamp;
+  edited_timestamp: timestamp | null;
   tts: boolean;
   mention_everyone: boolean;
   mentions: Array<RawUser>;
-  mention_roles: Array<string>;
+  mention_roles: Array<snowflake>;
   mention_channels?: Array<RawChannelMention>;
   attachments: Array<RawAttachment>;
   embeds: Array<RawEmbed>;
   reactions?: Array<RawReaction>;
   nonce?: number | string;
   pinned: boolean;
-  webhook_id?: string;
+  webhook_id?: snowflake;
   type: MessageTypes;
   activity?: RawMessageActivity;
   application?: RawApplication;
-  application_id?: string;
+  application_id?: snowflake;
   message_reference?: RawMessageReference;
   flags?: MessageFlags;
   referenced_message?: RawMessage | null;
@@ -124,33 +126,33 @@ export interface RawMessageActivity {
 
 /** https://discord.com/developers/docs/resources/channel#message-interaction-metadata-object-message-interaction-metadata-structure */
 export interface RawMessageInteractionMetadata {
-  id: string;
+  id: snowflake;
   type: InteractionType;
   user: RawUser;
   authorizing_integration_owners: Record<ApplicationIntegrationTypes, string>;
-  original_response_message_id?: string;
-  interacted_message_id?: string;
+  original_response_message_id?: snowflake;
+  interacted_message_id?: snowflake;
   triggering_interaction_metadata?: RawMessageInteractionMetadata;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-call-object-message-call-structure */
 export interface RawMessageCall {
-  partecipants: Array<string>;
-  ended_timestamp?: string | null;
+  partecipants: Array<snowflake>;
+  ended_timestamp?: timestamp | null;
 }
 
 /** https://discord.com/developers/docs/resources/channel#message-reference-object-message-reference-structure */
 export interface RawMessageReference {
-  message_id?: string;
-  channel_id?: string;
-  guild_id?: string;
+  message_id?: snowflake;
+  channel_id?: snowflake;
+  guild_id?: snowflake;
   fail_if_not_exists?: boolean;
 }
 
 /** https://discord.com/developers/docs/resources/channel#followed-channel-object-followed-channel-structure */
 export interface RawFollowedChannel {
-  channel_id: string;
-  webhook_id: string;
+  channel_id: snowflake;
+  webhook_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/resources/channel#reaction-object-reaction-structure */
@@ -171,7 +173,7 @@ export interface RawReactionCountDetails {
 
 /** https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure */
 export interface RawOverwrite {
-  id: string;
+  id: snowflake;
   type: number;
   allow: string;
   deny: string;
@@ -181,33 +183,33 @@ export interface RawOverwrite {
 export interface RawThreadMetadata {
   archived: boolean;
   auto_archive_duration: number;
-  archive_timestamp: string;
+  archive_timestamp: timestamp;
   locked: boolean;
   invitable?: boolean;
-  create_timestamp?: string | null;
+  create_timestamp?: timestamp | null;
 }
 
 /** https://discord.com/developers/docs/resources/channel#thread-member-object-thread-member-structure */
 export interface RawThreadMember {
-  id?: string;
-  user_id?: string;
-  join_timestamp: string;
+  id?: snowflake;
+  user_id?: snowflake;
+  join_timestamp: timestamp;
   flags: number;
   member?: RawGuildMember;
 }
 
 /** https://discord.com/developers/docs/resources/channel#default-reaction-object-default-reaction-structure */
 export interface RawDefaultReaction {
-  emoji_id: string | null;
+  emoji_id: snowflake | null;
   emoji_name: string | null;
 }
 
 /** https://discord.com/developers/docs/resources/channel#forum-tag-object-forum-tag-structure */
 export interface RawForumTag {
-  id: string;
+  id: snowflake;
   name: string;
   moderated: boolean;
-  emoji_id?: string;
+  emoji_id?: snowflake;
   emoji_name?: string;
 }
 
@@ -217,7 +219,7 @@ export interface RawEmbed {
   type?: string;
   description?: string;
   url?: string;
-  timestamp?: string;
+  timestamp?: timestamp;
   color?: number;
   footer?: RawEmbedFooter;
   image?: RawEmbedImage;
@@ -282,7 +284,7 @@ export interface RawEmbedField {
 
 /** https://discord.com/developers/docs/resources/channel#attachment-object-attachment-structure */
 export interface RawAttachment {
-  id: string;
+  id: snowflake;
   filename: string;
   description?: string;
   content_type?: string;
@@ -299,8 +301,8 @@ export interface RawAttachment {
 
 /** https://discord.com/developers/docs/resources/channel#channel-mention-object-channel-mention-structure */
 export interface RawChannelMention {
-  id: string;
-  guild_id: string;
+  id: snowflake;
+  guild_id: snowflake;
   type: ChannelTypes;
   name: string;
 }
@@ -308,39 +310,39 @@ export interface RawChannelMention {
 /** https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mentions-structure */
 export interface RawAllowedMentions {
   parse: Array<AllowedMentionTypes>;
-  roles: Array<string>;
-  users: Array<string>;
+  roles: Array<snowflake>;
+  users: Array<snowflake>;
   replied_user: boolean;
 }
 
 /** https://discord.com/developers/docs/resources/channel#role-subscription-data-object-role-subscription-data-object-structure */
 export interface RawRoleSubscriptionData {
-  role_subscription_listing_id: string;
+  role_subscription_listing_id: snowflake;
   tier_name: string;
   total_months_subscribed: number;
   is_renewal: boolean;
 }
 
 export interface Channel {
-  id: string;
+  id: snowflake;
   type: ChannelTypes;
-  guildId?: string;
+  guildId?: snowflake;
   position?: number;
   permissionOverwrites?: Array<Overwrite>;
   name?: string | null;
   topic?: string | null;
   nsfw?: boolean;
-  lastMessageId?: string | null;
+  lastMessageId?: snowflake | null;
   bitrate?: number;
   userLimit?: number;
   rateLimitPerUser?: number;
   recipients?: Array<User>;
   icon?: string | null;
-  ownerId?: string;
-  applicationId?: string;
+  ownerId?: snowflake;
+  applicationId?: snowflake;
   managed?: boolean;
-  parentId?: string | null;
-  lastPinTimestamp?: string | null;
+  parentId?: snowflake | null;
+  lastPinTimestamp?: timestamp | null;
   rtcRegion?: string | null;
   videoQualityMode?: VideoQualityModes;
   messageCount?: number;
@@ -360,27 +362,27 @@ export interface Channel {
 }
 
 export interface Message {
-  id: string;
-  channelId: string;
+  id: snowflake;
+  channelId: snowflake;
   author: User;
   content: string;
-  timestamp: string;
-  editedTimestamp: string | null;
+  timestamp: timestamp;
+  editedTimestamp: timestamp | null;
   tts: boolean;
   mentionEveryone: boolean;
   mentions: Array<User>;
-  mentionRoles: Array<string>;
+  mentionRoles: Array<snowflake>;
   mentionChannels?: Array<ChannelMention>;
   attachments: Array<Attachment>;
   embeds: Array<Embed>;
   reactions?: Array<Reaction>;
   nonce?: number | string;
   pinned: boolean;
-  webhookId?: string;
+  webhookId?: snowflake;
   type: MessageTypes;
   activity?: MessageActivity;
   application?: Application;
-  applicationId?: string;
+  applicationId?: snowflake;
   messageReference?: MessageReference;
   flags?: MessageFlags;
   referencedMessage?: Message | null;
@@ -403,30 +405,30 @@ export interface MessageActivity {
 }
 
 export interface MessageInteractionMetadata {
-  id: string;
+  id: snowflake;
   type: InteractionType;
   user: User;
   authorizingIntegrationOwners: Record<ApplicationIntegrationTypes, string>;
-  originalResponseMessageId?: string;
-  interactedMessageId?: string;
+  originalResponseMessageId?: snowflake;
+  interactedMessageId?: snowflake;
   triggeringInteractionMetadata?: MessageInteractionMetadata;
 }
 
 export interface MessageCall {
-  partecipants: Array<string>;
-  endedTimestamp?: string | null;
+  partecipants: Array<snowflake>;
+  endedTimestamp?: timestamp | null;
 }
 
 export interface MessageReference {
-  messageId?: string;
-  channelId?: string;
-  guildId?: string;
+  messageId?: snowflake;
+  channelId?: snowflake;
+  guildId?: snowflake;
   failIfNotExists?: boolean;
 }
 
 export interface FollowedChannel {
-  channelId: string;
-  webhookId: string;
+  channelId: snowflake;
+  webhookId: snowflake;
 }
 
 export interface Reaction {
@@ -444,7 +446,7 @@ export interface ReactionCountDetails {
 }
 
 export interface Overwrite {
-  id: string;
+  id: snowflake;
   type: number;
   allow: string;
   deny: string;
@@ -453,30 +455,30 @@ export interface Overwrite {
 export interface ThreadMetadata {
   archived: boolean;
   autoArchiveDuration: number;
-  archiveTimestamp: string;
+  archiveTimestamp: timestamp;
   locked: boolean;
   invitable?: boolean;
-  createTimestamp?: string | null;
+  createTimestamp?: timestamp | null;
 }
 
 export interface ThreadMember {
-  id?: string;
-  userId?: string;
-  joinTimestamp: string;
+  id?: snowflake;
+  userId?: snowflake;
+  joinTimestamp: timestamp;
   flags: number;
   member?: GuildMember;
 }
 
 export interface DefaultReaction {
-  emojiId: string | null;
+  emojiId: snowflake | null;
   emojiName: string | null;
 }
 
 export interface ForumTag {
-  id: string;
+  id: snowflake;
   name: string;
   moderated: boolean;
-  emojiId?: string;
+  emojiId?: snowflake;
   emojiName?: string;
 }
 
@@ -485,7 +487,7 @@ export interface Embed {
   type?: string;
   description?: string;
   url?: string;
-  timestamp?: string;
+  timestamp?: timestamp;
   color?: number;
   footer?: EmbedFooter;
   image?: EmbedImage;
@@ -542,7 +544,7 @@ export interface EmbedField {
 }
 
 export interface Attachment {
-  id: string;
+  id: snowflake;
   filename: string;
   description?: string;
   contentType?: string;
@@ -558,21 +560,21 @@ export interface Attachment {
 }
 
 export interface ChannelMention {
-  id: string;
-  guildId: string;
+  id: snowflake;
+  guildId: snowflake;
   type: ChannelTypes;
   name: string;
 }
 
 export interface AllowedMentions {
   parse: Array<AllowedMentionTypes>;
-  roles: Array<string>;
-  users: Array<string>;
+  roles: Array<snowflake>;
+  users: Array<snowflake>;
   repliedUser: boolean;
 }
 
 export interface RoleSubscriptionData {
-  roleSubscriptionListingId: string;
+  roleSubscriptionListingId: snowflake;
   tierName: string;
   totalMonthsSubscribed: number;
   isRenewal: boolean;
@@ -590,7 +592,7 @@ export interface EditChannelParams {
   bitrate?: number | null;
   userLimit?: number | null;
   permissionOverwrites?: Array<Overwrite> | null;
-  parentId?: string | null;
+  parentId?: snowflake | null;
   rtcRegion?: string | null;
   videoQualityMode?: VideoQualityModes | null;
   defaultAutoArchiveDuration?: number | null;
@@ -616,7 +618,7 @@ export interface CreateMessageParams {
   allowedMentions?: AllowedMentions;
   messageReference?: MessageReference;
   components?: Array<ActionRow>;
-  stickersIds?: Array<string>;
+  stickersIds?: Array<snowflake>;
   files?: Array<File>;
   attachments?: Array<Attachment>;
   flags?: MessageFlags;
@@ -635,7 +637,7 @@ export interface EditMessageParams {
 }
 
 export interface BulkDeleteMessagesParams {
-  messages: Array<string>;
+  messages: Array<snowflake>;
 }
 
 export interface EditChannelPermissionsParams {
@@ -650,12 +652,12 @@ export interface CreateChannelInviteParams {
   temporary?: boolean;
   unique?: boolean;
   targetType?: InviteTargetTypes;
-  targetUserId?: string;
-  targetApplicationId?: string;
+  targetUserId?: snowflake;
+  targetApplicationId?: snowflake;
 }
 
 export interface FollowAnnouncementChannelParams {
-  webhookChannelId: boolean;
+  webhookChannelId: snowflake;
 }
 
 export interface AddChannelRecipientParams {

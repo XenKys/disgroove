@@ -11,35 +11,36 @@ import type {
   RawGuild,
   RawUser,
   PollCreateParams,
+  snowflake,
 } from ".";
 import type { File } from "../rest";
 
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
 export interface RawWebhook {
-  id: string;
+  id: snowflake;
   type: WebhookTypes;
-  guild_id?: string | null;
-  channel_id: string | null;
+  guild_id?: snowflake | null;
+  channel_id: snowflake | null;
   user?: RawUser;
   name: string | null;
   avatar: string | null;
   token?: string;
-  application_id: string | null;
+  application_id: snowflake | null;
   source_guild?: RawGuild;
   source_channel?: RawChannel;
   url?: string;
 }
 
 export interface Webhook {
-  id: string;
+  id: snowflake;
   type: WebhookTypes;
-  guildId?: string | null;
-  channelId: string | null;
+  guildId?: snowflake | null;
+  channelId: snowflake | null;
   user?: User;
   name: string | null;
   avatar: string | null;
   token?: string;
-  applicationId: string | null;
+  applicationId: snowflake | null;
   sourceGuild?: Guild;
   sourceChannel?: Channel;
   url?: string;
@@ -53,7 +54,7 @@ export interface CreateWebhookParams {
 export interface EditWebhookParams {
   name?: string;
   avatar?: string | null;
-  channelId?: string;
+  channelId?: snowflake;
 }
 
 export interface ExecuteWebhookParams {
