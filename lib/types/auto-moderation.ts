@@ -4,7 +4,7 @@ import type {
   EventTypes,
   TriggerTypes,
 } from "../constants";
-import type { snowflake } from ".";
+import type { snowflake } from "./common";
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-auto-moderation-rule-structure */
 export interface RawAutoModerationRule {

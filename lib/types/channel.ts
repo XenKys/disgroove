@@ -13,32 +13,26 @@ import type {
   SortOrderTypes,
   VideoQualityModes,
 } from "../constants";
+import type { File } from "../rest";
+import type { RawApplication, Application } from "./application";
+import type { snowflake, timestamp } from "./common";
+import type { RawEmoji, Emoji } from "./emoji";
+import type { RawGuildMember, GuildMember } from "./guild";
 import type {
-  RawApplication,
-  RawGuildMember,
-  RawUser,
-  RawEmoji,
-  RawSticker,
-  RawStickerItem,
   RawMessageInteraction,
+  RawResolvedData,
   MessageInteraction,
+  ResolvedData,
+} from "./interaction";
+import type { RawActionRow, ActionRow } from "./message-components";
+import type { RawPoll, Poll, PollCreateParams } from "./poll";
+import type {
+  RawStickerItem,
+  RawSticker,
   StickerItem,
   Sticker,
-  Emoji,
-  User,
-  Application,
-  GuildMember,
-  RawActionRow,
-  ActionRow,
-  RawResolvedData,
-  ResolvedData,
-  PollCreateParams,
-  Poll,
-  RawPoll,
-  snowflake,
-  timestamp,
-} from ".";
-import type { File } from "../rest";
+} from "./sticker";
+import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
 export interface RawChannel {

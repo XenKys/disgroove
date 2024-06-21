@@ -1,4 +1,4 @@
-import type { snowflake } from "../types";
+import type { snowflake } from "../types/common";
 
 // Guilds
 export const bulkGuildBan = (guildId: snowflake) =>

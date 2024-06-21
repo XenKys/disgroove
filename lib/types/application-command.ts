@@ -1,4 +1,3 @@
-import type { LocaleMap, snowflake } from ".";
 import type {
   ApplicationCommandTypes,
   ApplicationCommandOptionType,
@@ -7,6 +6,7 @@ import type {
   ApplicationIntegrationTypes,
   InteractionContextTypes,
 } from "../constants";
+import type { snowflake, LocaleMap } from "./common";
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure */
 export interface RawApplicationCommand {

@@ -1,19 +1,13 @@
-import type {
-  Application,
-  Channel,
-  Guild,
-  GuildMember,
-  GuildScheduledEvent,
-  User,
-  RawApplication,
-  RawChannel,
-  RawGuild,
-  RawGuildMember,
-  RawGuildScheduledEvent,
-  RawUser,
-  timestamp,
-} from ".";
 import type { InviteTargetTypes, InviteTypes } from "../constants";
+import type { RawApplication, Application } from "./application";
+import type { RawChannel, Channel } from "./channel";
+import type { timestamp } from "./common";
+import type { RawGuild, RawGuildMember, Guild, GuildMember } from "./guild";
+import type {
+  RawGuildScheduledEvent,
+  GuildScheduledEvent,
+} from "./guild-scheduled-event";
+import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
 export interface RawInvite {

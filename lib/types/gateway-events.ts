@@ -7,32 +7,32 @@ import type {
   StatusTypes,
   TriggerTypes,
 } from "../constants";
+import type { RawApplication, Application } from "./application";
 import type {
-  RawApplication,
   RawAutoModerationAction,
-  RawChannel,
-  RawEmoji,
-  RawGuildMember,
-  RawThreadMember,
-  RawUser,
   AutoModerationAction,
-  ThreadMember,
+} from "./auto-moderation";
+import type {
+  RawChannel,
+  RawThreadMember,
   Channel,
-  Emoji,
-  User,
-  GuildMember,
-  RawVoiceState,
-  RawStageInstance,
+  ThreadMember,
+} from "./channel";
+import type { snowflake, timestamp } from "./common";
+import type { RawEmoji, Emoji } from "./emoji";
+import type { RawGuildMember, GuildMember } from "./guild";
+import type {
   RawGuildScheduledEvent,
-  VoiceState,
-  StageInstance,
   GuildScheduledEvent,
-  Application,
+} from "./guild-scheduled-event";
+import type { RawStageInstance, StageInstance } from "./stage-instance";
+import type {
+  RawUser,
   RawAvatarDecorationData,
+  User,
   AvatarDecorationData,
-  snowflake,
-  timestamp,
-} from ".";
+} from "./user";
+import type { RawVoiceState, VoiceState } from "./voice";
 
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {

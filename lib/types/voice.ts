@@ -1,4 +1,5 @@
-import type { GuildMember, RawGuildMember, snowflake, timestamp } from ".";
+import type { snowflake, timestamp } from "./common";
+import type { RawGuildMember, GuildMember } from "./guild";
 
 /** https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure */
 export interface RawVoiceState {

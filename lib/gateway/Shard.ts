@@ -1,61 +1,59 @@
 import WebSocket, { type RawData } from "ws";
 import { GatewayEvents, GatewayOPCodes, StatusTypes } from "../constants";
 import { GatewayError } from "../utils";
+import { Client } from "../Client";
+import * as pkg from "../../package.json";
+import type { GuildApplicationCommandPermissions } from "../types/application-command";
+import type { AuditLogEntry } from "../types/audit-log";
+import type { AutoModerationRule } from "../types/auto-moderation";
+import type { Channel, ThreadMember, Message } from "../types/channel";
+import type { RawEmoji, Emoji } from "../types/emoji";
+import type { Entitlement } from "../types/entitlements";
 import type {
   Activity,
-  RawEmoji,
-  RawSticker,
-  VoiceServerUpdateEventFields,
-  VoiceState,
-  Role,
-  User,
-  TypingStartEventFields,
-  StageInstance,
-  PresenceUpdateEventFields,
-  MessageReactionRemoveEmojiEventFields,
-  GuildApplicationCommandPermissions,
-  AutoModerationRule,
   AutoModerationActionExecutionEventFields,
-  Channel,
   ChannelPinsUpdateEventFields,
   ThreadListSyncEventFields,
-  ThreadMember,
+  ThreadMemberUpdateEventExtraFields,
   ThreadMembersUpdateEventFields,
-  Entitlement,
-  Guild,
-  UnavailableGuild,
-  AuditLogEntry,
+  GuildAuditLogEntryCreateExtraFields,
   GuildBanAddEventFields,
   GuildBanRemoveEventFields,
-  Emoji,
-  Sticker,
-  GuildMember,
   GuildMemberAddEventExtraFields,
   GuildMemberRemoveEventFields,
   GuildMemberUpdateEventFields,
   GuildMembersChunkEventFields,
-  GuildScheduledEvent,
-  Integration,
   IntegrationCreateEventExtraFields,
   IntegrationUpdateEventExtraFields,
   IntegrationDeleteEventFields,
-  Interaction,
   InviteCreateEventFields,
   InviteDeleteEventFields,
   MessageCreateEventExtraFields,
-  Message,
   MessageDeleteEventFields,
   MessageDeleteBulkEventFields,
   MessageReactionAddEventFields,
   MessageReactionRemoveEventFields,
   MessageReactionRemoveAllEventFields,
-  ThreadMemberUpdateEventExtraFields,
+  MessageReactionRemoveEmojiEventFields,
+  PresenceUpdateEventFields,
+  TypingStartEventFields,
+  VoiceServerUpdateEventFields,
   MessagePollVoteAddFields,
   MessagePollVoteRemoveFields,
-  GuildAuditLogEntryCreateExtraFields,
-} from "../types";
-import { Client } from "../Client";
-import * as pkg from "../../package.json";
+} from "../types/gateway-events";
+import type {
+  Guild,
+  UnavailableGuild,
+  GuildMember,
+  Integration,
+} from "../types/guild";
+import type { GuildScheduledEvent } from "../types/guild-scheduled-event";
+import type { Interaction } from "../types/interaction";
+import type { Role } from "../types/role";
+import type { StageInstance } from "../types/stage-instance";
+import type { RawSticker, Sticker } from "../types/sticker";
+import type { User } from "../types/user";
+import type { VoiceState } from "../types/voice";
 
 export class Shard {
   id: number;

@@ -1,34 +1,4 @@
 import type {
-  RawAttachment,
-  RawChannel,
-  RawGuildMember,
-  RawMessage,
-  RawUser,
-  RawRole,
-  Attachment,
-  User,
-  GuildMember,
-  Message,
-  Role,
-  Channel,
-  Entitlement,
-  RawEntitlement,
-  RawEmbed,
-  RawAllowedMentions,
-  RawActionRow,
-  RawApplicationCommandOptionChoice,
-  Embed,
-  AllowedMentions,
-  ActionRow,
-  ApplicationCommandOptionChoice,
-  RawTextInput,
-  TextInput,
-  ExecuteWebhookParams,
-  RawPollCreateParams,
-  PollCreateParams,
-  snowflake,
-} from ".";
-import type {
   ApplicationCommandOptionType,
   ApplicationCommandTypes,
   ComponentTypes,
@@ -37,6 +7,35 @@ import type {
   MessageFlags,
 } from "../constants";
 import type { File } from "../rest";
+import type {
+  RawApplicationCommandOptionChoice,
+  ApplicationCommandOptionChoice,
+} from "./application-command";
+import type {
+  RawChannel,
+  RawMessage,
+  RawAttachment,
+  RawEmbed,
+  RawAllowedMentions,
+  Channel,
+  Message,
+  Attachment,
+  Embed,
+  AllowedMentions,
+} from "./channel";
+import type { snowflake } from "./common";
+import type { RawEntitlement, Entitlement } from "./entitlements";
+import type { RawGuildMember, GuildMember } from "./guild";
+import type {
+  RawTextInput,
+  RawActionRow,
+  TextInput,
+  ActionRow,
+} from "./message-components";
+import type { RawPollCreateParams, PollCreateParams } from "./poll";
+import type { RawRole, Role } from "./role";
+import type { RawUser, User } from "./user";
+import type { ExecuteWebhookParams } from "./webhook";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {

@@ -19,21 +19,16 @@ import type {
 } from "../constants";
 import type {
   RawChannel,
-  RawEmoji,
-  RawSticker,
-  RawUser,
-  RawRole,
-  Emoji,
-  Sticker,
-  User,
-  Role,
   Channel,
   Overwrite,
   DefaultReaction,
   ForumTag,
-  snowflake,
-  timestamp,
-} from ".";
+} from "./channel";
+import type { snowflake, timestamp } from "./common";
+import type { RawEmoji, Emoji } from "./emoji";
+import type { RawRole, Role } from "./role";
+import type { RawSticker, Sticker } from "./sticker";
+import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface RawGuild {

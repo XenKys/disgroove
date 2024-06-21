@@ -1,10 +1,11 @@
-import type { Emoji, RawEmoji, snowflake } from ".";
 import type {
   ButtonStyles,
   ChannelTypes,
   ComponentTypes,
   TextInputStyles,
 } from "../constants";
+import type { snowflake } from "./common";
+import type { RawEmoji, Emoji } from "./emoji";
 
 /** https://discord.com/developers/docs/interactions/message-components#button-object-button-structure */
 export interface RawButton {

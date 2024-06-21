@@ -1,5 +1,5 @@
-import type { LocaleMap } from ".";
 import type { ApplicationRoleConnectionMetadataType } from "../constants";
+import type { LocaleMap } from "./common";
 
 /** https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-structure */
 export interface RawApplicationRoleConnectionMetadata {

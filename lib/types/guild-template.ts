@@ -1,4 +1,6 @@
-import type { Guild, User, RawGuild, RawUser, snowflake, timestamp } from ".";
+import type { snowflake, timestamp } from "./common";
+import type { RawGuild, Guild } from "./guild";
+import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/guild-template#guild-template-object-guild-template-structure */
 export interface RawGuildTemplate {

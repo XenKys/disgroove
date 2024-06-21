@@ -3,14 +3,9 @@ import type {
   GuildScheduledEventStatus,
   GuildScheduledEventEntityTypes,
 } from "../constants";
-import type {
-  GuildMember,
-  User,
-  RawGuildMember,
-  RawUser,
-  snowflake,
-  timestamp,
-} from ".";
+import type { snowflake, timestamp } from "./common";
+import type { RawGuildMember, GuildMember } from "./guild";
+import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
 export interface RawGuildScheduledEvent {

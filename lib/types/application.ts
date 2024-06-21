@@ -1,17 +1,12 @@
 import type {
-  RawUser,
-  RawTeam,
-  Team,
-  User,
-  RawGuild,
-  Guild,
-  snowflake,
-} from ".";
-import type {
   ApplicationFlags,
   ApplicationIntegrationTypes,
   OAuth2Scopes,
 } from "../constants";
+import type { snowflake } from "./common";
+import type { RawGuild, Guild } from "./guild";
+import type { RawTeam, Team } from "./team";
+import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface RawApplication {

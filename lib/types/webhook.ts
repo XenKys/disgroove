@@ -1,19 +1,17 @@
 import type { MessageFlags, WebhookTypes } from "../constants";
+import type { File } from "../rest";
 import type {
-  ActionRow,
-  AllowedMentions,
-  Attachment,
+  RawChannel,
   Channel,
   Embed,
-  Guild,
-  User,
-  RawChannel,
-  RawGuild,
-  RawUser,
-  PollCreateParams,
-  snowflake,
-} from ".";
-import type { File } from "../rest";
+  AllowedMentions,
+  Attachment,
+} from "./channel";
+import type { snowflake } from "./common";
+import type { RawGuild, Guild } from "./guild";
+import type { ActionRow } from "./message-components";
+import type { PollCreateParams } from "./poll";
+import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
 export interface RawWebhook {

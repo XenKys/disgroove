@@ -1,21 +1,21 @@
+import type { AuditLogEvents } from "../constants";
 import type {
   RawApplicationCommand,
-  RawGuildScheduledEvent,
-  RawAutoModerationRule,
-  RawIntegration,
-  RawChannel,
-  RawUser,
-  RawWebhook,
-  User,
   ApplicationCommand,
+} from "./application-command";
+import type {
+  RawAutoModerationRule,
   AutoModerationRule,
+} from "./auto-moderation";
+import type { RawChannel, Channel } from "./channel";
+import type { snowflake } from "./common";
+import type { RawIntegration, Integration } from "./guild";
+import type {
+  RawGuildScheduledEvent,
   GuildScheduledEvent,
-  Integration,
-  Channel,
-  Webhook,
-  snowflake,
-} from ".";
-import type { AuditLogEvents } from "../constants";
+} from "./guild-scheduled-event";
+import type { RawUser, User } from "./user";
+import type { RawWebhook, Webhook } from "./webhook";
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
 export interface RawAuditLog {

@@ -6,13 +6,11 @@ import type {
   ApplicationRoleConnectionMetadataType,
 } from "../constants";
 import type {
-  ApplicationRoleConnectionMetadata,
-  Integration,
-  LocaleMap,
   RawApplicationRoleConnectionMetadata,
-  RawIntegration,
-  snowflake,
-} from ".";
+  ApplicationRoleConnectionMetadata,
+} from "./application-role-connection-metadata";
+import type { snowflake, LocaleMap } from "./common";
+import type { RawIntegration, Integration } from "./guild";
 
 /** https://discord.com/developers/docs/resources/user#user-object-user-structure */
 export interface RawUser {
