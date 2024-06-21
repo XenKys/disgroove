@@ -115,7 +115,7 @@ export interface CreateDMParams {
   recipientId: string;
 }
 
-export interface CreateGrupDMParams {
+export interface CreateGroupDMParams {
   accessTokens: Array<string>;
   nicks: Array<string>;
 }
