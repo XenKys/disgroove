@@ -5,7 +5,7 @@ import type {
   ChannelTypes,
   ApplicationCommandPermissionType,
   ApplicationIntegrationTypes,
-  InterationContextTypes,
+  InteractionContextTypes,
 } from "../constants";
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure */
@@ -23,7 +23,7 @@ export interface RawApplicationCommand {
   dm_permission?: boolean;
   default_permission?: boolean | null;
   integration_types?: Array<ApplicationIntegrationTypes>;
-  contexts?: Array<InterationContextTypes>;
+  contexts?: Array<InteractionContextTypes>;
   nsfw?: boolean;
   version: string;
 }
@@ -82,7 +82,7 @@ export interface ApplicationCommand {
   dmPermission?: boolean;
   defaultPermission?: boolean | null;
   integrationTypes?: Array<ApplicationIntegrationTypes>;
-  contexts?: Array<InterationContextTypes>;
+  contexts?: Array<InteractionContextTypes>;
   nsfw?: boolean;
   version: string;
 }

@@ -83,7 +83,7 @@ export enum InteractionType {
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-context-types */
-export enum InterationContextTypes {
+export enum InteractionContextTypes {
   Guild,
   BotDM,
   PrivateChannel,
