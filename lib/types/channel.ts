@@ -135,7 +135,7 @@ export interface RawMessageInteractionMetadata {
   triggering_interaction_metadata?: RawMessageInteractionMetadata;
 }
 
-/** https://discord.com/developers/docs/resources/channel#message-call-object-message-call-structure */
+/** https://discord.com/developers/docs/resources/channel#message-call-object-message-call-object-structure */
 export interface RawMessageCall {
   partecipants: Array<snowflake>;
   ended_timestamp?: timestamp | null;
