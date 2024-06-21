@@ -62,6 +62,7 @@ export class Shard {
   private heartbeatInterval!: NodeJS.Timeout | null;
   client: Client;
   ws: WebSocket;
+  sessionId!: string;
 
   constructor(id: number, client: Client) {
     this.id = id;
@@ -151,6 +152,7 @@ export class Shard {
     switch (packet.t) {
       case "READY":
         {
+          this.sessionId = packet.d.session_id;
           this.client.user = this.client.util.toCamelCase<User>(packet.d.user);
           this.client.guilds = new Map();
           this.client.application = packet.d.application;
