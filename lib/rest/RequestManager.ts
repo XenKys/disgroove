@@ -1,4 +1,4 @@
-import { HTTPResponseCodes } from "../constants";
+import { HTTPResponseCodes, JSONErrorCodes } from "../constants";
 import { HTTPError, RESTError } from "../utils";
 import * as pkg from "../../package.json";
 
@@ -17,6 +17,13 @@ export interface RequestData {
   reason?: string;
   query?: Partial<Record<string, string | number | boolean | Array<string>>>;
   authorization?: boolean;
+}
+
+/** https://discord.com/developers/docs/reference#error-messages */
+export interface ErrorResponse {
+  code: JSONErrorCodes;
+  message: string;
+  errors: Record<string, unknown>;
 }
 
 export interface File {
@@ -119,14 +126,10 @@ export class RequestManager {
               5 * 1000
             );
           } else {
-            const responseJSON = await response.json();
+            const responseJSON: ErrorResponse = await response.json();
 
             reject(
-              responseJSON &&
-                typeof responseJSON === "object" &&
-                "code" in responseJSON &&
-                "message" in responseJSON &&
-                responseJSON.code !== 0
+              responseJSON.code !== 0
                 ? new RESTError(
                     `[${responseJSON.code}] ${responseJSON.message}`
                   )
