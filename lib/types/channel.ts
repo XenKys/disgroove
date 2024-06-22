@@ -6,14 +6,12 @@ import type {
   ChannelTypes,
   ForumLayoutTypes,
   InteractionType,
-  InviteTargetTypes,
   MessageActivityTypes,
   MessageFlags,
   MessageTypes,
   SortOrderTypes,
   VideoQualityModes,
 } from "../constants";
-import type { File } from "../rest";
 import type { RawApplication, Application } from "./application";
 import type { snowflake, timestamp } from "./common";
 import type { RawEmoji, Emoji } from "./emoji";
@@ -25,7 +23,7 @@ import type {
   ResolvedData,
 } from "./interaction";
 import type { RawActionRow, ActionRow } from "./message-components";
-import type { RawPoll, Poll, PollCreateParams } from "./poll";
+import type { RawPoll, Poll } from "./poll";
 import type {
   RawStickerItem,
   RawSticker,
@@ -572,119 +570,4 @@ export interface RoleSubscriptionData {
   tierName: string;
   totalMonthsSubscribed: number;
   isRenewal: boolean;
-}
-
-export interface EditChannelParams {
-  name?: string;
-  icon?: string;
-
-  type?: ChannelTypes;
-  position?: number | null;
-  topic?: string | null;
-  nsfw?: boolean | null;
-  rateLimitPerUser?: number | null;
-  bitrate?: number | null;
-  userLimit?: number | null;
-  permissionOverwrites?: Array<Overwrite> | null;
-  parentId?: snowflake | null;
-  rtcRegion?: string | null;
-  videoQualityMode?: VideoQualityModes | null;
-  defaultAutoArchiveDuration?: number | null;
-  flags?: ChannelFlags;
-  availableTags?: Array<ForumTag>;
-  defaultReactionEmoji?: DefaultReaction | null;
-  defaultThreadRateLimitPerUser?: number;
-  defaultSortOrder?: SortOrderTypes | null;
-  defaultForumLayout?: ForumLayoutTypes;
-
-  archived?: boolean;
-  autoArchiveDuration?: number;
-  locked?: boolean;
-  invitable?: boolean;
-  appliedTags?: Array<string>;
-}
-
-export interface CreateMessageParams {
-  content?: string;
-  nonce?: string | number;
-  tts?: boolean;
-  embeds?: Array<Embed>;
-  allowedMentions?: AllowedMentions;
-  messageReference?: MessageReference;
-  components?: Array<ActionRow>;
-  stickersIds?: Array<snowflake>;
-  files?: Array<File>;
-  attachments?: Array<Attachment>;
-  flags?: MessageFlags;
-  enforceNonce?: boolean;
-  poll?: PollCreateParams;
-}
-
-export interface EditMessageParams {
-  content?: string | null;
-  embeds?: Array<Embed> | null;
-  flags?: MessageFlags | null;
-  allowedMentions?: AllowedMentions | null;
-  components?: Array<ActionRow> | null;
-  files?: Array<File> | null;
-  attachments?: Array<Attachment> | null;
-}
-
-export interface BulkDeleteMessagesParams {
-  messages: Array<snowflake>;
-}
-
-export interface EditChannelPermissionsParams {
-  allow?: string | null;
-  deny?: string | null;
-  type: number;
-}
-
-export interface CreateChannelInviteParams {
-  maxAge?: number;
-  maxUses?: number;
-  temporary?: boolean;
-  unique?: boolean;
-  targetType?: InviteTargetTypes;
-  targetUserId?: snowflake;
-  targetApplicationId?: snowflake;
-}
-
-export interface FollowAnnouncementChannelParams {
-  webhookChannelId: snowflake;
-}
-
-export interface AddChannelRecipientParams {
-  accessToken: string;
-  nick: string;
-}
-
-export interface CreateThreadFromMessageParams {
-  name: string;
-  autoArchiveDuration?: number;
-  rateLimitPerUser?: number | null;
-}
-
-export interface CreateThreadWithoutMessageParams {
-  name: string;
-  autoArchiveDuration?: number;
-  type?: ChannelTypes;
-  invitable?: boolean;
-  rateLimitPerUser?: number | null;
-}
-
-export interface CreateThreadParams {
-  name: string;
-  autoArchiveDuration?: number;
-  rateLimitPerUser?: number | null;
-  message: {
-    content?: string | null;
-    embeds?: Array<Embed> | null;
-    allowedMentions?: AllowedMentions | null;
-    components?: Array<ActionRow> | null;
-    attachments?: Array<Attachment> | null;
-    flags?: MessageFlags | null;
-  };
-  appliedTags?: Array<string>;
-  files?: Array<File> | null;
 }

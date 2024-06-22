@@ -92,19 +92,3 @@ export interface InstallParams {
   scopes: Array<OAuth2Scopes>;
   permissions: string;
 }
-
-export interface EditCurrentApplicationParams {
-  customInstallUrl?: string;
-  description?: string;
-  roleConnectionsVerificationUrl?: string;
-  installParams?: InstallParams;
-  integrationTypesConfig?: Record<
-    ApplicationIntegrationTypes,
-    ApplicationIntegrationTypeConfiguration
-  >;
-  flags?: ApplicationFlags;
-  icon?: string;
-  coverImage?: string;
-  interactionsEndpointUrl?: string;
-  tags?: Array<string>;
-}

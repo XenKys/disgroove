@@ -35,7 +35,6 @@ import type {
 import type { RawPollCreateParams, PollCreateParams } from "./poll";
 import type { RawRole, Role } from "./role";
 import type { RawUser, User } from "./user";
-import type { ExecuteWebhookParams } from "./webhook";
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface RawInteraction {
@@ -225,6 +224,3 @@ export interface InteractionCallbackData {
   customId?: string;
   title?: string;
 }
-
-export interface CreateInteractionFollowupMessageParams
-  extends Omit<ExecuteWebhookParams, "threadId" | "avatarUrl" | "username"> {}

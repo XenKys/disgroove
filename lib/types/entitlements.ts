@@ -33,9 +33,3 @@ export interface Entitlement {
   guildId?: snowflake;
   subscriptionId?: string; // Undocumented
 }
-
-export interface CreateTestEntitlementParams {
-  skuId: snowflake;
-  ownerId: snowflake;
-  ownerType: number;
-}

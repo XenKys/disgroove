@@ -23,14 +23,3 @@ export interface Emoji {
   animated?: boolean;
   available?: boolean;
 }
-
-export interface CreateGuildEmojiParams {
-  name: string;
-  image: string;
-  roles: Array<string>;
-}
-
-export interface EditGuildEmojiParams {
-  name?: string;
-  roles?: Array<string> | null;
-}

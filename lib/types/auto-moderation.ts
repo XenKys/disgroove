@@ -77,25 +77,3 @@ export interface ActionMetadata {
   durationSeconds: number;
   customMessage?: string;
 }
-
-export interface CreateAutoModerationRuleParams {
-  name: string;
-  eventType: EventTypes;
-  triggerType: TriggerTypes;
-  triggerMetadata?: TriggerMetadata;
-  actions: Array<AutoModerationAction>;
-  enabled?: boolean;
-  exemptRoles?: Array<string>;
-  exemptChannels?: Array<string>;
-}
-
-export interface EditAutoModerationRuleParams {
-  name?: string;
-  eventType?: EventTypes;
-  triggerType?: TriggerTypes;
-  triggerMetadata?: TriggerMetadata;
-  actions?: Array<AutoModerationAction>;
-  enabled?: boolean;
-  exemptRoles?: Array<string>;
-  exemptChannels?: Array<string>;
-}

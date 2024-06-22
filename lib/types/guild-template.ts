@@ -30,18 +30,3 @@ export interface GuildTemplate {
   serializedSourceGuild: Guild;
   isDirty: boolean | null;
 }
-
-export interface CreateGuildFromGuildTemplateParams {
-  name: string;
-  icon?: string;
-}
-
-export interface CreateGuildTemplateParams {
-  name: string;
-  description?: string | null;
-}
-
-export interface EditGuildTemplateParams {
-  name?: string;
-  description?: string | null;
-}

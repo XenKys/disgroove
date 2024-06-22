@@ -1,5 +1,4 @@
 import type { StickerTypes, StickerFormatTypes } from "../constants";
-import type { File } from "../rest";
 import type { snowflake } from "./common";
 import type { RawUser, User } from "./user";
 
@@ -66,17 +65,4 @@ export interface StickerPack {
   coverStickerId?: snowflake;
   description: string;
   bannerAssetId?: snowflake;
-}
-
-export interface CreateGuildStickerParams {
-  name: string;
-  description: string;
-  tags: string;
-  file: File;
-}
-
-export interface EditGuildStickerParams {
-  name?: string;
-  description?: string | null;
-  tags?: string;
 }

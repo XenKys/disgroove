@@ -21,16 +21,3 @@ export interface StageInstance {
   discoverableDisabled: boolean;
   guildScheduledEventId: snowflake | null;
 }
-
-export interface CreateStageInstanceParams {
-  channelId: snowflake;
-  topic: string;
-  privacyLevel?: PrivacyLevel;
-  sendStartNotifications?: boolean;
-  guildScheduledEventId?: snowflake;
-}
-
-export interface EditStageInstanceParams {
-  topic?: string;
-  privacyLevel?: PrivacyLevel;
-}

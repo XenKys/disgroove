@@ -8,29 +8,48 @@ import {
   InteractionCallbackType,
   type MFALevel,
   type ReactionTypes,
+  ApplicationCommandTypes,
+  EventTypes,
+  TriggerTypes,
+  ChannelTypes,
+  VideoQualityModes,
+  SortOrderTypes,
+  ForumLayoutTypes,
+  InviteTargetTypes,
+  VerificationLevel,
+  DefaultMessageNotificationLevel,
+  ExplicitContentFilterLevel,
+  SystemChannelFlags,
+  ApplicationFlags,
+  ApplicationIntegrationTypes,
+  ChannelFlags,
+  GuildFeatures,
+  GuildScheduledEventEntityTypes,
+  GuildScheduledEventPrivacyLevel,
+  GuildScheduledEventStatus,
+  MessageFlags,
+  OnboardingMode,
+  PrivacyLevel,
+  GuildMemberFlags,
 } from "./constants";
 import { Util } from "./utils";
-import { Endpoints, RequestManager, RESTMethods } from "./rest";
+import { Endpoints, RequestManager, RESTMethods, File } from "./rest";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
 import type {
   Application,
-  EditCurrentApplicationParams,
+  ApplicationIntegrationTypeConfiguration,
+  InstallParams,
   RawApplication,
 } from "./types/application";
 import type {
-  BulkEditGlobalApplicationCommandsParams,
   ApplicationCommand,
   RawApplicationCommand,
-  BulkEditGuildApplicationCommandsParams,
-  CreateGlobalApplicationCommandParams,
   RawApplicationCommandOption,
-  CreateGuildApplicationCommandParams,
   RawApplicationCommandOptionChoice,
   GuildApplicationCommandPermissions,
   RawGuildApplicationCommandPermissions,
-  EditGlobalApplicationCommandParams,
-  EditGuildApplicationCommandParams,
+  ApplicationCommandOption,
 } from "./types/application-command";
 import type {
   ApplicationRoleConnectionMetadata,
@@ -38,46 +57,36 @@ import type {
 } from "./types/application-role-connection-metadata";
 import type { AuditLog, RawAuditLog, AuditLogEntry } from "./types/audit-log";
 import type {
-  CreateAutoModerationRuleParams,
   AutoModerationRule,
   RawAutoModerationRule,
   RawAutoModerationAction,
-  EditAutoModerationRuleParams,
+  TriggerMetadata,
+  AutoModerationAction,
 } from "./types/auto-moderation";
 import type {
-  BulkDeleteMessagesParams,
   Channel,
   RawChannel,
   RawDefaultReaction,
-  CreateChannelInviteParams,
   Message,
   RawMessage,
   RawEmbed,
   RawAllowedMentions,
   RawAttachment,
-  CreateMessageParams,
-  CreateThreadParams,
-  CreateThreadFromMessageParams,
-  CreateThreadWithoutMessageParams,
-  EditChannelParams,
-  EditMessageParams,
   FollowedChannel,
   RawFollowedChannel,
   ThreadMember,
   RawThreadMember,
+  Overwrite,
+  DefaultReaction,
+  ForumTag,
+  AllowedMentions,
+  Attachment,
+  Embed,
+  MessageReference,
 } from "./types/channel";
-import type { snowflake, timestamp } from "./types/common";
-import type {
-  CreateGuildEmojiParams,
-  Emoji,
-  RawEmoji,
-  EditGuildEmojiParams,
-} from "./types/emoji";
-import type {
-  CreateTestEntitlementParams,
-  Entitlement,
-  RawEntitlement,
-} from "./types/entitlements";
+import type { LocaleMap, snowflake, timestamp } from "./types/common";
+import type { Emoji, RawEmoji } from "./types/emoji";
+import type { Entitlement, RawEntitlement } from "./types/entitlements";
 import type {
   Activity,
   AutoModerationActionExecutionEventFields,
@@ -113,26 +122,9 @@ import type {
 } from "./types/gateway-events";
 import type {
   Guild,
-  AddGuildMemberParams,
   GuildMember,
   RawGuildMember,
-  BeginGuildPruneParams,
-  BulkGuildBanParams,
-  CreateGuildChannelParams,
-  CreateGuildParams,
   RawGuild,
-  CreateGuildBanParams,
-  CreateGuildRoleParams,
-  EditGuildChannelPositionsParams,
-  EditCurrentGuildMemberParams,
-  EditCurrentUserVoiceStateParams,
-  EditGuildParams,
-  EditGuildMemberParams,
-  EditGuildMFALevelParams,
-  EditGuildOnboardingParams,
-  RawOnboardingPrompt,
-  EditGuildRolePositionsParams,
-  EditGuildWelcomeScreenParams,
   WelcomeScreen,
   RawWelcomeScreen,
   GuildWidgetSettings,
@@ -148,65 +140,41 @@ import type {
   GuildWidget,
   RawGuildWidget,
   UnavailableGuild,
+  OnboardingPrompt,
+  WelcomeScreenChannel,
+  RawOnboardingPrompt,
 } from "./types/guild";
 import type {
-  CreateGuildScheduledEventParams,
   GuildScheduledEvent,
   RawGuildScheduledEvent,
-  EditGuildScheduledEventParams,
   GuildScheduledEventUser,
   RawGuildScheduledEventUser,
+  GuildScheduledEventEntityMetadata,
 } from "./types/guild-scheduled-event";
-import type {
-  CreateGuildFromGuildTemplateParams,
-  CreateGuildTemplateParams,
-  GuildTemplate,
-  RawGuildTemplate,
-  EditGuildTemplateParams,
-} from "./types/guild-template";
-import type {
-  CreateInteractionFollowupMessageParams,
-  InteractionResponse,
-  Interaction,
-} from "./types/interaction";
+import type { GuildTemplate, RawGuildTemplate } from "./types/guild-template";
+import type { Interaction, InteractionCallbackData } from "./types/interaction";
 import type { Invite, RawInvite } from "./types/invite";
-import type { RawActionRow } from "./types/message-components";
-import type { RawPollCreateParams } from "./types/poll";
+import type { ActionRow, RawActionRow } from "./types/message-components";
+import type { PollCreateParams, RawPollCreateParams } from "./types/poll";
 import type { Role, RawRole } from "./types/role";
 import type { Sku, RawSku } from "./types/sku";
+import type { StageInstance, RawStageInstance } from "./types/stage-instance";
 import type {
-  CreateStageInstanceParams,
-  StageInstance,
-  RawStageInstance,
-  EditStageInstanceParams,
-} from "./types/stage-instance";
-import type {
-  CreateGuildStickerParams,
   Sticker,
   RawSticker,
-  EditGuildStickerParams,
   StickerPack,
   RawStickerPack,
 } from "./types/sticker";
 import type {
   User,
-  CreateDMParams,
-  EditCurrentUserParams,
   RawUser,
   ApplicationRoleConnection,
   RawApplicationRoleConnection,
   Connection,
   RawConnection,
-  UpdateCurrentUserApplicationRoleConnection,
 } from "./types/user";
 import type { VoiceRegion, RawVoiceRegion, VoiceState } from "./types/voice";
-import type {
-  Webhook,
-  RawWebhook,
-  EditWebhookMessageParams,
-  EditWebhookParams,
-  ExecuteWebhookParams,
-} from "./types/webhook";
+import type { Webhook, RawWebhook } from "./types/webhook";
 
 export interface ClientOptions {
   intents?: number | Array<number>;
@@ -270,7 +238,13 @@ export class Client extends EventEmitter {
   addGuildMember(
     guildId: snowflake,
     userId: snowflake,
-    options: AddGuildMemberParams
+    options: {
+      accessToken: string;
+      nick?: string;
+      roles?: Array<snowflake>;
+      mute?: boolean;
+      deaf?: boolean;
+    }
   ): Promise<GuildMember | null> {
     return this.rest
       .request<RawGuildMember>(
@@ -318,7 +292,12 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#begin-guild-prune */
   beginGuildPrune(
     guildId: snowflake,
-    options: BeginGuildPruneParams,
+    options: {
+      days: number;
+      computePruneCount: boolean;
+      includeRoles: Array<snowflake>;
+      reason?: string;
+    },
     reason?: string
   ): Promise<{
     pruned: number;
@@ -345,7 +324,10 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#bulk-guild-ban */
   bulkGuildBan(
     guildId: snowflake,
-    options: BulkGuildBanParams,
+    options: {
+      userIds: Array<snowflake>;
+      deleteMessageSeconds?: number;
+    },
     reason?: string
   ): Promise<{
     bannedUsers: Array<string>;
@@ -373,7 +355,9 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
   bulkDeleteMessages(
     channelId: snowflake,
-    options?: BulkDeleteMessagesParams,
+    options?: {
+      messages: Array<snowflake>;
+    },
     reason?: string
   ): void {
     this.rest.request(
@@ -391,7 +375,19 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands */
   bulkEditGlobalApplicationCommands(
     applicationId: snowflake,
-    commands: BulkEditGlobalApplicationCommandsParams
+    commands: Array<{
+      id?: snowflake;
+      name: string;
+      nameLocalizations?: LocaleMap | null;
+      description?: string;
+      descriptionLocalizations?: LocaleMap | null;
+      options?: Array<ApplicationCommandOption>;
+      defaultMemberPermissions?: string | null;
+      dmPermission?: boolean;
+      defaultPermission?: boolean | null;
+      type?: ApplicationCommandTypes;
+      nsfw?: boolean;
+    }>
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
@@ -412,7 +408,19 @@ export class Client extends EventEmitter {
   bulkEditGuildApplicationCommands(
     applicationId: snowflake,
     guildId: snowflake,
-    commands: BulkEditGuildApplicationCommandsParams
+    commands: Array<{
+      id?: snowflake;
+      name: string;
+      nameLocalizations?: LocaleMap | null;
+      description?: string;
+      descriptionLocalizations?: LocaleMap | null;
+      options?: Array<ApplicationCommandOption>;
+      defaultMemberPermissions?: string | null;
+      dmPermission?: boolean;
+      defaultPermission?: boolean | null;
+      type: ApplicationCommandTypes;
+      nsfw?: boolean;
+    }>
   ): Promise<Array<ApplicationCommand>> {
     return this.rest
       .request<Array<RawApplicationCommand>>(
@@ -453,7 +461,16 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule */
   createAutoModerationRule(
     guildId: snowflake,
-    options: CreateAutoModerationRuleParams,
+    options: {
+      name: string;
+      eventType: EventTypes;
+      triggerType: TriggerTypes;
+      triggerMetadata?: TriggerMetadata;
+      actions: Array<AutoModerationAction>;
+      enabled?: boolean;
+      exemptRoles?: Array<string>;
+      exemptChannels?: Array<string>;
+    },
     reason?: string
   ): Promise<AutoModerationRule> {
     return this.rest
@@ -482,7 +499,26 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#create-guild-channel */
   createChannel(
     guildId: snowflake,
-    options: CreateGuildChannelParams,
+    options: {
+      name: string | null;
+      type?: ChannelTypes;
+      topic?: string | null;
+      bitrate?: number;
+      userLimit?: number;
+      rateLimitPerUser?: number;
+      position?: number;
+      permissionOverwrites?: Array<Overwrite>;
+      parentId?: snowflake | null;
+      nsfw?: boolean;
+      rtcRegion?: string | null;
+      videoQualityMode?: VideoQualityModes;
+      defaultAutoArchiveDuration?: number;
+      defaultReactionEmoji?: DefaultReaction | null;
+      availableTags?: Array<ForumTag>;
+      defaultSortOrder?: SortOrderTypes | null;
+      defaultForumLayout?: ForumLayoutTypes;
+      defaultThreadRateLimitPerUser?: number;
+    },
     reason?: string
   ): Promise<Channel> {
     return this.rest
@@ -523,7 +559,15 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
   createChannelInvite(
     channelId: snowflake,
-    options: CreateChannelInviteParams,
+    options: {
+      maxAge?: number;
+      maxUses?: number;
+      temporary?: boolean;
+      unique?: boolean;
+      targetType?: InviteTargetTypes;
+      targetUserId?: snowflake;
+      targetApplicationId?: snowflake;
+    },
     reason?: string
   ): Promise<Invite> {
     return this.rest
@@ -571,7 +615,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#create-dm */
-  createDM(options: CreateDMParams): Promise<Channel> {
+  createDM(options: { recipientId: snowflake }): Promise<Channel> {
     return this.rest
       .request<RawChannel>(RESTMethods.Post, Endpoints.userChannels(), {
         json: {
@@ -584,7 +628,18 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
   createGlobalApplicationCommand(
     applicationId: snowflake,
-    options: CreateGlobalApplicationCommandParams
+    options: {
+      name: string;
+      nameLocalizations?: LocaleMap | null;
+      description?: string;
+      descriptionLocalizations?: LocaleMap | null;
+      options?: Array<ApplicationCommandOption>;
+      defaultMemberPermissions?: string | null;
+      dmPermission?: boolean;
+      defaultPermission?: boolean | null;
+      type?: ApplicationCommandTypes;
+      nsfw?: boolean;
+    }
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
@@ -626,7 +681,33 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild */
-  createGuild(options: CreateGuildParams): Promise<Guild> {
+  createGuild(options: {
+    name: string;
+    region?: string | null;
+    icon?: string;
+    verificationLevel?: VerificationLevel;
+    defaultMessageNotifications?: DefaultMessageNotificationLevel;
+    explicitContentFilter?: ExplicitContentFilterLevel;
+    roles?: Array<{
+      name?: string;
+      permissions?: string;
+      color?: number;
+      hoist?: boolean;
+      icon?: string | null;
+      unicodeEmoji?: string | null;
+      mentionable?: boolean;
+    }>;
+    channels?: Array<{
+      name: string;
+      type: ChannelTypes;
+      id?: number;
+      parentId?: number;
+    }>;
+    afkChannelId?: snowflake;
+    afkTimeout?: number;
+    systemChannelId?: snowflake;
+    systemChannelFlags?: SystemChannelFlags;
+  }): Promise<Guild> {
     return this.rest
       .request<RawGuild>(RESTMethods.Post, Endpoints.guilds(), {
         json: {
@@ -653,7 +734,17 @@ export class Client extends EventEmitter {
   createGuildApplicationCommand(
     applicationId: snowflake,
     guildId: snowflake,
-    options: CreateGuildApplicationCommandParams
+    options: {
+      name: string;
+      nameLocalizations?: LocaleMap | null;
+      description?: string;
+      descriptionLocalizations?: LocaleMap | null;
+      options?: Array<ApplicationCommandOption>;
+      defaultMemberPermissions?: string | null;
+      defaultPermission?: boolean | null;
+      type?: ApplicationCommandTypes;
+      nsfw?: boolean;
+    }
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
@@ -682,7 +773,10 @@ export class Client extends EventEmitter {
   createGuildBan(
     guildId: snowflake,
     userId: snowflake,
-    options?: CreateGuildBanParams,
+    options?: {
+      deleteMessageDays?: number;
+      deleteMessageSeconds?: number;
+    },
     reason?: string
   ): void {
     this.rest.request(RESTMethods.Put, Endpoints.guildBan(guildId, userId), {
@@ -697,7 +791,11 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/emoji#create-guild-emoji */
   createGuildEmoji(
     guildId: snowflake,
-    options: CreateGuildEmojiParams,
+    options: {
+      name: string;
+      image: string;
+      roles: Array<snowflake>;
+    },
     reason?: string
   ): Promise<Emoji> {
     return this.rest
@@ -715,7 +813,10 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template */
   createGuildFromTemplate(
     code: string,
-    options: CreateGuildFromGuildTemplateParams
+    options: {
+      name: string;
+      icon?: string;
+    }
   ): Promise<Guild> {
     return this.rest
       .request<RawGuild>(RESTMethods.Post, Endpoints.template(code), {
@@ -730,7 +831,15 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
   createGuildRole(
     guildId: snowflake,
-    options: CreateGuildRoleParams,
+    options: {
+      name?: string;
+      permissions?: string;
+      color?: number;
+      hoist?: boolean;
+      icon?: string | null;
+      unicodeEmoji?: string | null;
+      mentionable?: boolean;
+    },
     reason?: string
   ): Promise<Role> {
     return this.rest
@@ -752,7 +861,17 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event */
   createGuildScheduledEvent(
     guildId: snowflake,
-    options: CreateGuildScheduledEventParams,
+    options: {
+      channelId?: snowflake | null;
+      entityMetadata?: GuildScheduledEventEntityMetadata | null;
+      name: string;
+      privacyLevel: GuildScheduledEventPrivacyLevel;
+      scheduledStartTime: string;
+      scheduledEndTime?: string | null;
+      description?: string | null;
+      entityType: GuildScheduledEventEntityTypes;
+      image?: string;
+    },
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return this.rest
@@ -780,7 +899,12 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
   createGuildSticker(
     guildId: snowflake,
-    options: CreateGuildStickerParams,
+    options: {
+      name: string;
+      description: string;
+      tags: string;
+      file: File;
+    },
     reason?: string
   ): Promise<Sticker> {
     const formData = new FormData();
@@ -801,7 +925,10 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-template */
   createGuildTemplate(
     guildId: snowflake,
-    options: CreateGuildTemplateParams
+    options: {
+      name: string;
+      description?: string | null;
+    }
   ): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
@@ -821,7 +948,19 @@ export class Client extends EventEmitter {
   createInteractionFollowupMessage(
     applicationId: snowflake,
     interactionToken: string,
-    options: CreateInteractionFollowupMessageParams
+    options: {
+      content?: string | null;
+      tts?: boolean;
+      embeds?: Array<Embed> | null;
+      allowedMentions?: AllowedMentions | null;
+      components?: Array<ActionRow> | null;
+      files?: Array<File> | null;
+      attachments?: Array<Attachment> | null;
+      flags?: MessageFlags | null;
+      threadName?: string;
+      appliedTags?: Array<string>;
+      poll?: PollCreateParams;
+    }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -871,7 +1010,10 @@ export class Client extends EventEmitter {
   createInteractionResponse(
     interactionId: snowflake,
     interactionToken: string,
-    options: InteractionResponse
+    options: {
+      type: InteractionCallbackType;
+      data?: InteractionCallbackData;
+    }
   ): void {
     switch (options.type) {
       case InteractionCallbackType.ChannelMessageWithSource:
@@ -998,7 +1140,21 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#create-message */
   createMessage(
     channelId: snowflake,
-    options: CreateMessageParams
+    options: {
+      content?: string;
+      nonce?: string | number;
+      tts?: boolean;
+      embeds?: Array<Embed>;
+      allowedMentions?: AllowedMentions;
+      messageReference?: MessageReference;
+      components?: Array<ActionRow>;
+      stickersIds?: Array<snowflake>;
+      files?: Array<File>;
+      attachments?: Array<Attachment>;
+      flags?: MessageFlags;
+      enforceNonce?: boolean;
+      poll?: PollCreateParams;
+    }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -1057,7 +1213,13 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/stage-instance#create-stage-instance */
   createStageInstance(
-    options: CreateStageInstanceParams,
+    options: {
+      channelId: snowflake;
+      topic: string;
+      privacyLevel?: PrivacyLevel;
+      sendStartNotifications?: boolean;
+      guildScheduledEventId?: snowflake;
+    },
     reason?: string
   ): Promise<StageInstance> {
     return this.rest
@@ -1077,7 +1239,11 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement */
   createTestEntitlement(
     applicationId: snowflake,
-    options: CreateTestEntitlementParams
+    options: {
+      skuId: snowflake;
+      ownerId: snowflake;
+      ownerType: number;
+    }
   ): Promise<Omit<Entitlement, "startsAt" | "endsAt" | "subscriptionId">> {
     return this.rest
       .request<
@@ -1099,7 +1265,21 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel */
   createThread(
     channelId: snowflake,
-    options: CreateThreadParams,
+    options: {
+      name: string;
+      autoArchiveDuration?: number;
+      rateLimitPerUser?: number | null;
+      message: {
+        content?: string | null;
+        embeds?: Array<Embed> | null;
+        allowedMentions?: AllowedMentions | null;
+        components?: Array<ActionRow> | null;
+        attachments?: Array<Attachment> | null;
+        flags?: MessageFlags | null;
+      };
+      appliedTags?: Array<string>;
+      files?: Array<File> | null;
+    },
     reason?: string
   ): Promise<Channel> {
     return this.rest
@@ -1121,7 +1301,11 @@ export class Client extends EventEmitter {
   createThreadFromMessage(
     channelId: snowflake,
     messageId: snowflake,
-    options: CreateThreadFromMessageParams,
+    options: {
+      name: string;
+      autoArchiveDuration?: number;
+      rateLimitPerUser?: number | null;
+    },
     reason?: string
   ): Promise<Channel> {
     return this.rest
@@ -1143,7 +1327,13 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
   createThreadWithoutMessage(
     channelId: snowflake,
-    options: CreateThreadWithoutMessageParams,
+    options: {
+      name: string;
+      autoArchiveDuration?: number;
+      type?: ChannelTypes;
+      invitable?: boolean;
+      rateLimitPerUser?: number | null;
+    },
     reason?: string
   ): Promise<Channel> {
     return this.rest
@@ -1465,7 +1655,16 @@ export class Client extends EventEmitter {
   editAutoModerationRule(
     guildId: snowflake,
     autoModerationRuleId: snowflake,
-    options: EditAutoModerationRuleParams,
+    options: {
+      name?: string;
+      eventType?: EventTypes;
+      triggerType?: TriggerTypes;
+      triggerMetadata?: TriggerMetadata;
+      actions?: Array<AutoModerationAction>;
+      enabled?: boolean;
+      exemptRoles?: Array<string>;
+      exemptChannels?: Array<string>;
+    },
     reason?: string
   ): Promise<AutoModerationRule> {
     return this.rest
@@ -1526,7 +1725,35 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
   editChannel(
     channelId: snowflake,
-    options: EditChannelParams,
+    options: {
+      name?: string;
+      icon?: string;
+
+      type?: ChannelTypes;
+      position?: number | null;
+      topic?: string | null;
+      nsfw?: boolean | null;
+      rateLimitPerUser?: number | null;
+      bitrate?: number | null;
+      userLimit?: number | null;
+      permissionOverwrites?: Array<Overwrite> | null;
+      parentId?: snowflake | null;
+      rtcRegion?: string | null;
+      videoQualityMode?: VideoQualityModes | null;
+      defaultAutoArchiveDuration?: number | null;
+      flags?: ChannelFlags;
+      availableTags?: Array<ForumTag>;
+      defaultReactionEmoji?: DefaultReaction | null;
+      defaultThreadRateLimitPerUser?: number;
+      defaultSortOrder?: SortOrderTypes | null;
+      defaultForumLayout?: ForumLayoutTypes;
+
+      archived?: boolean;
+      autoArchiveDuration?: number;
+      locked?: boolean;
+      invitable?: boolean;
+      appliedTags?: Array<string>;
+    },
     reason?: string
   ): Promise<Channel> {
     return this.rest
@@ -1586,7 +1813,12 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-channel-positions */
   editChannelPositions(
     guildId: snowflake,
-    options: EditGuildChannelPositionsParams
+    options: Array<{
+      id: snowflake;
+      position?: number | null;
+      lockPermissions?: boolean | null;
+      parentId?: snowflake | null;
+    }>
   ): void {
     this.rest.request(RESTMethods.Patch, Endpoints.guildChannels(guildId), {
       json: options.map((data) => ({
@@ -1599,7 +1831,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#modify-current-user */
-  editCurrentUser(options: EditCurrentUserParams): Promise<User> {
+  editCurrentUser(options: {
+    username?: string;
+    avatar?: string | null;
+    banner?: string | null;
+  }): Promise<User> {
     return this.rest
       .request<RawUser>(RESTMethods.Patch, Endpoints.user(), {
         json: {
@@ -1614,7 +1850,9 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
   editCurrentGuildMember(
     guildId: snowflake,
-    options: EditCurrentGuildMemberParams,
+    options: {
+      nick?: string;
+    },
     reason?: string
   ): Promise<GuildMember> {
     return this.rest
@@ -1634,7 +1872,11 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
   editCurrentUserVoiceState(
     guildId: snowflake,
-    options: EditCurrentUserVoiceStateParams
+    options: {
+      channelId?: snowflake;
+      suppress?: boolean;
+      requestToSpeakTimestamp?: timestamp | null;
+    }
   ): void {
     this.rest.request(RESTMethods.Patch, Endpoints.guildVoiceState(guildId), {
       json: {
@@ -1646,9 +1888,21 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/application#edit-current-application */
-  editCurrentApplication(
-    options: EditCurrentApplicationParams
-  ): Promise<Application> {
+  editCurrentApplication(options: {
+    customInstallUrl?: string;
+    description?: string;
+    roleConnectionsVerificationUrl?: string;
+    installParams?: InstallParams;
+    integrationTypesConfig?: Record<
+      ApplicationIntegrationTypes,
+      ApplicationIntegrationTypeConfiguration
+    >;
+    flags?: ApplicationFlags;
+    icon?: string;
+    coverImage?: string;
+    interactionsEndpointUrl?: string;
+    tags?: Array<string>;
+  }): Promise<Application> {
     return this.rest
       .request<RawApplication>(
         RESTMethods.Patch,
@@ -1675,7 +1929,17 @@ export class Client extends EventEmitter {
   editGlobalApplicationCommand(
     applicationId: snowflake,
     commandId: snowflake,
-    options: EditGlobalApplicationCommandParams
+    options: {
+      name?: string;
+      nameLocalizations?: LocaleMap | null;
+      description?: string;
+      descriptionLocalizations?: LocaleMap | null;
+      options?: Array<ApplicationCommandOption>;
+      defaultMemberPermissions?: string | null;
+      defaultPermission?: boolean | null;
+      dmPermission?: boolean;
+      nsfw?: boolean;
+    }
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
@@ -1703,7 +1967,29 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
   editGuild(
     guildId: snowflake,
-    options: EditGuildParams,
+    options: {
+      name?: string;
+      region?: string | null;
+      verificationLevel?: VerificationLevel;
+      defaultMessageNotifications?: DefaultMessageNotificationLevel;
+      explicitContentFilter?: ExplicitContentFilterLevel;
+      afkChannelId?: snowflake | null;
+      afkTimeout?: number;
+      icon?: string | null;
+      ownerId?: snowflake;
+      splash?: string | null;
+      discoverySplash?: string | null;
+      banner?: string | null;
+      systemChannelId?: snowflake | null;
+      systemChannelFlags?: SystemChannelFlags;
+      rulesChannelId?: snowflake | null;
+      publicUpdatesChannelId?: snowflake | null;
+      preferredLocale?: string;
+      features?: Array<GuildFeatures>;
+      description?: string | null;
+      premiumProgressBarEnabled?: boolean;
+      safetyAlertsChannelId?: snowflake | null;
+    },
     reason?: string
   ): Promise<Guild> {
     return this.rest
@@ -1741,7 +2027,16 @@ export class Client extends EventEmitter {
     applicationId: snowflake,
     guildId: snowflake,
     commandId: snowflake,
-    options: EditGuildApplicationCommandParams
+    options: {
+      name?: string;
+      nameLocalizations?: LocaleMap | null;
+      description?: string;
+      descriptionLocalizations?: LocaleMap | null;
+      options?: Array<ApplicationCommandOption>;
+      defaultMemberPermissions?: string | null;
+      defaultPermission?: boolean | null;
+      nsfw?: boolean;
+    }
   ): Promise<ApplicationCommand> {
     return this.rest
       .request<RawApplicationCommand>(
@@ -1769,7 +2064,10 @@ export class Client extends EventEmitter {
   editGuildEmoji(
     guildId: snowflake,
     emojiId: snowflake,
-    options: EditGuildEmojiParams,
+    options: {
+      name?: string;
+      roles?: Array<snowflake> | null;
+    },
     reason?: string
   ): Promise<Emoji> {
     return this.rest
@@ -1791,7 +2089,15 @@ export class Client extends EventEmitter {
   editGuildMember(
     guildId: snowflake,
     userId: snowflake,
-    options: EditGuildMemberParams,
+    options: {
+      nick?: string | null;
+      roles?: Array<snowflake> | null;
+      mute?: boolean | null;
+      deaf?: boolean | null;
+      channelId?: snowflake | null;
+      communicationDisabledUntil?: number | null;
+      flags?: GuildMemberFlags;
+    },
     reason?: string
   ): Promise<GuildMember> {
     return this.rest
@@ -1817,7 +2123,9 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
   editGuildMFALevel(
     guildId: snowflake,
-    options: EditGuildMFALevelParams,
+    options: {
+      level: MFALevel;
+    },
     reason?: string
   ): Promise<MFALevel> {
     return this.rest.request<MFALevel>(
@@ -1835,7 +2143,12 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
   editGuildOnboarding(
     guildId: snowflake,
-    options: EditGuildOnboardingParams,
+    options: {
+      prompts: Array<OnboardingPrompt>;
+      defaultChannelIds: Array<snowflake>;
+      enabled: boolean;
+      mode: OnboardingMode;
+    },
     reason?: string
   ): void {
     this.rest.request(RESTMethods.Patch, Endpoints.guildOnboarding(guildId), {
@@ -1886,7 +2199,10 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
   editGuildRolePositions(
     guildId: snowflake,
-    options: EditGuildRolePositionsParams
+    options: Array<{
+      id: snowflake;
+      position?: number | null;
+    }>
   ): Promise<Array<Role>> {
     return this.rest
       .request<Array<RawRole>>(
@@ -1905,7 +2221,18 @@ export class Client extends EventEmitter {
   editGuildScheduledEvent(
     guildId: snowflake,
     guildScheduledEventId: snowflake,
-    options: EditGuildScheduledEventParams,
+    options: {
+      channelId?: snowflake | null;
+      entityMetadata?: GuildScheduledEventEntityMetadata | null;
+      name?: string;
+      privacyLevel?: GuildScheduledEventPrivacyLevel;
+      scheduledStartTime?: string;
+      scheduledEndTime?: string;
+      description?: string | null;
+      entityType?: GuildScheduledEventEntityTypes;
+      status?: GuildScheduledEventStatus;
+      image?: string;
+    },
     reason?: string
   ): Promise<GuildScheduledEvent> {
     return this.rest
@@ -1935,7 +2262,11 @@ export class Client extends EventEmitter {
   editGuildSticker(
     guildId: snowflake,
     stickerId: snowflake,
-    options: EditGuildStickerParams,
+    options: {
+      name?: string;
+      description?: string | null;
+      tags?: string;
+    },
     reason?: string
   ): Promise<Sticker> {
     return this.rest
@@ -1958,7 +2289,10 @@ export class Client extends EventEmitter {
   editGuildTemplate(
     guildId: snowflake,
     code: string,
-    options: EditGuildTemplateParams
+    options: {
+      name?: string;
+      description?: string | null;
+    }
   ): Promise<GuildTemplate> {
     return this.rest
       .request<RawGuildTemplate>(
@@ -1977,7 +2311,11 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
   editGuildWelcomeScreen(
     guildId: snowflake,
-    options: EditGuildWelcomeScreenParams,
+    options: {
+      enabled?: boolean | null;
+      welcomeChannels?: Array<WelcomeScreenChannel> | null;
+      description?: string | null;
+    },
     reason?: string
   ): Promise<WelcomeScreen> {
     return this.rest
@@ -2024,7 +2362,15 @@ export class Client extends EventEmitter {
   editMessage(
     channelId: snowflake,
     messageId: snowflake,
-    options: EditMessageParams
+    options: {
+      content?: string | null;
+      embeds?: Array<Embed> | null;
+      flags?: MessageFlags | null;
+      allowedMentions?: AllowedMentions | null;
+      components?: Array<ActionRow> | null;
+      files?: Array<File> | null;
+      attachments?: Array<Attachment> | null;
+    }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -2071,7 +2417,10 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
   editStageInstance(
     channelId: snowflake,
-    options: EditStageInstanceParams,
+    options: {
+      topic?: string;
+      privacyLevel?: PrivacyLevel;
+    },
     reason?: string
   ): Promise<StageInstance> {
     return this.rest
@@ -2094,7 +2443,16 @@ export class Client extends EventEmitter {
     applicationId: snowflake,
     interactionToken: string,
     messageId: snowflake,
-    options: EditWebhookMessageParams & { threadId: snowflake }
+    options: {
+      content?: string | null;
+      embeds?: Array<Embed> | null;
+      flags?: MessageFlags | null;
+      allowedMentions?: AllowedMentions | null;
+      components?: Array<ActionRow> | null;
+      files?: Array<File> | null;
+      attachments?: Array<Attachment> | null;
+      threadId: snowflake;
+    }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -2145,7 +2503,16 @@ export class Client extends EventEmitter {
   editInteractionResponse(
     applicationId: snowflake,
     interactionToken: string,
-    options: EditWebhookMessageParams & { threadId: snowflake }
+    options: {
+      content?: string | null;
+      embeds?: Array<Embed> | null;
+      flags?: MessageFlags | null;
+      allowedMentions?: AllowedMentions | null;
+      components?: Array<ActionRow> | null;
+      files?: Array<File> | null;
+      attachments?: Array<Attachment> | null;
+      threadId: snowflake;
+    }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -2218,7 +2585,11 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook */
   editWebhook(
     webhookId: snowflake,
-    options: EditWebhookParams,
+    options: {
+      name?: string;
+      avatar?: string | null;
+      channelId?: snowflake;
+    },
     reason?: string
   ): Promise<Webhook> {
     return this.rest
@@ -2238,7 +2609,16 @@ export class Client extends EventEmitter {
     webhookId: snowflake,
     webhookToken: string,
     messageId: snowflake,
-    options: EditWebhookMessageParams & { threadId: snowflake }
+    options: {
+      content?: string | null;
+      embeds?: Array<Embed> | null;
+      flags?: MessageFlags | null;
+      allowedMentions?: AllowedMentions | null;
+      components?: Array<ActionRow> | null;
+      files?: Array<File> | null;
+      attachments?: Array<Attachment> | null;
+      threadId: snowflake;
+    }
   ): Promise<Message> {
     return this.rest
       .request<RawMessage>(
@@ -2289,7 +2669,10 @@ export class Client extends EventEmitter {
   editWebhookWithToken(
     webhookId: snowflake,
     webhookToken: string,
-    options: Omit<EditWebhookParams, "channelId">,
+    options: {
+      name?: string;
+      avatar?: string | null;
+    },
     reason?: string
   ): Promise<Webhook> {
     return this.rest
@@ -2322,7 +2705,23 @@ export class Client extends EventEmitter {
   executeWebhook(
     webhookId: snowflake,
     webhookToken: string,
-    options: ExecuteWebhookParams & { wait: boolean; threadId: snowflake }
+    options: {
+      content?: string | null;
+      username?: string;
+      avatarUrl?: string;
+      tts?: boolean;
+      embeds?: Array<Embed> | null;
+      allowedMentions?: AllowedMentions | null;
+      components?: Array<ActionRow> | null;
+      files?: Array<File> | null;
+      attachments?: Array<Attachment> | null;
+      flags?: MessageFlags | null;
+      threadName?: string;
+      appliedTags?: Array<string>;
+      poll?: PollCreateParams;
+      wait: boolean;
+      threadId: snowflake;
+    }
   ): Promise<Message | null> {
     return this.rest
       .request<RawMessage | null>(
@@ -3767,9 +4166,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#update-current-user-application-role-connection */
-  updateCurrentApplicationRoleConnection(
-    options: UpdateCurrentUserApplicationRoleConnection
-  ): Promise<ApplicationRoleConnection> {
+  updateCurrentApplicationRoleConnection(options: {
+    platformName?: string;
+    platformUsername?: string;
+    metadata?: ApplicationRoleConnectionMetadata;
+  }): Promise<ApplicationRoleConnection> {
     return this.rest
       .request<RawApplicationRoleConnection>(
         RESTMethods.Put,

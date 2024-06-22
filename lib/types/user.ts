@@ -3,13 +3,12 @@ import type {
   Services,
   VisibilityTypes,
   PremiumTypes,
-  ApplicationRoleConnectionMetadataType,
 } from "../constants";
 import type {
   RawApplicationRoleConnectionMetadata,
   ApplicationRoleConnectionMetadata,
 } from "./application-role-connection-metadata";
-import type { snowflake, LocaleMap } from "./common";
+import type { snowflake } from "./common";
 import type { RawIntegration, Integration } from "./guild";
 
 /** https://discord.com/developers/docs/resources/user#user-object-user-structure */
@@ -102,32 +101,4 @@ export interface ApplicationRoleConnection {
   platformName: string | null;
   platformUsername: string | null;
   metadata: ApplicationRoleConnectionMetadata;
-}
-
-export interface EditCurrentUserParams {
-  username?: string;
-  avatar?: string | null;
-  banner?: string | null;
-}
-
-export interface CreateDMParams {
-  recipientId: snowflake;
-}
-
-export interface CreateGroupDMParams {
-  accessTokens: Array<string>;
-  nicks: Array<string>;
-}
-
-export interface UpdateCurrentUserApplicationRoleConnection {
-  platformName?: string;
-  platformUsername?: string;
-  metadata?: {
-    type: ApplicationRoleConnectionMetadataType;
-    key: string;
-    name: string;
-    nameLocalizations?: LocaleMap | null;
-    description: string;
-    descriptionLocalizations?: LocaleMap | null;
-  };
 }

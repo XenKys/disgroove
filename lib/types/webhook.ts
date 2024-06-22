@@ -1,16 +1,7 @@
-import type { MessageFlags, WebhookTypes } from "../constants";
-import type { File } from "../rest";
-import type {
-  RawChannel,
-  Channel,
-  Embed,
-  AllowedMentions,
-  Attachment,
-} from "./channel";
+import type { WebhookTypes } from "../constants";
+import type { RawChannel, Channel } from "./channel";
 import type { snowflake } from "./common";
 import type { RawGuild, Guild } from "./guild";
-import type { ActionRow } from "./message-components";
-import type { PollCreateParams } from "./poll";
 import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
@@ -42,41 +33,4 @@ export interface Webhook {
   sourceGuild?: Guild;
   sourceChannel?: Channel;
   url?: string;
-}
-
-export interface CreateWebhookParams {
-  name: string;
-  avatar?: string | null;
-}
-
-export interface EditWebhookParams {
-  name?: string;
-  avatar?: string | null;
-  channelId?: snowflake;
-}
-
-export interface ExecuteWebhookParams {
-  content?: string | null;
-  username?: string;
-  avatarUrl?: string;
-  tts?: boolean;
-  embeds?: Array<Embed> | null;
-  allowedMentions?: AllowedMentions | null;
-  components?: Array<ActionRow> | null;
-  files?: Array<File> | null;
-  attachments?: Array<Attachment> | null;
-  flags?: MessageFlags | null;
-  threadName?: string;
-  appliedTags?: Array<string>;
-  poll?: PollCreateParams;
-}
-
-export interface EditWebhookMessageParams {
-  content?: string | null;
-  embeds?: Array<Embed> | null;
-  flags?: MessageFlags | null;
-  allowedMentions?: AllowedMentions | null;
-  components?: Array<ActionRow> | null;
-  files?: Array<File> | null;
-  attachments?: Array<Attachment> | null;
 }

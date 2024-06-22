@@ -67,28 +67,3 @@ export interface GuildScheduledEventUser {
   user: User;
   member?: GuildMember;
 }
-
-export interface CreateGuildScheduledEventParams {
-  channelId?: snowflake | null;
-  entityMetadata?: GuildScheduledEventEntityMetadata | null;
-  name: string;
-  privacyLevel: GuildScheduledEventPrivacyLevel;
-  scheduledStartTime: string;
-  scheduledEndTime?: string | null;
-  description?: string | null;
-  entityType: GuildScheduledEventEntityTypes;
-  image?: string;
-}
-
-export interface EditGuildScheduledEventParams {
-  channelId?: snowflake | null;
-  entityMetadata?: GuildScheduledEventEntityMetadata | null;
-  name?: string;
-  privacyLevel?: GuildScheduledEventPrivacyLevel;
-  scheduledStartTime?: string;
-  scheduledEndTime?: string;
-  description?: string | null;
-  entityType?: GuildScheduledEventEntityTypes;
-  status?: GuildScheduledEventStatus;
-  image?: string;
-}
