@@ -120,6 +120,7 @@ export enum ButtonStyles {
   Success,
   Danger,
   Link,
+  Premium,
 }
 
 /** https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles */

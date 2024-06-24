@@ -14,6 +14,7 @@ export interface RawButton {
   label?: string;
   emoji?: Pick<RawEmoji, "name" | "id" | "animated">;
   custom_id?: string;
+  sku_id?: snowflake;
   url?: string;
   disabled?: boolean;
 }
@@ -76,6 +77,7 @@ export interface Button {
   label?: string;
   emoji?: Pick<Emoji, "name" | "id" | "animated">;
   customId?: string;
+  skuId?: snowflake;
   url?: string;
   disabled?: boolean;
 }

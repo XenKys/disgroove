@@ -1561,6 +1561,7 @@ export class Util {
                     }
                   : undefined,
               customId: c.custom_id,
+              skuId: c.sku_id,
               url: c.url,
               disabled: c.disabled,
             };
@@ -1651,6 +1652,7 @@ export class Util {
                     }
                   : undefined,
               custom_id: c.customId,
+              sku_id: c.skuId,
               url: c.url,
               disabled: c.disabled,
             };
