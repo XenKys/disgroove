@@ -81,7 +81,7 @@ export const guildTemplate = (guildId: snowflake, code: string) =>
   `guilds/${guildId}/templates/${code}` as const;
 export const guildTemplates = (guildId: snowflake) =>
   `guilds/${guildId}/templates` as const;
-export const guildVanityUrl = (guildId: snowflake) =>
+export const guildVanityURL = (guildId: snowflake) =>
   `guilds/${guildId}/vanity-url` as const;
 export const guildVoiceRegions = (guildId: snowflake) =>
   `guilds/${guildId}/regions` as const;

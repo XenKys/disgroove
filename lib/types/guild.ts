@@ -236,7 +236,7 @@ export interface Guild {
   rulesChannelId: snowflake | null;
   maxPresences?: number | null;
   maxMembers?: number;
-  vanityUrlCode: string | null;
+  vanityURLCode: string | null;
   description: string | null;
   banner: string | null;
   premiumTier: PremiumTier;

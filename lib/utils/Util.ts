@@ -265,7 +265,7 @@ export class Util {
       contentType: attachment.content_type,
       size: attachment.size,
       url: attachment.url,
-      proxyUrl: attachment.proxy_url,
+      proxyURL: attachment.proxy_url,
       height: attachment.height,
       width: attachment.width,
       ephemeral: attachment.ephemeral,
@@ -283,7 +283,7 @@ export class Util {
       content_type: attachment.contentType,
       size: attachment.size,
       url: attachment.url,
-      proxy_url: attachment.proxyUrl,
+      proxy_url: attachment.proxyURL,
       height: attachment.height,
       width: attachment.width,
       ephemeral: attachment.ephemeral,
@@ -302,8 +302,8 @@ export class Util {
       rpcOrigins: application.rpc_origins,
       botPublic: application.bot_public,
       botRequireCodeGrant: application.bot_require_code_grant,
-      termsOfServiceUrl: application.terms_of_service_url,
-      privacyPolicyUrl: application.privacy_policy_url,
+      termsOfServiceURL: application.terms_of_service_url,
+      privacyPolicyURL: application.privacy_policy_url,
       owner:
         application.owner !== undefined
           ? this.userFromRaw(application.owner)
@@ -322,8 +322,8 @@ export class Util {
       flags: application.flags,
       approximateGuildCount: application.approximate_guild_count,
       redirectURIs: application.redirect_uris,
-      interactionsEndpointUrl: application.interactions_endpoint_url,
-      roleConnectionsVerificationUrl:
+      interactionsEndpointURL: application.interactions_endpoint_url,
+      roleConnectionsVerificationURL:
         application.role_connections_verification_url,
       tags: application.tags,
       installParams: application.install_params,
@@ -342,7 +342,7 @@ export class Util {
               },
             }
           : undefined,
-      customInstallUrl: application.custom_install_url,
+      customInstallURL: application.custom_install_url,
     };
   }
 
@@ -355,8 +355,8 @@ export class Util {
       rpc_origins: application.rpcOrigins,
       bot_public: application.botPublic,
       bot_require_code_grant: application.botRequireCodeGrant,
-      terms_of_service_url: application.termsOfServiceUrl,
-      privacy_policy_url: application.privacyPolicyUrl,
+      terms_of_service_url: application.termsOfServiceURL,
+      privacy_policy_url: application.privacyPolicyURL,
       owner:
         application.owner !== undefined
           ? this.userToRaw(application.owner)
@@ -374,9 +374,9 @@ export class Util {
       flags: application.flags,
       approximate_guild_count: application.approximateGuildCount,
       redirect_uris: application.redirectURIs,
-      interactions_endpoint_url: application.interactionsEndpointUrl,
+      interactions_endpoint_url: application.interactionsEndpointURL,
       role_connections_verification_url:
-        application.roleConnectionsVerificationUrl,
+        application.roleConnectionsVerificationURL,
       tags: application.tags,
       install_params: application.installParams,
       integration_types_config:
@@ -392,7 +392,7 @@ export class Util {
               },
             }
           : undefined,
-      custom_install_url: application.customInstallUrl,
+      custom_install_url: application.customInstallURL,
     };
   }
 
@@ -726,15 +726,15 @@ export class Util {
         embed.footer !== undefined
           ? {
               text: embed.footer.text,
-              iconUrl: embed.footer.icon_url,
-              proxyIconUrl: embed.footer.proxy_icon_url,
+              iconURL: embed.footer.icon_url,
+              proxyIconURL: embed.footer.proxy_icon_url,
             }
           : undefined,
       image:
         embed.image !== undefined
           ? {
               url: embed.image.url,
-              proxyUrl: embed.image.proxy_url,
+              proxyURL: embed.image.proxy_url,
               height: embed.image.height,
               width: embed.image.width,
             }
@@ -743,14 +743,14 @@ export class Util {
         embed.thumbnail !== undefined
           ? {
               url: embed.thumbnail.url,
-              proxyUrl: embed.thumbnail.proxy_url,
+              proxyURL: embed.thumbnail.proxy_url,
               height: embed.thumbnail.height,
               width: embed.thumbnail.width,
             }
           : undefined,
       video: {
         url: embed.video?.url,
-        proxyUrl: embed.video?.proxy_url,
+        proxyURL: embed.video?.proxy_url,
         height: embed.video?.height,
         width: embed.video?.width,
       },
@@ -763,8 +763,8 @@ export class Util {
           ? {
               name: embed.author.name,
               url: embed.author.url,
-              iconUrl: embed.author.icon_url,
-              proxyIconUrl: embed.author.proxy_icon_url,
+              iconURL: embed.author.icon_url,
+              proxyIconURL: embed.author.proxy_icon_url,
             }
           : undefined,
       fields: embed.fields?.map((field) => ({
@@ -787,15 +787,15 @@ export class Util {
         embed.footer !== undefined
           ? {
               text: embed.footer.text,
-              icon_url: embed.footer.iconUrl,
-              proxy_icon_url: embed.footer.proxyIconUrl,
+              icon_url: embed.footer.iconURL,
+              proxy_icon_url: embed.footer.proxyIconURL,
             }
           : undefined,
       image:
         embed.image !== undefined
           ? {
               url: embed.image.url,
-              proxy_url: embed.image.proxyUrl,
+              proxy_url: embed.image.proxyURL,
               height: embed.image.height,
               width: embed.image.width,
             }
@@ -804,14 +804,14 @@ export class Util {
         embed.thumbnail !== undefined
           ? {
               url: embed.thumbnail.url,
-              proxy_url: embed.thumbnail.proxyUrl,
+              proxy_url: embed.thumbnail.proxyURL,
               height: embed.thumbnail.height,
               width: embed.thumbnail.width,
             }
           : undefined,
       video: {
         url: embed.video?.url,
-        proxy_url: embed.video?.proxyUrl,
+        proxy_url: embed.video?.proxyURL,
         height: embed.video?.height,
         width: embed.video?.width,
       },
@@ -824,8 +824,8 @@ export class Util {
           ? {
               name: embed.author.name,
               url: embed.author.url,
-              icon_url: embed.author.iconUrl,
-              proxy_icon_url: embed.author.proxyIconUrl,
+              icon_url: embed.author.iconURL,
+              proxy_icon_url: embed.author.proxyIconURL,
             }
           : undefined,
       fields: embed.fields?.map((field) => ({
@@ -961,7 +961,7 @@ export class Util {
       rulesChannelId: guild.rules_channel_id,
       maxPresences: guild.max_presences,
       maxMembers: guild.max_members,
-      vanityUrlCode: guild.vanity_url_code,
+      vanityURLCode: guild.vanity_url_code,
       description: guild.description,
       banner: guild.banner,
       premiumTier: guild.premium_tier,
@@ -1022,7 +1022,7 @@ export class Util {
       rules_channel_id: guild.rulesChannelId,
       max_presences: guild.maxPresences,
       max_members: guild.maxMembers,
-      vanity_url_code: guild.vanityUrlCode,
+      vanity_url_code: guild.vanityURLCode,
       description: guild.description,
       banner: guild.banner,
       premium_tier: guild.premiumTier,

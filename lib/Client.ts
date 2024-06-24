@@ -1957,9 +1957,9 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/application#edit-current-application */
   async editCurrentApplication(options: {
-    customInstallUrl?: string;
+    customInstallURL?: string;
     description?: string;
-    roleConnectionsVerificationUrl?: string;
+    roleConnectionsVerificationURL?: string;
     installParams?: InstallParams;
     integrationTypesConfig?: Record<
       ApplicationIntegrationTypes,
@@ -1968,7 +1968,7 @@ export class Client extends EventEmitter {
     flags?: ApplicationFlags;
     icon?: string;
     coverImage?: string;
-    interactionsEndpointUrl?: string;
+    interactionsEndpointURL?: string;
     tags?: Array<string>;
   }): Promise<Application> {
     const response = await this.rest.request<RawApplication>(
@@ -1976,15 +1976,15 @@ export class Client extends EventEmitter {
       Endpoints.applicationCurrentUser(),
       {
         json: {
-          custom_install_url: options.customInstallUrl,
+          custom_install_url: options.customInstallURL,
           description: options.description,
           role_connections_verification_url:
-            options.roleConnectionsVerificationUrl,
+            options.roleConnectionsVerificationURL,
           install_params: options.installParams,
           flags: options.flags,
           icon: options.icon,
           cover_image: options.coverImage,
-          interactions_endpoint_url: options.interactionsEndpointUrl,
+          interactions_endpoint_url: options.interactionsEndpointURL,
           tags: options.tags,
         },
       }
@@ -2779,7 +2779,7 @@ export class Client extends EventEmitter {
     options: {
       content?: string | null;
       username?: string;
-      avatarUrl?: string;
+      avatarURL?: string;
       tts?: boolean;
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
@@ -2801,7 +2801,7 @@ export class Client extends EventEmitter {
         json: {
           content: options.content,
           username: options.username,
-          avatarUrl: options.avatarUrl,
+          avatarURL: options.avatarURL,
           tts: options.tts,
           embeds:
             options.embeds !== null
@@ -3678,14 +3678,14 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-vanity-url */
-  getGuildVanityUrl(guildId: snowflake): Promise<{
+  getGuildVanityURL(guildId: snowflake): Promise<{
     code: string;
     uses: number;
   }> {
     return this.rest.request<{
       code: string;
       uses: number;
-    }>(RESTMethods.Get, Endpoints.guildVanityUrl(guildId));
+    }>(RESTMethods.Get, Endpoints.guildVanityURL(guildId));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-voice-regions */

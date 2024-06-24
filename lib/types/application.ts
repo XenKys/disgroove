@@ -60,8 +60,8 @@ export interface Application {
   rpcOrigins?: Array<string>;
   botPublic: boolean;
   botRequireCodeGrant: boolean;
-  termsOfServiceUrl?: string;
-  privacyPolicyUrl?: string;
+  termsOfServiceURL?: string;
+  privacyPolicyURL?: string;
   owner?: User;
   verifyKey: string;
   team: Team | null;
@@ -73,15 +73,15 @@ export interface Application {
   flags?: ApplicationFlags;
   approximateGuildCount?: number;
   redirectURIs?: Array<string>;
-  interactionsEndpointUrl?: string;
-  roleConnectionsVerificationUrl?: string;
+  interactionsEndpointURL?: string;
+  roleConnectionsVerificationURL?: string;
   tags?: Array<string>;
   installParams?: InstallParams;
   integrationTypesConfig?: Record<
     ApplicationIntegrationTypes,
     ApplicationIntegrationTypeConfiguration
   >;
-  customInstallUrl?: string;
+  customInstallURL?: string;
 }
 
 export interface ApplicationIntegrationTypeConfiguration {

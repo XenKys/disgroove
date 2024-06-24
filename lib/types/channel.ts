@@ -492,21 +492,21 @@ export interface Embed {
 
 export interface EmbedThumbnail {
   url: string;
-  proxyUrl?: string;
+  proxyURL?: string;
   height?: number;
   width?: number;
 }
 
 export interface EmbedVideo {
   url?: string;
-  proxyUrl?: string;
+  proxyURL?: string;
   height?: number;
   width?: number;
 }
 
 export interface EmbedImage {
   url: string;
-  proxyUrl?: string;
+  proxyURL?: string;
   height?: number;
   width?: number;
 }
@@ -519,14 +519,14 @@ export interface EmbedProvider {
 export interface EmbedAuthor {
   name: string;
   url?: string;
-  iconUrl?: string;
-  proxyIconUrl?: string;
+  iconURL?: string;
+  proxyIconURL?: string;
 }
 
 export interface EmbedFooter {
   text: string;
-  iconUrl?: string;
-  proxyIconUrl?: string;
+  iconURL?: string;
+  proxyIconURL?: string;
 }
 
 export interface EmbedField {
@@ -542,7 +542,7 @@ export interface Attachment {
   contentType?: string;
   size: number;
   url: string;
-  proxyUrl: string;
+  proxyURL: string;
   height?: number;
   width?: number;
   ephemeral?: boolean;
