@@ -18,7 +18,7 @@ client.once("ready", () =>
 
 client.on("interactionCreate", (interaction) => {
   if (interaction.type === InteractionType.ApplicationCommand) {
-    if (interaction.data.name === "button") {
+    if (interaction.data.name === "buttons") {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
