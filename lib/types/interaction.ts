@@ -1,8 +1,10 @@
 import type {
   ApplicationCommandOptionType,
   ApplicationCommandTypes,
+  ApplicationIntegrationTypes,
   ComponentTypes,
   InteractionCallbackType,
+  InteractionContextTypes,
   InteractionType,
   MessageFlags,
 } from "../constants";
@@ -25,7 +27,7 @@ import type {
 } from "./channel";
 import type { snowflake } from "./common";
 import type { RawEntitlement, Entitlement } from "./entitlements";
-import type { RawGuildMember, GuildMember } from "./guild";
+import type { RawGuildMember, GuildMember, Guild, RawGuild } from "./guild";
 import type {
   RawTextInput,
   RawActionRow,
@@ -44,6 +46,7 @@ export interface RawInteraction {
   data?: RawApplicationCommandData &
     RawMessageComponentData &
     RawModalSubmitData;
+  guild?: RawGuild;
   guild_id?: snowflake;
   channel?: RawChannel;
   channel_id?: snowflake;
@@ -56,6 +59,8 @@ export interface RawInteraction {
   locale?: string;
   guild_locale?: string;
   entitlements: Array<RawEntitlement>;
+  authorizing_integration_owners: Record<ApplicationIntegrationTypes, string>;
+  context?: InteractionContextTypes;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
@@ -141,6 +146,7 @@ export interface Interaction {
   applicationId: snowflake;
   type: InteractionType;
   data?: ApplicationCommandData & MessageComponentData & ModalSubmitData;
+  guild?: Guild;
   guildId?: snowflake;
   channel?: Channel;
   channelId?: snowflake;
@@ -153,6 +159,8 @@ export interface Interaction {
   locale?: string;
   guildLocale?: string;
   entitlements: Array<Entitlement>;
+  authorizingIntegrationOwners: Record<ApplicationIntegrationTypes, string>;
+  context?: InteractionContextTypes;
 }
 
 export interface ApplicationCommandData {

@@ -1291,6 +1291,10 @@ export class Util {
               })),
             }
           : undefined,
+      guild:
+        interaction.guild !== undefined
+          ? this.guildFromRaw(interaction.guild)
+          : undefined,
       guildId: interaction.guild_id,
       channel:
         interaction.channel !== undefined
@@ -1317,6 +1321,11 @@ export class Util {
       entitlements: interaction.entitlements.map((entitlement) =>
         this.entitlementFromRaw(entitlement)
       ),
+      authorizingIntegrationOwners: {
+        "0": interaction.authorizing_integration_owners[0],
+        "1": interaction.authorizing_integration_owners[1],
+      },
+      context: interaction.context,
     };
   }
 
@@ -1357,6 +1366,10 @@ export class Util {
               })),
             }
           : undefined,
+      guild:
+        interaction.guild !== undefined
+          ? this.guildToRaw(interaction.guild)
+          : undefined,
       guild_id: interaction.guildId,
       channel:
         interaction.channel !== undefined
@@ -1383,6 +1396,11 @@ export class Util {
       entitlements: interaction.entitlements.map((entitlement) =>
         this.entitlementToRaw(entitlement)
       ),
+      authorizing_integration_owners: {
+        "0": interaction.authorizingIntegrationOwners[0],
+        "1": interaction.authorizingIntegrationOwners[1],
+      },
+      context: interaction.context,
     };
   }
 
