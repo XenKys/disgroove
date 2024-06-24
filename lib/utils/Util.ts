@@ -18,6 +18,8 @@ import type {
   RawEmbed,
   RawMessage,
   RawMessageInteractionMetadata,
+  RawThreadMember,
+  ThreadMember,
 } from "../types/channel";
 import type { Emoji, RawEmoji } from "../types/emoji";
 import type {
@@ -40,7 +42,7 @@ import type { RawStageInstance, StageInstance } from "../types/stage-instance";
 import type { RawSticker, Sticker } from "../types/sticker";
 import type { RawVoiceState, VoiceState } from "../types/voice";
 import type { RawWebhook, Webhook } from "../types/webhook";
-import type { RawTeam, Team } from "../types/team";
+import type { RawTeam, RawTeamMember, Team, TeamMember } from "../types/team";
 import type { RawRole, Role } from "../types/role";
 import type { ActionRow, RawActionRow } from "../types/message-components";
 import { ComponentTypes } from "../constants";
@@ -2331,6 +2333,32 @@ export class Util {
       })),
       name: team.name,
       owner_user_id: team.ownerUserId,
+    };
+  }
+
+  threadMemberFromRaw(threadMember: RawThreadMember): ThreadMember {
+    return {
+      id: threadMember.id,
+      userId: threadMember.user_id,
+      joinTimestamp: threadMember.join_timestamp,
+      flags: threadMember.flags,
+      member:
+        threadMember.member !== undefined
+          ? this.guildMemberFromRaw(threadMember.member)
+          : undefined,
+    };
+  }
+
+  threadMemberToRaw(threadMember: ThreadMember): RawThreadMember {
+    return {
+      id: threadMember.id,
+      user_id: threadMember.userId,
+      join_timestamp: threadMember.joinTimestamp,
+      flags: threadMember.flags,
+      member:
+        threadMember.member !== undefined
+          ? this.guildMemberToRaw(threadMember.member)
+          : undefined,
     };
   }
 

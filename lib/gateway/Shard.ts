@@ -224,16 +224,9 @@ export class Shard {
           threads: packet.d.threads.map((thread: RawChannel) =>
             this.client.util.channelFromRaw(thread)
           ),
-          members: packet.d.members.map((threadMember: RawThreadMember) => ({
-            id: threadMember.id,
-            userId: threadMember.user_id,
-            joinTimestamp: threadMember.join_timestamp,
-            flags: threadMember.flags,
-            member:
-              threadMember.member !== undefined
-                ? this.client.util.guildMemberFromRaw(threadMember.member)
-                : undefined,
-          })),
+          members: packet.d.members.map((threadMember: RawThreadMember) =>
+            this.client.util.threadMemberFromRaw(threadMember)
+          ),
         });
         break;
       case "THREAD_MEMBER_UPDATE":
@@ -255,17 +248,8 @@ export class Shard {
           id: packet.d.id,
           guildId: packet.d.guild_id,
           memberCount: packet.d.member_count,
-          addedMembers: packet.d.members.map(
-            (threadMember: RawThreadMember) => ({
-              id: threadMember.id,
-              userId: threadMember.user_id,
-              joinTimestamp: threadMember.join_timestamp,
-              flags: threadMember.flags,
-              member:
-                threadMember.member !== undefined
-                  ? this.client.util.guildMemberFromRaw(threadMember.member)
-                  : undefined,
-            })
+          addedMembers: packet.d.members.map((threadMember: RawThreadMember) =>
+            this.client.util.threadMemberFromRaw(threadMember)
           ),
           removedMemberIds: packet.d.removed_member_ids,
         });

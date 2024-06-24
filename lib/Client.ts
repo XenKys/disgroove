@@ -2939,16 +2939,9 @@ export class Client extends EventEmitter {
       threads: response.threads.map((thread) =>
         this.util.channelFromRaw(thread)
       ),
-      members: response.members.map((threadMember) => ({
-        id: threadMember.id,
-        userId: threadMember.user_id,
-        joinTimestamp: threadMember.join_timestamp,
-        flags: threadMember.flags,
-        member:
-          threadMember.member !== undefined
-            ? this.util.guildMemberFromRaw(threadMember.member)
-            : undefined,
-      })),
+      members: response.members.map((threadMember) =>
+        this.util.threadMemberFromRaw(threadMember)
+      ),
     };
   }
 
@@ -2984,16 +2977,9 @@ export class Client extends EventEmitter {
       threads: response.threads.map((thread) =>
         this.util.channelFromRaw(thread)
       ),
-      members: response.members.map((threadMember) => ({
-        id: threadMember.id,
-        userId: threadMember.user_id,
-        joinTimestamp: threadMember.join_timestamp,
-        flags: threadMember.flags,
-        member:
-          threadMember.member !== undefined
-            ? this.util.guildMemberFromRaw(threadMember.member)
-            : undefined,
-      })),
+      members: response.members.map((threadMember) =>
+        this.util.threadMemberFromRaw(threadMember)
+      ),
       hasMore: response.has_more,
     };
   }
@@ -3916,16 +3902,9 @@ export class Client extends EventEmitter {
       threads: response.threads.map((thread) =>
         this.util.channelFromRaw(thread)
       ),
-      members: response.members.map((threadMember) => ({
-        id: threadMember.id,
-        userId: threadMember.user_id,
-        joinTimestamp: threadMember.join_timestamp,
-        flags: threadMember.flags,
-        member:
-          threadMember.member !== undefined
-            ? this.util.guildMemberFromRaw(threadMember.member)
-            : undefined,
-      })),
+      members: response.members.map((threadMember) =>
+        this.util.threadMemberFromRaw(threadMember)
+      ),
       hasMore: response.has_more,
     };
   }
@@ -4164,16 +4143,9 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((threadMember) => ({
-      id: threadMember.id,
-      userId: threadMember.user_id,
-      joinTimestamp: threadMember.join_timestamp,
-      flags: threadMember.flags,
-      member:
-        threadMember.member !== undefined
-          ? this.util.guildMemberFromRaw(threadMember.member)
-          : undefined,
-    }));
+    return response.map((threadMember) =>
+      this.util.threadMemberFromRaw(threadMember)
+    );
   }
 
   /** https://discord.com/developers/docs/resources/user#get-user */
