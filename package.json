@@ -13,6 +13,9 @@
     "bot",
     "discord",
     "gateway",
+    "http",
+    "https",
+    "rest",
     "wrapper"
   ],
   "author": "XenKys",
