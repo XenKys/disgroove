@@ -1293,7 +1293,11 @@ export class Util {
           : undefined,
       guild:
         interaction.guild !== undefined
-          ? this.guildFromRaw(interaction.guild)
+          ? {
+              locale: interaction.guild.locale,
+              id: interaction.guild.id,
+              features: interaction.guild.features,
+            }
           : undefined,
       guildId: interaction.guild_id,
       channel:
@@ -1368,7 +1372,11 @@ export class Util {
           : undefined,
       guild:
         interaction.guild !== undefined
-          ? this.guildToRaw(interaction.guild)
+          ? {
+              locale: interaction.guild.locale,
+              id: interaction.guild.id,
+              features: interaction.guild.features,
+            }
           : undefined,
       guild_id: interaction.guildId,
       channel:

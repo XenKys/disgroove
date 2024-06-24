@@ -6,6 +6,7 @@ import type {
   InteractionCallbackType,
   InteractionContextTypes,
   InteractionType,
+  Locales,
   MessageFlags,
 } from "../constants";
 import type { File } from "../rest";
@@ -46,7 +47,7 @@ export interface RawInteraction {
   data?: RawApplicationCommandData &
     RawMessageComponentData &
     RawModalSubmitData;
-  guild?: RawGuild;
+  guild?: { locale: Locales } & Pick<RawGuild, "id" | "features">;
   guild_id?: snowflake;
   channel?: RawChannel;
   channel_id?: snowflake;
@@ -146,7 +147,7 @@ export interface Interaction {
   applicationId: snowflake;
   type: InteractionType;
   data?: ApplicationCommandData & MessageComponentData & ModalSubmitData;
-  guild?: Guild;
+  guild?: { locale: Locales } & Pick<Guild, "id" | "features">;
   guildId?: snowflake;
   channel?: Channel;
   channelId?: snowflake;
