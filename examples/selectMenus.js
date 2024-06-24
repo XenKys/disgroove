@@ -116,7 +116,7 @@ client.on("interactionCreate", (interaction) => {
               ],
             },
           ],
-          flags,
+          flags: MessageFlags.Ephemeral,
         },
       });
     }
