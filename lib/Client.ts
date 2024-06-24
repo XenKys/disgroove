@@ -1772,30 +1772,14 @@ export class Client extends EventEmitter {
         ),
         {
           json: {
-            permissions: options.permissions.map((permission) => ({
-              id: permission.id,
-              application_id: permission.applicationId,
-              guild_id: permission.guildId,
-              permissions: permission.permissions.map((perm) => ({
-                id: perm.id,
-                type: perm.type,
-                permission: perm.permission,
-              })),
-            })),
+            permissions: options.permissions.map((permission) =>
+              this.util.guildApplicationCommandPermissionsToRaw(permission)
+            ),
           },
         }
       );
 
-    return {
-      id: response.id,
-      applicationId: response.application_id,
-      guildId: response.guild_id,
-      permissions: response.permissions.map((permission) => ({
-        id: permission.id,
-        type: permission.type,
-        permission: permission.permission,
-      })),
-    };
+    return this.util.guildApplicationCommandPermissionsFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
@@ -3055,16 +3039,7 @@ export class Client extends EventEmitter {
         )
       );
 
-    return {
-      id: response.id,
-      applicationId: response.application_id,
-      guildId: response.guild_id,
-      permissions: response.permissions.map((permission) => ({
-        id: permission.id,
-        type: permission.type,
-        permission: permission.permission,
-      })),
-    };
+    return this.util.guildApplicationCommandPermissionsFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records */
@@ -3397,16 +3372,7 @@ export class Client extends EventEmitter {
         Endpoints.guildApplicationCommandsPermissions(applicationId, guildId)
       );
 
-    return {
-      id: response.id,
-      applicationId: response.application_id,
-      guildId: response.guild_id,
-      permissions: response.permissions.map((permission) => ({
-        id: permission.id,
-        type: permission.type,
-        permission: permission.permission,
-      })),
-    };
+    return this.util.guildApplicationCommandPermissionsFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-ban */

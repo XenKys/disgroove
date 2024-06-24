@@ -121,18 +121,10 @@ export class Shard {
         this.client.emit(GatewayEvents.Resumed);
         break;
       case "APPLICATION_COMMAND_PERMISSIONS_UPDATE":
-        this.client.emit(GatewayEvents.ApplicationCommandPermissionsUpdate, {
-          id: packet.d.id,
-          applicationId: packet.d.application_id,
-          guildId: packet.d.guild_id,
-          permissions: packet.d.permissions.map(
-            (permission: ApplicationCommandPermission) => ({
-              id: permission.id,
-              type: permission.type,
-              permission: permission.permission,
-            })
-          ),
-        });
+        this.client.emit(
+          GatewayEvents.ApplicationCommandPermissionsUpdate,
+          this.client.util.guildApplicationCommandPermissionsFromRaw(packet.d)
+        );
         break;
       case "AUTO_MODERATION_RULE_CREATE":
         this.client.emit(

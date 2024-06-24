@@ -1,7 +1,9 @@
 import type { Application, RawApplication } from "../types/application";
 import type {
   ApplicationCommand,
+  GuildApplicationCommandPermissions,
   RawApplicationCommand,
+  RawGuildApplicationCommandPermissions,
 } from "../types/application-command";
 import type {
   AutoModerationRule,
@@ -893,6 +895,40 @@ export class Util {
       ends_at: entitlement.endsAt,
       guild_id: entitlement.guildId,
       subscription_id: entitlement.subscriptionId,
+    };
+  }
+
+  guildApplicationCommandPermissionsFromRaw(
+    guildApplicationCommandPermissions: RawGuildApplicationCommandPermissions
+  ): GuildApplicationCommandPermissions {
+    return {
+      id: guildApplicationCommandPermissions.id,
+      applicationId: guildApplicationCommandPermissions.application_id,
+      guildId: guildApplicationCommandPermissions.guild_id,
+      permissions: guildApplicationCommandPermissions.permissions.map(
+        (permission) => ({
+          id: permission.id,
+          type: permission.type,
+          permission: permission.permission,
+        })
+      ),
+    };
+  }
+
+  guildApplicationCommandPermissionsToRaw(
+    guildApplicationCommandPermissions: GuildApplicationCommandPermissions
+  ): RawGuildApplicationCommandPermissions {
+    return {
+      id: guildApplicationCommandPermissions.id,
+      application_id: guildApplicationCommandPermissions.applicationId,
+      guild_id: guildApplicationCommandPermissions.guildId,
+      permissions: guildApplicationCommandPermissions.permissions.map(
+        (permission) => ({
+          id: permission.id,
+          type: permission.type,
+          permission: permission.permission,
+        })
+      ),
     };
   }
 
