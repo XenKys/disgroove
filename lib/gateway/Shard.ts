@@ -3,57 +3,16 @@ import { GatewayEvents, GatewayOPCodes, StatusTypes } from "../constants";
 import { GatewayError } from "../utils";
 import { Client } from "../Client";
 import * as pkg from "../../package.json";
-import type { GuildApplicationCommandPermissions } from "../types/application-command";
-import type { AuditLogEntry } from "../types/audit-log";
-import type { AutoModerationRule } from "../types/auto-moderation";
-import type { Channel, ThreadMember, Message } from "../types/channel";
-import type { RawEmoji, Emoji } from "../types/emoji";
-import type { Entitlement } from "../types/entitlements";
+import type { ApplicationCommandPermission } from "../types/application-command";
+import type { RawChannel, RawThreadMember } from "../types/channel";
+import type { RawEmoji } from "../types/emoji";
 import type {
   Activity,
-  AutoModerationActionExecutionEventFields,
-  ChannelPinsUpdateEventFields,
-  ThreadListSyncEventFields,
-  ThreadMemberUpdateEventExtraFields,
-  ThreadMembersUpdateEventFields,
-  GuildAuditLogEntryCreateExtraFields,
-  GuildBanAddEventFields,
-  GuildBanRemoveEventFields,
-  GuildMemberAddEventExtraFields,
-  GuildMemberRemoveEventFields,
-  GuildMemberUpdateEventFields,
-  GuildMembersChunkEventFields,
-  IntegrationCreateEventExtraFields,
-  IntegrationUpdateEventExtraFields,
-  IntegrationDeleteEventFields,
-  InviteCreateEventFields,
-  InviteDeleteEventFields,
-  MessageCreateEventExtraFields,
-  MessageDeleteEventFields,
-  MessageDeleteBulkEventFields,
-  MessageReactionAddEventFields,
-  MessageReactionRemoveEventFields,
-  MessageReactionRemoveAllEventFields,
-  MessageReactionRemoveEmojiEventFields,
-  PresenceUpdateEventFields,
-  TypingStartEventFields,
-  VoiceServerUpdateEventFields,
-  MessagePollVoteAddFields,
-  MessagePollVoteRemoveFields,
+  RawPresenceUpdateEventFields,
 } from "../types/gateway-events";
-import type {
-  Guild,
-  UnavailableGuild,
-  GuildMember,
-  Integration,
-} from "../types/guild";
-import type { GuildScheduledEvent } from "../types/guild-scheduled-event";
-import type { Interaction } from "../types/interaction";
-import type { Role } from "../types/role";
-import type { StageInstance } from "../types/stage-instance";
-import type { RawSticker, Sticker } from "../types/sticker";
-import type { User } from "../types/user";
-import type { VoiceState } from "../types/voice";
+import type { RawGuildMember } from "../types/guild";
+import type { RawSticker } from "../types/sticker";
+import type { RawUser } from "../types/user";
 
 export class Shard {
   id: number;
@@ -151,7 +110,7 @@ export class Shard {
       case "READY":
         {
           this.sessionId = packet.d.session_id;
-          this.client.user = this.client.util.toCamelCase<User>(packet.d.user);
+          this.client.user = this.client.util.userFromRaw(packet.d.user);
           this.client.guilds = new Map();
           this.client.application = packet.d.application;
 
@@ -162,117 +121,171 @@ export class Shard {
         this.client.emit(GatewayEvents.Resumed);
         break;
       case "APPLICATION_COMMAND_PERMISSIONS_UPDATE":
-        this.client.emit(
-          GatewayEvents.ApplicationCommandPermissionsUpdate,
-          this.client.util.toCamelCase<GuildApplicationCommandPermissions>(
-            packet.d
-          )
-        );
+        this.client.emit(GatewayEvents.ApplicationCommandPermissionsUpdate, {
+          id: packet.d.id,
+          applicationId: packet.d.application_id,
+          guildId: packet.d.guild_id,
+          permissions: packet.d.permissions.map(
+            (permission: ApplicationCommandPermission) => ({
+              id: permission.id,
+              type: permission.type,
+              permission: permission.permission,
+            })
+          ),
+        });
         break;
       case "AUTO_MODERATION_RULE_CREATE":
         this.client.emit(
           GatewayEvents.AutoModerationRuleCreate,
-          this.client.util.toCamelCase<AutoModerationRule>(packet.d)
+          this.client.util.autoModerationRuleFromRaw(packet.d)
         );
         break;
       case "AUTO_MODERATION_RULE_UPDATE":
         this.client.emit(
           GatewayEvents.AutoModerationRuleUpdate,
-          this.client.util.toCamelCase<AutoModerationRule>(packet.d)
+          this.client.util.autoModerationRuleFromRaw(packet.d)
         );
         break;
       case "AUTO_MODERATION_RULE_DELETE":
         this.client.emit(
           GatewayEvents.AutoModerationRuleDelete,
-          this.client.util.toCamelCase<AutoModerationRule>(packet.d)
+          this.client.util.autoModerationRuleFromRaw(packet.d)
         );
         break;
       case "AUTO_MODERATION_ACTION_EXECUTION":
-        this.client.emit(
-          GatewayEvents.AutoModerationActionExecution,
-          this.client.util.toCamelCase<AutoModerationActionExecutionEventFields>(
-            packet.d
-          )
-        );
+        this.client.emit(GatewayEvents.AutoModerationActionExecution, {
+          guildId: packet.d.guild_id,
+          action: {
+            type: packet.d.action.type,
+            metadata: {
+              channelId: packet.d.action.metadata.channel_id,
+              durationSeconds: packet.d.action.metadata.duration_seconds,
+              customMessage: packet.d.action.metadata.custom_message,
+            },
+          },
+          ruleId: packet.d.rule_id,
+          ruleTriggerType: packet.d.rule_trigger_type,
+          userId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          alertSystemMessageId: packet.d.alert_system_message_id,
+          content: packet.d.content,
+          matchedKeyword: packet.d.matched_keyword,
+          matchedContent: packet.d.matched_content,
+        });
         break;
       case "CHANNEL_CREATE":
         this.client.emit(
           GatewayEvents.ChannelCreate,
-          this.client.util.toCamelCase<Channel>(packet.d)
+          this.client.util.channelFromRaw(packet.d)
         );
         break;
       case "CHANNEL_UPDATE":
         this.client.emit(
           GatewayEvents.ChannelUpdate,
-          this.client.util.toCamelCase<Channel>(packet.d)
+          this.client.util.channelFromRaw(packet.d)
         );
         break;
       case "CHANNEL_DELETE":
         this.client.emit(
           GatewayEvents.ChannelDelete,
-          this.client.util.toCamelCase<Channel>(packet.d)
+          this.client.util.channelFromRaw(packet.d)
         );
         break;
       case "CHANNEL_PINS_UPDATE":
-        this.client.emit(
-          GatewayEvents.ChannelPinsUpdate,
-          this.client.util.toCamelCase<ChannelPinsUpdateEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.ChannelPinsUpdate, {
+          guildId: packet.d.guild_id,
+          channelId: packet.d.channel_id,
+          lastPinTimestamp: packet.d.last_pin_timestamp,
+        });
         break;
       case "THREAD_CREATE":
         this.client.emit(
           GatewayEvents.ThreadCreate,
-          this.client.util.toCamelCase<Channel>(packet.d)
+          this.client.util.channelFromRaw(packet.d)
         );
         break;
       case "THREAD_UPDATE":
         this.client.emit(
           GatewayEvents.ThreadUpdate,
-          this.client.util.toCamelCase<Channel>(packet.d)
+          this.client.util.channelFromRaw(packet.d)
         );
         break;
       case "THREAD_DELETE":
         this.client.emit(
           GatewayEvents.ThreadDelete,
-          this.client.util.toCamelCase<Channel>(packet.d)
+          this.client.util.channelFromRaw(packet.d)
         );
         break;
       case "THREAD_LIST_SYNC":
-        this.client.emit(
-          GatewayEvents.ThreadListSync,
-          this.client.util.toCamelCase<ThreadListSyncEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.ThreadListSync, {
+          guildId: packet.d.guild_id,
+          channelIds: packet.d.channel_ids,
+          threads: packet.d.threads.map((thread: RawChannel) =>
+            this.client.util.channelFromRaw(thread)
+          ),
+          members: packet.d.members.map((threadMember: RawThreadMember) => ({
+            id: threadMember.id,
+            userId: threadMember.user_id,
+            joinTimestamp: threadMember.join_timestamp,
+            flags: threadMember.flags,
+            member:
+              threadMember.member !== undefined
+                ? this.client.util.guildMemberFromRaw(threadMember.member)
+                : undefined,
+          })),
+        });
         break;
       case "THREAD_MEMBER_UPDATE":
-        this.client.emit(
-          GatewayEvents.ThreadMemberUpdate,
-          this.client.util.toCamelCase<
-            ThreadMember & ThreadMemberUpdateEventExtraFields
-          >(packet.d)
-        );
+        this.client.emit(GatewayEvents.ThreadMemberUpdate, {
+          id: packet.d.id,
+          userId: packet.d.user_id,
+          joinTimestamp: packet.d.join_timestamp,
+          flags: packet.d.flags,
+          member:
+            packet.d.member !== undefined
+              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              : undefined,
+
+          guildId: packet.d.guild_id,
+        });
         break;
       case "THREAD_MEMBERS_UPDATE":
-        this.client.emit(
-          GatewayEvents.ThreadMembersUpdate,
-          this.client.util.toCamelCase<ThreadMembersUpdateEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.ThreadMembersUpdate, {
+          id: packet.d.id,
+          guildId: packet.d.guild_id,
+          memberCount: packet.d.member_count,
+          addedMembers: packet.d.members.map(
+            (threadMember: RawThreadMember) => ({
+              id: threadMember.id,
+              userId: threadMember.user_id,
+              joinTimestamp: threadMember.join_timestamp,
+              flags: threadMember.flags,
+              member:
+                threadMember.member !== undefined
+                  ? this.client.util.guildMemberFromRaw(threadMember.member)
+                  : undefined,
+            })
+          ),
+          removedMemberIds: packet.d.removed_member_ids,
+        });
         break;
       case "ENTITLEMENT_CREATE":
         this.client.emit(
           GatewayEvents.EntitlementCreate,
-          this.client.util.toCamelCase<Entitlement>(packet.d)
+          this.client.util.entitlementFromRaw(packet.d)
         );
         break;
       case "ENTITLEMENT_UPDATE":
         this.client.emit(
           GatewayEvents.EntitlementUpdate,
-          this.client.util.toCamelCase<Entitlement>(packet.d)
+          this.client.util.entitlementFromRaw(packet.d)
         );
         break;
       case "ENTITLEMENT_DELETE":
         this.client.emit(
           GatewayEvents.EntitlementDelete,
-          this.client.util.toCamelCase<Entitlement>(packet.d)
+          this.client.util.entitlementFromRaw(packet.d)
         );
         break;
       case "GUILD_CREATE":
@@ -281,12 +294,12 @@ export class Shard {
 
           this.client.guilds.set(
             packet.d.id,
-            this.client.util.toCamelCase<Guild>(packet.d)
+            this.client.util.guildFromRaw(packet.d)
           );
 
           this.client.emit(
             GatewayEvents.GuildCreate,
-            this.client.util.toCamelCase<Guild>(packet.d)
+            this.client.util.guildFromRaw(packet.d)
           );
         }
         break;
@@ -294,11 +307,11 @@ export class Shard {
         {
           this.client.guilds.set(
             packet.d.id,
-            this.client.util.toCamelCase<Guild>(packet.d)
+            this.client.util.guildFromRaw(packet.d)
           );
           this.client.emit(
             GatewayEvents.GuildUpdate,
-            this.client.util.toCamelCase<Guild>(packet.d)
+            this.client.util.guildFromRaw(packet.d)
           );
         }
         break;
@@ -308,37 +321,36 @@ export class Shard {
 
           this.client.guilds.delete(packet.d.id);
 
-          this.client.emit(
-            GatewayEvents.GuildDelete,
-            this.client.util.toCamelCase<UnavailableGuild>(packet.d)
-          );
+          this.client.emit(GatewayEvents.GuildDelete, {
+            id: packet.d.id,
+            unavailable: packet.d.unavailable,
+          });
         }
         break;
       case "GUILD_AUDIT_LOG_ENTRY_CREATE":
-        this.client.emit(
-          GatewayEvents.GuildAuditLogEntryCreate,
-          this.client.util.toCamelCase<
-            AuditLogEntry & GuildAuditLogEntryCreateExtraFields
-          >(packet.d)
-        );
+        this.client.emit(GatewayEvents.GuildAuditLogEntryCreate, {
+          ...this.client.util.auditLogEntryFromRaw(packet.d),
+
+          guildId: packet.d.guild_id,
+        });
         break;
       case "GUILD_BAN_ADD":
-        this.client.emit(
-          GatewayEvents.GuildBanAdd,
-          this.client.util.toCamelCase<GuildBanAddEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.GuildBanAdd, {
+          guildId: packet.d.guild_id,
+          user: this.client.util.userFromRaw(packet.d.user),
+        });
         break;
       case "GUILD_BAN_REMOVE":
-        this.client.emit(
-          GatewayEvents.GuildBanRemove,
-          this.client.util.toCamelCase<GuildBanRemoveEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.GuildBanRemove, {
+          guildId: packet.d.guild_id,
+          user: this.client.util.userFromRaw(packet.d.user),
+        });
         break;
       case "GUILD_EMOJIS_UPDATE":
         this.client.emit(
           GatewayEvents.GuildEmojisUpdate,
           packet.d.emojis.map((emoji: RawEmoji) =>
-            this.client.util.toCamelCase<Emoji>(emoji)
+            this.client.util.emojiFromRaw(emoji)
           ),
           packet.d.guild_id
         );
@@ -347,7 +359,7 @@ export class Shard {
         this.client.emit(
           GatewayEvents.GuildStickersUpdate,
           packet.d.stickers.map((sticker: RawSticker) =>
-            this.client.util.toCamelCase<Sticker>(sticker)
+            this.client.util.stickerFromRaw(sticker)
           ),
           packet.d.guild_id
         );
@@ -359,42 +371,68 @@ export class Shard {
         );
         break;
       case "GUILD_MEMBER_ADD":
-        this.client.emit(
-          GatewayEvents.GuildMemberAdd,
-          this.client.util.toCamelCase<
-            GuildMember & GuildMemberAddEventExtraFields
-          >(packet.d)
-        );
+        this.client.emit(GatewayEvents.GuildMemberAdd, {
+          ...this.client.util.guildMemberFromRaw(packet.d),
+
+          guildId: packet.d.guild_id,
+        });
         break;
       case "GUILD_MEMBER_REMOVE":
-        this.client.emit(
-          GatewayEvents.GuildMemberRemove,
-          this.client.util.toCamelCase<GuildMemberRemoveEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.GuildMemberRemove, {
+          guildId: packet.d.guild_id,
+          user: this.client.util.userFromRaw(packet.d.user),
+        });
         break;
       case "GUILD_MEMBER_UPDATE":
-        this.client.emit(
-          GatewayEvents.GuildMemberUpdate,
-          this.client.util.toCamelCase<GuildMemberUpdateEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.GuildMemberUpdate, {
+          guildId: packet.d.guild_id,
+          roles: packet.d.roles,
+          user: this.client.util.userFromRaw(packet.d.user),
+          nick: packet.d.nick,
+          avatar: packet.d.avatar,
+          joinedAt: packet.d.joined_at,
+          premiumSince: packet.d.premium_since,
+          deaf: packet.d.deaf,
+          mute: packet.d.mute,
+          pending: packet.d.pending,
+          communicationDisabledUntil: packet.d.communication_disabled_until,
+          flags: packet.d.flags,
+          avatarDecorationData:
+            packet.d.avatar_decoration_data !== undefined
+              ? {
+                  asset: packet.d.asset,
+                  skuId: packet.d.sku_id,
+                }
+              : undefined,
+        });
         break;
       case "GUILD_MEMBERS_CHUNK":
-        this.client.emit(
-          GatewayEvents.GuildMembersChunk,
-          this.client.util.toCamelCase<GuildMembersChunkEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.GuildMembersChunk, {
+          guildId: packet.d.guild_id,
+          members: packet.d.members.map((guildMember: RawGuildMember) =>
+            this.client.util.guildMemberFromRaw(guildMember)
+          ),
+          chunkIndex: packet.d.chunk_index,
+          chunkCount: packet.d.chunk_count,
+          notFound: packet.d.not_found,
+          presences: packet.d.presences?.map(
+            (presence: RawPresenceUpdateEventFields) =>
+              this.client.util.presenceFromRaw(presence)
+          ),
+          nonce: packet.d.nonce,
+        });
         break;
       case "GUILD_ROLE_CREATE":
         this.client.emit(
           GatewayEvents.GuildRoleCreate,
-          this.client.util.toCamelCase<Role>(packet.d.role),
+          this.client.util.roleFromRaw(packet.d.role),
           packet.d.guild_id
         );
         break;
       case "GUILD_ROLE_UPDATE":
         this.client.emit(
           GatewayEvents.GuildRoleUpdate,
-          this.client.util.toCamelCase<Role>(packet.d.role),
+          this.client.util.roleFromRaw(packet.d.role),
           packet.d.guild_id
         );
         break;
@@ -408,19 +446,19 @@ export class Shard {
       case "GUILD_SCHEDULED_EVENT_CREATE":
         this.client.emit(
           GatewayEvents.GuildScheduledEventCreate,
-          this.client.util.toCamelCase<GuildScheduledEvent>(packet.d)
+          this.client.util.guildScheduledEventFromRaw(packet.d)
         );
         break;
       case "GUILD_SCHEDULED_EVENT_UPDATE":
         this.client.emit(
           GatewayEvents.GuildScheduledEventUpdate,
-          this.client.util.toCamelCase<GuildScheduledEvent>(packet.d)
+          this.client.util.guildScheduledEventFromRaw(packet.d)
         );
         break;
       case "GUILD_SCHEDULED_EVENT_DELETE":
         this.client.emit(
           GatewayEvents.GuildScheduledEventDelete,
-          this.client.util.toCamelCase<GuildScheduledEvent>(packet.d)
+          this.client.util.guildScheduledEventFromRaw(packet.d)
         );
         break;
       case "GUILD_SCHEDULED_EVENT_USER_ADD":
@@ -440,148 +478,195 @@ export class Shard {
         );
         break;
       case "INTEGRATION_CREATE":
-        this.client.emit(
-          GatewayEvents.IntegrationCreate,
-          this.client.util.toCamelCase<
-            Integration & IntegrationCreateEventExtraFields
-          >(packet.d)
-        );
+        this.client.emit(GatewayEvents.IntegrationCreate, {
+          ...this.client.util.integrationFromRaw(packet.d),
+
+          guildId: packet.d.guild_id,
+        });
         break;
       case "INTEGRATION_UPDATE":
-        this.client.emit(
-          GatewayEvents.IntegrationUpdate,
-          this.client.util.toCamelCase<
-            Integration & IntegrationUpdateEventExtraFields
-          >(packet.d)
-        );
+        this.client.emit(GatewayEvents.IntegrationUpdate, {
+          ...this.client.util.integrationFromRaw(packet.d),
+
+          guildId: packet.d.guild_id,
+        });
         break;
       case "INTEGRATION_DELETE":
-        this.client.emit(
-          GatewayEvents.IntegrationDelete,
-          this.client.util.toCamelCase<IntegrationDeleteEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.IntegrationDelete, {
+          id: packet.d.id,
+          guildId: packet.d.guild_id,
+          applicationId: packet.d.application_id,
+        });
         break;
       case "INTERACTION_CREATE":
         this.client.emit(
           GatewayEvents.InteractionCreate,
-          this.client.util.toCamelCase<Interaction>(packet.d)
+          this.client.util.interactionFromRaw(packet.d)
         );
         break;
       case "INVITE_CREATE":
-        this.client.emit(
-          GatewayEvents.InviteCreate,
-          this.client.util.toCamelCase<InviteCreateEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.InviteCreate, {
+          channelId: packet.d.channel_id,
+          code: packet.d.code,
+          createdAt: packet.d.created_at,
+          guildId: packet.d.guild_id,
+          inviter:
+            packet.d.inviter !== undefined
+              ? this.client.util.userFromRaw(packet.d.inviter)
+              : undefined,
+          maxAge: packet.d.max_age,
+          maxUses: packet.d.max_uses,
+          targetType: packet.d.target_type,
+          targetUser:
+            packet.d.target_user !== undefined
+              ? this.client.util.userFromRaw(packet.d.target_user)
+              : undefined,
+          targetApplication:
+            packet.d.target_application !== undefined
+              ? this.client.util.applicationFromRaw(packet.d.target_application)
+              : undefined,
+          temporary: packet.d.temporary,
+          uses: packet.d.uses,
+        });
         break;
       case "INVITE_DELETE":
-        this.client.emit(
-          GatewayEvents.InviteDelete,
-          this.client.util.toCamelCase<InviteDeleteEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.InviteDelete, {
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+          code: packet.d.code,
+        });
         break;
       case "MESSAGE_CREATE":
-        this.client.emit(
-          GatewayEvents.MessageCreate,
-          this.client.util.toCamelCase<Message & MessageCreateEventExtraFields>(
-            packet.d
-          )
-        );
+        this.client.emit(GatewayEvents.MessageCreate, {
+          ...this.client.util.messageFromRaw(packet.d),
+
+          guildId: packet.d.guild_id,
+          member:
+            packet.d.member !== undefined
+              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              : undefined,
+          mentions: packet.d.mentions.map((mention: RawUser) =>
+            this.client.util.userFromRaw(mention)
+          ),
+        });
         break;
       case "MESSAGE_UPDATE":
         this.client.emit(
           GatewayEvents.MessageUpdate,
-          this.client.util.toCamelCase<Message>(packet.d)
+          this.client.util.messageFromRaw(packet.d)
         );
         break;
       case "MESSAGE_DELETE":
-        this.client.emit(
-          GatewayEvents.MessageDelete,
-          this.client.util.toCamelCase<MessageDeleteEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.MessageDelete, {
+          id: packet.d.id,
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+        });
         break;
       case "MESSAGE_DELETE_BULK":
-        this.client.emit(
-          GatewayEvents.MessageDeleteBulk,
-          this.client.util.toCamelCase<MessageDeleteBulkEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.MessageDeleteBulk, {
+          ids: packet.d.ids,
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+        });
         break;
       case "MESSAGE_REACTION_ADD":
-        this.client.emit(
-          GatewayEvents.MessageReactionAdd,
-          this.client.util.toCamelCase<MessageReactionAddEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.MessageReactionAdd, {
+          userId: packet.d.user_id,
+          channelId: packet.d.user_id,
+          messageId: packet.d.user_id,
+          guildId: packet.d.user_id,
+          member:
+            packet.d.member !== undefined
+              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              : undefined,
+          emoji: this.client.util.emojiFromRaw(packet.d.emoji),
+          messageAuthorId: packet.d.message_author_id,
+          burst: packet.d.burst,
+          burstColors: packet.d.burst_colors,
+          type: packet.d.type,
+        });
         break;
       case "MESSAGE_REACTION_REMOVE":
-        this.client.emit(
-          GatewayEvents.MessageReactionRemove,
-          this.client.util.toCamelCase<MessageReactionRemoveEventFields>(
-            packet.d
-          )
-        );
+        this.client.emit(GatewayEvents.MessageReactionRemove, {
+          userId: packet.d.user_id,
+          channelId: packet.d.user_id,
+          messageId: packet.d.user_id,
+          guildId: packet.d.user_id,
+          emoji: this.client.util.emojiFromRaw(packet.d.emoji),
+          burst: packet.d.burst,
+          type: packet.d.type,
+        });
         break;
       case "MESSAGE_REACTION_REMOVE_ALL":
-        this.client.emit(
-          GatewayEvents.MessageReactionRemoveAll,
-          this.client.util.toCamelCase<MessageReactionRemoveAllEventFields>(
-            packet.d
-          )
-        );
+        this.client.emit(GatewayEvents.MessageReactionRemoveAll, {
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
+        });
         break;
       case "MESSAGE_REACTION_REMOVE_EMOJI":
-        this.client.emit(
-          GatewayEvents.MessageReactionRemoveEmoji,
-          this.client.util.toCamelCase<MessageReactionRemoveEmojiEventFields>(
-            packet.d
-          )
-        );
+        this.client.emit(GatewayEvents.MessageReactionRemoveEmoji, {
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+          messageId: packet.d.message_id,
+          emoji: this.client.util.emojiFromRaw(packet.d.emoji),
+        });
         break;
       case "PRESENCE_UPDATE":
         this.client.emit(
           GatewayEvents.PresenceUpdate,
-          this.client.util.toCamelCase<PresenceUpdateEventFields>(packet.d)
+          this.client.util.presenceFromRaw(packet.d)
         );
         break;
       case "STAGE_INSTANCE_CREATE":
         this.client.emit(
           GatewayEvents.StageInstanceCreate,
-          this.client.util.toCamelCase<StageInstance>(packet.d)
+          this.client.util.stageInstanceFromRaw(packet.d)
         );
         break;
       case "STAGE_INSTANCE_UPDATE":
         this.client.emit(
           GatewayEvents.StageInstanceUpdate,
-          this.client.util.toCamelCase<StageInstance>(packet.d)
+          this.client.util.stageInstanceFromRaw(packet.d)
         );
         break;
       case "STAGE_INSTANCE_DELETE":
         this.client.emit(
           GatewayEvents.StageInstanceDelete,
-          this.client.util.toCamelCase<StageInstance>(packet.d)
+          this.client.util.stageInstanceFromRaw(packet.d)
         );
         break;
       case "TYPING_START":
-        this.client.emit(
-          GatewayEvents.TypingStart,
-          this.client.util.toCamelCase<TypingStartEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.TypingStart, {
+          channelId: packet.d.channel_id,
+          guildId: packet.d.guild_id,
+          userId: packet.d.user_id,
+          timestamp: packet.d.timestamp,
+          member:
+            packet.d.member !== undefined
+              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              : undefined,
+        });
         break;
       case "USER_UPDATE":
         this.client.emit(
           GatewayEvents.UserUpdate,
-          this.client.util.toCamelCase<User>(packet.d)
+          this.client.util.userFromRaw(packet.d)
         );
         break;
       case "VOICE_STATE_UPDATE":
         this.client.emit(
           GatewayEvents.VoiceStateUpdate,
-          this.client.util.toCamelCase<VoiceState>(packet.d)
+          this.client.util.voiceStateFromRaw(packet.d)
         );
         break;
       case "VOICE_SERVER_UPDATE":
-        this.client.emit(
-          GatewayEvents.VoiceServerUpdate,
-          this.client.util.toCamelCase<VoiceServerUpdateEventFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.VoiceServerUpdate, {
+          token: packet.d.token,
+          guildId: packet.d.guild_id,
+          endpoint: packet.d.endpoint,
+        });
         break;
       case "WEBHOOKS_UPDATE":
         this.client.emit(
@@ -591,16 +676,22 @@ export class Shard {
         );
         break;
       case "MESSAGE_POLL_VOTE_ADD":
-        this.client.emit(
-          GatewayEvents.MessagePollVoteAdd,
-          this.client.util.toCamelCase<MessagePollVoteAddFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.MessagePollVoteAdd, {
+          userId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
+          answerId: packet.d.answer_id,
+        });
         break;
       case "MESSAGE_POLL_VOTE_REMOVE":
-        this.client.emit(
-          GatewayEvents.MessagePollVoteRemove,
-          this.client.util.toCamelCase<MessagePollVoteRemoveFields>(packet.d)
-        );
+        this.client.emit(GatewayEvents.MessagePollVoteRemove, {
+          userId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
+          answerId: packet.d.answer_id,
+        });
         break;
     }
   }
