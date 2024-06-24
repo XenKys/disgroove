@@ -991,6 +991,19 @@ export class Client extends EventEmitter {
           ),
           flags: options.flags,
           thread_name: options.threadName,
+          poll:
+            options.poll !== undefined
+              ? {
+                  question: options.poll.question,
+                  answers: options.poll.answers.map((answer) => ({
+                    answer_id: answer.answerId,
+                    poll_media: answer.pollMedia,
+                  })),
+                  duration: options.poll.duration,
+                  allow_multiselect: options.poll.allowMultiselect,
+                  layout_type: options.poll.layoutType,
+                }
+              : undefined,
         },
         files: options.files,
       }
