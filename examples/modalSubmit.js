@@ -52,7 +52,7 @@ client.on("interactionCreate", (interaction) => {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
-          content: `Text input: ${textInput}`,
+          content: `Text input: ${textInput.value}`,
         },
       });
     }
