@@ -921,7 +921,7 @@ export enum JSONErrorCodes {
   UnknownWebhookService,
   UnknownSession = 10020,
   UnknownBan = 10026,
-  UnknownSku,
+  UnknownSKU,
   UnknownStoreListing,
   UnknownEntitlement,
   UnknownBuild,
@@ -1046,7 +1046,7 @@ export enum JSONErrorCodes {
   InvalidFileUploaded,
   CannotSelfRedeemThisGift = 50054,
   InvalidGuild,
-  InvalidSku = 50057,
+  InvalidSKU = 50057,
   InvalidRequestOrigin = 50067,
   InvalidMessageType,
   PaymentSourceRequiredToRedeemGift = 50070,
@@ -1219,7 +1219,7 @@ export enum MembershipState {
 }
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-types */
-export enum SkuTypes {
+export enum SKUTypes {
   Durable = 2,
   Consumable,
   Subscription = 5,
@@ -1227,7 +1227,7 @@ export enum SkuTypes {
 }
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags */
-export enum SkuFlags {
+export enum SKUFlags {
   Available = 1 << 2,
   GuildSubscription = 1 << 7,
   UserSubscription = 1 << 8,

@@ -1,10 +1,10 @@
-import type { SkuFlags, SkuTypes } from "../constants";
+import type { SKUFlags, SKUTypes } from "../constants";
 import type { snowflake } from "./common";
 
 /** https://discord.com/developers/docs/monetization/skus#sku-object-sku-structure */
-export interface RawSku {
+export interface RawSKU {
   id: snowflake;
-  type: SkuTypes;
+  type: SKUTypes;
   dependent_sku_id?: string | null; // Undocumented
   application_id: snowflake;
   manifest_labels?: null; // Undocumented
@@ -13,14 +13,14 @@ export interface RawSku {
   features?: []; // Undocumented
   release_date?: null; // Undocumented
   slug: string;
-  flags: SkuFlags;
+  flags: SKUFlags;
   show_age_gate?: boolean; // Undocumented
 }
 
-export interface Sku {
+export interface SKU {
   id: snowflake;
-  type: SkuTypes;
-  dependentSkuId?: string | null; // Undocumented
+  type: SKUTypes;
+  dependentSKUId?: string | null; // Undocumented
   applicationId: snowflake;
   manifestLabels?: null; // Undocumented
   accessType?: number; // Undocumented
@@ -28,6 +28,6 @@ export interface Sku {
   features?: []; // Undocumented
   releaseDate?: null; // Undocumented
   slug: string;
-  flags: SkuFlags;
+  flags: SKUFlags;
   showAgeGate?: boolean; // Undocumented
 }

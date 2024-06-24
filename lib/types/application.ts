@@ -67,7 +67,7 @@ export interface Application {
   team: Team | null;
   guildId?: snowflake;
   guild?: Guild;
-  primarySkuId?: snowflake;
+  primarySKUId?: snowflake;
   slug?: string;
   coverImage?: string;
   flags?: ApplicationFlags;

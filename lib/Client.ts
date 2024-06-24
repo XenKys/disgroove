@@ -149,7 +149,7 @@ import type { Invite, RawInvite } from "./types/invite";
 import type { ActionRow } from "./types/message-components";
 import type { PollCreateParams } from "./types/poll";
 import type { Role, RawRole } from "./types/role";
-import type { Sku, RawSku } from "./types/sku";
+import type { SKU, RawSKU } from "./types/sku";
 import type { StageInstance, RawStageInstance } from "./types/stage-instance";
 import type {
   Sticker,
@@ -4016,10 +4016,10 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/monetization/skus#list-skus */
-  async getSkus(applicationId: snowflake): Promise<Array<Sku>> {
-    const response = await this.rest.request<Array<RawSku>>(
+  async getSKUs(applicationId: snowflake): Promise<Array<SKU>> {
+    const response = await this.rest.request<Array<RawSKU>>(
       RESTMethods.Get,
-      Endpoints.applicationSkus(applicationId)
+      Endpoints.applicationSKUs(applicationId)
     );
 
     return response.map((sku) => this.util.skuFromRaw(sku));

@@ -223,7 +223,7 @@ export const applicationGuildCommands = (
 ) => `applications/${applicationId}/guilds/${guildId}/commands` as const;
 export const applicationRoleConnectionMetadata = (applicationId: snowflake) =>
   `applications/${applicationId}/role-connections/metadata` as const;
-export const applicationSkus = (applicationId: snowflake) =>
+export const applicationSKUs = (applicationId: snowflake) =>
   `applications/${applicationId}/skus` as const;
 export const guildApplicationCommandsPermissions = (
   applicationId: snowflake,

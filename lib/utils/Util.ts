@@ -62,7 +62,7 @@ import type {
   RawAuditLog,
   RawAuditLogEntry,
 } from "../types/audit-log";
-import type { RawSku, Sku } from "../types/sku";
+import type { RawSKU, SKU } from "../types/sku";
 import type {
   PresenceUpdateEventFields,
   RawPresenceUpdateEventFields,
@@ -316,7 +316,7 @@ export class Util {
         application.guild !== undefined
           ? this.guildFromRaw(application.guild)
           : undefined,
-      primarySkuId: application.primary_sku_id,
+      primarySKUId: application.primary_sku_id,
       slug: application.slug,
       coverImage: application.cover_image,
       flags: application.flags,
@@ -368,7 +368,7 @@ export class Util {
         application.guild !== undefined
           ? this.guildToRaw(application.guild)
           : undefined,
-      primary_sku_id: application.primarySkuId,
+      primary_sku_id: application.primarySKUId,
       slug: application.slug,
       cover_image: application.coverImage,
       flags: application.flags,
@@ -2276,11 +2276,11 @@ export class Util {
     };
   }
 
-  skuFromRaw(sku: RawSku): Sku {
+  skuFromRaw(sku: RawSKU): SKU {
     return {
       id: sku.id,
       type: sku.type,
-      dependentSkuId: sku.dependent_sku_id,
+      dependentSKUId: sku.dependent_sku_id,
       applicationId: sku.application_id,
       manifestLabels: sku.manifest_labels,
       accessType: sku.access_type,
@@ -2293,11 +2293,11 @@ export class Util {
     };
   }
 
-  skuToRaw(sku: Sku): RawSku {
+  skuToRaw(sku: SKU): RawSKU {
     return {
       id: sku.id,
       type: sku.type,
-      dependent_sku_id: sku.dependentSkuId,
+      dependent_sku_id: sku.dependentSKUId,
       application_id: sku.applicationId,
       manifest_labels: sku.manifestLabels,
       access_type: sku.accessType,
