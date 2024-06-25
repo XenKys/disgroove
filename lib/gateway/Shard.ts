@@ -7,6 +7,7 @@ import type { RawChannel, RawThreadMember } from "../types/channel";
 import type { RawEmoji } from "../types/emoji";
 import type {
   GatewayPresenceUpdate,
+  Identify,
   RawPresenceUpdateEventFields,
 } from "../types/gateway-events";
 import type { RawGuildMember } from "../types/guild";
@@ -60,22 +61,38 @@ export class Shard {
     }
   }
 
-  private onWebSocketOpen(): void {
+  identify(options: Identify): void {
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.Identify,
         d: {
-          token: this.client.token,
-          shard: [this.id, this.client.shardsCount],
-          intents: this.client.intents,
+          token: options.token,
           properties: {
-            os: process.platform,
-            browser: pkg.name,
-            device: pkg.name,
+            os: options.properties.os,
+            browser: options.properties.browser,
+            device: options.properties.device,
           },
+          compress: options.compress,
+          large_threshold: options.largeThreshold,
+          shard: options.shard,
+          presence: options.presence,
+          intents: options.intents,
         },
       })
     );
+  }
+
+  private onWebSocketOpen(): void {
+    this.identify({
+      token: this.client.token,
+      shard: [this.id, this.client.shardsCount as number],
+      intents: this.client.intents,
+      properties: {
+        os: process.platform,
+        browser: pkg.name,
+        device: pkg.name,
+      },
+    });
   }
 
   private onWebSocketMessage(data: RawData): void {

@@ -1,6 +1,7 @@
 import type {
   ActivityFlags,
   ActivityType,
+  GatewayIntents,
   GuildMemberFlags,
   InviteTargetTypes,
   ReactionTypes,
@@ -33,6 +34,24 @@ import type {
   AvatarDecorationData,
 } from "./user";
 import type { RawVoiceState, VoiceState } from "./voice";
+
+/** https://discord.com/developers/docs/topics/gateway-events#identify-identify-structure */
+export interface RawIdentify {
+  token: string;
+  properties: RawIdentifyConnectionProperties;
+  compress?: boolean;
+  large_threshold?: number;
+  shard?: [number, number];
+  presence?: RawGatewayPresenceUpdate;
+  intents: GatewayIntents;
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#identify-identify-connection-properties */
+export interface RawIdentifyConnectionProperties {
+  os: string;
+  browser: string;
+  device: string;
+}
 
 /** https://discord.com/developers/docs/topics/gateway-events#update-presence-gateway-presence-update-structure */
 export interface RawGatewayPresenceUpdate {
@@ -362,6 +381,22 @@ export interface RawMessagePollVoteRemoveFields {
   message_id: snowflake;
   guild_id?: snowflake;
   answer_id: number;
+}
+
+export interface Identify {
+  token: string;
+  properties: IdentifyConnectionProperties;
+  compress?: boolean;
+  largeThreshold?: number;
+  shard?: [number, number];
+  presence?: GatewayPresenceUpdate;
+  intents: GatewayIntents;
+}
+
+export interface IdentifyConnectionProperties {
+  os: string;
+  browser: string;
+  device: string;
 }
 
 export interface GatewayPresenceUpdate {
