@@ -9,6 +9,7 @@ import type {
   GatewayPresenceUpdate,
   Identify,
   RawPresenceUpdateEventFields,
+  Resume,
 } from "../types/gateway-events";
 import type { RawGuildMember } from "../types/guild";
 import type { RawSticker } from "../types/sticker";
@@ -695,5 +696,18 @@ export class Shard {
     if (code === 1000) return;
 
     throw new GatewayError(`[${code}] ${reason}`);
+  }
+
+  resume(options: Resume): void {
+    this.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.Resume,
+        d: {
+          token: options.token,
+          session_id: options.sessionId,
+          seq: options.seq,
+        },
+      })
+    );
   }
 }

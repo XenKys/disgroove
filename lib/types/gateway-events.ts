@@ -53,6 +53,13 @@ export interface RawIdentifyConnectionProperties {
   device: string;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#resume-resume-structure */
+export interface RawResume {
+  token: string;
+  session_id: string;
+  seq: number;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#update-presence-gateway-presence-update-structure */
 export interface RawGatewayPresenceUpdate {
   since: number | null;
@@ -397,6 +404,12 @@ export interface IdentifyConnectionProperties {
   os: string;
   browser: string;
   device: string;
+}
+
+export interface Resume {
+  token: string;
+  sessionId: string;
+  seq: number;
 }
 
 export interface GatewayPresenceUpdate {
