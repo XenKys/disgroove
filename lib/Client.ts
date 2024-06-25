@@ -183,7 +183,7 @@ export class Client extends EventEmitter {
   util: Util;
   guildShardMap: Record<string, number>;
   user!: User;
-  guilds!: Map<string, Guild>;
+  guilds: Map<string, Guild>;
   application!: Pick<Application, "id" | "flags">;
 
   constructor(token: string, options?: ClientOptions) {
@@ -202,6 +202,7 @@ export class Client extends EventEmitter {
     this.rest = new RequestManager(token, this.auth);
     this.util = new Util();
     this.guildShardMap = {};
+    this.guilds = new Map();
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */

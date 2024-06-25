@@ -85,7 +85,6 @@ export class Shard {
         {
           this.sessionId = packet.d.session_id;
           this.client.user = this.client.util.userFromRaw(packet.d.user);
-          this.client.guilds = new Map();
           this.client.application = packet.d.application;
 
           this.client.emit(GatewayEvents.Ready);
