@@ -62,6 +62,15 @@ export class Shard {
     }
   }
 
+  heartbeat(lastSequence: number | null): void {
+    this.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.Heartbeat,
+        d: lastSequence,
+      })
+    );
+  }
+
   identify(options: Identify): void {
     this.ws.send(
       JSON.stringify({
@@ -108,14 +117,10 @@ export class Shard {
         break;
       case GatewayOPCodes.Hello:
         {
-          this.heartbeatInterval = setInterval(() => {
-            this.ws.send(
-              JSON.stringify({
-                op: GatewayOPCodes.Heartbeat,
-                d: null,
-              })
-            );
-          }, packet.d.heartbeat_interval);
+          this.heartbeatInterval = setInterval(
+            () => this.heartbeat(null),
+            packet.d.heartbeat_interval
+          );
 
           this.client.emit(GatewayEvents.Hello);
         }
