@@ -80,6 +80,8 @@ export class Shard {
   }
 
   private onDispatch(packet: RawPayload): void {
+    this.client.emit(GatewayEvents.Dispatch, packet);
+
     switch (packet.t) {
       case "READY":
         {
@@ -663,7 +665,6 @@ export class Shard {
 
     switch (packet.op) {
       case GatewayOPCodes.Dispatch:
-        this.client.emit(GatewayEvents.Dispatch, packet);
         this.onDispatch(packet);
         break;
       case GatewayOPCodes.Reconnect:
