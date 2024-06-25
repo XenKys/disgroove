@@ -6,7 +6,7 @@ import * as pkg from "../../package.json";
 import type { RawChannel, RawThreadMember } from "../types/channel";
 import type { RawEmoji } from "../types/emoji";
 import type {
-  Activity,
+  GatewayPresenceUpdate,
   RawPresenceUpdateEventFields,
 } from "../types/gateway-events";
 import type { RawGuildMember } from "../types/guild";
@@ -27,11 +27,11 @@ export class Shard {
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
-  setPresence(options: {
-    activities?: Array<Pick<Activity, "name" | "type" | "url" | "state">>;
-    status?: StatusTypes;
-    afk?: boolean;
-  }): void {
+  setPresence(
+    options: Partial<
+      Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+    >
+  ): void {
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.PresenceUpdate,

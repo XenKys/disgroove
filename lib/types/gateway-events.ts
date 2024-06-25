@@ -34,6 +34,14 @@ import type {
 } from "./user";
 import type { RawVoiceState, VoiceState } from "./voice";
 
+/** https://discord.com/developers/docs/topics/gateway-events#update-presence-gateway-presence-update-structure */
+export interface RawGatewayPresenceUpdate {
+  since: number | null;
+  activities: Array<Pick<RawActivity, "name" | "type" | "url" | "state">>;
+  status: StatusTypes;
+  afk: boolean;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExectionEventFields {
   guild_id: snowflake;
@@ -354,6 +362,13 @@ export interface RawMessagePollVoteRemoveFields {
   message_id: snowflake;
   guild_id?: snowflake;
   answer_id: number;
+}
+
+export interface GatewayPresenceUpdate {
+  since: number | null;
+  activities: Array<Pick<Activity, "name" | "type" | "url" | "state">>;
+  status: StatusTypes;
+  afk: boolean;
 }
 
 export interface AutoModerationActionExecutionEventFields {

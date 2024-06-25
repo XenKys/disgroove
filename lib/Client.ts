@@ -1,7 +1,6 @@
 import {
   GatewayIntents,
   type OAuth2Scopes,
-  type StatusTypes,
   GatewayOPCodes,
   type ActionTypes,
   type ImageWidgetStyleOptions,
@@ -81,7 +80,6 @@ import type { LocaleMap, snowflake, timestamp } from "./types/common";
 import type { Emoji, RawEmoji } from "./types/emoji";
 import type { Entitlement, RawEntitlement } from "./types/entitlements";
 import type {
-  Activity,
   AutoModerationActionExecutionEventFields,
   ChannelPinsUpdateEventFields,
   ThreadListSyncEventFields,
@@ -112,6 +110,7 @@ import type {
   VoiceServerUpdateEventFields,
   MessagePollVoteAddFields,
   MessagePollVoteRemoveFields,
+  GatewayPresenceUpdate,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -4324,11 +4323,11 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
-  setPresence(options: {
-    activities: Array<Pick<Activity, "name" | "type" | "url" | "state">>;
-    status?: StatusTypes;
-    afk?: boolean;
-  }): void {
+  setPresence(
+    options: Partial<
+      Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+    >
+  ): void {
     for (const [id, shard] of this.shards) shard.setPresence(options);
   }
 
