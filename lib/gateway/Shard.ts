@@ -79,41 +79,7 @@ export class Shard {
     );
   }
 
-  private onWebSocketOpen(): void {
-    this.identify({
-      token: this.client.token,
-      shard: [this.id, this.client.shardsCount as number],
-      intents: this.client.intents,
-      properties: {
-        os: process.platform,
-        browser: pkg.name,
-        device: pkg.name,
-      },
-    });
-  }
-
-  private onWebSocketMessage(data: RawData): void {
-    const packet: RawPayload = JSON.parse(data.toString());
-
-    switch (packet.op) {
-      case GatewayOPCodes.Reconnect:
-        this.client.emit(GatewayEvents.Reconnect);
-        break;
-      case GatewayOPCodes.InvalidSession:
-        this.client.emit(GatewayEvents.InvalidSession);
-        break;
-      case GatewayOPCodes.Hello:
-        {
-          this.heartbeatInterval = setInterval(
-            () => this.heartbeat(null),
-            packet.d.heartbeat_interval
-          );
-
-          this.client.emit(GatewayEvents.Hello);
-        }
-        break;
-    }
-
+  private onDispatch(packet: RawPayload): void {
     switch (packet.t) {
       case "READY":
         {
@@ -676,6 +642,45 @@ export class Shard {
           guildId: packet.d.guild_id,
           answerId: packet.d.answer_id,
         });
+        break;
+    }
+  }
+
+  private onWebSocketOpen(): void {
+    this.identify({
+      token: this.client.token,
+      shard: [this.id, this.client.shardsCount as number],
+      intents: this.client.intents,
+      properties: {
+        os: process.platform,
+        browser: pkg.name,
+        device: pkg.name,
+      },
+    });
+  }
+
+  private onWebSocketMessage(data: RawData): void {
+    const packet: RawPayload = JSON.parse(data.toString());
+
+    switch (packet.op) {
+      case GatewayOPCodes.Dispatch:
+        this.onDispatch(packet);
+        break;
+      case GatewayOPCodes.Reconnect:
+        this.client.emit(GatewayEvents.Reconnect);
+        break;
+      case GatewayOPCodes.InvalidSession:
+        this.client.emit(GatewayEvents.InvalidSession);
+        break;
+      case GatewayOPCodes.Hello:
+        {
+          this.heartbeatInterval = setInterval(
+            () => this.heartbeat(null),
+            packet.d.heartbeat_interval
+          );
+
+          this.client.emit(GatewayEvents.Hello);
+        }
         break;
     }
   }
