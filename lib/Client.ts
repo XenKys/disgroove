@@ -4325,7 +4325,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
   setPresence(options: {
-    activity?: Pick<Activity, "name" | "type" | "url" | "state">;
+    activities: Array<Pick<Activity, "name" | "type" | "url" | "state">>;
     status?: StatusTypes;
     afk?: boolean;
   }): void {

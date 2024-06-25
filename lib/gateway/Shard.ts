@@ -3,7 +3,6 @@ import { GatewayEvents, GatewayOPCodes, StatusTypes } from "../constants";
 import { GatewayError } from "../utils";
 import { Client } from "../Client";
 import * as pkg from "../../package.json";
-import type { ApplicationCommandPermission } from "../types/application-command";
 import type { RawChannel, RawThreadMember } from "../types/channel";
 import type { RawEmoji } from "../types/emoji";
 import type {
@@ -29,7 +28,7 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
   setPresence(options: {
-    activity?: Pick<Activity, "name" | "type" | "url" | "state">;
+    activities?: Array<Pick<Activity, "name" | "type" | "url" | "state">>;
     status?: StatusTypes;
     afk?: boolean;
   }): void {
@@ -38,8 +37,7 @@ export class Shard {
         op: GatewayOPCodes.PresenceUpdate,
         d: {
           since: options.status === StatusTypes.Idle ? Date.now() : null,
-          activities:
-            options.activity !== undefined ? [options.activity] : null,
+          activities: options.activities,
           status: options.status ?? StatusTypes.Online,
           afk: !!options.afk,
         },
