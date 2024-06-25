@@ -60,6 +60,16 @@ export interface RawResume {
   seq: number;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#request-guild-members-request-guild-members-structure */
+export interface RawRequestGuildMembers {
+  guild_id: snowflake;
+  query?: string;
+  limit?: number;
+  presences?: boolean;
+  user_ids?: snowflake | Array<snowflake>;
+  nonce?: string;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#update-presence-gateway-presence-update-structure */
 export interface RawGatewayPresenceUpdate {
   since: number | null;
@@ -410,6 +420,15 @@ export interface Resume {
   token: string;
   sessionId: string;
   seq: number;
+}
+
+export interface RequestGuildMembers {
+  guildId: snowflake;
+  query?: string;
+  limit?: number;
+  presences?: boolean;
+  userIds?: snowflake | Array<snowflake>;
+  nonce?: string;
 }
 
 export interface GatewayPresenceUpdate {

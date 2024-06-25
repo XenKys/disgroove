@@ -9,6 +9,7 @@ import type {
   GatewayPresenceUpdate,
   Identify,
   RawPresenceUpdateEventFields,
+  RequestGuildMembers,
   Resume,
 } from "../types/gateway-events";
 import type { RawGuildMember } from "../types/guild";
@@ -701,6 +702,22 @@ export class Shard {
     if (code === 1000) return;
 
     throw new GatewayError(`[${code}] ${reason}`);
+  }
+
+  requestGuildMembers(options: RequestGuildMembers): void {
+    this.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.RequestGuildMembers,
+        d: {
+          guild_id: options.guildId,
+          query: options.query,
+          limit: options.limit,
+          presences: options.presences,
+          user_ids: options.userIds,
+          nonce: options.nonce,
+        },
+      })
+    );
   }
 
   resume(options: Resume): void {
