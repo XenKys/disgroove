@@ -694,6 +694,7 @@ export enum StatusTypes {
 
 /** https://discord.com/developers/docs/topics/gateway-events#receive-events */
 export enum GatewayEvents {
+  Dispatch = "dispatch",
   Hello = "hello",
   Ready = "ready",
   Resumed = "resumed",

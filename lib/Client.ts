@@ -111,6 +111,7 @@ import type {
   MessagePollVoteAddFields,
   MessagePollVoteRemoveFields,
   GatewayPresenceUpdate,
+  RawPayload,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -4460,6 +4461,7 @@ export declare interface Client extends EventEmitter {
 }
 
 export interface ClientEvents {
+  dispatch: [packet: RawPayload];
   hello: [];
   ready: [];
   resumed: [];

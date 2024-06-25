@@ -663,6 +663,7 @@ export class Shard {
 
     switch (packet.op) {
       case GatewayOPCodes.Dispatch:
+        this.client.emit(GatewayEvents.Dispatch, packet);
         this.onDispatch(packet);
         break;
       case GatewayOPCodes.Reconnect:
