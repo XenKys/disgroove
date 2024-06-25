@@ -41,9 +41,9 @@ export interface RawGuildScheduledEventUser {
 
 export interface GuildScheduledEvent {
   id: snowflake;
-  guildId: snowflake;
-  channelId: snowflake | null;
-  creatorId?: snowflake | null;
+  guildID: snowflake;
+  channelID: snowflake | null;
+  creatorID?: snowflake | null;
   name: string;
   description?: string | null;
   scheduledStartTime: timestamp;
@@ -51,7 +51,7 @@ export interface GuildScheduledEvent {
   privacyLevel: GuildScheduledEventPrivacyLevel;
   status: GuildScheduledEventStatus;
   entityType: GuildScheduledEventEntityTypes;
-  entityId: snowflake | null;
+  entityID: snowflake | null;
   entityMetadata: GuildScheduledEventEntityMetadata | null;
   creator?: User;
   userCount?: number;
@@ -63,7 +63,7 @@ export interface GuildScheduledEventEntityMetadata {
 }
 
 export interface GuildScheduledEventUser {
-  guildScheduledEventId: snowflake;
+  guildScheduledEventID: snowflake;
   user: User;
   member?: GuildMember;
 }

@@ -318,22 +318,22 @@ export interface RawRoleSubscriptionData {
 export interface Channel {
   id: snowflake;
   type: ChannelTypes;
-  guildId?: snowflake;
+  guildID?: snowflake;
   position?: number;
   permissionOverwrites?: Array<Overwrite>;
   name?: string | null;
   topic?: string | null;
   nsfw?: boolean;
-  lastMessageId?: snowflake | null;
+  lastMessageID?: snowflake | null;
   bitrate?: number;
   userLimit?: number;
   rateLimitPerUser?: number;
   recipients?: Array<User>;
   icon?: string | null;
-  ownerId?: snowflake;
-  applicationId?: snowflake;
+  ownerID?: snowflake;
+  applicationID?: snowflake;
   managed?: boolean;
-  parentId?: snowflake | null;
+  parentID?: snowflake | null;
   lastPinTimestamp?: timestamp | null;
   rtcRegion?: string | null;
   videoQualityMode?: VideoQualityModes;
@@ -355,7 +355,7 @@ export interface Channel {
 
 export interface Message {
   id: snowflake;
-  channelId: snowflake;
+  channelID: snowflake;
   author: User;
   content: string;
   timestamp: timestamp;
@@ -370,11 +370,11 @@ export interface Message {
   reactions?: Array<Reaction>;
   nonce?: number | string;
   pinned: boolean;
-  webhookId?: snowflake;
+  webhookID?: snowflake;
   type: MessageTypes;
   activity?: MessageActivity;
   application?: Application;
-  applicationId?: snowflake;
+  applicationID?: snowflake;
   messageReference?: MessageReference;
   flags?: MessageFlags;
   referencedMessage?: Message | null;
@@ -393,7 +393,7 @@ export interface Message {
 
 export interface MessageActivity {
   type: MessageActivityTypes;
-  partyId?: string;
+  partyID?: string;
 }
 
 export interface MessageInteractionMetadata {
@@ -401,8 +401,8 @@ export interface MessageInteractionMetadata {
   type: InteractionType;
   user: User;
   authorizingIntegrationOwners: Record<ApplicationIntegrationTypes, string>;
-  originalResponseMessageId?: snowflake;
-  interactedMessageId?: snowflake;
+  originalResponseMessageID?: snowflake;
+  interactedMessageID?: snowflake;
   triggeringInteractionMetadata?: MessageInteractionMetadata;
 }
 
@@ -412,15 +412,15 @@ export interface MessageCall {
 }
 
 export interface MessageReference {
-  messageId?: snowflake;
-  channelId?: snowflake;
-  guildId?: snowflake;
+  messageID?: snowflake;
+  channelID?: snowflake;
+  guildID?: snowflake;
   failIfNotExists?: boolean;
 }
 
 export interface FollowedChannel {
-  channelId: snowflake;
-  webhookId: snowflake;
+  channelID: snowflake;
+  webhookID: snowflake;
 }
 
 export interface Reaction {
@@ -455,14 +455,14 @@ export interface ThreadMetadata {
 
 export interface ThreadMember {
   id?: snowflake;
-  userId?: snowflake;
+  userID?: snowflake;
   joinTimestamp: timestamp;
   flags: number;
   member?: GuildMember;
 }
 
 export interface DefaultReaction {
-  emojiId: snowflake | null;
+  emojiID: snowflake | null;
   emojiName: string | null;
 }
 
@@ -470,7 +470,7 @@ export interface ForumTag {
   id: snowflake;
   name: string;
   moderated: boolean;
-  emojiId?: snowflake;
+  emojiID?: snowflake;
   emojiName?: string;
 }
 
@@ -553,7 +553,7 @@ export interface Attachment {
 
 export interface ChannelMention {
   id: snowflake;
-  guildId: snowflake;
+  guildID: snowflake;
   type: ChannelTypes;
   name: string;
 }
@@ -566,7 +566,7 @@ export interface AllowedMentions {
 }
 
 export interface RoleSubscriptionData {
-  roleSubscriptionListingId: snowflake;
+  roleSubscriptionListingID: snowflake;
   tierName: string;
   totalMonthsSubscribed: number;
   isRenewal: boolean;

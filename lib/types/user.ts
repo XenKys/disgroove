@@ -81,7 +81,7 @@ export interface User {
 
 export interface AvatarDecorationData {
   asset: string;
-  skuId: snowflake;
+  skuID: snowflake;
 }
 
 export interface Connection {

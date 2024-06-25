@@ -68,7 +68,7 @@ export interface PollMedia {
 }
 
 export interface PollAnswer {
-  answerId: number;
+  answerID: number;
   pollMedia: PollMedia;
 }
 

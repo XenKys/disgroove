@@ -27,7 +27,7 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customId: "normal-green",
+                  customID: "normal-green",
                   label: "Normal green button",
                   style: ButtonStyles.Success,
                   type: ComponentTypes.Button,
@@ -39,7 +39,7 @@ client.on("interactionCreate", (interaction) => {
                   url: "https://github.com/XenKys/disgroove",
                 },
                 {
-                  customId: "disabled-red",
+                  customID: "disabled-red",
                   disabled: true,
                   label: "Disabled red button",
                   style: ButtonStyles.Danger,
@@ -54,7 +54,7 @@ client.on("interactionCreate", (interaction) => {
   } else if (interaction.type === InteractionType.MessageComponent) {
     if (
       interaction.data.componentType !== ComponentTypes.Button ||
-      interaction.data.customId !== "normal-green"
+      interaction.data.customID !== "normal-green"
     )
       return;
 

@@ -65,9 +65,9 @@ export interface Application {
   owner?: User;
   verifyKey: string;
   team: Team | null;
-  guildId?: snowflake;
+  guildID?: snowflake;
   guild?: Guild;
-  primarySKUId?: snowflake;
+  primarySKUID?: snowflake;
   slug?: string;
   coverImage?: string;
   flags?: ApplicationFlags;

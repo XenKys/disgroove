@@ -20,16 +20,16 @@ export interface RawEntitlement {
 
 export interface Entitlement {
   id: snowflake;
-  skuId: snowflake;
-  applicationId: snowflake;
-  userId?: snowflake;
-  promotionId?: snowflake | null; // Undocumented
+  skuID: snowflake;
+  applicationID: snowflake;
+  userID?: snowflake;
+  promotionID?: snowflake | null; // Undocumented
   type: EntitlementTypes;
   deleted: boolean;
   giftCodeFlags?: number; // Undocumented
   consumed?: boolean;
   startsAt?: timestamp;
   endsAt?: timestamp;
-  guildId?: snowflake;
-  subscriptionId?: string; // Undocumented
+  guildID?: snowflake;
+  subscriptionID?: string; // Undocumented
 }

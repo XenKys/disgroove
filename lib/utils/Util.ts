@@ -123,29 +123,29 @@ export class Util {
 
   auditLogEntryFromRaw(auditLogEntry: RawAuditLogEntry): AuditLogEntry {
     return {
-      targetId: auditLogEntry.target_id,
+      targetID: auditLogEntry.target_id,
       changes: auditLogEntry.changes?.map((auditLogChange) => ({
         newValue: auditLogChange.new_value,
         oldValue: auditLogChange.old_value,
         key: auditLogChange.key,
       })),
-      userId: auditLogEntry.user_id,
+      userID: auditLogEntry.user_id,
       id: auditLogEntry.id,
       actionType: auditLogEntry.action_type,
       options:
         auditLogEntry.options !== undefined
           ? {
-              applicationId: auditLogEntry.options.application_id,
+              applicationID: auditLogEntry.options.application_id,
               autoModerationRuleName:
                 auditLogEntry.options.auto_moderation_rule_name,
               autoModerationRuleTriggerType:
                 auditLogEntry.options.auto_moderation_rule_trigger_type,
-              channelId: auditLogEntry.options.channel_id,
+              channelID: auditLogEntry.options.channel_id,
               count: auditLogEntry.options.count,
               deleteMemberDays: auditLogEntry.options.delete_member_days,
               id: auditLogEntry.options.id,
               membersRemoved: auditLogEntry.options.members_removed,
-              messageId: auditLogEntry.options.message_id,
+              messageID: auditLogEntry.options.message_id,
               roleName: auditLogEntry.options.role_name,
               type: auditLogEntry.options.type,
               integrationType: auditLogEntry.options.integration_type,
@@ -157,29 +157,29 @@ export class Util {
 
   auditLogEntryToRaw(auditLogEntry: AuditLogEntry): RawAuditLogEntry {
     return {
-      target_id: auditLogEntry.targetId,
+      target_id: auditLogEntry.targetID,
       changes: auditLogEntry.changes?.map((auditLogChange) => ({
         new_value: auditLogChange.newValue,
         old_value: auditLogChange.oldValue,
         key: auditLogChange.key,
       })),
-      user_id: auditLogEntry.userId,
+      user_id: auditLogEntry.userID,
       id: auditLogEntry.id,
       action_type: auditLogEntry.actionType,
       options:
         auditLogEntry.options !== undefined
           ? {
-              application_id: auditLogEntry.options.applicationId,
+              application_id: auditLogEntry.options.applicationID,
               auto_moderation_rule_name:
                 auditLogEntry.options.autoModerationRuleName,
               auto_moderation_rule_trigger_type:
                 auditLogEntry.options.autoModerationRuleTriggerType,
-              channel_id: auditLogEntry.options.channelId,
+              channel_id: auditLogEntry.options.channelID,
               count: auditLogEntry.options.count,
               delete_member_days: auditLogEntry.options.deleteMemberDays,
               id: auditLogEntry.options.id,
               members_removed: auditLogEntry.options.membersRemoved,
-              message_id: auditLogEntry.options.messageId,
+              message_id: auditLogEntry.options.messageID,
               role_name: auditLogEntry.options.roleName,
               type: auditLogEntry.options.type,
               integration_type: auditLogEntry.options.integrationType,
@@ -194,9 +194,9 @@ export class Util {
   ): AutoModerationRule {
     return {
       id: autoModerationRule.id,
-      guildId: autoModerationRule.guild_id,
+      guildID: autoModerationRule.guild_id,
       name: autoModerationRule.name,
-      creatorId: autoModerationRule.creator_id,
+      creatorID: autoModerationRule.creator_id,
       eventType: autoModerationRule.event_type,
       triggerType: autoModerationRule.trigger_type,
       triggerMetadata: {
@@ -212,7 +212,7 @@ export class Util {
       actions: autoModerationRule.actions.map((action) => ({
         type: action.type,
         metadata: {
-          channelId: action.metadata.channel_id,
+          channelID: action.metadata.channel_id,
           durationSeconds: action.metadata.duration_seconds,
           customMessage: action.metadata.custom_message,
         },
@@ -228,9 +228,9 @@ export class Util {
   ): RawAutoModerationRule {
     return {
       id: autoModerationRule.id,
-      guild_id: autoModerationRule.guildId,
+      guild_id: autoModerationRule.guildID,
       name: autoModerationRule.name,
-      creator_id: autoModerationRule.creatorId,
+      creator_id: autoModerationRule.creatorID,
       event_type: autoModerationRule.eventType,
       trigger_type: autoModerationRule.triggerType,
       trigger_metadata: {
@@ -246,7 +246,7 @@ export class Util {
       actions: autoModerationRule.actions.map((action) => ({
         type: action.type,
         metadata: {
-          channel_id: action.metadata.channelId,
+          channel_id: action.metadata.channelID,
           duration_seconds: action.metadata.durationSeconds,
           custom_message: action.metadata.customMessage,
         },
@@ -311,12 +311,12 @@ export class Util {
       verifyKey: application.verify_key,
       team:
         application.team !== null ? this.teamFromRaw(application.team) : null,
-      guildId: application.guild_id,
+      guildID: application.guild_id,
       guild:
         application.guild !== undefined
           ? this.guildFromRaw(application.guild)
           : undefined,
-      primarySKUId: application.primary_sku_id,
+      primarySKUID: application.primary_sku_id,
       slug: application.slug,
       coverImage: application.cover_image,
       flags: application.flags,
@@ -363,12 +363,12 @@ export class Util {
           : undefined,
       verify_key: application.verifyKey,
       team: application.team !== null ? this.teamToRaw(application.team) : null,
-      guild_id: application.guildId,
+      guild_id: application.guildID,
       guild:
         application.guild !== undefined
           ? this.guildToRaw(application.guild)
           : undefined,
-      primary_sku_id: application.primarySKUId,
+      primary_sku_id: application.primarySKUID,
       slug: application.slug,
       cover_image: application.coverImage,
       flags: application.flags,
@@ -402,8 +402,8 @@ export class Util {
     return {
       id: applicationCommand.id,
       type: applicationCommand.type,
-      applicationId: applicationCommand.application_id,
-      guildId: applicationCommand.guild_id,
+      applicationID: applicationCommand.application_id,
+      guildID: applicationCommand.guild_id,
       name: applicationCommand.name,
       nameLocalizations: applicationCommand.name_localizations,
       description: applicationCommand.description,
@@ -460,8 +460,8 @@ export class Util {
     return {
       id: applicationCommand.id,
       type: applicationCommand.type,
-      application_id: applicationCommand.applicationId,
-      guild_id: applicationCommand.guildId,
+      application_id: applicationCommand.applicationID,
+      guild_id: applicationCommand.guildID,
       name: applicationCommand.name,
       name_localizations: applicationCommand.nameLocalizations,
       description: applicationCommand.description,
@@ -516,7 +516,7 @@ export class Util {
     return {
       id: channel.id,
       type: channel.type,
-      guildId: channel.guild_id,
+      guildID: channel.guild_id,
       position: channel.position,
       permissionOverwrites: channel.permission_overwrites?.map((overwrite) => ({
         id: overwrite.id,
@@ -527,7 +527,7 @@ export class Util {
       name: channel.name,
       topic: channel.topic,
       nsfw: channel.nsfw,
-      lastMessageId: channel.last_message_id,
+      lastMessageID: channel.last_message_id,
       bitrate: channel.bitrate,
       userLimit: channel.user_limit,
       rateLimitPerUser: channel.rate_limit_per_user,
@@ -535,10 +535,10 @@ export class Util {
         this.userFromRaw(recipient)
       ),
       icon: channel.icon,
-      ownerId: channel.owner_id,
-      applicationId: channel.application_id,
+      ownerID: channel.owner_id,
+      applicationID: channel.application_id,
       managed: channel.managed,
-      parentId: channel.parent_id,
+      parentID: channel.parent_id,
       lastPinTimestamp: channel.last_pin_timestamp,
       rtcRegion: channel.rtc_region,
       videoQualityMode: channel.video_quality_mode,
@@ -560,7 +560,7 @@ export class Util {
         channel.member !== undefined
           ? {
               id: channel.member.id,
-              userId: channel.member.user_id,
+              userID: channel.member.user_id,
               joinTimestamp: channel.member.join_timestamp,
               flags: channel.member.flags,
               member:
@@ -594,7 +594,7 @@ export class Util {
         id: availableTag.id,
         name: availableTag.name,
         moderated: availableTag.moderated,
-        emojiId: availableTag.emoji_id,
+        emojiID: availableTag.emoji_id,
         emojiName: availableTag.emoji_name,
       })),
       appliedTags: channel.applied_tags,
@@ -602,7 +602,7 @@ export class Util {
         channel.default_reaction_emoji !== undefined
           ? channel.default_reaction_emoji !== null
             ? {
-                emojiId: channel.default_reaction_emoji.emoji_id,
+                emojiID: channel.default_reaction_emoji.emoji_id,
                 emojiName: channel.default_reaction_emoji.emoji_name,
               }
             : null
@@ -617,7 +617,7 @@ export class Util {
     return {
       id: channel.id,
       type: channel.type,
-      guild_id: channel.guildId,
+      guild_id: channel.guildID,
       position: channel.position,
       permission_overwrites: channel.permissionOverwrites?.map((overwrite) => ({
         id: overwrite.id,
@@ -628,7 +628,7 @@ export class Util {
       name: channel.name,
       topic: channel.topic,
       nsfw: channel.nsfw,
-      last_message_id: channel.lastMessageId,
+      last_message_id: channel.lastMessageID,
       bitrate: channel.bitrate,
       user_limit: channel.userLimit,
       rate_limit_per_user: channel.rateLimitPerUser,
@@ -636,10 +636,10 @@ export class Util {
         this.userToRaw(recipient)
       ),
       icon: channel.icon,
-      owner_id: channel.ownerId,
-      application_id: channel.applicationId,
+      owner_id: channel.ownerID,
+      application_id: channel.applicationID,
       managed: channel.managed,
-      parent_id: channel.parentId,
+      parent_id: channel.parentID,
       last_pin_timestamp: channel.lastPinTimestamp,
       rtc_region: channel.rtcRegion,
       video_quality_mode: channel.videoQualityMode,
@@ -661,7 +661,7 @@ export class Util {
         channel.member !== undefined
           ? {
               id: channel.member.id,
-              user_id: channel.member.userId,
+              user_id: channel.member.userID,
               join_timestamp: channel.member.joinTimestamp,
               flags: channel.member.flags,
               member:
@@ -695,7 +695,7 @@ export class Util {
         id: availableTag.id,
         name: availableTag.name,
         moderated: availableTag.moderated,
-        emoji_id: availableTag.emojiId,
+        emoji_id: availableTag.emojiID,
         emoji_name: availableTag.emojiName,
       })),
       applied_tags: channel.appliedTags,
@@ -703,7 +703,7 @@ export class Util {
         channel.defaultReactionEmoji !== undefined
           ? channel.defaultReactionEmoji !== null
             ? {
-                emoji_id: channel.defaultReactionEmoji.emojiId,
+                emoji_id: channel.defaultReactionEmoji.emojiID,
                 emoji_name: channel.defaultReactionEmoji.emojiName,
               }
             : null
@@ -865,36 +865,36 @@ export class Util {
   entitlementFromRaw(entitlement: RawEntitlement): Entitlement {
     return {
       id: entitlement.id,
-      skuId: entitlement.sku_id,
-      applicationId: entitlement.application_id,
-      userId: entitlement.user_id,
-      promotionId: entitlement.promotion_id,
+      skuID: entitlement.sku_id,
+      applicationID: entitlement.application_id,
+      userID: entitlement.user_id,
+      promotionID: entitlement.promotion_id,
       type: entitlement.type,
       deleted: entitlement.deleted,
       giftCodeFlags: entitlement.gift_code_flags,
       consumed: entitlement.consumed,
       startsAt: entitlement.starts_at,
       endsAt: entitlement.ends_at,
-      guildId: entitlement.guild_id,
-      subscriptionId: entitlement.subscription_id,
+      guildID: entitlement.guild_id,
+      subscriptionID: entitlement.subscription_id,
     };
   }
 
   entitlementToRaw(entitlement: Entitlement): RawEntitlement {
     return {
       id: entitlement.id,
-      sku_id: entitlement.skuId,
-      application_id: entitlement.applicationId,
-      user_id: entitlement.userId,
-      promotion_id: entitlement.promotionId,
+      sku_id: entitlement.skuID,
+      application_id: entitlement.applicationID,
+      user_id: entitlement.userID,
+      promotion_id: entitlement.promotionID,
       type: entitlement.type,
       deleted: entitlement.deleted,
       gift_code_flags: entitlement.giftCodeFlags,
       consumed: entitlement.consumed,
       starts_at: entitlement.startsAt,
       ends_at: entitlement.endsAt,
-      guild_id: entitlement.guildId,
-      subscription_id: entitlement.subscriptionId,
+      guild_id: entitlement.guildID,
+      subscription_id: entitlement.subscriptionID,
     };
   }
 
@@ -903,8 +903,8 @@ export class Util {
   ): GuildApplicationCommandPermissions {
     return {
       id: guildApplicationCommandPermissions.id,
-      applicationId: guildApplicationCommandPermissions.application_id,
-      guildId: guildApplicationCommandPermissions.guild_id,
+      applicationID: guildApplicationCommandPermissions.application_id,
+      guildID: guildApplicationCommandPermissions.guild_id,
       permissions: guildApplicationCommandPermissions.permissions.map(
         (permission) => ({
           id: permission.id,
@@ -920,8 +920,8 @@ export class Util {
   ): RawGuildApplicationCommandPermissions {
     return {
       id: guildApplicationCommandPermissions.id,
-      application_id: guildApplicationCommandPermissions.applicationId,
-      guild_id: guildApplicationCommandPermissions.guildId,
+      application_id: guildApplicationCommandPermissions.applicationID,
+      guild_id: guildApplicationCommandPermissions.guildID,
       permissions: guildApplicationCommandPermissions.permissions.map(
         (permission) => ({
           id: permission.id,
@@ -941,13 +941,13 @@ export class Util {
       splash: guild.splash,
       discoverySplash: guild.discovery_splash,
       owner: guild.owner,
-      ownerId: guild.owner_id,
+      ownerID: guild.owner_id,
       permissions: guild.permissions,
       region: guild.region,
-      afkChannelId: guild.afk_channel_id,
+      afkChannelID: guild.afk_channel_id,
       afkTimeout: guild.afk_timeout,
       widgetEnabled: guild.widget_enabled,
-      widgetChannelId: guild.widget_channel_id,
+      widgetChannelID: guild.widget_channel_id,
       verificationLevel: guild.verification_level,
       defaultMessageNotifications: guild.default_message_notifications,
       explicitContentFilter: guild.explicit_content_filter,
@@ -955,10 +955,10 @@ export class Util {
       emojis: guild.emojis.map((emoji) => this.emojiFromRaw(emoji)),
       features: guild.features,
       mfaLevel: guild.mfa_level,
-      applicationId: guild.application_id,
-      systemChannelId: guild.system_channel_id,
+      applicationID: guild.application_id,
+      systemChannelID: guild.system_channel_id,
       systemChannelFlags: guild.system_channel_flags,
-      rulesChannelId: guild.rules_channel_id,
+      rulesChannelID: guild.rules_channel_id,
       maxPresences: guild.max_presences,
       maxMembers: guild.max_members,
       vanityURLCode: guild.vanity_url_code,
@@ -967,7 +967,7 @@ export class Util {
       premiumTier: guild.premium_tier,
       premiumSubscriptionCount: guild.premium_subscription_count,
       preferredLocale: guild.preferred_locale,
-      publicUpdatesChannelId: guild.public_updates_channel_id,
+      publicUpdatesChannelID: guild.public_updates_channel_id,
       maxVideoChannelUsers: guild.max_video_channel_users,
       maxStageVideoChannelUsers: guild.max_stage_video_channel_users,
       approximateMemberCount: guild.approximate_member_count,
@@ -978,9 +978,9 @@ export class Util {
               description: guild.welcome_screen.description,
               welcomeChannels: guild.welcome_screen.welcome_channels.map(
                 (welcomeScreenChannel) => ({
-                  channelId: welcomeScreenChannel.channel_id,
+                  channelID: welcomeScreenChannel.channel_id,
                   description: welcomeScreenChannel.description,
-                  emojiId: welcomeScreenChannel.emoji_id,
+                  emojiID: welcomeScreenChannel.emoji_id,
                   emojiName: welcomeScreenChannel.emoji_name,
                 })
               ),
@@ -989,7 +989,7 @@ export class Util {
       nsfwLevel: guild.nsfw_level,
       stickers: guild.stickers?.map((sticker) => this.stickerFromRaw(sticker)),
       premiumProgressBarEnabled: guild.premium_progress_bar_enabled,
-      safetyAlertsChannelId: guild.safety_alerts_channel_id,
+      safetyAlertsChannelID: guild.safety_alerts_channel_id,
     };
   }
 
@@ -1002,13 +1002,13 @@ export class Util {
       splash: guild.splash,
       discovery_splash: guild.discoverySplash,
       owner: guild.owner,
-      owner_id: guild.ownerId,
+      owner_id: guild.ownerID,
       permissions: guild.permissions,
       region: guild.region,
-      afk_channel_id: guild.afkChannelId,
+      afk_channel_id: guild.afkChannelID,
       afk_timeout: guild.afkTimeout,
       widget_enabled: guild.widgetEnabled,
-      widget_channel_id: guild.widgetChannelId,
+      widget_channel_id: guild.widgetChannelID,
       verification_level: guild.verificationLevel,
       default_message_notifications: guild.defaultMessageNotifications,
       explicit_content_filter: guild.explicitContentFilter,
@@ -1016,10 +1016,10 @@ export class Util {
       emojis: guild.emojis.map((emoji) => this.emojiToRaw(emoji)),
       features: guild.features,
       mfa_level: guild.mfaLevel,
-      application_id: guild.applicationId,
-      system_channel_id: guild.systemChannelId,
+      application_id: guild.applicationID,
+      system_channel_id: guild.systemChannelID,
       system_channel_flags: guild.systemChannelFlags,
-      rules_channel_id: guild.rulesChannelId,
+      rules_channel_id: guild.rulesChannelID,
       max_presences: guild.maxPresences,
       max_members: guild.maxMembers,
       vanity_url_code: guild.vanityURLCode,
@@ -1028,7 +1028,7 @@ export class Util {
       premium_tier: guild.premiumTier,
       premium_subscription_count: guild.premiumSubscriptionCount,
       preferred_locale: guild.preferredLocale,
-      public_updates_channel_id: guild.publicUpdatesChannelId,
+      public_updates_channel_id: guild.publicUpdatesChannelID,
       max_video_channel_users: guild.maxVideoChannelUsers,
       max_stage_video_channel_users: guild.maxStageVideoChannelUsers,
       approximate_member_count: guild.approximateMemberCount,
@@ -1039,9 +1039,9 @@ export class Util {
               description: guild.welcomeScreen.description,
               welcome_channels: guild.welcomeScreen.welcomeChannels.map(
                 (welcomeScreenChannel) => ({
-                  channel_id: welcomeScreenChannel.channelId,
+                  channel_id: welcomeScreenChannel.channelID,
                   description: welcomeScreenChannel.description,
-                  emoji_id: welcomeScreenChannel.emojiId,
+                  emoji_id: welcomeScreenChannel.emojiID,
                   emoji_name: welcomeScreenChannel.emojiName,
                 })
               ),
@@ -1050,7 +1050,7 @@ export class Util {
       nsfw_level: guild.nsfwLevel,
       stickers: guild.stickers?.map((sticker) => this.stickerToRaw(sticker)),
       premium_progress_bar_enabled: guild.premiumProgressBarEnabled,
-      safety_alerts_channel_id: guild.safetyAlertsChannelId,
+      safety_alerts_channel_id: guild.safetyAlertsChannelID,
     };
   }
 
@@ -1099,9 +1099,9 @@ export class Util {
   ): GuildScheduledEvent {
     return {
       id: guildScheduledEvent.id,
-      guildId: guildScheduledEvent.guild_id,
-      channelId: guildScheduledEvent.channel_id,
-      creatorId: guildScheduledEvent.creator_id,
+      guildID: guildScheduledEvent.guild_id,
+      channelID: guildScheduledEvent.channel_id,
+      creatorID: guildScheduledEvent.creator_id,
       name: guildScheduledEvent.name,
       description: guildScheduledEvent.description,
       scheduledStartTime: guildScheduledEvent.scheduled_start_time,
@@ -1109,7 +1109,7 @@ export class Util {
       privacyLevel: guildScheduledEvent.privacy_level,
       status: guildScheduledEvent.status,
       entityType: guildScheduledEvent.entity_type,
-      entityId: guildScheduledEvent.entity_id,
+      entityID: guildScheduledEvent.entity_id,
       entityMetadata: guildScheduledEvent.entity_metadata,
       creator:
         guildScheduledEvent.creator !== undefined
@@ -1125,9 +1125,9 @@ export class Util {
   ): RawGuildScheduledEvent {
     return {
       id: guildScheduledEvent.id,
-      guild_id: guildScheduledEvent.guildId,
-      channel_id: guildScheduledEvent.channelId,
-      creator_id: guildScheduledEvent.creatorId,
+      guild_id: guildScheduledEvent.guildID,
+      channel_id: guildScheduledEvent.channelID,
+      creator_id: guildScheduledEvent.creatorID,
       name: guildScheduledEvent.name,
       description: guildScheduledEvent.description,
       scheduled_start_time: guildScheduledEvent.scheduledStartTime,
@@ -1135,7 +1135,7 @@ export class Util {
       privacy_level: guildScheduledEvent.privacyLevel,
       status: guildScheduledEvent.status,
       entity_type: guildScheduledEvent.entityType,
-      entity_id: guildScheduledEvent.entityId,
+      entity_id: guildScheduledEvent.entityID,
       entity_metadata: guildScheduledEvent.entityMetadata,
       creator:
         guildScheduledEvent.creator !== undefined
@@ -1152,11 +1152,11 @@ export class Util {
       name: guildTemplate.name,
       description: guildTemplate.description,
       usageCount: guildTemplate.usage_count,
-      creatorId: guildTemplate.creator_id,
+      creatorID: guildTemplate.creator_id,
       creator: this.userFromRaw(guildTemplate.creator),
       createdAt: guildTemplate.created_at,
       updatedAt: guildTemplate.updated_at,
-      sourceGuildId: guildTemplate.source_guild_id,
+      sourceGuildID: guildTemplate.source_guild_id,
       serializedSourceGuild: this.guildFromRaw(
         guildTemplate.serialized_source_guild
       ),
@@ -1170,11 +1170,11 @@ export class Util {
       name: guildTemplate.name,
       description: guildTemplate.description,
       usage_count: guildTemplate.usageCount,
-      creator_id: guildTemplate.creatorId,
+      creator_id: guildTemplate.creatorID,
       creator: this.userToRaw(guildTemplate.creator),
       created_at: guildTemplate.createdAt,
       updated_at: guildTemplate.updatedAt,
-      source_guild_id: guildTemplate.sourceGuildId,
+      source_guild_id: guildTemplate.sourceGuildID,
       serialized_source_guild: this.guildToRaw(
         guildTemplate.serializedSourceGuild
       ),
@@ -1189,7 +1189,7 @@ export class Util {
       type: integration.type,
       enabled: integration.enabled,
       syncing: integration.syncing,
-      roleId: integration.role_id,
+      roleID: integration.role_id,
       enableEmoticons: integration.enable_emoticons,
       expireBehavior: integration.expire_behavior,
       expireGracePeriod: integration.expire_grace_period,
@@ -1225,7 +1225,7 @@ export class Util {
       type: integration.type,
       enabled: integration.enabled,
       syncing: integration.syncing,
-      role_id: integration.roleId,
+      role_id: integration.roleID,
       enable_emoticons: integration.enableEmoticons,
       expire_behavior: integration.expireBehavior,
       expire_grace_period: integration.expireGracePeriod,
@@ -1257,7 +1257,7 @@ export class Util {
   interactionFromRaw(interaction: RawInteraction): Interaction {
     return {
       id: interaction.id,
-      applicationId: interaction.application_id,
+      applicationID: interaction.application_id,
       type: interaction.type,
       data:
         interaction.data !== undefined
@@ -1270,16 +1270,16 @@ export class Util {
                   ? this.resolvedDataFromRaw(interaction.data.resolved)
                   : undefined,
               options: interaction.data.options,
-              guildId: interaction.data.guild_id,
-              targetId: interaction.data.target_id,
-              customId: interaction.data.custom_id,
+              guildID: interaction.data.guild_id,
+              targetID: interaction.data.target_id,
+              customID: interaction.data.custom_id,
               componentType: interaction.data.component_type,
               values: interaction.data.values,
               components: interaction.data.components?.map((component) => ({
                 type: component.type,
                 components: component.components?.map((c) => ({
                   type: c.type,
-                  customId: c.custom_id,
+                  customID: c.custom_id,
                   style: c.style,
                   label: c.label,
                   minLength: c.min_length,
@@ -1299,12 +1299,12 @@ export class Util {
               features: interaction.guild.features,
             }
           : undefined,
-      guildId: interaction.guild_id,
+      guildID: interaction.guild_id,
       channel:
         interaction.channel !== undefined
           ? this.channelFromRaw(interaction.channel)
           : undefined,
-      channelId: interaction.channel_id,
+      channelID: interaction.channel_id,
       member:
         interaction.member !== undefined
           ? this.guildMemberFromRaw(interaction.member)
@@ -1336,7 +1336,7 @@ export class Util {
   interactionToRaw(interaction: Interaction): RawInteraction {
     return {
       id: interaction.id,
-      application_id: interaction.applicationId,
+      application_id: interaction.applicationID,
       type: interaction.type,
       data:
         interaction.data !== undefined
@@ -1349,16 +1349,16 @@ export class Util {
                   ? this.resolvedDataToRaw(interaction.data.resolved)
                   : undefined,
               options: interaction.data.options,
-              guild_id: interaction.data.guildId,
-              target_id: interaction.data.targetId,
-              custom_id: interaction.data.customId,
+              guild_id: interaction.data.guildID,
+              target_id: interaction.data.targetID,
+              custom_id: interaction.data.customID,
               component_type: interaction.data.componentType,
               values: interaction.data.values,
               components: interaction.data.components?.map((component) => ({
                 type: component.type,
                 components: component.components?.map((c) => ({
                   type: c.type,
-                  custom_id: c.customId,
+                  custom_id: c.customID,
                   style: c.style,
                   label: c.label,
                   min_length: c.minLength,
@@ -1378,12 +1378,12 @@ export class Util {
               features: interaction.guild.features,
             }
           : undefined,
-      guild_id: interaction.guildId,
+      guild_id: interaction.guildID,
       channel:
         interaction.channel !== undefined
           ? this.channelToRaw(interaction.channel)
           : undefined,
-      channel_id: interaction.channelId,
+      channel_id: interaction.channelID,
       member:
         interaction.member !== undefined
           ? this.guildMemberToRaw(interaction.member)
@@ -1423,9 +1423,9 @@ export class Util {
         "0": interactionMetadata.authorizing_integration_owners[0],
         "1": interactionMetadata.authorizing_integration_owners[1],
       },
-      originalResponseMessageId:
+      originalResponseMessageID:
         interactionMetadata.original_response_message_id,
-      interactedMessageId: interactionMetadata.interacted_message_id,
+      interactedMessageID: interactionMetadata.interacted_message_id,
       triggeringInteractionMetadata:
         interactionMetadata.triggering_interaction_metadata !== undefined
           ? this.interactionMetadataFromRaw(
@@ -1447,8 +1447,8 @@ export class Util {
         "1": interactionMetadata.authorizingIntegrationOwners[1],
       },
       original_response_message_id:
-        interactionMetadata.originalResponseMessageId,
-      interacted_message_id: interactionMetadata.interactedMessageId,
+        interactionMetadata.originalResponseMessageID,
+      interacted_message_id: interactionMetadata.interactedMessageID,
       triggering_interaction_metadata:
         interactionMetadata.triggeringInteractionMetadata !== undefined
           ? this.interactionMetadataToRaw(
@@ -1560,8 +1560,8 @@ export class Util {
                       animated: c.emoji.animated,
                     }
                   : undefined,
-              customId: c.custom_id,
-              skuId: c.sku_id,
+              customID: c.custom_id,
+              skuID: c.sku_id,
               url: c.url,
               disabled: c.disabled,
             };
@@ -1569,7 +1569,7 @@ export class Util {
           case ComponentTypes.TextInput: {
             return {
               type: c.type,
-              customId: c.custom_id,
+              customID: c.custom_id,
               style: c.style,
               label: c.label,
               minLength: c.min_length,
@@ -1582,7 +1582,7 @@ export class Util {
           case ComponentTypes.ChannelSelect: {
             return {
               type: c.type,
-              customId: c.custom_id,
+              customID: c.custom_id,
               channelTypes: c.channel_types,
               placeholder: c.placeholder,
               defaultValues: c.default_values,
@@ -1594,7 +1594,7 @@ export class Util {
           case ComponentTypes.StringSelect: {
             return {
               type: c.type,
-              customId: c.custom_id,
+              customID: c.custom_id,
               placeholder: c.placeholder,
               options: c.options?.map((option) => ({
                 label: option.label,
@@ -1620,7 +1620,7 @@ export class Util {
           case ComponentTypes.UserSelect: {
             return {
               type: c.type,
-              customId: c.custom_id,
+              customID: c.custom_id,
               placeholder: c.placeholder,
               defaultValues: c.default_values,
               minValues: c.min_values,
@@ -1651,8 +1651,8 @@ export class Util {
                       animated: c.emoji.animated,
                     }
                   : undefined,
-              custom_id: c.customId,
-              sku_id: c.skuId,
+              custom_id: c.customID,
+              sku_id: c.skuID,
               url: c.url,
               disabled: c.disabled,
             };
@@ -1660,7 +1660,7 @@ export class Util {
           case ComponentTypes.TextInput: {
             return {
               type: c.type,
-              custom_id: c.customId,
+              custom_id: c.customID,
               style: c.style,
               label: c.label,
               min_length: c.minLength,
@@ -1673,7 +1673,7 @@ export class Util {
           case ComponentTypes.ChannelSelect: {
             return {
               type: c.type,
-              custom_id: c.customId,
+              custom_id: c.customID,
               channel_types: c.channelTypes,
               placeholder: c.placeholder,
               default_values: c.defaultValues,
@@ -1685,7 +1685,7 @@ export class Util {
           case ComponentTypes.StringSelect: {
             return {
               type: c.type,
-              custom_id: c.customId,
+              custom_id: c.customID,
               placeholder: c.placeholder,
               options: c.options?.map((option) => ({
                 label: option.label,
@@ -1711,7 +1711,7 @@ export class Util {
           case ComponentTypes.UserSelect: {
             return {
               type: c.type,
-              custom_id: c.customId,
+              custom_id: c.customID,
               placeholder: c.placeholder,
               default_values: c.defaultValues,
               min_values: c.minValues,
@@ -1727,7 +1727,7 @@ export class Util {
   messageFromRaw(message: RawMessage): Message {
     return {
       id: message.id,
-      channelId: message.channel_id,
+      channelID: message.channel_id,
       author: this.userFromRaw(message.author),
       content: message.content,
       timestamp: message.timestamp,
@@ -1738,7 +1738,7 @@ export class Util {
       mentionRoles: message.mention_roles,
       mentionChannels: message.mention_channels?.map((channelMention) => ({
         id: channelMention.id,
-        guildId: channelMention.guild_id,
+        guildID: channelMention.guild_id,
         type: channelMention.type,
         name: channelMention.name,
       })),
@@ -1756,20 +1756,20 @@ export class Util {
       })),
       nonce: message.nonce,
       pinned: message.pinned,
-      webhookId: message.webhook_id,
+      webhookID: message.webhook_id,
       type: message.type,
       activity: message.activity,
       application:
         message.application !== undefined
           ? this.applicationFromRaw(message.application)
           : undefined,
-      applicationId: message.application_id,
+      applicationID: message.application_id,
       messageReference:
         message.message_reference !== undefined
           ? {
-              messageId: message.message_reference.message_id,
-              channelId: message.message_reference.channel_id,
-              guildId: message.message_reference.guild_id,
+              messageID: message.message_reference.message_id,
+              channelID: message.message_reference.channel_id,
+              guildID: message.message_reference.guild_id,
               failIfNotExists: message.message_reference.fail_if_not_exists,
             }
           : undefined,
@@ -1817,7 +1817,7 @@ export class Util {
       roleSubscriptionData:
         message.role_subscription_data !== undefined
           ? {
-              roleSubscriptionListingId:
+              roleSubscriptionListingID:
                 message.role_subscription_data.role_subscription_listing_id,
               tierName: message.role_subscription_data.tier_name,
               totalMonthsSubscribed:
@@ -1838,7 +1838,7 @@ export class Util {
   messageToRaw(message: Message): RawMessage {
     return {
       id: message.id,
-      channel_id: message.channelId,
+      channel_id: message.channelID,
       author: this.userToRaw(message.author),
       content: message.content,
       timestamp: message.timestamp,
@@ -1849,7 +1849,7 @@ export class Util {
       mention_roles: message.mentionRoles,
       mention_channels: message.mentionChannels?.map((channelMention) => ({
         id: channelMention.id,
-        guild_id: channelMention.guildId,
+        guild_id: channelMention.guildID,
         type: channelMention.type,
         name: channelMention.name,
       })),
@@ -1867,20 +1867,20 @@ export class Util {
       })),
       nonce: message.nonce,
       pinned: message.pinned,
-      webhook_id: message.webhookId,
+      webhook_id: message.webhookID,
       type: message.type,
       activity: message.activity,
       application:
         message.application !== undefined
           ? this.applicationToRaw(message.application)
           : undefined,
-      application_id: message.applicationId,
+      application_id: message.applicationID,
       message_reference:
         message.messageReference !== undefined
           ? {
-              message_id: message.messageReference.messageId,
-              channel_id: message.messageReference.channelId,
-              guild_id: message.messageReference.guildId,
+              message_id: message.messageReference.messageID,
+              channel_id: message.messageReference.channelID,
+              guild_id: message.messageReference.guildID,
               fail_if_not_exists: message.messageReference.failIfNotExists,
             }
           : undefined,
@@ -1927,7 +1927,7 @@ export class Util {
         message.roleSubscriptionData !== undefined
           ? {
               role_subscription_listing_id:
-                message.roleSubscriptionData.roleSubscriptionListingId,
+                message.roleSubscriptionData.roleSubscriptionListingID,
               tier_name: message.roleSubscriptionData.tierName,
               total_months_subscribed:
                 message.roleSubscriptionData.totalMonthsSubscribed,
@@ -1950,8 +1950,8 @@ export class Util {
     return {
       id: applicationCommand.id,
       type: applicationCommand.type,
-      application_id: applicationCommand.applicationId,
-      guild_id: applicationCommand.guildId,
+      application_id: applicationCommand.applicationID,
+      guild_id: applicationCommand.guildID,
       name: applicationCommand.name,
       name_localizations: applicationCommand.nameLocalizations,
       description: applicationCommand.description,
@@ -2007,7 +2007,7 @@ export class Util {
   ): PresenceUpdateEventFields {
     return {
       user: this.userFromRaw(presence.user),
-      guildId: presence.guild_id,
+      guildID: presence.guild_id,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
         name: activity.name,
@@ -2015,7 +2015,7 @@ export class Util {
         url: activity.url,
         createdAt: activity.created_at,
         timestamps: activity.timestamps,
-        applicationId: activity.application_id,
+        applicationID: activity.application_id,
         details: activity.details,
         state: activity.state,
         party: activity.party,
@@ -2039,7 +2039,7 @@ export class Util {
   ): RawPresenceUpdateEventFields {
     return {
       user: this.userToRaw(presence.user),
-      guild_id: presence.guildId,
+      guild_id: presence.guildID,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
         name: activity.name,
@@ -2047,7 +2047,7 @@ export class Util {
         url: activity.url,
         created_at: activity.createdAt,
         timestamps: activity.timestamps,
-        application_id: activity.applicationId,
+        application_id: activity.applicationID,
         details: activity.details,
         state: activity.state,
         party: activity.party,
@@ -2178,7 +2178,7 @@ export class Util {
     return {
       question: poll.question,
       answers: poll.answers.map((answer) => ({
-        answerId: answer.answer_id,
+        answerID: answer.answer_id,
         pollMedia: answer.poll_media,
       })),
       expiry: poll.expiry,
@@ -2202,7 +2202,7 @@ export class Util {
     return {
       question: poll.question,
       answers: poll.answers.map((answer) => ({
-        answer_id: answer.answerId,
+        answer_id: answer.answerID,
         poll_media: answer.pollMedia,
       })),
       expiry: poll.expiry,
@@ -2237,10 +2237,10 @@ export class Util {
       tags:
         role.tags !== undefined
           ? {
-              botId: role.tags.bot_id,
-              integrationId: role.tags.integration_id,
+              botID: role.tags.bot_id,
+              integrationID: role.tags.integration_id,
               premiumSubscriber: role.tags.premium_subscriber,
-              subscriptionListingId: role.tags.subscription_listing_id,
+              subscriptionListingID: role.tags.subscription_listing_id,
               availableForPurchase: role.tags.available_for_purchase,
               guildConnections: role.tags.guild_connections,
             }
@@ -2264,10 +2264,10 @@ export class Util {
       tags:
         role.tags !== undefined
           ? {
-              bot_id: role.tags.botId,
-              integration_id: role.tags.integrationId,
+              bot_id: role.tags.botID,
+              integration_id: role.tags.integrationID,
               premium_subscriber: role.tags.premiumSubscriber,
-              subscription_listing_id: role.tags.subscriptionListingId,
+              subscription_listing_id: role.tags.subscriptionListingID,
               available_for_purchase: role.tags.availableForPurchase,
               guild_connections: role.tags.guildConnections,
             }
@@ -2280,8 +2280,8 @@ export class Util {
     return {
       id: sku.id,
       type: sku.type,
-      dependentSKUId: sku.dependent_sku_id,
-      applicationId: sku.application_id,
+      dependentSKUID: sku.dependent_sku_id,
+      applicationID: sku.application_id,
       manifestLabels: sku.manifest_labels,
       accessType: sku.access_type,
       name: sku.name,
@@ -2297,8 +2297,8 @@ export class Util {
     return {
       id: sku.id,
       type: sku.type,
-      dependent_sku_id: sku.dependentSKUId,
-      application_id: sku.applicationId,
+      dependent_sku_id: sku.dependentSKUID,
+      application_id: sku.applicationID,
       manifest_labels: sku.manifestLabels,
       access_type: sku.accessType,
       name: sku.name,
@@ -2313,31 +2313,31 @@ export class Util {
   stageInstanceFromRaw(stageInstance: RawStageInstance): StageInstance {
     return {
       id: stageInstance.id,
-      guildId: stageInstance.guild_id,
-      channelId: stageInstance.channel_id,
+      guildID: stageInstance.guild_id,
+      channelID: stageInstance.channel_id,
       topic: stageInstance.topic,
       privacyLevel: stageInstance.privacy_level,
       discoverableDisabled: stageInstance.discoverable_disabled,
-      guildScheduledEventId: stageInstance.guild_scheduled_event_id,
+      guildScheduledEventID: stageInstance.guild_scheduled_event_id,
     };
   }
 
   stageInstanceToRaw(stageInstance: StageInstance): RawStageInstance {
     return {
       id: stageInstance.id,
-      guild_id: stageInstance.guildId,
-      channel_id: stageInstance.channelId,
+      guild_id: stageInstance.guildID,
+      channel_id: stageInstance.channelID,
       topic: stageInstance.topic,
       privacy_level: stageInstance.privacyLevel,
       discoverable_disabled: stageInstance.discoverableDisabled,
-      guild_scheduled_event_id: stageInstance.guildScheduledEventId,
+      guild_scheduled_event_id: stageInstance.guildScheduledEventID,
     };
   }
 
   stickerFromRaw(sticker: RawSticker): Sticker {
     return {
       id: sticker.id,
-      packId: sticker.pack_id,
+      packID: sticker.pack_id,
       name: sticker.name,
       description: sticker.description,
       tags: sticker.tags,
@@ -2345,7 +2345,7 @@ export class Util {
       type: sticker.type,
       formatType: sticker.format_type,
       available: sticker.available,
-      guildId: sticker.id,
+      guildID: sticker.id,
       user:
         sticker.user !== undefined ? this.userFromRaw(sticker.user) : undefined,
       sortValue: sticker.sort_value,
@@ -2355,7 +2355,7 @@ export class Util {
   stickerToRaw(sticker: Sticker): RawSticker {
     return {
       id: sticker.id,
-      pack_id: sticker.packId,
+      pack_id: sticker.packID,
       name: sticker.name,
       description: sticker.description,
       tags: sticker.tags,
@@ -2376,12 +2376,12 @@ export class Util {
       id: team.id,
       members: team.members.map((teamMember) => ({
         membershipState: teamMember.membership_state,
-        teamId: teamMember.team_id,
+        teamID: teamMember.team_id,
         user: this.userFromRaw(teamMember.user),
         role: teamMember.role,
       })),
       name: team.name,
-      ownerUserId: team.owner_user_id,
+      ownerUserID: team.owner_user_id,
     };
   }
 
@@ -2391,19 +2391,19 @@ export class Util {
       id: team.id,
       members: team.members.map((teamMember) => ({
         membership_state: teamMember.membershipState,
-        team_id: teamMember.teamId,
+        team_id: teamMember.teamID,
         user: this.userToRaw(teamMember.user),
         role: teamMember.role,
       })),
       name: team.name,
-      owner_user_id: team.ownerUserId,
+      owner_user_id: team.ownerUserID,
     };
   }
 
   threadMemberFromRaw(threadMember: RawThreadMember): ThreadMember {
     return {
       id: threadMember.id,
-      userId: threadMember.user_id,
+      userID: threadMember.user_id,
       joinTimestamp: threadMember.join_timestamp,
       flags: threadMember.flags,
       member:
@@ -2416,7 +2416,7 @@ export class Util {
   threadMemberToRaw(threadMember: ThreadMember): RawThreadMember {
     return {
       id: threadMember.id,
-      user_id: threadMember.userId,
+      user_id: threadMember.userID,
       join_timestamp: threadMember.joinTimestamp,
       flags: threadMember.flags,
       member:
@@ -2431,35 +2431,35 @@ export class Util {
       RawEntitlement,
       "starts_at" | "ends_at" | "subscription_id"
     >
-  ): Omit<Entitlement, "startsAt" | "endsAt" | "subscriptionId"> {
+  ): Omit<Entitlement, "startsAt" | "endsAt" | "subscriptionID"> {
     return {
       id: entitlement.id,
-      skuId: entitlement.sku_id,
-      applicationId: entitlement.application_id,
-      userId: entitlement.user_id,
-      promotionId: entitlement.promotion_id,
+      skuID: entitlement.sku_id,
+      applicationID: entitlement.application_id,
+      userID: entitlement.user_id,
+      promotionID: entitlement.promotion_id,
       type: entitlement.type,
       deleted: entitlement.deleted,
       giftCodeFlags: entitlement.gift_code_flags,
       consumed: entitlement.consumed,
-      guildId: entitlement.guild_id,
+      guildID: entitlement.guild_id,
     };
   }
 
   testEntitlementToRaw(
-    entitlement: Omit<Entitlement, "startsAt" | "endsAt" | "subscriptionId">
+    entitlement: Omit<Entitlement, "startsAt" | "endsAt" | "subscriptionID">
   ): Omit<RawEntitlement, "starts_at" | "ends_at" | "subscription_id"> {
     return {
       id: entitlement.id,
-      sku_id: entitlement.skuId,
-      application_id: entitlement.applicationId,
-      user_id: entitlement.userId,
-      promotion_id: entitlement.promotionId,
+      sku_id: entitlement.skuID,
+      application_id: entitlement.applicationID,
+      user_id: entitlement.userID,
+      promotion_id: entitlement.promotionID,
       type: entitlement.type,
       deleted: entitlement.deleted,
       gift_code_flags: entitlement.giftCodeFlags,
       consumed: entitlement.consumed,
-      guild_id: entitlement.guildId,
+      guild_id: entitlement.guildID,
     };
   }
 
@@ -2509,14 +2509,14 @@ export class Util {
 
   voiceStateFromRaw(voiceState: RawVoiceState): VoiceState {
     return {
-      guildId: voiceState.guild_id,
-      channelId: voiceState.channel_id,
-      userId: voiceState.user_id,
+      guildID: voiceState.guild_id,
+      channelID: voiceState.channel_id,
+      userID: voiceState.user_id,
       member:
         voiceState.member !== undefined
           ? this.guildMemberFromRaw(voiceState.member)
           : undefined,
-      sessionId: voiceState.session_id,
+      sessionID: voiceState.session_id,
       deaf: voiceState.deaf,
       mute: voiceState.mute,
       selfDeaf: voiceState.self_deaf,
@@ -2530,14 +2530,14 @@ export class Util {
 
   voiceStateToRaw(voiceState: VoiceState): RawVoiceState {
     return {
-      guild_id: voiceState.guildId,
-      channel_id: voiceState.channelId,
-      user_id: voiceState.userId,
+      guild_id: voiceState.guildID,
+      channel_id: voiceState.channelID,
+      user_id: voiceState.userID,
       member:
         voiceState.member !== undefined
           ? this.guildMemberToRaw(voiceState.member)
           : undefined,
-      session_id: voiceState.sessionId,
+      session_id: voiceState.sessionID,
       deaf: voiceState.deaf,
       mute: voiceState.mute,
       self_deaf: voiceState.selfDeaf,
@@ -2553,14 +2553,14 @@ export class Util {
     return {
       id: webhook.id,
       type: webhook.type,
-      guildId: webhook.guild_id,
-      channelId: webhook.channel_id,
+      guildID: webhook.guild_id,
+      channelID: webhook.channel_id,
       user:
         webhook.user !== undefined ? this.userFromRaw(webhook.user) : undefined,
       name: webhook.name,
       avatar: webhook.avatar,
       token: webhook.token,
-      applicationId: webhook.application_id,
+      applicationID: webhook.application_id,
       sourceGuild:
         webhook.source_guild !== undefined
           ? this.guildFromRaw(webhook.source_guild)
@@ -2577,14 +2577,14 @@ export class Util {
     return {
       id: webhook.id,
       type: webhook.type,
-      guild_id: webhook.guildId,
-      channel_id: webhook.channelId,
+      guild_id: webhook.guildID,
+      channel_id: webhook.channelID,
       user:
         webhook.user !== undefined ? this.userToRaw(webhook.user) : undefined,
       name: webhook.name,
       avatar: webhook.avatar,
       token: webhook.token,
-      application_id: webhook.applicationId,
+      application_id: webhook.applicationID,
       source_guild:
         webhook.sourceGuild !== undefined
           ? this.guildToRaw(webhook.sourceGuild)

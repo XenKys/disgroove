@@ -22,7 +22,7 @@ client.on("interactionCreate", (interaction) => {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.Modal,
         data: {
-          customId: "modal-submit",
+          customID: "modal-submit",
           title: "Modal submit",
           components: [
             {
@@ -30,7 +30,7 @@ client.on("interactionCreate", (interaction) => {
               components: [
                 {
                   type: ComponentTypes.TextInput,
-                  customId: "text-input",
+                  customID: "text-input",
                   style: TextInputStyles.Short,
                   label: "Text input",
                 },
@@ -41,12 +41,12 @@ client.on("interactionCreate", (interaction) => {
       });
     }
   } else if (interaction.type === InteractionType.ModalSubmit) {
-    if (interaction.data.customId === "modal-submit") {
+    if (interaction.data.customID === "modal-submit") {
       const actionRow = interaction.data.components.find(
         (component) => component.type === ComponentTypes.ActionRow
       );
       const textInput = actionRow.components.find(
-        (component) => component.customId === "text-input"
+        (component) => component.customID === "text-input"
       );
 
       client.createInteractionResponse(interaction.id, interaction.token, {

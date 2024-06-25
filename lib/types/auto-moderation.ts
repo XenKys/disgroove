@@ -46,9 +46,9 @@ export interface RawActionMetadata {
 
 export interface AutoModerationRule {
   id: snowflake;
-  guildId: snowflake;
+  guildID: snowflake;
   name: string;
-  creatorId: snowflake;
+  creatorID: snowflake;
   eventType: EventTypes;
   triggerType: TriggerTypes;
   triggerMetadata: TriggerMetadata;
@@ -73,7 +73,7 @@ export interface AutoModerationAction {
 }
 
 export interface ActionMetadata {
-  channelId: snowflake;
+  channelID: snowflake;
   durationSeconds: number;
   customMessage?: string;
 }

@@ -20,8 +20,8 @@ export interface RawSKU {
 export interface SKU {
   id: snowflake;
   type: SKUTypes;
-  dependentSKUId?: string | null; // Undocumented
-  applicationId: snowflake;
+  dependentSKUID?: string | null; // Undocumented
+  applicationID: snowflake;
   manifestLabels?: null; // Undocumented
   accessType?: number; // Undocumented
   name: string;

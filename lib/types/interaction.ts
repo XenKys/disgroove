@@ -144,13 +144,13 @@ export interface RawInteractionCallbackData {
 
 export interface Interaction {
   id: snowflake;
-  applicationId: snowflake;
+  applicationID: snowflake;
   type: InteractionType;
   data?: ApplicationCommandData & MessageComponentData & ModalSubmitData;
   guild?: { locale: Locales } & Pick<Guild, "id" | "features">;
-  guildId?: snowflake;
+  guildID?: snowflake;
   channel?: Channel;
-  channelId?: snowflake;
+  channelID?: snowflake;
   member?: GuildMember;
   user?: User;
   token: string;
@@ -170,19 +170,19 @@ export interface ApplicationCommandData {
   type: ApplicationCommandTypes;
   resolved?: ResolvedData;
   options?: Array<ApplicationCommandInteractionDataOption>;
-  guildId?: snowflake;
-  targetId?: snowflake;
+  guildID?: snowflake;
+  targetID?: snowflake;
 }
 
 export interface MessageComponentData {
-  customId: string;
+  customID: string;
   componentType: ComponentTypes;
   values?: Array<string>;
   resolved?: ResolvedData;
 }
 
 export interface ModalSubmitData {
-  customId: string;
+  customID: string;
   components: Array<{
     type: ComponentTypes.ActionRow;
     components: Array<TextInput>;
@@ -230,6 +230,6 @@ export interface InteractionCallbackData {
   poll?: PollCreateParams;
   files?: Array<File>;
   choices?: Array<ApplicationCommandOptionChoice>;
-  customId?: string;
+  customID?: string;
   title?: string;
 }

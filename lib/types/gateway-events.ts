@@ -434,16 +434,16 @@ export interface IdentifyConnectionProperties {
 
 export interface Resume {
   token: string;
-  sessionId: string;
+  sessionID: string;
   seq: number;
 }
 
 export interface RequestGuildMembers {
-  guildId: snowflake;
+  guildID: snowflake;
   query?: string;
   limit?: number;
   presences?: boolean;
-  userIds?: snowflake | Array<snowflake>;
+  userIDs?: snowflake | Array<snowflake>;
   nonce?: string;
 }
 
@@ -455,41 +455,41 @@ export interface GatewayPresenceUpdate {
 }
 
 export interface AutoModerationActionExecutionEventFields {
-  guildId: snowflake;
+  guildID: snowflake;
   action: AutoModerationAction;
-  ruleId: snowflake;
+  ruleID: snowflake;
   ruleTriggerType: TriggerTypes;
-  userId: snowflake;
-  channelId?: snowflake;
-  messageId?: snowflake;
-  alertSystemMessageId?: snowflake;
+  userID: snowflake;
+  channelID?: snowflake;
+  messageID?: snowflake;
+  alertSystemMessageID?: snowflake;
   content: string;
   matchedKeyword: string | null;
   matchedContent: string | null;
 }
 
 export interface ThreadListSyncEventFields {
-  guildId: snowflake;
-  channelIds?: Array<snowflake>;
+  guildID: snowflake;
+  channelIDs?: Array<snowflake>;
   threads: Array<Channel>;
   members: Array<ThreadMember>;
 }
 
 export interface ThreadMemberUpdateEventExtraFields {
-  guildId: snowflake;
+  guildID: snowflake;
 }
 
 export interface ThreadMembersUpdateEventFields {
   id: snowflake;
-  guildId: snowflake;
+  guildID: snowflake;
   memberCount: number;
   addedMembers?: Array<ThreadMember>;
-  removedMemberIds?: Array<snowflake>;
+  removedMemberIDs?: Array<snowflake>;
 }
 
 export interface ChannelPinsUpdateEventFields {
-  guildId?: snowflake;
-  channelId: snowflake;
+  guildID?: snowflake;
+  channelID: snowflake;
   lastPinTimestamp?: timestamp | null;
 }
 
@@ -508,34 +508,34 @@ export interface GuildCreateEventExtraFields {
 }
 
 export interface GuildAuditLogEntryCreateExtraFields {
-  guildId: snowflake;
+  guildID: snowflake;
 }
 
 export interface GuildBanAddEventFields {
-  guildId: snowflake;
+  guildID: snowflake;
   user: User;
 }
 
 export interface GuildBanRemoveEventFields {
-  guildId: snowflake;
+  guildID: snowflake;
   user: User;
 }
 
 export interface GuildIntegrationsUpdateEventFields {
-  guildId: snowflake;
+  guildID: snowflake;
 }
 
 export interface GuildMemberAddEventExtraFields {
-  guildId: snowflake;
+  guildID: snowflake;
 }
 
 export interface GuildMemberRemoveEventFields {
-  guildId: snowflake;
+  guildID: snowflake;
   user: User;
 }
 
 export interface GuildMemberUpdateEventFields {
-  guildId: snowflake;
+  guildID: snowflake;
   roles: Array<snowflake>;
   user: User;
   nick?: string | null;
@@ -551,7 +551,7 @@ export interface GuildMemberUpdateEventFields {
 }
 
 export interface GuildMembersChunkEventFields {
-  guildId: snowflake;
+  guildID: snowflake;
   members: Array<GuildMember>;
   chunkIndex: number;
   chunkCount: number;
@@ -561,24 +561,24 @@ export interface GuildMembersChunkEventFields {
 }
 
 export interface IntegrationCreateEventExtraFields {
-  guildId: snowflake;
+  guildID: snowflake;
 }
 
 export interface IntegrationUpdateEventExtraFields {
-  guildId: snowflake;
+  guildID: snowflake;
 }
 
 export interface IntegrationDeleteEventFields {
   id: snowflake;
-  guildId: snowflake;
-  applicationId?: snowflake;
+  guildID: snowflake;
+  applicationID?: snowflake;
 }
 
 export interface InviteCreateEventFields {
-  channelId: snowflake;
+  channelID: snowflake;
   code: string;
   createdAt: timestamp;
-  guildId?: snowflake;
+  guildID?: snowflake;
   inviter?: User;
   maxAge: number;
   maxUses: number;
@@ -590,68 +590,68 @@ export interface InviteCreateEventFields {
 }
 
 export interface InviteDeleteEventFields {
-  channelId: snowflake;
-  guildId?: snowflake;
+  channelID: snowflake;
+  guildID?: snowflake;
   code: string;
 }
 
 export interface MessageCreateEventExtraFields {
-  guildId?: snowflake;
+  guildID?: snowflake;
   member?: GuildMember;
   mentions: Array<User>;
 }
 
 export interface MessageDeleteEventFields {
   id: snowflake;
-  channelId: snowflake;
-  guildId?: snowflake;
+  channelID: snowflake;
+  guildID?: snowflake;
 }
 
 export interface MessageDeleteBulkEventFields {
   ids: Array<snowflake>;
-  channelId: snowflake;
-  guildId?: snowflake;
+  channelID: snowflake;
+  guildID?: snowflake;
 }
 
 export interface MessageReactionAddEventFields {
-  userId: snowflake;
-  channelId: snowflake;
-  messageId: snowflake;
-  guildId?: snowflake;
+  userID: snowflake;
+  channelID: snowflake;
+  messageID: snowflake;
+  guildID?: snowflake;
   member?: GuildMember;
   emoji: Emoji;
-  messageAuthorId?: snowflake;
+  messageAuthorID?: snowflake;
   burst: boolean;
   burstColors?: Array<string>;
   type: ReactionTypes;
 }
 
 export interface MessageReactionRemoveEventFields {
-  userId: snowflake;
-  channelId: snowflake;
-  messageId: snowflake;
-  guildId?: snowflake;
+  userID: snowflake;
+  channelID: snowflake;
+  messageID: snowflake;
+  guildID?: snowflake;
   emoji: Emoji;
   burst: boolean;
   type: ReactionTypes;
 }
 
 export interface MessageReactionRemoveAllEventFields {
-  channelId: snowflake;
-  messageId: snowflake;
-  guildId?: snowflake;
+  channelID: snowflake;
+  messageID: snowflake;
+  guildID?: snowflake;
 }
 
 export interface MessageReactionRemoveEmojiEventFields {
-  channelId: snowflake;
-  guildId?: snowflake;
-  messageId: snowflake;
+  channelID: snowflake;
+  guildID?: snowflake;
+  messageID: snowflake;
   emoji: Emoji;
 }
 
 export interface PresenceUpdateEventFields {
   user: User;
-  guildId: snowflake;
+  guildID: snowflake;
   status: StatusTypes;
   activities: Array<Activity>;
   clientStatus: ClientStatus;
@@ -669,7 +669,7 @@ export interface Activity {
   url?: string | null;
   createdAt: timestamp;
   timestamps?: ActivityTimestamps;
-  applicationId?: snowflake;
+  applicationID?: snowflake;
   details?: string | null;
   state?: string | null;
   party?: ActivityParty;
@@ -709,31 +709,31 @@ export interface ActivityButton {
 }
 
 export interface TypingStartEventFields {
-  channelId: snowflake;
-  guildId?: snowflake;
-  userId: snowflake;
+  channelID: snowflake;
+  guildID?: snowflake;
+  userID: snowflake;
   timestamp: timestamp;
   member?: GuildMember;
 }
 
 export interface VoiceServerUpdateEventFields {
   token: string;
-  guildId: snowflake;
+  guildID: snowflake;
   endpoint: string | null;
 }
 
 export interface MessagePollVoteAddFields {
-  userId: snowflake;
-  channelId: snowflake;
-  messageId: snowflake;
-  guildId?: snowflake;
-  answerId: number;
+  userID: snowflake;
+  channelID: snowflake;
+  messageID: snowflake;
+  guildID?: snowflake;
+  answerID: number;
 }
 
 export interface MessagePollVoteRemoveFields {
-  userId: snowflake;
-  channelId: snowflake;
-  messageId: snowflake;
-  guildId?: snowflake;
-  answerId: number;
+  userID: snowflake;
+  channelID: snowflake;
+  messageID: snowflake;
+  guildID?: snowflake;
+  answerID: number;
 }

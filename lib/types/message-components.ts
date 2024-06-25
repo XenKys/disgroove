@@ -76,8 +76,8 @@ export interface Button {
   style: ButtonStyles;
   label?: string;
   emoji?: Pick<Emoji, "name" | "id" | "animated">;
-  customId?: string;
-  skuId?: snowflake;
+  customID?: string;
+  skuID?: snowflake;
   url?: string;
   disabled?: boolean;
 }
@@ -89,7 +89,7 @@ export interface SelectMenu {
     | ComponentTypes.RoleSelect
     | ComponentTypes.StringSelect
     | ComponentTypes.UserSelect;
-  customId: string;
+  customID: string;
   options?: Array<SelectOption>;
   channelTypes?: Array<ChannelTypes>;
   placeholder?: string;
@@ -114,7 +114,7 @@ export interface DefaultValue {
 
 export interface TextInput {
   type: ComponentTypes.TextInput;
-  customId: string;
+  customID: string;
   style: TextInputStyles;
   label: string;
   minLength?: number;

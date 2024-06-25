@@ -24,12 +24,12 @@ export interface Team {
   id: snowflake;
   members: Array<TeamMember>;
   name: string;
-  ownerUserId: snowflake;
+  ownerUserID: snowflake;
 }
 
 export interface TeamMember {
   membershipState: number;
-  teamId: snowflake;
+  teamID: snowflake;
   user: User;
   role: TeamMemberRoleTypes;
 }

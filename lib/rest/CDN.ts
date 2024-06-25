@@ -1,68 +1,68 @@
 import type { snowflake } from "../types/common";
 
 export const achievementIcon = (
-  applicationId: snowflake,
-  achievementId: snowflake,
+  applicationID: snowflake,
+  achievementID: snowflake,
   iconHash: string
 ) =>
-  `https://cdn.discordapp.com/app-assets/${applicationId}/achievements/${achievementId}/icons/${iconHash}.png` as const;
+  `https://cdn.discordapp.com/app-assets/${applicationID}/achievements/${achievementID}/icons/${iconHash}.png` as const;
 export const applicationAsset = (
-  applicationId: snowflake,
-  assetId: snowflake
+  applicationID: snowflake,
+  assetID: snowflake
 ) =>
-  `https://cdn.discordapp.com/app-assets/${applicationId}/${assetId}.png` as const;
+  `https://cdn.discordapp.com/app-assets/${applicationID}/${assetID}.png` as const;
 export const applicationCover = (
-  applicationId: snowflake,
+  applicationID: snowflake,
   coverImage: string
 ) =>
-  `https://cdn.discordapp.com/app-icons/${applicationId}/${coverImage}.png` as const;
-export const applicationIcon = (applicationId: snowflake, icon: string) =>
-  `https://cdn.discordapp.com/app-icons/${applicationId}/${icon}.png` as const;
-export const customEmoji = (emojiId: snowflake) =>
-  `https://cdn.discordapp.com/emojis/${emojiId}.png` as const;
+  `https://cdn.discordapp.com/app-icons/${applicationID}/${coverImage}.png` as const;
+export const applicationIcon = (applicationID: snowflake, icon: string) =>
+  `https://cdn.discordapp.com/app-icons/${applicationID}/${icon}.png` as const;
+export const customEmoji = (emojiID: snowflake) =>
+  `https://cdn.discordapp.com/emojis/${emojiID}.png` as const;
 export const defaultUserAvatar = (index: string) =>
   `https://cdn.discordapp.com/embed/avatars/${index}.png` as const;
-export const guildBanner = (guildId: snowflake, banner: string) =>
-  `https://cdn.discordapp.com/banners/${guildId}/${banner}.png` as const;
-export const guildDiscoverySplash = (guildId: snowflake, splash: string) =>
-  `https://cdn.discordapp.com/discovery-splashes/${guildId}/${splash}.png` as const;
-export const guildIcon = (guildId: snowflake, icon: string) =>
-  `https://cdn.discordapp.com/icons/${guildId}/${icon}.png` as const;
+export const guildBanner = (guildID: snowflake, banner: string) =>
+  `https://cdn.discordapp.com/banners/${guildID}/${banner}.png` as const;
+export const guildDiscoverySplash = (guildID: snowflake, splash: string) =>
+  `https://cdn.discordapp.com/discovery-splashes/${guildID}/${splash}.png` as const;
+export const guildIcon = (guildID: snowflake, icon: string) =>
+  `https://cdn.discordapp.com/icons/${guildID}/${icon}.png` as const;
 export const guildMemberAvatar = (
-  guildId: snowflake,
-  userId: snowflake,
+  guildID: snowflake,
+  userID: snowflake,
   avatar: string
 ) =>
-  `https://cdn.discordapp.com/guilds/${guildId}/users/${userId}/avatars/${avatar}.png` as const;
+  `https://cdn.discordapp.com/guilds/${guildID}/users/${userID}/avatars/${avatar}.png` as const;
 export const guildMemberBanner = (
-  guildId: snowflake,
-  userId: snowflake,
+  guildID: snowflake,
+  userID: snowflake,
   banner: string
 ) =>
-  `https://cdn.discordapp.com/guilds/${guildId}/users/${userId}/banners/${banner}.png` as const;
+  `https://cdn.discordapp.com/guilds/${guildID}/users/${userID}/banners/${banner}.png` as const;
 export const guildScheduledEventCover = (
-  scheduledEventId: snowflake,
+  scheduledEventID: snowflake,
   coverImage: string
 ) =>
-  `https://cdn.discordapp.com/guild-events/${scheduledEventId}/${coverImage}.png` as const;
-export const guildSplash = (guildId: snowflake, splash: string) =>
-  `https://cdn.discordapp.com/splashes/${guildId}/${splash}.png` as const;
-export const roleIcon = (roleId: snowflake, icon: string) =>
-  `https://cdn.discordapp.com/role-icons/${roleId}/${icon}.png` as const;
-export const stickerPackBanner = (assetId: snowflake) =>
-  `https://cdn.discordapp.com/app-assets/710982414301790216/store/${assetId}.png` as const;
-export const sticker = (stickerId: snowflake) =>
-  `https://cdn.discordapp.com/stickers/${stickerId}.png` as const;
-export const storePageAsset = (applicationId: snowflake, assetId: snowflake) =>
-  `https://cdn.discordapp.com/app-assets/${applicationId}/store/${assetId}` as const;
-export const teamIcon = (teamId: snowflake, icon: string) =>
-  `https://cdn.discordapp.com/team-icons/${teamId}/${icon}.png` as const;
-export const userAvatar = (userId: snowflake, avatar: string) =>
-  `https://cdn.discordapp.com/avatars/${userId}/${avatar}.png` as const;
+  `https://cdn.discordapp.com/guild-events/${scheduledEventID}/${coverImage}.png` as const;
+export const guildSplash = (guildID: snowflake, splash: string) =>
+  `https://cdn.discordapp.com/splashes/${guildID}/${splash}.png` as const;
+export const roleIcon = (roleID: snowflake, icon: string) =>
+  `https://cdn.discordapp.com/role-icons/${roleID}/${icon}.png` as const;
+export const stickerPackBanner = (assetID: snowflake) =>
+  `https://cdn.discordapp.com/app-assets/710982414301790216/store/${assetID}.png` as const;
+export const sticker = (stickerID: snowflake) =>
+  `https://cdn.discordapp.com/stickers/${stickerID}.png` as const;
+export const storePageAsset = (applicationID: snowflake, assetID: snowflake) =>
+  `https://cdn.discordapp.com/app-assets/${applicationID}/store/${assetID}` as const;
+export const teamIcon = (teamID: snowflake, icon: string) =>
+  `https://cdn.discordapp.com/team-icons/${teamID}/${icon}.png` as const;
+export const userAvatar = (userID: snowflake, avatar: string) =>
+  `https://cdn.discordapp.com/avatars/${userID}/${avatar}.png` as const;
 export const userAvatarDecoration = (
-  userId: snowflake,
+  userID: snowflake,
   avatarDecoration: string
 ) =>
-  `https://cdn.discordapp.com/avatar-decorations/${userId}/${avatarDecoration}.png` as const;
-export const userBanner = (userId: snowflake, banner: string) =>
-  `https://cdn.discordapp.com/banners/${userId}/${banner}.png` as const;
+  `https://cdn.discordapp.com/avatar-decorations/${userID}/${avatarDecoration}.png` as const;
+export const userBanner = (userID: snowflake, banner: string) =>
+  `https://cdn.discordapp.com/banners/${userID}/${banner}.png` as const;

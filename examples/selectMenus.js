@@ -38,7 +38,7 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customId: "string",
+                  customID: "string",
                   options: [
                     {
                       description: "First value",
@@ -73,7 +73,7 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customId: "user",
+                  customID: "user",
                   placeholder: "Select a user",
                   type: ComponentTypes.UserSelect,
                 },
@@ -91,7 +91,7 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customId: "role",
+                  customID: "role",
                   placeholder: "Select a role",
                   type: ComponentTypes.RoleSelect,
                 },
@@ -109,7 +109,7 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customId: "channel",
+                  customID: "channel",
                   placeholder: "Select a channel",
                   type: ComponentTypes.ChannelSelect,
                 },
@@ -121,7 +121,7 @@ client.on("interactionCreate", (interaction) => {
       });
     }
   } else if (interaction.type === InteractionType.MessageComponent) {
-    if (interaction.data.customId === "string") {
+    if (interaction.data.customID === "string") {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
@@ -129,7 +129,7 @@ client.on("interactionCreate", (interaction) => {
           flags: MessageFlags.Ephemeral,
         },
       });
-    } else if (interaction.data.customId === "user") {
+    } else if (interaction.data.customID === "user") {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
@@ -137,7 +137,7 @@ client.on("interactionCreate", (interaction) => {
           flags: MessageFlags.Ephemeral,
         },
       });
-    } else if (interaction.data.customId === "role") {
+    } else if (interaction.data.customID === "role") {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
@@ -145,7 +145,7 @@ client.on("interactionCreate", (interaction) => {
           flags: MessageFlags.Ephemeral,
         },
       });
-    } else if (interaction.data.customId === "channel") {
+    } else if (interaction.data.customID === "channel") {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {

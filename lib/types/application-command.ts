@@ -71,8 +71,8 @@ export interface RawApplicationCommandPermission {
 export interface ApplicationCommand {
   id: snowflake;
   type?: ApplicationCommandTypes;
-  applicationId: snowflake;
-  guildId?: snowflake;
+  applicationID: snowflake;
+  guildID?: snowflake;
   name: string;
   nameLocalizations?: LocaleMap | null;
   description: string;
@@ -112,8 +112,8 @@ export interface ApplicationCommandOptionChoice {
 
 export interface GuildApplicationCommandPermissions {
   id: snowflake;
-  applicationId: snowflake;
-  guildId: snowflake;
+  applicationID: snowflake;
+  guildID: snowflake;
   permissions: Array<ApplicationCommandPermission>;
 }
 
