@@ -1,20 +1,22 @@
-import type { ErrorResponse } from "../rest";
+import type { JSONErrorCodes } from "../constants";
 
 export class RESTError extends Error {
   override name: string = "RESTError";
-  responseJSON: ErrorResponse;
   method: string;
   endpoint: string;
 
-  constructor(responseJSON: ErrorResponse, method: string, endpoint: string) {
+  constructor(
+    code: JSONErrorCodes,
+    message: string,
+    errors: Record<string, unknown>,
+    method: string,
+    endpoint: string
+  ) {
     super();
 
-    this.responseJSON = responseJSON;
     this.method = method;
     this.endpoint = endpoint;
-    this.message = `[${responseJSON.code}] ${
-      responseJSON.message
-    }\n${this.flattenErrors(responseJSON.errors)}`;
+    this.message = `[${code}] ${message}\n${this.flattenErrors(errors)}`;
   }
 
   flattenErrors(
@@ -54,8 +56,6 @@ export class RESTError extends Error {
 
 export class HTTPError extends Error {
   override name: string = "HTTPError";
-  status: number;
-  statusText: string;
   method: string;
   endpoint: string;
 
@@ -67,8 +67,6 @@ export class HTTPError extends Error {
   ) {
     super();
 
-    this.status = status;
-    this.statusText = statusText;
     this.method = method;
     this.endpoint = endpoint;
     this.message = `[${status}] ${statusText}`;

@@ -130,7 +130,13 @@ export class RequestManager {
 
             reject(
               responseJSON.code !== 0
-                ? new RESTError(responseJSON, method, endpoint)
+                ? new RESTError(
+                    responseJSON.code,
+                    responseJSON.message,
+                    responseJSON.errors,
+                    method,
+                    endpoint
+                  )
                 : new HTTPError(
                     response.status,
                     response.statusText,
