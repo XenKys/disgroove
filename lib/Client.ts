@@ -4328,7 +4328,7 @@ export class Client extends EventEmitter {
       Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
     >
   ): void {
-    for (const [id, shard] of this.shards) shard.setPresence(options);
+    for (const [id, shard] of this.shards) shard.updatePresence(options);
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */

@@ -29,25 +29,6 @@ export class Shard {
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
   }
 
-  /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
-  setPresence(
-    options: Partial<
-      Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
-    >
-  ): void {
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.PresenceUpdate,
-        d: {
-          since: options.status === StatusTypes.Idle ? Date.now() : null,
-          activities: options.activities,
-          status: options.status ?? StatusTypes.Online,
-          afk: !!options.afk,
-        },
-      })
-    );
-  }
-
   /** https://discord.com/developers/docs/topics/gateway#connections */
   connect(): void {
     this.ws.on("open", () => this.onWebSocketOpen());
@@ -728,6 +709,25 @@ export class Shard {
           token: options.token,
           session_id: options.sessionId,
           seq: options.seq,
+        },
+      })
+    );
+  }
+
+  /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
+  updatePresence(
+    options: Partial<
+      Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+    >
+  ): void {
+    this.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.PresenceUpdate,
+        d: {
+          since: options.status === StatusTypes.Idle ? Date.now() : null,
+          activities: options.activities,
+          status: options.status ?? StatusTypes.Online,
+          afk: !!options.afk,
         },
       })
     );
