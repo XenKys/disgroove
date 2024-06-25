@@ -37,13 +37,16 @@ export class Shard {
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
   }
 
+  /** https://discord.com/developers/docs/topics/gateway#connections */
   disconnect(): void {
     if (this.heartbeatInterval) {
       clearInterval(this.heartbeatInterval);
+
       this.heartbeatInterval = null;
     }
   }
 
+  /** https://discord.com/developers/docs/topics/gateway-events#heartbeat */
   heartbeat(lastSequence: number | null): void {
     this.ws.send(
       JSON.stringify({
@@ -53,6 +56,7 @@ export class Shard {
     );
   }
 
+  /** https://discord.com/developers/docs/topics/gateway-events#identify */
   identify(options: Identify): void {
     this.ws.send(
       JSON.stringify({
@@ -685,6 +689,7 @@ export class Shard {
     throw new GatewayError(`[${code}] ${reason}`);
   }
 
+  /** https://discord.com/developers/docs/topics/gateway-events#request-guild-members */
   requestGuildMembers(options: RequestGuildMembers): void {
     this.ws.send(
       JSON.stringify({
@@ -701,6 +706,7 @@ export class Shard {
     );
   }
 
+  /** https://discord.com/developers/docs/topics/gateway-events#resume */
   resume(options: Resume): void {
     this.ws.send(
       JSON.stringify({
