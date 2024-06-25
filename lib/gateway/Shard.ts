@@ -8,6 +8,7 @@ import type { RawEmoji } from "../types/emoji";
 import type {
   GatewayPresenceUpdate,
   Identify,
+  RawPayload,
   RawPresenceUpdateEventFields,
   RequestGuildMembers,
   Resume,
@@ -92,7 +93,7 @@ export class Shard {
   }
 
   private onWebSocketMessage(data: RawData): void {
-    const packet = JSON.parse(data.toString());
+    const packet: RawPayload = JSON.parse(data.toString());
 
     switch (packet.op) {
       case GatewayOPCodes.Reconnect:

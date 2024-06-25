@@ -2,6 +2,7 @@ import type {
   ActivityFlags,
   ActivityType,
   GatewayIntents,
+  GatewayOPCodes,
   GuildMemberFlags,
   InviteTargetTypes,
   ReactionTypes,
@@ -34,6 +35,14 @@ import type {
   AvatarDecorationData,
 } from "./user";
 import type { RawVoiceState, VoiceState } from "./voice";
+
+/** https://discord.com/developers/docs/topics/gateway-events#payload-structure */
+export interface RawPayload {
+  op: GatewayOPCodes;
+  d: any | null;
+  s: number | null;
+  t: string | null;
+}
 
 /** https://discord.com/developers/docs/topics/gateway-events#identify-identify-structure */
 export interface RawIdentify {
@@ -398,6 +407,13 @@ export interface RawMessagePollVoteRemoveFields {
   message_id: snowflake;
   guild_id?: snowflake;
   answer_id: number;
+}
+
+export interface Payload {
+  op: GatewayOPCodes;
+  d: any | null;
+  s: number | null;
+  t: string | null;
 }
 
 export interface Identify {
