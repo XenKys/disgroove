@@ -1,4 +1,4 @@
-import { ErrorResponse } from "../rest";
+import type { ErrorResponse } from "../rest";
 
 export class RESTError extends Error {
   override name: string = "RESTError";
