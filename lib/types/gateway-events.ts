@@ -88,7 +88,7 @@ export interface RawGatewayPresenceUpdate {
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
-export interface RawAutoModerationActionExectionEventFields {
+export interface RawAutoModerationActionExecutionEventFields {
   guild_id: snowflake;
   action: RawAutoModerationAction;
   rule_id: snowflake;
