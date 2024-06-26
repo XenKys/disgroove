@@ -3,7 +3,7 @@ const {
   InteractionType,
   InteractionCallbackType,
 } = require("disgroove");
-const client = new Client("token");
+const client = new Client("B0t.T0k3N");
 const fs = require("fs");
 
 client.once("ready", () =>
