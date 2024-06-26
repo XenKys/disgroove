@@ -278,6 +278,7 @@ export interface RawEmbedField {
 export interface RawAttachment {
   id: snowflake;
   filename: string;
+  title?: string;
   description?: string;
   content_type?: string;
   size: number;
@@ -538,6 +539,7 @@ export interface EmbedField {
 export interface Attachment {
   id: snowflake;
   filename: string;
+  title?: string;
   description?: string;
   contentType?: string;
   size: number;

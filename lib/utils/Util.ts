@@ -261,6 +261,7 @@ export class Util {
     return {
       id: attachment.id,
       filename: attachment.filename,
+      title: attachment.title,
       description: attachment.description,
       contentType: attachment.content_type,
       size: attachment.size,
@@ -279,6 +280,7 @@ export class Util {
     return {
       id: attachment.id,
       filename: attachment.filename,
+      title: attachment.title,
       description: attachment.description,
       content_type: attachment.contentType,
       size: attachment.size,
