@@ -7,6 +7,7 @@ import type { RawChannel, RawThreadMember } from "../types/channel";
 import type { RawEmoji } from "../types/emoji";
 import type {
   GatewayPresenceUpdate,
+  GatewayVoiceStateUpdate,
   Identify,
   RawPayload,
   RawPresenceUpdateEventFields,
@@ -613,11 +614,20 @@ export class Shard {
         );
         break;
       case "VOICE_SERVER_UPDATE":
-        this.client.emit(GatewayEvents.VoiceServerUpdate, {
-          token: packet.d.token,
-          guildID: packet.d.guild_id,
-          endpoint: packet.d.endpoint,
-        });
+        {
+          this.client.voiceConnections.connect(packet.d.endpoint, {
+            serverID: packet.d.guild_id,
+            userID: this.client.user.id,
+            sessionID: this.sessionID,
+            token: packet.d.token,
+          });
+
+          this.client.emit(GatewayEvents.VoiceServerUpdate, {
+            token: packet.d.token,
+            guildID: packet.d.guild_id,
+            endpoint: packet.d.endpoint,
+          });
+        }
         break;
       case "WEBHOOKS_UPDATE":
         this.client.emit(
