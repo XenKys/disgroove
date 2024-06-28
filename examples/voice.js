@@ -69,7 +69,7 @@ client.on("voiceServerUpdate", (voiceServer) => {
   const connection = client.voiceConnections.get(voiceServer.guildID);
   const guild = client.guilds.get(voiceServer.guildID);
 
-  connection.on("ready", () =>
+  connection.once("ready", () =>
     console.log(`Voice connection ready on ${guild.name}`)
   );
 });
