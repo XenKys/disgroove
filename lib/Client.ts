@@ -4190,17 +4190,12 @@ export class Client extends EventEmitter {
       selfDeaf?: boolean;
     }
   ): void {
-    this.shards.get(this.guildShardMap[guildID])?.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.VoiceStateUpdate,
-        d: {
-          guild_id: guildID,
-          channel_id: channelID,
-          self_mute: !!options?.selfMute,
-          self_deaf: !!options?.selfDeaf,
-        },
-      })
-    );
+    this.shards.get(this.guildShardMap[guildID])?.updateVoiceState({
+      guildID: guildID,
+      channelID: channelID,
+      selfMute: !!options?.selfMute,
+      selfDeaf: !!options?.selfDeaf,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/user#leave-guild */
@@ -4218,17 +4213,12 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   leaveVoiceChannel(guildID: snowflake): void {
-    this.shards.get(this.guildShardMap[guildID])?.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.VoiceStateUpdate,
-        d: {
-          guild_id: guildID,
-          channel_id: null,
-          self_mute: false,
-          self_deaf: false,
-        },
-      })
-    );
+    this.shards.get(this.guildShardMap[guildID])?.updateVoiceState({
+      guildID: guildID,
+      channelID: null,
+      selfMute: false,
+      selfDeaf: false,
+    });
   }
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */

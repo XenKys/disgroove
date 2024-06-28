@@ -745,4 +745,19 @@ export class Shard {
       })
     );
   }
+
+  /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
+  updateVoiceState(options: GatewayVoiceStateUpdate): void {
+    this.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.VoiceStateUpdate,
+        d: {
+          guild_id: options.guildID,
+          channel_id: options.channelID,
+          self_mute: options.selfMute,
+          self_deaf: options.selfDeaf,
+        },
+      })
+    );
+  }
 }

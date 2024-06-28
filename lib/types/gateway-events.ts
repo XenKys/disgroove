@@ -87,6 +87,14 @@ export interface RawGatewayPresenceUpdate {
   afk: boolean;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#update-voice-state-gateway-voice-state-update-structure */
+export interface RawGatewayVoiceStateUpdate {
+  guild_id: snowflake;
+  channel_id: snowflake | null;
+  self_mute: boolean;
+  self_deaf: boolean;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface RawAutoModerationActionExecutionEventFields {
   guild_id: snowflake;
@@ -452,6 +460,13 @@ export interface GatewayPresenceUpdate {
   activities: Array<Pick<Activity, "name" | "type" | "url" | "state">>;
   status: StatusTypes;
   afk: boolean;
+}
+
+export interface GatewayVoiceStateUpdate {
+  guildID: snowflake;
+  channelID: snowflake | null;
+  selfMute: boolean;
+  selfDeaf: boolean;
 }
 
 export interface AutoModerationActionExecutionEventFields {
