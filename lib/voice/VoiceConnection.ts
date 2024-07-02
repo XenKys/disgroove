@@ -10,6 +10,7 @@ import type {
   VoiceIdentifyPayload,
   VoiceReadyPayload,
 } from "../types/voice-connections";
+import type { RawPayload } from "../types/gateway-events";
 
 export class VoiceConnection extends EventEmitter {
   ws: WebSocket;
@@ -84,7 +85,7 @@ export class VoiceConnection extends EventEmitter {
   }
 
   private onWebSocketMessage(data: RawData): void {
-    const packet = JSON.parse(data.toString());
+    const packet: Pick<RawPayload, "op" | "d"> = JSON.parse(data.toString());
 
     switch (packet.op) {
       case VoiceOPCodes.Ready:

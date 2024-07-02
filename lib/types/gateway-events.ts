@@ -38,7 +38,7 @@ import type { RawVoiceState, VoiceState } from "./voice";
 
 /** https://discord.com/developers/docs/topics/gateway-events#payload-structure */
 export interface RawPayload {
-  op: GatewayOPCodes;
+  op: number;
   d: any | null;
   s: number | null;
   t: string | null;
