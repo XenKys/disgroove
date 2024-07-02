@@ -3,6 +3,8 @@
 A module to interface with Discord
 
 - Fast
+- Lightweight
+- Flexible
 - 100% coverage of the [Official Discord API Documentation](https://discord.com/developers/docs/intro)
 
 ## Installation
