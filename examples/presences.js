@@ -1,7 +1,7 @@
 const { Client, ActivityType, StatusTypes } = require("disgroove");
 const client = new Client("B0t.T0k3N");
 
-client.once("ready", () =>
+client.once("ready", () => {
   client.setPresence({
     activities: [
       {
@@ -10,7 +10,7 @@ client.once("ready", () =>
       },
     ],
     status: StatusTypes.Online,
-  })
-);
+  });
+});
 
 client.connect();

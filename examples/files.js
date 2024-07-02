@@ -6,14 +6,14 @@ const {
 const client = new Client("B0t.T0k3N");
 const fs = require("fs");
 
-client.once("ready", () =>
+client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "file",
       description: "Responds with a file",
     },
-  ])
-);
+  ]);
+});
 
 client.on("interactionCreate", (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return;

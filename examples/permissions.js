@@ -6,15 +6,15 @@ const {
 } = require("disgroove");
 const client = new Client("B0t.T0k3N");
 
-client.once("ready", () =>
+client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "permission",
       description:
         "Responds whether you have the permission to send messages or not",
     },
-  ])
-);
+  ]);
+});
 
 client.on("interactionCreate", (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return;

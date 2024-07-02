@@ -6,14 +6,14 @@ const {
 } = require("disgroove");
 const client = new Client("B0t.T0k3N");
 
-client.once("ready", () =>
+client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "ephemeral",
       description: "Responds with an ephemeral message",
     },
-  ])
-);
+  ]);
+});
 
 client.on("interactionCreate", (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return;

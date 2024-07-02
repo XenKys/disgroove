@@ -7,14 +7,14 @@ const {
 } = require("disgroove");
 const client = new Client("B0t.T0k3N");
 
-client.once("ready", () =>
+client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "buttons",
       description: "Responds with some buttons",
     },
-  ])
-);
+  ]);
+});
 
 client.on("interactionCreate", (interaction) => {
   if (interaction.type === InteractionType.ApplicationCommand) {

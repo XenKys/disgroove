@@ -11,7 +11,7 @@ const client = new Client("B0t.T0k3N", {
   intents: GatewayIntents.All,
 });
 
-client.once("ready", async () =>
+client.once("ready", async () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "join",
@@ -30,8 +30,8 @@ client.once("ready", async () =>
       name: "leave",
       description: "Leave the voice channel",
     },
-  ])
-);
+  ]);
+});
 
 client.on("interactionCreate", async (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return;

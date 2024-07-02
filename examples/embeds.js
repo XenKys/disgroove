@@ -5,14 +5,14 @@ const {
 } = require("disgroove");
 const client = new Client("B0t.T0k3N");
 
-client.once("ready", () =>
+client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "embed",
       description: "Responds with an embed",
     },
-  ])
-);
+  ]);
+});
 
 client.on("interactionCreate", async (interaction) => {
   if (interaction.type !== InteractionType.ApplicationCommand) return;
