@@ -27,8 +27,8 @@ client.on("interactionCreate", (interaction) => {
           interaction.member.permissions,
           BitwisePermissionFlags.AddReactions
         )
-          ? "You have the 'Add Reactions' permission"
-          : "You haven't the 'Add Reactions' permission",
+          ? "You have the permission to add reactions"
+          : "You haven't the permission to add reactions",
       },
     });
   }
