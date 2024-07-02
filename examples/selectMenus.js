@@ -3,33 +3,22 @@ const {
   InteractionType,
   InteractionCallbackType,
   ComponentTypes,
+  MessageFlags,
 } = require("disgroove");
 const client = new Client("B0t.T0k3N");
 
 client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
-      name: "string-menu",
-      description: "Responds with a string select menu",
-    },
-    {
-      name: "user-menu",
-      description: "Responds with a user select menu",
-    },
-    {
-      name: "role-menu",
-      description: "Responds with a role select menu",
-    },
-    {
-      name: "channel-menu",
-      description: "Responds with a channel select menu",
+      name: "menu",
+      description: "Responds with the menu",
     },
   ]);
 });
 
 client.on("interactionCreate", (interaction) => {
   if (interaction.type === InteractionType.ApplicationCommand) {
-    if (interaction.data.name === "string-menu") {
+    if (interaction.data.name === "menu") {
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
@@ -38,25 +27,25 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customID: "string",
+                  customID: "order",
                   options: [
                     {
-                      description: "First value",
-                      label: "First option",
-                      value: "first",
+                      label: "Pizza margherita",
+                      description: "Price: €7,00",
+                      value: "margherita",
                     },
                     {
-                      description: "Second value",
-                      label: "Second option",
-                      value: "second",
+                      label: "Pizza alla diavola",
+                      description: "Price: €8,50",
+                      value: "diavola",
                     },
                     {
-                      description: "Third value",
-                      label: "Third option",
-                      value: "third",
+                      label: "Pizza alle quattro stagioni",
+                      description: "Price: €9,00",
+                      value: "quattro-stagioni",
                     },
                   ],
-                  placeholder: "Select an option",
+                  placeholder: "Select a pizza",
                   type: ComponentTypes.StringSelect,
                 },
               ],
@@ -64,92 +53,29 @@ client.on("interactionCreate", (interaction) => {
           ],
         },
       });
-    } else if (interaction.data.name === "user-menu") {
-      client.createInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionCallbackType.ChannelMessageWithSource,
-        data: {
-          components: [
-            {
-              type: ComponentTypes.ActionRow,
-              components: [
-                {
-                  customID: "user",
-                  placeholder: "Select a user",
-                  type: ComponentTypes.UserSelect,
-                },
-              ],
-            },
-          ],
-        },
-      });
-    } else if (interaction.data.name === "role-menu") {
-      client.createInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionCallbackType.ChannelMessageWithSource,
-        data: {
-          components: [
-            {
-              type: ComponentTypes.ActionRow,
-              components: [
-                {
-                  customID: "role",
-                  placeholder: "Select a role",
-                  type: ComponentTypes.RoleSelect,
-                },
-              ],
-            },
-          ],
-        },
-      });
-    } else if (interaction.data.name === "channel-menu") {
-      client.createInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionCallbackType.ChannelMessageWithSource,
-        data: {
-          components: [
-            {
-              type: ComponentTypes.ActionRow,
-              components: [
-                {
-                  customID: "channel",
-                  placeholder: "Select a channel",
-                  type: ComponentTypes.ChannelSelect,
-                },
-              ],
-            },
-          ],
-          flags: MessageFlags.Ephemeral,
-        },
-      });
     }
-  } else if (interaction.type === InteractionType.MessageComponent) {
-    if (interaction.data.customID === "string") {
+  }
+
+  if (interaction.type === InteractionType.MessageComponent) {
+    if (interaction.data.customID === "order") {
+      let orderedPizza;
+
+      switch (interaction.data.values[0]) {
+        case "margherita":
+          orderedPizza = "Pizza margherita";
+          break;
+        case "diavola":
+          orderedPizza = "Pizza alla diavola";
+          break;
+        case "quattro-stagioni":
+          orderedPizza = "Pizza alle quattro stagioni";
+          break;
+      }
+
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
-          content: `Clicked option value: ${interaction.data.values[0]}`,
-          flags: MessageFlags.Ephemeral,
-        },
-      });
-    } else if (interaction.data.customID === "user") {
-      client.createInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionCallbackType.ChannelMessageWithSource,
-        data: {
-          content: `Clicked user: <@${interaction.data.values[0]}>`,
-          flags: MessageFlags.Ephemeral,
-        },
-      });
-    } else if (interaction.data.customID === "role") {
-      client.createInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionCallbackType.ChannelMessageWithSource,
-        data: {
-          content: `Clicked role: <@&${interaction.data.values[0]}>`,
-          flags: MessageFlags.Ephemeral,
-        },
-      });
-    } else if (interaction.data.customID === "channel") {
-      client.createInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionCallbackType.ChannelMessageWithSource,
-        data: {
-          content: `Clicked channel: <#${interaction.data.values[0]}>`,
+          content: `You ordered a **${orderedPizza}**`,
           flags: MessageFlags.Ephemeral,
         },
       });

@@ -10,7 +10,7 @@ client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "echo",
-      description: "Responds with your provided text",
+      description: "Responds with the provided text",
       options: [
         {
           type: ApplicationCommandOptionType.String,

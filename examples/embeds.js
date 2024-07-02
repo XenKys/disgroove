@@ -23,9 +23,16 @@ client.on("interactionCreate", async (interaction) => {
       data: {
         embeds: [
           {
-            color: 5793266,
-            description: "Description",
-            title: "Title",
+            title: "disgroove",
+            description: "A module to interface with Discord",
+            url: "https://npmjs.com/package/disgroove",
+            timestamp: new Date().toISOString(),
+            color: 16777215,
+            author: {
+              name: "XenKys",
+              url: "https://github.com/XenKys",
+              iconURL: "https://avatars.githubusercontent.com/u/78646587?v=4",
+            },
           },
         ],
       },

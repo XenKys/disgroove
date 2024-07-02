@@ -11,7 +11,7 @@ client.once("ready", () => {
   client.bulkEditGlobalApplicationCommands(client.application.id, [
     {
       name: "modal",
-      description: "Opens a modal submit",
+      description: "Opens a modal",
     },
   ]);
 });
@@ -23,7 +23,7 @@ client.on("interactionCreate", (interaction) => {
         type: InteractionCallbackType.Modal,
         data: {
           customID: "modal-submit",
-          title: "Modal submit",
+          title: "Modal",
           components: [
             {
               type: ComponentTypes.ActionRow,
@@ -40,19 +40,21 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     }
-  } else if (interaction.type === InteractionType.ModalSubmit) {
+  }
+
+  if (interaction.type === InteractionType.ModalSubmit) {
     if (interaction.data.customID === "modal-submit") {
       const actionRow = interaction.data.components.find(
         (component) => component.type === ComponentTypes.ActionRow
       );
       const textInput = actionRow.components.find(
         (component) => component.customID === "text-input"
-      );
+      ).value;
 
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
-          content: `Text input: ${textInput.value}`,
+          content: `Text input: ${textInput}`,
         },
       });
     }

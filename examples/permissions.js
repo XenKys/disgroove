@@ -11,7 +11,7 @@ client.once("ready", () => {
     {
       name: "permission",
       description:
-        "Responds whether you have the permission to send messages or not",
+        "Responds whether you have the permission to add reactions or not",
     },
   ]);
 });
@@ -25,10 +25,10 @@ client.on("interactionCreate", (interaction) => {
       data: {
         content: hasPermission(
           interaction.member.permissions,
-          BitwisePermissionFlags.SendMessages
+          BitwisePermissionFlags.AddReactions
         )
-          ? "Has the 'Send Messages' permission"
-          : "Hasn't the 'Send Messages' permission",
+          ? "You have the 'Add Reactions' permission"
+          : "You haven't the 'Add Reactions' permission",
       },
     });
   }
@@ -36,6 +36,7 @@ client.on("interactionCreate", (interaction) => {
 
 client.connect();
 
+/** https://discord.com/developers/docs/topics/permissions */
 function hasPermission(userPermissions, permission) {
   return (BigInt(userPermissions) & permission) === permission;
 }

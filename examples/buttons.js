@@ -27,8 +27,8 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customID: "normal-green",
-                  label: "Normal green button",
+                  customID: "green",
+                  label: "Green button",
                   style: ButtonStyles.Success,
                   type: ComponentTypes.Button,
                 },
@@ -39,7 +39,7 @@ client.on("interactionCreate", (interaction) => {
                   url: "https://github.com/XenKys/disgroove",
                 },
                 {
-                  customID: "disabled-red",
+                  customID: "red",
                   disabled: true,
                   label: "Disabled red button",
                   style: ButtonStyles.Danger,
@@ -51,19 +51,19 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     }
-  } else if (interaction.type === InteractionType.MessageComponent) {
-    if (
-      interaction.data.componentType !== ComponentTypes.Button ||
-      interaction.data.customID !== "normal-green"
-    )
-      return;
+  }
 
-    client.createInteractionResponse(interaction.id, interaction.token, {
-      type: InteractionCallbackType.ChannelMessageWithSource,
-      data: {
-        content: "You've clicked the normal green button",
-      },
-    });
+  if (interaction.type === InteractionType.MessageComponent) {
+    if (interaction.data.componentType !== ComponentTypes.Button) return;
+
+    if (interaction.data.customID == "green") {
+      client.createInteractionResponse(interaction.id, interaction.token, {
+        type: InteractionCallbackType.ChannelMessageWithSource,
+        data: {
+          content: "Green button clicked",
+        },
+      });
+    }
   }
 });
 

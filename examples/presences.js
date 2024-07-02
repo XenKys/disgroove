@@ -5,8 +5,8 @@ client.once("ready", () => {
   client.setPresence({
     activities: [
       {
-        name: "/ping",
-        type: ActivityType.Watching,
+        name: "Minecraft",
+        type: ActivityType.Game,
       },
     ],
     status: StatusTypes.Online,
