@@ -15,8 +15,8 @@ export interface RawPoll {
 export interface RawPollCreateParams {
   question: RawPollMedia;
   answers: Array<RawPollAnswer>;
-  duration: number;
-  allow_multiselect: boolean;
+  duration?: number;
+  allow_multiselect?: boolean;
   layout_type?: LayoutType;
 }
 
@@ -57,8 +57,8 @@ export interface Poll {
 export interface PollCreateParams {
   question: PollMedia;
   answers: Array<PollAnswer>;
-  duration: number;
-  allowMultiselect: boolean;
+  duration?: number;
+  allowMultiselect?: boolean;
   layoutType?: LayoutType;
 }
 
