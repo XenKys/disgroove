@@ -15,7 +15,7 @@ export interface RequestData {
   form?: FormData;
   files?: Array<File> | null;
   reason?: string;
-  query?: Partial<Record<string, string | number | boolean | Array<string>>>;
+  query?: Record<string, any>;
   authorization?: boolean;
 }
 
