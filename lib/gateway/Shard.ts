@@ -20,15 +20,17 @@ import type { RawUser } from "../types/user";
 
 export class Shard {
   id: number;
-  private heartbeatInterval!: NodeJS.Timeout | null;
+  private heartbeatInterval: NodeJS.Timeout | null;
   client: Client;
   ws: WebSocket;
-  sessionID!: string;
+  sessionID: string | null;
 
   constructor(id: number, client: Client) {
     this.id = id;
+    this.heartbeatInterval = null;
     this.client = client;
     this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
+    this.sessionID = null;
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
