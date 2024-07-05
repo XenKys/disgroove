@@ -29,7 +29,10 @@ export class Shard {
     this.id = id;
     this.heartbeatInterval = null;
     this.client = client;
-    this.ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
+    this.ws = new WebSocket(
+      "wss://gateway.discord.gg/?v=10&encoding=json",
+      client.ws
+    );
     this.sessionID = null;
   }
 

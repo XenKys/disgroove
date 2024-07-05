@@ -167,6 +167,7 @@ import type {
 } from "./types/user";
 import type { VoiceRegion, RawVoiceRegion, VoiceState } from "./types/voice";
 import type { Webhook, RawWebhook } from "./types/webhook";
+import type { ClientOptions as WebSocketOptions } from "ws";
 
 export interface ClientOptions {
   shardsCount?: number | "auto";
@@ -179,6 +180,7 @@ export interface ClientOptions {
       Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
     >;
   };
+  ws?: WebSocketOptions;
 }
 
 export class Client extends EventEmitter {
@@ -198,6 +200,7 @@ export class Client extends EventEmitter {
   user: User | null;
   guilds: Map<string, Guild>;
   application: Pick<Application, "id" | "flags"> | null;
+  ws?: WebSocketOptions;
 
   constructor(token: string, options?: ClientOptions) {
     super();
@@ -225,6 +228,7 @@ export class Client extends EventEmitter {
     this.user = null;
     this.guilds = new Map();
     this.application = null;
+    this.ws = options?.ws;
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
