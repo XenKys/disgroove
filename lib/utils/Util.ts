@@ -69,335 +69,6 @@ import type {
 } from "../types/gateway-events";
 
 export class Util {
-  auditLogFromRaw(auditLog: RawAuditLog): AuditLog {
-    return {
-      applicationCommands: auditLog.application_commands.map(
-        (applicationCommand) =>
-          this.applicationCommandFromRaw(applicationCommand)
-      ),
-      auditLogEntries: auditLog.audit_log_entries.map((auditLogEntry) =>
-        this.auditLogEntryFromRaw(auditLogEntry)
-      ),
-      autoModerationRules: auditLog.auto_moderation_rules.map(
-        (autoModerationRule) =>
-          this.autoModerationRuleFromRaw(autoModerationRule)
-      ),
-      guildScheduledEvents: auditLog.guild_scheduled_events.map(
-        (guildScheduledEvent) =>
-          this.guildScheduledEventFromRaw(guildScheduledEvent)
-      ),
-      integrations: auditLog.integrations.map((integration) =>
-        this.integrationFromRaw(integration)
-      ),
-      threads: auditLog.threads.map((thread) => this.channelFromRaw(thread)),
-      users: auditLog.users.map((user) => this.userFromRaw(user)),
-      webhooks: auditLog.webhooks.map((webhook) =>
-        this.webhookFromRaw(webhook)
-      ),
-    };
-  }
-
-  auditLogToRaw(auditLog: AuditLog): RawAuditLog {
-    return {
-      application_commands: auditLog.applicationCommands.map(
-        (applicationCommand) => this.applicationCommandToRaw(applicationCommand)
-      ),
-      audit_log_entries: auditLog.auditLogEntries.map((auditLogEntry) =>
-        this.auditLogEntryToRaw(auditLogEntry)
-      ),
-      auto_moderation_rules: auditLog.autoModerationRules.map(
-        (autoModerationRule) => this.autoModerationRuleToRaw(autoModerationRule)
-      ),
-      guild_scheduled_events: auditLog.guildScheduledEvents.map(
-        (guildScheduledEvent) =>
-          this.guildScheduledEventToRaw(guildScheduledEvent)
-      ),
-      integrations: auditLog.integrations.map((integration) =>
-        this.integrationToRaw(integration)
-      ),
-      threads: auditLog.threads.map((thread) => this.channelToRaw(thread)),
-      users: auditLog.users.map((user) => this.userToRaw(user)),
-      webhooks: auditLog.webhooks.map((webhook) => this.webhookToRaw(webhook)),
-    };
-  }
-
-  auditLogEntryFromRaw(auditLogEntry: RawAuditLogEntry): AuditLogEntry {
-    return {
-      targetID: auditLogEntry.target_id,
-      changes: auditLogEntry.changes?.map((auditLogChange) => ({
-        newValue: auditLogChange.new_value,
-        oldValue: auditLogChange.old_value,
-        key: auditLogChange.key,
-      })),
-      userID: auditLogEntry.user_id,
-      id: auditLogEntry.id,
-      actionType: auditLogEntry.action_type,
-      options:
-        auditLogEntry.options !== undefined
-          ? {
-              applicationID: auditLogEntry.options.application_id,
-              autoModerationRuleName:
-                auditLogEntry.options.auto_moderation_rule_name,
-              autoModerationRuleTriggerType:
-                auditLogEntry.options.auto_moderation_rule_trigger_type,
-              channelID: auditLogEntry.options.channel_id,
-              count: auditLogEntry.options.count,
-              deleteMemberDays: auditLogEntry.options.delete_member_days,
-              id: auditLogEntry.options.id,
-              membersRemoved: auditLogEntry.options.members_removed,
-              messageID: auditLogEntry.options.message_id,
-              roleName: auditLogEntry.options.role_name,
-              type: auditLogEntry.options.type,
-              integrationType: auditLogEntry.options.integration_type,
-            }
-          : undefined,
-      reason: auditLogEntry.reason,
-    };
-  }
-
-  auditLogEntryToRaw(auditLogEntry: AuditLogEntry): RawAuditLogEntry {
-    return {
-      target_id: auditLogEntry.targetID,
-      changes: auditLogEntry.changes?.map((auditLogChange) => ({
-        new_value: auditLogChange.newValue,
-        old_value: auditLogChange.oldValue,
-        key: auditLogChange.key,
-      })),
-      user_id: auditLogEntry.userID,
-      id: auditLogEntry.id,
-      action_type: auditLogEntry.actionType,
-      options:
-        auditLogEntry.options !== undefined
-          ? {
-              application_id: auditLogEntry.options.applicationID,
-              auto_moderation_rule_name:
-                auditLogEntry.options.autoModerationRuleName,
-              auto_moderation_rule_trigger_type:
-                auditLogEntry.options.autoModerationRuleTriggerType,
-              channel_id: auditLogEntry.options.channelID,
-              count: auditLogEntry.options.count,
-              delete_member_days: auditLogEntry.options.deleteMemberDays,
-              id: auditLogEntry.options.id,
-              members_removed: auditLogEntry.options.membersRemoved,
-              message_id: auditLogEntry.options.messageID,
-              role_name: auditLogEntry.options.roleName,
-              type: auditLogEntry.options.type,
-              integration_type: auditLogEntry.options.integrationType,
-            }
-          : undefined,
-      reason: auditLogEntry.reason,
-    };
-  }
-
-  autoModerationRuleFromRaw(
-    autoModerationRule: RawAutoModerationRule
-  ): AutoModerationRule {
-    return {
-      id: autoModerationRule.id,
-      guildID: autoModerationRule.guild_id,
-      name: autoModerationRule.name,
-      creatorID: autoModerationRule.creator_id,
-      eventType: autoModerationRule.event_type,
-      triggerType: autoModerationRule.trigger_type,
-      triggerMetadata: {
-        keywordFilter: autoModerationRule.trigger_metadata.keyword_filter,
-        regexPatterns: autoModerationRule.trigger_metadata.regex_patterns,
-        presets: autoModerationRule.trigger_metadata.presets,
-        allowList: autoModerationRule.trigger_metadata.allow_list,
-        mentionTotalLimit:
-          autoModerationRule.trigger_metadata.mention_total_limit,
-        mentionRaidProtection:
-          autoModerationRule.trigger_metadata.mention_raid_protection,
-      },
-      actions: autoModerationRule.actions.map((action) => ({
-        type: action.type,
-        metadata: {
-          channelID: action.metadata.channel_id,
-          durationSeconds: action.metadata.duration_seconds,
-          customMessage: action.metadata.custom_message,
-        },
-      })),
-      enabled: autoModerationRule.enabled,
-      exemptRoles: autoModerationRule.exempt_roles,
-      exemptChannels: autoModerationRule.exempt_channels,
-    };
-  }
-
-  autoModerationRuleToRaw(
-    autoModerationRule: AutoModerationRule
-  ): RawAutoModerationRule {
-    return {
-      id: autoModerationRule.id,
-      guild_id: autoModerationRule.guildID,
-      name: autoModerationRule.name,
-      creator_id: autoModerationRule.creatorID,
-      event_type: autoModerationRule.eventType,
-      trigger_type: autoModerationRule.triggerType,
-      trigger_metadata: {
-        keyword_filter: autoModerationRule.triggerMetadata.keywordFilter,
-        regex_patterns: autoModerationRule.triggerMetadata.regexPatterns,
-        presets: autoModerationRule.triggerMetadata.presets,
-        allow_list: autoModerationRule.triggerMetadata.allowList,
-        mention_total_limit:
-          autoModerationRule.triggerMetadata.mentionTotalLimit,
-        mention_raid_protection:
-          autoModerationRule.triggerMetadata.mentionRaidProtection,
-      },
-      actions: autoModerationRule.actions.map((action) => ({
-        type: action.type,
-        metadata: {
-          channel_id: action.metadata.channelID,
-          duration_seconds: action.metadata.durationSeconds,
-          custom_message: action.metadata.customMessage,
-        },
-      })),
-      enabled: autoModerationRule.enabled,
-      exempt_roles: autoModerationRule.exemptRoles,
-      exempt_channels: autoModerationRule.exemptChannels,
-    };
-  }
-
-  attachmentFromRaw(attachment: RawAttachment): Attachment {
-    return {
-      id: attachment.id,
-      filename: attachment.filename,
-      title: attachment.title,
-      description: attachment.description,
-      contentType: attachment.content_type,
-      size: attachment.size,
-      url: attachment.url,
-      proxyURL: attachment.proxy_url,
-      height: attachment.height,
-      width: attachment.width,
-      ephemeral: attachment.ephemeral,
-      durationSecs: attachment.duration_secs,
-      waveform: attachment.waveform,
-      flags: attachment.flags,
-    };
-  }
-
-  attachmentToRaw(attachment: Attachment): RawAttachment {
-    return {
-      id: attachment.id,
-      filename: attachment.filename,
-      title: attachment.title,
-      description: attachment.description,
-      content_type: attachment.contentType,
-      size: attachment.size,
-      url: attachment.url,
-      proxy_url: attachment.proxyURL,
-      height: attachment.height,
-      width: attachment.width,
-      ephemeral: attachment.ephemeral,
-      duration_secs: attachment.durationSecs,
-      waveform: attachment.waveform,
-      flags: attachment.flags,
-    };
-  }
-
-  applicationFromRaw(application: RawApplication): Application {
-    return {
-      id: application.id,
-      name: application.name,
-      icon: application.icon,
-      description: application.description,
-      rpcOrigins: application.rpc_origins,
-      botPublic: application.bot_public,
-      botRequireCodeGrant: application.bot_require_code_grant,
-      termsOfServiceURL: application.terms_of_service_url,
-      privacyPolicyURL: application.privacy_policy_url,
-      owner:
-        application.owner !== undefined
-          ? this.userFromRaw(application.owner)
-          : undefined,
-      verifyKey: application.verify_key,
-      team:
-        application.team !== null ? this.teamFromRaw(application.team) : null,
-      guildID: application.guild_id,
-      guild:
-        application.guild !== undefined
-          ? this.guildFromRaw(application.guild)
-          : undefined,
-      primarySKUID: application.primary_sku_id,
-      slug: application.slug,
-      coverImage: application.cover_image,
-      flags: application.flags,
-      approximateGuildCount: application.approximate_guild_count,
-      redirectURIs: application.redirect_uris,
-      interactionsEndpointURL: application.interactions_endpoint_url,
-      roleConnectionsVerificationURL:
-        application.role_connections_verification_url,
-      tags: application.tags,
-      installParams: application.install_params,
-      integrationTypesConfig:
-        application.integration_types_config !== undefined
-          ? {
-              "0": {
-                oauth2InstallParams:
-                  application.integration_types_config?.[0]
-                    .oauth2_install_params,
-              },
-              "1": {
-                oauth2InstallParams:
-                  application.integration_types_config?.[1]
-                    .oauth2_install_params,
-              },
-            }
-          : undefined,
-      customInstallURL: application.custom_install_url,
-    };
-  }
-
-  applicationToRaw(application: Application): RawApplication {
-    return {
-      id: application.id,
-      name: application.name,
-      icon: application.icon,
-      description: application.description,
-      rpc_origins: application.rpcOrigins,
-      bot_public: application.botPublic,
-      bot_require_code_grant: application.botRequireCodeGrant,
-      terms_of_service_url: application.termsOfServiceURL,
-      privacy_policy_url: application.privacyPolicyURL,
-      owner:
-        application.owner !== undefined
-          ? this.userToRaw(application.owner)
-          : undefined,
-      verify_key: application.verifyKey,
-      team: application.team !== null ? this.teamToRaw(application.team) : null,
-      guild_id: application.guildID,
-      guild:
-        application.guild !== undefined
-          ? this.guildToRaw(application.guild)
-          : undefined,
-      primary_sku_id: application.primarySKUID,
-      slug: application.slug,
-      cover_image: application.coverImage,
-      flags: application.flags,
-      approximate_guild_count: application.approximateGuildCount,
-      redirect_uris: application.redirectURIs,
-      interactions_endpoint_url: application.interactionsEndpointURL,
-      role_connections_verification_url:
-        application.roleConnectionsVerificationURL,
-      tags: application.tags,
-      install_params: application.installParams,
-      integration_types_config:
-        application.integrationTypesConfig !== undefined
-          ? {
-              "0": {
-                oauth2_install_params:
-                  application.integrationTypesConfig?.[0].oauth2InstallParams,
-              },
-              "1": {
-                oauth2_install_params:
-                  application.integrationTypesConfig?.[1].oauth2InstallParams,
-              },
-            }
-          : undefined,
-      custom_install_url: application.customInstallURL,
-    };
-  }
-
   applicationCommandFromRaw(
     applicationCommand: RawApplicationCommand
   ): ApplicationCommand {
@@ -511,6 +182,335 @@ export class Util {
       default_permission: applicationCommand.defaultPermission,
       nsfw: applicationCommand.nsfw,
       version: applicationCommand.version,
+    };
+  }
+
+  applicationFromRaw(application: RawApplication): Application {
+    return {
+      id: application.id,
+      name: application.name,
+      icon: application.icon,
+      description: application.description,
+      rpcOrigins: application.rpc_origins,
+      botPublic: application.bot_public,
+      botRequireCodeGrant: application.bot_require_code_grant,
+      termsOfServiceURL: application.terms_of_service_url,
+      privacyPolicyURL: application.privacy_policy_url,
+      owner:
+        application.owner !== undefined
+          ? this.userFromRaw(application.owner)
+          : undefined,
+      verifyKey: application.verify_key,
+      team:
+        application.team !== null ? this.teamFromRaw(application.team) : null,
+      guildID: application.guild_id,
+      guild:
+        application.guild !== undefined
+          ? this.guildFromRaw(application.guild)
+          : undefined,
+      primarySKUID: application.primary_sku_id,
+      slug: application.slug,
+      coverImage: application.cover_image,
+      flags: application.flags,
+      approximateGuildCount: application.approximate_guild_count,
+      redirectURIs: application.redirect_uris,
+      interactionsEndpointURL: application.interactions_endpoint_url,
+      roleConnectionsVerificationURL:
+        application.role_connections_verification_url,
+      tags: application.tags,
+      installParams: application.install_params,
+      integrationTypesConfig:
+        application.integration_types_config !== undefined
+          ? {
+              "0": {
+                oauth2InstallParams:
+                  application.integration_types_config?.[0]
+                    .oauth2_install_params,
+              },
+              "1": {
+                oauth2InstallParams:
+                  application.integration_types_config?.[1]
+                    .oauth2_install_params,
+              },
+            }
+          : undefined,
+      customInstallURL: application.custom_install_url,
+    };
+  }
+
+  applicationToRaw(application: Application): RawApplication {
+    return {
+      id: application.id,
+      name: application.name,
+      icon: application.icon,
+      description: application.description,
+      rpc_origins: application.rpcOrigins,
+      bot_public: application.botPublic,
+      bot_require_code_grant: application.botRequireCodeGrant,
+      terms_of_service_url: application.termsOfServiceURL,
+      privacy_policy_url: application.privacyPolicyURL,
+      owner:
+        application.owner !== undefined
+          ? this.userToRaw(application.owner)
+          : undefined,
+      verify_key: application.verifyKey,
+      team: application.team !== null ? this.teamToRaw(application.team) : null,
+      guild_id: application.guildID,
+      guild:
+        application.guild !== undefined
+          ? this.guildToRaw(application.guild)
+          : undefined,
+      primary_sku_id: application.primarySKUID,
+      slug: application.slug,
+      cover_image: application.coverImage,
+      flags: application.flags,
+      approximate_guild_count: application.approximateGuildCount,
+      redirect_uris: application.redirectURIs,
+      interactions_endpoint_url: application.interactionsEndpointURL,
+      role_connections_verification_url:
+        application.roleConnectionsVerificationURL,
+      tags: application.tags,
+      install_params: application.installParams,
+      integration_types_config:
+        application.integrationTypesConfig !== undefined
+          ? {
+              "0": {
+                oauth2_install_params:
+                  application.integrationTypesConfig?.[0].oauth2InstallParams,
+              },
+              "1": {
+                oauth2_install_params:
+                  application.integrationTypesConfig?.[1].oauth2InstallParams,
+              },
+            }
+          : undefined,
+      custom_install_url: application.customInstallURL,
+    };
+  }
+
+  attachmentFromRaw(attachment: RawAttachment): Attachment {
+    return {
+      id: attachment.id,
+      filename: attachment.filename,
+      title: attachment.title,
+      description: attachment.description,
+      contentType: attachment.content_type,
+      size: attachment.size,
+      url: attachment.url,
+      proxyURL: attachment.proxy_url,
+      height: attachment.height,
+      width: attachment.width,
+      ephemeral: attachment.ephemeral,
+      durationSecs: attachment.duration_secs,
+      waveform: attachment.waveform,
+      flags: attachment.flags,
+    };
+  }
+
+  attachmentToRaw(attachment: Attachment): RawAttachment {
+    return {
+      id: attachment.id,
+      filename: attachment.filename,
+      title: attachment.title,
+      description: attachment.description,
+      content_type: attachment.contentType,
+      size: attachment.size,
+      url: attachment.url,
+      proxy_url: attachment.proxyURL,
+      height: attachment.height,
+      width: attachment.width,
+      ephemeral: attachment.ephemeral,
+      duration_secs: attachment.durationSecs,
+      waveform: attachment.waveform,
+      flags: attachment.flags,
+    };
+  }
+
+  auditLogEntryFromRaw(auditLogEntry: RawAuditLogEntry): AuditLogEntry {
+    return {
+      targetID: auditLogEntry.target_id,
+      changes: auditLogEntry.changes?.map((auditLogChange) => ({
+        newValue: auditLogChange.new_value,
+        oldValue: auditLogChange.old_value,
+        key: auditLogChange.key,
+      })),
+      userID: auditLogEntry.user_id,
+      id: auditLogEntry.id,
+      actionType: auditLogEntry.action_type,
+      options:
+        auditLogEntry.options !== undefined
+          ? {
+              applicationID: auditLogEntry.options.application_id,
+              autoModerationRuleName:
+                auditLogEntry.options.auto_moderation_rule_name,
+              autoModerationRuleTriggerType:
+                auditLogEntry.options.auto_moderation_rule_trigger_type,
+              channelID: auditLogEntry.options.channel_id,
+              count: auditLogEntry.options.count,
+              deleteMemberDays: auditLogEntry.options.delete_member_days,
+              id: auditLogEntry.options.id,
+              membersRemoved: auditLogEntry.options.members_removed,
+              messageID: auditLogEntry.options.message_id,
+              roleName: auditLogEntry.options.role_name,
+              type: auditLogEntry.options.type,
+              integrationType: auditLogEntry.options.integration_type,
+            }
+          : undefined,
+      reason: auditLogEntry.reason,
+    };
+  }
+
+  auditLogEntryToRaw(auditLogEntry: AuditLogEntry): RawAuditLogEntry {
+    return {
+      target_id: auditLogEntry.targetID,
+      changes: auditLogEntry.changes?.map((auditLogChange) => ({
+        new_value: auditLogChange.newValue,
+        old_value: auditLogChange.oldValue,
+        key: auditLogChange.key,
+      })),
+      user_id: auditLogEntry.userID,
+      id: auditLogEntry.id,
+      action_type: auditLogEntry.actionType,
+      options:
+        auditLogEntry.options !== undefined
+          ? {
+              application_id: auditLogEntry.options.applicationID,
+              auto_moderation_rule_name:
+                auditLogEntry.options.autoModerationRuleName,
+              auto_moderation_rule_trigger_type:
+                auditLogEntry.options.autoModerationRuleTriggerType,
+              channel_id: auditLogEntry.options.channelID,
+              count: auditLogEntry.options.count,
+              delete_member_days: auditLogEntry.options.deleteMemberDays,
+              id: auditLogEntry.options.id,
+              members_removed: auditLogEntry.options.membersRemoved,
+              message_id: auditLogEntry.options.messageID,
+              role_name: auditLogEntry.options.roleName,
+              type: auditLogEntry.options.type,
+              integration_type: auditLogEntry.options.integrationType,
+            }
+          : undefined,
+      reason: auditLogEntry.reason,
+    };
+  }
+
+  auditLogFromRaw(auditLog: RawAuditLog): AuditLog {
+    return {
+      applicationCommands: auditLog.application_commands.map(
+        (applicationCommand) =>
+          this.applicationCommandFromRaw(applicationCommand)
+      ),
+      auditLogEntries: auditLog.audit_log_entries.map((auditLogEntry) =>
+        this.auditLogEntryFromRaw(auditLogEntry)
+      ),
+      autoModerationRules: auditLog.auto_moderation_rules.map(
+        (autoModerationRule) =>
+          this.autoModerationRuleFromRaw(autoModerationRule)
+      ),
+      guildScheduledEvents: auditLog.guild_scheduled_events.map(
+        (guildScheduledEvent) =>
+          this.guildScheduledEventFromRaw(guildScheduledEvent)
+      ),
+      integrations: auditLog.integrations.map((integration) =>
+        this.integrationFromRaw(integration)
+      ),
+      threads: auditLog.threads.map((thread) => this.channelFromRaw(thread)),
+      users: auditLog.users.map((user) => this.userFromRaw(user)),
+      webhooks: auditLog.webhooks.map((webhook) =>
+        this.webhookFromRaw(webhook)
+      ),
+    };
+  }
+
+  auditLogToRaw(auditLog: AuditLog): RawAuditLog {
+    return {
+      application_commands: auditLog.applicationCommands.map(
+        (applicationCommand) => this.applicationCommandToRaw(applicationCommand)
+      ),
+      audit_log_entries: auditLog.auditLogEntries.map((auditLogEntry) =>
+        this.auditLogEntryToRaw(auditLogEntry)
+      ),
+      auto_moderation_rules: auditLog.autoModerationRules.map(
+        (autoModerationRule) => this.autoModerationRuleToRaw(autoModerationRule)
+      ),
+      guild_scheduled_events: auditLog.guildScheduledEvents.map(
+        (guildScheduledEvent) =>
+          this.guildScheduledEventToRaw(guildScheduledEvent)
+      ),
+      integrations: auditLog.integrations.map((integration) =>
+        this.integrationToRaw(integration)
+      ),
+      threads: auditLog.threads.map((thread) => this.channelToRaw(thread)),
+      users: auditLog.users.map((user) => this.userToRaw(user)),
+      webhooks: auditLog.webhooks.map((webhook) => this.webhookToRaw(webhook)),
+    };
+  }
+
+  autoModerationRuleFromRaw(
+    autoModerationRule: RawAutoModerationRule
+  ): AutoModerationRule {
+    return {
+      id: autoModerationRule.id,
+      guildID: autoModerationRule.guild_id,
+      name: autoModerationRule.name,
+      creatorID: autoModerationRule.creator_id,
+      eventType: autoModerationRule.event_type,
+      triggerType: autoModerationRule.trigger_type,
+      triggerMetadata: {
+        keywordFilter: autoModerationRule.trigger_metadata.keyword_filter,
+        regexPatterns: autoModerationRule.trigger_metadata.regex_patterns,
+        presets: autoModerationRule.trigger_metadata.presets,
+        allowList: autoModerationRule.trigger_metadata.allow_list,
+        mentionTotalLimit:
+          autoModerationRule.trigger_metadata.mention_total_limit,
+        mentionRaidProtection:
+          autoModerationRule.trigger_metadata.mention_raid_protection,
+      },
+      actions: autoModerationRule.actions.map((action) => ({
+        type: action.type,
+        metadata: {
+          channelID: action.metadata.channel_id,
+          durationSeconds: action.metadata.duration_seconds,
+          customMessage: action.metadata.custom_message,
+        },
+      })),
+      enabled: autoModerationRule.enabled,
+      exemptRoles: autoModerationRule.exempt_roles,
+      exemptChannels: autoModerationRule.exempt_channels,
+    };
+  }
+
+  autoModerationRuleToRaw(
+    autoModerationRule: AutoModerationRule
+  ): RawAutoModerationRule {
+    return {
+      id: autoModerationRule.id,
+      guild_id: autoModerationRule.guildID,
+      name: autoModerationRule.name,
+      creator_id: autoModerationRule.creatorID,
+      event_type: autoModerationRule.eventType,
+      trigger_type: autoModerationRule.triggerType,
+      trigger_metadata: {
+        keyword_filter: autoModerationRule.triggerMetadata.keywordFilter,
+        regex_patterns: autoModerationRule.triggerMetadata.regexPatterns,
+        presets: autoModerationRule.triggerMetadata.presets,
+        allow_list: autoModerationRule.triggerMetadata.allowList,
+        mention_total_limit:
+          autoModerationRule.triggerMetadata.mentionTotalLimit,
+        mention_raid_protection:
+          autoModerationRule.triggerMetadata.mentionRaidProtection,
+      },
+      actions: autoModerationRule.actions.map((action) => ({
+        type: action.type,
+        metadata: {
+          channel_id: action.metadata.channelID,
+          duration_seconds: action.metadata.durationSeconds,
+          custom_message: action.metadata.customMessage,
+        },
+      })),
+      enabled: autoModerationRule.enabled,
+      exempt_roles: autoModerationRule.exemptRoles,
+      exempt_channels: autoModerationRule.exemptChannels,
     };
   }
 
@@ -995,67 +995,6 @@ export class Util {
     };
   }
 
-  guildToRaw(guild: Guild): RawGuild {
-    return {
-      id: guild.id,
-      name: guild.name,
-      icon: guild.icon,
-      icon_hash: guild.icon,
-      splash: guild.splash,
-      discovery_splash: guild.discoverySplash,
-      owner: guild.owner,
-      owner_id: guild.ownerID,
-      permissions: guild.permissions,
-      region: guild.region,
-      afk_channel_id: guild.afkChannelID,
-      afk_timeout: guild.afkTimeout,
-      widget_enabled: guild.widgetEnabled,
-      widget_channel_id: guild.widgetChannelID,
-      verification_level: guild.verificationLevel,
-      default_message_notifications: guild.defaultMessageNotifications,
-      explicit_content_filter: guild.explicitContentFilter,
-      roles: guild.roles.map((role) => this.roleToRaw(role)),
-      emojis: guild.emojis.map((emoji) => this.emojiToRaw(emoji)),
-      features: guild.features,
-      mfa_level: guild.mfaLevel,
-      application_id: guild.applicationID,
-      system_channel_id: guild.systemChannelID,
-      system_channel_flags: guild.systemChannelFlags,
-      rules_channel_id: guild.rulesChannelID,
-      max_presences: guild.maxPresences,
-      max_members: guild.maxMembers,
-      vanity_url_code: guild.vanityURLCode,
-      description: guild.description,
-      banner: guild.banner,
-      premium_tier: guild.premiumTier,
-      premium_subscription_count: guild.premiumSubscriptionCount,
-      preferred_locale: guild.preferredLocale,
-      public_updates_channel_id: guild.publicUpdatesChannelID,
-      max_video_channel_users: guild.maxVideoChannelUsers,
-      max_stage_video_channel_users: guild.maxStageVideoChannelUsers,
-      approximate_member_count: guild.approximateMemberCount,
-      approximate_presence_count: guild.approximatePresenceCount,
-      welcome_screen:
-        guild.welcomeScreen !== undefined
-          ? {
-              description: guild.welcomeScreen.description,
-              welcome_channels: guild.welcomeScreen.welcomeChannels.map(
-                (welcomeScreenChannel) => ({
-                  channel_id: welcomeScreenChannel.channelID,
-                  description: welcomeScreenChannel.description,
-                  emoji_id: welcomeScreenChannel.emojiID,
-                  emoji_name: welcomeScreenChannel.emojiName,
-                })
-              ),
-            }
-          : undefined,
-      nsfw_level: guild.nsfwLevel,
-      stickers: guild.stickers?.map((sticker) => this.stickerToRaw(sticker)),
-      premium_progress_bar_enabled: guild.premiumProgressBarEnabled,
-      safety_alerts_channel_id: guild.safetyAlertsChannelID,
-    };
-  }
-
   guildMemberFromRaw(guildMember: RawGuildMember): GuildMember {
     return {
       user:
@@ -1181,6 +1120,67 @@ export class Util {
         guildTemplate.serializedSourceGuild
       ),
       is_dirty: guildTemplate.isDirty,
+    };
+  }
+
+  guildToRaw(guild: Guild): RawGuild {
+    return {
+      id: guild.id,
+      name: guild.name,
+      icon: guild.icon,
+      icon_hash: guild.icon,
+      splash: guild.splash,
+      discovery_splash: guild.discoverySplash,
+      owner: guild.owner,
+      owner_id: guild.ownerID,
+      permissions: guild.permissions,
+      region: guild.region,
+      afk_channel_id: guild.afkChannelID,
+      afk_timeout: guild.afkTimeout,
+      widget_enabled: guild.widgetEnabled,
+      widget_channel_id: guild.widgetChannelID,
+      verification_level: guild.verificationLevel,
+      default_message_notifications: guild.defaultMessageNotifications,
+      explicit_content_filter: guild.explicitContentFilter,
+      roles: guild.roles.map((role) => this.roleToRaw(role)),
+      emojis: guild.emojis.map((emoji) => this.emojiToRaw(emoji)),
+      features: guild.features,
+      mfa_level: guild.mfaLevel,
+      application_id: guild.applicationID,
+      system_channel_id: guild.systemChannelID,
+      system_channel_flags: guild.systemChannelFlags,
+      rules_channel_id: guild.rulesChannelID,
+      max_presences: guild.maxPresences,
+      max_members: guild.maxMembers,
+      vanity_url_code: guild.vanityURLCode,
+      description: guild.description,
+      banner: guild.banner,
+      premium_tier: guild.premiumTier,
+      premium_subscription_count: guild.premiumSubscriptionCount,
+      preferred_locale: guild.preferredLocale,
+      public_updates_channel_id: guild.publicUpdatesChannelID,
+      max_video_channel_users: guild.maxVideoChannelUsers,
+      max_stage_video_channel_users: guild.maxStageVideoChannelUsers,
+      approximate_member_count: guild.approximateMemberCount,
+      approximate_presence_count: guild.approximatePresenceCount,
+      welcome_screen:
+        guild.welcomeScreen !== undefined
+          ? {
+              description: guild.welcomeScreen.description,
+              welcome_channels: guild.welcomeScreen.welcomeChannels.map(
+                (welcomeScreenChannel) => ({
+                  channel_id: welcomeScreenChannel.channelID,
+                  description: welcomeScreenChannel.description,
+                  emoji_id: welcomeScreenChannel.emojiID,
+                  emoji_name: welcomeScreenChannel.emojiName,
+                })
+              ),
+            }
+          : undefined,
+      nsfw_level: guild.nsfwLevel,
+      stickers: guild.stickers?.map((sticker) => this.stickerToRaw(sticker)),
+      premium_progress_bar_enabled: guild.premiumProgressBarEnabled,
+      safety_alerts_channel_id: guild.safetyAlertsChannelID,
     };
   }
 
@@ -1335,6 +1335,52 @@ export class Util {
     };
   }
 
+  interactionMetadataFromRaw(
+    interactionMetadata: RawMessageInteractionMetadata
+  ): MessageInteractionMetadata {
+    return {
+      id: interactionMetadata.id,
+      type: interactionMetadata.type,
+      user: this.userFromRaw(interactionMetadata.user),
+      authorizingIntegrationOwners: {
+        "0": interactionMetadata.authorizing_integration_owners[0],
+        "1": interactionMetadata.authorizing_integration_owners[1],
+      },
+      originalResponseMessageID:
+        interactionMetadata.original_response_message_id,
+      interactedMessageID: interactionMetadata.interacted_message_id,
+      triggeringInteractionMetadata:
+        interactionMetadata.triggering_interaction_metadata !== undefined
+          ? this.interactionMetadataFromRaw(
+              interactionMetadata.triggering_interaction_metadata
+            )
+          : undefined,
+    };
+  }
+
+  interactionMetadataToRaw(
+    interactionMetadata: MessageInteractionMetadata
+  ): RawMessageInteractionMetadata {
+    return {
+      id: interactionMetadata.id,
+      type: interactionMetadata.type,
+      user: this.userToRaw(interactionMetadata.user),
+      authorizing_integration_owners: {
+        "0": interactionMetadata.authorizingIntegrationOwners[0],
+        "1": interactionMetadata.authorizingIntegrationOwners[1],
+      },
+      original_response_message_id:
+        interactionMetadata.originalResponseMessageID,
+      interacted_message_id: interactionMetadata.interactedMessageID,
+      triggering_interaction_metadata:
+        interactionMetadata.triggeringInteractionMetadata !== undefined
+          ? this.interactionMetadataToRaw(
+              interactionMetadata.triggeringInteractionMetadata
+            )
+          : undefined,
+    };
+  }
+
   interactionToRaw(interaction: Interaction): RawInteraction {
     return {
       id: interaction.id,
@@ -1411,52 +1457,6 @@ export class Util {
         "1": interaction.authorizingIntegrationOwners[1],
       },
       context: interaction.context,
-    };
-  }
-
-  interactionMetadataFromRaw(
-    interactionMetadata: RawMessageInteractionMetadata
-  ): MessageInteractionMetadata {
-    return {
-      id: interactionMetadata.id,
-      type: interactionMetadata.type,
-      user: this.userFromRaw(interactionMetadata.user),
-      authorizingIntegrationOwners: {
-        "0": interactionMetadata.authorizing_integration_owners[0],
-        "1": interactionMetadata.authorizing_integration_owners[1],
-      },
-      originalResponseMessageID:
-        interactionMetadata.original_response_message_id,
-      interactedMessageID: interactionMetadata.interacted_message_id,
-      triggeringInteractionMetadata:
-        interactionMetadata.triggering_interaction_metadata !== undefined
-          ? this.interactionMetadataFromRaw(
-              interactionMetadata.triggering_interaction_metadata
-            )
-          : undefined,
-    };
-  }
-
-  interactionMetadataToRaw(
-    interactionMetadata: MessageInteractionMetadata
-  ): RawMessageInteractionMetadata {
-    return {
-      id: interactionMetadata.id,
-      type: interactionMetadata.type,
-      user: this.userToRaw(interactionMetadata.user),
-      authorizing_integration_owners: {
-        "0": interactionMetadata.authorizingIntegrationOwners[0],
-        "1": interactionMetadata.authorizingIntegrationOwners[1],
-      },
-      original_response_message_id:
-        interactionMetadata.originalResponseMessageID,
-      interacted_message_id: interactionMetadata.interactedMessageID,
-      triggering_interaction_metadata:
-        interactionMetadata.triggeringInteractionMetadata !== undefined
-          ? this.interactionMetadataToRaw(
-              interactionMetadata.triggeringInteractionMetadata
-            )
-          : undefined,
     };
   }
 
@@ -2068,6 +2068,54 @@ export class Util {
     };
   }
 
+  pollFromRaw(poll: RawPoll): Poll {
+    return {
+      question: poll.question,
+      answers: poll.answers.map((answer) => ({
+        answerID: answer.answer_id,
+        pollMedia: answer.poll_media,
+      })),
+      expiry: poll.expiry,
+      allowMultiselect: poll.allow_multiselect,
+      layoutType: poll.layout_type,
+      results:
+        poll.results !== undefined
+          ? {
+              isFinalized: poll.results.is_finalized,
+              answerCounts: poll.results.answer_counts.map((answerCount) => ({
+                id: answerCount.id,
+                count: answerCount.count,
+                meVoted: answerCount.me_voted,
+              })),
+            }
+          : undefined,
+    };
+  }
+
+  pollToRaw(poll: Poll): RawPoll {
+    return {
+      question: poll.question,
+      answers: poll.answers.map((answer) => ({
+        answer_id: answer.answerID,
+        poll_media: answer.pollMedia,
+      })),
+      expiry: poll.expiry,
+      allow_multiselect: poll.allowMultiselect,
+      layout_type: poll.layoutType,
+      results:
+        poll.results !== undefined
+          ? {
+              is_finalized: poll.results.isFinalized,
+              answer_counts: poll.results.answerCounts.map((answerCount) => ({
+                id: answerCount.id,
+                count: answerCount.count,
+                me_voted: answerCount.meVoted,
+              })),
+            }
+          : undefined,
+    };
+  }
+
   resolvedDataFromRaw(resolvedData: RawResolvedData): ResolvedData {
     let users: Record<snowflake, User> = {};
     let members: Record<snowflake, GuildMember> = {};
@@ -2173,54 +2221,6 @@ export class Util {
       channels,
       messages,
       attachments,
-    };
-  }
-
-  pollFromRaw(poll: RawPoll): Poll {
-    return {
-      question: poll.question,
-      answers: poll.answers.map((answer) => ({
-        answerID: answer.answer_id,
-        pollMedia: answer.poll_media,
-      })),
-      expiry: poll.expiry,
-      allowMultiselect: poll.allow_multiselect,
-      layoutType: poll.layout_type,
-      results:
-        poll.results !== undefined
-          ? {
-              isFinalized: poll.results.is_finalized,
-              answerCounts: poll.results.answer_counts.map((answerCount) => ({
-                id: answerCount.id,
-                count: answerCount.count,
-                meVoted: answerCount.me_voted,
-              })),
-            }
-          : undefined,
-    };
-  }
-
-  pollToRaw(poll: Poll): RawPoll {
-    return {
-      question: poll.question,
-      answers: poll.answers.map((answer) => ({
-        answer_id: answer.answerID,
-        poll_media: answer.pollMedia,
-      })),
-      expiry: poll.expiry,
-      allow_multiselect: poll.allowMultiselect,
-      layout_type: poll.layoutType,
-      results:
-        poll.results !== undefined
-          ? {
-              is_finalized: poll.results.isFinalized,
-              answer_counts: poll.results.answerCounts.map((answerCount) => ({
-                id: answerCount.id,
-                count: answerCount.count,
-                me_voted: answerCount.meVoted,
-              })),
-            }
-          : undefined,
     };
   }
 
@@ -2402,32 +2402,6 @@ export class Util {
     };
   }
 
-  threadMemberFromRaw(threadMember: RawThreadMember): ThreadMember {
-    return {
-      id: threadMember.id,
-      userID: threadMember.user_id,
-      joinTimestamp: threadMember.join_timestamp,
-      flags: threadMember.flags,
-      member:
-        threadMember.member !== undefined
-          ? this.guildMemberFromRaw(threadMember.member)
-          : undefined,
-    };
-  }
-
-  threadMemberToRaw(threadMember: ThreadMember): RawThreadMember {
-    return {
-      id: threadMember.id,
-      user_id: threadMember.userID,
-      join_timestamp: threadMember.joinTimestamp,
-      flags: threadMember.flags,
-      member:
-        threadMember.member !== undefined
-          ? this.guildMemberToRaw(threadMember.member)
-          : undefined,
-    };
-  }
-
   testEntitlementFromRaw(
     entitlement: Omit<
       RawEntitlement,
@@ -2462,6 +2436,32 @@ export class Util {
       gift_code_flags: entitlement.giftCodeFlags,
       consumed: entitlement.consumed,
       guild_id: entitlement.guildID,
+    };
+  }
+
+  threadMemberFromRaw(threadMember: RawThreadMember): ThreadMember {
+    return {
+      id: threadMember.id,
+      userID: threadMember.user_id,
+      joinTimestamp: threadMember.join_timestamp,
+      flags: threadMember.flags,
+      member:
+        threadMember.member !== undefined
+          ? this.guildMemberFromRaw(threadMember.member)
+          : undefined,
+    };
+  }
+
+  threadMemberToRaw(threadMember: ThreadMember): RawThreadMember {
+    return {
+      id: threadMember.id,
+      user_id: threadMember.userID,
+      join_timestamp: threadMember.joinTimestamp,
+      flags: threadMember.flags,
+      member:
+        threadMember.member !== undefined
+          ? this.guildMemberToRaw(threadMember.member)
+          : undefined,
     };
   }
 
