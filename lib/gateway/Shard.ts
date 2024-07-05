@@ -669,6 +669,10 @@ export class Shard {
       presence:
         this.client.presence !== undefined
           ? {
+              since:
+                this.client.presence.status === StatusTypes.Idle
+                  ? Date.now()
+                  : null,
               activities: this.client.presence.activities,
               status: this.client.presence.status ?? StatusTypes.Online,
               afk: !!this.client.presence.afk,

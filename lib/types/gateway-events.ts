@@ -431,7 +431,7 @@ export interface Identify {
   largeThreshold?: number;
   shard?: [number, number];
   presence?: Partial<
-    Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+    Pick<GatewayPresenceUpdate, "since" | "activities" | "status" | "afk">
   >;
   intents: GatewayIntents;
 }
