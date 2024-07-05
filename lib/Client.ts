@@ -286,7 +286,6 @@ export class Client extends EventEmitter {
       days: number;
       computePruneCount: boolean;
       includeRoles: Array<snowflake>;
-      reason?: string;
     },
     reason?: string
   ): Promise<{
@@ -299,7 +298,6 @@ export class Client extends EventEmitter {
         days: options.days,
         compute_prune_count: options.computePruneCount,
         include_roles: options.includeRoles,
-        reason: options.reason,
       },
       reason,
     });
