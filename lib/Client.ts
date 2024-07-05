@@ -4363,14 +4363,17 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#update-current-user-application-role-connection */
-  async updateCurrentApplicationRoleConnection(options: {
-    platformName?: string;
-    platformUsername?: string;
-    metadata?: ApplicationRoleConnectionMetadata;
-  }): Promise<ApplicationRoleConnection> {
+  async updateCurrentApplicationRoleConnection(
+    applicationID: snowflake,
+    options: {
+      platformName?: string;
+      platformUsername?: string;
+      metadata?: ApplicationRoleConnectionMetadata;
+    }
+  ): Promise<ApplicationRoleConnection> {
     const response = await this.rest.request<RawApplicationRoleConnection>(
       RESTMethods.Put,
-      Endpoints.userApplicationRoleConnection(this.application.id),
+      Endpoints.userApplicationRoleConnection(applicationID),
       {
         json: {
           platform_name: options.platformName,
