@@ -615,13 +615,6 @@ export class Shard {
         break;
       case "VOICE_SERVER_UPDATE":
         {
-          this.client.voiceConnections.connect(packet.d.endpoint, {
-            serverID: packet.d.guild_id,
-            userID: this.client.user.id,
-            sessionID: this.sessionID,
-            token: packet.d.token,
-          });
-
           this.client.emit(GatewayEvents.VoiceServerUpdate, {
             token: packet.d.token,
             guildID: packet.d.guild_id,

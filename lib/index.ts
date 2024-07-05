@@ -26,6 +26,5 @@ export * from "./types/user";
 export * from "./types/voice";
 export * from "./types/webhook";
 export * from "./utils";
-export * from "./voice";
 export * from "./Client";
 export * from "./constants";

@@ -1,7 +1,6 @@
 import {
   GatewayIntents,
   type OAuth2Scopes,
-  GatewayOPCodes,
   type ActionTypes,
   type ImageWidgetStyleOptions,
   InteractionCallbackType,
@@ -167,7 +166,6 @@ import type {
 } from "./types/user";
 import type { VoiceRegion, RawVoiceRegion, VoiceState } from "./types/voice";
 import type { Webhook, RawWebhook } from "./types/webhook";
-import { VoiceConnectionManager } from "./voice";
 
 export interface ClientOptions {
   intents?: number | Array<number>;
@@ -187,7 +185,6 @@ export class Client extends EventEmitter {
   user!: User;
   guilds: Map<string, Guild>;
   application!: Pick<Application, "id" | "flags">;
-  voiceConnections: VoiceConnectionManager;
 
   constructor(token: string, options?: ClientOptions) {
     super();
@@ -206,7 +203,6 @@ export class Client extends EventEmitter {
     this.util = new Util();
     this.guildShardMap = {};
     this.guilds = new Map();
-    this.voiceConnections = new VoiceConnectionManager();
   }
 
   /** https://discord.com/developers/docs/resources/channel#group-dm-add-recipient */
@@ -4216,8 +4212,6 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   leaveVoiceChannel(guildID: snowflake): void {
-    this.voiceConnections.disconnect(guildID);
-
     this.shards.get(this.guildShardMap[guildID])?.updateVoiceState({
       guildID: guildID,
       channelID: null,
