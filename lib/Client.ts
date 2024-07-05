@@ -4189,7 +4189,7 @@ export class Client extends EventEmitter {
       selfDeaf?: boolean;
     }
   ): void {
-    this.shards.get(this.guildShardMap[guildID])?.updateVoiceState({
+    this.shards.get(this.guildShardMap[guildID])!.updateVoiceState({
       guildID: guildID,
       channelID: channelID,
       selfMute: !!options?.selfMute,
@@ -4212,7 +4212,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   leaveVoiceChannel(guildID: snowflake): void {
-    this.shards.get(this.guildShardMap[guildID])?.updateVoiceState({
+    this.shards.get(this.guildShardMap[guildID])!.updateVoiceState({
       guildID: guildID,
       channelID: null,
       selfMute: false,
