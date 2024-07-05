@@ -26,7 +26,9 @@ const {
   MessageFlags,
 } = require("disgroove");
 const client = new Client("B0t.T0k3N", {
-  intents: GatewayIntents.All,
+  gateway: {
+    intents: GatewayIntents.All,
+  },
 });
 
 client.once("ready", () => {

@@ -29,6 +29,7 @@ import {
   type OnboardingMode,
   type PrivacyLevel,
   type GuildMemberFlags,
+  StatusTypes,
 } from "./constants";
 import { Util } from "./utils";
 import { Endpoints, RequestManager, RESTMethods, type File } from "./rest";
@@ -168,13 +169,25 @@ import type { VoiceRegion, RawVoiceRegion, VoiceState } from "./types/voice";
 import type { Webhook, RawWebhook } from "./types/webhook";
 
 export interface ClientOptions {
-  intents?: number | Array<number>;
   shardsCount?: number | "auto";
   auth?: "Bot" | "Bearer";
+  gateway?: {
+    intents?: number | Array<number>;
+    compress?: boolean;
+    largeThreshold?: number;
+    presence?: Partial<
+      Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+    >;
+  };
 }
 
 export class Client extends EventEmitter {
   token: string;
+  compress?: boolean;
+  largeThreshold?: number;
+  presence?: Partial<
+    Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+  >;
   intents: GatewayIntents | number;
   shardsCount: number | "auto";
   auth: "Bot" | "Bearer";
@@ -190,11 +203,18 @@ export class Client extends EventEmitter {
     super();
 
     this.token = token;
+    this.compress = options?.gateway?.compress;
+    this.largeThreshold = options?.gateway?.largeThreshold;
+    this.presence = {
+      activities: options?.gateway?.presence?.activities,
+      status: options?.gateway?.presence?.status ?? StatusTypes.Online,
+      afk: !!options?.gateway?.presence?.afk,
+    };
     this.intents =
-      options?.intents !== undefined
-        ? Array.isArray(options.intents)
-          ? options.intents.reduce((sum, num) => sum + num, 0)
-          : options.intents
+      options?.gateway?.intents !== undefined
+        ? Array.isArray(options.gateway.intents)
+          ? options.gateway.intents.reduce((sum, num) => sum + num, 0)
+          : options.gateway.intents
         : GatewayIntents.AllNonPrivileged;
     this.shardsCount = options?.shardsCount ?? "auto";
     this.auth = options?.auth ?? "Bot";

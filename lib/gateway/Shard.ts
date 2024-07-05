@@ -655,13 +655,23 @@ export class Shard {
   private onWebSocketOpen(): void {
     this.identify({
       token: this.client.token,
-      shard: [this.id, this.client.shardsCount as number],
-      intents: this.client.intents,
       properties: {
         os: process.platform,
         browser: pkg.name,
         device: pkg.name,
       },
+      compress: this.client.compress,
+      largeThreshold: this.client.largeThreshold,
+      shard: [this.id, this.client.shardsCount as number],
+      presence:
+        this.client.presence !== undefined
+          ? {
+              activities: this.client.presence.activities,
+              status: this.client.presence.status ?? StatusTypes.Online,
+              afk: !!this.client.presence.afk,
+            }
+          : undefined,
+      intents: this.client.intents,
     });
   }
 

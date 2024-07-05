@@ -430,7 +430,9 @@ export interface Identify {
   compress?: boolean;
   largeThreshold?: number;
   shard?: [number, number];
-  presence?: GatewayPresenceUpdate;
+  presence?: Partial<
+    Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+  >;
   intents: GatewayIntents;
 }
 
