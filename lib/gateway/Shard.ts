@@ -1,5 +1,10 @@
 import WebSocket, { type RawData } from "ws";
-import { GatewayEvents, GatewayOPCodes, StatusTypes } from "../constants";
+import {
+  ActivityType,
+  GatewayEvents,
+  GatewayOPCodes,
+  StatusTypes,
+} from "../constants";
 import { GatewayError } from "../utils";
 import { Client } from "../Client";
 import * as pkg from "../../package.json";
@@ -667,7 +672,15 @@ export class Shard {
                 this.client.presence.status === StatusTypes.Idle
                   ? Date.now()
                   : null,
-              activities: this.client.presence.activities,
+              activities: this.client.presence.activities?.map((activity) => ({
+                name:
+                  activity.type === ActivityType.Custom
+                    ? "Custom Status"
+                    : activity.name,
+                type: activity.type,
+                url: activity.url,
+                state: activity.state,
+              })),
               status: this.client.presence.status ?? StatusTypes.Online,
               afk: !!this.client.presence.afk,
             }
@@ -754,7 +767,15 @@ export class Shard {
         op: GatewayOPCodes.PresenceUpdate,
         d: {
           since: options.status === StatusTypes.Idle ? Date.now() : null,
-          activities: options.activities,
+          activities: options.activities?.map((activity) => ({
+            name:
+              activity.type === ActivityType.Custom
+                ? "Custom Status"
+                : activity.name,
+            type: activity.type,
+            url: activity.url,
+            state: activity.state,
+          })),
           status: options.status ?? StatusTypes.Online,
           afk: !!options.afk,
         },

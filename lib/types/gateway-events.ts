@@ -84,7 +84,9 @@ export interface RawRequestGuildMembers {
 /** https://discord.com/developers/docs/topics/gateway-events#update-presence-gateway-presence-update-structure */
 export interface RawGatewayPresenceUpdate {
   since: number | null;
-  activities: Array<Pick<RawActivity, "name" | "type" | "url" | "state">>;
+  activities: Array<
+    Partial<Pick<RawActivity, "name" | "type" | "url" | "state">>
+  >;
   status: StatusTypes;
   afk: boolean;
 }
@@ -469,7 +471,7 @@ export interface RequestGuildMembers {
 
 export interface GatewayPresenceUpdate {
   since: number | null;
-  activities: Array<Pick<Activity, "name" | "type" | "url" | "state">>;
+  activities: Array<Partial<Pick<Activity, "name" | "type" | "url" | "state">>>;
   status: StatusTypes;
   afk: boolean;
 }
