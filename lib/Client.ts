@@ -970,14 +970,14 @@ export class Client extends EventEmitter {
     applicationID: snowflake,
     interactionToken: string,
     options: {
-      content?: string | null;
+      content?: string;
       tts?: boolean;
-      embeds?: Array<Embed> | null;
-      allowedMentions?: AllowedMentions | null;
-      components?: Array<ActionRow> | null;
+      embeds?: Array<Embed>;
+      allowedMentions?: AllowedMentions;
+      components?: Array<ActionRow>;
       files?: Array<File> | null;
-      attachments?: Array<Attachment> | null;
-      flags?: MessageFlags | null;
+      attachments?: Array<Pick<Attachment, "filename" | "description">>;
+      flags?: MessageFlags;
       threadName?: string;
       appliedTags?: Array<string>;
       poll?: PollCreateParams;
@@ -990,10 +990,7 @@ export class Client extends EventEmitter {
         json: {
           content: options.content,
           tts: options.tts,
-          embeds:
-            options.embeds !== null
-              ? options.embeds?.map((embed) => this.util.embedToRaw(embed))
-              : null,
+          embeds: options.embeds?.map((embed) => this.util.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
               ? options.allowedMentions !== null
@@ -1007,13 +1004,9 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? options.components !== null
-                ? this.util.messageComponentsToRaw(options.components)
-                : null
+              ? this.util.messageComponentsToRaw(options.components)
               : undefined,
-          attachments: options.attachments?.map((attachment) =>
-            this.util.attachmentToRaw(attachment)
-          ),
+          attachments: options.attachments,
           flags: options.flags,
           thread_name: options.threadName,
           poll:
@@ -2803,21 +2796,21 @@ export class Client extends EventEmitter {
     webhookID: snowflake,
     webhookToken: string,
     options: {
-      content?: string | null;
+      content?: string;
       username?: string;
       avatarURL?: string;
       tts?: boolean;
-      embeds?: Array<Embed> | null;
-      allowedMentions?: AllowedMentions | null;
-      components?: Array<ActionRow> | null;
-      files?: Array<File> | null;
-      attachments?: Array<Attachment> | null;
-      flags?: MessageFlags | null;
+      embeds?: Array<Embed>;
+      allowedMentions?: AllowedMentions;
+      components?: Array<ActionRow>;
+      files?: Array<File>;
+      attachments?: Array<Pick<Attachment, "filename" | "description">>;
+      flags?: MessageFlags;
       threadName?: string;
-      appliedTags?: Array<string>;
+      appliedTags?: Array<snowflake>;
       poll?: PollCreateParams;
-      wait: boolean;
-      threadID: snowflake;
+      wait?: boolean;
+      threadID?: snowflake;
     }
   ): Promise<Message | null> {
     const response = await this.rest.request<RawMessage | null>(
@@ -2827,32 +2820,23 @@ export class Client extends EventEmitter {
         json: {
           content: options.content,
           username: options.username,
-          avatarURL: options.avatarURL,
+          avatar_url: options.avatarURL,
           tts: options.tts,
-          embeds:
-            options.embeds !== null
-              ? options.embeds?.map((embed) => this.util.embedToRaw(embed))
-              : null,
+          embeds: options.embeds?.map((embed) => this.util.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
-              ? options.allowedMentions !== null
-                ? {
-                    parse: options.allowedMentions.parse,
-                    roles: options.allowedMentions.roles,
-                    users: options.allowedMentions.users,
-                    replied_user: options.allowedMentions.repliedUser,
-                  }
-                : null
+              ? {
+                  parse: options.allowedMentions.parse,
+                  roles: options.allowedMentions.roles,
+                  users: options.allowedMentions.users,
+                  replied_user: options.allowedMentions.repliedUser,
+                }
               : undefined,
           components:
             options.components !== undefined
-              ? options.components !== null
-                ? this.util.messageComponentsToRaw(options.components)
-                : null
+              ? this.util.messageComponentsToRaw(options.components)
               : undefined,
-          attachments: options.attachments?.map((attachment) =>
-            this.util.attachmentToRaw(attachment)
-          ),
+          attachments: options.attachments,
           flags: options.flags,
           thread_name: options.threadName,
           applied_tags: options.appliedTags,
