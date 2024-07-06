@@ -337,7 +337,7 @@ export interface RawActivity {
   name: string;
   type: ActivityType;
   url?: string | null;
-  created_at: timestamp;
+  created_at: number;
   timestamps?: RawActivityTimestamps;
   application_id?: snowflake;
   details?: string | null;
@@ -692,7 +692,7 @@ export interface Activity {
   name: string;
   type: ActivityType;
   url?: string | null;
-  createdAt: timestamp;
+  createdAt: number;
   timestamps?: ActivityTimestamps;
   applicationID?: snowflake;
   details?: string | null;
