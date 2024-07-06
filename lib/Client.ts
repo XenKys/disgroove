@@ -385,7 +385,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
       defaultPermission?: boolean | null;
       integrationTypes: Array<ApplicationIntegrationTypes>;
       contexts: Array<InteractionContextTypes>;
@@ -418,7 +417,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
       defaultPermission?: boolean | null;
       type?: ApplicationCommandTypes;
       nsfw?: boolean;
@@ -649,7 +647,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      dmPermission?: boolean;
       defaultPermission?: boolean | null;
       integrationTypes?: Array<ApplicationIntegrationTypes>;
       contexts?: Array<InteractionContextTypes>;
@@ -2029,7 +2026,6 @@ export class Client extends EventEmitter {
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
-      dmPermission?: boolean;
       integrationTypes?: Array<ApplicationIntegrationTypes>;
       contexts?: Array<InteractionContextTypes>;
       nsfw?: boolean;
