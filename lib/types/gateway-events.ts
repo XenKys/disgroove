@@ -51,7 +51,9 @@ export interface RawIdentify {
   compress?: boolean;
   large_threshold?: number;
   shard?: [number, number];
-  presence?: RawGatewayPresenceUpdate;
+  presence?: Partial<
+    Pick<RawGatewayPresenceUpdate, "since" | "activities" | "status" | "afk">
+  >;
   intents: GatewayIntents;
 }
 
