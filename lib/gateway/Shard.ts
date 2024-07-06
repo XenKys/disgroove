@@ -722,7 +722,7 @@ export class Shard {
   private onWebSocketClose(code: number, reason: Buffer): void {
     if (code === 1000) return;
 
-    throw new GatewayError(`[${code}] ${reason}`);
+    throw new GatewayError(code, reason.toString());
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#request-guild-members */

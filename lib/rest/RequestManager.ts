@@ -140,6 +140,7 @@ export class RequestManager {
                 : new HTTPError(
                     response.status,
                     response.statusText,
+                    responseJSON.errors,
                     method,
                     endpoint
                   )

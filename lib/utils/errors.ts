@@ -12,14 +12,13 @@ export class RESTError extends Error {
     method: string,
     endpoint: string
   ) {
-    super();
+    super(`[${code}] ${message}\n${RESTError.flattenErrors(errors)}`);
 
     this.method = method;
     this.endpoint = endpoint;
-    this.message = `[${code}] ${message}\n${this.flattenErrors(errors)}`;
   }
 
-  flattenErrors(
+  static flattenErrors(
     errors: Record<string, unknown> | undefined,
     prefix = ""
   ): string {
@@ -62,21 +61,21 @@ export class HTTPError extends Error {
   constructor(
     status: number,
     statusText: string,
+    errors: Record<string, unknown>,
     method: string,
     endpoint: string
   ) {
-    super();
+    super(`[${status}] ${statusText}\n${RESTError.flattenErrors(errors)}`);
 
     this.method = method;
     this.endpoint = endpoint;
-    this.message = `[${status}] ${statusText}`;
   }
 }
 
 export class GatewayError extends Error {
   override name: string = "GatewayError";
 
-  constructor(message: string) {
-    super(message);
+  constructor(code: number, reason: string) {
+    super(`[${code}] ${reason}`);
   }
 }
