@@ -2008,7 +2008,7 @@ export class Util {
     presence: RawPresenceUpdateEventFields
   ): PresenceUpdateEventFields {
     return {
-      user: this.userFromRaw(presence.user),
+      user: this.presenceUserFromRaw(presence.user),
       guildID: presence.guild_id,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
@@ -2041,7 +2041,7 @@ export class Util {
     presence: PresenceUpdateEventFields
   ): RawPresenceUpdateEventFields {
     return {
-      user: this.userToRaw(presence.user),
+      user: this.presenceUserToRaw(presence.user),
       guild_id: presence.guildID,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
@@ -2067,6 +2067,54 @@ export class Util {
         buttons: activity.buttons,
       })),
       client_status: presence.clientStatus,
+    };
+  }
+
+  presenceUserFromRaw(
+    user: Pick<RawUser, "id"> & Partial<RawUser>
+  ): Pick<User, "id"> & Partial<User> {
+    return {
+      id: user.id,
+      username: user.username,
+      discriminator: user.discriminator,
+      globalName: user.global_name,
+      avatar: user.avatar,
+      bot: user.bot,
+      system: user.system,
+      mfaEnabled: user.mfa_enabled,
+      banner: user.banner,
+      accentColor: user.accent_color,
+      locale: user.locale,
+      verified: user.verified,
+      email: user.email,
+      flags: user.flags,
+      premiumType: user.premium_type,
+      publicFlags: user.public_flags,
+      avatarDecoration: user.avatar_decoration,
+    };
+  }
+
+  presenceUserToRaw(
+    user: Pick<User, "id"> & Partial<User>
+  ): Pick<RawUser, "id"> & Partial<RawUser> {
+    return {
+      id: user.id,
+      username: user.username,
+      discriminator: user.discriminator,
+      global_name: user.globalName,
+      avatar: user.avatar,
+      bot: user.bot,
+      system: user.system,
+      mfa_enabled: user.mfaEnabled,
+      banner: user.banner,
+      accent_color: user.accentColor,
+      locale: user.locale,
+      verified: user.verified,
+      email: user.email,
+      flags: user.flags,
+      premium_type: user.premiumType,
+      public_flags: user.publicFlags,
+      avatar_decoration: user.avatarDecoration,
     };
   }
 

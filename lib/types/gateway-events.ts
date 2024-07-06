@@ -318,7 +318,7 @@ export interface RawMessageReactionRemoveEmojiEventFields {
 
 /** https://discord.com/developers/docs/topics/gateway-events#presence-update-presence-update-event-fields */
 export interface RawPresenceUpdateEventFields {
-  user: RawUser;
+  user: Pick<RawUser, "id"> & Partial<RawUser>;
   guild_id: snowflake;
   status: StatusTypes;
   activities: Array<RawActivity>;
@@ -675,7 +675,7 @@ export interface MessageReactionRemoveEmojiEventFields {
 }
 
 export interface PresenceUpdateEventFields {
-  user: User;
+  user: Pick<User, "id"> & Partial<User>;
   guildID: snowflake;
   status: StatusTypes;
   activities: Array<Activity>;
