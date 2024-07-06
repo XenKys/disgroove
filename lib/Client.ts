@@ -687,7 +687,6 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#create-guild */
   async createGuild(options: {
     name: string;
-    region?: string | null;
     icon?: string;
     verificationLevel?: VerificationLevel;
     defaultMessageNotifications?: DefaultMessageNotificationLevel;
@@ -718,7 +717,6 @@ export class Client extends EventEmitter {
       {
         json: {
           name: options.name,
-          region: options.region,
           icon: options.icon,
           verification_level: options.verificationLevel,
           default_message_notifications: options.defaultMessageNotifications,
