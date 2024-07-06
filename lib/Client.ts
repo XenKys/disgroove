@@ -1187,7 +1187,7 @@ export class Client extends EventEmitter {
       components?: Array<ActionRow>;
       stickersIDs?: Array<snowflake>;
       files?: Array<File>;
-      attachments?: Array<Attachment>;
+      attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;
       enforceNonce?: boolean;
       poll?: PollCreateParams;
@@ -1217,9 +1217,7 @@ export class Client extends EventEmitter {
               ? this.util.messageComponentsToRaw(options.components)
               : undefined,
           stickers_ids: options.stickersIDs,
-          attachments: options.attachments?.map((attachment) =>
-            this.util.attachmentToRaw(attachment)
-          ),
+          attachments: options.attachments,
           flags: options.flags,
           enforce_nonce: options.enforceNonce,
           poll:
