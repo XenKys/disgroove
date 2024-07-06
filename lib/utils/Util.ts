@@ -2020,6 +2020,7 @@ export class Util {
         applicationID: activity.application_id,
         details: activity.details,
         state: activity.state,
+        emoji: activity.emoji,
         party: activity.party,
         assets: {
           largeImage: activity.assets?.large_image,
@@ -2052,6 +2053,7 @@ export class Util {
         application_id: activity.applicationID,
         details: activity.details,
         state: activity.state,
+        emoji: activity.emoji,
         party: activity.party,
         assets: {
           large_image: activity.assets?.largeImage,

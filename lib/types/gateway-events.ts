@@ -342,6 +342,7 @@ export interface RawActivity {
   application_id?: snowflake;
   details?: string | null;
   state?: string | null;
+  emoji?: RawActivityEmoji | null;
   party?: RawActivityParty;
   assets?: RawActivityAssets;
   secrets?: RawActivitySecrets;
@@ -354,6 +355,13 @@ export interface RawActivity {
 export interface RawActivityTimestamps {
   start?: number;
   end?: number;
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-emoji */
+export interface RawActivityEmoji {
+  name: string;
+  id?: snowflake;
+  animated?: boolean;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-party */
@@ -689,6 +697,7 @@ export interface Activity {
   applicationID?: snowflake;
   details?: string | null;
   state?: string | null;
+  emoji?: ActivityEmoji | null;
   party?: ActivityParty;
   assets?: ActivityAssets;
   secrets?: ActivitySecrets;
@@ -700,6 +709,12 @@ export interface Activity {
 export interface ActivityTimestamps {
   start?: number;
   end?: number;
+}
+
+export interface ActivityEmoji {
+  name: string;
+  id?: snowflake;
+  animated?: boolean;
 }
 
 export interface ActivityParty {
