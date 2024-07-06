@@ -879,13 +879,13 @@ export class Client extends EventEmitter {
   async createGuildScheduledEvent(
     guildID: snowflake,
     options: {
-      channelID?: snowflake | null;
-      entityMetadata?: GuildScheduledEventEntityMetadata | null;
+      channelID?: snowflake;
+      entityMetadata?: GuildScheduledEventEntityMetadata;
       name: string;
       privacyLevel: GuildScheduledEventPrivacyLevel;
       scheduledStartTime: string;
-      scheduledEndTime?: string | null;
-      description?: string | null;
+      scheduledEndTime?: string;
+      description?: string;
       entityType: GuildScheduledEventEntityTypes;
       image?: string;
     },
