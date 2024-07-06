@@ -503,24 +503,24 @@ export class Client extends EventEmitter {
   async createChannel(
     guildID: snowflake,
     options: {
-      name: string | null;
-      type?: ChannelTypes;
+      name: string;
+      type?: ChannelTypes | null;
       topic?: string | null;
-      bitrate?: number;
-      userLimit?: number;
-      rateLimitPerUser?: number;
-      position?: number;
+      bitrate?: number | null;
+      userLimit?: number | null;
+      rateLimitPerUser?: number | null;
+      position?: number | null;
       permissionOverwrites?: Array<Overwrite>;
       parentID?: snowflake | null;
-      nsfw?: boolean;
+      nsfw?: boolean | null;
       rtcRegion?: string | null;
-      videoQualityMode?: VideoQualityModes;
-      defaultAutoArchiveDuration?: number;
+      videoQualityMode?: VideoQualityModes | null;
+      defaultAutoArchiveDuration?: number | null;
       defaultReactionEmoji?: DefaultReaction | null;
-      availableTags?: Array<ForumTag>;
+      availableTags?: Array<ForumTag> | null;
       defaultSortOrder?: SortOrderTypes | null;
-      defaultForumLayout?: ForumLayoutTypes;
-      defaultThreadRateLimitPerUser?: number;
+      defaultForumLayout?: ForumLayoutTypes | null;
+      defaultThreadRateLimitPerUser?: number | null;
     },
     reason?: string
   ): Promise<Channel> {
