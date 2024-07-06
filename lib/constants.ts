@@ -894,7 +894,6 @@ export enum HTTPResponseCodes {
   MethodNotAllowed,
   TooManyRequests = 429,
   GatewayUnavailable = 502,
-  ServerError = "5xx",
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes */
