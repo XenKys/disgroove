@@ -1987,8 +1987,8 @@ export class Client extends EventEmitter {
       ApplicationIntegrationTypeConfiguration
     >;
     flags?: ApplicationFlags;
-    icon?: string;
-    coverImage?: string;
+    icon?: string | null;
+    coverImage?: string | null;
     interactionsEndpointURL?: string;
     tags?: Array<string>;
   }): Promise<Application> {
