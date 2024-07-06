@@ -122,6 +122,8 @@ export class Util {
       defaultMemberPermissions: applicationCommand.default_member_permissions,
       dmPermission: applicationCommand.dm_permission,
       defaultPermission: applicationCommand.default_permission,
+      integrationTypes: applicationCommand.integration_types,
+      contexts: applicationCommand.contexts,
       nsfw: applicationCommand.nsfw,
       version: applicationCommand.version,
     };
@@ -180,6 +182,8 @@ export class Util {
       default_member_permissions: applicationCommand.defaultMemberPermissions,
       dm_permission: applicationCommand.dmPermission,
       default_permission: applicationCommand.defaultPermission,
+      integration_types: applicationCommand.integrationTypes,
+      contexts: applicationCommand.contexts,
       nsfw: applicationCommand.nsfw,
       version: applicationCommand.version,
     };
@@ -1999,6 +2003,8 @@ export class Util {
       default_member_permissions: applicationCommand.defaultMemberPermissions,
       dm_permission: applicationCommand.dmPermission,
       default_permission: applicationCommand.defaultPermission,
+      integration_types: applicationCommand.integrationTypes,
+      contexts: applicationCommand.contexts,
       nsfw: applicationCommand.nsfw,
       version: applicationCommand.version,
     };

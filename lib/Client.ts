@@ -29,7 +29,7 @@ import {
   type OnboardingMode,
   type PrivacyLevel,
   type GuildMemberFlags,
-  StatusTypes,
+  type InteractionContextTypes,
 } from "./constants";
 import { Util } from "./utils";
 import { Endpoints, RequestManager, RESTMethods, type File } from "./rest";
@@ -381,12 +381,14 @@ export class Client extends EventEmitter {
       id?: snowflake;
       name: string;
       nameLocalizations?: LocaleMap | null;
-      description?: string;
+      description: string;
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;
+      integrationTypes: Array<ApplicationIntegrationTypes>;
+      contexts: Array<InteractionContextTypes>;
       type?: ApplicationCommandTypes;
       nsfw?: boolean;
     }>
@@ -412,13 +414,13 @@ export class Client extends EventEmitter {
       id?: snowflake;
       name: string;
       nameLocalizations?: LocaleMap | null;
-      description?: string;
+      description: string;
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;
-      type: ApplicationCommandTypes;
+      type?: ApplicationCommandTypes;
       nsfw?: boolean;
     }>
   ): Promise<Array<ApplicationCommand>> {
@@ -649,6 +651,8 @@ export class Client extends EventEmitter {
       defaultMemberPermissions?: string | null;
       dmPermission?: boolean;
       defaultPermission?: boolean | null;
+      integrationTypes?: Array<ApplicationIntegrationTypes>;
+      contexts?: Array<InteractionContextTypes>;
       type?: ApplicationCommandTypes;
       nsfw?: boolean;
     }
@@ -2026,6 +2030,8 @@ export class Client extends EventEmitter {
       defaultMemberPermissions?: string | null;
       defaultPermission?: boolean | null;
       dmPermission?: boolean;
+      integrationTypes?: Array<ApplicationIntegrationTypes>;
+      contexts?: Array<InteractionContextTypes>;
       nsfw?: boolean;
     }
   ): Promise<ApplicationCommand> {
