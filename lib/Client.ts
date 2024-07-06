@@ -208,11 +208,7 @@ export class Client extends EventEmitter {
     this.token = token;
     this.compress = options?.gateway?.compress;
     this.largeThreshold = options?.gateway?.largeThreshold;
-    this.presence = {
-      activities: options?.gateway?.presence?.activities,
-      status: options?.gateway?.presence?.status ?? StatusTypes.Online,
-      afk: !!options?.gateway?.presence?.afk,
-    };
+    this.presence = options?.gateway?.presence;
     this.intents =
       options?.gateway?.intents !== undefined
         ? Array.isArray(options.gateway.intents)
