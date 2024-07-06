@@ -5,29 +5,17 @@ import type { snowflake } from "./common";
 export interface RawSKU {
   id: snowflake;
   type: SKUTypes;
-  dependent_sku_id?: string | null; // Undocumented
   application_id: snowflake;
-  manifest_labels?: null; // Undocumented
-  access_type?: number; // Undocumented
   name: string;
-  features?: []; // Undocumented
-  release_date?: null; // Undocumented
   slug: string;
   flags: SKUFlags;
-  show_age_gate?: boolean; // Undocumented
 }
 
 export interface SKU {
   id: snowflake;
   type: SKUTypes;
-  dependentSKUID?: string | null; // Undocumented
   applicationID: snowflake;
-  manifestLabels?: null; // Undocumented
-  accessType?: number; // Undocumented
   name: string;
-  features?: []; // Undocumented
-  releaseDate?: null; // Undocumented
   slug: string;
   flags: SKUFlags;
-  showAgeGate?: boolean; // Undocumented
 }

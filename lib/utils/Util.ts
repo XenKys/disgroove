@@ -874,15 +874,12 @@ export class Util {
       skuID: entitlement.sku_id,
       applicationID: entitlement.application_id,
       userID: entitlement.user_id,
-      promotionID: entitlement.promotion_id,
       type: entitlement.type,
       deleted: entitlement.deleted,
-      giftCodeFlags: entitlement.gift_code_flags,
       consumed: entitlement.consumed,
       startsAt: entitlement.starts_at,
       endsAt: entitlement.ends_at,
       guildID: entitlement.guild_id,
-      subscriptionID: entitlement.subscription_id,
     };
   }
 
@@ -892,15 +889,12 @@ export class Util {
       sku_id: entitlement.skuID,
       application_id: entitlement.applicationID,
       user_id: entitlement.userID,
-      promotion_id: entitlement.promotionID,
       type: entitlement.type,
       deleted: entitlement.deleted,
-      gift_code_flags: entitlement.giftCodeFlags,
       consumed: entitlement.consumed,
       starts_at: entitlement.startsAt,
       ends_at: entitlement.endsAt,
       guild_id: entitlement.guildID,
-      subscription_id: entitlement.subscriptionID,
     };
   }
 
@@ -2338,16 +2332,10 @@ export class Util {
     return {
       id: sku.id,
       type: sku.type,
-      dependentSKUID: sku.dependent_sku_id,
       applicationID: sku.application_id,
-      manifestLabels: sku.manifest_labels,
-      accessType: sku.access_type,
       name: sku.name,
-      features: sku.features,
-      releaseDate: sku.release_date,
       slug: sku.slug,
       flags: sku.flags,
-      showAgeGate: sku.show_age_gate,
     };
   }
 
@@ -2355,16 +2343,10 @@ export class Util {
     return {
       id: sku.id,
       type: sku.type,
-      dependent_sku_id: sku.dependentSKUID,
       application_id: sku.applicationID,
-      manifest_labels: sku.manifestLabels,
-      access_type: sku.accessType,
       name: sku.name,
-      features: sku.features,
-      release_date: sku.releaseDate,
       slug: sku.slug,
       flags: sku.flags,
-      show_age_gate: sku.showAgeGate,
     };
   }
 
@@ -2469,10 +2451,8 @@ export class Util {
       skuID: entitlement.sku_id,
       applicationID: entitlement.application_id,
       userID: entitlement.user_id,
-      promotionID: entitlement.promotion_id,
       type: entitlement.type,
       deleted: entitlement.deleted,
-      giftCodeFlags: entitlement.gift_code_flags,
       consumed: entitlement.consumed,
       guildID: entitlement.guild_id,
     };
@@ -2486,10 +2466,8 @@ export class Util {
       sku_id: entitlement.skuID,
       application_id: entitlement.applicationID,
       user_id: entitlement.userID,
-      promotion_id: entitlement.promotionID,
       type: entitlement.type,
       deleted: entitlement.deleted,
-      gift_code_flags: entitlement.giftCodeFlags,
       consumed: entitlement.consumed,
       guild_id: entitlement.guildID,
     };
