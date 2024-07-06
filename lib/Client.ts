@@ -732,6 +732,12 @@ export class Client extends EventEmitter {
             permissions: role.permissions,
             mentionable: role.mentionable,
           })),
+          channels: options.channels?.map((channel) => ({
+            name: channel.name,
+            type: channel.type,
+            id: channel.id,
+            parent_id: channel.id,
+          })),
           afk_channel_id: options.afkChannelID,
           afk_timeout: options.afkTimeout,
           system_channel_id: options.systemChannelID,
