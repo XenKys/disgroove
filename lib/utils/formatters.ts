@@ -23,7 +23,7 @@ export function slashCommandMention(
 ): string {
   return subCommandName
     ? subCommandGroupName
-      ? `</${commandName} ${subCommandGroupName}  ${subCommandName}:${commandID}>`
+      ? `</${commandName} ${subCommandGroupName} ${subCommandName}:${commandID}>`
       : `</${commandName} ${subCommandName}:${commandID}>`
     : `</${commandName}:${commandID}>`;
 }
