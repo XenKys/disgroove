@@ -2081,10 +2081,9 @@ export class Client extends EventEmitter {
     guildID: snowflake,
     options: {
       name?: string;
-      region?: string | null;
-      verificationLevel?: VerificationLevel;
-      defaultMessageNotifications?: DefaultMessageNotificationLevel;
-      explicitContentFilter?: ExplicitContentFilterLevel;
+      verificationLevel?: VerificationLevel | null;
+      defaultMessageNotifications?: DefaultMessageNotificationLevel | null;
+      explicitContentFilter?: ExplicitContentFilterLevel | null;
       afkChannelID?: snowflake | null;
       afkTimeout?: number;
       icon?: string | null;
@@ -2096,7 +2095,7 @@ export class Client extends EventEmitter {
       systemChannelFlags?: SystemChannelFlags;
       rulesChannelID?: snowflake | null;
       publicUpdatesChannelID?: snowflake | null;
-      preferredLocale?: string;
+      preferredLocale?: string | null;
       features?: Array<GuildFeatures>;
       description?: string | null;
       premiumProgressBarEnabled?: boolean;
@@ -2110,7 +2109,6 @@ export class Client extends EventEmitter {
       {
         json: {
           name: options.name,
-          region: options.region,
           verification_level: options.verificationLevel,
           default_message_notifications: options.defaultMessageNotifications,
           explicit_content_filter: options.explicitContentFilter,
