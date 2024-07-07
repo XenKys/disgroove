@@ -47,6 +47,7 @@ import type {
   GuildApplicationCommandPermissions,
   RawGuildApplicationCommandPermissions,
   ApplicationCommandOption,
+  ApplicationCommandPermission,
 } from "./types/application-command";
 import type {
   ApplicationRoleConnectionMetadata,
@@ -1747,8 +1748,8 @@ export class Client extends EventEmitter {
       triggerMetadata?: TriggerMetadata;
       actions?: Array<AutoModerationAction>;
       enabled?: boolean;
-      exemptRoles?: Array<string>;
-      exemptChannels?: Array<string>;
+      exemptRoles?: Array<snowflake>;
+      exemptChannels?: Array<snowflake>;
     },
     reason?: string
   ): Promise<AutoModerationRule> {
@@ -1786,7 +1787,7 @@ export class Client extends EventEmitter {
     guildID: snowflake,
     commandID: snowflake,
     options: {
-      permissions: Array<GuildApplicationCommandPermissions>;
+      permissions: Array<ApplicationCommandPermission>;
     }
   ): Promise<GuildApplicationCommandPermissions> {
     const response =
@@ -1799,9 +1800,11 @@ export class Client extends EventEmitter {
         ),
         {
           json: {
-            permissions: options.permissions.map((permission) =>
-              Guilds.guildApplicationCommandPermissionsToRaw(permission)
-            ),
+            permissions: options.permissions.map((permission) => ({
+              id: permission.type,
+              type: permission.type,
+              permission: permission.permission,
+            })),
           },
         }
       );
