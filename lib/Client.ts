@@ -3972,7 +3972,7 @@ export class Client extends EventEmitter {
     emoji: string,
     options?: {
       type?: ReactionTypes;
-      after?: string;
+      after?: snowflake;
       limit?: number;
     }
   ): Promise<Array<User>> {
