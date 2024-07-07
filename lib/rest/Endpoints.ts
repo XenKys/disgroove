@@ -21,7 +21,7 @@ export const guildBulkBan = (guildID: snowflake) =>
   `guilds/${guildID}/bulk-ban` as const;
 export const guildChannels = (guildID: snowflake) =>
   `guilds/${guildID}/channels` as const;
-export const guildCurrentMemberNickname = (guildID: snowflake) =>
+export const guildMemberNickname = (guildID: snowflake) =>
   `guilds/${guildID}/members/@me/nick` as const;
 export const guildEmoji = (guildID: snowflake, emojiID: snowflake) =>
   `guilds/${guildID}/emojis/${emojiID}` as const;
@@ -199,7 +199,7 @@ export const applicationCommandPermissions = (
   commandID: snowflake
 ) =>
   `applications/${applicationID}/guilds/${guildID}/commands/${commandID}/permissions` as const;
-export const applicationCurrentUser = () => "applications/@me" as const;
+export const applicationUser = () => "applications/@me" as const;
 export const applicationEntitlement = (
   applicationID: snowflake,
   entitlementID: snowflake
@@ -252,10 +252,9 @@ export const gateway = () => "gateway" as const;
 export const gatewayBot = () => "gateway/bot" as const;
 
 // OAuth2
-export const oauth2Authorization = () => "oauth2/authorize" as const;
-export const oauth2CurrentApplication = () =>
-  `oauth2/applications/@me` as const;
-export const oauth2CurrentAuthorization = () => "oauth2/@me" as const;
+export const oauth2Authorize = () => "oauth2/authorize" as const;
+export const oauth2Application = () => `oauth2/applications/@me` as const;
+export const oauth2Authorization = () => "oauth2/@me" as const;
 export const oauth2TokenExchange = () => "oauth2/token" as const;
 export const oauth2TokenRevocation = () => "oauth2/token/revoke" as const;
 

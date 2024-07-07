@@ -1998,7 +1998,7 @@ export class Client extends EventEmitter {
   }): Promise<Application> {
     const response = await this.rest.request<RawApplication>(
       RESTMethods.Patch,
-      Endpoints.applicationCurrentUser(),
+      Endpoints.applicationUser(),
       {
         json: {
           custom_install_url: options.customInstallURL,
@@ -3125,7 +3125,7 @@ export class Client extends EventEmitter {
   async getCurrentApplication(): Promise<Application> {
     const response = await this.rest.request<RawApplication>(
       RESTMethods.Get,
-      Endpoints.applicationCurrentUser()
+      Endpoints.applicationUser()
     );
 
     return Applications.applicationFromRaw(response);
@@ -3961,7 +3961,7 @@ export class Client extends EventEmitter {
   async getOAuth2Application(): Promise<Application> {
     const response = await this.rest.request<RawApplication>(
       RESTMethods.Get,
-      Endpoints.oauth2CurrentApplication()
+      Endpoints.oauth2Application()
     );
 
     return Applications.applicationFromRaw(response);
