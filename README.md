@@ -25,18 +25,14 @@ const {
   InteractionCallbackType,
   MessageFlags,
 } = require("disgroove");
-const client = new Client("B0t.T0k3N", {
-  gateway: {
-    intents: GatewayIntents.All,
-  },
-});
+const client = new Client("B0t.T0k3N");
 
 client.once("ready", () => {
   console.log("Logged in as", client.user.username);
 
   client.createGlobalApplicationCommand(client.application.id, {
     name: "ping",
-    description: "Responds with Pong! 🏓",
+    description: "Pong!",
   });
 });
 
