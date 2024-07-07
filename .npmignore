@@ -2,4 +2,5 @@
 /lib
 /test
 .gitignore
+.prettierrc.json
 tsconfig.json
