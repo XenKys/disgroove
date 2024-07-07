@@ -3625,7 +3625,7 @@ export class Client extends EventEmitter {
     guildID: snowflake,
     options: {
       days: number;
-      includeRoles: string | Array<string>;
+      includeRoles: string | Array<snowflake>;
     }
   ): Promise<{ pruned: number }> {
     return this.rest.request<{ pruned: number }>(
