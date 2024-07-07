@@ -2198,8 +2198,8 @@ export class Client extends EventEmitter {
       mute?: boolean | null;
       deaf?: boolean | null;
       channelID?: snowflake | null;
-      communicationDisabledUntil?: number | null;
-      flags?: GuildMemberFlags;
+      communicationDisabledUntil?: timestamp | null;
+      flags?: GuildMemberFlags | null;
     },
     reason?: string
   ): Promise<GuildMember> {
