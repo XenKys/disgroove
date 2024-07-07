@@ -2,6 +2,7 @@ import type {
   ApplicationCommand,
   RawApplicationCommand,
 } from "../types/application-command";
+import type { Attachment, RawAttachment } from "../types/channel";
 
 export class Util {
   partialApplicationCommandToRaw(
@@ -61,6 +62,27 @@ export class Util {
       contexts: applicationCommand.contexts,
       nsfw: applicationCommand.nsfw,
       version: applicationCommand.version,
+    };
+  }
+
+  partialAttachmentToRaw(
+    attachment: Partial<Attachment>
+  ): Partial<RawAttachment> {
+    return {
+      id: attachment.id,
+      filename: attachment.filename,
+      title: attachment.title,
+      description: attachment.description,
+      content_type: attachment.contentType,
+      size: attachment.size,
+      url: attachment.url,
+      proxy_url: attachment.proxyURL,
+      height: attachment.height,
+      width: attachment.width,
+      ephemeral: attachment.ephemeral,
+      duration_secs: attachment.durationSecs,
+      waveform: attachment.waveform,
+      flags: attachment.flags,
     };
   }
 }
