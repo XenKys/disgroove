@@ -168,6 +168,24 @@ import type {
 import type { VoiceRegion, RawVoiceRegion, VoiceState } from "./types/voice";
 import type { Webhook, RawWebhook } from "./types/webhook";
 import type { ClientOptions as WebSocketOptions } from "ws";
+import {
+  Guilds,
+  Applications,
+  AutoModeration,
+  Channels,
+  Users,
+  Emojis,
+  Invites,
+  Roles,
+  Webhooks,
+  GuildScheduledEvents,
+  Stickers,
+  GuildTemplates,
+  StageInstances,
+  Entitlements,
+  AuditLogs,
+  SKUs,
+} from "./transformers";
 
 export interface ClientOptions {
   shardsCount?: number | "auto";
@@ -274,7 +292,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response !== null ? this.util.guildMemberFromRaw(response) : null;
+    return response !== null ? Guilds.guildMemberFromRaw(response) : null;
   }
 
   /** https://discord.com/developers/docs/resources/guild#add-guild-member-role */
@@ -402,7 +420,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((c) => this.util.applicationCommandFromRaw(c));
+    return response.map((c) => Applications.applicationCommandFromRaw(c));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
@@ -432,7 +450,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((c) => this.util.applicationCommandFromRaw(c));
+    return response.map((c) => Applications.applicationCommandFromRaw(c));
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
@@ -496,7 +514,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.autoModerationRuleFromRaw(response);
+    return AutoModeration.autoModerationRuleFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-channel */
@@ -561,7 +579,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-channel-invite */
@@ -595,7 +613,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.inviteFromRaw(response);
+    return Invites.inviteFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#create-webhook */
@@ -619,7 +637,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.webhookFromRaw(response);
+    return Webhooks.webhookFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/user#create-dm */
@@ -634,7 +652,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-global-application-command */
@@ -662,7 +680,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.applicationCommandFromRaw(response);
+    return Applications.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/user#create-group-dm */
@@ -681,7 +699,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild */
@@ -744,7 +762,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildFromRaw(response);
+    return Guilds.guildFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
@@ -771,7 +789,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.applicationCommandFromRaw(response);
+    return Applications.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
@@ -816,7 +834,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.emojiFromRaw(response);
+    return Emojis.emojiFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template */
@@ -838,7 +856,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildFromRaw(response);
+    return Guilds.guildFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
@@ -872,7 +890,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.roleFromRaw(response);
+    return Roles.roleFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event */
@@ -910,7 +928,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildScheduledEventFromRaw(response);
+    return GuildScheduledEvents.guildScheduledEventFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/sticker#create-guild-sticker */
@@ -940,7 +958,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.stickerFromRaw(response);
+    return Stickers.stickerFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-template */
@@ -962,7 +980,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildTemplateFromRaw(response);
+    return GuildTemplates.guildTemplateFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message */
@@ -990,7 +1008,7 @@ export class Client extends EventEmitter {
         json: {
           content: options.content,
           tts: options.tts,
-          embeds: options.embeds?.map((embed) => this.util.embedToRaw(embed)),
+          embeds: options.embeds?.map((embed) => Channels.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
               ? options.allowedMentions !== null
@@ -1004,7 +1022,7 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? this.util.messageComponentsToRaw(options.components)
+              ? Channels.messageComponentsToRaw(options.components)
               : undefined,
           attachments: options.attachments,
           flags: options.flags,
@@ -1027,7 +1045,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
@@ -1054,7 +1072,7 @@ export class Client extends EventEmitter {
                   embeds:
                     options.data?.embeds !== undefined
                       ? options.data.embeds.map((embed) =>
-                          this.util.embedToRaw(embed)
+                          Channels.embedToRaw(embed)
                         )
                       : undefined,
                   allowed_mentions:
@@ -1070,12 +1088,10 @@ export class Client extends EventEmitter {
                   flags: options.data?.flags,
                   components:
                     options.data?.components !== undefined
-                      ? this.util.messageComponentsToRaw(
-                          options.data.components
-                        )
+                      ? Channels.messageComponentsToRaw(options.data.components)
                       : undefined,
                   attachments: options.data?.attachments?.map((attachment) =>
-                    this.util.attachmentToRaw(attachment)
+                    Channels.attachmentToRaw(attachment)
                   ),
                   poll:
                     options.data?.poll !== undefined
@@ -1146,9 +1162,7 @@ export class Client extends EventEmitter {
                   custom_id: options.data?.customID,
                   components:
                     options.data?.components !== undefined
-                      ? this.util.messageComponentsToRaw(
-                          options.data.components
-                        )
+                      ? Channels.messageComponentsToRaw(options.data.components)
                       : undefined,
                   title: options.data?.title,
                 },
@@ -1201,7 +1215,7 @@ export class Client extends EventEmitter {
           content: options.content,
           nonce: options.nonce,
           tts: options.tts,
-          embeds: options.embeds?.map((embed) => this.util.embedToRaw(embed)),
+          embeds: options.embeds?.map((embed) => Channels.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
               ? {
@@ -1214,7 +1228,7 @@ export class Client extends EventEmitter {
           message_reference: options.messageReference,
           components:
             options.components !== undefined
-              ? this.util.messageComponentsToRaw(options.components)
+              ? Channels.messageComponentsToRaw(options.components)
               : undefined,
           stickers_ids: options.stickersIDs,
           attachments: options.attachments,
@@ -1238,7 +1252,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#create-reaction */
@@ -1279,7 +1293,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.stageInstanceFromRaw(response);
+    return StageInstances.stageInstanceFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement */
@@ -1301,7 +1315,7 @@ export class Client extends EventEmitter {
       },
     });
 
-    return this.util.testEntitlementFromRaw(response);
+    return Entitlements.testEntitlementFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-in-forum-or-media-channel */
@@ -1335,7 +1349,7 @@ export class Client extends EventEmitter {
           message: {
             content: options.message.content,
             embeds: options.message.embeds?.map((embed) =>
-              this.util.embedToRaw(embed)
+              Channels.embedToRaw(embed)
             ),
             allowed_mentions:
               options.message.allowedMentions !== undefined
@@ -1356,7 +1370,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-from-message */
@@ -1383,7 +1397,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#start-thread-without-message */
@@ -1413,7 +1427,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#crosspost-message */
@@ -1426,7 +1440,7 @@ export class Client extends EventEmitter {
       Endpoints.channelMessage(channelID, messageID)
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
@@ -1466,7 +1480,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#delete-channel-permission */
@@ -1593,7 +1607,7 @@ export class Client extends EventEmitter {
       Endpoints.guildTemplate(guildID, code)
     );
 
-    return this.util.guildTemplateFromRaw(response);
+    return GuildTemplates.guildTemplateFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/invite#delete-invite */
@@ -1606,7 +1620,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.inviteFromRaw(response);
+    return Invites.inviteFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message */
@@ -1766,7 +1780,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.autoModerationRuleFromRaw(response);
+    return AutoModeration.autoModerationRuleFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions */
@@ -1789,13 +1803,13 @@ export class Client extends EventEmitter {
         {
           json: {
             permissions: options.permissions.map((permission) =>
-              this.util.guildApplicationCommandPermissionsToRaw(permission)
+              Guilds.guildApplicationCommandPermissionsToRaw(permission)
             ),
           },
         }
       );
 
-    return this.util.guildApplicationCommandPermissionsFromRaw(response);
+    return Guilds.guildApplicationCommandPermissionsFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
@@ -1866,7 +1880,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#edit-channel-permissions */
@@ -1928,7 +1942,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.userFromRaw(response);
+    return Users.userFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-member */
@@ -1950,7 +1964,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildMemberFromRaw(response);
+    return Guilds.guildMemberFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-current-user-voice-state */
@@ -2006,7 +2020,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.applicationFromRaw(response);
+    return Applications.applicationFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command */
@@ -2034,7 +2048,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.applicationCommandFromRaw(response);
+    return Applications.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
@@ -2096,7 +2110,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildFromRaw(response);
+    return Guilds.guildFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command */
@@ -2123,7 +2137,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.applicationCommandFromRaw(response);
+    return Applications.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
@@ -2148,7 +2162,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.emojiFromRaw(response);
+    return Emojis.emojiFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */
@@ -2183,7 +2197,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildMemberFromRaw(response);
+    return Guilds.guildMemberFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
@@ -2228,7 +2242,7 @@ export class Client extends EventEmitter {
             role_ids: promptOption.roleIDs,
             emoji:
               promptOption.emoji !== undefined
-                ? this.util.emojiToRaw(promptOption.emoji)
+                ? Emojis.emojiToRaw(promptOption.emoji)
                 : undefined,
             emoji_id: promptOption.emojiID,
             emoji_name: promptOption.emojiName,
@@ -2278,7 +2292,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.roleFromRaw(response);
+    return Roles.roleFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-role-positions */
@@ -2297,7 +2311,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((role) => this.util.roleFromRaw(role));
+    return response.map((role) => Roles.roleFromRaw(role));
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event */
@@ -2338,7 +2352,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildScheduledEventFromRaw(response);
+    return GuildScheduledEvents.guildScheduledEventFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/sticker#modify-guild-sticker */
@@ -2365,7 +2379,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.stickerFromRaw(response);
+    return Stickers.stickerFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
@@ -2388,7 +2402,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildTemplateFromRaw(response);
+    return GuildTemplates.guildTemplateFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen */
@@ -2476,7 +2490,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => this.util.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2492,11 +2506,11 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? this.util.messageComponentsToRaw(options.components)
+                ? Channels.messageComponentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
-            this.util.attachmentToRaw(attachment)
+            Channels.attachmentToRaw(attachment)
           ),
           flags: options.flags,
         },
@@ -2504,7 +2518,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
@@ -2528,7 +2542,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.stageInstanceFromRaw(response);
+    return StageInstances.stageInstanceFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-followup-message */
@@ -2555,7 +2569,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => this.util.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2571,11 +2585,11 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? this.util.messageComponentsToRaw(options.components)
+                ? Channels.messageComponentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
-            this.util.attachmentToRaw(attachment)
+            Channels.attachmentToRaw(attachment)
           ),
           flags: options.flags,
         },
@@ -2586,7 +2600,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
@@ -2612,7 +2626,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => this.util.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2628,11 +2642,11 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? this.util.messageComponentsToRaw(options.components)
+                ? Channels.messageComponentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
-            this.util.attachmentToRaw(attachment)
+            Channels.attachmentToRaw(attachment)
           ),
           flags: options.flags,
         },
@@ -2643,7 +2657,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
@@ -2692,7 +2706,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.webhookFromRaw(response);
+    return Webhooks.webhookFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#edit-webhook-message */
@@ -2719,7 +2733,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => this.util.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2735,11 +2749,11 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? this.util.messageComponentsToRaw(options.components)
+                ? Channels.messageComponentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
-            this.util.attachmentToRaw(attachment)
+            Channels.attachmentToRaw(attachment)
           ),
           flags: options.flags,
         },
@@ -2750,7 +2764,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
@@ -2776,7 +2790,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.webhookFromRaw(response);
+    return Webhooks.webhookFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/poll#end-poll */
@@ -2786,7 +2800,7 @@ export class Client extends EventEmitter {
       Endpoints.pollExpire(channelID, messageID)
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
@@ -2820,7 +2834,7 @@ export class Client extends EventEmitter {
           username: options.username,
           avatar_url: options.avatarURL,
           tts: options.tts,
-          embeds: options.embeds?.map((embed) => this.util.embedToRaw(embed)),
+          embeds: options.embeds?.map((embed) => Channels.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
               ? {
@@ -2832,7 +2846,7 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? this.util.messageComponentsToRaw(options.components)
+              ? Channels.messageComponentsToRaw(options.components)
               : undefined,
           attachments: options.attachments,
           flags: options.flags,
@@ -2860,7 +2874,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response !== null ? this.util.messageFromRaw(response) : response;
+    return response !== null ? Channels.messageFromRaw(response) : response;
   }
 
   /**
@@ -2889,7 +2903,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response !== null ? this.util.messageFromRaw(response) : null;
+    return response !== null ? Channels.messageFromRaw(response) : null;
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
@@ -2929,10 +2943,10 @@ export class Client extends EventEmitter {
 
     return {
       threads: response.threads.map((thread) =>
-        this.util.channelFromRaw(thread)
+        Channels.channelFromRaw(thread)
       ),
       members: response.members.map((threadMember) =>
-        this.util.threadMemberFromRaw(threadMember)
+        Channels.threadMemberFromRaw(threadMember)
       ),
     };
   }
@@ -2967,10 +2981,10 @@ export class Client extends EventEmitter {
 
     return {
       threads: response.threads.map((thread) =>
-        this.util.channelFromRaw(thread)
+        Channels.channelFromRaw(thread)
       ),
       members: response.members.map((threadMember) =>
-        this.util.threadMemberFromRaw(threadMember)
+        Channels.threadMemberFromRaw(threadMember)
       ),
       hasMore: response.has_more,
     };
@@ -3001,7 +3015,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.auditLogFromRaw(response);
+    return AuditLogs.auditLogFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#get-auto-moderation-rule */
@@ -3014,7 +3028,7 @@ export class Client extends EventEmitter {
       Endpoints.guildAutoModerationRule(guildID, ruleID)
     );
 
-    return this.util.autoModerationRuleFromRaw(response);
+    return AutoModeration.autoModerationRuleFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#list-auto-moderation-rules-for-guild */
@@ -3027,7 +3041,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((autoModerationRule) =>
-      this.util.autoModerationRuleFromRaw(autoModerationRule)
+      AutoModeration.autoModerationRuleFromRaw(autoModerationRule)
     );
   }
 
@@ -3047,7 +3061,7 @@ export class Client extends EventEmitter {
         )
       );
 
-    return this.util.guildApplicationCommandPermissionsFromRaw(response);
+    return Guilds.guildApplicationCommandPermissionsFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records */
@@ -3079,7 +3093,7 @@ export class Client extends EventEmitter {
       Endpoints.channel(channelID)
     );
 
-    return this.util.channelFromRaw(response);
+    return Channels.channelFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-channels */
@@ -3089,7 +3103,7 @@ export class Client extends EventEmitter {
       Endpoints.guildChannels(guildID)
     );
 
-    return response.map((channel) => this.util.channelFromRaw(channel));
+    return response.map((channel) => Channels.channelFromRaw(channel));
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-invites */
@@ -3099,7 +3113,7 @@ export class Client extends EventEmitter {
       Endpoints.channelInvites(channelID)
     );
 
-    return response.map((invite) => this.util.inviteFromRaw(invite));
+    return response.map((invite) => Invites.inviteFromRaw(invite));
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-channel-webhooks */
@@ -3109,7 +3123,7 @@ export class Client extends EventEmitter {
       Endpoints.channelWebhooks(channelID)
     );
 
-    return response.map((webhook) => this.util.webhookFromRaw(webhook));
+    return response.map((webhook) => Webhooks.webhookFromRaw(webhook));
   }
 
   /** https://discord.com/developers/docs/resources/application#get-current-application */
@@ -3119,7 +3133,7 @@ export class Client extends EventEmitter {
       Endpoints.applicationCurrentUser()
     );
 
-    return this.util.applicationFromRaw(response);
+    return Applications.applicationFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-application-role-connection */
@@ -3152,7 +3166,7 @@ export class Client extends EventEmitter {
       Endpoints.guildMember(guildID)
     );
 
-    return this.util.guildMemberFromRaw(response);
+    return Guilds.guildMemberFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-connections */
@@ -3168,7 +3182,7 @@ export class Client extends EventEmitter {
       type: connection.type,
       revoked: connection.revoked,
       integrations: connection.integrations?.map((integration) =>
-        this.util.integrationFromRaw(integration)
+        Guilds.integrationFromRaw(integration)
       ),
       verified: connection.verified,
       friendSync: connection.friend_sync,
@@ -3208,7 +3222,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((entitlement) =>
-      this.util.entitlementFromRaw(entitlement)
+      Entitlements.entitlementFromRaw(entitlement)
     );
   }
 
@@ -3264,7 +3278,7 @@ export class Client extends EventEmitter {
       Endpoints.applicationCommand(applicationID, commandID)
     );
 
-    return this.util.applicationCommandFromRaw(response);
+    return Applications.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
@@ -3285,7 +3299,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((applicationCommand) =>
-      this.util.applicationCommandFromRaw(applicationCommand)
+      Applications.applicationCommandFromRaw(applicationCommand)
     );
   }
 
@@ -3306,7 +3320,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.guildFromRaw(response);
+    return Guilds.guildFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */
@@ -3329,7 +3343,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((guild) => this.util.guildFromRaw(guild));
+    return response.map((guild) => Guilds.guildFromRaw(guild));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
@@ -3343,7 +3357,7 @@ export class Client extends EventEmitter {
       Endpoints.applicationGuildCommand(applicationID, guildID, commandID)
     );
 
-    return this.util.applicationCommandFromRaw(response);
+    return Applications.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-commands */
@@ -3365,7 +3379,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((applicationCommand) =>
-      this.util.applicationCommandFromRaw(applicationCommand)
+      Applications.applicationCommandFromRaw(applicationCommand)
     );
   }
 
@@ -3380,7 +3394,7 @@ export class Client extends EventEmitter {
         Endpoints.guildApplicationCommandsPermissions(applicationID, guildID)
       );
 
-    return this.util.guildApplicationCommandPermissionsFromRaw(response);
+    return Guilds.guildApplicationCommandPermissionsFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-ban */
@@ -3392,7 +3406,7 @@ export class Client extends EventEmitter {
 
     return {
       reason: response.reason,
-      user: this.util.userFromRaw(response.user),
+      user: Users.userFromRaw(response.user),
     };
   }
 
@@ -3419,7 +3433,7 @@ export class Client extends EventEmitter {
 
     return response.map((ban) => ({
       reason: ban.reason,
-      user: this.util.userFromRaw(ban.user),
+      user: Users.userFromRaw(ban.user),
     }));
   }
 
@@ -3430,7 +3444,7 @@ export class Client extends EventEmitter {
       Endpoints.guildEmoji(guildID, emojiID)
     );
 
-    return this.util.emojiFromRaw(response);
+    return Emojis.emojiFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/emoji#list-guild-emojis */
@@ -3440,7 +3454,7 @@ export class Client extends EventEmitter {
       Endpoints.guildEmojis(guildID)
     );
 
-    return response.map((emoji) => this.util.emojiFromRaw(emoji));
+    return response.map((emoji) => Emojis.emojiFromRaw(emoji));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-integrations */
@@ -3451,7 +3465,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((integration) =>
-      this.util.integrationFromRaw(integration)
+      Guilds.integrationFromRaw(integration)
     );
   }
 
@@ -3462,7 +3476,7 @@ export class Client extends EventEmitter {
       Endpoints.guildInvites(guildID)
     );
 
-    return response.map((invite) => this.util.inviteFromRaw(invite));
+    return response.map((invite) => Invites.inviteFromRaw(invite));
   }
 
   /** https://discord.com/developers/docs/resources/guild#get-guild-member */
@@ -3475,7 +3489,7 @@ export class Client extends EventEmitter {
       Endpoints.guildMember(guildID, userID)
     );
 
-    return this.util.guildMemberFromRaw(response);
+    return Guilds.guildMemberFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
@@ -3486,7 +3500,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((guildMember) =>
-      this.util.guildMemberFromRaw(guildMember)
+      Guilds.guildMemberFromRaw(guildMember)
     );
   }
 
@@ -3508,7 +3522,7 @@ export class Client extends EventEmitter {
           roleIDs: promptOption.role_ids,
           emoji:
             promptOption.emoji !== undefined
-              ? this.util.emojiFromRaw(promptOption.emoji)
+              ? Emojis.emojiFromRaw(promptOption.emoji)
               : undefined,
           emojiID: promptOption.emoji_id,
           emojiName: promptOption.emoji_name,
@@ -3540,13 +3554,13 @@ export class Client extends EventEmitter {
       icon: response.icon,
       splash: response.splash,
       discoverySplash: response.discovery_splash,
-      emojis: response.emojis.map((emoji) => this.util.emojiFromRaw(emoji)),
+      emojis: response.emojis.map((emoji) => Emojis.emojiFromRaw(emoji)),
       features: response.features,
       approximateMemberCount: response.approximate_member_count,
       approximatePresenceCount: response.approximate_presence_count,
       description: response.description,
       stickers: response.stickers?.map((sticker) =>
-        this.util.stickerFromRaw(sticker)
+        Stickers.stickerFromRaw(sticker)
       ),
     };
   }
@@ -3578,7 +3592,7 @@ export class Client extends EventEmitter {
       Endpoints.guildRoles(guildID)
     );
 
-    return response.map((role) => this.util.roleFromRaw(role));
+    return response.map((role) => Roles.roleFromRaw(role));
   }
 
   /** https://discord.com/developers/docs/resources/guild-scheduled-event#list-scheduled-events-for-guild */
@@ -3599,7 +3613,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((guildScheduledEvent) =>
-      this.util.guildScheduledEventFromRaw(guildScheduledEvent)
+      GuildScheduledEvents.guildScheduledEventFromRaw(guildScheduledEvent)
     );
   }
 
@@ -3629,10 +3643,10 @@ export class Client extends EventEmitter {
 
     return response.map((guildScheduledEventUser) => ({
       guildScheduledEventID: guildScheduledEventUser.guild_scheduled_event_id,
-      user: this.util.userFromRaw(guildScheduledEventUser.user),
+      user: Users.userFromRaw(guildScheduledEventUser.user),
       member:
         guildScheduledEventUser.member !== undefined
-          ? this.util.guildMemberFromRaw(guildScheduledEventUser.member)
+          ? Guilds.guildMemberFromRaw(guildScheduledEventUser.member)
           : undefined,
     }));
   }
@@ -3647,7 +3661,7 @@ export class Client extends EventEmitter {
       Endpoints.guildSticker(guildID, stickerID)
     );
 
-    return this.util.stickerFromRaw(response);
+    return Stickers.stickerFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-guild-stickers */
@@ -3657,7 +3671,7 @@ export class Client extends EventEmitter {
       Endpoints.guildStickers(guildID)
     );
 
-    return response.map((sticker) => this.util.stickerFromRaw(sticker));
+    return response.map((sticker) => Stickers.stickerFromRaw(sticker));
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-template */
@@ -3670,7 +3684,7 @@ export class Client extends EventEmitter {
       Endpoints.guildTemplate(guildID, code)
     );
 
-    return this.util.guildTemplateFromRaw(response);
+    return GuildTemplates.guildTemplateFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-templates */
@@ -3681,7 +3695,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((guildTemplate) =>
-      this.util.guildTemplateFromRaw(guildTemplate)
+      GuildTemplates.guildTemplateFromRaw(guildTemplate)
     );
   }
 
@@ -3744,9 +3758,9 @@ export class Client extends EventEmitter {
       name: response.name,
       instantInvite: response.instant_invite,
       channels: response.channels.map((channel) =>
-        this.util.channelFromRaw(channel)
+        Channels.channelFromRaw(channel)
       ),
-      members: response.members.map((member) => this.util.userFromRaw(member)),
+      members: response.members.map((member) => Users.userFromRaw(member)),
       presenceCount: response.presence_count,
     };
   }
@@ -3803,7 +3817,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response */
@@ -3822,7 +3836,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/invite#get-invite */
@@ -3846,7 +3860,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.inviteFromRaw(response);
+    return Invites.inviteFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
@@ -3874,10 +3888,10 @@ export class Client extends EventEmitter {
 
     return {
       threads: response.threads.map((thread) =>
-        this.util.channelFromRaw(thread)
+        Channels.channelFromRaw(thread)
       ),
       members: response.members.map((threadMember) =>
-        this.util.threadMemberFromRaw(threadMember)
+        Channels.threadMemberFromRaw(threadMember)
       ),
       hasMore: response.has_more,
     };
@@ -3893,7 +3907,7 @@ export class Client extends EventEmitter {
       Endpoints.channelMessage(channelID, messageID)
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-reactions */
@@ -3919,7 +3933,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((user) => this.util.userFromRaw(user));
+    return response.map((user) => Users.userFromRaw(user));
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel-messages */
@@ -3945,7 +3959,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((message) => this.util.messageFromRaw(message));
+    return response.map((message) => Channels.messageFromRaw(message));
   }
 
   /** https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
@@ -3955,7 +3969,7 @@ export class Client extends EventEmitter {
       Endpoints.oauth2CurrentApplication()
     );
 
-    return this.util.applicationFromRaw(response);
+    return Applications.applicationFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/topics/oauth2#get-current-authorization-information */
@@ -3973,12 +3987,12 @@ export class Client extends EventEmitter {
     }>(RESTMethods.Get, Endpoints.oauth2Authorization());
 
     return {
-      application: this.util.applicationFromRaw(response.application),
+      application: Applications.applicationFromRaw(response.application),
       scopes: response.scopes,
       expires: response.expires,
       user:
         response.user !== undefined
-          ? this.util.userFromRaw(response.user)
+          ? Users.userFromRaw(response.user)
           : undefined,
     };
   }
@@ -3990,7 +4004,7 @@ export class Client extends EventEmitter {
       Endpoints.channelPins(channelID)
     );
 
-    return response.map((message) => this.util.messageFromRaw(message));
+    return response.map((message) => Channels.messageFromRaw(message));
   }
 
   /** https://discord.com/developers/docs/resources/poll#get-answer-voters */
@@ -4019,7 +4033,7 @@ export class Client extends EventEmitter {
     );
 
     return {
-      users: response.users.map((user) => this.util.userFromRaw(user)),
+      users: response.users.map((user) => Users.userFromRaw(user)),
     };
   }
 
@@ -4030,7 +4044,7 @@ export class Client extends EventEmitter {
       Endpoints.applicationSKUs(applicationID)
     );
 
-    return response.map((sku) => this.util.skuFromRaw(sku));
+    return response.map((sku) => SKUs.skuFromRaw(sku));
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#get-stage-instance */
@@ -4040,7 +4054,7 @@ export class Client extends EventEmitter {
       Endpoints.stageInstance(channelID)
     );
 
-    return this.util.stageInstanceFromRaw(response);
+    return StageInstances.stageInstanceFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/sticker#list-sticker-packs */
@@ -4055,7 +4069,7 @@ export class Client extends EventEmitter {
       stickerPacks: response.sticker_packs.map((stickerPack) => ({
         id: stickerPack.id,
         stickers: stickerPack.stickers.map((sticker) =>
-          this.util.stickerFromRaw(sticker)
+          Stickers.stickerFromRaw(sticker)
         ),
         name: stickerPack.name,
         skuID: stickerPack.sku_id,
@@ -4091,7 +4105,7 @@ export class Client extends EventEmitter {
       flags: response.flags,
       member:
         response.member !== undefined
-          ? this.util.guildMemberFromRaw(response.member)
+          ? Guilds.guildMemberFromRaw(response.member)
           : undefined,
     };
   }
@@ -4118,7 +4132,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((threadMember) =>
-      this.util.threadMemberFromRaw(threadMember)
+      Channels.threadMemberFromRaw(threadMember)
     );
   }
 
@@ -4129,7 +4143,7 @@ export class Client extends EventEmitter {
       Endpoints.user(userID)
     );
 
-    return this.util.userFromRaw(response);
+    return Users.userFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/voice#list-voice-regions */
@@ -4167,7 +4181,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return this.util.messageFromRaw(response);
+    return Channels.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */
@@ -4177,7 +4191,7 @@ export class Client extends EventEmitter {
       Endpoints.guildWebhooks(guildID)
     );
 
-    return response.map((webhook) => this.util.webhookFromRaw(webhook));
+    return response.map((webhook) => Webhooks.webhookFromRaw(webhook));
   }
 
   /** https://discord.com/developers/docs/resources/channel#join-thread */
@@ -4317,7 +4331,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((guildMember) =>
-      this.util.guildMemberFromRaw(guildMember)
+      Guilds.guildMemberFromRaw(guildMember)
     );
   }
 
@@ -4340,7 +4354,7 @@ export class Client extends EventEmitter {
       Endpoints.guildTemplate(guildID, code)
     );
 
-    return this.util.guildTemplateFromRaw(response);
+    return GuildTemplates.guildTemplateFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
