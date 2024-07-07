@@ -262,11 +262,7 @@ export class Channels {
               proxyIconURL: embed.author.proxy_icon_url,
             }
           : undefined,
-      fields: embed.fields?.map((field) => ({
-        name: field.name,
-        value: field.value,
-        inline: field.inline,
-      })),
+      fields: embed.fields,
     };
   }
 
@@ -323,11 +319,7 @@ export class Channels {
               proxy_icon_url: embed.author.proxyIconURL,
             }
           : undefined,
-      fields: embed.fields?.map((field) => ({
-        name: field.name,
-        value: field.value,
-        inline: field.inline,
-      })),
+      fields: embed.fields,
     };
   }
 
