@@ -18,7 +18,7 @@ export enum GuildNavigationTypes {
 
 /** https://discord.com/developers/docs/reference#image-formatting-image-formats */
 export enum ImageFormats {
-  JPG = "JPG",
+  JPG = "jpg",
   JPEG = "jpeg",
   PNG = "png",
   WebP = "webp",
