@@ -2978,7 +2978,7 @@ export class Client extends EventEmitter {
     channelID: snowflake,
     archivedStatus: "public" | "private",
     options?: {
-      before?: string;
+      before?: timestamp;
       limit?: number;
     }
   ): Promise<{
