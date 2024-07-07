@@ -2023,6 +2023,19 @@ export class Client extends EventEmitter {
           role_connections_verification_url:
             options.roleConnectionsVerificationURL,
           install_params: options.installParams,
+          integration_types_config:
+            options.integrationTypesConfig !== undefined
+              ? {
+                  "0": {
+                    oauth2_install_params:
+                      options.integrationTypesConfig?.[0].oauth2InstallParams,
+                  },
+                  "1": {
+                    oauth2_install_params:
+                      options.integrationTypesConfig?.[1].oauth2InstallParams,
+                  },
+                }
+              : undefined,
           flags: options.flags,
           icon: options.icon,
           cover_image: options.coverImage,
