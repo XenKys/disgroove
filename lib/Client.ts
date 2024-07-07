@@ -3470,8 +3470,8 @@ export class Client extends EventEmitter {
     guildID: snowflake,
     options?: {
       limit?: number;
-      before?: string;
-      after?: string;
+      before?: snowflake;
+      after?: snowflake;
     }
   ): Promise<Array<Ban>> {
     const response = await this.rest.request<Array<RawBan>>(
