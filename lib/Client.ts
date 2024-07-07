@@ -1826,7 +1826,9 @@ export class Client extends EventEmitter {
       rateLimitPerUser?: number | null;
       bitrate?: number | null;
       userLimit?: number | null;
-      permissionOverwrites?: Array<Overwrite> | null;
+      permissionOverwrites?: Array<
+        Pick<Overwrite, "id" | "type"> & Partial<Overwrite>
+      > | null;
       parentID?: snowflake | null;
       rtcRegion?: string | null;
       videoQualityMode?: VideoQualityModes | null;
@@ -1842,7 +1844,7 @@ export class Client extends EventEmitter {
       autoArchiveDuration?: number;
       locked?: boolean;
       invitable?: boolean;
-      appliedTags?: Array<string>;
+      appliedTags?: Array<snowflake>;
     },
     reason?: string
   ): Promise<Channel> {
@@ -1852,12 +1854,14 @@ export class Client extends EventEmitter {
       {
         json: {
           name: options.name,
+          icon: options.icon,
           type: options.type,
           position: options.position,
           topic: options.topic,
           nsfw: options.nsfw,
           rate_limit_per_user: options.rateLimitPerUser,
           bitrate: options.bitrate,
+          user_limit: options.userLimit,
           permission_overwrites: options.permissionOverwrites,
           parent_id: options.parentID,
           rtc_region: options.rtcRegion,
@@ -1865,7 +1869,15 @@ export class Client extends EventEmitter {
           default_auto_archive_duration: options.defaultAutoArchiveDuration,
           flags: options.flags,
           available_tags: options.availableTags,
-          default_reaction_emoji: options.defaultReactionEmoji,
+          default_reaction_emoji:
+            options.defaultReactionEmoji !== undefined
+              ? options.defaultReactionEmoji !== null
+                ? {
+                    emoji_id: options.defaultReactionEmoji.emojiID,
+                    emoji_name: options.defaultReactionEmoji.emojiName,
+                  }
+                : null
+              : undefined,
           default_thread_rate_limit_per_user:
             options.defaultThreadRateLimitPerUser,
           default_sort_order: options.defaultSortOrder,
