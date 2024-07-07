@@ -134,7 +134,7 @@ export interface RawInteractionCallbackData {
   allowed_mentions?: RawAllowedMentions;
   flags?: MessageFlags;
   components?: Array<RawActionRow>;
-  attachments?: Array<RawAttachment>;
+  attachments?: Array<Pick<RawAttachment, "filename" | "description">>;
   poll?: RawPollCreateParams;
   files?: Array<File>;
   choices?: Array<RawApplicationCommandOptionChoice>;
