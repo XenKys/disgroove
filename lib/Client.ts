@@ -1321,15 +1321,16 @@ export class Client extends EventEmitter {
       autoArchiveDuration?: number;
       rateLimitPerUser?: number | null;
       message: {
-        content?: string | null;
-        embeds?: Array<Embed> | null;
-        allowedMentions?: AllowedMentions | null;
-        components?: Array<ActionRow> | null;
-        attachments?: Array<Attachment> | null;
-        flags?: MessageFlags | null;
+        content?: string;
+        embeds?: Array<Embed>;
+        allowedMentions?: AllowedMentions;
+        components?: Array<ActionRow>;
+        stickerIDs?: Array<snowflake>;
+        attachments?: Array<Pick<Attachment, "filename" | "description">>;
+        flags?: MessageFlags;
+        files?: Array<File>;
       };
-      appliedTags?: Array<string>;
-      files?: Array<File> | null;
+      appliedTags?: Array<snowflake>;
     },
     reason?: string
   ): Promise<Channel> {
@@ -1348,19 +1349,20 @@ export class Client extends EventEmitter {
             ),
             allowed_mentions:
               options.message.allowedMentions !== undefined
-                ? options.message.allowedMentions !== null
-                  ? {
-                      parse: options.message.allowedMentions.parse,
-                      roles: options.message.allowedMentions.roles,
-                      users: options.message.allowedMentions.users,
-                      replied_user: options.message.allowedMentions.repliedUser,
-                    }
-                  : null
+                ? {
+                    parse: options.message.allowedMentions.parse,
+                    roles: options.message.allowedMentions.roles,
+                    users: options.message.allowedMentions.users,
+                    replied_user: options.message.allowedMentions.repliedUser,
+                  }
                 : undefined,
+            sticker_ids: options.message.stickerIDs,
+            attachments: options.message.attachments,
+            flags: options.message.flags,
           },
           applied_tags: options.appliedTags,
         },
-        files: options.files,
+        files: options.message.files,
         reason,
       }
     );
