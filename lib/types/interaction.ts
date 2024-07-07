@@ -226,7 +226,7 @@ export interface InteractionCallbackData {
   allowedMentions?: AllowedMentions;
   flags?: MessageFlags;
   components?: Array<ActionRow>;
-  attachments?: Array<Attachment>;
+  attachments?: Array<Pick<Attachment, "filename" | "description">>;
   poll?: PollCreateParams;
   files?: Array<File>;
   choices?: Array<ApplicationCommandOptionChoice>;

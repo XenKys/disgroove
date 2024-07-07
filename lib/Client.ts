@@ -144,7 +144,7 @@ import type {
   GuildScheduledEventEntityMetadata,
 } from "./types/guild-scheduled-event";
 import type { GuildTemplate, RawGuildTemplate } from "./types/guild-template";
-import type { Interaction, InteractionCallbackData } from "./types/interaction";
+import type { Interaction, InteractionResponse } from "./types/interaction";
 import type { Invite, RawInvite } from "./types/invite";
 import type { ActionRow } from "./types/message-components";
 import type { PollCreateParams } from "./types/poll";
@@ -1052,10 +1052,7 @@ export class Client extends EventEmitter {
   createInteractionResponse(
     interactionID: snowflake,
     interactionToken: string,
-    options: {
-      type: InteractionCallbackType;
-      data?: InteractionCallbackData;
-    }
+    options: InteractionResponse
   ): void {
     switch (options.type) {
       case InteractionCallbackType.ChannelMessageWithSource:
@@ -1090,9 +1087,7 @@ export class Client extends EventEmitter {
                     options.data?.components !== undefined
                       ? Channels.componentsToRaw(options.data.components)
                       : undefined,
-                  attachments: options.data?.attachments?.map((attachment) =>
-                    Channels.attachmentToRaw(attachment)
-                  ),
+                  attachments: options.data?.attachments,
                   poll:
                     options.data?.poll !== undefined
                       ? {
