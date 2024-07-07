@@ -485,8 +485,8 @@ export class Client extends EventEmitter {
       triggerMetadata?: TriggerMetadata;
       actions: Array<AutoModerationAction>;
       enabled?: boolean;
-      exemptRoles?: Array<string>;
-      exemptChannels?: Array<string>;
+      exemptRoles?: Array<snowflake>;
+      exemptChannels?: Array<snowflake>;
     },
     reason?: string
   ): Promise<AutoModerationRule> {
@@ -498,7 +498,19 @@ export class Client extends EventEmitter {
           name: options.name,
           event_type: options.eventType,
           trigger_type: options.triggerType,
-          trigger_metadata: options.triggerMetadata,
+          trigger_metadata:
+            options.triggerMetadata !== undefined
+              ? {
+                  keyword_filter: options.triggerMetadata.keywordFilter,
+                  regex_patterns: options.triggerMetadata.regexPatterns,
+                  presets: options.triggerMetadata.presets,
+                  allow_list: options.triggerMetadata.allowList,
+                  mention_total_limit:
+                    options.triggerMetadata.mentionTotalLimit,
+                  mention_raid_protection:
+                    options.triggerMetadata.mentionRaidProtection,
+                }
+              : undefined,
           actions: options.actions.map((action) => ({
             type: action.type,
             metadata: {
