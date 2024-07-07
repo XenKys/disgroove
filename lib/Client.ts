@@ -3219,9 +3219,9 @@ export class Client extends EventEmitter {
     applicationID: snowflake,
     options?: {
       userID?: snowflake;
-      skuIDs?: Array<string>;
-      before?: string;
-      after?: string;
+      skuIDs?: Array<snowflake>;
+      before?: snowflake;
+      after?: snowflake;
       limit?: number;
       guildID?: snowflake;
       excludeEnded?: boolean;
