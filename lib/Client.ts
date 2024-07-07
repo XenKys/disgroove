@@ -3679,8 +3679,8 @@ export class Client extends EventEmitter {
     options?: {
       limit?: number;
       withMember?: boolean;
-      before?: string;
-      after?: string;
+      before?: snowflake;
+      after?: snowflake;
     }
   ): Promise<Array<GuildScheduledEventUser>> {
     const response = await this.rest.request<Array<RawGuildScheduledEventUser>>(
