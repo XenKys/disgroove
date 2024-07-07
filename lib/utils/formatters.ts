@@ -18,8 +18,8 @@ export function roleMention(roleID: snowflake): string {
 export function slashCommandMention(
   commandName: string,
   commandID: snowflake,
-  subCommandName: string,
-  subCommandGroupName: string
+  subCommandName?: string,
+  subCommandGroupName?: string
 ): string {
   return subCommandName
     ? subCommandGroupName
