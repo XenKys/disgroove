@@ -3995,9 +3995,9 @@ export class Client extends EventEmitter {
   async getMessages(
     channelID: snowflake,
     options: {
-      around?: string;
-      before?: string;
-      after?: string;
+      around?: snowflake;
+      before?: snowflake;
+      after?: snowflake;
       limit?: number;
     }
   ): Promise<Array<Message>> {
