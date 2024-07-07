@@ -22,6 +22,23 @@ import type {
 import type { RawGuildMember } from "../types/guild";
 import type { RawSticker } from "../types/sticker";
 import type { RawUser } from "../types/user";
+import {
+  Applications,
+  AuditLogs,
+  AutoModeration,
+  Channels,
+  Emojis,
+  Entitlements,
+  Guilds,
+  GuildScheduledEvents,
+  Interactions,
+  Presences,
+  Roles,
+  StageInstances,
+  Stickers,
+  Users,
+  Voice,
+} from "../transformers";
 
 export class Shard {
   id: number;
@@ -97,7 +114,7 @@ export class Shard {
       case GatewayEvents.Ready:
         {
           this.sessionID = packet.d.session_id;
-          this.client.user = this.client.util.userFromRaw(packet.d.user);
+          this.client.user = Users.userFromRaw(packet.d.user);
           this.client.application = packet.d.application;
 
           this.client.emit("ready");
@@ -109,25 +126,25 @@ export class Shard {
       case GatewayEvents.ApplicationCommandPermissionsUpdate:
         this.client.emit(
           "applicationCommandPermissionsUpdate",
-          this.client.util.guildApplicationCommandPermissionsFromRaw(packet.d)
+          Guilds.guildApplicationCommandPermissionsFromRaw(packet.d)
         );
         break;
       case GatewayEvents.AutoModerationRuleCreate:
         this.client.emit(
           "autoModerationRuleCreate",
-          this.client.util.autoModerationRuleFromRaw(packet.d)
+          AutoModeration.autoModerationRuleFromRaw(packet.d)
         );
         break;
       case GatewayEvents.AutoModerationRuleUpdate:
         this.client.emit(
           "autoModerationRuleUpdate",
-          this.client.util.autoModerationRuleFromRaw(packet.d)
+          AutoModeration.autoModerationRuleFromRaw(packet.d)
         );
         break;
       case GatewayEvents.AutoModerationRuleDelete:
         this.client.emit(
           "autoModerationRuleDelete",
-          this.client.util.autoModerationRuleFromRaw(packet.d)
+          AutoModeration.autoModerationRuleFromRaw(packet.d)
         );
         break;
       case GatewayEvents.AutoModerationActionExecution:
@@ -153,22 +170,13 @@ export class Shard {
         });
         break;
       case GatewayEvents.ChannelCreate:
-        this.client.emit(
-          "channelCreate",
-          this.client.util.channelFromRaw(packet.d)
-        );
+        this.client.emit("channelCreate", Channels.channelFromRaw(packet.d));
         break;
       case GatewayEvents.ChannelUpdate:
-        this.client.emit(
-          "channelUpdate",
-          this.client.util.channelFromRaw(packet.d)
-        );
+        this.client.emit("channelUpdate", Channels.channelFromRaw(packet.d));
         break;
       case GatewayEvents.ChannelDelete:
-        this.client.emit(
-          "channelDelete",
-          this.client.util.channelFromRaw(packet.d)
-        );
+        this.client.emit("channelDelete", Channels.channelFromRaw(packet.d));
         break;
       case GatewayEvents.ChannelPinsUpdate:
         this.client.emit("channelPinsUpdate", {
@@ -178,32 +186,23 @@ export class Shard {
         });
         break;
       case GatewayEvents.ThreadCreate:
-        this.client.emit(
-          "threadCreate",
-          this.client.util.channelFromRaw(packet.d)
-        );
+        this.client.emit("threadCreate", Channels.channelFromRaw(packet.d));
         break;
       case GatewayEvents.ThreadUpdate:
-        this.client.emit(
-          "threadUpdate",
-          this.client.util.channelFromRaw(packet.d)
-        );
+        this.client.emit("threadUpdate", Channels.channelFromRaw(packet.d));
         break;
       case GatewayEvents.ThreadDelete:
-        this.client.emit(
-          "threadDelete",
-          this.client.util.channelFromRaw(packet.d)
-        );
+        this.client.emit("threadDelete", Channels.channelFromRaw(packet.d));
         break;
       case GatewayEvents.ThreadListSync:
         this.client.emit("threadListSync", {
           guildID: packet.d.guild_id,
           channelIDs: packet.d.channel_ids,
           threads: packet.d.threads.map((thread: RawChannel) =>
-            this.client.util.channelFromRaw(thread)
+            Channels.channelFromRaw(thread)
           ),
           members: packet.d.members.map((threadMember: RawThreadMember) =>
-            this.client.util.threadMemberFromRaw(threadMember)
+            Channels.threadMemberFromRaw(threadMember)
           ),
         });
         break;
@@ -215,7 +214,7 @@ export class Shard {
           flags: packet.d.flags,
           member:
             packet.d.member !== undefined
-              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              ? Guilds.guildMemberFromRaw(packet.d.member)
               : undefined,
 
           guildID: packet.d.guild_id,
@@ -227,7 +226,7 @@ export class Shard {
           guildID: packet.d.guild_id,
           memberCount: packet.d.member_count,
           addedMembers: packet.d.members.map((threadMember: RawThreadMember) =>
-            this.client.util.threadMemberFromRaw(threadMember)
+            Channels.threadMemberFromRaw(threadMember)
           ),
           removedMemberIDs: packet.d.removed_member_ids,
         });
@@ -235,46 +234,34 @@ export class Shard {
       case GatewayEvents.EntitlementCreate:
         this.client.emit(
           "entitlementCreate",
-          this.client.util.entitlementFromRaw(packet.d)
+          Entitlements.entitlementFromRaw(packet.d)
         );
         break;
       case GatewayEvents.EntitlementUpdate:
         this.client.emit(
           "entitlementUpdate",
-          this.client.util.entitlementFromRaw(packet.d)
+          Entitlements.entitlementFromRaw(packet.d)
         );
         break;
       case GatewayEvents.EntitlementDelete:
         this.client.emit(
           "entitlementDelete",
-          this.client.util.entitlementFromRaw(packet.d)
+          Entitlements.entitlementFromRaw(packet.d)
         );
         break;
       case GatewayEvents.GuildCreate:
         {
           this.client.guildShardMap[packet.d.id] = this.id;
 
-          this.client.guilds.set(
-            packet.d.id,
-            this.client.util.guildFromRaw(packet.d)
-          );
+          this.client.guilds.set(packet.d.id, Guilds.guildFromRaw(packet.d));
 
-          this.client.emit(
-            "guildCreate",
-            this.client.util.guildFromRaw(packet.d)
-          );
+          this.client.emit("guildCreate", Guilds.guildFromRaw(packet.d));
         }
         break;
       case GatewayEvents.GuildUpdate:
         {
-          this.client.guilds.set(
-            packet.d.id,
-            this.client.util.guildFromRaw(packet.d)
-          );
-          this.client.emit(
-            "guildUpdate",
-            this.client.util.guildFromRaw(packet.d)
-          );
+          this.client.guilds.set(packet.d.id, Guilds.guildFromRaw(packet.d));
+          this.client.emit("guildUpdate", Guilds.guildFromRaw(packet.d));
         }
         break;
       case GatewayEvents.GuildDelete:
@@ -291,7 +278,7 @@ export class Shard {
         break;
       case GatewayEvents.GuildAuditLogEntryCreate:
         this.client.emit("guildAuditLogEntryCreate", {
-          ...this.client.util.auditLogEntryFromRaw(packet.d),
+          ...AuditLogs.auditLogEntryFromRaw(packet.d),
 
           guildID: packet.d.guild_id,
         });
@@ -299,21 +286,19 @@ export class Shard {
       case GatewayEvents.GuildBanAdd:
         this.client.emit("guildBanAdd", {
           guildID: packet.d.guild_id,
-          user: this.client.util.userFromRaw(packet.d.user),
+          user: Users.userFromRaw(packet.d.user),
         });
         break;
       case GatewayEvents.GuildBanRemove:
         this.client.emit("guildBanRemove", {
           guildID: packet.d.guild_id,
-          user: this.client.util.userFromRaw(packet.d.user),
+          user: Users.userFromRaw(packet.d.user),
         });
         break;
       case GatewayEvents.GuildEmojisUpdate:
         this.client.emit(
           "guildEmojisUpdate",
-          packet.d.emojis.map((emoji: RawEmoji) =>
-            this.client.util.emojiFromRaw(emoji)
-          ),
+          packet.d.emojis.map((emoji: RawEmoji) => Emojis.emojiFromRaw(emoji)),
           packet.d.guild_id
         );
         break;
@@ -321,7 +306,7 @@ export class Shard {
         this.client.emit(
           "guildStickersUpdate",
           packet.d.stickers.map((sticker: RawSticker) =>
-            this.client.util.stickerFromRaw(sticker)
+            Stickers.stickerFromRaw(sticker)
           ),
           packet.d.guild_id
         );
@@ -331,7 +316,7 @@ export class Shard {
         break;
       case GatewayEvents.GuildMemberAdd:
         this.client.emit("guildMemberAdd", {
-          ...this.client.util.guildMemberFromRaw(packet.d),
+          ...Guilds.guildMemberFromRaw(packet.d),
 
           guildID: packet.d.guild_id,
         });
@@ -339,14 +324,14 @@ export class Shard {
       case GatewayEvents.GuildMemberRemove:
         this.client.emit("guildMemberRemove", {
           guildID: packet.d.guild_id,
-          user: this.client.util.userFromRaw(packet.d.user),
+          user: Users.userFromRaw(packet.d.user),
         });
         break;
       case GatewayEvents.GuildMemberUpdate:
         this.client.emit("guildMemberUpdate", {
           guildID: packet.d.guild_id,
           roles: packet.d.roles,
-          user: this.client.util.userFromRaw(packet.d.user),
+          user: Users.userFromRaw(packet.d.user),
           nick: packet.d.nick,
           avatar: packet.d.avatar,
           joinedAt: packet.d.joined_at,
@@ -369,14 +354,14 @@ export class Shard {
         this.client.emit("guildMembersChunk", {
           guildID: packet.d.guild_id,
           members: packet.d.members.map((guildMember: RawGuildMember) =>
-            this.client.util.guildMemberFromRaw(guildMember)
+            Guilds.guildMemberFromRaw(guildMember)
           ),
           chunkIndex: packet.d.chunk_index,
           chunkCount: packet.d.chunk_count,
           notFound: packet.d.not_found,
           presences: packet.d.presences?.map(
             (presence: RawPresenceUpdateEventFields) =>
-              this.client.util.presenceFromRaw(presence)
+              Presences.presenceFromRaw(presence)
           ),
           nonce: packet.d.nonce,
         });
@@ -384,14 +369,14 @@ export class Shard {
       case GatewayEvents.GuildRoleCreate:
         this.client.emit(
           "guildRoleCreate",
-          this.client.util.roleFromRaw(packet.d.role),
+          Roles.roleFromRaw(packet.d.role),
           packet.d.guild_id
         );
         break;
       case GatewayEvents.GuildRoleUpdate:
         this.client.emit(
           "guildRoleUpdate",
-          this.client.util.roleFromRaw(packet.d.role),
+          Roles.roleFromRaw(packet.d.role),
           packet.d.guild_id
         );
         break;
@@ -405,19 +390,19 @@ export class Shard {
       case GatewayEvents.GuildScheduledEventCreate:
         this.client.emit(
           "guildScheduledEventCreate",
-          this.client.util.guildScheduledEventFromRaw(packet.d)
+          GuildScheduledEvents.guildScheduledEventFromRaw(packet.d)
         );
         break;
       case GatewayEvents.GuildScheduledEventUpdate:
         this.client.emit(
           "guildScheduledEventUpdate",
-          this.client.util.guildScheduledEventFromRaw(packet.d)
+          GuildScheduledEvents.guildScheduledEventFromRaw(packet.d)
         );
         break;
       case GatewayEvents.GuildScheduledEventDelete:
         this.client.emit(
           "guildScheduledEventDelete",
-          this.client.util.guildScheduledEventFromRaw(packet.d)
+          GuildScheduledEvents.guildScheduledEventFromRaw(packet.d)
         );
         break;
       case GatewayEvents.GuildScheduledEventUserAdd:
@@ -438,14 +423,14 @@ export class Shard {
         break;
       case GatewayEvents.IntegrationCreate:
         this.client.emit("integrationCreate", {
-          ...this.client.util.integrationFromRaw(packet.d),
+          ...Guilds.integrationFromRaw(packet.d),
 
           guildID: packet.d.guild_id,
         });
         break;
       case GatewayEvents.IntegrationUpdate:
         this.client.emit("integrationUpdate", {
-          ...this.client.util.integrationFromRaw(packet.d),
+          ...Guilds.integrationFromRaw(packet.d),
 
           guildID: packet.d.guild_id,
         });
@@ -460,7 +445,7 @@ export class Shard {
       case GatewayEvents.InteractionCreate:
         this.client.emit(
           "interactionCreate",
-          this.client.util.interactionFromRaw(packet.d)
+          Interactions.interactionFromRaw(packet.d)
         );
         break;
       case GatewayEvents.InviteCreate:
@@ -471,18 +456,18 @@ export class Shard {
           guildID: packet.d.guild_id,
           inviter:
             packet.d.inviter !== undefined
-              ? this.client.util.userFromRaw(packet.d.inviter)
+              ? Users.userFromRaw(packet.d.inviter)
               : undefined,
           maxAge: packet.d.max_age,
           maxUses: packet.d.max_uses,
           targetType: packet.d.target_type,
           targetUser:
             packet.d.target_user !== undefined
-              ? this.client.util.userFromRaw(packet.d.target_user)
+              ? Users.userFromRaw(packet.d.target_user)
               : undefined,
           targetApplication:
             packet.d.target_application !== undefined
-              ? this.client.util.applicationFromRaw(packet.d.target_application)
+              ? Applications.applicationFromRaw(packet.d.target_application)
               : undefined,
           temporary: packet.d.temporary,
           uses: packet.d.uses,
@@ -497,23 +482,20 @@ export class Shard {
         break;
       case GatewayEvents.MessageCreate:
         this.client.emit("messageCreate", {
-          ...this.client.util.messageFromRaw(packet.d),
+          ...Channels.messageFromRaw(packet.d),
 
           guildID: packet.d.guild_id,
           member:
             packet.d.member !== undefined
-              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              ? Guilds.guildMemberFromRaw(packet.d.member)
               : undefined,
           mentions: packet.d.mentions.map((mention: RawUser) =>
-            this.client.util.userFromRaw(mention)
+            Users.userFromRaw(mention)
           ),
         });
         break;
       case GatewayEvents.MessageUpdate:
-        this.client.emit(
-          "messageUpdate",
-          this.client.util.messageFromRaw(packet.d)
-        );
+        this.client.emit("messageUpdate", Channels.messageFromRaw(packet.d));
         break;
       case GatewayEvents.MessageDelete:
         this.client.emit("messageDelete", {
@@ -537,9 +519,9 @@ export class Shard {
           guildID: packet.d.user_id,
           member:
             packet.d.member !== undefined
-              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              ? Guilds.guildMemberFromRaw(packet.d.member)
               : undefined,
-          emoji: this.client.util.emojiFromRaw(packet.d.emoji),
+          emoji: Emojis.emojiFromRaw(packet.d.emoji),
           messageAuthorID: packet.d.message_author_id,
           burst: packet.d.burst,
           burstColors: packet.d.burst_colors,
@@ -552,7 +534,7 @@ export class Shard {
           channelID: packet.d.user_id,
           messageID: packet.d.user_id,
           guildID: packet.d.user_id,
-          emoji: this.client.util.emojiFromRaw(packet.d.emoji),
+          emoji: Emojis.emojiFromRaw(packet.d.emoji),
           burst: packet.d.burst,
           type: packet.d.type,
         });
@@ -569,31 +551,28 @@ export class Shard {
           channelID: packet.d.channel_id,
           guildID: packet.d.guild_id,
           messageID: packet.d.message_id,
-          emoji: this.client.util.emojiFromRaw(packet.d.emoji),
+          emoji: Emojis.emojiFromRaw(packet.d.emoji),
         });
         break;
       case GatewayEvents.PresenceUpdate:
-        this.client.emit(
-          "presenceUpdate",
-          this.client.util.presenceFromRaw(packet.d)
-        );
+        this.client.emit("presenceUpdate", Presences.presenceFromRaw(packet.d));
         break;
       case GatewayEvents.StageInstanceCreate:
         this.client.emit(
           "stageInstanceCreate",
-          this.client.util.stageInstanceFromRaw(packet.d)
+          StageInstances.stageInstanceFromRaw(packet.d)
         );
         break;
       case GatewayEvents.StageInstanceUpdate:
         this.client.emit(
           "stageInstanceUpdate",
-          this.client.util.stageInstanceFromRaw(packet.d)
+          StageInstances.stageInstanceFromRaw(packet.d)
         );
         break;
       case GatewayEvents.StageInstanceDelete:
         this.client.emit(
           "stageInstanceDelete",
-          this.client.util.stageInstanceFromRaw(packet.d)
+          StageInstances.stageInstanceFromRaw(packet.d)
         );
         break;
       case GatewayEvents.TypingStart:
@@ -604,18 +583,15 @@ export class Shard {
           timestamp: packet.d.timestamp,
           member:
             packet.d.member !== undefined
-              ? this.client.util.guildMemberFromRaw(packet.d.member)
+              ? Guilds.guildMemberFromRaw(packet.d.member)
               : undefined,
         });
         break;
       case GatewayEvents.UserUpdate:
-        this.client.emit("userUpdate", this.client.util.userFromRaw(packet.d));
+        this.client.emit("userUpdate", Users.userFromRaw(packet.d));
         break;
       case GatewayEvents.VoiceStateUpdate:
-        this.client.emit(
-          "voiceStateUpdate",
-          this.client.util.voiceStateFromRaw(packet.d)
-        );
+        this.client.emit("voiceStateUpdate", Voice.voiceStateFromRaw(packet.d));
         break;
       case GatewayEvents.VoiceServerUpdate:
         {
