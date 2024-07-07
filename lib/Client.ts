@@ -4068,7 +4068,7 @@ export class Client extends EventEmitter {
     messageID: snowflake,
     answerID: snowflake,
     options?: {
-      after?: string;
+      after?: snowflake;
       limit?: number;
     }
   ): Promise<{
