@@ -340,7 +340,7 @@ export class Client extends EventEmitter {
     const response = await this.rest.request<{
       banned_users: Array<string>;
       failed_users: Array<string>;
-    }>(RESTMethods.Post, Endpoints.bulkGuildBan(guildID), {
+    }>(RESTMethods.Post, Endpoints.guildBulkBan(guildID), {
       json: {
         user_ids: options.userIDs,
         delete_message_seconds: options.deleteMessageSeconds,

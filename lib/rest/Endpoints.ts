@@ -1,8 +1,6 @@
 import type { snowflake } from "../types/common";
 
 // Guilds
-export const bulkGuildBan = (guildID: snowflake) =>
-  `guilds/${guildID}/bulk-ban` as const;
 export const guild = (guildID: snowflake) => `guilds/${guildID}` as const;
 export const guilds = () => "guilds" as const;
 export const guildActiveThreads = (guildID: snowflake) =>
@@ -19,6 +17,8 @@ export const guildBan = (guildID: snowflake, userID: snowflake) =>
   `guilds/${guildID}/bans/${userID}` as const;
 export const guildBans = (guildID: snowflake) =>
   `guilds/${guildID}/bans` as const;
+export const guildBulkBan = (guildID: snowflake) =>
+  `guilds/${guildID}/bulk-ban` as const;
 export const guildChannels = (guildID: snowflake) =>
   `guilds/${guildID}/channels` as const;
 export const guildCurrentMemberNickname = (guildID: snowflake) =>
