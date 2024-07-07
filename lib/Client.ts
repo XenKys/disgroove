@@ -1022,7 +1022,7 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? Channels.messageComponentsToRaw(options.components)
+              ? Channels.componentsToRaw(options.components)
               : undefined,
           attachments: options.attachments,
           flags: options.flags,
@@ -1088,7 +1088,7 @@ export class Client extends EventEmitter {
                   flags: options.data?.flags,
                   components:
                     options.data?.components !== undefined
-                      ? Channels.messageComponentsToRaw(options.data.components)
+                      ? Channels.componentsToRaw(options.data.components)
                       : undefined,
                   attachments: options.data?.attachments?.map((attachment) =>
                     Channels.attachmentToRaw(attachment)
@@ -1162,7 +1162,7 @@ export class Client extends EventEmitter {
                   custom_id: options.data?.customID,
                   components:
                     options.data?.components !== undefined
-                      ? Channels.messageComponentsToRaw(options.data.components)
+                      ? Channels.componentsToRaw(options.data.components)
                       : undefined,
                   title: options.data?.title,
                 },
@@ -1228,7 +1228,7 @@ export class Client extends EventEmitter {
           message_reference: options.messageReference,
           components:
             options.components !== undefined
-              ? Channels.messageComponentsToRaw(options.components)
+              ? Channels.componentsToRaw(options.components)
               : undefined,
           stickers_ids: options.stickersIDs,
           attachments: options.attachments,
@@ -2506,7 +2506,7 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.messageComponentsToRaw(options.components)
+                ? Channels.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
@@ -2585,7 +2585,7 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.messageComponentsToRaw(options.components)
+                ? Channels.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
@@ -2642,7 +2642,7 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.messageComponentsToRaw(options.components)
+                ? Channels.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
@@ -2749,7 +2749,7 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.messageComponentsToRaw(options.components)
+                ? Channels.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
@@ -2846,7 +2846,7 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? Channels.messageComponentsToRaw(options.components)
+              ? Channels.componentsToRaw(options.components)
               : undefined,
           attachments: options.attachments,
           flags: options.flags,

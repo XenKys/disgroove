@@ -209,6 +209,188 @@ export class Channels {
     };
   }
 
+  static componentsFromRaw(components: Array<RawActionRow>): Array<ActionRow> {
+    return components.map((component) => ({
+      type: component.type,
+      components: component.components.map((c) => {
+        switch (c.type) {
+          case ComponentTypes.Button: {
+            return {
+              type: c.type,
+              style: c.style,
+              label: c.label,
+              emoji:
+                c.emoji !== undefined
+                  ? {
+                      name: c.emoji.name,
+                      id: c.emoji.id,
+                      animated: c.emoji.animated,
+                    }
+                  : undefined,
+              customID: c.custom_id,
+              skuID: c.sku_id,
+              url: c.url,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.TextInput: {
+            return {
+              type: c.type,
+              customID: c.custom_id,
+              style: c.style,
+              label: c.label,
+              minLength: c.min_length,
+              maxLength: c.max_length,
+              required: c.required,
+              value: c.value,
+              placeholder: c.placeholder,
+            };
+          }
+          case ComponentTypes.ChannelSelect: {
+            return {
+              type: c.type,
+              customID: c.custom_id,
+              channelTypes: c.channel_types,
+              placeholder: c.placeholder,
+              defaultValues: c.default_values,
+              minValues: c.min_values,
+              maxValues: c.max_values,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.StringSelect: {
+            return {
+              type: c.type,
+              customID: c.custom_id,
+              placeholder: c.placeholder,
+              options: c.options?.map((option) => ({
+                label: option.label,
+                value: option.value,
+                description: option.description,
+                emoji:
+                  option.emoji !== undefined
+                    ? {
+                        name: option.emoji.name,
+                        id: option.emoji.id,
+                        animated: option.emoji.animated,
+                      }
+                    : undefined,
+                default: option.default,
+              })),
+              minValues: c.min_values,
+              maxValues: c.max_values,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.MentionableSelect:
+          case ComponentTypes.RoleSelect:
+          case ComponentTypes.UserSelect: {
+            return {
+              type: c.type,
+              customID: c.custom_id,
+              placeholder: c.placeholder,
+              defaultValues: c.default_values,
+              minValues: c.min_values,
+              maxValues: c.max_values,
+              disabled: c.disabled,
+            };
+          }
+        }
+      }),
+    }));
+  }
+
+  static componentsToRaw(components: Array<ActionRow>): Array<RawActionRow> {
+    return components.map((component) => ({
+      type: component.type,
+      components: component.components.map((c) => {
+        switch (c.type) {
+          case ComponentTypes.Button: {
+            return {
+              type: c.type,
+              style: c.style,
+              label: c.label,
+              emoji:
+                c.emoji !== undefined
+                  ? {
+                      name: c.emoji.name,
+                      id: c.emoji.id,
+                      animated: c.emoji.animated,
+                    }
+                  : undefined,
+              custom_id: c.customID,
+              sku_id: c.skuID,
+              url: c.url,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.TextInput: {
+            return {
+              type: c.type,
+              custom_id: c.customID,
+              style: c.style,
+              label: c.label,
+              min_length: c.minLength,
+              max_length: c.maxLength,
+              required: c.required,
+              value: c.value,
+              placeholder: c.placeholder,
+            };
+          }
+          case ComponentTypes.ChannelSelect: {
+            return {
+              type: c.type,
+              custom_id: c.customID,
+              channel_types: c.channelTypes,
+              placeholder: c.placeholder,
+              default_values: c.defaultValues,
+              min_values: c.minValues,
+              max_values: c.maxValues,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.StringSelect: {
+            return {
+              type: c.type,
+              custom_id: c.customID,
+              placeholder: c.placeholder,
+              options: c.options?.map((option) => ({
+                label: option.label,
+                value: option.value,
+                description: option.description,
+                emoji:
+                  option.emoji !== undefined
+                    ? {
+                        name: option.emoji.name,
+                        id: option.emoji.id,
+                        animated: option.emoji.animated,
+                      }
+                    : undefined,
+                default: option.default,
+              })),
+              min_values: c.minValues,
+              max_values: c.maxValues,
+              disabled: c.disabled,
+            };
+          }
+          case ComponentTypes.MentionableSelect:
+          case ComponentTypes.RoleSelect:
+          case ComponentTypes.UserSelect: {
+            return {
+              type: c.type,
+              custom_id: c.customID,
+              placeholder: c.placeholder,
+              default_values: c.defaultValues,
+              min_values: c.minValues,
+              max_values: c.maxValues,
+              disabled: c.disabled,
+            };
+          }
+        }
+      }),
+    }));
+  }
+
   static embedFromRaw(embed: RawEmbed): Embed {
     return {
       title: embed.title,
@@ -323,192 +505,6 @@ export class Channels {
     };
   }
 
-  static messageComponentsFromRaw(
-    components: Array<RawActionRow>
-  ): Array<ActionRow> {
-    return components.map((component) => ({
-      type: component.type,
-      components: component.components.map((c) => {
-        switch (c.type) {
-          case ComponentTypes.Button: {
-            return {
-              type: c.type,
-              style: c.style,
-              label: c.label,
-              emoji:
-                c.emoji !== undefined
-                  ? {
-                      name: c.emoji.name,
-                      id: c.emoji.id,
-                      animated: c.emoji.animated,
-                    }
-                  : undefined,
-              customID: c.custom_id,
-              skuID: c.sku_id,
-              url: c.url,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.TextInput: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              style: c.style,
-              label: c.label,
-              minLength: c.min_length,
-              maxLength: c.max_length,
-              required: c.required,
-              value: c.value,
-              placeholder: c.placeholder,
-            };
-          }
-          case ComponentTypes.ChannelSelect: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              channelTypes: c.channel_types,
-              placeholder: c.placeholder,
-              defaultValues: c.default_values,
-              minValues: c.min_values,
-              maxValues: c.max_values,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.StringSelect: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              placeholder: c.placeholder,
-              options: c.options?.map((option) => ({
-                label: option.label,
-                value: option.value,
-                description: option.description,
-                emoji:
-                  option.emoji !== undefined
-                    ? {
-                        name: option.emoji.name,
-                        id: option.emoji.id,
-                        animated: option.emoji.animated,
-                      }
-                    : undefined,
-                default: option.default,
-              })),
-              minValues: c.min_values,
-              maxValues: c.max_values,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.MentionableSelect:
-          case ComponentTypes.RoleSelect:
-          case ComponentTypes.UserSelect: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              placeholder: c.placeholder,
-              defaultValues: c.default_values,
-              minValues: c.min_values,
-              maxValues: c.max_values,
-              disabled: c.disabled,
-            };
-          }
-        }
-      }),
-    }));
-  }
-
-  static messageComponentsToRaw(
-    components: Array<ActionRow>
-  ): Array<RawActionRow> {
-    return components.map((component) => ({
-      type: component.type,
-      components: component.components.map((c) => {
-        switch (c.type) {
-          case ComponentTypes.Button: {
-            return {
-              type: c.type,
-              style: c.style,
-              label: c.label,
-              emoji:
-                c.emoji !== undefined
-                  ? {
-                      name: c.emoji.name,
-                      id: c.emoji.id,
-                      animated: c.emoji.animated,
-                    }
-                  : undefined,
-              custom_id: c.customID,
-              sku_id: c.skuID,
-              url: c.url,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.TextInput: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              style: c.style,
-              label: c.label,
-              min_length: c.minLength,
-              max_length: c.maxLength,
-              required: c.required,
-              value: c.value,
-              placeholder: c.placeholder,
-            };
-          }
-          case ComponentTypes.ChannelSelect: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              channel_types: c.channelTypes,
-              placeholder: c.placeholder,
-              default_values: c.defaultValues,
-              min_values: c.minValues,
-              max_values: c.maxValues,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.StringSelect: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              placeholder: c.placeholder,
-              options: c.options?.map((option) => ({
-                label: option.label,
-                value: option.value,
-                description: option.description,
-                emoji:
-                  option.emoji !== undefined
-                    ? {
-                        name: option.emoji.name,
-                        id: option.emoji.id,
-                        animated: option.emoji.animated,
-                      }
-                    : undefined,
-                default: option.default,
-              })),
-              min_values: c.minValues,
-              max_values: c.maxValues,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.MentionableSelect:
-          case ComponentTypes.RoleSelect:
-          case ComponentTypes.UserSelect: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              placeholder: c.placeholder,
-              default_values: c.defaultValues,
-              min_values: c.minValues,
-              max_values: c.maxValues,
-              disabled: c.disabled,
-            };
-          }
-        }
-      }),
-    }));
-  }
-
   static messageFromRaw(message: RawMessage): Message {
     return {
       id: message.id,
@@ -590,7 +586,7 @@ export class Channels {
           : undefined,
       components:
         message.components !== undefined
-          ? Channels.messageComponentsFromRaw(message.components)
+          ? Channels.componentsFromRaw(message.components)
           : undefined,
       stickerItems: message.sticker_items?.map((stickerItem) => ({
         id: stickerItem.id,
@@ -703,7 +699,7 @@ export class Channels {
           : undefined,
       components:
         message.components !== undefined
-          ? Channels.messageComponentsToRaw(message.components)
+          ? Channels.componentsToRaw(message.components)
           : undefined,
       sticker_items: message.stickerItems?.map((stickerItem) => ({
         id: stickerItem.id,
