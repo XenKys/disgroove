@@ -582,7 +582,7 @@ export enum StickerTypes {
 export enum StickerFormatTypes {
   PNG = 1,
   APNG,
-  LOTTIE,
+  Lottie,
   GIF,
 }
 
