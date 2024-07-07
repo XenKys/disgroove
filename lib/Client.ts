@@ -3347,25 +3347,58 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/user#get-current-user-guilds */
   async getGuilds(options?: {
-    before?: string;
-    after?: string;
+    before?: snowflake;
+    after?: snowflake;
     limit?: number;
     withCounts?: boolean;
-  }): Promise<Array<Guild>> {
-    const response = await this.rest.request<Array<RawGuild>>(
-      RESTMethods.Get,
-      Endpoints.userGuilds(),
-      {
-        query: {
-          before: options?.before,
-          after: options?.after,
-          limit: options?.limit,
-          with_counts: options?.withCounts,
-        },
-      }
-    );
+  }): Promise<
+    Array<
+      Pick<
+        Guild,
+        | "id"
+        | "name"
+        | "icon"
+        | "owner"
+        | "permissions"
+        | "features"
+        | "approximateMemberCount"
+        | "approximatePresenceCount"
+      >
+    >
+  > {
+    const response = await this.rest.request<
+      Array<
+        Pick<
+          RawGuild,
+          | "id"
+          | "name"
+          | "icon"
+          | "owner"
+          | "permissions"
+          | "features"
+          | "approximate_member_count"
+          | "approximate_presence_count"
+        >
+      >
+    >(RESTMethods.Get, Endpoints.userGuilds(), {
+      query: {
+        before: options?.before,
+        after: options?.after,
+        limit: options?.limit,
+        with_counts: options?.withCounts,
+      },
+    });
 
-    return response.map((guild) => Guilds.guildFromRaw(guild));
+    return response.map((guild) => ({
+      id: guild.id,
+      name: guild.name,
+      icon: guild.icon,
+      owner: guild.owner,
+      permissions: guild.permissions,
+      features: guild.features,
+      approximate_member_count: guild.approximate_member_count,
+      approximate_presence_count: guild.approximate_presence_count,
+    }));
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-command */
