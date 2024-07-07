@@ -4161,7 +4161,7 @@ export class Client extends EventEmitter {
     channelID: snowflake,
     options?: {
       withMember?: boolean;
-      after?: string;
+      after?: snowflake;
       limit?: number;
     }
   ): Promise<Array<ThreadMember>> {
