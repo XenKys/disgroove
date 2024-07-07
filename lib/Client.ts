@@ -2348,8 +2348,8 @@ export class Client extends EventEmitter {
       entityMetadata?: GuildScheduledEventEntityMetadata | null;
       name?: string;
       privacyLevel?: GuildScheduledEventPrivacyLevel;
-      scheduledStartTime?: string;
-      scheduledEndTime?: string;
+      scheduledStartTime?: timestamp;
+      scheduledEndTime?: timestamp;
       description?: string | null;
       entityType?: GuildScheduledEventEntityTypes;
       status?: GuildScheduledEventStatus;
