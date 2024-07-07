@@ -9,6 +9,13 @@ export enum TimestampStyles {
   RelativeTime = "R",
 }
 
+/** https://discord.com/developers/docs/reference#message-formatting-guild-navigation-types */
+export enum GuildNavigationTypes {
+  Customize = "customize",
+  BrowseChannels = "browse",
+  ServerGuide = "guide",
+}
+
 /** https://discord.com/developers/docs/reference#image-formatting-image-formats */
 export enum ImageFormats {
   JPG = "JPG",
