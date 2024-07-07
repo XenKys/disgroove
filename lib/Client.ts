@@ -2446,7 +2446,12 @@ export class Client extends EventEmitter {
       {
         json: {
           enabled: options.enabled,
-          welcome_channels: options.welcomeChannels,
+          welcome_channels: options.welcomeChannels?.map((welcomeChannel) => ({
+            channel_id: welcomeChannel.channelID,
+            description: welcomeChannel.description,
+            emoji_id: welcomeChannel.emojiID,
+            emoji_name: welcomeChannel.emojiName,
+          })),
           description: options.description,
         },
         reason,
