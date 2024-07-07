@@ -2638,12 +2638,11 @@ export class Client extends EventEmitter {
     options: {
       content?: string | null;
       embeds?: Array<Embed> | null;
-      flags?: MessageFlags | null;
       allowedMentions?: AllowedMentions | null;
       components?: Array<ActionRow> | null;
       files?: Array<File> | null;
-      attachments?: Array<Attachment> | null;
-      threadID: snowflake;
+      attachments?: Array<Partial<Attachment>> | null;
+      threadID?: snowflake;
     }
   ): Promise<Message> {
     const response = await this.rest.request<RawMessage>(
@@ -2674,9 +2673,8 @@ export class Client extends EventEmitter {
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
-            Channels.attachmentToRaw(attachment)
+            this.util.partialAttachmentToRaw(attachment)
           ),
-          flags: options.flags,
         },
         files: options.files,
         query: {
