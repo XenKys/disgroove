@@ -529,7 +529,9 @@ export class Client extends EventEmitter {
       userLimit?: number | null;
       rateLimitPerUser?: number | null;
       position?: number | null;
-      permissionOverwrites?: Array<Overwrite>;
+      permissionOverwrites?: Array<
+        Pick<Overwrite, "id" | "type"> & Partial<Overwrite>
+      > | null;
       parentID?: snowflake | null;
       nsfw?: boolean | null;
       rtcRegion?: string | null;
@@ -1818,7 +1820,6 @@ export class Client extends EventEmitter {
     options: {
       name?: string;
       icon?: string;
-
       type?: ChannelTypes;
       position?: number | null;
       topic?: string | null;
@@ -1839,7 +1840,6 @@ export class Client extends EventEmitter {
       defaultThreadRateLimitPerUser?: number;
       defaultSortOrder?: SortOrderTypes | null;
       defaultForumLayout?: ForumLayoutTypes;
-
       archived?: boolean;
       autoArchiveDuration?: number;
       locked?: boolean;
