@@ -1,4 +1,4 @@
-import { HTTPResponseCodes, JSONErrorCodes } from "../constants";
+import { HTTPResponseCodes, type JSONErrorCodes } from "../constants";
 import { HTTPError, RESTError } from "../utils";
 import * as pkg from "../../package.json";
 
