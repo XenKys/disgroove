@@ -4182,10 +4182,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#join-thread */
   joinThread(channelID: snowflake): void {
-    this.rest.request(
-      RESTMethods.Put,
-      Endpoints.threadMembers(channelID, "@me")
-    );
+    this.rest.request(RESTMethods.Put, Endpoints.threadMembers(channelID));
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
@@ -4212,10 +4209,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/resources/channel#leave-thread */
   leaveThread(channelID: snowflake): void {
-    this.rest.request(
-      RESTMethods.Delete,
-      Endpoints.threadMembers(channelID, "@me")
-    );
+    this.rest.request(RESTMethods.Delete, Endpoints.threadMembers(channelID));
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
