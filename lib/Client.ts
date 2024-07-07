@@ -4093,16 +4093,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return {
-      id: response.id,
-      userID: response.user_id,
-      joinTimestamp: response.join_timestamp,
-      flags: response.flags,
-      member:
-        response.member !== undefined
-          ? Guilds.guildMemberFromRaw(response.member)
-          : undefined,
-    };
+    return Channels.threadMemberFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#list-thread-members */
