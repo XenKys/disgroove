@@ -4440,7 +4440,18 @@ export class Client extends EventEmitter {
         json: {
           platform_name: options.platformName,
           platform_username: options.platformUsername,
-          metadata: options.metadata,
+          metadata:
+            options.metadata !== undefined
+              ? {
+                  type: options.metadata.type,
+                  key: options.metadata.key,
+                  name: options.metadata.name,
+                  name_localizations: options.metadata.nameLocalizations,
+                  description: options.metadata.description,
+                  description_localizations:
+                    options.metadata.descriptionLocalizations,
+                }
+              : undefined,
         },
       }
     );
