@@ -2691,9 +2691,8 @@ export class Client extends EventEmitter {
     guildID: snowflake,
     userID: snowflake,
     options: {
-      channelID?: snowflake;
+      channelID: snowflake;
       suppress?: boolean;
-      requestToSpeakTimestamp?: timestamp | null;
     }
   ): void {
     this.rest.request(
@@ -2703,7 +2702,6 @@ export class Client extends EventEmitter {
         json: {
           channel_id: options.channelID,
           suppress: options.suppress,
-          requestToSpeakTimestamp: options.requestToSpeakTimestamp,
         },
       }
     );
