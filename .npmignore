@@ -1,6 +1,5 @@
-examples/
-lib/
-!dist/lib/
-test/
+/examples
+/lib
+/test
 .gitignore
 tsconfig.json
