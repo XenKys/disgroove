@@ -1961,7 +1961,7 @@ export class Client extends EventEmitter {
   async editCurrentGuildMember(
     guildID: snowflake,
     options: {
-      nick?: string;
+      nick?: string | null;
     },
     reason?: string
   ): Promise<GuildMember> {
