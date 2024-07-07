@@ -3018,8 +3018,8 @@ export class Client extends EventEmitter {
     options?: {
       userID?: snowflake;
       actionType?: ActionTypes;
-      before?: string;
-      after?: string;
+      before?: snowflake;
+      after?: snowflake;
       limit?: number;
     }
   ): Promise<AuditLog> {
