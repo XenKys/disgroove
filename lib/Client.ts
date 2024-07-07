@@ -2324,13 +2324,15 @@ export class Client extends EventEmitter {
     options: Array<{
       id: snowflake;
       position?: number | null;
-    }>
+    }>,
+    reason?: string
   ): Promise<Array<Role>> {
     const response = await this.rest.request<Array<RawRole>>(
       RESTMethods.Patch,
       Endpoints.guildRoles(guildID),
       {
         json: options,
+        reason,
       }
     );
 
