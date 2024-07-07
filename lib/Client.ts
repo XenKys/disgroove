@@ -3922,7 +3922,7 @@ export class Client extends EventEmitter {
   async getJoinedPrivateArchivedThreads(
     channelID: snowflake,
     options?: {
-      before?: string;
+      before?: snowflake;
       limit?: number;
     }
   ): Promise<{
