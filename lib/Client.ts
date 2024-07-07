@@ -1235,7 +1235,15 @@ export class Client extends EventEmitter {
                   replied_user: options.allowedMentions.repliedUser,
                 }
               : undefined,
-          message_reference: options.messageReference,
+          message_reference:
+            options.messageReference !== undefined
+              ? {
+                  message_id: options.messageReference.messageID,
+                  channel_id: options.messageReference.channelID,
+                  guild_id: options.messageReference.guildID,
+                  fail_if_not_exists: options.messageReference.failIfNotExists,
+                }
+              : undefined,
           components:
             options.components !== undefined
               ? Channels.componentsToRaw(options.components)
