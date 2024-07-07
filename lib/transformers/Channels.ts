@@ -105,33 +105,7 @@ export class Channels {
           : undefined,
       member:
         channel.member !== undefined
-          ? {
-              id: channel.member.id,
-              userID: channel.member.user_id,
-              joinTimestamp: channel.member.join_timestamp,
-              flags: channel.member.flags,
-              member:
-                channel.member.member !== undefined
-                  ? {
-                      user:
-                        channel.member.member.user !== undefined
-                          ? Users.userFromRaw(channel.member.member.user)
-                          : undefined,
-                      nick: channel.member.member.nick,
-                      avatar: channel.member.member.avatar,
-                      roles: channel.member.member.roles,
-                      joinedAt: channel.member.member.joined_at,
-                      premiumSince: channel.member.member.premium_since,
-                      deaf: channel.member.member.deaf,
-                      mute: channel.member.member.mute,
-                      flags: channel.member.member.flags,
-                      pending: channel.member.member.pending,
-                      permissions: channel.member.member.permissions,
-                      communicationDisabledUntil:
-                        channel.member.member.communication_disabled_until,
-                    }
-                  : undefined,
-            }
+          ? Channels.threadMemberFromRaw(channel.member)
           : undefined,
       defaultAutoArchiveDuration: channel.default_auto_archive_duration,
       permissions: channel.permissions,
@@ -206,33 +180,7 @@ export class Channels {
           : undefined,
       member:
         channel.member !== undefined
-          ? {
-              id: channel.member.id,
-              user_id: channel.member.userID,
-              join_timestamp: channel.member.joinTimestamp,
-              flags: channel.member.flags,
-              member:
-                channel.member.member !== undefined
-                  ? {
-                      user:
-                        channel.member.member.user !== undefined
-                          ? Users.userToRaw(channel.member.member.user)
-                          : undefined,
-                      nick: channel.member.member.nick,
-                      avatar: channel.member.member.avatar,
-                      roles: channel.member.member.roles,
-                      joined_at: channel.member.member.joinedAt,
-                      premium_since: channel.member.member.premiumSince,
-                      deaf: channel.member.member.deaf,
-                      mute: channel.member.member.mute,
-                      flags: channel.member.member.flags,
-                      pending: channel.member.member.pending,
-                      permissions: channel.member.member.permissions,
-                      communication_disabled_until:
-                        channel.member.member.communicationDisabledUntil,
-                    }
-                  : undefined,
-            }
+          ? Channels.threadMemberToRaw(channel.member)
           : undefined,
       default_auto_archive_duration: channel.defaultAutoArchiveDuration,
       permissions: channel.permissions,
