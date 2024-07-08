@@ -31,7 +31,6 @@ import {
   type GuildMemberFlags,
   type InteractionContextTypes,
 } from "./constants";
-import { Util } from "./utils";
 import { Endpoints, RequestManager, RESTMethods, type File } from "./rest";
 import EventEmitter from "node:events";
 import { Shard, ShardManager } from "./gateway";
@@ -220,7 +219,6 @@ export class Client extends EventEmitter {
   auth: "Bot" | "Bearer";
   shards: ShardManager;
   rest: RequestManager;
-  util: Util;
   guildShardMap: Record<string, number>;
   user: User | null;
   guilds: Map<string, Guild>;
@@ -245,7 +243,6 @@ export class Client extends EventEmitter {
     this.auth = options?.auth ?? "Bot";
     this.shards = new ShardManager();
     this.rest = new RequestManager(token, this.auth);
-    this.util = new Util();
     this.guildShardMap = {};
     this.user = null;
     this.guilds = new Map();
@@ -422,9 +419,22 @@ export class Client extends EventEmitter {
       RESTMethods.Put,
       Endpoints.applicationCommands(applicationID),
       {
-        json: commands.map((command) =>
-          this.util.partialApplicationCommandToRaw(command)
-        ),
+        json: commands.map((command) => ({
+          id: command.id,
+          name: command.name,
+          name_localizations: command.nameLocalizations,
+          description: command.description,
+          description_localizations: command.descriptionLocalizations,
+          options: command.options?.map((option) =>
+            ApplicationCommands.optionToRaw(option)
+          ),
+          default_member_permissions: command.defaultMemberPermissions,
+          default_permissions: command.defaultPermission,
+          integration_types: command.integrationTypes,
+          contexts: command.contexts,
+          type: command.type,
+          nsfw: command.nsfw,
+        })),
       }
     );
 
@@ -454,9 +464,20 @@ export class Client extends EventEmitter {
       RESTMethods.Put,
       Endpoints.applicationGuildCommands(applicationID, guildID),
       {
-        json: commands.map((command) =>
-          this.util.partialApplicationCommandToRaw(command)
-        ),
+        json: commands.map((command) => ({
+          id: command.id,
+          name: command.name,
+          name_localizations: command.nameLocalizations,
+          description: command.description,
+          description_localizations: command.descriptionLocalizations,
+          options: command.options?.map((option) =>
+            ApplicationCommands.optionToRaw(option)
+          ),
+          default_member_permissions: command.defaultMemberPermissions,
+          default_permissions: command.defaultPermission,
+          type: command.type,
+          nsfw: command.nsfw,
+        })),
       }
     );
 
@@ -702,7 +723,21 @@ export class Client extends EventEmitter {
       RESTMethods.Post,
       Endpoints.applicationCommands(applicationID),
       {
-        json: this.util.partialApplicationCommandToRaw(options),
+        json: {
+          name: options.name,
+          name_localizations: options.nameLocalizations,
+          description: options.description,
+          description_localizations: options.descriptionLocalizations,
+          options: options.options?.map((option) =>
+            ApplicationCommands.optionToRaw(option)
+          ),
+          default_member_permissions: options.defaultMemberPermissions,
+          default_permissions: options.defaultPermission,
+          integration_types: options.integrationTypes,
+          contexts: options.contexts,
+          type: options.type,
+          nsfw: options.nsfw,
+        },
       }
     );
 
@@ -811,7 +846,19 @@ export class Client extends EventEmitter {
       RESTMethods.Post,
       Endpoints.applicationGuildCommands(applicationID, guildID),
       {
-        json: this.util.partialApplicationCommandToRaw(options),
+        json: {
+          name: options.name,
+          name_localizations: options.nameLocalizations,
+          description: options.description,
+          description_localizations: options.descriptionLocalizations,
+          options: options.options?.map((option) =>
+            ApplicationCommands.optionToRaw(option)
+          ),
+          default_member_permissions: options.defaultMemberPermissions,
+          default_permissions: options.defaultPermission,
+          type: options.type,
+          nsfw: options.nsfw,
+        },
       }
     );
 
@@ -2112,7 +2159,20 @@ export class Client extends EventEmitter {
       RESTMethods.Patch,
       Endpoints.applicationCommand(applicationID, commandID),
       {
-        json: this.util.partialApplicationCommandToRaw(options),
+        json: {
+          name: options.name,
+          name_localizations: options.nameLocalizations,
+          description: options.description,
+          description_localizations: options.descriptionLocalizations,
+          options: options.options?.map((option) =>
+            ApplicationCommands.optionToRaw(option)
+          ),
+          default_member_permissions: options.defaultMemberPermissions,
+          default_permissions: options.defaultPermission,
+          integration_types: options.integrationTypes,
+          contexts: options.contexts,
+          nsfw: options.nsfw,
+        },
       }
     );
 
@@ -2199,7 +2259,18 @@ export class Client extends EventEmitter {
       RESTMethods.Patch,
       Endpoints.applicationGuildCommand(applicationID, guildID, commandID),
       {
-        json: this.util.partialApplicationCommandToRaw(options),
+        json: {
+          name: options.name,
+          name_localizations: options.nameLocalizations,
+          description: options.description,
+          description_localizations: options.descriptionLocalizations,
+          options: options.options?.map((option) =>
+            ApplicationCommands.optionToRaw(option)
+          ),
+          default_member_permissions: options.defaultMemberPermissions,
+          default_permissions: options.defaultPermission,
+          nsfw: options.nsfw,
+        },
       }
     );
 
@@ -2660,9 +2731,22 @@ export class Client extends EventEmitter {
                 ? Channels.componentsToRaw(options.components)
                 : null
               : undefined,
-          attachments: options.attachments?.map((attachment) =>
-            this.util.partialAttachmentToRaw(attachment)
-          ),
+          attachments: options.attachments?.map((attachment) => ({
+            id: attachment.id,
+            filename: attachment.filename,
+            title: attachment.title,
+            description: attachment.description,
+            content_type: attachment.contentType,
+            size: attachment.size,
+            url: attachment.url,
+            proxy_url: attachment.proxyURL,
+            height: attachment.height,
+            width: attachment.width,
+            ephemeral: attachment.ephemeral,
+            duration_secs: attachment.durationSecs,
+            waveform: attachment.waveform,
+            flags: attachment.flags,
+          })),
         },
         files: options.files,
         query: {
@@ -2715,9 +2799,22 @@ export class Client extends EventEmitter {
                 ? Channels.componentsToRaw(options.components)
                 : null
               : undefined,
-          attachments: options.attachments?.map((attachment) =>
-            this.util.partialAttachmentToRaw(attachment)
-          ),
+          attachments: options.attachments?.map((attachment) => ({
+            id: attachment.id,
+            filename: attachment.filename,
+            title: attachment.title,
+            description: attachment.description,
+            content_type: attachment.contentType,
+            size: attachment.size,
+            url: attachment.url,
+            proxy_url: attachment.proxyURL,
+            height: attachment.height,
+            width: attachment.width,
+            ephemeral: attachment.ephemeral,
+            duration_secs: attachment.durationSecs,
+            waveform: attachment.waveform,
+            flags: attachment.flags,
+          })),
         },
         files: options.files,
         query: {
@@ -2818,9 +2915,22 @@ export class Client extends EventEmitter {
                 ? Channels.componentsToRaw(options.components)
                 : null
               : undefined,
-          attachments: options.attachments?.map((attachment) =>
-            this.util.partialAttachmentToRaw(attachment)
-          ),
+          attachments: options.attachments?.map((attachment) => ({
+            id: attachment.id,
+            filename: attachment.filename,
+            title: attachment.title,
+            description: attachment.description,
+            content_type: attachment.contentType,
+            size: attachment.size,
+            url: attachment.url,
+            proxy_url: attachment.proxyURL,
+            height: attachment.height,
+            width: attachment.width,
+            ephemeral: attachment.ephemeral,
+            duration_secs: attachment.durationSecs,
+            waveform: attachment.waveform,
+            flags: attachment.flags,
+          })),
         },
         files: options.files,
         query: {

@@ -4,7 +4,7 @@ import type {
   RawAuditLog,
   AuditLog,
 } from "../types/audit-log";
-import { Applications } from "./Applications";
+import { ApplicationCommands } from "./ApplicationCommands";
 import { AutoModeration } from "./AutoModeration";
 import { Channels } from "./Channels";
 import { Guilds } from "./Guilds";
@@ -85,7 +85,7 @@ export class AuditLogs {
     return {
       applicationCommands: auditLog.application_commands.map(
         (applicationCommand) =>
-          Applications.applicationCommandFromRaw(applicationCommand)
+          ApplicationCommands.applicationCommandFromRaw(applicationCommand)
       ),
       auditLogEntries: auditLog.audit_log_entries.map((auditLogEntry) =>
         AuditLogs.auditLogEntryFromRaw(auditLogEntry)
@@ -115,7 +115,7 @@ export class AuditLogs {
     return {
       application_commands: auditLog.applicationCommands.map(
         (applicationCommand) =>
-          Applications.applicationCommandToRaw(applicationCommand)
+          ApplicationCommands.applicationCommandToRaw(applicationCommand)
       ),
       audit_log_entries: auditLog.auditLogEntries.map((auditLogEntry) =>
         AuditLogs.auditLogEntryToRaw(auditLogEntry)
