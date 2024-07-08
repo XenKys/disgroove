@@ -1,4 +1,5 @@
 export * from "./ApplicationCommands";
+export * from "./ApplicationRoleConnectionMetadatas";
 export * from "./Applications";
 export * from "./AuditLogs";
 export * from "./AutoModeration";

@@ -186,8 +186,9 @@ import {
   Entitlements,
   AuditLogs,
   SKUs,
+  ApplicationCommands,
+  ApplicationRoleConnectionMetadatas,
 } from "./transformers";
-import { ApplicationCommands } from "./transformers/ApplicationCommands";
 
 export interface GatewayOptions {
   properties?: IdentifyConnectionProperties;
@@ -3250,15 +3251,11 @@ export class Client extends EventEmitter {
       Endpoints.applicationRoleConnectionMetadata(applicationID)
     );
 
-    return response.map((applicationRoleConnectionMetadata) => ({
-      type: applicationRoleConnectionMetadata.type,
-      key: applicationRoleConnectionMetadata.key,
-      name: applicationRoleConnectionMetadata.name,
-      nameLocalizations: applicationRoleConnectionMetadata.name_localizations,
-      description: applicationRoleConnectionMetadata.description,
-      descriptionLocalizations:
-        applicationRoleConnectionMetadata.description_localizations,
-    }));
+    return response.map((applicationRoleConnectionMetadata) =>
+      ApplicationRoleConnectionMetadatas.applicationRoleConnectionMetadataFromRaw(
+        applicationRoleConnectionMetadata
+      )
+    );
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-channel */
@@ -3323,14 +3320,10 @@ export class Client extends EventEmitter {
     return {
       platformName: response.platform_name,
       platformUsername: response.platform_username,
-      metadata: {
-        type: response.metadata.type,
-        key: response.metadata.key,
-        name: response.metadata.name,
-        nameLocalizations: response.metadata.name_localizations,
-        description: response.metadata.description,
-        descriptionLocalizations: response.metadata.description_localizations,
-      },
+      metadata:
+        ApplicationRoleConnectionMetadatas.applicationRoleConnectionMetadataFromRaw(
+          response.metadata
+        ),
     };
   }
 
@@ -4566,15 +4559,11 @@ export class Client extends EventEmitter {
       Endpoints.applicationRoleConnectionMetadata(applicationID)
     );
 
-    return response.map((applicationRoleConnectionMetadata) => ({
-      type: applicationRoleConnectionMetadata.type,
-      key: applicationRoleConnectionMetadata.key,
-      name: applicationRoleConnectionMetadata.name,
-      nameLocalizations: applicationRoleConnectionMetadata.name_localizations,
-      description: applicationRoleConnectionMetadata.description,
-      descriptionLocalizations:
-        applicationRoleConnectionMetadata.description_localizations,
-    }));
+    return response.map((applicationRoleConnectionMetadata) =>
+      ApplicationRoleConnectionMetadatas.applicationRoleConnectionMetadataFromRaw(
+        applicationRoleConnectionMetadata
+      )
+    );
   }
 
   /** https://discord.com/developers/docs/resources/user#update-current-user-application-role-connection */
@@ -4595,15 +4584,9 @@ export class Client extends EventEmitter {
           platform_username: options.platformUsername,
           metadata:
             options.metadata !== undefined
-              ? {
-                  type: options.metadata.type,
-                  key: options.metadata.key,
-                  name: options.metadata.name,
-                  name_localizations: options.metadata.nameLocalizations,
-                  description: options.metadata.description,
-                  description_localizations:
-                    options.metadata.descriptionLocalizations,
-                }
+              ? ApplicationRoleConnectionMetadatas.applicationRoleConnectionMetadataToRaw(
+                  options.metadata
+                )
               : undefined,
         },
       }
@@ -4612,14 +4595,10 @@ export class Client extends EventEmitter {
     return {
       platformName: response.platform_name,
       platformUsername: response.platform_username,
-      metadata: {
-        type: response.metadata.type,
-        key: response.metadata.key,
-        name: response.metadata.name,
-        nameLocalizations: response.metadata.name_localizations,
-        description: response.metadata.description,
-        descriptionLocalizations: response.metadata.description_localizations,
-      },
+      metadata:
+        ApplicationRoleConnectionMetadatas.applicationRoleConnectionMetadataFromRaw(
+          response.metadata
+        ),
     };
   }
 
