@@ -634,9 +634,9 @@ export class Shard {
     this.identify({
       token: this.client.token,
       properties: {
-        os: process.platform,
-        browser: pkg.name,
-        device: pkg.name,
+        os: this.client.properties?.os ?? process.platform,
+        browser: this.client.properties?.browser ?? pkg.name,
+        device: this.client.properties?.device ?? pkg.name,
       },
       compress: this.client.compress,
       largeThreshold: this.client.largeThreshold,

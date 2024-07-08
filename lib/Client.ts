@@ -113,6 +113,7 @@ import type {
   MessagePollVoteRemoveFields,
   GatewayPresenceUpdate,
   RawPayload,
+  IdentifyConnectionProperties,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -188,22 +189,26 @@ import {
   SKUs,
 } from "./transformers";
 
+export interface GatewayOptions {
+  properties?: IdentifyConnectionProperties;
+  compress?: boolean;
+  largeThreshold?: number;
+  presence?: Partial<
+    Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
+  >;
+  intents?: number | Array<number>;
+}
+
 export interface ClientOptions {
   shardsCount?: number | "auto";
   auth?: "Bot" | "Bearer";
-  gateway?: {
-    intents?: number | Array<number>;
-    compress?: boolean;
-    largeThreshold?: number;
-    presence?: Partial<
-      Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
-    >;
-  };
+  gateway?: GatewayOptions;
   ws?: WebSocketOptions;
 }
 
 export class Client extends EventEmitter {
   token: string;
+  properties?: IdentifyConnectionProperties;
   compress?: boolean;
   largeThreshold?: number;
   presence?: Partial<
@@ -225,6 +230,7 @@ export class Client extends EventEmitter {
     super();
 
     this.token = token;
+    this.properties = options?.gateway?.properties;
     this.compress = options?.gateway?.compress;
     this.largeThreshold = options?.gateway?.largeThreshold;
     this.presence = options?.gateway?.presence;
