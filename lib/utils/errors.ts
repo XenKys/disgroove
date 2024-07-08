@@ -22,7 +22,7 @@ export class RESTError extends Error {
     errors: Record<string, unknown> | undefined,
     prefix = ""
   ): string {
-    let result = "";
+    let message = "";
 
     if (errors) {
       for (const [key, value] of Object.entries(errors)) {
@@ -34,13 +34,13 @@ export class RESTError extends Error {
                 error !== null &&
                 "message" in error
               ) {
-                result += `${
+                message += `${
                   prefix ? `${prefix}: [${error.code}]` : `[${error.code}]`
                 } ${error.message}\n`;
               }
             }
           } else if (typeof value === "object" && value !== null) {
-            result += this.flattenErrors(
+            message += this.flattenErrors(
               value as Record<string, unknown>,
               prefix ? `${prefix}.${key}` : key
             );
@@ -49,7 +49,7 @@ export class RESTError extends Error {
       }
     }
 
-    return result;
+    return message;
   }
 }
 
