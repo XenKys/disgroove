@@ -188,6 +188,7 @@ import {
   AuditLogs,
   SKUs,
 } from "./transformers";
+import { ApplicationCommands } from "./transformers/ApplicationCommands";
 
 export interface GatewayOptions {
   properties?: IdentifyConnectionProperties;
@@ -427,7 +428,9 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((c) => Applications.applicationCommandFromRaw(c));
+    return response.map((c) =>
+      ApplicationCommands.applicationCommandFromRaw(c)
+    );
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-guild-application-commands */
@@ -457,7 +460,9 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((c) => Applications.applicationCommandFromRaw(c));
+    return response.map((c) =>
+      ApplicationCommands.applicationCommandFromRaw(c)
+    );
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
@@ -701,7 +706,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Applications.applicationCommandFromRaw(response);
+    return ApplicationCommands.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/user#create-group-dm */
@@ -810,7 +815,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Applications.applicationCommandFromRaw(response);
+    return ApplicationCommands.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-ban */
@@ -2111,7 +2116,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Applications.applicationCommandFromRaw(response);
+    return ApplicationCommands.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild */
@@ -2198,7 +2203,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Applications.applicationCommandFromRaw(response);
+    return ApplicationCommands.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/emoji#modify-guild-emoji */
@@ -3338,7 +3343,7 @@ export class Client extends EventEmitter {
       Endpoints.applicationCommand(applicationID, commandID)
     );
 
-    return Applications.applicationCommandFromRaw(response);
+    return ApplicationCommands.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
@@ -3359,7 +3364,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((applicationCommand) =>
-      Applications.applicationCommandFromRaw(applicationCommand)
+      ApplicationCommands.applicationCommandFromRaw(applicationCommand)
     );
   }
 
@@ -3450,7 +3455,7 @@ export class Client extends EventEmitter {
       Endpoints.applicationGuildCommand(applicationID, guildID, commandID)
     );
 
-    return Applications.applicationCommandFromRaw(response);
+    return ApplicationCommands.applicationCommandFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-guild-application-commands */
@@ -3472,7 +3477,7 @@ export class Client extends EventEmitter {
     );
 
     return response.map((applicationCommand) =>
-      Applications.applicationCommandFromRaw(applicationCommand)
+      ApplicationCommands.applicationCommandFromRaw(applicationCommand)
     );
   }
 
