@@ -2,14 +2,31 @@ import type {
   RawPresenceUpdateEventFields,
   PresenceUpdateEventFields,
 } from "../types/gateway-events";
-import type { RawUser, User } from "../types/user";
 
 export class Presences {
   static presenceFromRaw(
     presence: RawPresenceUpdateEventFields
   ): PresenceUpdateEventFields {
     return {
-      user: Presences.presenceUserFromRaw(presence.user),
+      user: {
+        id: presence.user.id,
+        username: presence.user.username,
+        discriminator: presence.user.discriminator,
+        globalName: presence.user.global_name,
+        avatar: presence.user.avatar,
+        bot: presence.user.bot,
+        system: presence.user.system,
+        mfaEnabled: presence.user.mfa_enabled,
+        banner: presence.user.banner,
+        accentColor: presence.user.accent_color,
+        locale: presence.user.locale,
+        verified: presence.user.verified,
+        email: presence.user.email,
+        flags: presence.user.flags,
+        premiumType: presence.user.premium_type,
+        publicFlags: presence.user.public_flags,
+        avatarDecoration: presence.user.avatar_decoration,
+      },
       guildID: presence.guild_id,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
@@ -42,7 +59,25 @@ export class Presences {
     presence: PresenceUpdateEventFields
   ): RawPresenceUpdateEventFields {
     return {
-      user: Presences.presenceUserToRaw(presence.user),
+      user: {
+        id: presence.user.id,
+        username: presence.user.username,
+        discriminator: presence.user.discriminator,
+        global_name: presence.user.globalName,
+        avatar: presence.user.avatar,
+        bot: presence.user.bot,
+        system: presence.user.system,
+        mfa_enabled: presence.user.mfaEnabled,
+        banner: presence.user.banner,
+        accent_color: presence.user.accentColor,
+        locale: presence.user.locale,
+        verified: presence.user.verified,
+        email: presence.user.email,
+        flags: presence.user.flags,
+        premium_type: presence.user.premiumType,
+        public_flags: presence.user.publicFlags,
+        avatar_decoration: presence.user.avatarDecoration,
+      },
       guild_id: presence.guildID,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
@@ -68,54 +103,6 @@ export class Presences {
         buttons: activity.buttons,
       })),
       client_status: presence.clientStatus,
-    };
-  }
-
-  static presenceUserFromRaw(
-    user: Pick<RawUser, "id"> & Partial<RawUser>
-  ): Pick<User, "id"> & Partial<User> {
-    return {
-      id: user.id,
-      username: user.username,
-      discriminator: user.discriminator,
-      globalName: user.global_name,
-      avatar: user.avatar,
-      bot: user.bot,
-      system: user.system,
-      mfaEnabled: user.mfa_enabled,
-      banner: user.banner,
-      accentColor: user.accent_color,
-      locale: user.locale,
-      verified: user.verified,
-      email: user.email,
-      flags: user.flags,
-      premiumType: user.premium_type,
-      publicFlags: user.public_flags,
-      avatarDecoration: user.avatar_decoration,
-    };
-  }
-
-  static presenceUserToRaw(
-    user: Pick<User, "id"> & Partial<User>
-  ): Pick<RawUser, "id"> & Partial<RawUser> {
-    return {
-      id: user.id,
-      username: user.username,
-      discriminator: user.discriminator,
-      global_name: user.globalName,
-      avatar: user.avatar,
-      bot: user.bot,
-      system: user.system,
-      mfa_enabled: user.mfaEnabled,
-      banner: user.banner,
-      accent_color: user.accentColor,
-      locale: user.locale,
-      verified: user.verified,
-      email: user.email,
-      flags: user.flags,
-      premium_type: user.premiumType,
-      public_flags: user.publicFlags,
-      avatar_decoration: user.avatarDecoration,
     };
   }
 }
