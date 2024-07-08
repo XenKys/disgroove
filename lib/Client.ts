@@ -409,7 +409,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
       integrationTypes: Array<ApplicationIntegrationTypes>;
       contexts: Array<InteractionContextTypes>;
       type?: ApplicationCommandTypes;
@@ -430,7 +429,6 @@ export class Client extends EventEmitter {
             ApplicationCommands.optionToRaw(option)
           ),
           default_member_permissions: command.defaultMemberPermissions,
-          default_permissions: command.defaultPermission,
           integration_types: command.integrationTypes,
           contexts: command.contexts,
           type: command.type,
@@ -456,7 +454,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
       type?: ApplicationCommandTypes;
       nsfw?: boolean;
     }>
@@ -475,7 +472,6 @@ export class Client extends EventEmitter {
             ApplicationCommands.optionToRaw(option)
           ),
           default_member_permissions: command.defaultMemberPermissions,
-          default_permissions: command.defaultPermission,
           type: command.type,
           nsfw: command.nsfw,
         })),
@@ -699,7 +695,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
       integrationTypes?: Array<ApplicationIntegrationTypes>;
       contexts?: Array<InteractionContextTypes>;
       type?: ApplicationCommandTypes;
@@ -719,7 +714,6 @@ export class Client extends EventEmitter {
             ApplicationCommands.optionToRaw(option)
           ),
           default_member_permissions: options.defaultMemberPermissions,
-          default_permissions: options.defaultPermission,
           integration_types: options.integrationTypes,
           contexts: options.contexts,
           type: options.type,
@@ -824,7 +818,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
       type?: ApplicationCommandTypes;
       nsfw?: boolean;
     }
@@ -842,7 +835,6 @@ export class Client extends EventEmitter {
             ApplicationCommands.optionToRaw(option)
           ),
           default_member_permissions: options.defaultMemberPermissions,
-          default_permissions: options.defaultPermission,
           type: options.type,
           nsfw: options.nsfw,
         },
@@ -2122,7 +2114,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
       integrationTypes?: Array<ApplicationIntegrationTypes>;
       contexts?: Array<InteractionContextTypes>;
       nsfw?: boolean;
@@ -2141,7 +2132,6 @@ export class Client extends EventEmitter {
             ApplicationCommands.optionToRaw(option)
           ),
           default_member_permissions: options.defaultMemberPermissions,
-          default_permissions: options.defaultPermission,
           integration_types: options.integrationTypes,
           contexts: options.contexts,
           nsfw: options.nsfw,
@@ -2224,7 +2214,6 @@ export class Client extends EventEmitter {
       descriptionLocalizations?: LocaleMap | null;
       options?: Array<ApplicationCommandOption>;
       defaultMemberPermissions?: string | null;
-      defaultPermission?: boolean | null;
       nsfw?: boolean;
     }
   ): Promise<ApplicationCommand> {
@@ -2241,7 +2230,6 @@ export class Client extends EventEmitter {
             ApplicationCommands.optionToRaw(option)
           ),
           default_member_permissions: options.defaultMemberPermissions,
-          default_permissions: options.defaultPermission,
           nsfw: options.nsfw,
         },
       }
