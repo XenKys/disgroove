@@ -46,6 +46,7 @@ export class Shard {
   client: Client;
   ws: WebSocket;
   sessionID: string | null;
+  resumeGatewayURL: string | null;
 
   constructor(id: number, client: Client) {
     this.id = id;
@@ -56,6 +57,7 @@ export class Shard {
       client.ws
     );
     this.sessionID = null;
+    this.resumeGatewayURL = null;
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
@@ -114,6 +116,7 @@ export class Shard {
       case GatewayEvents.Ready:
         {
           this.sessionID = packet.d.session_id;
+          this.resumeGatewayURL = packet.d.resume_gateway_url;
           this.client.user = Users.userFromRaw(packet.d.user);
           this.client.application = packet.d.application;
 
