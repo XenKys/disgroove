@@ -688,11 +688,11 @@ export class Shard {
             packet.d.heartbeat_interval
           );
 
-          this.client.emit("hello");
+          this.client.emit("hello", packet.d.heartbeat_interval);
         }
         break;
       case GatewayOPCodes.HeartbeatACK:
-        this.client.emit("heartbeatACK", this.id);
+        this.client.emit("heartbeatACK");
         break;
     }
   }
