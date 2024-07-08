@@ -732,7 +732,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/user#create-group-dm */
-  async createGroupDM(options: {
+  async createGroup(options: {
     accessTokens: Array<string>;
     nicks: Array<string>;
   }): Promise<Channel> {
