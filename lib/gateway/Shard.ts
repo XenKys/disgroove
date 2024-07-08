@@ -688,6 +688,9 @@ export class Shard {
           this.client.emit("hello");
         }
         break;
+      case GatewayOPCodes.HeartbeatACK:
+        this.client.emit("heartbeatACK", this.id);
+        break;
     }
   }
 
