@@ -233,7 +233,7 @@ export class Client extends EventEmitter {
         ? Array.isArray(options.gateway.intents)
           ? options.gateway.intents.reduce((sum, num) => sum + num, 0)
           : options.gateway.intents
-        : GatewayIntents.AllNonPrivileged;
+        : 0;
     this.shardsCount = options?.shardsCount ?? "auto";
     this.auth = options?.auth ?? "Bot";
     this.shards = new ShardManager();
