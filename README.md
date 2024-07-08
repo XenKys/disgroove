@@ -9,13 +9,13 @@ A module to interface with Discord
 
 ## Installation
 
-[**NodeJS v18**](https://nodejs.org) or newer required
+[**Node.js v18**](https://nodejs.org) or newer required
 
 ```
 npm install disgroove
 ```
 
-#### Example
+## Example
 
 ```js
 const {
