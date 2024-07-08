@@ -533,25 +533,11 @@ export class Client extends EventEmitter {
           trigger_type: options.triggerType,
           trigger_metadata:
             options.triggerMetadata !== undefined
-              ? {
-                  keyword_filter: options.triggerMetadata.keywordFilter,
-                  regex_patterns: options.triggerMetadata.regexPatterns,
-                  presets: options.triggerMetadata.presets,
-                  allow_list: options.triggerMetadata.allowList,
-                  mention_total_limit:
-                    options.triggerMetadata.mentionTotalLimit,
-                  mention_raid_protection:
-                    options.triggerMetadata.mentionRaidProtection,
-                }
+              ? AutoModeration.triggerMetadataToRaw(options.triggerMetadata)
               : undefined,
-          actions: options.actions.map((action) => ({
-            type: action.type,
-            metadata: {
-              channel_id: action.metadata.channelID,
-              duration_seconds: action.metadata.durationSeconds,
-              custom_message: action.metadata.customMessage,
-            },
-          })),
+          actions: options.actions.map((action) =>
+            AutoModeration.actionToRaw(action)
+          ),
           enabled: options.enabled,
           exempt_roles: options.exemptRoles,
           exempt_channels: options.exemptChannels,
@@ -1844,25 +1830,11 @@ export class Client extends EventEmitter {
           trigger_type: options.triggerType,
           trigger_metadata:
             options.triggerMetadata !== undefined
-              ? {
-                  keyword_filter: options.triggerMetadata.keywordFilter,
-                  regex_patterns: options.triggerMetadata.regexPatterns,
-                  presets: options.triggerMetadata.presets,
-                  allow_list: options.triggerMetadata.allowList,
-                  mention_total_limit:
-                    options.triggerMetadata.mentionTotalLimit,
-                  mention_raid_protection:
-                    options.triggerMetadata.mentionRaidProtection,
-                }
+              ? AutoModeration.triggerMetadataToRaw(options.triggerMetadata)
               : undefined,
-          actions: options.actions?.map((action) => ({
-            type: action.type,
-            metadata: {
-              channel_id: action.metadata.channelID,
-              duration_seconds: action.metadata.durationSeconds,
-              custom_message: action.metadata.customMessage,
-            },
-          })),
+          actions: options.actions?.map((action) =>
+            AutoModeration.actionToRaw(action)
+          ),
           enabled: options.enabled,
           exempt_roles: options.exemptRoles,
           exempt_channels: options.exemptChannels,
