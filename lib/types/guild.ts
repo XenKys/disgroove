@@ -18,7 +18,12 @@ import type { snowflake, timestamp } from "./common";
 import type { RawEmoji, Emoji } from "./emoji";
 import type { RawRole, Role } from "./role";
 import type { RawSticker, Sticker } from "./sticker";
-import type { RawUser, User } from "./user";
+import type {
+  AvatarDecorationData,
+  RawAvatarDecorationData,
+  RawUser,
+  User,
+} from "./user";
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface RawGuild {
@@ -118,6 +123,7 @@ export interface RawGuildMember {
   pending?: boolean;
   permissions?: string;
   communication_disabled_until?: number | null;
+  avatar_decoration_data?: RawAvatarDecorationData | null;
 }
 
 /** https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
@@ -300,6 +306,7 @@ export interface GuildMember {
   pending?: boolean;
   permissions?: string;
   communicationDisabledUntil?: number | null;
+  avatarDecorationData?: AvatarDecorationData | null;
 }
 
 export interface Integration {

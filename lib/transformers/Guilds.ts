@@ -130,6 +130,15 @@ export class Guilds {
       pending: guildMember.pending,
       permissions: guildMember.permissions,
       communicationDisabledUntil: guildMember.communication_disabled_until,
+      avatarDecorationData:
+        guildMember.avatar_decoration_data !== undefined
+          ? guildMember.avatar_decoration_data !== null
+            ? {
+                asset: guildMember.avatar_decoration_data.asset,
+                skuID: guildMember.avatar_decoration_data.sku_id,
+              }
+            : null
+          : undefined,
     };
   }
 
@@ -150,6 +159,15 @@ export class Guilds {
       pending: guildMember.pending,
       permissions: guildMember.permissions,
       communication_disabled_until: guildMember.communicationDisabledUntil,
+      avatar_decoration_data:
+        guildMember.avatarDecorationData !== undefined
+          ? guildMember.avatarDecorationData !== null
+            ? {
+                asset: guildMember.avatarDecorationData.asset,
+                sku_id: guildMember.avatarDecorationData.skuID,
+              }
+            : null
+          : undefined,
     };
   }
 
