@@ -33,7 +33,7 @@ import {
 } from "./constants";
 import { Endpoints, RequestManager, RESTMethods, type File } from "./rest";
 import EventEmitter from "node:events";
-import { Shard, ShardManager } from "./gateway";
+import { Shard } from "./gateway";
 import type {
   Application,
   ApplicationIntegrationTypeConfiguration,
@@ -218,7 +218,7 @@ export class Client extends EventEmitter {
   intents: GatewayIntents | number;
   shardsCount: number | "auto";
   auth: "Bot" | "Bearer";
-  shards: ShardManager;
+  shards: Map<number, Shard>;
   rest: RequestManager;
   guildShardMap: Record<string, number>;
   user: User | null;
@@ -242,7 +242,7 @@ export class Client extends EventEmitter {
         : 0;
     this.shardsCount = options?.shardsCount ?? "auto";
     this.auth = options?.auth ?? "Bot";
-    this.shards = new ShardManager();
+    this.shards = new Map();
     this.rest = new RequestManager(token, this.auth);
     this.guildShardMap = {};
     this.user = null;
@@ -493,7 +493,7 @@ export class Client extends EventEmitter {
     for (let i = 0; i < this.shardsCount; i++)
       this.shards.set(i, new Shard(i, this));
 
-    this.shards.connect();
+    this.shards.forEach((shard) => shard.connect());
   }
 
   /** https://discord.com/developers/docs/monetization/entitlements#consume-an-entitlement */
@@ -1793,7 +1793,7 @@ export class Client extends EventEmitter {
   }
 
   disconnect(): void {
-    this.shards.disconnect();
+    this.shards.forEach((shard) => shard.disconnect());
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
@@ -4487,7 +4487,7 @@ export class Client extends EventEmitter {
       Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
     >
   ): void {
-    this.shards.updatePresence(options);
+    this.shards.forEach((shard) => shard.updatePresence(options));
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
