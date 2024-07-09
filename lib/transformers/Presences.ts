@@ -25,7 +25,15 @@ export class Presences {
         flags: presence.user.flags,
         premiumType: presence.user.premium_type,
         publicFlags: presence.user.public_flags,
-        avatarDecoration: presence.user.avatar_decoration,
+        avatarDecorationData:
+          presence.user.avatar_decoration_data !== undefined
+            ? presence.user.avatar_decoration_data !== null
+              ? {
+                  asset: presence.user.avatar_decoration_data.asset,
+                  skuID: presence.user.avatar_decoration_data.sku_id,
+                }
+              : null
+            : undefined,
       },
       guildID: presence.guild_id,
       status: presence.status,
@@ -76,7 +84,15 @@ export class Presences {
         flags: presence.user.flags,
         premium_type: presence.user.premiumType,
         public_flags: presence.user.publicFlags,
-        avatar_decoration: presence.user.avatarDecoration,
+        avatar_decoration_data:
+          presence.user.avatarDecorationData !== undefined
+            ? presence.user.avatarDecorationData !== null
+              ? {
+                  asset: presence.user.avatarDecorationData.asset,
+                  sku_id: presence.user.avatarDecorationData.skuID,
+                }
+              : null
+            : undefined,
       },
       guild_id: presence.guildID,
       status: presence.status,

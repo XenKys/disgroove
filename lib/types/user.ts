@@ -29,7 +29,7 @@ export interface RawUser {
   flags?: UserFlags;
   premium_type?: PremiumTypes;
   public_flags?: UserFlags;
-  avatar_decoration?: string | null;
+  avatar_decoration_data?: RawAvatarDecorationData | null;
 }
 
 /** https://discord.com/developers/docs/resources/user#avatar-decoration-data-object-avatar-decoration-data-structure */
@@ -76,7 +76,7 @@ export interface User {
   flags?: UserFlags;
   premiumType?: PremiumTypes;
   publicFlags?: UserFlags;
-  avatarDecoration?: string | null;
+  avatarDecorationData?: AvatarDecorationData | null;
 }
 
 export interface AvatarDecorationData {

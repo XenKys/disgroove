@@ -19,7 +19,15 @@ export class Users {
       flags: user.flags,
       premiumType: user.premium_type,
       publicFlags: user.public_flags,
-      avatarDecoration: user.avatar_decoration,
+      avatarDecorationData:
+        user.avatar_decoration_data !== undefined
+          ? user.avatar_decoration_data !== null
+            ? {
+                asset: user.avatar_decoration_data.asset,
+                skuID: user.avatar_decoration_data.sku_id,
+              }
+            : null
+          : undefined,
     };
   }
 
@@ -41,7 +49,15 @@ export class Users {
       flags: user.flags,
       premium_type: user.premiumType,
       public_flags: user.publicFlags,
-      avatar_decoration: user.avatarDecoration,
+      avatar_decoration_data:
+        user.avatarDecorationData !== undefined
+          ? user.avatarDecorationData !== null
+            ? {
+                asset: user.avatarDecorationData.asset,
+                sku_id: user.avatarDecorationData.skuID,
+              }
+            : null
+          : undefined,
     };
   }
 }
