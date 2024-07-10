@@ -110,7 +110,7 @@ export class Shard {
   }
 
   private onDispatch(packet: RawPayload): void {
-    this.client.emit("dispatch", packet);
+    this.client.emit("dispatch", packet, this.id);
 
     switch (packet.t) {
       case GatewayEvents.Ready:
@@ -688,11 +688,11 @@ export class Shard {
             packet.d.heartbeat_interval
           );
 
-          this.client.emit("hello", packet.d.heartbeat_interval);
+          this.client.emit("hello", packet.d.heartbeat_interval, this.id);
         }
         break;
       case GatewayOPCodes.HeartbeatACK:
-        this.client.emit("heartbeatACK");
+        this.client.emit("heartbeatACK", this.id);
         break;
     }
   }
