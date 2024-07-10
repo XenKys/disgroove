@@ -1,6 +1,7 @@
 import type {
   ActivityFlags,
   ActivityType,
+  GatewayEvents,
   GatewayIntents,
   GatewayOPCodes,
   GuildMemberFlags,
@@ -38,10 +39,10 @@ import type { RawVoiceState, VoiceState } from "./voice";
 
 /** https://discord.com/developers/docs/topics/gateway-events#payload-structure */
 export interface RawPayload {
-  op: number;
+  op: GatewayOPCodes;
   d: any | null;
   s: number | null;
-  t: string | null;
+  t: GatewayEvents | null;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#identify-identify-structure */
@@ -433,7 +434,7 @@ export interface Payload {
   op: GatewayOPCodes;
   d: any | null;
   s: number | null;
-  t: string | null;
+  t: GatewayEvents | null;
 }
 
 export interface Identify {
