@@ -8,6 +8,7 @@ import type {
   InteractionType,
   MessageActivityTypes,
   MessageFlags,
+  MessageReferenceTypes,
   MessageTypes,
   SortOrderTypes,
   VideoQualityModes,
@@ -94,8 +95,9 @@ export interface RawMessage {
   activity?: RawMessageActivity;
   application?: RawApplication;
   application_id?: snowflake;
-  message_reference?: RawMessageReference;
   flags?: MessageFlags;
+  message_reference?: RawMessageReference;
+  message_snapshots?: Array<RawMessageSnapshot>;
   referenced_message?: RawMessage | null;
   interaction_metadata?: RawMessageInteractionMetadata;
   interaction?: RawMessageInteraction;
@@ -135,10 +137,27 @@ export interface RawMessageCall {
 
 /** https://discord.com/developers/docs/resources/channel#message-reference-object-message-reference-structure */
 export interface RawMessageReference {
+  type?: MessageReferenceTypes;
   message_id?: snowflake;
   channel_id?: snowflake;
   guild_id?: snowflake;
   fail_if_not_exists?: boolean;
+}
+
+/** https://discord.com/developers/docs/resources/channel#message-snapshot-object-message-snapshot-structure */
+export interface RawMessageSnapshot {
+  message: Pick<
+    RawMessage,
+    | "type"
+    | "content"
+    | "embeds"
+    | "attachments"
+    | "timestamp"
+    | "edited_timestamp"
+    | "flags"
+    | "mentions"
+    | "mention_roles"
+  >;
 }
 
 /** https://discord.com/developers/docs/resources/channel#followed-channel-object-followed-channel-structure */
@@ -376,8 +395,9 @@ export interface Message {
   activity?: MessageActivity;
   application?: Application;
   applicationID?: snowflake;
-  messageReference?: MessageReference;
   flags?: MessageFlags;
+  messageReference?: MessageReference;
+  messageSnapshots?: Array<MessageSnapshot>;
   referencedMessage?: Message | null;
   interactionMetadata?: MessageInteractionMetadata;
   interaction?: MessageInteraction;
@@ -413,10 +433,26 @@ export interface MessageCall {
 }
 
 export interface MessageReference {
+  type?: MessageReferenceTypes;
   messageID?: snowflake;
   channelID?: snowflake;
   guildID?: snowflake;
   failIfNotExists?: boolean;
+}
+
+export interface MessageSnapshot {
+  message: Pick<
+    Message,
+    | "type"
+    | "content"
+    | "embeds"
+    | "attachments"
+    | "timestamp"
+    | "editedTimestamp"
+    | "flags"
+    | "mentions"
+    | "mentionRoles"
+  >;
 }
 
 export interface FollowedChannel {

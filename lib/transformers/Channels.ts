@@ -545,6 +545,7 @@ export class Channels {
           ? Applications.applicationFromRaw(message.application)
           : undefined,
       applicationID: message.application_id,
+      flags: message.flags,
       messageReference:
         message.message_reference !== undefined
           ? {
@@ -554,7 +555,25 @@ export class Channels {
               failIfNotExists: message.message_reference.fail_if_not_exists,
             }
           : undefined,
-      flags: message.flags,
+      messageSnapshots: message.message_snapshots?.map((messageSnapshot) => ({
+        message: {
+          type: messageSnapshot.message.type,
+          content: messageSnapshot.message.content,
+          embeds: messageSnapshot.message.embeds.map((embed) =>
+            this.embedFromRaw(embed)
+          ),
+          attachments: messageSnapshot.message.attachments.map((attachment) =>
+            this.attachmentFromRaw(attachment)
+          ),
+          timestamp: messageSnapshot.message.timestamp,
+          editedTimestamp: messageSnapshot.message.edited_timestamp,
+          flags: messageSnapshot.message.flags,
+          mentions: messageSnapshot.message.mentions.map((user) =>
+            Users.userFromRaw(user)
+          ),
+          mentionRoles: messageSnapshot.message.mention_roles,
+        },
+      })),
       referencedMessage:
         message.referenced_message !== undefined
           ? message.referenced_message !== null
@@ -660,6 +679,7 @@ export class Channels {
           ? Applications.applicationToRaw(message.application)
           : undefined,
       application_id: message.applicationID,
+      flags: message.flags,
       message_reference:
         message.messageReference !== undefined
           ? {
@@ -669,7 +689,25 @@ export class Channels {
               fail_if_not_exists: message.messageReference.failIfNotExists,
             }
           : undefined,
-      flags: message.flags,
+      message_snapshots: message.messageSnapshots?.map((messageSnapshot) => ({
+        message: {
+          type: messageSnapshot.message.type,
+          content: messageSnapshot.message.content,
+          embeds: messageSnapshot.message.embeds.map((embed) =>
+            this.embedToRaw(embed)
+          ),
+          attachments: messageSnapshot.message.attachments.map((attachment) =>
+            this.attachmentToRaw(attachment)
+          ),
+          timestamp: messageSnapshot.message.timestamp,
+          edited_timestamp: messageSnapshot.message.editedTimestamp,
+          flags: messageSnapshot.message.flags,
+          mentions: messageSnapshot.message.mentions.map((user) =>
+            Users.userToRaw(user)
+          ),
+          mention_roles: messageSnapshot.message.mentionRoles,
+        },
+      })),
       referenced_message:
         message.referencedMessage !== undefined
           ? message.referencedMessage !== null
