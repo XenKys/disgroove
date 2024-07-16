@@ -626,6 +626,7 @@ export enum Services {
   Playstation = "playstation",
   Reddit = "reddit",
   RiotGames = "riotgames",
+  Roblox = "roblox",
   Spotify = "spotify",
   Skype = "skype",
   Steam = "steam",
