@@ -3464,6 +3464,7 @@ export class Client extends EventEmitter {
         | "id"
         | "name"
         | "icon"
+        | "banner"
         | "owner"
         | "permissions"
         | "features"
@@ -3478,6 +3479,7 @@ export class Client extends EventEmitter {
           RawGuild,
           | "id"
           | "name"
+          | "banner"
           | "icon"
           | "owner"
           | "permissions"
@@ -3498,6 +3500,7 @@ export class Client extends EventEmitter {
     return response.map((guild) => ({
       id: guild.id,
       name: guild.name,
+      banner: guild.banner,
       icon: guild.icon,
       owner: guild.owner,
       permissions: guild.permissions,
