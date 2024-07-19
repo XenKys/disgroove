@@ -382,7 +382,7 @@ export enum MessageFlags {
   IsVoiceMessage = 1 << 13,
 }
 
-/** https://discord.com/developers/docs/resources/channel#message-object-message-reference-types */
+/** https://discord.com/developers/docs/resources/channel#message-reference-types */
 export enum MessageReferenceTypes {
   Default,
   Forward,
