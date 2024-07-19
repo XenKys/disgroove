@@ -545,6 +545,25 @@ export class Client extends EventEmitter {
     return AutoModeration.autoModerationRuleFromRaw(response);
   }
 
+  /** https://discord.com/developers/docs/resources/emoji#create-application-emoji */
+  async createApplicationEmoji(
+    applicationID: snowflake,
+    options: {
+      name: string;
+      image: string;
+    }
+  ): Promise<Emoji> {
+    const response = await this.rest.request<RawEmoji>(
+      RESTMethods.Post,
+      Endpoints.applicationEmojis(applicationID),
+      {
+        json: options,
+      }
+    );
+
+    return Emojis.emojiFromRaw(response);
+  }
+
   /** https://discord.com/developers/docs/resources/guild#create-guild-channel */
   async createChannel(
     guildID: snowflake,
@@ -1527,6 +1546,14 @@ export class Client extends EventEmitter {
     );
   }
 
+  /** https://discord.com/developers/docs/resources/emoji#delete-application-emoji */
+  deleteApplicationEmoji(applicationID: snowflake, emojiID: snowflake): void {
+    this.rest.request<RawEmoji>(
+      RESTMethods.Delete,
+      Endpoints.applicationEmoji(applicationID, emojiID)
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/channel#deleteclose-channel */
   async deleteChannel(channelID: snowflake, reason?: string): Promise<Channel> {
     const response = await this.rest.request<RawChannel>(
@@ -1867,6 +1894,25 @@ export class Client extends EventEmitter {
       );
 
     return Guilds.guildApplicationCommandPermissionsFromRaw(response);
+  }
+
+  /** https://discord.com/developers/docs/resources/emoji#modify-application-emoji */
+  async editApplicationEmoji(
+    applicationID: snowflake,
+    emojiID: snowflake,
+    options: {
+      name: string;
+    }
+  ): Promise<Emoji> {
+    const response = await this.rest.request<RawEmoji>(
+      RESTMethods.Patch,
+      Endpoints.applicationEmoji(applicationID, emojiID),
+      {
+        json: options,
+      }
+    );
+
+    return Emojis.emojiFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#modify-channel */
@@ -3198,6 +3244,32 @@ export class Client extends EventEmitter {
       );
 
     return Guilds.guildApplicationCommandPermissionsFromRaw(response);
+  }
+
+  /** https://discord.com/developers/docs/resources/emoji#get-application-emoji */
+  async getApplicationEmoji(
+    applicationID: snowflake,
+    emojiID: snowflake
+  ): Promise<Emoji> {
+    const response = await this.rest.request<RawEmoji>(
+      RESTMethods.Get,
+      Endpoints.applicationEmoji(applicationID, emojiID)
+    );
+
+    return Emojis.emojiFromRaw(response);
+  }
+
+  /** https://discord.com/developers/docs/resources/emoji#list-application-emojis */
+  async getApplicationEmojis(applicationID: snowflake): Promise<{
+    items: Array<Emoji>;
+  }> {
+    const response = await this.rest.request<{
+      items: Array<RawEmoji>;
+    }>(RESTMethods.Get, Endpoints.applicationEmojis(applicationID));
+
+    return {
+      items: response.items.map((emoji) => Emojis.emojiFromRaw(emoji)),
+    };
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#get-application-role-connection-metadata-records */

@@ -200,6 +200,12 @@ export const applicationCommandPermissions = (
 ) =>
   `applications/${applicationID}/guilds/${guildID}/commands/${commandID}/permissions` as const;
 export const applicationUser = () => "applications/@me" as const;
+export const applicationEmoji = (
+  applicationID: snowflake,
+  emojiID: snowflake
+) => `applications/${applicationID}/emojis/${emojiID}` as const;
+export const applicationEmojis = (applicationID: snowflake) =>
+  `applications/${applicationID}/emojis` as const;
 export const applicationEntitlement = (
   applicationID: snowflake,
   entitlementID: snowflake
