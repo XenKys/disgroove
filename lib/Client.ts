@@ -4771,9 +4771,7 @@ export interface ClientEvents {
   inviteCreate: [invite: InviteCreateEventFields];
   inviteDelete: [invite: InviteDeleteEventFields];
   messageCreate: [message: Message & MessageCreateEventExtraFields];
-  messageUpdate: [
-    message: Partial<Message> & Pick<Message, "id" | "channelID">
-  ];
+  messageUpdate: [message: Message];
   messageDelete: [message: MessageDeleteEventFields];
   messageDeleteBulk: [bulk: MessageDeleteBulkEventFields];
   messageReactionAdd: [reaction: MessageReactionAddEventFields];
