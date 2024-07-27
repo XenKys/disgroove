@@ -14,21 +14,20 @@ import type {
   RawApplicationCommandOptionChoice,
   ApplicationCommandOptionChoice,
 } from "./application-command";
+import type { RawChannel, Channel } from "./channel";
+import type { snowflake } from "./common";
+import type { RawEntitlement, Entitlement } from "./entitlements";
+import type { RawGuildMember, GuildMember, Guild, RawGuild } from "./guild";
 import type {
-  RawChannel,
   RawMessage,
   RawAttachment,
   RawEmbed,
   RawAllowedMentions,
-  Channel,
   Message,
   Attachment,
   Embed,
   AllowedMentions,
-} from "./channel";
-import type { snowflake } from "./common";
-import type { RawEntitlement, Entitlement } from "./entitlements";
-import type { RawGuildMember, GuildMember, Guild, RawGuild } from "./guild";
+} from "./message";
 import type {
   RawTextInput,
   RawActionRow,

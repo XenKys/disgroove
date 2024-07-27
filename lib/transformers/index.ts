@@ -11,6 +11,7 @@ export * from "./GuildScheduledEvents";
 export * from "./GuildTemplates";
 export * from "./Interactions";
 export * from "./Invites";
+export * from "./Messages";
 export * from "./Polls";
 export * from "./Presences";
 export * from "./Roles";

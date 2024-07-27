@@ -1,13 +1,4 @@
-import type {
-  RawMessageInteractionMetadata,
-  MessageInteractionMetadata,
-  Channel,
-  Message,
-  Attachment,
-  RawChannel,
-  RawMessage,
-  RawAttachment,
-} from "../types/channel";
+import type { Channel, RawChannel } from "../types/channel";
 import type { snowflake } from "../types/common";
 import type { GuildMember, RawGuildMember } from "../types/guild";
 import type {
@@ -23,6 +14,15 @@ import { Guilds } from "./Guilds";
 import { Users } from "./Users";
 import { Entitlements } from "./Entitlements";
 import { Roles } from "./Roles";
+import { Messages } from "./Messages";
+import type {
+  RawMessageInteractionMetadata,
+  MessageInteractionMetadata,
+  Message,
+  Attachment,
+  RawMessage,
+  RawAttachment,
+} from "../types/message";
 
 export class Interactions {
   static interactionFromRaw(interaction: RawInteraction): Interaction {
@@ -88,7 +88,7 @@ export class Interactions {
       version: interaction.version,
       message:
         interaction.message !== undefined
-          ? Channels.messageFromRaw(interaction.message)
+          ? Messages.messageFromRaw(interaction.message)
           : undefined,
       appPermissions: interaction.app_permissions,
       locale: interaction.locale,
@@ -213,7 +213,7 @@ export class Interactions {
       version: interaction.version,
       message:
         interaction.message !== undefined
-          ? Channels.messageToRaw(interaction.message)
+          ? Messages.messageToRaw(interaction.message)
           : undefined,
       app_permissions: interaction.appPermissions,
       locale: interaction.locale,
@@ -263,13 +263,13 @@ export class Interactions {
 
     if (resolvedData.messages !== undefined) {
       for (const [key, value] of Object.entries(resolvedData.messages)) {
-        messages[key] = Channels.messageFromRaw(value);
+        messages[key] = Messages.messageFromRaw(value);
       }
     }
 
     if (resolvedData.attachments !== undefined) {
       for (const [key, value] of Object.entries(resolvedData.attachments)) {
-        attachments[key] = Channels.attachmentFromRaw(value);
+        attachments[key] = Messages.attachmentFromRaw(value);
       }
     }
 
@@ -317,13 +317,13 @@ export class Interactions {
 
     if (resolvedData.messages !== undefined) {
       for (const [key, value] of Object.entries(resolvedData.messages)) {
-        messages[key] = Channels.messageToRaw(value);
+        messages[key] = Messages.messageToRaw(value);
       }
     }
 
     if (resolvedData.attachments !== undefined) {
       for (const [key, value] of Object.entries(resolvedData.attachments)) {
-        attachments[key] = Channels.attachmentToRaw(value);
+        attachments[key] = Messages.attachmentToRaw(value);
       }
     }
 

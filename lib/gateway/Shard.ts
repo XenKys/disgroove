@@ -32,6 +32,7 @@ import {
   Guilds,
   GuildScheduledEvents,
   Interactions,
+  Messages,
   Presences,
   Roles,
   StageInstances,
@@ -485,7 +486,7 @@ export class Shard {
         break;
       case GatewayEvents.MessageCreate:
         this.client.emit("messageCreate", {
-          ...Channels.messageFromRaw(packet.d),
+          ...Messages.messageFromRaw(packet.d),
 
           guildID: packet.d.guild_id,
           member:
@@ -498,7 +499,7 @@ export class Shard {
         });
         break;
       case GatewayEvents.MessageUpdate:
-        this.client.emit("messageUpdate", Channels.messageFromRaw(packet.d));
+        this.client.emit("messageUpdate", Messages.messageFromRaw(packet.d));
         break;
       case GatewayEvents.MessageDelete:
         this.client.emit("messageDelete", {

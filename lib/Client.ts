@@ -62,8 +62,6 @@ import type {
 import type {
   Channel,
   RawChannel,
-  Message,
-  RawMessage,
   FollowedChannel,
   RawFollowedChannel,
   ThreadMember,
@@ -71,10 +69,6 @@ import type {
   Overwrite,
   DefaultReaction,
   ForumTag,
-  AllowedMentions,
-  Attachment,
-  Embed,
-  MessageReference,
 } from "./types/channel";
 import type { LocaleMap, snowflake, timestamp } from "./types/common";
 import type { Emoji, RawEmoji } from "./types/emoji";
@@ -188,7 +182,16 @@ import {
   SKUs,
   ApplicationCommands,
   ApplicationRoleConnectionMetadatas,
+  Messages,
 } from "./transformers";
+import type {
+  Embed,
+  AllowedMentions,
+  Attachment,
+  Message,
+  RawMessage,
+  MessageReference,
+} from "./types/message";
 
 export interface GatewayOptions {
   properties?: IdentifyConnectionProperties;
@@ -378,7 +381,7 @@ export class Client extends EventEmitter {
     };
   }
 
-  /** https://discord.com/developers/docs/resources/channel#bulk-delete-messages */
+  /** https://discord.com/developers/docs/resources/message#bulk-delete-messages */
   bulkDeleteMessages(
     channelID: snowflake,
     options?: {
@@ -1079,7 +1082,7 @@ export class Client extends EventEmitter {
         json: {
           content: options.content,
           tts: options.tts,
-          embeds: options.embeds?.map((embed) => Channels.embedToRaw(embed)),
+          embeds: options.embeds?.map((embed) => Messages.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
               ? options.allowedMentions !== null
@@ -1093,7 +1096,7 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? Channels.componentsToRaw(options.components)
+              ? Messages.componentsToRaw(options.components)
               : undefined,
           attachments: options.attachments,
           flags: options.flags,
@@ -1116,7 +1119,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
@@ -1140,7 +1143,7 @@ export class Client extends EventEmitter {
                   embeds:
                     options.data?.embeds !== undefined
                       ? options.data.embeds.map((embed) =>
-                          Channels.embedToRaw(embed)
+                          Messages.embedToRaw(embed)
                         )
                       : undefined,
                   allowed_mentions:
@@ -1156,7 +1159,7 @@ export class Client extends EventEmitter {
                   flags: options.data?.flags,
                   components:
                     options.data?.components !== undefined
-                      ? Channels.componentsToRaw(options.data.components)
+                      ? Messages.componentsToRaw(options.data.components)
                       : undefined,
                   attachments: options.data?.attachments,
                   poll:
@@ -1228,7 +1231,7 @@ export class Client extends EventEmitter {
                   custom_id: options.data?.customID,
                   components:
                     options.data?.components !== undefined
-                      ? Channels.componentsToRaw(options.data.components)
+                      ? Messages.componentsToRaw(options.data.components)
                       : undefined,
                   title: options.data?.title,
                 },
@@ -1254,7 +1257,7 @@ export class Client extends EventEmitter {
     }
   }
 
-  /** https://discord.com/developers/docs/resources/channel#create-message */
+  /** https://discord.com/developers/docs/resources/message#create-message */
   async createMessage(
     channelID: snowflake,
     options: {
@@ -1281,7 +1284,7 @@ export class Client extends EventEmitter {
           content: options.content,
           nonce: options.nonce,
           tts: options.tts,
-          embeds: options.embeds?.map((embed) => Channels.embedToRaw(embed)),
+          embeds: options.embeds?.map((embed) => Messages.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
               ? {
@@ -1302,7 +1305,7 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? Channels.componentsToRaw(options.components)
+              ? Messages.componentsToRaw(options.components)
               : undefined,
           stickers_ids: options.stickersIDs,
           attachments: options.attachments,
@@ -1326,10 +1329,10 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
-  /** https://discord.com/developers/docs/resources/channel#create-reaction */
+  /** https://discord.com/developers/docs/resources/message#create-reaction */
   createMessageReaction(
     channelID: snowflake,
     messageID: snowflake,
@@ -1424,7 +1427,7 @@ export class Client extends EventEmitter {
           message: {
             content: options.message.content,
             embeds: options.message.embeds?.map((embed) =>
-              Channels.embedToRaw(embed)
+              Messages.embedToRaw(embed)
             ),
             allowed_mentions:
               options.message.allowedMentions !== undefined
@@ -1506,7 +1509,7 @@ export class Client extends EventEmitter {
     return Channels.channelFromRaw(response);
   }
 
-  /** https://discord.com/developers/docs/resources/channel#crosspost-message */
+  /** https://discord.com/developers/docs/resources/message#crosspost-message */
   async crosspostMessage(
     channelID: snowflake,
     messageID: snowflake
@@ -1516,10 +1519,10 @@ export class Client extends EventEmitter {
       Endpoints.channelMessage(channelID, messageID)
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
-  /** https://discord.com/developers/docs/resources/channel#delete-all-reactions */
+  /** https://discord.com/developers/docs/resources/message#delete-all-reactions */
   deleteAllMessageReactions(
     channelID: snowflake,
     messageID: snowflake,
@@ -1730,7 +1733,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#delete-message */
+  /** https://discord.com/developers/docs/resources/message#delete-message */
   deleteMessage(
     channelID: snowflake,
     messageID: snowflake,
@@ -1745,7 +1748,7 @@ export class Client extends EventEmitter {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/channel#delete-user-reaction */
+  /** https://discord.com/developers/docs/resources/message#delete-user-reaction */
   deleteMessageReaction(
     channelID: snowflake,
     messageID: snowflake,
@@ -2619,7 +2622,7 @@ export class Client extends EventEmitter {
     };
   }
 
-  /** https://discord.com/developers/docs/resources/channel#edit-message */
+  /** https://discord.com/developers/docs/resources/message#edit-message */
   async editMessage(
     channelID: snowflake,
     messageID: snowflake,
@@ -2641,7 +2644,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Messages.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2657,11 +2660,11 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.componentsToRaw(options.components)
+                ? Messages.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
-            Channels.attachmentToRaw(attachment)
+            Messages.attachmentToRaw(attachment)
           ),
           flags: options.flags,
         },
@@ -2669,7 +2672,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance */
@@ -2719,7 +2722,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Messages.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2735,7 +2738,7 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.componentsToRaw(options.components)
+                ? Messages.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) => ({
@@ -2762,7 +2765,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#edit-original-interaction-response */
@@ -2787,7 +2790,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Messages.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2803,7 +2806,7 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.componentsToRaw(options.components)
+                ? Messages.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) => ({
@@ -2830,7 +2833,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-user-voice-state */
@@ -2903,7 +2906,7 @@ export class Client extends EventEmitter {
           content: options.content,
           embeds:
             options.embeds !== null
-              ? options.embeds?.map((embed) => Channels.embedToRaw(embed))
+              ? options.embeds?.map((embed) => Messages.embedToRaw(embed))
               : null,
           allowed_mentions:
             options.allowedMentions !== undefined
@@ -2919,7 +2922,7 @@ export class Client extends EventEmitter {
           components:
             options.components !== undefined
               ? options.components !== null
-                ? Channels.componentsToRaw(options.components)
+                ? Messages.componentsToRaw(options.components)
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) => ({
@@ -2946,7 +2949,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#modify-webhook-with-token */
@@ -2982,7 +2985,7 @@ export class Client extends EventEmitter {
       Endpoints.pollExpire(channelID, messageID)
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#execute-webhook */
@@ -3016,7 +3019,7 @@ export class Client extends EventEmitter {
           username: options.username,
           avatar_url: options.avatarURL,
           tts: options.tts,
-          embeds: options.embeds?.map((embed) => Channels.embedToRaw(embed)),
+          embeds: options.embeds?.map((embed) => Messages.embedToRaw(embed)),
           allowed_mentions:
             options.allowedMentions !== undefined
               ? {
@@ -3028,7 +3031,7 @@ export class Client extends EventEmitter {
               : undefined,
           components:
             options.components !== undefined
-              ? Channels.componentsToRaw(options.components)
+              ? Messages.componentsToRaw(options.components)
               : undefined,
           attachments: options.attachments,
           flags: options.flags,
@@ -3056,7 +3059,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response !== null ? Channels.messageFromRaw(response) : response;
+    return response !== null ? Messages.messageFromRaw(response) : response;
   }
 
   /**
@@ -3085,7 +3088,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response !== null ? Channels.messageFromRaw(response) : null;
+    return response !== null ? Messages.messageFromRaw(response) : null;
   }
 
   /** https://discord.com/developers/docs/resources/channel#follow-announcement-channel */
@@ -4053,7 +4056,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response */
@@ -4072,7 +4075,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/invite#get-invite */
@@ -4133,7 +4136,7 @@ export class Client extends EventEmitter {
     };
   }
 
-  /** https://discord.com/developers/docs/resources/channel#get-channel-message */
+  /** https://discord.com/developers/docs/resources/message#get-channel-message */
   async getMessage(
     channelID: snowflake,
     messageID: snowflake
@@ -4143,10 +4146,10 @@ export class Client extends EventEmitter {
       Endpoints.channelMessage(channelID, messageID)
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
-  /** https://discord.com/developers/docs/resources/channel#get-reactions */
+  /** https://discord.com/developers/docs/resources/message#get-reactions */
   async getMessageReactions(
     channelID: snowflake,
     messageID: snowflake,
@@ -4172,7 +4175,7 @@ export class Client extends EventEmitter {
     return response.map((user) => Users.userFromRaw(user));
   }
 
-  /** https://discord.com/developers/docs/resources/channel#get-channel-messages */
+  /** https://discord.com/developers/docs/resources/message#get-channel-messages */
   async getMessages(
     channelID: snowflake,
     options: {
@@ -4195,7 +4198,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return response.map((message) => Channels.messageFromRaw(message));
+    return response.map((message) => Messages.messageFromRaw(message));
   }
 
   /** https://discord.com/developers/docs/topics/oauth2#get-current-bot-application-information */
@@ -4240,7 +4243,7 @@ export class Client extends EventEmitter {
       Endpoints.channelPins(channelID)
     );
 
-    return response.map((message) => Channels.messageFromRaw(message));
+    return response.map((message) => Messages.messageFromRaw(message));
   }
 
   /** https://discord.com/developers/docs/resources/poll#get-answer-voters */
@@ -4408,7 +4411,7 @@ export class Client extends EventEmitter {
       }
     );
 
-    return Channels.messageFromRaw(response);
+    return Messages.messageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-guild-webhooks */

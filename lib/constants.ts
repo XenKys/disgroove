@@ -319,93 +319,6 @@ export enum ForumLayoutTypes {
   GalleryView,
 }
 
-/** https://discord.com/developers/docs/resources/channel#message-object-message-types */
-export enum MessageTypes {
-  Default,
-  RecipientAdd,
-  RecipientRemove,
-  Call,
-  ChannelNameChange,
-  ChannelIconChange,
-  ChannelPinnedMessage,
-  UserJoin,
-  GuildBoost,
-  GuildBoostTier1,
-  GuildBoostTier2,
-  GuildBoostTier3,
-  ChannelFollowAdd,
-  GuildDiscoveryDisqualified = 14,
-  GuildDiscoveryRequalified,
-  GuildDiscoveryGracePeriodInitialWarning,
-  GuildDiscoveryGracePeriodFinalWarning,
-  ThreadCreated,
-  Reply,
-  ChatInputCommand,
-  ThreadStarterMessage,
-  GuildInviteReminder,
-  ContextMenuCommand,
-  AutoModerationAction,
-  RoleSubscriptionPurchase,
-  InteractionPremiumUpsell,
-  StageStart,
-  StageEnd,
-  StageSpeaker,
-  StageTopic = 31,
-  GuildApplicationPremiumSubscription,
-  GuildIncidentAlertModeEnabled = 36,
-  GuildIncidentAlertModeDisabled,
-  GuildIncidentReportRaid,
-  GuildIncidentReportFalseAlarm,
-  PurchaseNotification = 44,
-}
-
-/** https://discord.com/developers/docs/resources/channel#message-object-message-activity-types */
-export enum MessageActivityTypes {
-  Join = 1,
-  Spectate,
-  Listen,
-  JoinRequest = 5,
-}
-
-/** https://discord.com/developers/docs/resources/channel#message-object-message-flags */
-export enum MessageFlags {
-  Crossposted = 1 << 0,
-  IsCrosspost = 1 << 1,
-  SuppressEmbeds = 1 << 2,
-  SourceMessageDeleted = 1 << 3,
-  Urgent = 1 << 4,
-  HasThread = 1 << 5,
-  Ephemeral = 1 << 6,
-  Loading = 1 << 7,
-  FailedToMentionSomeRolesInThread = 1 << 8,
-  SuppressNotifications = 1 << 12,
-  IsVoiceMessage = 1 << 13,
-}
-
-/** https://discord.com/developers/docs/resources/channel#message-reference-types */
-export enum MessageReferenceTypes {
-  Default,
-  Forward,
-}
-
-/** https://discord.com/developers/docs/resources/channel#attachment-object-attachment-flags */
-export enum AttachmentFlags {
-  IsRemix = 1 << 2,
-}
-
-/** https://discord.com/developers/docs/resources/channel#allowed-mentions-object-allowed-mention-types */
-export enum AllowedMentionTypes {
-  RoleMentions = "roles",
-  UserMentions = "users",
-  EveryoneMentions = "everyone",
-}
-
-/** https://discord.com/developers/docs/resources/channel#get-reactions-reaction-types */
-export enum ReactionTypes {
-  Normal,
-  Burst,
-}
-
 /** https://discord.com/developers/docs/resources/guild#guild-object-default-message-notification-level */
 export enum DefaultMessageNotificationLevel {
   AllMessages,
@@ -565,6 +478,93 @@ export enum InviteTypes {
 export enum InviteTargetTypes {
   Stream = 1,
   EmbeddedApplication,
+}
+
+/** https://discord.com/developers/docs/resources/message#message-object-message-types */
+export enum MessageTypes {
+  Default,
+  RecipientAdd,
+  RecipientRemove,
+  Call,
+  ChannelNameChange,
+  ChannelIconChange,
+  ChannelPinnedMessage,
+  UserJoin,
+  GuildBoost,
+  GuildBoostTier1,
+  GuildBoostTier2,
+  GuildBoostTier3,
+  ChannelFollowAdd,
+  GuildDiscoveryDisqualified = 14,
+  GuildDiscoveryRequalified,
+  GuildDiscoveryGracePeriodInitialWarning,
+  GuildDiscoveryGracePeriodFinalWarning,
+  ThreadCreated,
+  Reply,
+  ChatInputCommand,
+  ThreadStarterMessage,
+  GuildInviteReminder,
+  ContextMenuCommand,
+  AutoModerationAction,
+  RoleSubscriptionPurchase,
+  InteractionPremiumUpsell,
+  StageStart,
+  StageEnd,
+  StageSpeaker,
+  StageTopic = 31,
+  GuildApplicationPremiumSubscription,
+  GuildIncidentAlertModeEnabled = 36,
+  GuildIncidentAlertModeDisabled,
+  GuildIncidentReportRaid,
+  GuildIncidentReportFalseAlarm,
+  PurchaseNotification = 44,
+}
+
+/** https://discord.com/developers/docs/resources/message#message-object-message-activity-types */
+export enum MessageActivityTypes {
+  Join = 1,
+  Spectate,
+  Listen,
+  JoinRequest = 5,
+}
+
+/** https://discord.com/developers/docs/resources/message#message-object-message-flags */
+export enum MessageFlags {
+  Crossposted = 1 << 0,
+  IsCrosspost = 1 << 1,
+  SuppressEmbeds = 1 << 2,
+  SourceMessageDeleted = 1 << 3,
+  Urgent = 1 << 4,
+  HasThread = 1 << 5,
+  Ephemeral = 1 << 6,
+  Loading = 1 << 7,
+  FailedToMentionSomeRolesInThread = 1 << 8,
+  SuppressNotifications = 1 << 12,
+  IsVoiceMessage = 1 << 13,
+}
+
+/** https://discord.com/developers/docs/resources/message#message-reference-types */
+export enum MessageReferenceTypes {
+  Default,
+  Forward,
+}
+
+/** https://discord.com/developers/docs/resources/message#attachment-object-attachment-flags */
+export enum AttachmentFlags {
+  IsRemix = 1 << 2,
+}
+
+/** https://discord.com/developers/docs/resources/message#allowed-mentions-object-allowed-mention-types */
+export enum AllowedMentionTypes {
+  RoleMentions = "roles",
+  UserMentions = "users",
+  EveryoneMentions = "everyone",
+}
+
+/** https://discord.com/developers/docs/resources/message#get-reactions-reaction-types */
+export enum ReactionTypes {
+  Normal,
+  Burst,
 }
 
 /** https://discord.com/developers/docs/resources/poll#layout-type */
