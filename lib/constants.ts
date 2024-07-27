@@ -789,7 +789,7 @@ export enum GatewayEvents {
 
 /** https://discord.com/developers/docs/topics/gateway-events#activity-object-activity-types */
 export enum ActivityType {
-  Game,
+  Playing,
   Streaming,
   Listening,
   Watching,
