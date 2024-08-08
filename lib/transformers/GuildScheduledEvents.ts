@@ -1,10 +1,46 @@
 import type {
   RawGuildScheduledEvent,
   GuildScheduledEvent,
+  RawGuildScheduledEventRecurrenceRule,
+  GuildScheduledEventRecurrenceRule,
 } from "../types/guild-scheduled-event";
 import { Users } from "./Users";
 
 export class GuildScheduledEvents {
+  static guildScheduledEventRecurrenceRuleFromRaw(
+    guildScheduledEventRecurrenceRule: RawGuildScheduledEventRecurrenceRule
+  ): GuildScheduledEventRecurrenceRule {
+    return {
+      start: guildScheduledEventRecurrenceRule.start,
+      end: guildScheduledEventRecurrenceRule.end,
+      frequency: guildScheduledEventRecurrenceRule.frequency,
+      interval: guildScheduledEventRecurrenceRule.interval,
+      byWeekday: guildScheduledEventRecurrenceRule.by_weekday,
+      byNWeekday: guildScheduledEventRecurrenceRule.by_n_weekday,
+      byMonth: guildScheduledEventRecurrenceRule.by_month,
+      byMonthDay: guildScheduledEventRecurrenceRule.by_month_day,
+      byYearDay: guildScheduledEventRecurrenceRule.by_year_day,
+      count: guildScheduledEventRecurrenceRule.count,
+    };
+  }
+
+  static guildScheduledEventRecurrenceRuleToRaw(
+    guildScheduledEventRecurrenceRule: GuildScheduledEventRecurrenceRule
+  ): RawGuildScheduledEventRecurrenceRule {
+    return {
+      start: guildScheduledEventRecurrenceRule.start,
+      end: guildScheduledEventRecurrenceRule.end,
+      frequency: guildScheduledEventRecurrenceRule.frequency,
+      interval: guildScheduledEventRecurrenceRule.interval,
+      by_weekday: guildScheduledEventRecurrenceRule.byWeekday,
+      by_n_weekday: guildScheduledEventRecurrenceRule.byNWeekday,
+      by_month: guildScheduledEventRecurrenceRule.byMonth,
+      by_month_day: guildScheduledEventRecurrenceRule.byMonthDay,
+      by_year_day: guildScheduledEventRecurrenceRule.byYearDay,
+      count: guildScheduledEventRecurrenceRule.count,
+    };
+  }
+
   static guildScheduledEventFromRaw(
     guildScheduledEvent: RawGuildScheduledEvent
   ): GuildScheduledEvent {
@@ -28,6 +64,12 @@ export class GuildScheduledEvents {
           : undefined,
       userCount: guildScheduledEvent.user_count,
       image: guildScheduledEvent.image,
+      recurrenceRule:
+        guildScheduledEvent.reccurence_rule !== null
+          ? GuildScheduledEvents.guildScheduledEventRecurrenceRuleFromRaw(
+              guildScheduledEvent.reccurence_rule
+            )
+          : null,
     };
   }
 
@@ -54,6 +96,12 @@ export class GuildScheduledEvents {
           : undefined,
       user_count: guildScheduledEvent.userCount,
       image: guildScheduledEvent.image,
+      reccurence_rule:
+        guildScheduledEvent.recurrenceRule !== null
+          ? GuildScheduledEvents.guildScheduledEventRecurrenceRuleToRaw(
+              guildScheduledEvent.recurrenceRule
+            )
+          : null,
     };
   }
 }

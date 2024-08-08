@@ -467,6 +467,41 @@ export enum GuildScheduledEventStatus {
   Canceled,
 }
 
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-frequency */
+export enum GuildScheduledEventRecurrenceRuleFrequency {
+  Yearly,
+  Monthly,
+  Weekly,
+  Daily,
+}
+
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-weekday */
+export enum GuildScheduledEventRecurrenceRuleWeekday {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday,
+}
+
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-month */
+export enum GuildScheduledEventRecurrenceRuleMonth {
+  January = 1,
+  February,
+  March,
+  April,
+  May,
+  June,
+  July,
+  August,
+  September,
+  October,
+  November,
+  Dicember,
+}
+
 /** https://discord.com/developers/docs/resources/invite#invite-object-invite-types */
 export enum InviteTypes {
   Guild,

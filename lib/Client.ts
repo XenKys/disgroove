@@ -137,6 +137,7 @@ import type {
   GuildScheduledEventUser,
   RawGuildScheduledEventUser,
   GuildScheduledEventEntityMetadata,
+  GuildScheduledEventRecurrenceRule,
 } from "./types/guild-scheduled-event";
 import type { GuildTemplate, RawGuildTemplate } from "./types/guild-template";
 import type { Interaction, InteractionResponse } from "./types/interaction";
@@ -980,6 +981,7 @@ export class Client extends EventEmitter {
       description?: string;
       entityType: GuildScheduledEventEntityTypes;
       image?: string;
+      recurrenceRule?: GuildScheduledEventRecurrenceRule;
     },
     reason?: string
   ): Promise<GuildScheduledEvent> {
@@ -997,6 +999,12 @@ export class Client extends EventEmitter {
           description: options.description,
           entity_type: options.entityType,
           image: options.image,
+          recurrence_rule:
+            options.recurrenceRule !== undefined
+              ? GuildScheduledEvents.guildScheduledEventRecurrenceRuleToRaw(
+                  options.recurrenceRule
+                )
+              : undefined,
         },
         reason,
       }
@@ -2478,6 +2486,7 @@ export class Client extends EventEmitter {
       entityType?: GuildScheduledEventEntityTypes;
       status?: GuildScheduledEventStatus;
       image?: string;
+      recurrenceRule?: GuildScheduledEventRecurrenceRule;
     },
     reason?: string
   ): Promise<GuildScheduledEvent> {
@@ -2496,6 +2505,13 @@ export class Client extends EventEmitter {
           entityType: options.entityType,
           status: options.status,
           image: options.image,
+
+          recurrence_rule:
+            options.recurrenceRule !== undefined
+              ? GuildScheduledEvents.guildScheduledEventRecurrenceRuleToRaw(
+                  options.recurrenceRule
+                )
+              : undefined,
         },
         reason,
       }
