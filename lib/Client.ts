@@ -161,7 +161,12 @@ import type {
   Connection,
   RawConnection,
 } from "./types/user";
-import type { VoiceRegion, RawVoiceRegion, VoiceState } from "./types/voice";
+import type {
+  VoiceRegion,
+  RawVoiceRegion,
+  VoiceState,
+  RawVoiceState,
+} from "./types/voice";
 import type { Webhook, RawWebhook } from "./types/webhook";
 import type { ClientOptions as WebSocketOptions } from "ws";
 import {
@@ -184,6 +189,7 @@ import {
   ApplicationCommands,
   ApplicationRoleConnectionMetadatas,
   Messages,
+  Voice,
 } from "./transformers";
 import type {
   Embed,
@@ -3411,6 +3417,16 @@ export class Client extends EventEmitter {
     }));
   }
 
+  /** https://discord.com/developers/docs/resources/voice#get-current-user-voice-state */
+  async getCurrentUserVoiceState(guildID: snowflake): Promise<VoiceState> {
+    const response = await this.rest.request<RawVoiceState>(
+      RESTMethods.Get,
+      Endpoints.guildVoiceState(guildID)
+    );
+
+    return Voice.voiceStateFromRaw(response);
+  }
+
   /** https://discord.com/developers/docs/monetization/entitlements#list-entitlements */
   async getEntitlements(
     applicationID: snowflake,
@@ -4406,6 +4422,19 @@ export class Client extends EventEmitter {
       deprecated: voiceRegion.deprecated,
       custom: voiceRegion.custom,
     }));
+  }
+
+  /** https://discord.com/developers/docs/resources/voice#get-user-voice-state */
+  async getUserVoiceState(
+    guildID: snowflake,
+    userID: snowflake
+  ): Promise<VoiceState> {
+    const response = await this.rest.request<RawVoiceState>(
+      RESTMethods.Get,
+      Endpoints.guildVoiceState(guildID, userID)
+    );
+
+    return Voice.voiceStateFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/webhook#get-webhook-message */
