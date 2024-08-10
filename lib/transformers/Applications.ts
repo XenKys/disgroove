@@ -36,6 +36,7 @@ export class Applications {
       coverImage: application.cover_image,
       flags: application.flags,
       approximateGuildCount: application.approximate_guild_count,
+      approximateUserInstallCount: application.approximate_user_install_count,
       redirectURIs: application.redirect_uris,
       interactionsEndpointURL: application.interactions_endpoint_url,
       roleConnectionsVerificationURL:
@@ -89,6 +90,7 @@ export class Applications {
       cover_image: application.coverImage,
       flags: application.flags,
       approximate_guild_count: application.approximateGuildCount,
+      approximate_user_install_count: application.approximateUserInstallCount,
       redirect_uris: application.redirectURIs,
       interactions_endpoint_url: application.interactionsEndpointURL,
       role_connections_verification_url:

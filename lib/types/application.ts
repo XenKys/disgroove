@@ -29,6 +29,7 @@ export interface RawApplication {
   cover_image?: string;
   flags?: ApplicationFlags;
   approximate_guild_count?: number;
+  approximate_user_install_count?: number;
   redirect_uris?: Array<string>;
   interactions_endpoint_url?: string;
   role_connections_verification_url?: string;
@@ -72,6 +73,7 @@ export interface Application {
   coverImage?: string;
   flags?: ApplicationFlags;
   approximateGuildCount?: number;
+  approximateUserInstallCount?: number;
   redirectURIs?: Array<string>;
   interactionsEndpointURL?: string;
   roleConnectionsVerificationURL?: string;
