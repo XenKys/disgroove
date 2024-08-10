@@ -253,6 +253,11 @@ export const webhookPlatform = (
   platform: "github" | "slack"
 ) => `webhooks/${webhookID}/${webhookToken}/${platform}` as const;
 
+// Sticker packs
+export const stickerPack = (packID: snowflake) =>
+  `sticker-packs/${packID}` as const;
+export const stickerPacks = () => "sticker-packs" as const;
+
 // Gateway
 export const gateway = () => "gateway" as const;
 export const gatewayBot = () => "gateway/bot" as const;
@@ -275,5 +280,4 @@ export const stageInstance = (channelID: snowflake) =>
 export const stageInstances = () => "stage-instances" as const;
 export const sticker = (stickerID: snowflake) =>
   `stickers/${stickerID}` as const;
-export const stickerPacks = () => "sticker-packs" as const;
 export const voiceRegions = () => "voice/regions" as const;

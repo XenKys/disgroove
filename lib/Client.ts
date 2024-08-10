@@ -4328,6 +4328,26 @@ export class Client extends EventEmitter {
     return StageInstances.stageInstanceFromRaw(response);
   }
 
+  /** https://discord.com/developers/docs/resources/sticker#get-sticker-pack */
+  async getStickerPack(packID: snowflake): Promise<StickerPack> {
+    const response = await this.rest.request<RawStickerPack>(
+      RESTMethods.Get,
+      Endpoints.stickerPack(packID)
+    );
+
+    return {
+      id: response.id,
+      stickers: response.stickers.map((sticker) =>
+        Stickers.stickerFromRaw(sticker)
+      ),
+      name: response.name,
+      skuID: response.sku_id,
+      coverStickerID: response.cover_sticker_id,
+      description: response.description,
+      bannerAssetID: response.banner_asset_id,
+    };
+  }
+
   /** https://discord.com/developers/docs/resources/sticker#list-sticker-packs */
   async getStickerPacks(): Promise<{
     stickerPacks: Array<StickerPack>;
