@@ -207,6 +207,18 @@ export interface RawEmbedField {
   inline?: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-fields-by-embed-type-poll-result-embed-fields */
+export interface RawPollResultEmbedFields {
+  poll_question_text: string;
+  victor_answer_votes: Array<number>;
+  total_votes: number;
+  victor_answer_id?: snowflake;
+  victor_answer_text?: string;
+  victor_answer_emoji_id?: snowflake;
+  victor_answer_emoji_name?: string;
+  victor_answer_emoji_animated?: boolean;
+}
+
 /** https://discord.com/developers/docs/resources/message#attachment-object-attachment-structure */
 export interface RawAttachment {
   id: snowflake;
@@ -396,6 +408,17 @@ export interface EmbedField {
   name: string;
   value: string;
   inline?: boolean;
+}
+
+export interface PollResultEmbedFields {
+  pollQuestionText: string;
+  victorAnswerVotes: Array<number>;
+  totalVotes: number;
+  victorAnswerID?: snowflake;
+  victorAnswerText?: string;
+  victorAnswerEmojiID?: snowflake;
+  victorAnswerEmojiName?: string;
+  victorAnswerEmojiAnimated?: boolean;
 }
 
 export interface Attachment {

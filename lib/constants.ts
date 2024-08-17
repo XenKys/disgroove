@@ -553,6 +553,7 @@ export enum MessageTypes {
   GuildIncidentReportRaid,
   GuildIncidentReportFalseAlarm,
   PurchaseNotification = 44,
+  PollResult = 46,
 }
 
 /** https://discord.com/developers/docs/resources/message#message-object-message-activity-types */
