@@ -815,6 +815,7 @@ export enum GatewayEvents {
   StageInstanceDelete = "STAGE_INSTANCE_DELETE",
   TypingStart = "TYPING_START",
   UserUpdate = "USER_UPDATE",
+  VoiceChannelEffectSend = "VOICE_CHANNEL_EFFECT_SEND",
   VoiceStateUpdate = "VOICE_STATE_UPDATE",
   VoiceServerUpdate = "VOICE_SERVER_UPDATE",
   WebhooksUpdate = "WEBHOOKS_UPDATE",
@@ -843,6 +844,12 @@ export enum ActivityFlags {
   PartyPrivacyFriends = 1 << 6,
   PartyPrivacyVoiceChannel = 1 << 7,
   Embedded = 1 << 8,
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#voice-channel-effect-send-animation-types */
+export enum AnimationTypes {
+  Premium,
+  Basic,
 }
 
 /** https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes */

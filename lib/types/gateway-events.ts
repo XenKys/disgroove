@@ -1,6 +1,7 @@
 import type {
   ActivityFlags,
   ActivityType,
+  AnimationTypes,
   GatewayEvents,
   GatewayIntents,
   GatewayOPCodes,
@@ -405,6 +406,18 @@ export interface RawTypingStartEventFields {
   member?: RawGuildMember;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#voice-channel-effetc-send-event-fields */
+export interface RawVoiceChannelEffectSendEventFields {
+  channel_id: snowflake;
+  guild_id: snowflake;
+  user_id: snowflake;
+  emoji?: RawEmoji | null;
+  animation_type?: AnimationTypes | null;
+  animation_id?: number;
+  sound_id?: snowflake | number;
+  sound_volume?: number;
+}
+
 /** https://discord.com/developers/docs/topics/gateway-events#voice-server-update-voice-server-update-event-fields */
 export interface RawVoiceServerUpdateEventFields {
   token: string;
@@ -751,6 +764,17 @@ export interface TypingStartEventFields {
   userID: snowflake;
   timestamp: timestamp;
   member?: GuildMember;
+}
+
+export interface VoiceChannelEffectSendEventFields {
+  channelID: snowflake;
+  guildID: snowflake;
+  userID: snowflake;
+  emoji?: Emoji | null;
+  animationType?: AnimationTypes | null;
+  animationID?: number;
+  soundID?: snowflake | number;
+  soundVolume?: number;
 }
 
 export interface VoiceServerUpdateEventFields {

@@ -107,6 +107,7 @@ import type {
   GatewayPresenceUpdate,
   RawPayload,
   IdentifyConnectionProperties,
+  VoiceChannelEffectSendEventFields,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -4862,6 +4863,7 @@ export interface ClientEvents {
   stageInstanceDelete: [stageInstance: StageInstance];
   typingStart: [typing: TypingStartEventFields];
   userUpdate: [user: User];
+  voiceChannelEffectSend: [voiceEffect: VoiceChannelEffectSendEventFields];
   voiceStateUpdate: [voiceState: VoiceState];
   voiceServerUpdate: [voiceServer: VoiceServerUpdateEventFields];
   webhooksUpdate: [channelID: snowflake, guildID: snowflake];

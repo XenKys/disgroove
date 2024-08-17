@@ -594,6 +594,21 @@ export class Shard {
       case GatewayEvents.UserUpdate:
         this.client.emit("userUpdate", Users.userFromRaw(packet.d));
         break;
+      case GatewayEvents.VoiceChannelEffectSend:
+        this.client.emit("voiceChannelEffectSend", {
+          channelID: packet.d.channel_id,
+          guildID: packet.d.guild_id,
+          userID: packet.d.user_id,
+          emoji:
+            packet.d.emoji !== null
+              ? Emojis.emojiFromRaw(packet.d.emoji)
+              : null,
+          animationType: packet.d.animation_type,
+          animationID: packet.d.animation_id,
+          soundID: packet.d.sound_id,
+          soundVolume: packet.d.sound_volume,
+        });
+        break;
       case GatewayEvents.VoiceStateUpdate:
         this.client.emit("voiceStateUpdate", Voice.voiceStateFromRaw(packet.d));
         break;
