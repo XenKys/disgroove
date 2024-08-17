@@ -585,6 +585,17 @@ export enum MessageReferenceTypes {
   Forward,
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-types */
+export enum EmbedTypes {
+  Rich = "rich",
+  Image = "image",
+  Video = "video",
+  Gifv = "gifv",
+  Article = "article",
+  Link = "link",
+  PollResult = "poll_result",
+}
+
 /** https://discord.com/developers/docs/resources/message#attachment-object-attachment-flags */
 export enum AttachmentFlags {
   IsRemix = 1 << 2,

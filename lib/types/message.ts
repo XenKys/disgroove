@@ -8,6 +8,7 @@ import type {
   AttachmentFlags,
   ChannelTypes,
   AllowedMentionTypes,
+  EmbedTypes,
 } from "../constants";
 import type { Application, RawApplication } from "./application";
 import type {
@@ -141,7 +142,7 @@ export interface RawReactionCountDetails {
 /** https://discord.com/developers/docs/resources/message#embed-object-embed-structure */
 export interface RawEmbed {
   title?: string;
-  type?: string;
+  type?: EmbedTypes;
   description?: string;
   url?: string;
   timestamp?: timestamp;
@@ -351,7 +352,7 @@ export interface ReactionCountDetails {
 
 export interface Embed {
   title?: string;
-  type?: string;
+  type?: EmbedTypes;
   description?: string;
   url?: string;
   timestamp?: timestamp;
