@@ -2493,7 +2493,7 @@ export class Client extends EventEmitter {
       entityType?: GuildScheduledEventEntityTypes;
       status?: GuildScheduledEventStatus;
       image?: string;
-      recurrenceRule?: GuildScheduledEventRecurrenceRule;
+      recurrenceRule?: GuildScheduledEventRecurrenceRule | null;
     },
     reason?: string
   ): Promise<GuildScheduledEvent> {
@@ -2515,9 +2515,11 @@ export class Client extends EventEmitter {
 
           recurrence_rule:
             options.recurrenceRule !== undefined
-              ? GuildScheduledEvents.guildScheduledEventRecurrenceRuleToRaw(
-                  options.recurrenceRule
-                )
+              ? options.recurrenceRule !== null
+                ? GuildScheduledEvents.guildScheduledEventRecurrenceRuleToRaw(
+                    options.recurrenceRule
+                  )
+                : null
               : undefined,
         },
         reason,
