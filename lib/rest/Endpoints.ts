@@ -187,6 +187,10 @@ export const userGuild = (guildID: snowflake) =>
 export const userGuilds = () => "users/@me/guilds" as const;
 
 // Applications
+export const applicationActivityInstance = (
+  applicationID: snowflake,
+  instanceID: string
+) => `applications/${applicationID}/activity-instances/${instanceID}`;
 export const applicationCommand = (
   applicationID: snowflake,
   commandID: snowflake

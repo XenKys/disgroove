@@ -35,9 +35,11 @@ import { Endpoints, RequestManager, RESTMethods, type File } from "./rest";
 import EventEmitter from "node:events";
 import { Shard } from "./gateway";
 import type {
+  ActivityInstance,
   Application,
   ApplicationIntegrationTypeConfiguration,
   InstallParams,
+  RawActivityInstance,
   RawApplication,
 } from "./types/application";
 import type {
@@ -3253,6 +3255,30 @@ export class Client extends EventEmitter {
     return response.map((autoModerationRule) =>
       AutoModeration.autoModerationRuleFromRaw(autoModerationRule)
     );
+  }
+
+  /** https://discord.com/developers/docs/interactions/application-commands#get-application-activity-instance */
+  async getApplicationActivityInstance(
+    applicationID: snowflake,
+    instanceID: string
+  ): Promise<ActivityInstance> {
+    const response = await this.rest.request<RawActivityInstance>(
+      RESTMethods.Get,
+      Endpoints.applicationActivityInstance(applicationID, instanceID)
+    );
+
+    return {
+      applicationID: response.application_id,
+      instanceID: response.instance_id,
+      launchID: response.launch_id,
+      location: {
+        id: response.location.id,
+        kind: response.location.kind,
+        channelID: response.location.channel_id,
+        guildID: response.location.guild_id,
+      },
+      users: response.users,
+    };
   }
 
   /** https://discord.com/developers/docs/interactions/application-commands#get-application-command-permissions */

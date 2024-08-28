@@ -167,6 +167,12 @@ export enum ApplicationFlags {
   ApplicationCommandBadge = 1 << 23,
 }
 
+/** https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-location-kind-enum */
+export enum ActivityLocationKind {
+  GuildChannel = "gc",
+  PrivateChannel = "pc",
+}
+
 /** https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-type */
 export enum ApplicationRoleConnectionMetadataType {
   IntegerLessThanOrEqual = 1,

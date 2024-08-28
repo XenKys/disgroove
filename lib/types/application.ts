@@ -1,4 +1,5 @@
 import type {
+  ActivityLocationKind,
   ApplicationFlags,
   ApplicationIntegrationTypes,
   OAuth2Scopes,
@@ -53,6 +54,23 @@ export interface RawInstallParams {
   permissions: string;
 }
 
+/** https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-instance-object */
+export interface RawActivityInstance {
+  application_id: snowflake;
+  instance_id: string;
+  launch_id: snowflake;
+  location: RawActivityLocation;
+  users: Array<snowflake>;
+}
+
+/** https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-location-object */
+export interface RawActivityLocation {
+  id: string;
+  kind: ActivityLocationKind;
+  channel_id: snowflake;
+  guild_id?: snowflake | null;
+}
+
 export interface Application {
   id: snowflake;
   name: string;
@@ -93,4 +111,19 @@ export interface ApplicationIntegrationTypeConfiguration {
 export interface InstallParams {
   scopes: Array<OAuth2Scopes>;
   permissions: string;
+}
+
+export interface ActivityInstance {
+  applicationID: snowflake;
+  instanceID: string;
+  launchID: snowflake;
+  location: ActivityLocation;
+  users: Array<snowflake>;
+}
+
+export interface ActivityLocation {
+  id: string;
+  kind: ActivityLocationKind;
+  channelID: snowflake;
+  guildID?: snowflake | null;
 }
