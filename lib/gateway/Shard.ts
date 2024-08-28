@@ -37,6 +37,7 @@ import {
   Roles,
   StageInstances,
   Stickers,
+  Subscriptions,
   Users,
   Voice,
 } from "../transformers";
@@ -626,6 +627,24 @@ export class Shard {
           "webhooksUpdate",
           packet.d.channel_id,
           packet.d.guild_id
+        );
+        break;
+      case GatewayEvents.SubscriptionCreate:
+        this.client.emit(
+          "subscriptionCreate",
+          Subscriptions.subscriptionFromRaw(packet.d)
+        );
+        break;
+      case GatewayEvents.SubscriptionUpdate:
+        this.client.emit(
+          "subscriptionUpdate",
+          Subscriptions.subscriptionFromRaw(packet.d)
+        );
+        break;
+      case GatewayEvents.SubscriptionDelete:
+        this.client.emit(
+          "subscriptionDelete",
+          Subscriptions.subscriptionFromRaw(packet.d)
         );
         break;
       case GatewayEvents.MessagePollVoteAdd:

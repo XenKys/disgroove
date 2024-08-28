@@ -702,6 +702,13 @@ export enum VisibilityTypes {
   Everyone,
 }
 
+/** https://discord.com/developers/docs/resources/subscription#subscription-statuses */
+export enum SubscriptionStatuses {
+  Active = 1,
+  Ending,
+  Inactive,
+}
+
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types */
 export enum WebhookTypes {
   Incoming = 1,
@@ -831,6 +838,9 @@ export enum GatewayEvents {
   StageInstanceCreate = "STAGE_INSTANCE_CREATE",
   StageInstanceUpdate = "STAGE_INSTANCE_UPDATE",
   StageInstanceDelete = "STAGE_INSTANCE_DELETE",
+  SubscriptionCreate = "SUBSCRIPTION_CREATE",
+  SubscriptionUpdate = "SUBSCRIPTION_UPDATE",
+  SubscriptionDelete = "SUBSCRIPTION_DELETE",
   TypingStart = "TYPING_START",
   UserUpdate = "USER_UPDATE",
   VoiceChannelEffectSend = "VOICE_CHANNEL_EFFECT_SEND",

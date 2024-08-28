@@ -262,6 +262,12 @@ export const stickerPack = (packID: snowflake) =>
   `sticker-packs/${packID}` as const;
 export const stickerPacks = () => "sticker-packs" as const;
 
+// Subscriptions
+export const skuSubscription = (skuID: snowflake, subscriptionID: snowflake) =>
+  `skus/${skuID}/subscriptions/${subscriptionID}` as const;
+export const skuSubscriptions = (skuID: snowflake) =>
+  `skus/${skuID}/subscriptions` as const;
+
 // Gateway
 export const gateway = () => "gateway" as const;
 export const gatewayBot = () => "gateway/bot" as const;

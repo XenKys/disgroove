@@ -193,6 +193,7 @@ import {
   ApplicationRoleConnectionMetadatas,
   Messages,
   Voice,
+  Subscriptions,
 } from "./transformers";
 import type {
   Embed,
@@ -202,6 +203,7 @@ import type {
   RawMessage,
   MessageReference,
 } from "./types/message";
+import { RawSubscription, Subscription } from "./types/subscription";
 
 export interface GatewayOptions {
   properties?: IdentifyConnectionProperties;
@@ -4357,6 +4359,47 @@ export class Client extends EventEmitter {
     return response.map((sku) => SKUs.skuFromRaw(sku));
   }
 
+  /** https://discord.com/developers/docs/resources/subscription#get-sku-subscription */
+  async getSKUSubscription(
+    skuID: snowflake,
+    subscriptionID: snowflake
+  ): Promise<Subscription> {
+    const response = await this.rest.request<RawSubscription>(
+      RESTMethods.Get,
+      Endpoints.skuSubscription(skuID, subscriptionID)
+    );
+
+    return Subscriptions.subscriptionFromRaw(response);
+  }
+
+  /** https://discord.com/developers/docs/resources/subscription#list-sku-subscriptions */
+  async getSKUSubscriptions(
+    skuID: snowflake,
+    options: {
+      before?: snowflake;
+      after?: snowflake;
+      limit?: number;
+      userID?: snowflake;
+    }
+  ): Promise<Array<Subscription>> {
+    const response = await this.rest.request<Array<RawSubscription>>(
+      RESTMethods.Get,
+      Endpoints.skuSubscriptions(skuID),
+      {
+        query: {
+          before: options.before,
+          after: options.after,
+          limit: options.limit,
+          user_id: options.userID,
+        },
+      }
+    );
+
+    return response.map((subscription) =>
+      Subscriptions.subscriptionFromRaw(subscription)
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/stage-instance#get-stage-instance */
   async getStageInstance(channelID: snowflake): Promise<StageInstance> {
     const response = await this.rest.request<RawStageInstance>(
@@ -4889,6 +4932,9 @@ export interface ClientEvents {
   stageInstanceCreate: [stageInstance: StageInstance];
   stageInstanceUpdate: [stageInstance: StageInstance];
   stageInstanceDelete: [stageInstance: StageInstance];
+  subscriptionCreate: [subscription: Subscription];
+  subscriptionUpdate: [subscription: Subscription];
+  subscriptionDelete: [subscription: Subscription];
   typingStart: [typing: TypingStartEventFields];
   userUpdate: [user: User];
   voiceChannelEffectSend: [voiceEffect: VoiceChannelEffectSendEventFields];

@@ -18,6 +18,7 @@ export * from "./Roles";
 export * from "./SKUs";
 export * from "./StageInstances";
 export * from "./Stickers";
+export * from "./Subscriptions";
 export * from "./Teams";
 export * from "./Users";
 export * from "./Voice";
