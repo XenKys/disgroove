@@ -1,7 +1,7 @@
 import type { EntitlementTypes } from "../constants";
 import type { snowflake, timestamp } from "./common";
 
-/** https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-structure */
+/** https://discord.com/developers/docs/resources/entitlement#entitlement-object-entitlement-structure */
 export interface RawEntitlement {
   id: snowflake;
   sku_id: snowflake;

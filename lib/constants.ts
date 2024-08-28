@@ -1310,7 +1310,7 @@ export enum MembershipState {
   Accepted,
 }
 
-/** https://discord.com/developers/docs/monetization/skus#sku-object-sku-types */
+/** https://discord.com/developers/docs/resources/sku#sku-object-sku-types */
 export enum SKUTypes {
   Durable = 2,
   Consumable,
@@ -1318,14 +1318,14 @@ export enum SKUTypes {
   SubscriptionGroup,
 }
 
-/** https://discord.com/developers/docs/monetization/skus#sku-object-sku-flags */
+/** https://discord.com/developers/docs/resources/sku#sku-object-sku-flags */
 export enum SKUFlags {
   Available = 1 << 2,
   GuildSubscription = 1 << 7,
   UserSubscription = 1 << 8,
 }
 
-/** https://discord.com/developers/docs/monetization/entitlements#entitlement-object-entitlement-types */
+/** https://discord.com/developers/docs/resources/entitlement#entitlement-object-entitlement-types */
 export enum EntitlementTypes {
   Purchase = 1,
   PremiumSubscription,

@@ -511,7 +511,7 @@ export class Client extends EventEmitter {
     this.shards.forEach((shard) => shard.connect());
   }
 
-  /** https://discord.com/developers/docs/monetization/entitlements#consume-an-entitlement */
+  /** https://discord.com/developers/docs/resources/entitlement#consume-an-entitlement */
   consumeEntitlement(applicationID: snowflake, entitlementID: snowflake): void {
     this.rest.request(
       RESTMethods.Post,
@@ -1392,7 +1392,7 @@ export class Client extends EventEmitter {
     return StageInstances.stageInstanceFromRaw(response);
   }
 
-  /** https://discord.com/developers/docs/monetization/entitlements#create-test-entitlement */
+  /** https://discord.com/developers/docs/resources/entitlement#create-test-entitlement */
   async createTestEntitlement(
     applicationID: snowflake,
     options: {
@@ -3458,7 +3458,7 @@ export class Client extends EventEmitter {
     return Voice.voiceStateFromRaw(response);
   }
 
-  /** https://discord.com/developers/docs/monetization/entitlements#list-entitlements */
+  /** https://discord.com/developers/docs/resources/entitlement#list-entitlements */
   async getEntitlements(
     applicationID: snowflake,
     options?: {
@@ -4349,7 +4349,7 @@ export class Client extends EventEmitter {
     };
   }
 
-  /** https://discord.com/developers/docs/monetization/skus#list-skus */
+  /** https://discord.com/developers/docs/resources/sku#list-skus */
   async getSKUs(applicationID: snowflake): Promise<Array<SKU>> {
     const response = await this.rest.request<Array<RawSKU>>(
       RESTMethods.Get,
