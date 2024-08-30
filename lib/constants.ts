@@ -424,6 +424,11 @@ export enum GuildMemberFlags {
   CompletedOnboarding = 1 << 1,
   BypassesVerification = 1 << 2,
   StartedOnboarding = 1 << 3,
+  IsGuest = 1 << 4,
+  StartedHomeActions = 1 << 5,
+  CompletedHomeActions = 1 << 6,
+  AutomodQuarantinedUsername = 1 << 7,
+  DMSettingsUpsellAckownledge = 1 << 9,
 }
 
 /** https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors */
