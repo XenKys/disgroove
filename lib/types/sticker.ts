@@ -9,7 +9,6 @@ export interface RawSticker {
   name: string;
   description: string | null;
   tags: string;
-  asset?: string;
   type: StickerTypes;
   format_type: StickerFormatTypes;
   available?: boolean;
@@ -42,7 +41,6 @@ export interface Sticker {
   name: string;
   description: string | null;
   tags: string;
-  asset?: string;
   type: StickerTypes;
   formatType: StickerFormatTypes;
   available?: boolean;
