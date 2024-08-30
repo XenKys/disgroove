@@ -704,7 +704,7 @@ export enum VisibilityTypes {
 
 /** https://discord.com/developers/docs/resources/subscription#subscription-statuses */
 export enum SubscriptionStatuses {
-  Active = 1,
+  Active,
   Ending,
   Inactive,
 }
