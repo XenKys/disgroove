@@ -120,6 +120,9 @@ export interface RawMessageSnapshot {
     | "flags"
     | "mentions"
     | "mention_roles"
+    | "stickers"
+    | "sticker_items"
+    | "components"
   >;
 }
 
@@ -333,6 +336,9 @@ export interface MessageSnapshot {
     | "flags"
     | "mentions"
     | "mentionRoles"
+    | "stickers"
+    | "stickerItems"
+    | "components"
   >;
 }
 
