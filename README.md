@@ -54,3 +54,4 @@ client.connect();
 ```
 
 More examples on the [GitHub repository](https://github.com/XenKys/disgroove/tree/main/examples)
+For support and more join the [Discord server](https://discord.gg/kunfRQgRyD)
