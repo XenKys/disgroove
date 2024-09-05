@@ -14,6 +14,7 @@ export enum GuildNavigationTypes {
   Customize = "customize",
   BrowseChannels = "browse",
   ServerGuide = "guide",
+  LinkedRoles = "linked-roles",
 }
 
 /** https://discord.com/developers/docs/reference#image-formatting-image-formats */

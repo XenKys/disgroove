@@ -1,4 +1,4 @@
-import type { GuildNavigationTypes, TimestampStyles } from "../constants";
+import { GuildNavigationTypes, TimestampStyles } from "../constants";
 import type { snowflake } from "../types/common";
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
@@ -49,7 +49,10 @@ export function unixTimestamp(time: number, style?: TimestampStyles): string {
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
 export function guildNavigation(
   guildID: snowflake,
-  type: GuildNavigationTypes
+  type: GuildNavigationTypes,
+  roleID?: snowflake
 ): string {
-  return `<${guildID}:${type}>`;
+  return roleID && type === GuildNavigationTypes.LinkedRoles
+    ? `<${guildID}:${type}:${roleID}>`
+    : `<${guildID}:${type}>`;
 }
