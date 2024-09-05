@@ -2740,6 +2740,7 @@ export class Client extends EventEmitter {
       components?: Array<ActionRow> | null;
       files?: Array<File> | null;
       attachments?: Array<Partial<Attachment>> | null;
+      poll?: PollCreateParams | null;
       threadID?: snowflake;
     }
   ): Promise<Message> {
@@ -2786,6 +2787,21 @@ export class Client extends EventEmitter {
             waveform: attachment.waveform,
             flags: attachment.flags,
           })),
+          poll:
+            options.poll !== undefined
+              ? options.poll !== null
+                ? {
+                    question: options.poll.question,
+                    answers: options.poll.answers.map((answer) => ({
+                      answer_id: answer.answerID,
+                      poll_media: answer.pollMedia,
+                    })),
+                    duration: options.poll.duration,
+                    allow_multiselect: options.poll.allowMultiselect,
+                    layout_type: options.poll.layoutType,
+                  }
+                : null
+              : undefined,
         },
         files: options.files,
         query: {
@@ -2808,6 +2824,7 @@ export class Client extends EventEmitter {
       components?: Array<ActionRow> | null;
       files?: Array<File> | null;
       attachments?: Array<Partial<Attachment>> | null;
+      poll?: PollCreateParams | null;
       threadID?: snowflake;
     }
   ): Promise<Message> {
@@ -2854,6 +2871,21 @@ export class Client extends EventEmitter {
             waveform: attachment.waveform,
             flags: attachment.flags,
           })),
+          poll:
+            options.poll !== undefined
+              ? options.poll !== null
+                ? {
+                    question: options.poll.question,
+                    answers: options.poll.answers.map((answer) => ({
+                      answer_id: answer.answerID,
+                      poll_media: answer.pollMedia,
+                    })),
+                    duration: options.poll.duration,
+                    allow_multiselect: options.poll.allowMultiselect,
+                    layout_type: options.poll.layoutType,
+                  }
+                : null
+              : undefined,
         },
         files: options.files,
         query: {
@@ -2924,6 +2956,7 @@ export class Client extends EventEmitter {
       components?: Array<ActionRow> | null;
       files?: Array<File> | null;
       attachments?: Array<Partial<Attachment>> | null;
+      poll?: PollCreateParams | null;
       threadID?: snowflake;
     }
   ): Promise<Message> {
@@ -2970,6 +3003,21 @@ export class Client extends EventEmitter {
             waveform: attachment.waveform,
             flags: attachment.flags,
           })),
+          poll:
+            options.poll !== undefined
+              ? options.poll !== null
+                ? {
+                    question: options.poll.question,
+                    answers: options.poll.answers.map((answer) => ({
+                      answer_id: answer.answerID,
+                      poll_media: answer.pollMedia,
+                    })),
+                    duration: options.poll.duration,
+                    allow_multiselect: options.poll.allowMultiselect,
+                    layout_type: options.poll.layoutType,
+                  }
+                : null
+              : undefined,
         },
         files: options.files,
         query: {
