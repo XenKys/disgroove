@@ -679,6 +679,7 @@ export enum PremiumTypes {
 
 /** https://discord.com/developers/docs/resources/user#connection-object-services */
 export enum Services {
+  AmazonMusic = "amazon-music",
   BattleNet = "battlenet",
   Ebay = "ebay",
   EpicGames = "epicgames",
