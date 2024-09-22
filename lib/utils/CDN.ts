@@ -162,6 +162,8 @@ export const storePageAsset = (
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
 ) => cdnURL(`app-assets/${applicationID}/store/${assetID}`, imageFormat);
+export const soundboardSound = (soundID: snowflake) =>
+  cdnURL(`soundboard-sounds/${soundID}`);
 export const teamIcon = (
   teamID: snowflake,
   icon: string,

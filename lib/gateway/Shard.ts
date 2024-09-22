@@ -17,6 +17,7 @@ import type {
   RawPayload,
   RawPresenceUpdateEventFields,
   RequestGuildMembers,
+  RequestSoundboardSounds,
   Resume,
 } from "../types/gateway-events";
 import type { RawGuildMember } from "../types/guild";
@@ -35,12 +36,14 @@ import {
   Messages,
   Presences,
   Roles,
+  Soundboards,
   StageInstances,
   Stickers,
   Subscriptions,
   Users,
   Voice,
 } from "../transformers";
+import type { RawSoundboardSound } from "../types/soundboard";
 
 export class Shard {
   id: number;
@@ -426,6 +429,41 @@ export class Shard {
           packet.d.guild_id
         );
         break;
+      case GatewayEvents.GuildSoundboardSoundCreate:
+        this.client.emit(
+          "guildSoundboardSoundCreate",
+          Soundboards.soundboardSoundFromRaw(packet.d)
+        );
+        break;
+      case GatewayEvents.GuildSoundboardSoundUpdate:
+        this.client.emit(
+          "guildSoundboardSoundUpdate",
+          Soundboards.soundboardSoundFromRaw(packet.d)
+        );
+        break;
+      case GatewayEvents.GuildSoundboardSoundDelete:
+        this.client.emit("guildSoundboardSoundDelete", {
+          soundID: packet.d.sound_id,
+          guildID: packet.d.guild_id,
+        });
+        break;
+      case GatewayEvents.GuildSoundboardSoundsUpdate:
+        this.client.emit(
+          "guildSoundboardSoundsUpdate",
+          packet.d.map((sound: RawSoundboardSound) =>
+            Soundboards.soundboardSoundFromRaw(sound)
+          )
+        );
+        break;
+      case GatewayEvents.SoundboardSounds:
+        this.client.emit(
+          "soundboardSounds",
+          packet.d.soundboard_sounds.map((sound: RawSoundboardSound) =>
+            Soundboards.soundboardSoundFromRaw(sound)
+          ),
+          packet.d.guild_id
+        );
+        break;
       case GatewayEvents.IntegrationCreate:
         this.client.emit("integrationCreate", {
           ...Guilds.integrationFromRaw(packet.d),
@@ -754,6 +792,18 @@ export class Shard {
           presences: options.presences,
           user_ids: options.userIDs,
           nonce: options.nonce,
+        },
+      })
+    );
+  }
+
+  /** https://discord.com/developers/docs/topics/gateway-events#request-soundboard-sounds */
+  requestSoundboardSounds(options: RequestSoundboardSounds): void {
+    this.ws.send(
+      JSON.stringify({
+        op: GatewayOPCodes.RequestSoundboardSounds,
+        d: {
+          guild_ids: options.guildIDs,
         },
       })
     );

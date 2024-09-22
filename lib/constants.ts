@@ -740,7 +740,7 @@ export enum GatewayIntents {
   Guilds = 1 << 0,
   GuildMembers = 1 << 1,
   GuildModeration = 1 << 2,
-  GuildEmojisAndStickers = 1 << 3,
+  GuildExpressions = 1 << 3,
   GuildIntegrations = 1 << 4,
   GuildWebhooks = 1 << 5,
   GuildInvites = 1 << 6,
@@ -760,7 +760,7 @@ export enum GatewayIntents {
   DirectMessagePolls = 1 << 25,
   AllNonPrivileged = Guilds |
     GuildModeration |
-    GuildEmojisAndStickers |
+    GuildExpressions |
     GuildIntegrations |
     GuildWebhooks |
     GuildInvites |
@@ -832,6 +832,11 @@ export enum GatewayEvents {
   GuildScheduledEventDelete = "GUILD_SCHEDULED_EVENT_DELETE",
   GuildScheduledEventUserAdd = "GUILD_SCHEDULED_EVENT_USER_ADD",
   GuildScheduledEventUserRemove = "GUILD_SCHEDULED_EVENT_USER_REMOVE",
+  GuildSoundboardSoundCreate = "GUILD_SOUNDBOARD_SOUND_CREATE",
+  GuildSoundboardSoundUpdate = "GUILD_SOUNDBOARD_SOUND_UPDATE",
+  GuildSoundboardSoundDelete = "GUILD_SOUNDBOARD_SOUND_DELETE",
+  GuildSoundboardSoundsUpdate = "GUILD_SOUNDBOARD_SOUNDS_UPDATE",
+  SoundboardSounds = "SOUNDBOARD_SOUNDS",
   IntegrationCreate = "INTEGRATION_CREATE",
   IntegrationUpdate = "INTEGRATION_UPDATE",
   IntegrationDelete = "INTEGRATION_DELETE",
@@ -937,6 +942,7 @@ export enum GatewayOPCodes {
   InvalidSession,
   Hello,
   HeartbeatACK,
+  RequestSoundboardSounds = 31,
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes */
@@ -1023,6 +1029,7 @@ export enum JSONErrorCodes {
   UnknownWebhook,
   UnknownWebhookService,
   UnknownSession = 10020,
+  UnknownAsset,
   UnknownBan = 10026,
   UnknownSKU,
   UnknownStoreListing,
@@ -1049,6 +1056,7 @@ export enum JSONErrorCodes {
   UnknownGuildScheduledEvent,
   UnknownGuildScheduledEventUser,
   UnknownTag = 10087,
+  UnknownSound = 10091,
   BotsCannotUseThisEndpoint = 20001,
   OnlyBotsCanUseThisEndpoint,
   ExplicitContentCannotBeSentToTheDesiredRecipient = 20009,
@@ -1087,7 +1095,8 @@ export enum JSONErrorCodes {
   MaximumNumberOfStickersReached = 30039,
   MaximumNumberOfPruneRequestsHasBeenReached,
   MaximumNumberOfGuildWidgetSettingsUpdatesHasBeenReached = 30042,
-  MaximumNumberOfEditsToMessagesOlderThanOneHourReached = 30046,
+  MaximumNumberOfSoundboardSoundsReached = 30045,
+  MaximumNumberOfEditsToMessagesOlderThanOneHourReached,
   MaximumNumberOfPinnedThreadsInForumHasBeenReached,
   MaximumNumberOfTagsInForumHasBeenReached,
   BitrateIsTooHighForChannelOfThisType = 30052,
@@ -1170,12 +1179,16 @@ export enum JSONErrorCodes {
   ServerNeedsMonetizationEnabledToPerformThisAction = 50097,
   ServerNeedsMoreBoostsToPerformThisAction = 50101,
   RequestBodyContainsInvalidJSON = 50109,
+  TheProvidedFileIsInvalid,
+  TheProvidedFileTypeIsInvalid = 50123,
+  TheProvidedFileDurationExceedsMaximumOf5Seconds,
   OwnerCannotBePendingMember = 50131,
   OwnershipCannotBeMovedToABotUser,
   FailedToResizeAssetBelowTheMinimumSize = 50138,
   CannotMixSubscriptionAndNonSubscriptionRolesForAnEmoji = 50144,
   CannotConvertBetweenPremiumEmojiAndNormalEmoji,
   UploadedFileNotFound,
+  TheSpecifiedEmojiIsInvalid = 50151,
   VoiceMessagesDoNotSupportAdditionalContent = 50159,
   VoiceMessagesMustHaveASingleAudioAttachment,
   VoiceMessagesMustHaveSupportingMetadata,
@@ -1183,6 +1196,7 @@ export enum JSONErrorCodes {
   CannotDeleteGuildSubscriptionIntegration,
   YouCannotSendVoiceMessagesInThisChannel = 50173,
   TheUserAccountMustFirstBeVerified = 50178,
+  TheProvidedFileDoesNotHaveAValidDuration = 50192,
   YouDoNotHavePermissionToSendThisSticker = 50600,
   TwoFactorAuthenticationIsRequired = 60003,
   NoUsersWithDiscordTagExist = 80004,

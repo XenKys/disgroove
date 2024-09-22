@@ -16,6 +16,7 @@ export * from "./Polls";
 export * from "./Presences";
 export * from "./Roles";
 export * from "./SKUs";
+export * from "./Soundboards";
 export * from "./StageInstances";
 export * from "./Stickers";
 export * from "./Subscriptions";

@@ -73,6 +73,10 @@ export const guildScheduledEventUsers = (
   guildScheduledEventID: snowflake
 ) =>
   `guilds/${guildID}/scheduled-events/${guildScheduledEventID}/users` as const;
+export const guildSoundboardSound = (guildID: snowflake, soundID: snowflake) =>
+  `guilds/${guildID}/soundboard-sounds/${soundID}` as const;
+export const guildSoundboardSounds = (guildID: snowflake) =>
+  `guilds/${guildID}/soundboard-sounds` as const;
 export const guildSticker = (guildID: snowflake, stickerID: snowflake) =>
   `guilds/${guildID}/stickers/${stickerID}` as const;
 export const guildStickers = (guildID: snowflake) =>
@@ -267,6 +271,12 @@ export const skuSubscription = (skuID: snowflake, subscriptionID: snowflake) =>
   `skus/${skuID}/subscriptions/${subscriptionID}` as const;
 export const skuSubscriptions = (skuID: snowflake) =>
   `skus/${skuID}/subscriptions` as const;
+
+// Soundboards
+export const sendSoundboardSound = (channelID: snowflake) =>
+  `channels/${channelID}/send-soundboard-sound` as const;
+export const soundboardDefaultSounds = () =>
+  `soundboard-default-sounds` as const;
 
 // Gateway
 export const gateway = () => "gateway" as const;

@@ -29,6 +29,7 @@ import type {
   RawGuildScheduledEvent,
   GuildScheduledEvent,
 } from "./guild-scheduled-event";
+import type { RawSoundboardSound, SoundboardSound } from "./soundboard";
 import type { RawStageInstance, StageInstance } from "./stage-instance";
 import type {
   RawUser,
@@ -81,6 +82,11 @@ export interface RawRequestGuildMembers {
   presences?: boolean;
   user_ids?: snowflake | Array<snowflake>;
   nonce?: string;
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#request-soundboard-sounds-request-soundboard-sounds-structure */
+export interface RequestSoundboardSounds {
+  guild_ids: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#update-presence-gateway-presence-update-structure */
@@ -158,6 +164,7 @@ export interface RawGuildCreateEventExtraFields {
   presences?: Array<RawPresenceUpdateEventFields>;
   stage_instances?: Array<RawStageInstance>;
   guild_scheduled_events?: Array<RawGuildScheduledEvent>;
+  soundboard_sounds?: Array<RawSoundboardSound>;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#guild-audit-log-entry-create-guild-audit-log-entry-create-extra-fields */
@@ -219,6 +226,12 @@ export interface RawGuildMembersChunkEventFields {
   not_found?: Array<string>;
   presences?: Array<RawPresenceUpdateEventFields>;
   nonce?: string;
+}
+
+/** https://discord.com/developers/docs/topics/gateway-events#guild-soundboard-sound-delete-guild-soundboard-sound-delete-event-fields */
+export interface RawGuildSoundboardSoundDeleteEventFields {
+  soundID: snowflake;
+  guildID: snowflake;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#integration-create-integration-create-event-additional-fields */
@@ -483,6 +496,10 @@ export interface RequestGuildMembers {
   nonce?: string;
 }
 
+export interface RequestSoundboardSounds {
+  guildIDs: Array<snowflake>;
+}
+
 export interface GatewayPresenceUpdate {
   since: number | null;
   activities: Array<Partial<Pick<Activity, "name" | "type" | "url" | "state">>>;
@@ -548,6 +565,7 @@ export interface GuildCreateEventExtraFields {
   presences?: Array<PresenceUpdateEventFields>;
   stageInstances?: Array<StageInstance>;
   guildScheduledEvents?: Array<GuildScheduledEvent>;
+  soundboardSounds?: Array<SoundboardSound>;
 }
 
 export interface GuildAuditLogEntryCreateExtraFields {
@@ -601,6 +619,11 @@ export interface GuildMembersChunkEventFields {
   notFound?: Array<string>;
   presences?: Array<PresenceUpdateEventFields>;
   nonce?: string;
+}
+
+export interface GuildSoundboardSoundDeleteEventFields {
+  soundID: snowflake;
+  guildID: snowflake;
 }
 
 export interface IntegrationCreateEventExtraFields {

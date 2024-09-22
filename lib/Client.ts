@@ -110,6 +110,7 @@ import type {
   RawPayload,
   IdentifyConnectionProperties,
   VoiceChannelEffectSendEventFields,
+  GuildSoundboardSoundDeleteEventFields,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -194,6 +195,7 @@ import {
   Messages,
   Voice,
   Subscriptions,
+  Soundboards,
 } from "./transformers";
 import type {
   Embed,
@@ -203,7 +205,8 @@ import type {
   RawMessage,
   MessageReference,
 } from "./types/message";
-import { RawSubscription, Subscription } from "./types/subscription";
+import type { RawSubscription, Subscription } from "./types/subscription";
+import type { RawSoundboardSound, SoundboardSound } from "./types/soundboard";
 
 export interface GatewayOptions {
   properties?: IdentifyConnectionProperties;
@@ -1054,6 +1057,36 @@ export class Client extends EventEmitter {
     return Stickers.stickerFromRaw(response);
   }
 
+  /** https://discord.com/developers/docs/resources/soundboard#create-guild-soundboard-sound */
+  async createGuildSoundboardSound(
+    guildID: snowflake,
+    options: {
+      name: string;
+      sound: Buffer;
+      volume?: number | null;
+      emojiID?: snowflake | null;
+      emojiName?: snowflake | null;
+    },
+    reason?: string
+  ): Promise<SoundboardSound> {
+    const response = await this.rest.request<RawSoundboardSound>(
+      RESTMethods.Get,
+      Endpoints.guildSoundboardSounds(guildID),
+      {
+        json: {
+          name: options.name,
+          sound: options.sound,
+          volume: options.volume,
+          emoji_id: options.emojiID,
+          emoji_name: options.emojiName,
+        },
+        reason,
+      }
+    );
+
+    return Soundboards.soundboardSoundFromRaw(response);
+  }
+
   /** https://discord.com/developers/docs/resources/guild-template#create-guild-template */
   async createGuildTemplate(
     guildID: snowflake,
@@ -1697,6 +1730,21 @@ export class Client extends EventEmitter {
     this.rest.request(
       RESTMethods.Delete,
       Endpoints.guildSticker(guildID, stickerID),
+      {
+        reason,
+      }
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/soundboard#delete-guild-soundboard-sound */
+  deleteGuildSoundboardSound(
+    guildID: snowflake,
+    soundID: snowflake,
+    reason?: string
+  ): void {
+    this.rest.request(
+      RESTMethods.Get,
+      Endpoints.guildSoundboardSound(guildID, soundID),
       {
         reason,
       }
@@ -2558,6 +2606,35 @@ export class Client extends EventEmitter {
     );
 
     return Stickers.stickerFromRaw(response);
+  }
+
+  /** https://discord.com/developers/docs/resources/soundboard#edit-guild-soundboard-sound */
+  async editGuildSoundboardSound(
+    guildID: snowflake,
+    soundID: snowflake,
+    options: {
+      name?: string;
+      volume?: number | null;
+      emojiID?: snowflake | null;
+      emojiName?: snowflake | null;
+    },
+    reason?: string
+  ): Promise<SoundboardSound> {
+    const response = await this.rest.request<RawSoundboardSound>(
+      RESTMethods.Get,
+      Endpoints.guildSoundboardSound(guildID, soundID),
+      {
+        json: {
+          name: options.name,
+          volume: options.volume,
+          emoji_id: options.emojiID,
+          emoji_name: options.emojiName,
+        },
+        reason,
+      }
+    );
+
+    return Soundboards.soundboardSoundFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#modify-guild-template */
@@ -3506,6 +3583,16 @@ export class Client extends EventEmitter {
     return Voice.voiceStateFromRaw(response);
   }
 
+  /** https://discord.com/developers/docs/resources/soundboard#list-default-soundboard-sounds */
+  async getDefaultSoundboardSounds(): Promise<Array<SoundboardSound>> {
+    const response = await this.rest.request<Array<RawSoundboardSound>>(
+      RESTMethods.Get,
+      Endpoints.soundboardDefaultSounds()
+    );
+
+    return response.map((sound) => Soundboards.soundboardSoundFromRaw(sound));
+  }
+
   /** https://discord.com/developers/docs/resources/entitlement#list-entitlements */
   async getEntitlements(
     applicationID: snowflake,
@@ -4032,6 +4119,33 @@ export class Client extends EventEmitter {
     );
 
     return response.map((sticker) => Stickers.stickerFromRaw(sticker));
+  }
+
+  /** https://discord.com/developers/docs/resources/soundboard#get-guild-soundboard-sound */
+  async getGuildSoundboardSound(
+    guildID: snowflake,
+    soundID: snowflake
+  ): Promise<SoundboardSound> {
+    const response = await this.rest.request<RawSoundboardSound>(
+      RESTMethods.Get,
+      Endpoints.guildSoundboardSound(guildID, soundID)
+    );
+
+    return Soundboards.soundboardSoundFromRaw(response);
+  }
+
+  async getGuildSoundboardSounds(
+    guildID: snowflake
+  ): Promise<{ items: Array<SoundboardSound> }> {
+    const response = await this.rest.request<{
+      items: Array<RawSoundboardSound>;
+    }>(RESTMethods.Get, Endpoints.guildSoundboardSounds(guildID));
+
+    return {
+      items: response.items.map((sound) =>
+        Soundboards.soundboardSoundFromRaw(sound)
+      ),
+    };
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#get-guild-template */
@@ -4757,6 +4871,26 @@ export class Client extends EventEmitter {
     );
   }
 
+  /** https://discord.com/developers/docs/resources/soundboard#send-soundboard-sound */
+  sendSoundboardSound(
+    channelID: snowflake,
+    options: {
+      soundID: snowflake;
+      sourceGuildID?: snowflake;
+    }
+  ): void {
+    this.rest.request(
+      RESTMethods.Post,
+      Endpoints.sendSoundboardSound(channelID),
+      {
+        json: {
+          sound_id: options.soundID,
+          source_guild_id: options.sourceGuildID,
+        },
+      }
+    );
+  }
+
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
   setPresence(
     options: Partial<
@@ -4958,6 +5092,11 @@ export interface ClientEvents {
     guildScheduledEventID: snowflake,
     guildID: snowflake
   ];
+  guildSoundboardSoundCreate: [sound: SoundboardSound];
+  guildSoundboardSoundUpdate: [sound: SoundboardSound];
+  guildSoundboardSoundDelete: [sound: GuildSoundboardSoundDeleteEventFields];
+  guildSoundboardSoundsUpdate: [sounds: Array<SoundboardSound>];
+  soundboardSounds: [sounds: Array<SoundboardSound>, guildID: snowflake];
   integrationCreate: [
     integration: Integration & IntegrationCreateEventExtraFields
   ];
