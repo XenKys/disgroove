@@ -5095,7 +5095,10 @@ export interface ClientEvents {
   guildSoundboardSoundCreate: [sound: SoundboardSound];
   guildSoundboardSoundUpdate: [sound: SoundboardSound];
   guildSoundboardSoundDelete: [sound: GuildSoundboardSoundDeleteEventFields];
-  guildSoundboardSoundsUpdate: [sounds: Array<SoundboardSound>];
+  guildSoundboardSoundsUpdate: [
+    sounds: Array<SoundboardSound>,
+    guildID: snowflake
+  ];
   soundboardSounds: [sounds: Array<SoundboardSound>, guildID: snowflake];
   integrationCreate: [
     integration: Integration & IntegrationCreateEventExtraFields

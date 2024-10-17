@@ -450,9 +450,10 @@ export class Shard {
       case GatewayEvents.GuildSoundboardSoundsUpdate:
         this.client.emit(
           "guildSoundboardSoundsUpdate",
-          packet.d.map((sound: RawSoundboardSound) =>
+          packet.d.soundboard_sounds.map((sound: RawSoundboardSound) =>
             Soundboards.soundboardSoundFromRaw(sound)
-          )
+          ),
+          packet.d.guild_id
         );
         break;
       case GatewayEvents.SoundboardSounds:
