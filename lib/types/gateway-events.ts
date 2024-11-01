@@ -207,6 +207,7 @@ export interface RawGuildMemberUpdateEventFields {
   user: RawUser;
   nick?: string | null;
   avatar: string | null;
+  banner: string | null;
   joined_at?: timestamp | null;
   premium_since?: number | null;
   deaf?: boolean;
@@ -601,6 +602,7 @@ export interface GuildMemberUpdateEventFields {
   user: User;
   nick?: string | null;
   avatar: string | null;
+  banner: string | null;
   joinedAt?: timestamp | null;
   premiumSince?: number | null;
   deaf?: boolean;

@@ -114,6 +114,7 @@ export interface RawGuildMember {
   user?: RawUser;
   nick?: string | null;
   avatar?: string | null;
+  banner?: string | null;
   roles: Array<snowflake>;
   joined_at: timestamp;
   premium_since?: number | null;
@@ -297,6 +298,7 @@ export interface GuildMember {
   user?: User;
   nick?: string | null;
   avatar?: string | null;
+  banner?: string | null;
   roles: Array<snowflake>;
   joinedAt: string;
   premiumSince?: number | null;

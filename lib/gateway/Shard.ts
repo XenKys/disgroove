@@ -342,6 +342,7 @@ export class Shard {
           user: Users.userFromRaw(packet.d.user),
           nick: packet.d.nick,
           avatar: packet.d.avatar,
+          banner: packet.d.banner,
           joinedAt: packet.d.joined_at,
           premiumSince: packet.d.premium_since,
           deaf: packet.d.deaf,
