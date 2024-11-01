@@ -141,6 +141,34 @@ export interface RawInteractionCallbackData {
   title?: string;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-response-object */
+export interface RawInteractionCallbackResponse {
+  interaction: RawInteractionCallback;
+  resource?: RawInteractionResource;
+}
+
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-object */
+export interface RawInteractionCallback {
+  id: snowflake;
+  type: InteractionType;
+  activity_instance_id?: string;
+  response_message_id?: snowflake;
+  response_message_loading?: boolean;
+  response_message_ephemeral?: boolean;
+}
+
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-resource-object */
+export interface RawInteractionResource {
+  type: InteractionCallbackType;
+  activity_instance?: RawActivityInstanceResource;
+  message?: RawMessage;
+}
+
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-activity-instance-resource */
+export interface RawActivityInstanceResource {
+  id: string;
+}
+
 export interface Interaction {
   id: snowflake;
   applicationID: snowflake;
@@ -231,4 +259,28 @@ export interface InteractionCallbackData {
   choices?: Array<ApplicationCommandOptionChoice>;
   customID?: string;
   title?: string;
+}
+
+export interface InteractionCallbackResponse {
+  interaction: InteractionCallback;
+  resource?: InteractionResource;
+}
+
+export interface InteractionCallback {
+  id: snowflake;
+  type: InteractionType;
+  activityInstanceID?: string;
+  responseMessageID?: snowflake;
+  responseMessageLoading?: boolean;
+  responseMessageEphemeral?: boolean;
+}
+
+export interface InteractionResource {
+  type: InteractionCallbackType;
+  activityInstance?: ActivityInstanceResource;
+  message?: Message;
+}
+
+export interface ActivityInstanceResource {
+  id: string;
 }
