@@ -1279,6 +1279,7 @@ export class Client extends EventEmitter {
         }
         break;
       case InteractionCallbackType.PremiumRequired:
+      case InteractionCallbackType.LaunchActivity:
         {
           json = {
             type: options.type,

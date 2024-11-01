@@ -130,6 +130,7 @@ export enum InteractionCallbackType {
   ApplicationCommandAutocompleteResult,
   Modal,
   PremiumRequired,
+  LaunchActivity = 12,
 }
 
 /** https://discord.com/developers/docs/interactions/message-components#button-object-button-styles */
