@@ -26,6 +26,7 @@ export class ApplicationCommands {
       contexts: command.contexts,
       nsfw: command.nsfw,
       version: command.version,
+      handler: command.handler,
     };
   }
 
@@ -49,6 +50,7 @@ export class ApplicationCommands {
       contexts: command.contexts,
       nsfw: command.nsfw,
       version: command.version,
+      handler: command.handler,
     };
   }
 

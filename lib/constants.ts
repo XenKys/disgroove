@@ -68,6 +68,7 @@ export enum ApplicationCommandTypes {
   ChatInput = 1,
   User,
   Message,
+  PrimaryEntryPoint,
 }
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-type */
@@ -83,6 +84,12 @@ export enum ApplicationCommandOptionType {
   Mentionable,
   Number,
   Attachment,
+}
+
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-entry-point-command-handler-types */
+export enum EntryPointCommandHandlerTypes {
+  AppHandler = 1,
+  DiscordLaunchActivity,
 }
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permission-type */

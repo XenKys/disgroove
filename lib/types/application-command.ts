@@ -5,6 +5,7 @@ import type {
   ApplicationCommandPermissionType,
   ApplicationIntegrationTypes,
   InteractionContextTypes,
+  EntryPointCommandHandlerTypes,
 } from "../constants";
 import type { snowflake, LocaleMap } from "./common";
 
@@ -26,6 +27,7 @@ export interface RawApplicationCommand {
   contexts?: Array<InteractionContextTypes>;
   nsfw?: boolean;
   version: snowflake;
+  handler?: EntryPointCommandHandlerTypes;
 }
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure */
@@ -85,6 +87,7 @@ export interface ApplicationCommand {
   contexts?: Array<InteractionContextTypes>;
   nsfw?: boolean;
   version: string;
+  handler?: EntryPointCommandHandlerTypes;
 }
 
 export interface ApplicationCommandOption {
