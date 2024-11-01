@@ -6,6 +6,8 @@ import type {
   Interaction,
   RawResolvedData,
   ResolvedData,
+  RawInteractionCallbackResponse,
+  InteractionCallbackResponse,
 } from "../types/interaction";
 import type { Role, RawRole } from "../types/role";
 import type { User, RawUser } from "../types/user";
@@ -25,6 +27,72 @@ import type {
 } from "../types/message";
 
 export class Interactions {
+  static interactionCallbackResponseFromRaw(
+    interactionCallbackResponse: RawInteractionCallbackResponse
+  ): InteractionCallbackResponse {
+    return {
+      interaction: {
+        id: interactionCallbackResponse.interaction.id,
+        type: interactionCallbackResponse.interaction.type,
+        activityInstanceID:
+          interactionCallbackResponse.interaction.activity_instance_id,
+        responseMessageID:
+          interactionCallbackResponse.interaction.response_message_id,
+        responseMessageLoading:
+          interactionCallbackResponse.interaction.response_message_loading,
+        responseMessageEphemeral:
+          interactionCallbackResponse.interaction.response_message_ephemeral,
+      },
+      resource:
+        interactionCallbackResponse.resource !== undefined
+          ? {
+              type: interactionCallbackResponse.resource.type,
+              activityInstance:
+                interactionCallbackResponse.resource.activity_instance,
+              message:
+                interactionCallbackResponse.resource.message !== undefined
+                  ? Messages.messageFromRaw(
+                      interactionCallbackResponse.resource.message
+                    )
+                  : undefined,
+            }
+          : undefined,
+    };
+  }
+
+  static interactionCallbackResponseToRaw(
+    interactionCallbackResponse: InteractionCallbackResponse
+  ): RawInteractionCallbackResponse {
+    return {
+      interaction: {
+        id: interactionCallbackResponse.interaction.id,
+        type: interactionCallbackResponse.interaction.type,
+        activity_instance_id:
+          interactionCallbackResponse.interaction.activityInstanceID,
+        response_message_id:
+          interactionCallbackResponse.interaction.responseMessageID,
+        response_message_loading:
+          interactionCallbackResponse.interaction.responseMessageLoading,
+        response_message_ephemeral:
+          interactionCallbackResponse.interaction.responseMessageEphemeral,
+      },
+      resource:
+        interactionCallbackResponse.resource !== undefined
+          ? {
+              type: interactionCallbackResponse.resource.type,
+              activity_instance:
+                interactionCallbackResponse.resource.activityInstance,
+              message:
+                interactionCallbackResponse.resource.message !== undefined
+                  ? Messages.messageToRaw(
+                      interactionCallbackResponse.resource.message
+                    )
+                  : undefined,
+            }
+          : undefined,
+    };
+  }
+
   static interactionFromRaw(interaction: RawInteraction): Interaction {
     return {
       id: interaction.id,

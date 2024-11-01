@@ -144,7 +144,12 @@ import type {
   GuildScheduledEventRecurrenceRule,
 } from "./types/guild-scheduled-event";
 import type { GuildTemplate, RawGuildTemplate } from "./types/guild-template";
-import type { Interaction, InteractionResponse } from "./types/interaction";
+import type {
+  Interaction,
+  InteractionCallbackResponse,
+  InteractionResponse,
+  RawInteractionCallbackResponse,
+} from "./types/interaction";
 import type { Invite, RawInvite } from "./types/invite";
 import type { ActionRow } from "./types/message-components";
 import type { PollCreateParams } from "./types/poll";
@@ -196,6 +201,7 @@ import {
   Voice,
   Subscriptions,
   Soundboards,
+  Interactions,
 } from "./transformers";
 import type {
   Embed,
@@ -1175,137 +1181,139 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/interactions/receiving-and-responding#create-interaction-response */
-  createInteractionResponse(
+  async createInteractionResponse(
     interactionID: snowflake,
     interactionToken: string,
-    options: InteractionResponse
-  ): void {
+    options: InteractionResponse & {
+      withResponse?: boolean;
+    }
+  ): Promise<void | InteractionCallbackResponse> {
+    let json;
+    let files;
+
     switch (options.type) {
       case InteractionCallbackType.ChannelMessageWithSource:
       case InteractionCallbackType.UpdateMessage:
         {
-          this.rest.request(
-            RESTMethods.Post,
-            Endpoints.interactionCallback(interactionID, interactionToken),
-            {
-              json: {
-                type: options.type,
-                data: {
-                  content: options.data?.content,
-                  embeds:
-                    options.data?.embeds !== undefined
-                      ? options.data.embeds.map((embed) =>
-                          Messages.embedToRaw(embed)
-                        )
-                      : undefined,
-                  allowed_mentions:
-                    options.data?.allowedMentions !== undefined
-                      ? {
-                          parse: options.data.allowedMentions.parse,
-                          roles: options.data.allowedMentions.roles,
-                          users: options.data.allowedMentions.users,
-                          replied_user:
-                            options.data.allowedMentions.repliedUser,
-                        }
-                      : undefined,
-                  flags: options.data?.flags,
-                  components:
-                    options.data?.components !== undefined
-                      ? Messages.componentsToRaw(options.data.components)
-                      : undefined,
-                  attachments: options.data?.attachments,
-                  poll:
-                    options.data?.poll !== undefined
-                      ? {
-                          question: options.data.poll.question,
-                          answers: options.data.poll.answers.map((answer) => ({
-                            answer_id: answer.answerID,
-                            poll_media: answer.pollMedia,
-                          })),
-                          duration: options.data.poll.duration,
-                          allow_multiselect: options.data.poll.allowMultiselect,
-                          layout_type: options.data.poll.layoutType,
-                        }
-                      : undefined,
-                },
-              },
-              files: options.data?.files,
-            }
-          );
+          json = {
+            type: options.type,
+            data: {
+              content: options.data?.content,
+              embeds:
+                options.data?.embeds !== undefined
+                  ? options.data.embeds.map((embed) =>
+                      Messages.embedToRaw(embed)
+                    )
+                  : undefined,
+              allowed_mentions:
+                options.data?.allowedMentions !== undefined
+                  ? {
+                      parse: options.data.allowedMentions.parse,
+                      roles: options.data.allowedMentions.roles,
+                      users: options.data.allowedMentions.users,
+                      replied_user: options.data.allowedMentions.repliedUser,
+                    }
+                  : undefined,
+              flags: options.data?.flags,
+              components:
+                options.data?.components !== undefined
+                  ? Messages.componentsToRaw(options.data.components)
+                  : undefined,
+              attachments: options.data?.attachments,
+              poll:
+                options.data?.poll !== undefined
+                  ? {
+                      question: options.data.poll.question,
+                      answers: options.data.poll.answers.map((answer) => ({
+                        answer_id: answer.answerID,
+                        poll_media: answer.pollMedia,
+                      })),
+                      duration: options.data.poll.duration,
+                      allow_multiselect: options.data.poll.allowMultiselect,
+                      layout_type: options.data.poll.layoutType,
+                    }
+                  : undefined,
+            },
+          };
+          files = options.data?.files;
         }
         break;
       case InteractionCallbackType.DeferredChannelMessageWithSource:
       case InteractionCallbackType.DeferredUpdateMessage:
         {
-          this.rest.request(
-            RESTMethods.Post,
-            Endpoints.interactionCallback(interactionID, interactionToken),
-            {
-              json: {
-                type: options.type,
-                data: {
-                  flags: options.data?.flags,
-                },
-              },
-            }
-          );
+          json = {
+            type: options.type,
+            data: {
+              flags: options.data?.flags,
+            },
+          };
         }
         break;
       case InteractionCallbackType.ApplicationCommandAutocompleteResult:
         {
-          this.rest.request(
-            RESTMethods.Post,
-            Endpoints.interactionCallback(interactionID, interactionToken),
-            {
-              json: {
-                type: options.type,
-                data: {
-                  choices: options.data?.choices?.map((choice) => ({
-                    name: choice.name,
-                    name_localizations: choice.nameLocalizations,
-                    value: choice.value,
-                  })),
-                },
-              },
-            }
-          );
+          json = {
+            type: options.type,
+            data: {
+              choices: options.data?.choices?.map((choice) => ({
+                name: choice.name,
+                name_localizations: choice.nameLocalizations,
+                value: choice.value,
+              })),
+            },
+          };
         }
         break;
       case InteractionCallbackType.Modal:
         {
-          this.rest.request(
-            RESTMethods.Post,
-            Endpoints.interactionCallback(interactionID, interactionToken),
-            {
-              json: {
-                type: options.type,
-                data: {
-                  custom_id: options.data?.customID,
-                  components:
-                    options.data?.components !== undefined
-                      ? Messages.componentsToRaw(options.data.components)
-                      : undefined,
-                  title: options.data?.title,
-                },
-              },
-            }
-          );
+          json = {
+            type: options.type,
+            data: {
+              custom_id: options.data?.customID,
+              components:
+                options.data?.components !== undefined
+                  ? Messages.componentsToRaw(options.data.components)
+                  : undefined,
+              title: options.data?.title,
+            },
+          };
         }
         break;
       case InteractionCallbackType.PremiumRequired:
         {
-          this.rest.request(
-            RESTMethods.Post,
-            Endpoints.interactionCallback(interactionID, interactionToken),
-            {
-              json: {
-                type: options.type,
-                data: {},
-              },
-            }
-          );
+          json = {
+            type: options.type,
+            data: {},
+          };
         }
         break;
+    }
+
+    if (options.withResponse) {
+      const response = await this.rest.request<RawInteractionCallbackResponse>(
+        RESTMethods.Post,
+        Endpoints.interactionCallback(interactionID, interactionToken),
+        {
+          json,
+          query: {
+            with_response: options.withResponse,
+          },
+          files,
+        }
+      );
+
+      return Interactions.interactionCallbackResponseFromRaw(response);
+    } else {
+      this.rest.request(
+        RESTMethods.Post,
+        Endpoints.interactionCallback(interactionID, interactionToken),
+        {
+          json,
+          query: {
+            with_response: options.withResponse,
+          },
+          files,
+        }
+      );
     }
   }
 
