@@ -3613,6 +3613,7 @@ export class Client extends EventEmitter {
       limit?: number;
       guildID?: snowflake;
       excludeEnded?: boolean;
+      excludeDeleted?: boolean;
     }
   ): Promise<Array<Entitlement>> {
     const response = await this.rest.request<Array<RawEntitlement>>(
@@ -3627,6 +3628,7 @@ export class Client extends EventEmitter {
           limit: options?.limit,
           guild_id: options?.guildID,
           exclude_ended: options?.excludeEnded,
+          exclude_deleted: options?.excludeDeleted,
         },
       }
     );
