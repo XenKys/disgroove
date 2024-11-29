@@ -3602,6 +3602,19 @@ export class Client extends EventEmitter {
     return response.map((sound) => Soundboards.soundboardSoundFromRaw(sound));
   }
 
+  /** https://discord.com/developers/docs/resources/entitlement#get-entitlement */
+  async getEntitlement(
+    applicationID: snowflake,
+    entitlementID: snowflake
+  ): Promise<Entitlement> {
+    const response = await this.rest.request<RawEntitlement>(
+      RESTMethods.Get,
+      Endpoints.applicationEntitlement(applicationID, entitlementID)
+    );
+
+    return Entitlements.entitlementFromRaw(response);
+  }
+
   /** https://discord.com/developers/docs/resources/entitlement#list-entitlements */
   async getEntitlements(
     applicationID: snowflake,
