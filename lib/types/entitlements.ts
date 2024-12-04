@@ -10,8 +10,8 @@ export interface RawEntitlement {
   type: EntitlementTypes;
   deleted: boolean;
   consumed?: boolean;
-  starts_at?: timestamp;
-  ends_at?: timestamp;
+  starts_at: timestamp | null;
+  ends_at: timestamp | null;
   guild_id?: snowflake;
 }
 
@@ -23,7 +23,7 @@ export interface Entitlement {
   type: EntitlementTypes;
   deleted: boolean;
   consumed?: boolean;
-  startsAt?: timestamp;
-  endsAt?: timestamp;
+  startsAt: timestamp | null;
+  endsAt: timestamp | null;
   guildID?: snowflake;
 }
