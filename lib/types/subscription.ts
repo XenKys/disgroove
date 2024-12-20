@@ -7,6 +7,7 @@ export interface RawSubscription {
   user_id: snowflake;
   sku_ids: Array<snowflake>;
   entitlement_ids: Array<snowflake>;
+  renewal_sku_ids: Array<snowflake>;
   current_period_start: timestamp;
   current_period_end: timestamp;
   status: SubscriptionStatuses;
@@ -19,6 +20,7 @@ export interface Subscription {
   userID: snowflake;
   skuIDs: Array<snowflake>;
   entitlementIDs: Array<snowflake>;
+  renewalSKUIDs: Array<snowflake>;
   currentPeriodStart: timestamp;
   currentPeriodEnd: timestamp;
   status: SubscriptionStatuses;
