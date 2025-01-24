@@ -70,6 +70,7 @@ export interface RawGuild {
   stickers?: Array<RawSticker>;
   premium_progress_bar_enabled: boolean;
   safety_alerts_channel_id: snowflake | null;
+  incidents_data: RawIncidentsData | null;
 }
 
 /** https://discord.com/developers/docs/resources/guild#unavailable-guild-object */
@@ -215,6 +216,14 @@ export interface RawPromptOption {
   description: string | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#incidents-data-object-incidents-data-structure */
+export interface RawIncidentsData {
+  invites_disabled_until: timestamp | null;
+  dms_disabled_until: timestamp | null;
+  dm_spam_detected_at?: timestamp | null;
+  raid_detected_at?: timestamp | null;
+}
+
 export interface Guild {
   id: snowflake;
   name: string;
@@ -259,6 +268,7 @@ export interface Guild {
   stickers?: Array<Sticker>;
   premiumProgressBarEnabled: boolean;
   safetyAlertsChannelID: snowflake | null;
+  incidentsData: IncidentsData | null;
 }
 
 export interface UnavailableGuild {
@@ -388,4 +398,11 @@ export interface PromptOption {
   emojiAnimated?: boolean;
   title: string;
   description: string | null;
+}
+
+export interface IncidentsData {
+  invitesDisabledUntil: timestamp | null;
+  dmsDisabledUntil: timestamp | null;
+  dmSpamDetectedAt?: timestamp | null;
+  raidDetectedAt?: timestamp | null;
 }

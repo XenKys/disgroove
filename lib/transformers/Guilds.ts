@@ -110,6 +110,15 @@ export class Guilds {
       ),
       premiumProgressBarEnabled: guild.premium_progress_bar_enabled,
       safetyAlertsChannelID: guild.safety_alerts_channel_id,
+      incidentsData:
+        guild.incidents_data !== null
+          ? {
+              invitesDisabledUntil: guild.incidents_data.invites_disabled_until,
+              dmsDisabledUntil: guild.incidents_data.dms_disabled_until,
+              dmSpamDetectedAt: guild.incidents_data.dm_spam_detected_at,
+              raidDetectedAt: guild.incidents_data.raid_detected_at,
+            }
+          : null,
     };
   }
 
@@ -231,6 +240,15 @@ export class Guilds {
       ),
       premium_progress_bar_enabled: guild.premiumProgressBarEnabled,
       safety_alerts_channel_id: guild.safetyAlertsChannelID,
+      incidents_data:
+        guild.incidentsData !== null
+          ? {
+              invites_disabled_until: guild.incidentsData.invitesDisabledUntil,
+              dms_disabled_until: guild.incidentsData.dmsDisabledUntil,
+              dm_spam_detected_at: guild.incidentsData.dmSpamDetectedAt,
+              raid_detected_at: guild.incidentsData.raidDetectedAt,
+            }
+          : null,
     };
   }
 
