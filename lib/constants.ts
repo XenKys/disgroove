@@ -602,6 +602,7 @@ export enum MessageFlags {
   FailedToMentionSomeRolesInThread = 1 << 8,
   SuppressNotifications = 1 << 12,
   IsVoiceMessage = 1 << 13,
+  HasSnapshot = 1 << 14,
 }
 
 /** https://discord.com/developers/docs/resources/message#message-reference-types */
