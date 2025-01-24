@@ -134,6 +134,8 @@ import type {
   UnavailableGuild,
   OnboardingPrompt,
   WelcomeScreenChannel,
+  IncidentsData,
+  RawIncidentsData,
 } from "./types/guild";
 import type {
   GuildScheduledEvent,
@@ -2386,6 +2388,35 @@ export class Client extends EventEmitter {
     );
 
     return Emojis.emojiFromRaw(response);
+  }
+
+  /** https://discord.com/developers/docs/resources/emoji#modify-guild-incidents-actions */
+  async editGuildIncidentsActions(
+    guildID: snowflake,
+    options?: {
+      invitesDisabledUntil?: timestamp | null;
+      dmsDisabledUntil?: timestamp | null;
+    },
+    reason?: string
+  ): Promise<IncidentsData> {
+    const response = await this.rest.request<RawIncidentsData>(
+      RESTMethods.Put,
+      Endpoints.guildIncidentsActions(guildID),
+      {
+        json: {
+          invites_disabled_until: options?.invitesDisabledUntil,
+          dms_disabled_until: options?.dmsDisabledUntil,
+        },
+        reason,
+      }
+    );
+
+    return {
+      invitesDisabledUntil: response.invites_disabled_until,
+      dmsDisabledUntil: response.dms_disabled_until,
+      dmSpamDetectedAt: response.dm_spam_detected_at,
+      raidDetectedAt: response.raid_detected_at,
+    };
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-member */

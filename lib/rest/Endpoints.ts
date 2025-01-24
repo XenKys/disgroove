@@ -27,6 +27,8 @@ export const guildEmoji = (guildID: snowflake, emojiID: snowflake) =>
   `guilds/${guildID}/emojis/${emojiID}` as const;
 export const guildEmojis = (guildID: snowflake) =>
   `guilds/${guildID}/emojis` as const;
+export const guildIncidentsActions = (guildID: snowflake) =>
+  `guilds/${guildID}/incidents-actions` as const;
 export const guildIntegration = (
   guildID: snowflake,
   integrationID: snowflake
