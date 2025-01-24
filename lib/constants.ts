@@ -1000,6 +1000,7 @@ export enum VoiceCloseEventCodes {
   Disconnect = 4014,
   VoiceServerCrashed,
   UnknownEncryptionMode,
+  BadRequest = 4020,
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#http-http-response-codes */
