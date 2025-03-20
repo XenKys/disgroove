@@ -7,14 +7,6 @@ A module to interface with Discord
 - Flexible
 - 100% coverage of the [Official Discord API Documentation](https://discord.com/developers/docs/intro)
 
-## Installation
-
-[**Node.js v18**](https://nodejs.org) or newer required
-
-```
-npm install disgroove
-```
-
 ## Example
 
 ```js
@@ -53,5 +45,4 @@ client.on("interactionCreate", async (interaction) => {
 client.connect();
 ```
 
-More examples on the [GitHub repository](https://github.com/XenKys/disgroove/tree/main/examples)
-For support and more join the [Discord server](https://discord.gg/kunfRQgRyD)
+More examples on the [GitHub repository](https://github.com/sergiogotuzzo/disgroove/tree/main/examples)
