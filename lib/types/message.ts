@@ -251,10 +251,10 @@ export interface RawChannelMention {
 
 /** https://discord.com/developers/docs/resources/message#allowed-mentions-object-allowed-mentions-structure */
 export interface RawAllowedMentions {
-  parse: Array<AllowedMentionTypes>;
-  roles: Array<snowflake>;
-  users: Array<snowflake>;
-  replied_user: boolean;
+  parse?: Array<AllowedMentionTypes>;
+  roles?: Array<snowflake>;
+  users?: Array<snowflake>;
+  replied_user?: boolean;
 }
 
 export interface Message {
@@ -453,8 +453,8 @@ export interface ChannelMention {
 }
 
 export interface AllowedMentions {
-  parse: Array<AllowedMentionTypes>;
-  roles: Array<snowflake>;
-  users: Array<snowflake>;
-  repliedUser: boolean;
+  parse?: Array<AllowedMentionTypes>;
+  roles?: Array<snowflake>;
+  users?: Array<snowflake>;
+  repliedUser?: boolean;
 }
