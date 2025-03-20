@@ -3075,6 +3075,7 @@ export class Client extends EventEmitter {
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
       threadID?: snowflake;
+      withComponents?: boolean;
     }
   ): Promise<Message> {
     const response = await this.rest.request<RawMessage>(
@@ -3139,6 +3140,7 @@ export class Client extends EventEmitter {
         files: options.files,
         query: {
           thread_id: options.threadID,
+          with_components: options.withComponents,
         },
       }
     );
@@ -3202,6 +3204,7 @@ export class Client extends EventEmitter {
       poll?: PollCreateParams;
       wait?: boolean;
       threadID?: snowflake;
+      withComponents?: boolean;
     }
   ): Promise<Message | null> {
     const response = await this.rest.request<RawMessage | null>(
@@ -3249,6 +3252,7 @@ export class Client extends EventEmitter {
         query: {
           wait: options.wait,
           thread_id: options.threadID,
+          with_components: options.withComponents,
         },
       }
     );
