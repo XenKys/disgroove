@@ -6,7 +6,7 @@
   "types": "./dist/lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/XenKys/disgroove.git"
+    "url": "git+https://github.com/sergiogotuzzo/disgroove.git"
   },
   "keywords": [
     "api",
@@ -21,9 +21,9 @@
   "author": "XenKys",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/XenKys/disgroove/issues"
+    "url": "https://github.com/sergiogotuzzo/disgroove/issues"
   },
-  "homepage": "https://github.com/XenKys/disgroove#readme",
+  "homepage": "https://github.com/sergiogotuzzo/disgroove#readme",
   "devDependencies": {
     "@types/node": "^22.5.3",
     "@types/ws": "^8.5.12",
