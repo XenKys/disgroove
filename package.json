@@ -1,6 +1,6 @@
 {
   "name": "disgroove",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "description": "A module to interface with Discord",
   "main": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
@@ -25,11 +25,11 @@
   },
   "homepage": "https://github.com/sergiogotuzzo/disgroove#readme",
   "devDependencies": {
-    "@types/node": "^22.5.3",
-    "@types/ws": "^8.5.12",
-    "typescript": "^5.5.4"
+    "@types/node": "^22.13.11",
+    "@types/ws": "^8.18.0",
+    "typescript": "^5.8.2"
   },
   "dependencies": {
-    "ws": "^8.18.0"
+    "ws": "^8.18.1"
   }
 }
