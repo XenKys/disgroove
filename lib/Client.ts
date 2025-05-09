@@ -3989,10 +3989,22 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
-  async getGuildMembers(guildID: snowflake): Promise<Array<GuildMember>> {
+  async getGuildMembers(
+    guildID: snowflake,
+    options: {
+      limit?: number,
+      after?: snowflake
+    }
+  ): Promise<Array<GuildMember>> {
     const response = await this.rest.request<Array<RawGuildMember>>(
       RESTMethods.Get,
-      Endpoints.guildMembers(guildID)
+      Endpoints.guildMembers(guildID),
+      {
+        query: {
+          limit: options.limit,
+          after: options.after
+        }
+      }
     );
 
     return response.map((guildMember) =>
