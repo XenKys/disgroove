@@ -25,7 +25,22 @@ import type {
   RawResolvedData,
   ResolvedData,
 } from "./interaction";
-import type { ActionRow, RawActionRow } from "./message-components";
+import type {
+  ActionRow,
+  Container,
+  File,
+  MediaGallery,
+  RawActionRow,
+  RawContainer,
+  RawFile,
+  RawMediaGallery,
+  RawSection,
+  RawSeparator,
+  RawTextDisplay,
+  Section,
+  Separator,
+  TextDisplay,
+} from "./message-components";
 import type { Poll, RawPoll } from "./poll";
 import type {
   RawStickerItem,
@@ -65,7 +80,7 @@ export interface RawMessage {
   interaction_metadata?: RawMessageInteractionMetadata;
   interaction?: RawMessageInteraction;
   thread?: RawChannel;
-  components?: Array<RawActionRow>;
+  components?: Array<RawMessageTopLevelComponent>;
   sticker_items?: Array<RawStickerItem>;
   stickers?: Array<RawSticker>;
   position?: number;
@@ -74,6 +89,15 @@ export interface RawMessage {
   poll?: RawPoll;
   call?: RawMessageCall;
 }
+
+export type RawMessageTopLevelComponent =
+  | RawActionRow
+  | RawTextDisplay
+  | RawContainer
+  | RawFile
+  | RawSection
+  | RawSeparator
+  | RawMediaGallery;
 
 /** https://discord.com/developers/docs/resources/message#message-object-message-activity-structure */
 export interface RawMessageActivity {
@@ -286,7 +310,7 @@ export interface Message {
   interactionMetadata?: MessageInteractionMetadata;
   interaction?: MessageInteraction;
   thread?: Channel;
-  components?: Array<ActionRow>;
+  components?: Array<MessageTopLevelComponent>;
   stickerItems?: Array<StickerItem>;
   stickers?: Array<Sticker>;
   position?: number;
@@ -295,6 +319,15 @@ export interface Message {
   poll?: Poll;
   call?: MessageCall;
 }
+
+export type MessageTopLevelComponent =
+  | ActionRow
+  | TextDisplay
+  | Container
+  | File
+  | Section
+  | Separator
+  | MediaGallery;
 
 export interface MessageActivity {
   type: MessageActivityTypes;

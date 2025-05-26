@@ -6,10 +6,12 @@ import {
   Embed,
   RawMessage,
   Message,
+  MessageTopLevelComponent,
+  RawMessageTopLevelComponent,
 } from "../types/message";
-import type { RawActionRow, ActionRow } from "../types/message-components";
 import { Applications } from "./Applications";
 import { Channels } from "./Channels";
+import { Components } from "./Components.js";
 import { Emojis } from "./Emojis";
 import { Guilds } from "./Guilds";
 import { Interactions } from "./Interactions";
@@ -56,186 +58,64 @@ export class Messages {
     };
   }
 
-  static componentsFromRaw(components: Array<RawActionRow>): Array<ActionRow> {
-    return components.map((component) => ({
-      type: component.type,
-      components: component.components.map((c) => {
-        switch (c.type) {
-          case ComponentTypes.Button: {
-            return {
-              type: c.type,
-              style: c.style,
-              label: c.label,
-              emoji:
-                c.emoji !== undefined
-                  ? {
-                      name: c.emoji.name,
-                      id: c.emoji.id,
-                      animated: c.emoji.animated,
-                    }
-                  : undefined,
-              customID: c.custom_id,
-              skuID: c.sku_id,
-              url: c.url,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.TextInput: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              style: c.style,
-              label: c.label,
-              minLength: c.min_length,
-              maxLength: c.max_length,
-              required: c.required,
-              value: c.value,
-              placeholder: c.placeholder,
-            };
-          }
-          case ComponentTypes.ChannelSelect: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              channelTypes: c.channel_types,
-              placeholder: c.placeholder,
-              defaultValues: c.default_values,
-              minValues: c.min_values,
-              maxValues: c.max_values,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.StringSelect: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              placeholder: c.placeholder,
-              options: c.options?.map((option) => ({
-                label: option.label,
-                value: option.value,
-                description: option.description,
-                emoji:
-                  option.emoji !== undefined
-                    ? {
-                        name: option.emoji.name,
-                        id: option.emoji.id,
-                        animated: option.emoji.animated,
-                      }
-                    : undefined,
-                default: option.default,
-              })),
-              minValues: c.min_values,
-              maxValues: c.max_values,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.MentionableSelect:
-          case ComponentTypes.RoleSelect:
-          case ComponentTypes.UserSelect: {
-            return {
-              type: c.type,
-              customID: c.custom_id,
-              placeholder: c.placeholder,
-              defaultValues: c.default_values,
-              minValues: c.min_values,
-              maxValues: c.max_values,
-              disabled: c.disabled,
-            };
-          }
+  static componentsFromRaw(
+    components: Array<RawMessageTopLevelComponent>
+  ): Array<MessageTopLevelComponent> {
+    return components.map((component) => {
+      switch (component.type) {
+        case ComponentTypes.ActionRow: {
+          return Components.actionRowFromRaw(component);
         }
-      }),
-    }));
+        case ComponentTypes.TextDisplay: {
+          return Components.textDisplayFromRaw(component);
+        }
+        case ComponentTypes.Container: {
+          return Components.containerFromRaw(component);
+        }
+        case ComponentTypes.File: {
+          return Components.fileFromRaw(component);
+        }
+        case ComponentTypes.Section: {
+          return Components.sectionFromRaw(component);
+        }
+        case ComponentTypes.Separator: {
+          return Components.separatorFromRaw(component);
+        }
+        case ComponentTypes.MediaGallery: {
+          return Components.mediaGalleryFromRaw(component);
+        }
+      }
+    });
   }
 
-  static componentsToRaw(components: Array<ActionRow>): Array<RawActionRow> {
-    return components.map((component) => ({
-      type: component.type,
-      components: component.components.map((c) => {
-        switch (c.type) {
-          case ComponentTypes.Button: {
-            return {
-              type: c.type,
-              style: c.style,
-              label: c.label,
-              emoji:
-                c.emoji !== undefined
-                  ? {
-                      name: c.emoji.name,
-                      id: c.emoji.id,
-                      animated: c.emoji.animated,
-                    }
-                  : undefined,
-              custom_id: c.customID,
-              sku_id: c.skuID,
-              url: c.url,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.TextInput: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              style: c.style,
-              label: c.label,
-              min_length: c.minLength,
-              max_length: c.maxLength,
-              required: c.required,
-              value: c.value,
-              placeholder: c.placeholder,
-            };
-          }
-          case ComponentTypes.ChannelSelect: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              channel_types: c.channelTypes,
-              placeholder: c.placeholder,
-              default_values: c.defaultValues,
-              min_values: c.minValues,
-              max_values: c.maxValues,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.StringSelect: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              placeholder: c.placeholder,
-              options: c.options?.map((option) => ({
-                label: option.label,
-                value: option.value,
-                description: option.description,
-                emoji:
-                  option.emoji !== undefined
-                    ? {
-                        name: option.emoji.name,
-                        id: option.emoji.id,
-                        animated: option.emoji.animated,
-                      }
-                    : undefined,
-                default: option.default,
-              })),
-              min_values: c.minValues,
-              max_values: c.maxValues,
-              disabled: c.disabled,
-            };
-          }
-          case ComponentTypes.MentionableSelect:
-          case ComponentTypes.RoleSelect:
-          case ComponentTypes.UserSelect: {
-            return {
-              type: c.type,
-              custom_id: c.customID,
-              placeholder: c.placeholder,
-              default_values: c.defaultValues,
-              min_values: c.minValues,
-              max_values: c.maxValues,
-              disabled: c.disabled,
-            };
-          }
+  static componentsToRaw(
+    components: Array<MessageTopLevelComponent>
+  ): Array<RawMessageTopLevelComponent> {
+    return components.map((component) => {
+      switch (component.type) {
+        case ComponentTypes.ActionRow: {
+          return Components.actionRowToRaw(component);
         }
-      }),
-    }));
+        case ComponentTypes.TextDisplay: {
+          return Components.textDisplayToRaw(component);
+        }
+        case ComponentTypes.Container: {
+          return Components.containerToRaw(component);
+        }
+        case ComponentTypes.File: {
+          return Components.fileToRaw(component);
+        }
+        case ComponentTypes.Section: {
+          return Components.sectionToRaw(component);
+        }
+        case ComponentTypes.Separator: {
+          return Components.separatorToRaw(component);
+        }
+        case ComponentTypes.MediaGallery: {
+          return Components.mediaGalleryToRaw(component);
+        }
+      }
+    });
   }
 
   static embedFromRaw(embed: RawEmbed): Embed {

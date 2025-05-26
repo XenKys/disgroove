@@ -27,13 +27,10 @@ import type {
   Attachment,
   Embed,
   AllowedMentions,
+  MessageTopLevelComponent,
+  RawMessageTopLevelComponent,
 } from "./message";
-import type {
-  RawTextInput,
-  RawActionRow,
-  TextInput,
-  ActionRow,
-} from "./message-components";
+import type { RawTextInput, TextInput } from "./message-components";
 import type { RawPollCreateParams, PollCreateParams } from "./poll";
 import type { RawRole, Role } from "./role";
 import type { RawUser, User } from "./user";
@@ -132,7 +129,7 @@ export interface RawInteractionCallbackData {
   embeds?: Array<RawEmbed>;
   allowed_mentions?: RawAllowedMentions;
   flags?: MessageFlags;
-  components?: Array<RawActionRow>;
+  components?: Array<RawMessageTopLevelComponent>;
   attachments?: Array<Pick<RawAttachment, "filename" | "description">>;
   poll?: RawPollCreateParams;
   files?: Array<File>;
@@ -252,7 +249,7 @@ export interface InteractionCallbackData {
   embeds?: Array<Embed>;
   allowedMentions?: AllowedMentions;
   flags?: MessageFlags;
-  components?: Array<ActionRow>;
+  components?: Array<MessageTopLevelComponent>;
   attachments?: Array<Pick<Attachment, "filename" | "description">>;
   poll?: PollCreateParams;
   files?: Array<File>;

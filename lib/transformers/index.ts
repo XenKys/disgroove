@@ -4,6 +4,7 @@ export * from "./Applications";
 export * from "./AuditLogs";
 export * from "./AutoModeration";
 export * from "./Channels";
+export * from "./Components.js";
 export * from "./Emojis";
 export * from "./Entitlements";
 export * from "./Guilds";
