@@ -125,6 +125,19 @@ export enum ComponentTypes {
   RoleSelect,
   MentionableSelect,
   ChannelSelect,
+  Section,
+  TextDisplay,
+  Thumbnail,
+  MediaGallery,
+  File,
+  Separator,
+  Container = 17
+}
+
+/** https://discord.com/developers/docs/components/reference#separator-separator-structure */
+export enum SeparatorSpacing {
+  Small = 1,
+  Large,
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type */
@@ -603,6 +616,7 @@ export enum MessageFlags {
   SuppressNotifications = 1 << 12,
   IsVoiceMessage = 1 << 13,
   HasSnapshot = 1 << 14,
+  IsComponentsV2 = 1 << 15,
 }
 
 /** https://discord.com/developers/docs/resources/message#message-reference-types */

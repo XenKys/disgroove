@@ -153,7 +153,6 @@ import type {
   RawInteractionCallbackResponse,
 } from "./types/interaction";
 import type { Invite, RawInvite } from "./types/invite";
-import type { ActionRow } from "./types/message-components";
 import type { PollCreateParams } from "./types/poll";
 import type { Role, RawRole } from "./types/role";
 import type { SKU, RawSKU } from "./types/sku";
@@ -212,6 +211,7 @@ import type {
   Message,
   RawMessage,
   MessageReference,
+  MessageTopLevelComponent,
 } from "./types/message";
 import type { RawSubscription, Subscription } from "./types/subscription";
 import type { RawSoundboardSound, SoundboardSound } from "./types/soundboard";
@@ -1126,7 +1126,7 @@ export class Client extends EventEmitter {
       tts?: boolean;
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
-      components?: Array<ActionRow>;
+      components?: Array<MessageTopLevelComponent>;
       files?: Array<File> | null;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;
@@ -1330,7 +1330,7 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
       messageReference?: MessageReference;
-      components?: Array<ActionRow>;
+      components?: Array<MessageTopLevelComponent>;
       stickersIDs?: Array<snowflake>;
       files?: Array<File>;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
@@ -1469,7 +1469,7 @@ export class Client extends EventEmitter {
         content?: string;
         embeds?: Array<Embed>;
         allowedMentions?: AllowedMentions;
-        components?: Array<ActionRow>;
+        components?: Array<MessageTopLevelComponent>;
         stickerIDs?: Array<snowflake>;
         attachments?: Array<Pick<Attachment, "filename" | "description">>;
         flags?: MessageFlags;
@@ -2777,7 +2777,7 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed> | null;
       flags?: MessageFlags | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<ActionRow> | null;
+      components?: Array<MessageTopLevelComponent> | null;
       files?: Array<File> | null;
       attachments?: Array<Attachment> | null;
     }
@@ -2854,7 +2854,7 @@ export class Client extends EventEmitter {
       content?: string | null;
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<ActionRow> | null;
+      components?: Array<MessageTopLevelComponent> | null;
       files?: Array<File> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
@@ -2938,7 +2938,7 @@ export class Client extends EventEmitter {
       content?: string | null;
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<ActionRow> | null;
+      components?: Array<MessageTopLevelComponent> | null;
       files?: Array<File> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
@@ -3070,7 +3070,7 @@ export class Client extends EventEmitter {
       content?: string | null;
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<ActionRow> | null;
+      components?: Array<MessageTopLevelComponent> | null;
       files?: Array<File> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
@@ -3195,7 +3195,7 @@ export class Client extends EventEmitter {
       tts?: boolean;
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
-      components?: Array<ActionRow>;
+      components?: Array<MessageTopLevelComponent>;
       files?: Array<File>;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;
@@ -3992,8 +3992,8 @@ export class Client extends EventEmitter {
   async getGuildMembers(
     guildID: snowflake,
     options: {
-      limit?: number,
-      after?: snowflake
+      limit?: number;
+      after?: snowflake;
     }
   ): Promise<Array<GuildMember>> {
     const response = await this.rest.request<Array<RawGuildMember>>(
@@ -4002,8 +4002,8 @@ export class Client extends EventEmitter {
       {
         query: {
           limit: options.limit,
-          after: options.after
-        }
+          after: options.after,
+        },
       }
     );
 
