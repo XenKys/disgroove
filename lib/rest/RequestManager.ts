@@ -13,7 +13,7 @@ export enum RESTMethods {
 export interface RequestData {
   json?: unknown;
   form?: FormData;
-  files?: Array<File> | null;
+  files?: Array<FileData> | null;
   reason?: string;
   query?: Record<string, any>;
   authorization?: boolean;
@@ -26,7 +26,7 @@ export interface ErrorResponse {
   errors: Record<string, unknown>;
 }
 
-export interface File {
+export interface FileData {
   contents: Buffer;
   name: string;
 }

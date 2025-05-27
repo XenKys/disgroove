@@ -31,7 +31,7 @@ import {
   type GuildMemberFlags,
   type InteractionContextTypes,
 } from "./constants";
-import { Endpoints, RequestManager, RESTMethods, type File } from "./rest";
+import { Endpoints, RequestManager, RESTMethods, type FileData } from "./rest";
 import EventEmitter from "node:events";
 import { Shard } from "./gateway";
 import type {
@@ -1042,7 +1042,7 @@ export class Client extends EventEmitter {
       name: string;
       description: string;
       tags: string;
-      file: File;
+      file: FileData;
     },
     reason?: string
   ): Promise<Sticker> {
@@ -1127,7 +1127,7 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
       components?: Array<MessageTopLevelComponent>;
-      files?: Array<File> | null;
+      files?: Array<FileData> | null;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;
       threadName?: string;
@@ -1332,7 +1332,7 @@ export class Client extends EventEmitter {
       messageReference?: MessageReference;
       components?: Array<MessageTopLevelComponent>;
       stickersIDs?: Array<snowflake>;
-      files?: Array<File>;
+      files?: Array<FileData>;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;
       enforceNonce?: boolean;
@@ -1473,7 +1473,7 @@ export class Client extends EventEmitter {
         stickerIDs?: Array<snowflake>;
         attachments?: Array<Pick<Attachment, "filename" | "description">>;
         flags?: MessageFlags;
-        files?: Array<File>;
+        files?: Array<FileData>;
       };
       appliedTags?: Array<snowflake>;
     },
@@ -2778,7 +2778,7 @@ export class Client extends EventEmitter {
       flags?: MessageFlags | null;
       allowedMentions?: AllowedMentions | null;
       components?: Array<MessageTopLevelComponent> | null;
-      files?: Array<File> | null;
+      files?: Array<FileData> | null;
       attachments?: Array<Attachment> | null;
     }
   ): Promise<Message> {
@@ -2855,7 +2855,7 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
       components?: Array<MessageTopLevelComponent> | null;
-      files?: Array<File> | null;
+      files?: Array<FileData> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
       threadID?: snowflake;
@@ -2939,7 +2939,7 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
       components?: Array<MessageTopLevelComponent> | null;
-      files?: Array<File> | null;
+      files?: Array<FileData> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
       threadID?: snowflake;
@@ -3071,7 +3071,7 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
       components?: Array<MessageTopLevelComponent> | null;
-      files?: Array<File> | null;
+      files?: Array<FileData> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
       threadID?: snowflake;
@@ -3196,7 +3196,7 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
       components?: Array<MessageTopLevelComponent>;
-      files?: Array<File>;
+      files?: Array<FileData>;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;
       threadName?: string;

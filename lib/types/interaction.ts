@@ -9,7 +9,7 @@ import type {
   Locales,
   MessageFlags,
 } from "../constants";
-import type { File } from "../rest";
+import type { FileData } from "../rest";
 import type {
   RawApplicationCommandOptionChoice,
   ApplicationCommandOptionChoice,
@@ -132,7 +132,7 @@ export interface RawInteractionCallbackData {
   components?: Array<RawMessageTopLevelComponent>;
   attachments?: Array<Pick<RawAttachment, "filename" | "description">>;
   poll?: RawPollCreateParams;
-  files?: Array<File>;
+  files?: Array<FileData>;
   choices?: Array<RawApplicationCommandOptionChoice>;
   custom_id?: string;
   title?: string;
@@ -252,7 +252,7 @@ export interface InteractionCallbackData {
   components?: Array<MessageTopLevelComponent>;
   attachments?: Array<Pick<Attachment, "filename" | "description">>;
   poll?: PollCreateParams;
-  files?: Array<File>;
+  files?: Array<FileData>;
   choices?: Array<ApplicationCommandOptionChoice>;
   customID?: string;
   title?: string;
