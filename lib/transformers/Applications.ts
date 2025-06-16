@@ -1,8 +1,4 @@
 import type { RawApplication, Application } from "../types/application";
-import type {
-  RawApplicationCommand,
-  ApplicationCommand,
-} from "../types/application-command";
 import { Guilds } from "./Guilds";
 import { Teams } from "./Teams";
 import { Users } from "./Users";
@@ -41,6 +37,9 @@ export class Applications {
       interactionsEndpointURL: application.interactions_endpoint_url,
       roleConnectionsVerificationURL:
         application.role_connections_verification_url,
+      eventWebhooksURL: application.event_webhooks_url,
+      eventWebhooksStatus: application.event_webhooks_status,
+      eventWebhooksTypes: application.event_webhooks_types,
       tags: application.tags,
       installParams: application.install_params,
       integrationTypesConfig:
@@ -95,6 +94,9 @@ export class Applications {
       interactions_endpoint_url: application.interactionsEndpointURL,
       role_connections_verification_url:
         application.roleConnectionsVerificationURL,
+      event_webhooks_url: application.eventWebhooksURL,
+      event_webhooks_status: application.eventWebhooksStatus,
+      event_webhooks_types: application.eventWebhooksTypes,
       tags: application.tags,
       install_params: application.installParams,
       integration_types_config:

@@ -1,5 +1,6 @@
 import type {
   ActivityLocationKind,
+  ApplicationEventWebhookStatus,
   ApplicationFlags,
   ApplicationIntegrationTypes,
   OAuth2Scopes,
@@ -34,6 +35,9 @@ export interface RawApplication {
   redirect_uris?: Array<string>;
   interactions_endpoint_url?: string;
   role_connections_verification_url?: string;
+  event_webhooks_url?: string | null;
+  event_webhooks_status: ApplicationEventWebhookStatus;
+  event_webhooks_types?: Array<string>;
   tags?: Array<string>;
   install_params?: RawInstallParams;
   integration_types_config?: Record<
@@ -95,6 +99,9 @@ export interface Application {
   redirectURIs?: Array<string>;
   interactionsEndpointURL?: string;
   roleConnectionsVerificationURL?: string;
+  eventWebhooksURL?: string | null;
+  eventWebhooksStatus: ApplicationEventWebhookStatus;
+  eventWebhooksTypes?: Array<string>;
   tags?: Array<string>;
   installParams?: InstallParams;
   integrationTypesConfig?: Record<

@@ -176,6 +176,13 @@ export enum ApplicationIntegrationTypes {
   UserInstall,
 }
 
+/** https://discord.com/developers/docs/resources/application#application-object-application-event-webhook-status */
+export enum ApplicationEventWebhookStatus {
+  Disabled = 1,
+  Enabled,
+  DisabledByDiscord,
+}
+
 /** https://discord.com/developers/docs/resources/application#application-object-application-flags */
 export enum ApplicationFlags {
   ApplicationAutoModerationRuleCreateBadge = 1 << 6,
