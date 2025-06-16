@@ -33,6 +33,8 @@ export class Applications {
       flags: application.flags,
       approximateGuildCount: application.approximate_guild_count,
       approximateUserInstallCount: application.approximate_user_install_count,
+      approximateUserAuthorizationCount:
+        application.approximate_user_authorization_count,
       redirectURIs: application.redirect_uris,
       interactionsEndpointURL: application.interactions_endpoint_url,
       roleConnectionsVerificationURL:
@@ -90,6 +92,8 @@ export class Applications {
       flags: application.flags,
       approximate_guild_count: application.approximateGuildCount,
       approximate_user_install_count: application.approximateUserInstallCount,
+      approximate_user_authorization_count:
+        application.approximateUserAuthorizationCount,
       redirect_uris: application.redirectURIs,
       interactions_endpoint_url: application.interactionsEndpointURL,
       role_connections_verification_url:
