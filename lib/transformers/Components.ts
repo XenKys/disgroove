@@ -171,6 +171,8 @@ export class Components {
       id: file.id,
       file: Components.unfurledMediaItemFromRaw(file.file),
       spoiler: file.spoiler,
+      name: file.name,
+      size: file.size,
     };
   }
 
@@ -180,6 +182,8 @@ export class Components {
       id: file.id,
       file: Components.unfurledMediaItemToRaw(file.file),
       spoiler: file.spoiler,
+      name: file.name,
+      size: file.size,
     };
   }
 

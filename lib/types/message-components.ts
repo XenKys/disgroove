@@ -43,6 +43,8 @@ export interface RawFile {
   id?: number;
   file: RawUnfurledMediaItem;
   spoiler?: boolean;
+  name: string;
+  size: number;
 }
 
 /** https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-structure */
@@ -153,6 +155,7 @@ export interface RawUnfurledMediaItem {
   height?: number | null;
   width?: number | null;
   content_type?: string;
+  attachment_id?: snowflake;
 }
 
 export interface Button {
@@ -182,6 +185,8 @@ export interface File {
   id?: number;
   file: UnfurledMediaItem;
   spoiler?: boolean;
+  name: string;
+  size: number;
 }
 
 export interface MediaGallery {
@@ -280,4 +285,5 @@ export interface UnfurledMediaItem {
   height?: number | null;
   width?: number | null;
   contentType?: string;
+  attachmentID?: snowflake;
 }
