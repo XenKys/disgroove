@@ -1,6 +1,24 @@
-import type { RawUser, User } from "../types/user";
+import type { Nameplate, RawNameplate, RawUser, User } from "../types/user";
 
 export class Users {
+  static nameplateFromRaw(nameplate: RawNameplate): Nameplate {
+    return {
+      skuID: nameplate.sku_id,
+      asset: nameplate.asset,
+      label: nameplate.label,
+      palette: nameplate.palette,
+    };
+  }
+
+  static nameplateToRaw(nameplate: Nameplate): RawNameplate {
+    return {
+      sku_id: nameplate.skuID,
+      asset: nameplate.asset,
+      label: nameplate.label,
+      palette: nameplate.palette,
+    };
+  }
+
   static userFromRaw(user: RawUser): User {
     return {
       id: user.id,
@@ -25,6 +43,17 @@ export class Users {
             ? {
                 asset: user.avatar_decoration_data.asset,
                 skuID: user.avatar_decoration_data.sku_id,
+              }
+            : null
+          : undefined,
+      collectibles:
+        user.collectibles !== undefined
+          ? user.collectibles !== null
+            ? {
+                nameplate:
+                  user.collectibles.nameplate !== undefined
+                    ? this.nameplateFromRaw(user.collectibles.nameplate)
+                    : undefined,
               }
             : null
           : undefined,
@@ -55,6 +84,17 @@ export class Users {
             ? {
                 asset: user.avatarDecorationData.asset,
                 sku_id: user.avatarDecorationData.skuID,
+              }
+            : null
+          : undefined,
+      collectibles:
+        user.collectibles !== undefined
+          ? user.collectibles !== null
+            ? {
+                nameplate:
+                  user.collectibles.nameplate !== undefined
+                    ? this.nameplateToRaw(user.collectibles.nameplate)
+                    : undefined,
               }
             : null
           : undefined,

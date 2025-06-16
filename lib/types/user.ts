@@ -30,12 +30,26 @@ export interface RawUser {
   premium_type?: PremiumTypes;
   public_flags?: UserFlags;
   avatar_decoration_data?: RawAvatarDecorationData | null;
+  collectibles?: RawCollectibles | null;
 }
 
 /** https://discord.com/developers/docs/resources/user#avatar-decoration-data-object-avatar-decoration-data-structure */
 export interface RawAvatarDecorationData {
   asset: string;
   sku_id: snowflake;
+}
+
+/** https://discord.com/developers/docs/resources/user#collectibles-object-collectibles-structure */
+export interface RawCollectibles {
+  nameplate?: RawNameplate;
+}
+
+/** https://discord.com/developers/docs/resources/user#nameplate-object-nameplate-structure */
+export interface RawNameplate {
+  sku_id: snowflake;
+  asset: string;
+  label: string;
+  palette: string;
 }
 
 /** https://discord.com/developers/docs/resources/user#connection-object-connection-structure */
@@ -77,11 +91,23 @@ export interface User {
   premiumType?: PremiumTypes;
   publicFlags?: UserFlags;
   avatarDecorationData?: AvatarDecorationData | null;
+  collectibles?: Collectibles | null;
 }
 
 export interface AvatarDecorationData {
   asset: string;
   skuID: snowflake;
+}
+
+export interface Collectibles {
+  nameplate?: Nameplate;
+}
+
+export interface Nameplate {
+  skuID: snowflake;
+  asset: string;
+  label: string;
+  palette: string;
 }
 
 export interface Connection {
