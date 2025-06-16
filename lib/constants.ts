@@ -24,6 +24,7 @@ export enum ImageFormats {
   PNG = "png",
   WebP = "webp",
   GIF = "gif",
+  AVIF = "avif",
   Lottie = "json",
 }
 
@@ -131,7 +132,7 @@ export enum ComponentTypes {
   MediaGallery,
   File,
   Separator,
-  Container = 17
+  Container = 17,
 }
 
 /** https://discord.com/developers/docs/components/reference#separator-separator-structure */
