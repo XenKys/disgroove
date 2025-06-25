@@ -145,9 +145,9 @@ export const channelPermission = (
   overwriteID: snowflake
 ) => `channels/${channelID}/permissions/${overwriteID}` as const;
 export const channelPin = (channelID: snowflake, messageID: snowflake) =>
-  `channels/${channelID}/pins/${messageID}` as const;
+  `channels/${channelID}/messages/pins/${messageID}` as const;
 export const channelPins = (channelID: snowflake) =>
-  `channels/${channelID}/pins` as const;
+  `channels/${channelID}/messages/pins` as const;
 export const channelRecipient = (channelID: snowflake, userID: snowflake) =>
   `channels/${channelID}/recipients/${userID}` as const;
 export const channelThreads = (

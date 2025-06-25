@@ -281,6 +281,12 @@ export interface RawAllowedMentions {
   replied_user?: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/message#message-pin-object-message-pin-structure */
+export interface RawMessagePin {
+  pinnet_at: timestamp;
+  message: RawMessage;
+}
+
 export interface Message {
   id: snowflake;
   channelID: snowflake;
@@ -490,4 +496,9 @@ export interface AllowedMentions {
   roles?: Array<snowflake>;
   users?: Array<snowflake>;
   repliedUser?: boolean;
+}
+
+export interface MessagePin {
+  pinnetAt: timestamp;
+  message: Message;
 }

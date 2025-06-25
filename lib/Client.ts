@@ -212,6 +212,8 @@ import type {
   RawMessage,
   MessageReference,
   MessageTopLevelComponent,
+  MessagePin,
+  RawMessagePin,
 } from "./types/message";
 import type { RawSubscription, Subscription } from "./types/subscription";
 import type { RawSoundboardSound, SoundboardSound } from "./types/soundboard";
@@ -4543,13 +4545,30 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
-  async getPinnedMessages(channelID: snowflake): Promise<Array<Message>> {
-    const response = await this.rest.request<Array<RawMessage>>(
-      RESTMethods.Get,
-      Endpoints.channelPins(channelID)
-    );
+  async getPinnedMessages(
+    channelID: snowflake,
+    options: {
+      before?: timestamp;
+      limit?: number;
+    }
+  ): Promise<{
+    items: Array<MessagePin>;
+    hasMore: boolean;
+  }> {
+    const response = await this.rest.request<{
+      items: Array<RawMessagePin>;
+      has_more: boolean;
+    }>(RESTMethods.Get, Endpoints.channelPins(channelID), {
+      query: options,
+    });
 
-    return response.map((message) => Messages.messageFromRaw(message));
+    return {
+      items: response.items.map((item) => ({
+        pinnetAt: item.pinnet_at,
+        message: Messages.messageFromRaw(item.message),
+      })),
+      hasMore: response.has_more,
+    };
   }
 
   /** https://discord.com/developers/docs/resources/poll#get-answer-voters */
