@@ -56,3 +56,13 @@ export function guildNavigation(
     ? `<${guildID}:${type}:${roleID}>`
     : `<${guildID}:${type}>`;
 }
+
+/** https://discord.com/developers/docs/reference#message-formatting-formats */
+export function email(username: string, domain: string) {
+  return `<${username}:${domain}>`;
+}
+
+/** https://discord.com/developers/docs/reference#message-formatting-formats */
+export function phoneNumber(number: number) {
+  return `<+${phoneNumber}>`;
+}
