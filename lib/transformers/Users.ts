@@ -57,6 +57,17 @@ export class Users {
               }
             : null
           : undefined,
+      primaryGuild:
+        user.primary_guild !== undefined
+          ? user.primary_guild !== null
+            ? {
+                identityGuildID: user.primary_guild.identity_guild_id,
+                identityEnabled: user.primary_guild.identity_enabled,
+                tag: user.primary_guild.tag,
+                badge: user.primary_guild.badge,
+              }
+            : null
+          : undefined,
     };
   }
 
@@ -95,6 +106,17 @@ export class Users {
                   user.collectibles.nameplate !== undefined
                     ? this.nameplateToRaw(user.collectibles.nameplate)
                     : undefined,
+              }
+            : null
+          : undefined,
+      primary_guild:
+        user.primaryGuild !== undefined
+          ? user.primaryGuild !== null
+            ? {
+                identity_guild_id: user.primaryGuild.identityGuildID,
+                identity_enabled: user.primaryGuild.identityEnabled,
+                tag: user.primaryGuild.tag,
+                badge: user.primaryGuild.badge,
               }
             : null
           : undefined,

@@ -31,6 +31,15 @@ export interface RawUser {
   public_flags?: UserFlags;
   avatar_decoration_data?: RawAvatarDecorationData | null;
   collectibles?: RawCollectibles | null;
+  primary_guild?: RawUserPrimaryGuild | null;
+}
+
+/** https://discord.com/developers/docs/resources/user#user-object-user-primary-guild */
+export interface RawUserPrimaryGuild {
+  identity_guild_id: snowflake | null;
+  identity_enabled: boolean | null;
+  tag: string | null;
+  badge: string | null;
 }
 
 /** https://discord.com/developers/docs/resources/user#avatar-decoration-data-object-avatar-decoration-data-structure */
@@ -92,6 +101,14 @@ export interface User {
   publicFlags?: UserFlags;
   avatarDecorationData?: AvatarDecorationData | null;
   collectibles?: Collectibles | null;
+  primaryGuild?: UserPrimaryGuild | null;
+}
+
+export interface UserPrimaryGuild {
+  identityGuildID: snowflake | null;
+  identityEnabled: boolean | null;
+  tag: string | null;
+  badge: string | null;
 }
 
 export interface AvatarDecorationData {

@@ -129,6 +129,15 @@ export const guildSplash = (
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
 ) => cdnURL(`splashes/${guildID}/${splash}`, imageFormat);
+export const guildTagBadge = (
+  guildID: snowflake,
+  hash: string,
+  imageFormat:
+    | ImageFormats.PNG
+    | ImageFormats.JPEG
+    | ImageFormats.JPG
+    | ImageFormats.WebP = ImageFormats.PNG
+) => cdnURL(`guild-tag-badges/${guildID}/${hash}`, imageFormat);
 export const roleIcon = (
   roleID: snowflake,
   icon: string,
