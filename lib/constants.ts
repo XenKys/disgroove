@@ -443,6 +443,7 @@ export enum GuildFeatures {
   Verified = "VERIFIED",
   VipRegions = "VIP_REGIONS",
   WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
+  GuestsEnabled = "GUESTS_ENABLED",
   EnhancedRoleColors = "ENHANCED_ROLE_COLORS",
 }
 
@@ -560,6 +561,11 @@ export enum InviteTypes {
 export enum InviteTargetTypes {
   Stream = 1,
   EmbeddedApplication,
+}
+
+/** https://discord.com/developers/docs/resources/invite#invite-object-guild-invite-flags */
+export enum GuildInviteFlags {
+  IsGuestInvite = 1 << 0,
 }
 
 /** https://discord.com/developers/docs/resources/message#message-object-message-types */

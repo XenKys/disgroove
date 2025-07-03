@@ -117,7 +117,7 @@ export interface RawGuildMember {
   avatar?: string | null;
   banner?: string | null;
   roles: Array<snowflake>;
-  joined_at: timestamp;
+  joined_at: timestamp | null;
   premium_since?: number | null;
   deaf: boolean;
   mute: boolean;
@@ -310,7 +310,7 @@ export interface GuildMember {
   avatar?: string | null;
   banner?: string | null;
   roles: Array<snowflake>;
-  joinedAt: string;
+  joinedAt: string | null;
   premiumSince?: number | null;
   deaf: boolean;
   mute: boolean;

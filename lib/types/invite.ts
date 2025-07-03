@@ -1,4 +1,8 @@
-import type { InviteTargetTypes, InviteTypes } from "../constants";
+import type {
+  GuildInviteFlags,
+  InviteTargetTypes,
+  InviteTypes,
+} from "../constants";
 import type { RawApplication, Application } from "./application";
 import type { RawChannel, Channel } from "./channel";
 import type { timestamp } from "./common";
@@ -24,6 +28,7 @@ export interface RawInvite {
   expires_at?: timestamp | null;
   stage_instance?: RawInviteStageInstance;
   guild_scheduled_event?: RawGuildScheduledEvent;
+  flags?: GuildInviteFlags;
 }
 
 /** https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */
@@ -57,6 +62,7 @@ export interface Invite {
   expiresAt?: timestamp | null;
   stageInstance?: InviteStageInstance;
   guildScheduledEvent?: GuildScheduledEvent;
+  flags?: GuildInviteFlags;
 }
 
 export interface InviteMetadata {

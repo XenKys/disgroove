@@ -48,6 +48,7 @@ export class Invites {
               invite.guild_scheduled_event
             )
           : undefined,
+      flags: invite.flags,
     };
   }
 
@@ -93,6 +94,7 @@ export class Invites {
               invite.guildScheduledEvent
             )
           : undefined,
+      flags: invite.flags,
     };
   }
 }
