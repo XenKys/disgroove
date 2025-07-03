@@ -2481,16 +2481,16 @@ export class Client extends EventEmitter {
   editGuildOnboarding(
     guildID: snowflake,
     options: {
-      prompts: Array<OnboardingPrompt>;
-      defaultChannelIDs: Array<snowflake>;
-      enabled: boolean;
-      mode: OnboardingMode;
+      prompts?: Array<OnboardingPrompt>;
+      defaultChannelIDs?: Array<snowflake>;
+      enabled?: boolean;
+      mode?: OnboardingMode;
     },
     reason?: string
   ): void {
     this.rest.request(RESTMethods.Patch, Endpoints.guildOnboarding(guildID), {
       json: {
-        prompts: options.prompts.map((prompt) => ({
+        prompts: options.prompts?.map((prompt) => ({
           id: prompt.id,
           type: prompt.type,
           options: prompt.options.map((promptOption) => ({
