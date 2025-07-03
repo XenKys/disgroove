@@ -6,6 +6,7 @@ export interface RawRole {
   id: snowflake;
   name: string;
   color: number;
+  colors: RawRoleColors;
   hoist: boolean;
   icon?: string | null;
   unicode_emoji?: string | null;
@@ -27,10 +28,18 @@ export interface RawRoleTags {
   guild_connections?: null;
 }
 
+/** https://discord.com/developers/docs/topics/permissions#role-object-role-colors-object */
+export interface RawRoleColors {
+  primary_color: number;
+  secondary_color: number | null;
+  tertiary_colors: number | null;
+}
+
 export interface Role {
   id: snowflake;
   name: string;
   color: number;
+  colors: RoleColors;
   hoist: boolean;
   icon?: string | null;
   unicodeEmoji?: string | null;
@@ -49,4 +58,10 @@ export interface RoleTags {
   subscriptionListingID?: snowflake;
   availableForPurchase?: null;
   guildConnections?: null;
+}
+
+export interface RoleColors {
+  primaryColor: number;
+  secondaryColor: number | null;
+  tertiaryColors: number | null;
 }

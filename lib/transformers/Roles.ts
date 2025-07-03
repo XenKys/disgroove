@@ -6,6 +6,11 @@ export class Roles {
       id: role.id,
       name: role.name,
       color: role.color,
+      colors: {
+        primaryColor: role.colors.primary_color,
+        secondaryColor: role.colors.secondary_color,
+        tertiaryColors: role.colors.tertiary_colors,
+      },
       hoist: role.hoist,
       icon: role.icon,
       unicodeEmoji: role.unicode_emoji,
@@ -33,6 +38,11 @@ export class Roles {
       id: role.id,
       name: role.name,
       color: role.color,
+      colors: {
+        primary_color: role.colors.primaryColor,
+        secondary_color: role.colors.secondaryColor,
+        tertiary_colors: role.colors.tertiaryColors,
+      },
       hoist: role.hoist,
       icon: role.icon,
       unicode_emoji: role.unicodeEmoji,

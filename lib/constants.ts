@@ -443,6 +443,7 @@ export enum GuildFeatures {
   Verified = "VERIFIED",
   VipRegions = "VIP_REGIONS",
   WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
+  EnhancedRoleColors = "ENHANCED_ROLE_COLORS",
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-mutable-guild-features */

@@ -154,7 +154,7 @@ import type {
 } from "./types/interaction";
 import type { Invite, RawInvite } from "./types/invite";
 import type { PollCreateParams } from "./types/poll";
-import type { Role, RawRole } from "./types/role";
+import type { Role, RawRole, RoleColors } from "./types/role";
 import type { SKU, RawSKU } from "./types/sku";
 import type { StageInstance, RawStageInstance } from "./types/stage-instance";
 import type {
@@ -965,6 +965,7 @@ export class Client extends EventEmitter {
       name?: string;
       permissions?: string;
       color?: number;
+      colors?: RoleColors | null;
       hoist?: boolean;
       icon?: string | null;
       unicodeEmoji?: string | null;
@@ -2524,6 +2525,7 @@ export class Client extends EventEmitter {
       name?: string | null;
       permissions?: string | null;
       color?: number | null;
+      colors?: RoleColors | null;
       hoist?: boolean | null;
       icon?: string | null;
       unicodeEmoji?: string | null;
