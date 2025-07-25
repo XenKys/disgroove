@@ -467,6 +467,7 @@ export enum GuildMemberFlags {
   CompletedHomeActions = 1 << 6,
   AutomodQuarantinedUsername = 1 << 7,
   DMSettingsUpsellAckownledge = 1 << 9,
+  AutomodQuarantinedGuildTag = 1 << 10,
 }
 
 /** https://discord.com/developers/docs/resources/guild#integration-object-integration-expire-behaviors */
