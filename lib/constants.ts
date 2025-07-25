@@ -274,6 +274,7 @@ export enum AuditLogEvents {
   AutoModerationBlockMessage,
   AutoModerationFlagToChannel,
   AutoModerationUserCommunicationDisabled,
+  AutoModerationQuarantineUser,
   CreatorMonetizationRequestCreated = 150,
   CreatorMonetizationTermsAccepted,
   OnboardingPromptCreate = 163,
