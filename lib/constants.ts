@@ -445,6 +445,7 @@ export enum GuildFeatures {
   VipRegions = "VIP_REGIONS",
   WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
   GuestsEnabled = "GUESTS_ENABLED",
+  GuildTags = "GUILD_TAGS",
   EnhancedRoleColors = "ENHANCED_ROLE_COLORS",
 }
 
