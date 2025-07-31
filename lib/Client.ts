@@ -791,69 +791,6 @@ export class Client extends EventEmitter {
     return Channels.channelFromRaw(response);
   }
 
-  /** https://discord.com/developers/docs/resources/guild#create-guild */
-  async createGuild(options: {
-    name: string;
-    icon?: string;
-    verificationLevel?: VerificationLevel;
-    defaultMessageNotifications?: DefaultMessageNotificationLevel;
-    explicitContentFilter?: ExplicitContentFilterLevel;
-    roles?: Array<{
-      name?: string;
-      permissions?: string;
-      color?: number;
-      hoist?: boolean;
-      icon?: string | null;
-      unicodeEmoji?: string | null;
-      mentionable?: boolean;
-    }>;
-    channels?: Array<{
-      name: string;
-      type: ChannelTypes;
-      id?: number;
-      parentID?: number;
-    }>;
-    afkChannelID?: snowflake;
-    afkTimeout?: number;
-    systemChannelID?: snowflake;
-    systemChannelFlags?: SystemChannelFlags;
-  }): Promise<Guild> {
-    const response = await this.rest.request<RawGuild>(
-      RESTMethods.Post,
-      Endpoints.guilds(),
-      {
-        json: {
-          name: options.name,
-          icon: options.icon,
-          verification_level: options.verificationLevel,
-          default_message_notifications: options.defaultMessageNotifications,
-          explicit_content_filter: options.explicitContentFilter,
-          roles: options.roles?.map((role) => ({
-            name: role.name,
-            color: role.color,
-            hoist: role.hoist,
-            icon: role.icon,
-            unicode_emoji: role.unicodeEmoji,
-            permissions: role.permissions,
-            mentionable: role.mentionable,
-          })),
-          channels: options.channels?.map((channel) => ({
-            name: channel.name,
-            type: channel.type,
-            id: channel.id,
-            parent_id: channel.id,
-          })),
-          afk_channel_id: options.afkChannelID,
-          afk_timeout: options.afkTimeout,
-          system_channel_id: options.systemChannelID,
-          system_channel_flags: options.systemChannelFlags,
-        },
-      }
-    );
-
-    return Guilds.guildFromRaw(response);
-  }
-
   /** https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command */
   async createGuildApplicationCommand(
     applicationID: snowflake,
@@ -934,28 +871,6 @@ export class Client extends EventEmitter {
     );
 
     return Emojis.emojiFromRaw(response);
-  }
-
-  /** https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template */
-  async createGuildFromTemplate(
-    code: string,
-    options: {
-      name: string;
-      icon?: string;
-    }
-  ): Promise<Guild> {
-    const response = await this.rest.request<RawGuild>(
-      RESTMethods.Post,
-      Endpoints.template(code),
-      {
-        json: {
-          name: options.name,
-          icon: options.icon,
-        },
-      }
-    );
-
-    return Guilds.guildFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/guild#create-guild-role */
@@ -1662,11 +1577,6 @@ export class Client extends EventEmitter {
     );
   }
 
-  /** https://discord.com/developers/docs/resources/guild#delete-guild */
-  deleteGuild(guildID: snowflake): void {
-    this.rest.request(RESTMethods.Delete, Endpoints.guild(guildID));
-  }
-
   /** https://discord.com/developers/docs/interactions/application-commands#delete-guild-application-command */
   deleteGuildApplicationCommand(
     applicationID: snowflake,
@@ -2283,7 +2193,6 @@ export class Client extends EventEmitter {
       afkChannelID?: snowflake | null;
       afkTimeout?: number;
       icon?: string | null;
-      ownerID?: snowflake;
       splash?: string | null;
       discoverySplash?: string | null;
       banner?: string | null;
@@ -2311,7 +2220,6 @@ export class Client extends EventEmitter {
           afk_channel_id: options.afkChannelID,
           afk_timeout: options.afkTimeout,
           icon: options.icon,
-          owner_id: options.ownerID,
           splash: options.splash,
           discovery_splash: options.discoverySplash,
           banner: options.banner,
@@ -2455,26 +2363,6 @@ export class Client extends EventEmitter {
     );
 
     return Guilds.guildMemberFromRaw(response);
-  }
-
-  /** https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level */
-  editGuildMFALevel(
-    guildID: snowflake,
-    options: {
-      level: MFALevel;
-    },
-    reason?: string
-  ): Promise<MFALevel> {
-    return this.rest.request<MFALevel>(
-      RESTMethods.Post,
-      Endpoints.guildMFA(guildID),
-      {
-        json: {
-          level: options.level,
-        },
-        reason,
-      }
-    );
   }
 
   /** https://discord.com/developers/docs/resources/guild#modify-guild-onboarding */
