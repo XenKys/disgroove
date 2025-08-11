@@ -2911,7 +2911,7 @@ export class Client extends EventEmitter {
     guildID: snowflake,
     userID: snowflake,
     options: {
-      channelID: snowflake;
+      channelID?: snowflake;
       suppress?: boolean;
     }
   ): void {
