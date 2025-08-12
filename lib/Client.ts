@@ -4281,7 +4281,6 @@ export class Client extends EventEmitter {
     code: string,
     options?: {
       withCounts?: boolean;
-      withExpiration?: boolean;
       guildScheduledEventID?: snowflake;
     }
   ): Promise<Invite> {
@@ -4291,7 +4290,6 @@ export class Client extends EventEmitter {
       {
         query: {
           with_counts: options?.withCounts,
-          with_expiration: options?.withExpiration,
           guild_scheduled_event_id: options?.guildScheduledEventID,
         },
       }

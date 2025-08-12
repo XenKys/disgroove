@@ -25,7 +25,7 @@ export interface RawInvite {
   target_application?: RawApplication;
   approximate_presence_count?: number;
   approximate_member_count?: number;
-  expires_at?: timestamp | null;
+  expires_at: timestamp | null;
   stage_instance?: RawInviteStageInstance;
   guild_scheduled_event?: RawGuildScheduledEvent;
   flags?: GuildInviteFlags;
@@ -59,7 +59,7 @@ export interface Invite {
   targetApplication?: Application;
   approximatePresenceCount?: number;
   approximateMemberCount?: number;
-  expiresAt?: timestamp | null;
+  expiresAt: timestamp | null;
   stageInstance?: InviteStageInstance;
   guildScheduledEvent?: GuildScheduledEvent;
   flags?: GuildInviteFlags;
