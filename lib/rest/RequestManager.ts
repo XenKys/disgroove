@@ -27,7 +27,7 @@ export interface ErrorResponse {
 }
 
 export interface FileData {
-  contents: Buffer;
+  contents: BlobPart;
   name: string;
 }
 
