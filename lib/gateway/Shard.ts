@@ -131,6 +131,20 @@ export class Shard {
       case GatewayEvents.Resumed:
         this.client.emit("resumed");
         break;
+      case GatewayEvents.RateLimited:
+        switch (packet.d.opcode) {
+          case GatewayOPCodes.RequestGuildMembers: {
+            this.client.emit("rateLimited", {
+              opcode: GatewayOPCodes.RequestGuildMembers,
+              retryAfter: packet.d.retry_after,
+              meta: {
+                guildID: packet.d.meta.guild_id,
+                nonce: packet.d.nonce,
+              },
+            });
+          }
+        }
+        break;
       case GatewayEvents.ApplicationCommandPermissionsUpdate:
         this.client.emit(
           "applicationCommandPermissionsUpdate",

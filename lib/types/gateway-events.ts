@@ -457,6 +457,19 @@ export interface RawMessagePollVoteRemoveFields {
   answer_id: number;
 }
 
+/** https://discord.com/developers/docs/events/gateway-events#rate-limited-rate-limited-fields */
+export interface RawRateLimitedFields {
+  opcode: GatewayOPCodes;
+  retry_after: number;
+  meta: RawRequestGuildMembersRateLimitMetadata;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#rate-limited-rate-limit-metadata-for-opcode-structure */
+export interface RawRequestGuildMembersRateLimitMetadata {
+  guild_id: snowflake;
+  nonce?: string;
+}
+
 export interface Payload {
   op: GatewayOPCodes;
   d: any | null;
@@ -822,4 +835,15 @@ export interface MessagePollVoteRemoveFields {
   messageID: snowflake;
   guildID?: snowflake;
   answerID: number;
+}
+
+export interface RateLimitedFields {
+  opcode: GatewayOPCodes;
+  retryAfter: number;
+  meta: RequestGuildMembersRateLimitMetadata;
+}
+
+export interface RequestGuildMembersRateLimitMetadata {
+  guildID: snowflake;
+  nonce?: string;
 }

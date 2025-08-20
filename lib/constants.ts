@@ -839,6 +839,7 @@ export enum StatusTypes {
 export enum GatewayEvents {
   Ready = "READY",
   Resumed = "RESUMED",
+  RateLimited = "RATE_LIMITED",
   ApplicationCommandPermissionsUpdate = "APPLICATION_COMMAND_PERMISSIONS_UPDATE",
   AutoModerationRuleCreate = "AUTO_MODERATION_RULE_CREATE",
   AutoModerationRuleUpdate = "AUTO_MODERATION_RULE_UPDATE",

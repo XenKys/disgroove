@@ -111,6 +111,7 @@ import type {
   IdentifyConnectionProperties,
   VoiceChannelEffectSendEventFields,
   GuildSoundboardSoundDeleteEventFields,
+  RateLimitedFields,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -5011,6 +5012,7 @@ export interface ClientEvents {
   hello: [interval: number, shard: number];
   ready: [];
   resumed: [];
+  rateLimited: [rateLimit: RateLimitedFields];
   reconnect: [];
   invalidSession: [];
   applicationCommandPermissionsUpdate: [
