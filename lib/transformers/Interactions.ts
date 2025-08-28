@@ -118,10 +118,10 @@ export class Interactions {
               values: interaction.data?.values,
               components: interaction.data?.components?.map((component) => {
                 switch (component.type) {
-                  case ComponentTypes.StringSelect:
-                    return Components.stringSelectFromRaw(component);
-                  case ComponentTypes.TextInput:
-                    return Components.textInputFromRaw(component);
+                  case ComponentTypes.ActionRow:
+                    return Components.actionRowFromRaw(component);
+                  case ComponentTypes.TextDisplay:
+                    return Components.textDisplayFromRaw(component);
                   case ComponentTypes.Label:
                     return Components.labelFromRaw(component);
                 }
@@ -239,10 +239,10 @@ export class Interactions {
               values: interaction.data.values,
               components: interaction.data?.components?.map((component) => {
                 switch (component.type) {
-                  case ComponentTypes.StringSelect:
-                    return Components.stringSelectToRaw(component);
-                  case ComponentTypes.TextInput:
-                    return Components.textInputToRaw(component);
+                  case ComponentTypes.ActionRow:
+                    return Components.actionRowToRaw(component);
+                  case ComponentTypes.TextDisplay:
+                    return Components.textDisplayToRaw(component);
                   case ComponentTypes.Label:
                     return Components.labelToRaw(component);
                 }

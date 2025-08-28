@@ -113,7 +113,7 @@ export interface RawMessageComponentData {
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
 export interface RawModalSubmitData {
   custom_id: string;
-  components: Array<RawStringSelect | RawTextInput | RawLabel>;
+  components: Array<RawActionRow | RawTextDisplay | RawLabel>;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
@@ -252,7 +252,7 @@ export interface MessageComponentData {
 
 export interface ModalSubmitData {
   customID: string;
-  components: Array<StringSelect | TextInput | Label>;
+  components: Array<ActionRow | TextDisplay | Label>;
 }
 
 export interface ResolvedData {

@@ -1256,10 +1256,10 @@ export class Client extends EventEmitter {
                 options.data?.components !== undefined
                   ? options.data?.components.map((component) => {
                       switch (component.type) {
-                        case ComponentTypes.StringSelect:
-                          return Components.stringSelectToRaw(component);
-                        case ComponentTypes.TextInput:
-                          return Components.textInputToRaw(component);
+                        case ComponentTypes.ActionRow:
+                          return Components.actionRowToRaw(component);
+                        case ComponentTypes.TextDisplay:
+                          return Components.textDisplayToRaw(component);
                         case ComponentTypes.Label:
                           return Components.labelToRaw(component);
                       }
