@@ -133,6 +133,7 @@ export enum ComponentTypes {
   File,
   Separator,
   Container = 17,
+  Label,
 }
 
 /** https://discord.com/developers/docs/components/reference#separator-separator-structure */

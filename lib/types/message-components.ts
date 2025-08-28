@@ -148,6 +148,15 @@ export interface RawActionRow {
   id?: number;
 }
 
+/** https://discord.com/developers/docs/components/reference#label-label-structure */
+export interface RawLabel {
+  type: ComponentTypes.Label;
+  id?: number;
+  label: string;
+  description?: string;
+  component: RawTextInput | RawSelectMenu;
+}
+
 /** https://discord.com/developers/docs/components/reference#unfurled-media-item-structure */
 export interface RawUnfurledMediaItem {
   url: string;
@@ -277,6 +286,14 @@ export interface ActionRow {
   type: ComponentTypes.ActionRow;
   components: Array<Button | SelectMenu | TextInput>;
   id?: number;
+}
+
+export interface Label {
+  type: ComponentTypes.Label;
+  id?: number;
+  label: string;
+  description?: string;
+  component: TextInput | SelectMenu;
 }
 
 export interface UnfurledMediaItem {
