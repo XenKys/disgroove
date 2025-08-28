@@ -27,10 +27,41 @@ import type {
   Attachment,
   Embed,
   AllowedMentions,
-  MessageTopLevelComponent,
-  RawMessageTopLevelComponent,
 } from "./message";
-import type { RawTextInput, TextInput } from "./message-components";
+import type {
+  ActionRow,
+  Button,
+  ChannelSelect,
+  Container,
+  File,
+  Label,
+  MediaGallery,
+  MentionableSelect,
+  RawActionRow,
+  RawButton,
+  RawChannelSelect,
+  RawContainer,
+  RawFile,
+  RawLabel,
+  RawMediaGallery,
+  RawMentionableSelect,
+  RawRoleSelect,
+  RawSection,
+  RawSeparator,
+  RawStringSelect,
+  RawTextDisplay,
+  RawTextInput,
+  RawThumbnail,
+  RawUserSelect,
+  RoleSelect,
+  Section,
+  Separator,
+  StringSelect,
+  TextDisplay,
+  TextInput,
+  Thumbnail,
+  UserSelect,
+} from "./message-components";
 import type { RawPollCreateParams, PollCreateParams } from "./poll";
 import type { RawRole, Role } from "./role";
 import type { RawUser, User } from "./user";
@@ -82,10 +113,7 @@ export interface RawMessageComponentData {
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
 export interface RawModalSubmitData {
   custom_id: string;
-  components: Array<{
-    type: ComponentTypes.ActionRow;
-    components: Array<RawTextInput>;
-  }>;
+  components: Array<RawStringSelect | RawTextInput | RawLabel>;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
@@ -129,7 +157,22 @@ export interface RawInteractionCallbackData {
   embeds?: Array<RawEmbed>;
   allowed_mentions?: RawAllowedMentions;
   flags?: MessageFlags;
-  components?: Array<RawMessageTopLevelComponent>;
+  components?: Array<
+    | RawActionRow
+    | RawButton
+    | RawStringSelect
+    | RawUserSelect
+    | RawRoleSelect
+    | RawMentionableSelect
+    | RawChannelSelect
+    | RawSection
+    | RawTextDisplay
+    | RawThumbnail
+    | RawMediaGallery
+    | RawFile
+    | RawSeparator
+    | RawContainer
+  >;
   attachments?: Array<Pick<RawAttachment, "filename" | "description">>;
   poll?: RawPollCreateParams;
   files?: Array<FileData>;
@@ -207,10 +250,7 @@ export interface MessageComponentData {
 
 export interface ModalSubmitData {
   customID: string;
-  components: Array<{
-    type: ComponentTypes.ActionRow;
-    components: Array<TextInput>;
-  }>;
+  components: Array<StringSelect | TextInput | Label>;
 }
 
 export interface ResolvedData {
@@ -249,7 +289,22 @@ export interface InteractionCallbackData {
   embeds?: Array<Embed>;
   allowedMentions?: AllowedMentions;
   flags?: MessageFlags;
-  components?: Array<MessageTopLevelComponent>;
+  components?: Array<
+    | ActionRow
+    | Button
+    | StringSelect
+    | UserSelect
+    | RoleSelect
+    | MentionableSelect
+    | ChannelSelect
+    | Section
+    | TextDisplay
+    | Thumbnail
+    | MediaGallery
+    | File
+    | Separator
+    | Container
+  >;
   attachments?: Array<Pick<Attachment, "filename" | "description">>;
   poll?: PollCreateParams;
   files?: Array<FileData>;

@@ -116,7 +116,20 @@ export enum InteractionContextTypes {
   PrivateChannel,
 }
 
-/** https://discord.com/developers/docs/interactions/message-components#component-object-component-types */
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type */
+export enum InteractionCallbackType {
+  Pong = 1,
+  ChannelMessageWithSource = 4,
+  DeferredChannelMessageWithSource,
+  DeferredUpdateMessage,
+  UpdateMessage,
+  ApplicationCommandAutocompleteResult,
+  Modal,
+  PremiumRequired,
+  LaunchActivity = 12,
+}
+
+/** https://discord.com/developers/docs/components/reference#component-object-component-types */
 export enum ComponentTypes {
   ActionRow = 1,
   Button,
@@ -136,26 +149,7 @@ export enum ComponentTypes {
   Label,
 }
 
-/** https://discord.com/developers/docs/components/reference#separator-separator-structure */
-export enum SeparatorSpacing {
-  Small = 1,
-  Large,
-}
-
-/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-type */
-export enum InteractionCallbackType {
-  Pong = 1,
-  ChannelMessageWithSource = 4,
-  DeferredChannelMessageWithSource,
-  DeferredUpdateMessage,
-  UpdateMessage,
-  ApplicationCommandAutocompleteResult,
-  Modal,
-  PremiumRequired,
-  LaunchActivity = 12,
-}
-
-/** https://discord.com/developers/docs/interactions/message-components#button-object-button-styles */
+/** https://discord.com/developers/docs/components/reference#button-button-styles */
 export enum ButtonStyles {
   Primary = 1,
   Secondary,
@@ -165,10 +159,16 @@ export enum ButtonStyles {
   Premium,
 }
 
-/** https://discord.com/developers/docs/interactions/message-components#text-inputs-text-input-styles */
+/** https://discord.com/developers/docs/components/reference#text-input-text-input-styles */
 export enum TextInputStyles {
   Short = 1,
   Paragraph,
+}
+
+/** https://discord.com/developers/docs/components/reference#separator-separator-structure */
+export enum SeparatorSpacing {
+  Small = 1,
+  Large,
 }
 
 /** https://discord.com/developers/docs/resources/application#application-object-application-integration-types */

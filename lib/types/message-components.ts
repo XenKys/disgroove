@@ -8,84 +8,44 @@ import type {
 import type { snowflake } from "./common";
 import type { RawEmoji, Emoji } from "./emoji";
 
+/** https://discord.com/developers/docs/components/reference#action-row-action-row-structure */
+export interface RawActionRow {
+  type: ComponentTypes.ActionRow;
+  components: Array<
+    | RawButton
+    | RawStringSelect
+    | RawUserSelect
+    | RawRoleSelect
+    | RawMentionableSelect
+    | RawChannelSelect
+  >;
+  id?: number;
+}
+
 /** https://discord.com/developers/docs/components/reference#button-button-structure */
 export interface RawButton {
   type: ComponentTypes.Button;
+  id?: number;
   style: ButtonStyles;
   label?: string;
   emoji?: Pick<RawEmoji, "name" | "id" | "animated">;
-  custom_id?: string;
+  custom_id: string;
   sku_id?: snowflake;
   url?: string;
   disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#string-select-string-select-structure */
+export interface RawStringSelect {
+  type: ComponentTypes.StringSelect;
   id?: number;
-}
-
-/** https://discord.com/developers/docs/components/reference#container-container-structure */
-export interface RawContainer {
-  type: ComponentTypes.Container;
-  id?: number;
-  components: Array<
-    | RawActionRow
-    | RawTextDisplay
-    | RawSection
-    | RawMediaGallery
-    | RawSeparator
-    | RawFile
-  >;
-  accent_color?: number | null;
-  spoiler?: boolean;
-}
-
-/** https://discord.com/developers/docs/components/reference#file-file-structure */
-export interface RawFile {
-  type: ComponentTypes.File;
-  id?: number;
-  file: RawUnfurledMediaItem;
-  spoiler?: boolean;
-  name: string;
-  size: number;
-}
-
-/** https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-structure */
-export interface RawMediaGallery {
-  type: ComponentTypes.MediaGallery;
-  id?: number;
-  items: Array<RawMediaGalleryItem>;
-}
-
-/** https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-item-structure */
-export interface RawMediaGalleryItem {
-  media: RawUnfurledMediaItem;
-  description?: string;
-  spoiler?: boolean;
-}
-
-/** https://discord.com/developers/docs/components/reference#section-section-structure */
-export interface RawSection {
-  type: ComponentTypes.Section;
-  id?: number;
-  components: Array<RawTextDisplay>;
-  accessory: RawThumbnail | RawButton;
-}
-
-/** https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-menu-structure */
-export interface RawSelectMenu {
-  type:
-    | ComponentTypes.ChannelSelect
-    | ComponentTypes.MentionableSelect
-    | ComponentTypes.RoleSelect
-    | ComponentTypes.StringSelect
-    | ComponentTypes.UserSelect;
   custom_id: string;
-  options?: Array<RawSelectOption>;
-  channel_types?: Array<ChannelTypes>;
+  options: Array<RawSelectOption>;
   placeholder?: string;
-  default_values?: Array<RawDefaultValue>;
   min_values?: number;
   max_values?: number;
+  required?: boolean;
   disabled?: boolean;
-  id?: number;
 }
 
 /** https://discord.com/developers/docs/components/reference#string-select-select-option-structure */
@@ -97,12 +57,80 @@ export interface RawSelectOption {
   default?: boolean;
 }
 
-/** https://discord.com/developers/docs/components/reference#separator-separator-structure */
-export interface RawSeparator {
-  type: ComponentTypes.Separator;
+/** https://discord.com/developers/docs/components/reference#text-input-text-input-structure */
+export interface RawTextInput {
+  type: ComponentTypes.TextInput;
   id?: number;
-  divider?: boolean;
-  spacing?: SeparatorSpacing;
+  custom_id: string;
+  style: TextInputStyles;
+  min_length?: number;
+  max_length?: number;
+  required?: boolean;
+  value?: string;
+  placeholder?: string;
+}
+
+/** https://discord.com/developers/docs/components/reference#user-select-user-select-structure */
+export interface RawUserSelect {
+  type: ComponentTypes.UserSelect;
+  id?: number;
+  custom_id: string;
+  placeholder?: string;
+  default_values?: Array<RawDefaultValue>;
+  min_values?: number;
+  max_values?: number;
+  disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#user-select-select-default-value-structure */
+export interface RawDefaultValue {
+  id: snowflake;
+  type: "user" | "role" | "channel";
+}
+
+/** https://discord.com/developers/docs/components/reference#role-select-role-select-structure */
+export interface RawRoleSelect {
+  type: ComponentTypes.RoleSelect;
+  id?: number;
+  custom_id: string;
+  placeholder?: string;
+  default_values?: Array<RawDefaultValue>;
+  min_values?: number;
+  max_values?: number;
+  disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#mentionable-select-mentionable-select-structure */
+export interface RawMentionableSelect {
+  type: ComponentTypes.MentionableSelect;
+  id?: number;
+  custom_id: string;
+  placeholder?: string;
+  default_values?: Array<RawDefaultValue>;
+  min_values?: number;
+  max_values?: number;
+  disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#channel-select-channel-select-structure */
+export interface RawChannelSelect {
+  type: ComponentTypes.ChannelSelect;
+  id?: number;
+  custom_id: string;
+  channel_types?: Array<ChannelTypes>;
+  placeholder?: string;
+  default_values?: Array<RawDefaultValue>;
+  min_values?: number;
+  max_values?: number;
+  disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#section-section-structure */
+export interface RawSection {
+  type: ComponentTypes.Section;
+  id?: number;
+  components: Array<RawTextDisplay>;
+  accessory: RawButton | RawThumbnail;
 }
 
 /** https://discord.com/developers/docs/components/reference#text-display-text-display-structure */
@@ -121,31 +149,52 @@ export interface RawThumbnail {
   spoiler?: boolean;
 }
 
-/** https://discord.com/developers/docs/components/reference#user-select-select-default-value-structure */
-export interface RawDefaultValue {
-  id: snowflake;
-  type: string;
+/** https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-structure */
+export interface RawMediaGallery {
+  type: ComponentTypes.MediaGallery;
+  id?: number;
+  items: Array<RawMediaGalleryItem>;
 }
 
-/** https://discord.com/developers/docs/components/reference#text-input-text-input-structure */
-export interface RawTextInput {
-  type: ComponentTypes.TextInput;
-  custom_id: string;
-  style: TextInputStyles;
-  label: string;
-  min_length?: number;
-  max_length?: number;
-  required?: boolean;
-  value?: string;
-  placeholder?: string;
-  id?: number;
+/** https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-item-structure */
+export interface RawMediaGalleryItem {
+  media: RawUnfurledMediaItem;
+  description?: string;
+  spoiler?: boolean;
 }
 
-/** https://discord.com/developers/docs/components/reference#action-row-action-row-structure */
-export interface RawActionRow {
-  type: ComponentTypes.ActionRow;
-  components: Array<RawButton | RawSelectMenu | RawTextInput>;
+/** https://discord.com/developers/docs/components/reference#file-file-structure */
+export interface RawFile {
+  type: ComponentTypes.File;
   id?: number;
+  file: RawUnfurledMediaItem;
+  spoiler?: boolean;
+  name: string;
+  size: number;
+}
+
+/** https://discord.com/developers/docs/components/reference#separator-separator-structure */
+export interface RawSeparator {
+  type: ComponentTypes.Separator;
+  id?: number;
+  divider?: boolean;
+  spacing?: SeparatorSpacing;
+}
+
+/** https://discord.com/developers/docs/components/reference#container-container-structure */
+export interface RawContainer {
+  type: ComponentTypes.Container;
+  id?: number;
+  components: Array<
+    | RawActionRow
+    | RawTextDisplay
+    | RawSection
+    | RawMediaGallery
+    | RawSeparator
+    | RawFile
+  >;
+  accent_color?: number | null;
+  spoiler?: boolean;
 }
 
 /** https://discord.com/developers/docs/components/reference#label-label-structure */
@@ -154,10 +203,10 @@ export interface RawLabel {
   id?: number;
   label: string;
   description?: string;
-  component: RawTextInput | RawSelectMenu;
+  component: RawTextInput | RawStringSelect;
 }
 
-/** https://discord.com/developers/docs/components/reference#unfurled-media-item-structure */
+/** https://discord.com/developers/docs/components/reference#unfurled-media-item-unfurled-media-item-structure */
 export interface RawUnfurledMediaItem {
   url: string;
   proxy_url?: string;
@@ -167,72 +216,41 @@ export interface RawUnfurledMediaItem {
   attachment_id?: snowflake;
 }
 
+export interface ActionRow {
+  type: ComponentTypes.ActionRow;
+  components: Array<
+    | Button
+    | StringSelect
+    | UserSelect
+    | RoleSelect
+    | MentionableSelect
+    | ChannelSelect
+  >;
+  id?: number;
+}
+
 export interface Button {
   type: ComponentTypes.Button;
+  id?: number;
   style: ButtonStyles;
   label?: string;
   emoji?: Pick<Emoji, "name" | "id" | "animated">;
-  customID?: string;
+  customID: string;
   skuID?: snowflake;
   url?: string;
   disabled?: boolean;
+}
+
+export interface StringSelect {
+  type: ComponentTypes.StringSelect;
   id?: number;
-}
-
-export interface Container {
-  type: ComponentTypes.Container;
-  id?: number;
-  components: Array<
-    ActionRow | TextDisplay | Section | MediaGallery | Separator | File
-  >;
-  accentColor?: number | null;
-  spoiler?: boolean;
-}
-
-export interface File {
-  type: ComponentTypes.File;
-  id?: number;
-  file: UnfurledMediaItem;
-  spoiler?: boolean;
-  name: string;
-  size: number;
-}
-
-export interface MediaGallery {
-  type: ComponentTypes.MediaGallery;
-  id?: number;
-  items: Array<MediaGalleryItem>;
-}
-
-export interface MediaGalleryItem {
-  media: UnfurledMediaItem;
-  description?: string;
-  spoiler?: boolean;
-}
-
-export interface Section {
-  type: ComponentTypes.Section;
-  id?: number;
-  components: Array<TextDisplay>;
-  accessory: Thumbnail | Button;
-}
-
-export interface SelectMenu {
-  type:
-    | ComponentTypes.ChannelSelect
-    | ComponentTypes.MentionableSelect
-    | ComponentTypes.RoleSelect
-    | ComponentTypes.StringSelect
-    | ComponentTypes.UserSelect;
   customID: string;
-  options?: Array<SelectOption>;
-  channelTypes?: Array<ChannelTypes>;
+  options: Array<SelectOption>;
   placeholder?: string;
-  defaultValues?: Array<DefaultValue>;
   minValues?: number;
   maxValues?: number;
+  required?: boolean;
   disabled?: boolean;
-  id?: number;
 }
 
 export interface SelectOption {
@@ -243,11 +261,73 @@ export interface SelectOption {
   default?: boolean;
 }
 
-export interface Separator {
-  type: ComponentTypes.Separator;
+export interface TextInput {
+  type: ComponentTypes.TextInput;
   id?: number;
-  divider?: boolean;
-  spacing?: SeparatorSpacing;
+  customID: string;
+  style: TextInputStyles;
+  minLength?: number;
+  maxLength?: number;
+  required?: boolean;
+  value?: string;
+  placeholder?: string;
+}
+
+export interface UserSelect {
+  type: ComponentTypes.UserSelect;
+  id?: number;
+  customID: string;
+  placeholder?: string;
+  defaultValues?: Array<DefaultValue>;
+  minValues?: number;
+  maxValues?: number;
+  disabled?: boolean;
+}
+
+export interface DefaultValue {
+  id: snowflake;
+  type: "user" | "role" | "channel";
+}
+
+export interface RoleSelect {
+  type: ComponentTypes.RoleSelect;
+  id?: number;
+  customID: string;
+  placeholder?: string;
+  defaultValues?: Array<DefaultValue>;
+  minValues?: number;
+  maxValues?: number;
+  disabled?: boolean;
+}
+
+export interface MentionableSelect {
+  type: ComponentTypes.MentionableSelect;
+  id?: number;
+  customID: string;
+  placeholder?: string;
+  defaultValues?: Array<DefaultValue>;
+  minValues?: number;
+  maxValues?: number;
+  disabled?: boolean;
+}
+
+export interface ChannelSelect {
+  type: ComponentTypes.ChannelSelect;
+  id?: number;
+  customID: string;
+  channelTypes?: Array<ChannelTypes>;
+  placeholder?: string;
+  defaultValues?: Array<DefaultValue>;
+  minValues?: number;
+  maxValues?: number;
+  disabled?: boolean;
+}
+
+export interface Section {
+  type: ComponentTypes.Section;
+  id?: number;
+  components: Array<TextDisplay>;
+  accessory: Button | Thumbnail;
 }
 
 export interface TextDisplay {
@@ -264,28 +344,42 @@ export interface Thumbnail {
   spoiler?: boolean;
 }
 
-export interface DefaultValue {
-  id: snowflake;
-  type: string;
+export interface MediaGallery {
+  type: ComponentTypes.MediaGallery;
+  id?: number;
+  items: Array<MediaGalleryItem>;
 }
 
-export interface TextInput {
-  type: ComponentTypes.TextInput;
-  customID: string;
-  style: TextInputStyles;
-  label: string;
-  minLength?: number;
-  maxLength?: number;
-  required?: boolean;
-  value?: string;
-  placeholder?: string;
-  id?: number;
+export interface MediaGalleryItem {
+  media: UnfurledMediaItem;
+  description?: string;
+  spoiler?: boolean;
 }
 
-export interface ActionRow {
-  type: ComponentTypes.ActionRow;
-  components: Array<Button | SelectMenu | TextInput>;
+export interface File {
+  type: ComponentTypes.File;
   id?: number;
+  file: UnfurledMediaItem;
+  spoiler?: boolean;
+  name: string;
+  size: number;
+}
+
+export interface Separator {
+  type: ComponentTypes.Separator;
+  id?: number;
+  divider?: boolean;
+  spacing?: SeparatorSpacing;
+}
+
+export interface Container {
+  type: ComponentTypes.Container;
+  id?: number;
+  components: Array<
+    ActionRow | TextDisplay | Section | MediaGallery | Separator | File
+  >;
+  accentColor?: number | null;
+  spoiler?: boolean;
 }
 
 export interface Label {
@@ -293,7 +387,7 @@ export interface Label {
   id?: number;
   label: string;
   description?: string;
-  component: TextInput | SelectMenu;
+  component: TextInput | StringSelect;
 }
 
 export interface UnfurledMediaItem {

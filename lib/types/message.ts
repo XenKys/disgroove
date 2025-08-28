@@ -27,19 +27,33 @@ import type {
 } from "./interaction";
 import type {
   ActionRow,
+  Button,
+  ChannelSelect,
   Container,
   File,
   MediaGallery,
+  MentionableSelect,
   RawActionRow,
+  RawButton,
+  RawChannelSelect,
   RawContainer,
   RawFile,
   RawMediaGallery,
+  RawMentionableSelect,
+  RawRoleSelect,
   RawSection,
   RawSeparator,
+  RawStringSelect,
   RawTextDisplay,
+  RawThumbnail,
+  RawUserSelect,
+  RoleSelect,
   Section,
   Separator,
+  StringSelect,
   TextDisplay,
+  Thumbnail,
+  UserSelect,
 } from "./message-components";
 import type { Poll, RawPoll } from "./poll";
 import type {
@@ -80,7 +94,22 @@ export interface RawMessage {
   interaction_metadata?: RawMessageInteractionMetadata;
   interaction?: RawMessageInteraction;
   thread?: RawChannel;
-  components?: Array<RawMessageTopLevelComponent>;
+  components?: Array<
+    | RawActionRow
+    | RawButton
+    | RawStringSelect
+    | RawUserSelect
+    | RawRoleSelect
+    | RawMentionableSelect
+    | RawChannelSelect
+    | RawSection
+    | RawTextDisplay
+    | RawThumbnail
+    | RawMediaGallery
+    | RawFile
+    | RawSeparator
+    | RawContainer
+  >;
   sticker_items?: Array<RawStickerItem>;
   stickers?: Array<RawSticker>;
   position?: number;
@@ -89,15 +118,6 @@ export interface RawMessage {
   poll?: RawPoll;
   call?: RawMessageCall;
 }
-
-export type RawMessageTopLevelComponent =
-  | RawActionRow
-  | RawTextDisplay
-  | RawContainer
-  | RawFile
-  | RawSection
-  | RawSeparator
-  | RawMediaGallery;
 
 /** https://discord.com/developers/docs/resources/message#message-object-message-activity-structure */
 export interface RawMessageActivity {
@@ -316,7 +336,22 @@ export interface Message {
   interactionMetadata?: MessageInteractionMetadata;
   interaction?: MessageInteraction;
   thread?: Channel;
-  components?: Array<MessageTopLevelComponent>;
+  components?: Array<
+    | ActionRow
+    | Button
+    | StringSelect
+    | UserSelect
+    | RoleSelect
+    | MentionableSelect
+    | ChannelSelect
+    | Section
+    | TextDisplay
+    | Thumbnail
+    | MediaGallery
+    | File
+    | Separator
+    | Container
+  >;
   stickerItems?: Array<StickerItem>;
   stickers?: Array<Sticker>;
   position?: number;
@@ -325,15 +360,6 @@ export interface Message {
   poll?: Poll;
   call?: MessageCall;
 }
-
-export type MessageTopLevelComponent =
-  | ActionRow
-  | TextDisplay
-  | Container
-  | File
-  | Section
-  | Separator
-  | MediaGallery;
 
 export interface MessageActivity {
   type: MessageActivityTypes;

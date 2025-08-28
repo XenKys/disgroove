@@ -20,10 +20,20 @@ import {
   RawThumbnail,
   TextInput,
   RawTextInput,
-  SelectMenu,
-  RawSelectMenu,
   MediaGallery,
   RawMediaGallery,
+  RawStringSelect,
+  StringSelect,
+  RawUserSelect,
+  UserSelect,
+  RawRoleSelect,
+  RoleSelect,
+  RawMentionableSelect,
+  MentionableSelect,
+  RawChannelSelect,
+  ChannelSelect,
+  RawLabel,
+  Label,
 } from "../types/message-components.js";
 
 export class Components {
@@ -32,19 +42,18 @@ export class Components {
       type: actionRow.type,
       components: actionRow.components.map((c) => {
         switch (c.type) {
-          case ComponentTypes.Button: {
+          case ComponentTypes.Button:
             return Components.buttonFromRaw(c);
-          }
-          case ComponentTypes.TextInput: {
-            return Components.textInputFromRaw(c);
-          }
-          case ComponentTypes.ChannelSelect:
-          case ComponentTypes.MentionableSelect:
-          case ComponentTypes.RoleSelect:
+          case ComponentTypes.StringSelect:
+            return Components.stringSelectFromRaw(c);
           case ComponentTypes.UserSelect:
-          case ComponentTypes.StringSelect: {
-            return Components.selectMenuFromRaw(c);
-          }
+            return Components.userSelectFromRaw(c);
+          case ComponentTypes.RoleSelect:
+            return Components.roleSelectFromRaw(c);
+          case ComponentTypes.MentionableSelect:
+            return Components.mentionableSelectFromRaw(c);
+          case ComponentTypes.ChannelSelect:
+            return Components.channelSelectFromRaw(c);
         }
       }),
       id: actionRow.id,
@@ -56,19 +65,18 @@ export class Components {
       type: actionRow.type,
       components: actionRow.components.map((c) => {
         switch (c.type) {
-          case ComponentTypes.Button: {
+          case ComponentTypes.Button:
             return Components.buttonToRaw(c);
-          }
-          case ComponentTypes.TextInput: {
-            return Components.textInputToRaw(c);
-          }
-          case ComponentTypes.ChannelSelect:
-          case ComponentTypes.MentionableSelect:
-          case ComponentTypes.RoleSelect:
+          case ComponentTypes.StringSelect:
+            return Components.stringSelectToRaw(c);
           case ComponentTypes.UserSelect:
-          case ComponentTypes.StringSelect: {
-            return Components.selectMenuToRaw(c);
-          }
+            return Components.userSelectToRaw(c);
+          case ComponentTypes.RoleSelect:
+            return Components.roleSelectToRaw(c);
+          case ComponentTypes.MentionableSelect:
+            return Components.mentionableSelectToRaw(c);
+          case ComponentTypes.ChannelSelect:
+            return Components.channelSelectToRaw(c);
         }
       }),
       id: actionRow.id,
@@ -100,6 +108,34 @@ export class Components {
       url: button.url,
       disabled: button.disabled,
       id: button.id,
+    };
+  }
+
+  static channelSelectFromRaw(channelSelect: RawChannelSelect): ChannelSelect {
+    return {
+      type: channelSelect.type,
+      id: channelSelect.id,
+      customID: channelSelect.custom_id,
+      channelTypes: channelSelect.channel_types,
+      placeholder: channelSelect.placeholder,
+      defaultValues: channelSelect.default_values,
+      minValues: channelSelect.min_values,
+      maxValues: channelSelect.max_values,
+      disabled: channelSelect.disabled,
+    };
+  }
+
+  static channelSelectToRaw(channelSelect: ChannelSelect): RawChannelSelect {
+    return {
+      type: channelSelect.type,
+      id: channelSelect.id,
+      custom_id: channelSelect.customID,
+      channel_types: channelSelect.channelTypes,
+      placeholder: channelSelect.placeholder,
+      default_values: channelSelect.defaultValues,
+      min_values: channelSelect.minValues,
+      max_values: channelSelect.maxValues,
+      disabled: channelSelect.disabled,
     };
   }
 
@@ -187,6 +223,48 @@ export class Components {
     };
   }
 
+  static labelFromRaw(label: RawLabel): Label {
+    let component;
+
+    switch (label.component.type) {
+      case ComponentTypes.StringSelect:
+        component = Components.stringSelectFromRaw(label.component);
+        break;
+      case ComponentTypes.TextInput:
+        component = Components.textInputFromRaw(label.component);
+        break;
+    }
+
+    return {
+      type: label.type,
+      id: label.id,
+      label: label.label,
+      description: label.description,
+      component,
+    };
+  }
+
+  static labelToRaw(label: Label): RawLabel {
+    let component;
+
+    switch (label.component.type) {
+      case ComponentTypes.StringSelect:
+        component = Components.stringSelectToRaw(label.component);
+        break;
+      case ComponentTypes.TextInput:
+        component = Components.textInputToRaw(label.component);
+        break;
+    }
+
+    return {
+      type: label.type,
+      id: label.id,
+      label: label.label,
+      description: label.description,
+      component,
+    };
+  }
+
   static mediaGalleryFromRaw(mediaGallery: RawMediaGallery): MediaGallery {
     return {
       type: mediaGallery.type,
@@ -208,6 +286,62 @@ export class Components {
         description: item.description,
         spoiler: item.spoiler,
       })),
+    };
+  }
+
+  static mentionableSelectFromRaw(
+    mentionableSelect: RawMentionableSelect
+  ): MentionableSelect {
+    return {
+      type: mentionableSelect.type,
+      id: mentionableSelect.id,
+      customID: mentionableSelect.custom_id,
+      placeholder: mentionableSelect.placeholder,
+      defaultValues: mentionableSelect.default_values,
+      minValues: mentionableSelect.min_values,
+      maxValues: mentionableSelect.max_values,
+      disabled: mentionableSelect.disabled,
+    };
+  }
+
+  static mentionableSelectToRaw(
+    mentionableSelect: MentionableSelect
+  ): RawMentionableSelect {
+    return {
+      type: mentionableSelect.type,
+      id: mentionableSelect.id,
+      custom_id: mentionableSelect.customID,
+      placeholder: mentionableSelect.placeholder,
+      default_values: mentionableSelect.defaultValues,
+      min_values: mentionableSelect.minValues,
+      max_values: mentionableSelect.maxValues,
+      disabled: mentionableSelect.disabled,
+    };
+  }
+
+  static roleSelectFromRaw(roleSelect: RawRoleSelect): RoleSelect {
+    return {
+      type: roleSelect.type,
+      id: roleSelect.id,
+      customID: roleSelect.custom_id,
+      placeholder: roleSelect.placeholder,
+      defaultValues: roleSelect.default_values,
+      minValues: roleSelect.min_values,
+      maxValues: roleSelect.max_values,
+      disabled: roleSelect.disabled,
+    };
+  }
+
+  static roleSelectToRaw(roleSelect: RoleSelect): RawRoleSelect {
+    return {
+      type: roleSelect.type,
+      id: roleSelect.id,
+      custom_id: roleSelect.customID,
+      placeholder: roleSelect.placeholder,
+      default_values: roleSelect.defaultValues,
+      min_values: roleSelect.minValues,
+      max_values: roleSelect.maxValues,
+      disabled: roleSelect.disabled,
     };
   }
 
@@ -235,112 +369,55 @@ export class Components {
     };
   }
 
-  static selectMenuFromRaw(selectMenu: RawSelectMenu): SelectMenu {
-    switch (selectMenu.type) {
-      case ComponentTypes.ChannelSelect: {
-        return {
-          type: selectMenu.type,
-          customID: selectMenu.custom_id,
-          channelTypes: selectMenu.channel_types,
-          placeholder: selectMenu.placeholder,
-          defaultValues: selectMenu.default_values,
-          minValues: selectMenu.min_values,
-          maxValues: selectMenu.max_values,
-          disabled: selectMenu.disabled,
-        };
-      }
-      case ComponentTypes.StringSelect: {
-        return {
-          type: selectMenu.type,
-          customID: selectMenu.custom_id,
-          placeholder: selectMenu.placeholder,
-          options: selectMenu.options?.map((option) => ({
-            label: option.label,
-            value: option.value,
-            description: option.description,
-            emoji:
-              option.emoji !== undefined
-                ? {
-                    name: option.emoji.name,
-                    id: option.emoji.id,
-                    animated: option.emoji.animated,
-                  }
-                : undefined,
-            default: option.default,
-          })),
-          minValues: selectMenu.min_values,
-          maxValues: selectMenu.max_values,
-          disabled: selectMenu.disabled,
-        };
-      }
-      case ComponentTypes.MentionableSelect:
-      case ComponentTypes.RoleSelect:
-      case ComponentTypes.UserSelect: {
-        return {
-          type: selectMenu.type,
-          customID: selectMenu.custom_id,
-          placeholder: selectMenu.placeholder,
-          defaultValues: selectMenu.default_values,
-          minValues: selectMenu.min_values,
-          maxValues: selectMenu.max_values,
-          disabled: selectMenu.disabled,
-        };
-      }
-    }
+  static stringSelectFromRaw(stringSelect: RawStringSelect): StringSelect {
+    return {
+      type: stringSelect.type,
+      id: stringSelect.id,
+      customID: stringSelect.custom_id,
+      placeholder: stringSelect.placeholder,
+      options: stringSelect.options?.map((option) => ({
+        label: option.label,
+        value: option.value,
+        description: option.description,
+        emoji:
+          option.emoji !== undefined
+            ? {
+                name: option.emoji.name,
+                id: option.emoji.id,
+                animated: option.emoji.animated,
+              }
+            : undefined,
+        default: option.default,
+      })),
+      minValues: stringSelect.min_values,
+      maxValues: stringSelect.max_values,
+      disabled: stringSelect.disabled,
+    };
   }
 
-  static selectMenuToRaw(selectMenu: SelectMenu): RawSelectMenu {
-    switch (selectMenu.type) {
-      case ComponentTypes.ChannelSelect: {
-        return {
-          type: selectMenu.type,
-          custom_id: selectMenu.customID,
-          channel_types: selectMenu.channelTypes,
-          placeholder: selectMenu.placeholder,
-          default_values: selectMenu.defaultValues,
-          min_values: selectMenu.minValues,
-          max_values: selectMenu.maxValues,
-          disabled: selectMenu.disabled,
-        };
-      }
-      case ComponentTypes.StringSelect: {
-        return {
-          type: selectMenu.type,
-          custom_id: selectMenu.customID,
-          placeholder: selectMenu.placeholder,
-          options: selectMenu.options?.map((option) => ({
-            label: option.label,
-            value: option.value,
-            description: option.description,
-            emoji:
-              option.emoji !== undefined
-                ? {
-                    name: option.emoji.name,
-                    id: option.emoji.id,
-                    animated: option.emoji.animated,
-                  }
-                : undefined,
-            default: option.default,
-          })),
-          min_values: selectMenu.minValues,
-          max_values: selectMenu.maxValues,
-          disabled: selectMenu.disabled,
-        };
-      }
-      case ComponentTypes.MentionableSelect:
-      case ComponentTypes.RoleSelect:
-      case ComponentTypes.UserSelect: {
-        return {
-          type: selectMenu.type,
-          custom_id: selectMenu.customID,
-          placeholder: selectMenu.placeholder,
-          default_values: selectMenu.defaultValues,
-          min_values: selectMenu.minValues,
-          max_values: selectMenu.maxValues,
-          disabled: selectMenu.disabled,
-        };
-      }
-    }
+  static stringSelectToRaw(stringSelect: StringSelect): RawStringSelect {
+    return {
+      type: stringSelect.type,
+      custom_id: stringSelect.customID,
+      placeholder: stringSelect.placeholder,
+      options: stringSelect.options?.map((option) => ({
+        label: option.label,
+        value: option.value,
+        description: option.description,
+        emoji:
+          option.emoji !== undefined
+            ? {
+                name: option.emoji.name,
+                id: option.emoji.id,
+                animated: option.emoji.animated,
+              }
+            : undefined,
+        default: option.default,
+      })),
+      min_values: stringSelect.minValues,
+      max_values: stringSelect.maxValues,
+      disabled: stringSelect.disabled,
+    };
   }
 
   static separatorFromRaw(separator: RawSeparator): Separator {
@@ -382,7 +459,6 @@ export class Components {
       type: textInput.type,
       customID: textInput.custom_id,
       style: textInput.style,
-      label: textInput.label,
       minLength: textInput.min_length,
       maxLength: textInput.max_length,
       required: textInput.required,
@@ -397,7 +473,6 @@ export class Components {
       type: textInput.type,
       custom_id: textInput.customID,
       style: textInput.style,
-      label: textInput.label,
       min_length: textInput.minLength,
       max_length: textInput.maxLength,
       required: textInput.required,
@@ -448,6 +523,32 @@ export class Components {
       height: unfurledMediaItem.height,
       width: unfurledMediaItem.width,
       content_type: unfurledMediaItem.contentType,
+    };
+  }
+
+  static userSelectFromRaw(userSelect: RawUserSelect): UserSelect {
+    return {
+      type: userSelect.type,
+      id: userSelect.id,
+      customID: userSelect.custom_id,
+      placeholder: userSelect.placeholder,
+      defaultValues: userSelect.default_values,
+      minValues: userSelect.min_values,
+      maxValues: userSelect.max_values,
+      disabled: userSelect.disabled,
+    };
+  }
+
+  static userSelectToRaw(userSelect: UserSelect): RawUserSelect {
+    return {
+      type: userSelect.type,
+      id: userSelect.id,
+      custom_id: userSelect.customID,
+      placeholder: userSelect.placeholder,
+      default_values: userSelect.defaultValues,
+      min_values: userSelect.minValues,
+      max_values: userSelect.maxValues,
+      disabled: userSelect.disabled,
     };
   }
 }

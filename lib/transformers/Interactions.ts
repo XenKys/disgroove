@@ -25,6 +25,8 @@ import type {
   RawMessage,
   RawAttachment,
 } from "../types/message";
+import { ComponentTypes } from "../constants";
+import { Components } from "./Components";
 
 export class Interactions {
   static interactionCallbackResponseFromRaw(
@@ -101,33 +103,29 @@ export class Interactions {
       data:
         interaction.data !== undefined
           ? {
-              id: interaction.data.id,
-              name: interaction.data.name,
-              type: interaction.data.type,
+              id: interaction.data?.id,
+              name: interaction.data?.name,
+              type: interaction.data?.type,
               resolved:
-                interaction.data.resolved !== undefined
+                interaction.data?.resolved !== undefined
                   ? Interactions.resolvedDataFromRaw(interaction.data.resolved)
                   : undefined,
-              options: interaction.data.options,
-              guildID: interaction.data.guild_id,
-              targetID: interaction.data.target_id,
-              customID: interaction.data.custom_id,
-              componentType: interaction.data.component_type,
-              values: interaction.data.values,
-              components: interaction.data.components?.map((component) => ({
-                type: component.type,
-                components: component.components?.map((c) => ({
-                  type: c.type,
-                  customID: c.custom_id,
-                  style: c.style,
-                  label: c.label,
-                  minLength: c.min_length,
-                  maxLength: c.max_length,
-                  required: c.required,
-                  value: c.value,
-                  placeholder: c.placeholder,
-                })),
-              })),
+              options: interaction.data?.options,
+              guildID: interaction.data?.guild_id,
+              targetID: interaction.data?.target_id,
+              customID: interaction.data?.custom_id,
+              componentType: interaction.data?.component_type,
+              values: interaction.data?.values,
+              components: interaction.data?.components?.map((component) => {
+                switch (component.type) {
+                  case ComponentTypes.StringSelect:
+                    return Components.stringSelectFromRaw(component);
+                  case ComponentTypes.TextInput:
+                    return Components.textInputFromRaw(component);
+                  case ComponentTypes.Label:
+                    return Components.labelFromRaw(component);
+                }
+              }),
             }
           : undefined,
       guild:
@@ -239,20 +237,16 @@ export class Interactions {
               custom_id: interaction.data.customID,
               component_type: interaction.data.componentType,
               values: interaction.data.values,
-              components: interaction.data.components?.map((component) => ({
-                type: component.type,
-                components: component.components?.map((c) => ({
-                  type: c.type,
-                  custom_id: c.customID,
-                  style: c.style,
-                  label: c.label,
-                  min_length: c.minLength,
-                  max_length: c.maxLength,
-                  required: c.required,
-                  value: c.value,
-                  placeholder: c.placeholder,
-                })),
-              })),
+              components: interaction.data?.components?.map((component) => {
+                switch (component.type) {
+                  case ComponentTypes.StringSelect:
+                    return Components.stringSelectToRaw(component);
+                  case ComponentTypes.TextInput:
+                    return Components.textInputToRaw(component);
+                  case ComponentTypes.Label:
+                    return Components.labelToRaw(component);
+                }
+              }),
             }
           : undefined,
       guild:

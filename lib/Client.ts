@@ -212,12 +212,41 @@ import type {
   Message,
   RawMessage,
   MessageReference,
-  MessageTopLevelComponent,
   MessagePin,
   RawMessagePin,
 } from "./types/message";
 import type { RawSubscription, Subscription } from "./types/subscription";
 import type { RawSoundboardSound, SoundboardSound } from "./types/soundboard";
+import type {
+  ActionRow,
+  Button,
+  ChannelSelect,
+  Container,
+  File,
+  MediaGallery,
+  MentionableSelect,
+  RawActionRow,
+  RawButton,
+  RawChannelSelect,
+  RawContainer,
+  RawFile,
+  RawMediaGallery,
+  RawMentionableSelect,
+  RawRoleSelect,
+  RawSection,
+  RawSeparator,
+  RawStringSelect,
+  RawTextDisplay,
+  RawThumbnail,
+  RawUserSelect,
+  RoleSelect,
+  Section,
+  Separator,
+  StringSelect,
+  TextDisplay,
+  Thumbnail,
+  UserSelect,
+} from "./types/message-components";
 
 export interface GatewayOptions {
   properties?: IdentifyConnectionProperties;
@@ -1045,7 +1074,22 @@ export class Client extends EventEmitter {
       tts?: boolean;
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
-      components?: Array<MessageTopLevelComponent>;
+      components?: Array<
+        | ActionRow
+        | Button
+        | StringSelect
+        | UserSelect
+        | RoleSelect
+        | MentionableSelect
+        | ChannelSelect
+        | Section
+        | TextDisplay
+        | Thumbnail
+        | MediaGallery
+        | File
+        | Separator
+        | Container
+      >;
       files?: Array<FileData> | null;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;
@@ -1249,7 +1293,22 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
       messageReference?: MessageReference;
-      components?: Array<MessageTopLevelComponent>;
+      components?: Array<
+        | ActionRow
+        | Button
+        | StringSelect
+        | UserSelect
+        | RoleSelect
+        | MentionableSelect
+        | ChannelSelect
+        | Section
+        | TextDisplay
+        | Thumbnail
+        | MediaGallery
+        | File
+        | Separator
+        | Container
+      >;
       stickersIDs?: Array<snowflake>;
       files?: Array<FileData>;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
@@ -1388,7 +1447,22 @@ export class Client extends EventEmitter {
         content?: string;
         embeds?: Array<Embed>;
         allowedMentions?: AllowedMentions;
-        components?: Array<MessageTopLevelComponent>;
+        components?: Array<
+          | ActionRow
+          | Button
+          | StringSelect
+          | UserSelect
+          | RoleSelect
+          | MentionableSelect
+          | ChannelSelect
+          | Section
+          | TextDisplay
+          | Thumbnail
+          | MediaGallery
+          | File
+          | Separator
+          | Container
+        >;
         stickerIDs?: Array<snowflake>;
         attachments?: Array<Pick<Attachment, "filename" | "description">>;
         flags?: MessageFlags;
@@ -2670,7 +2744,22 @@ export class Client extends EventEmitter {
       embeds?: Array<Embed> | null;
       flags?: MessageFlags | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<MessageTopLevelComponent> | null;
+      components?: Array<
+        | ActionRow
+        | Button
+        | StringSelect
+        | UserSelect
+        | RoleSelect
+        | MentionableSelect
+        | ChannelSelect
+        | Section
+        | TextDisplay
+        | Thumbnail
+        | MediaGallery
+        | File
+        | Separator
+        | Container
+      > | null;
       files?: Array<FileData> | null;
       attachments?: Array<Attachment> | null;
     }
@@ -2747,7 +2836,22 @@ export class Client extends EventEmitter {
       content?: string | null;
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<MessageTopLevelComponent> | null;
+      components?: Array<
+        | ActionRow
+        | Button
+        | StringSelect
+        | UserSelect
+        | RoleSelect
+        | MentionableSelect
+        | ChannelSelect
+        | Section
+        | TextDisplay
+        | Thumbnail
+        | MediaGallery
+        | File
+        | Separator
+        | Container
+      > | null;
       files?: Array<FileData> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
@@ -2831,7 +2935,22 @@ export class Client extends EventEmitter {
       content?: string | null;
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<MessageTopLevelComponent> | null;
+      components?: Array<
+        | ActionRow
+        | Button
+        | StringSelect
+        | UserSelect
+        | RoleSelect
+        | MentionableSelect
+        | ChannelSelect
+        | Section
+        | TextDisplay
+        | Thumbnail
+        | MediaGallery
+        | File
+        | Separator
+        | Container
+      > | null;
       files?: Array<FileData> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
@@ -2963,7 +3082,22 @@ export class Client extends EventEmitter {
       content?: string | null;
       embeds?: Array<Embed> | null;
       allowedMentions?: AllowedMentions | null;
-      components?: Array<MessageTopLevelComponent> | null;
+      components?: Array<
+        | ActionRow
+        | Button
+        | StringSelect
+        | UserSelect
+        | RoleSelect
+        | MentionableSelect
+        | ChannelSelect
+        | Section
+        | TextDisplay
+        | Thumbnail
+        | MediaGallery
+        | File
+        | Separator
+        | Container
+      > | null;
       files?: Array<FileData> | null;
       attachments?: Array<Partial<Attachment>> | null;
       poll?: PollCreateParams | null;
@@ -3088,7 +3222,22 @@ export class Client extends EventEmitter {
       tts?: boolean;
       embeds?: Array<Embed>;
       allowedMentions?: AllowedMentions;
-      components?: Array<MessageTopLevelComponent>;
+      components?: Array<
+        | ActionRow
+        | Button
+        | StringSelect
+        | UserSelect
+        | RoleSelect
+        | MentionableSelect
+        | ChannelSelect
+        | Section
+        | TextDisplay
+        | Thumbnail
+        | MediaGallery
+        | File
+        | Separator
+        | Container
+      >;
       files?: Array<FileData>;
       attachments?: Array<Pick<Attachment, "filename" | "description">>;
       flags?: MessageFlags;

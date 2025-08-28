@@ -6,8 +6,6 @@ import {
   Embed,
   RawMessage,
   Message,
-  MessageTopLevelComponent,
-  RawMessageTopLevelComponent,
 } from "../types/message";
 import { Applications } from "./Applications";
 import { Channels } from "./Channels";
@@ -18,6 +16,36 @@ import { Interactions } from "./Interactions";
 import { Polls } from "./Polls";
 import { Stickers } from "./Stickers";
 import { Users } from "./Users";
+import type {
+  ActionRow,
+  Button,
+  ChannelSelect,
+  Container,
+  File,
+  MediaGallery,
+  MentionableSelect,
+  RawActionRow,
+  RawButton,
+  RawChannelSelect,
+  RawContainer,
+  RawFile,
+  RawMediaGallery,
+  RawMentionableSelect,
+  RawRoleSelect,
+  RawSection,
+  RawSeparator,
+  RawStringSelect,
+  RawTextDisplay,
+  RawThumbnail,
+  RawUserSelect,
+  RoleSelect,
+  Section,
+  Separator,
+  StringSelect,
+  TextDisplay,
+  Thumbnail,
+  UserSelect,
+} from "../types/message-components";
 
 export class Messages {
   static attachmentFromRaw(attachment: RawAttachment): Attachment {
@@ -59,61 +87,135 @@ export class Messages {
   }
 
   static componentsFromRaw(
-    components: Array<RawMessageTopLevelComponent>
-  ): Array<MessageTopLevelComponent> {
+    components: Array<
+      | RawActionRow
+      | RawButton
+      | RawStringSelect
+      | RawUserSelect
+      | RawRoleSelect
+      | RawMentionableSelect
+      | RawChannelSelect
+      | RawSection
+      | RawTextDisplay
+      | RawThumbnail
+      | RawMediaGallery
+      | RawFile
+      | RawSeparator
+      | RawContainer
+    >
+  ): Array<
+    | ActionRow
+    | Button
+    | StringSelect
+    | UserSelect
+    | RoleSelect
+    | MentionableSelect
+    | ChannelSelect
+    | Section
+    | TextDisplay
+    | Thumbnail
+    | MediaGallery
+    | File
+    | Separator
+    | Container
+  > {
     return components.map((component) => {
       switch (component.type) {
-        case ComponentTypes.ActionRow: {
+        case ComponentTypes.ActionRow:
           return Components.actionRowFromRaw(component);
-        }
-        case ComponentTypes.TextDisplay: {
-          return Components.textDisplayFromRaw(component);
-        }
-        case ComponentTypes.Container: {
-          return Components.containerFromRaw(component);
-        }
-        case ComponentTypes.File: {
-          return Components.fileFromRaw(component);
-        }
-        case ComponentTypes.Section: {
+        case ComponentTypes.Button:
+          return Components.buttonFromRaw(component);
+        case ComponentTypes.StringSelect:
+          return Components.stringSelectFromRaw(component);
+        case ComponentTypes.UserSelect:
+          return Components.userSelectFromRaw(component);
+        case ComponentTypes.RoleSelect:
+          return Components.roleSelectFromRaw(component);
+        case ComponentTypes.MentionableSelect:
+          return Components.mentionableSelectFromRaw(component);
+        case ComponentTypes.ChannelSelect:
+          return Components.channelSelectFromRaw(component);
+        case ComponentTypes.Section:
           return Components.sectionFromRaw(component);
-        }
-        case ComponentTypes.Separator: {
-          return Components.separatorFromRaw(component);
-        }
-        case ComponentTypes.MediaGallery: {
+        case ComponentTypes.TextDisplay:
+          return Components.textDisplayFromRaw(component);
+        case ComponentTypes.Thumbnail:
+          return Components.thumbnailFromRaw(component);
+        case ComponentTypes.MediaGallery:
           return Components.mediaGalleryFromRaw(component);
-        }
+        case ComponentTypes.File:
+          return Components.fileFromRaw(component);
+        case ComponentTypes.Separator:
+          return Components.separatorFromRaw(component);
+        case ComponentTypes.Container:
+          return Components.containerFromRaw(component);
       }
     });
   }
 
   static componentsToRaw(
-    components: Array<MessageTopLevelComponent>
-  ): Array<RawMessageTopLevelComponent> {
+    components: Array<
+      | ActionRow
+      | Button
+      | StringSelect
+      | UserSelect
+      | RoleSelect
+      | MentionableSelect
+      | ChannelSelect
+      | Section
+      | TextDisplay
+      | Thumbnail
+      | MediaGallery
+      | File
+      | Separator
+      | Container
+    >
+  ): Array<
+    | RawActionRow
+    | RawButton
+    | RawStringSelect
+    | RawUserSelect
+    | RawRoleSelect
+    | RawMentionableSelect
+    | RawChannelSelect
+    | RawSection
+    | RawTextDisplay
+    | RawThumbnail
+    | RawMediaGallery
+    | RawFile
+    | RawSeparator
+    | RawContainer
+  > {
     return components.map((component) => {
       switch (component.type) {
-        case ComponentTypes.ActionRow: {
+        case ComponentTypes.ActionRow:
           return Components.actionRowToRaw(component);
-        }
-        case ComponentTypes.TextDisplay: {
-          return Components.textDisplayToRaw(component);
-        }
-        case ComponentTypes.Container: {
-          return Components.containerToRaw(component);
-        }
-        case ComponentTypes.File: {
-          return Components.fileToRaw(component);
-        }
-        case ComponentTypes.Section: {
+        case ComponentTypes.Button:
+          return Components.buttonToRaw(component);
+        case ComponentTypes.StringSelect:
+          return Components.stringSelectToRaw(component);
+        case ComponentTypes.UserSelect:
+          return Components.userSelectToRaw(component);
+        case ComponentTypes.RoleSelect:
+          return Components.roleSelectToRaw(component);
+        case ComponentTypes.MentionableSelect:
+          return Components.mentionableSelectToRaw(component);
+        case ComponentTypes.ChannelSelect:
+          return Components.channelSelectToRaw(component);
+        case ComponentTypes.Section:
           return Components.sectionToRaw(component);
-        }
-        case ComponentTypes.Separator: {
-          return Components.separatorToRaw(component);
-        }
-        case ComponentTypes.MediaGallery: {
+        case ComponentTypes.TextDisplay:
+          return Components.textDisplayToRaw(component);
+        case ComponentTypes.Thumbnail:
+          return Components.thumbnailToRaw(component);
+        case ComponentTypes.MediaGallery:
           return Components.mediaGalleryToRaw(component);
-        }
+        case ComponentTypes.File:
+          return Components.fileToRaw(component);
+        case ComponentTypes.Separator:
+          return Components.separatorToRaw(component);
+        case ComponentTypes.Container:
+          return Components.containerToRaw(component);
       }
     });
   }
