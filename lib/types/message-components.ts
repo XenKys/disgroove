@@ -14,6 +14,7 @@ export interface RawActionRow {
   components: Array<
     | RawButton
     | RawStringSelect
+    | RawTextInput
     | RawUserSelect
     | RawRoleSelect
     | RawMentionableSelect
@@ -221,6 +222,7 @@ export interface ActionRow {
   components: Array<
     | Button
     | StringSelect
+    | TextInput
     | UserSelect
     | RoleSelect
     | MentionableSelect

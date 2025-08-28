@@ -46,6 +46,8 @@ export class Components {
             return Components.buttonFromRaw(c);
           case ComponentTypes.StringSelect:
             return Components.stringSelectFromRaw(c);
+          case ComponentTypes.TextInput:
+            return Components.textInputFromRaw(c);
           case ComponentTypes.UserSelect:
             return Components.userSelectFromRaw(c);
           case ComponentTypes.RoleSelect:
@@ -69,6 +71,8 @@ export class Components {
             return Components.buttonToRaw(c);
           case ComponentTypes.StringSelect:
             return Components.stringSelectToRaw(c);
+          case ComponentTypes.TextInput:
+            return Components.textInputToRaw(c);
           case ComponentTypes.UserSelect:
             return Components.userSelectToRaw(c);
           case ComponentTypes.RoleSelect:
