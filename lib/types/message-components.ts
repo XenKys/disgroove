@@ -69,6 +69,7 @@ export interface RawTextInput {
   required?: boolean;
   value?: string;
   placeholder?: string;
+  label: string;
 }
 
 /** https://discord.com/developers/docs/components/reference#user-select-user-select-structure */
@@ -273,6 +274,7 @@ export interface TextInput {
   required?: boolean;
   value?: string;
   placeholder?: string;
+  label: string;
 }
 
 export interface UserSelect {

@@ -469,6 +469,7 @@ export class Components {
       value: textInput.value,
       placeholder: textInput.placeholder,
       id: textInput.id,
+      label: textInput.label,
     };
   }
 
@@ -483,6 +484,7 @@ export class Components {
       value: textInput.value,
       placeholder: textInput.placeholder,
       id: textInput.id,
+      label: textInput.label,
     };
   }
 
