@@ -161,6 +161,7 @@ export interface RawInteractionCallbackData {
     | RawActionRow
     | RawButton
     | RawStringSelect
+    | RawTextInput
     | RawUserSelect
     | RawRoleSelect
     | RawMentionableSelect
@@ -172,6 +173,7 @@ export interface RawInteractionCallbackData {
     | RawFile
     | RawSeparator
     | RawContainer
+    | RawLabel
   >;
   attachments?: Array<Pick<RawAttachment, "filename" | "description">>;
   poll?: RawPollCreateParams;
@@ -293,6 +295,7 @@ export interface InteractionCallbackData {
     | ActionRow
     | Button
     | StringSelect
+    | TextInput
     | UserSelect
     | RoleSelect
     | MentionableSelect
@@ -304,6 +307,7 @@ export interface InteractionCallbackData {
     | File
     | Separator
     | Container
+    | Label
   >;
   attachments?: Array<Pick<Attachment, "filename" | "description">>;
   poll?: PollCreateParams;

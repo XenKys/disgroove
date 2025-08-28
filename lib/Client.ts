@@ -29,6 +29,7 @@ import {
   type PrivacyLevel,
   type GuildMemberFlags,
   type InteractionContextTypes,
+  ComponentTypes,
 } from "./constants";
 import { Endpoints, RequestManager, RESTMethods, type FileData } from "./rest";
 import EventEmitter from "node:events";
@@ -203,6 +204,7 @@ import {
   Subscriptions,
   Soundboards,
   Interactions,
+  Components,
 } from "./transformers";
 import type {
   Embed,
@@ -1167,7 +1169,38 @@ export class Client extends EventEmitter {
               flags: options.data?.flags,
               components:
                 options.data?.components !== undefined
-                  ? Messages.componentsToRaw(options.data.components)
+                  ? options.data?.components.map((component) => {
+                      switch (component.type) {
+                        case ComponentTypes.ActionRow:
+                          return Components.actionRowToRaw(component);
+                        case ComponentTypes.Button:
+                          return Components.buttonToRaw(component);
+                        case ComponentTypes.StringSelect:
+                          return Components.stringSelectToRaw(component);
+                        case ComponentTypes.UserSelect:
+                          return Components.userSelectToRaw(component);
+                        case ComponentTypes.RoleSelect:
+                          return Components.roleSelectToRaw(component);
+                        case ComponentTypes.MentionableSelect:
+                          return Components.mentionableSelectToRaw(component);
+                        case ComponentTypes.ChannelSelect:
+                          return Components.channelSelectToRaw(component);
+                        case ComponentTypes.Section:
+                          return Components.sectionToRaw(component);
+                        case ComponentTypes.TextDisplay:
+                          return Components.textDisplayToRaw(component);
+                        case ComponentTypes.Thumbnail:
+                          return Components.thumbnailToRaw(component);
+                        case ComponentTypes.MediaGallery:
+                          return Components.mediaGalleryToRaw(component);
+                        case ComponentTypes.File:
+                          return Components.fileToRaw(component);
+                        case ComponentTypes.Separator:
+                          return Components.separatorToRaw(component);
+                        case ComponentTypes.Container:
+                          return Components.containerToRaw(component);
+                      }
+                    })
                   : undefined,
               attachments: options.data?.attachments,
               poll:
@@ -1221,7 +1254,16 @@ export class Client extends EventEmitter {
               custom_id: options.data?.customID,
               components:
                 options.data?.components !== undefined
-                  ? Messages.componentsToRaw(options.data.components)
+                  ? options.data?.components.map((component) => {
+                      switch (component.type) {
+                        case ComponentTypes.StringSelect:
+                          return Components.stringSelectToRaw(component);
+                        case ComponentTypes.TextInput:
+                          return Components.textInputToRaw(component);
+                        case ComponentTypes.Label:
+                          return Components.labelToRaw(component);
+                      }
+                    })
                   : undefined,
               title: options.data?.title,
             },
