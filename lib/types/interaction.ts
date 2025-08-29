@@ -159,16 +159,8 @@ export interface RawInteractionCallbackData {
   flags?: MessageFlags;
   components?: Array<
     | RawActionRow
-    | RawButton
-    | RawStringSelect
-    | RawTextInput
-    | RawUserSelect
-    | RawRoleSelect
-    | RawMentionableSelect
-    | RawChannelSelect
     | RawSection
     | RawTextDisplay
-    | RawThumbnail
     | RawMediaGallery
     | RawFile
     | RawSeparator
@@ -293,16 +285,8 @@ export interface InteractionCallbackData {
   flags?: MessageFlags;
   components?: Array<
     | ActionRow
-    | Button
-    | StringSelect
-    | TextInput
-    | UserSelect
-    | RoleSelect
-    | MentionableSelect
-    | ChannelSelect
     | Section
     | TextDisplay
-    | Thumbnail
     | MediaGallery
     | File
     | Separator

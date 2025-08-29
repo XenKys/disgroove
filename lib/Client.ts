@@ -1063,15 +1063,8 @@ export class Client extends EventEmitter {
       allowedMentions?: AllowedMentions;
       components?: Array<
         | ActionRow
-        | Button
-        | StringSelect
-        | UserSelect
-        | RoleSelect
-        | MentionableSelect
-        | ChannelSelect
         | Section
         | TextDisplay
-        | Thumbnail
         | MediaGallery
         | File
         | Separator
@@ -1173,24 +1166,10 @@ export class Client extends EventEmitter {
                       switch (component.type) {
                         case ComponentTypes.ActionRow:
                           return Components.actionRowToRaw(component);
-                        case ComponentTypes.Button:
-                          return Components.buttonToRaw(component);
-                        case ComponentTypes.StringSelect:
-                          return Components.stringSelectToRaw(component);
-                        case ComponentTypes.UserSelect:
-                          return Components.userSelectToRaw(component);
-                        case ComponentTypes.RoleSelect:
-                          return Components.roleSelectToRaw(component);
-                        case ComponentTypes.MentionableSelect:
-                          return Components.mentionableSelectToRaw(component);
-                        case ComponentTypes.ChannelSelect:
-                          return Components.channelSelectToRaw(component);
                         case ComponentTypes.Section:
                           return Components.sectionToRaw(component);
                         case ComponentTypes.TextDisplay:
                           return Components.textDisplayToRaw(component);
-                        case ComponentTypes.Thumbnail:
-                          return Components.thumbnailToRaw(component);
                         case ComponentTypes.MediaGallery:
                           return Components.mediaGalleryToRaw(component);
                         case ComponentTypes.File:
@@ -1322,15 +1301,8 @@ export class Client extends EventEmitter {
       messageReference?: MessageReference;
       components?: Array<
         | ActionRow
-        | Button
-        | StringSelect
-        | UserSelect
-        | RoleSelect
-        | MentionableSelect
-        | ChannelSelect
         | Section
         | TextDisplay
-        | Thumbnail
         | MediaGallery
         | File
         | Separator
@@ -2773,15 +2745,8 @@ export class Client extends EventEmitter {
       allowedMentions?: AllowedMentions | null;
       components?: Array<
         | ActionRow
-        | Button
-        | StringSelect
-        | UserSelect
-        | RoleSelect
-        | MentionableSelect
-        | ChannelSelect
         | Section
         | TextDisplay
-        | Thumbnail
         | MediaGallery
         | File
         | Separator
@@ -2865,15 +2830,8 @@ export class Client extends EventEmitter {
       allowedMentions?: AllowedMentions | null;
       components?: Array<
         | ActionRow
-        | Button
-        | StringSelect
-        | UserSelect
-        | RoleSelect
-        | MentionableSelect
-        | ChannelSelect
         | Section
         | TextDisplay
-        | Thumbnail
         | MediaGallery
         | File
         | Separator
@@ -2964,15 +2922,8 @@ export class Client extends EventEmitter {
       allowedMentions?: AllowedMentions | null;
       components?: Array<
         | ActionRow
-        | Button
-        | StringSelect
-        | UserSelect
-        | RoleSelect
-        | MentionableSelect
-        | ChannelSelect
         | Section
         | TextDisplay
-        | Thumbnail
         | MediaGallery
         | File
         | Separator
@@ -3111,15 +3062,8 @@ export class Client extends EventEmitter {
       allowedMentions?: AllowedMentions | null;
       components?: Array<
         | ActionRow
-        | Button
-        | StringSelect
-        | UserSelect
-        | RoleSelect
-        | MentionableSelect
-        | ChannelSelect
         | Section
         | TextDisplay
-        | Thumbnail
         | MediaGallery
         | File
         | Separator
@@ -3251,15 +3195,8 @@ export class Client extends EventEmitter {
       allowedMentions?: AllowedMentions;
       components?: Array<
         | ActionRow
-        | Button
-        | StringSelect
-        | UserSelect
-        | RoleSelect
-        | MentionableSelect
-        | ChannelSelect
         | Section
         | TextDisplay
-        | Thumbnail
         | MediaGallery
         | File
         | Separator

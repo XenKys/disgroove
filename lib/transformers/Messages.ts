@@ -89,15 +89,8 @@ export class Messages {
   static componentsFromRaw(
     components: Array<
       | RawActionRow
-      | RawButton
-      | RawStringSelect
-      | RawUserSelect
-      | RawRoleSelect
-      | RawMentionableSelect
-      | RawChannelSelect
       | RawSection
       | RawTextDisplay
-      | RawThumbnail
       | RawMediaGallery
       | RawFile
       | RawSeparator
@@ -105,15 +98,8 @@ export class Messages {
     >
   ): Array<
     | ActionRow
-    | Button
-    | StringSelect
-    | UserSelect
-    | RoleSelect
-    | MentionableSelect
-    | ChannelSelect
     | Section
     | TextDisplay
-    | Thumbnail
     | MediaGallery
     | File
     | Separator
@@ -123,24 +109,10 @@ export class Messages {
       switch (component.type) {
         case ComponentTypes.ActionRow:
           return Components.actionRowFromRaw(component);
-        case ComponentTypes.Button:
-          return Components.buttonFromRaw(component);
-        case ComponentTypes.StringSelect:
-          return Components.stringSelectFromRaw(component);
-        case ComponentTypes.UserSelect:
-          return Components.userSelectFromRaw(component);
-        case ComponentTypes.RoleSelect:
-          return Components.roleSelectFromRaw(component);
-        case ComponentTypes.MentionableSelect:
-          return Components.mentionableSelectFromRaw(component);
-        case ComponentTypes.ChannelSelect:
-          return Components.channelSelectFromRaw(component);
         case ComponentTypes.Section:
           return Components.sectionFromRaw(component);
         case ComponentTypes.TextDisplay:
           return Components.textDisplayFromRaw(component);
-        case ComponentTypes.Thumbnail:
-          return Components.thumbnailFromRaw(component);
         case ComponentTypes.MediaGallery:
           return Components.mediaGalleryFromRaw(component);
         case ComponentTypes.File:
@@ -156,15 +128,8 @@ export class Messages {
   static componentsToRaw(
     components: Array<
       | ActionRow
-      | Button
-      | StringSelect
-      | UserSelect
-      | RoleSelect
-      | MentionableSelect
-      | ChannelSelect
       | Section
       | TextDisplay
-      | Thumbnail
       | MediaGallery
       | File
       | Separator
@@ -172,15 +137,8 @@ export class Messages {
     >
   ): Array<
     | RawActionRow
-    | RawButton
-    | RawStringSelect
-    | RawUserSelect
-    | RawRoleSelect
-    | RawMentionableSelect
-    | RawChannelSelect
     | RawSection
     | RawTextDisplay
-    | RawThumbnail
     | RawMediaGallery
     | RawFile
     | RawSeparator
@@ -190,24 +148,10 @@ export class Messages {
       switch (component.type) {
         case ComponentTypes.ActionRow:
           return Components.actionRowToRaw(component);
-        case ComponentTypes.Button:
-          return Components.buttonToRaw(component);
-        case ComponentTypes.StringSelect:
-          return Components.stringSelectToRaw(component);
-        case ComponentTypes.UserSelect:
-          return Components.userSelectToRaw(component);
-        case ComponentTypes.RoleSelect:
-          return Components.roleSelectToRaw(component);
-        case ComponentTypes.MentionableSelect:
-          return Components.mentionableSelectToRaw(component);
-        case ComponentTypes.ChannelSelect:
-          return Components.channelSelectToRaw(component);
         case ComponentTypes.Section:
           return Components.sectionToRaw(component);
         case ComponentTypes.TextDisplay:
           return Components.textDisplayToRaw(component);
-        case ComponentTypes.Thumbnail:
-          return Components.thumbnailToRaw(component);
         case ComponentTypes.MediaGallery:
           return Components.mediaGalleryToRaw(component);
         case ComponentTypes.File:

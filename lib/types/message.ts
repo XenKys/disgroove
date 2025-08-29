@@ -96,15 +96,8 @@ export interface RawMessage {
   thread?: RawChannel;
   components?: Array<
     | RawActionRow
-    | RawButton
-    | RawStringSelect
-    | RawUserSelect
-    | RawRoleSelect
-    | RawMentionableSelect
-    | RawChannelSelect
     | RawSection
     | RawTextDisplay
-    | RawThumbnail
     | RawMediaGallery
     | RawFile
     | RawSeparator
@@ -338,15 +331,8 @@ export interface Message {
   thread?: Channel;
   components?: Array<
     | ActionRow
-    | Button
-    | StringSelect
-    | UserSelect
-    | RoleSelect
-    | MentionableSelect
-    | ChannelSelect
     | Section
     | TextDisplay
-    | Thumbnail
     | MediaGallery
     | File
     | Separator
