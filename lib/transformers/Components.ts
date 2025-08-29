@@ -399,6 +399,24 @@ export class Components {
     };
   }
 
+  static separatorFromRaw(separator: RawSeparator): Separator {
+    return {
+      type: separator.type,
+      id: separator.id,
+      divider: separator.divider,
+      spacing: separator.spacing,
+    };
+  }
+
+  static separatorToRaw(separator: Separator): RawSeparator {
+    return {
+      type: separator.type,
+      id: separator.id,
+      divider: separator.divider,
+      spacing: separator.spacing,
+    };
+  }
+
   static stringSelectFromRaw(stringSelect: RawStringSelect): StringSelect {
     return {
       type: stringSelect.type,
@@ -447,24 +465,6 @@ export class Components {
       min_values: stringSelect.minValues,
       max_values: stringSelect.maxValues,
       disabled: stringSelect.disabled,
-    };
-  }
-
-  static separatorFromRaw(separator: RawSeparator): Separator {
-    return {
-      type: separator.type,
-      id: separator.id,
-      divider: separator.divider,
-      spacing: separator.spacing,
-    };
-  }
-
-  static separatorToRaw(separator: Separator): RawSeparator {
-    return {
-      type: separator.type,
-      id: separator.id,
-      divider: separator.divider,
-      spacing: separator.spacing,
     };
   }
 
