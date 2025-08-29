@@ -350,26 +350,52 @@ export class Components {
   }
 
   static sectionFromRaw(section: RawSection): Section {
+    let accessory;
+
+    switch (section.accessory.type) {
+      case ComponentTypes.Button:
+        accessory = Components.buttonFromRaw(section.accessory);
+        break;
+      case ComponentTypes.Thumbnail:
+        accessory = Components.thumbnailFromRaw(section.accessory);
+        break;
+    }
+
     return {
       type: section.type,
       id: section.id,
-      components: [],
-      accessory:
-        section.accessory.type === ComponentTypes.Button
-          ? Components.buttonFromRaw(section.accessory)
-          : Components.thumbnailFromRaw(section.accessory),
+      components: section.components.map((component) => {
+        switch (component.type) {
+          case ComponentTypes.TextDisplay:
+            return Components.textDisplayFromRaw(component);
+        }
+      }),
+      accessory,
     };
   }
 
   static sectionToRaw(section: Section): RawSection {
+    let accessory;
+
+    switch (section.accessory.type) {
+      case ComponentTypes.Button:
+        accessory = Components.buttonToRaw(section.accessory);
+        break;
+      case ComponentTypes.Thumbnail:
+        accessory = Components.thumbnailToRaw(section.accessory);
+        break;
+    }
+
     return {
       type: section.type,
       id: section.id,
-      components: [],
-      accessory:
-        section.accessory.type === ComponentTypes.Button
-          ? Components.buttonToRaw(section.accessory)
-          : Components.thumbnailToRaw(section.accessory),
+      components: section.components.map((component) => {
+        switch (component.type) {
+          case ComponentTypes.TextDisplay:
+            return Components.textDisplayToRaw(component);
+        }
+      }),
+      accessory,
     };
   }
 
