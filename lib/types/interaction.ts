@@ -109,7 +109,11 @@ export interface RawModalSubmitData {
         >;
       }
     | RawTextDisplay
-    | RawLabel
+    | (Omit<RawLabel, "component"> & {
+        component:
+          | RawStringSelectInteractionResponse
+          | RawTextInputInteractionResponse;
+      })
   >;
 }
 
@@ -249,7 +253,11 @@ export interface ModalSubmitData {
         >;
       }
     | TextDisplay
-    | Label
+    | (Omit<Label, "component"> & {
+        component:
+          | StringSelectInteractionResponse
+          | TextInputInteractionResponse;
+      })
   >;
 }
 

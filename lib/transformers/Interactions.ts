@@ -143,8 +143,37 @@ export class Interactions {
                     };
                   case ComponentTypes.TextDisplay:
                     return Components.textDisplayFromRaw(component);
-                  case ComponentTypes.Label:
-                    return Components.labelFromRaw(component);
+                  case ComponentTypes.Label: {
+                    let c;
+
+                    switch (component.component.type) {
+                      case ComponentTypes.StringSelect:
+                        c = {
+                          type: component.component.type,
+                          componentType: component.component.component_type,
+                          id: component.component.id,
+                          customID: component.component.custom_id,
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.TextInput:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          customID: component.component.custom_id,
+                          value: component.component.value,
+                        };
+                        break;
+                    }
+
+                    return {
+                      type: component.type,
+                      id: component.id,
+                      label: component.label,
+                      description: component.description,
+                      component: c,
+                    };
+                  }
                 }
               }),
             }
@@ -285,8 +314,37 @@ export class Interactions {
                     };
                   case ComponentTypes.TextDisplay:
                     return Components.textDisplayToRaw(component);
-                  case ComponentTypes.Label:
-                    return Components.labelToRaw(component);
+                  case ComponentTypes.Label: {
+                    let c;
+
+                    switch (component.component.type) {
+                      case ComponentTypes.StringSelect:
+                        c = {
+                          type: component.component.type,
+                          component_type: component.component.componentType,
+                          id: component.component.id,
+                          custom_id: component.component.customID,
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.TextInput:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          custom_id: component.component.customID,
+                          value: component.component.value,
+                        };
+                        break;
+                    }
+
+                    return {
+                      type: component.type,
+                      id: component.id,
+                      label: component.label,
+                      description: component.description,
+                      component: c,
+                    };
+                  }
                 }
               }),
             }
