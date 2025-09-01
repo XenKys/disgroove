@@ -30,6 +30,7 @@ import {
   type GuildMemberFlags,
   type InteractionContextTypes,
   ComponentTypes,
+  type LobbyMemberFlags,
 } from "./constants";
 import { Endpoints, RequestManager, RESTMethods, type FileData } from "./rest";
 import EventEmitter from "node:events";
@@ -205,6 +206,7 @@ import {
   Soundboards,
   Interactions,
   Components,
+  Lobbies,
 } from "./transformers";
 import type {
   Embed,
@@ -234,6 +236,12 @@ import type {
   Thumbnail,
   UserSelect,
 } from "./types/message-components";
+import type {
+  Lobby,
+  LobbyMember,
+  RawLobby,
+  RawLobbyMember,
+} from "./types/lobby";
 
 export interface GatewayOptions {
   properties?: IdentifyConnectionProperties;
@@ -360,6 +368,26 @@ export class Client extends EventEmitter {
         reason,
       }
     );
+  }
+
+  /** https://discord.com/developers/docs/resources/lobby#add-a-member-to-a-lobby */
+  async addLobbyMember(
+    lobbyID: snowflake,
+    userID: snowflake,
+    options: {
+      metadata?: Record<string, string> | null;
+      flags?: LobbyMemberFlags;
+    }
+  ): Promise<LobbyMember> {
+    const response = await this.rest.request<RawLobbyMember>(
+      RESTMethods.Put,
+      Endpoints.lobbyMember(lobbyID, userID),
+      {
+        json: options,
+      }
+    );
+
+    return Lobbies.lobbyMemberFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#add-thread-member */
@@ -1289,6 +1317,27 @@ export class Client extends EventEmitter {
     }
   }
 
+  /** https://discord.com/developers/docs/resources/lobby#create-lobby */
+  async createLobby(options: {
+    metadata?: Record<string, string> | null;
+    members?: Array<Pick<LobbyMember, "id" | "metadata" | "flags">>;
+    idleTimeoutSeconds?: number;
+  }): Promise<Lobby> {
+    const response = await this.rest.request<RawLobby>(
+      RESTMethods.Post,
+      Endpoints.lobbies(),
+      {
+        json: {
+          metadata: options.metadata,
+          members: options.members,
+          idle_timeout_seconds: options.idleTimeoutSeconds,
+        },
+      }
+    );
+
+    return Lobbies.lobbyFromRaw(response);
+  }
+
   /** https://discord.com/developers/docs/resources/message#create-message */
   async createMessage(
     channelID: snowflake,
@@ -1796,6 +1845,11 @@ export class Client extends EventEmitter {
       RESTMethods.Delete,
       Endpoints.webhookMessage(applicationID, interactionToken)
     );
+  }
+
+  /** https://discord.com/developers/docs/resources/lobby#delete-lobby */
+  deleteLobby(lobbyID: snowflake): void {
+    this.rest.request(RESTMethods.Delete, Endpoints.lobby(lobbyID));
   }
 
   /** https://discord.com/developers/docs/resources/message#delete-message */
@@ -2732,6 +2786,30 @@ export class Client extends EventEmitter {
       enabled: response.enabled,
       channelID: response.channel_id,
     };
+  }
+
+  /** https://discord.com/developers/docs/resources/lobby#modify-lobby */
+  async editLobby(
+    lobbyID: snowflake,
+    options: {
+      metadata?: Record<string, string> | null;
+      members?: Array<Pick<LobbyMember, "id" | "metadata" | "flags">>;
+      idleTimeoutSeconds?: number;
+    }
+  ): Promise<Lobby> {
+    const response = await this.rest.request<RawLobby>(
+      RESTMethods.Patch,
+      Endpoints.lobby(lobbyID),
+      {
+        json: {
+          metadata: options.metadata,
+          members: options.members,
+          idle_timeout_seconds: options.idleTimeoutSeconds,
+        },
+      }
+    );
+
+    return Lobbies.lobbyFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/message#edit-message */
@@ -4446,6 +4524,16 @@ export class Client extends EventEmitter {
     };
   }
 
+  /** https://discord.com/developers/docs/resources/lobby#get-lobby */
+  async getLobby(lobbyID: snowflake): Promise<Lobby> {
+    const response = await this.rest.request<RawLobby>(
+      RESTMethods.Get,
+      Endpoints.lobby(lobbyID)
+    );
+
+    return Lobbies.lobbyFromRaw(response);
+  }
+
   /** https://discord.com/developers/docs/resources/message#get-channel-message */
   async getMessage(
     channelID: snowflake,
@@ -4852,6 +4940,11 @@ export class Client extends EventEmitter {
     this.rest.request(RESTMethods.Delete, Endpoints.userGuild(guildID));
   }
 
+  /** https://discord.com/developers/docs/resources/lobby#leave-lobby */
+  leaveLobby(lobbyID: snowflake): void {
+    this.rest.request(RESTMethods.Delete, Endpoints.lobbyMember(lobbyID));
+  }
+
   /** https://discord.com/developers/docs/resources/channel#leave-thread */
   leaveThread(channelID: snowflake): void {
     this.rest.request(
@@ -4868,6 +4961,26 @@ export class Client extends EventEmitter {
       selfMute: false,
       selfDeaf: false,
     });
+  }
+
+  /** discord.com/developers/docs/resources/lobby#link-channel-to-lobby */
+  async linkChannel(
+    lobbyID: snowflake,
+    options: {
+      channelID: snowflake;
+    }
+  ): Promise<Lobby> {
+    const response = await this.rest.request<RawLobby>(
+      RESTMethods.Patch,
+      Endpoints.lobbyChannelLinking(lobbyID),
+      {
+        json: {
+          channel_id: options.channelID,
+        },
+      }
+    );
+
+    return Lobbies.lobbyFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/channel#pin-message */
@@ -4928,6 +5041,14 @@ export class Client extends EventEmitter {
       {
         reason,
       }
+    );
+  }
+
+  /** https://discord.com/developers/docs/resources/lobby#remove-a-member-from-a-lobby */
+  removeLobbyMember(lobbyID: snowflake, userID: snowflake): void {
+    this.rest.request(
+      RESTMethods.Delete,
+      Endpoints.lobbyMember(lobbyID, userID)
     );
   }
 
@@ -5008,6 +5129,16 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#trigger-typing-indicator */
   triggerTypingIndicator(channelID: snowflake): void {
     this.rest.request(RESTMethods.Post, Endpoints.channelTyping(channelID));
+  }
+
+  /** https://discord.com/developers/docs/resources/lobby#unlink-channel-from-lobby */
+  async unlinkChannel(lobbyID: snowflake): Promise<Lobby> {
+    const response = await this.rest.request<RawLobby>(
+      RESTMethods.Patch,
+      Endpoints.lobbyChannelLinking(lobbyID)
+    );
+
+    return Lobbies.lobbyFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/application-role-connection-metadata#update-application-role-connection-metadata-records */

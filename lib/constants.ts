@@ -572,6 +572,11 @@ export enum GuildInviteFlags {
   IsGuestInvite = 1 << 0,
 }
 
+/** https://discord.com/developers/docs/resources/lobby#lobby-member-object-lobby-member-flags */
+export enum LobbyMemberFlags {
+  CanLinkLobby = 1 << 0,
+}
+
 /** https://discord.com/developers/docs/resources/message#message-object-message-types */
 export enum MessageTypes {
   Default,

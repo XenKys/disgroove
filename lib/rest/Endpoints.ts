@@ -303,3 +303,13 @@ export const stageInstances = () => "stage-instances" as const;
 export const sticker = (stickerID: snowflake) =>
   `stickers/${stickerID}` as const;
 export const voiceRegions = () => "voice/regions" as const;
+
+// Lobbies
+export const lobbies = () => "lobbies" as const;
+export const lobby = (lobbyID: snowflake) => `lobbies/${lobbyID}` as const;
+export const lobbyMember = (
+  lobbyID: snowflake,
+  userID: snowflake | "@me" = "@me"
+) => `lobbies/${lobbyID}/members/${userID}` as const;
+export const lobbyChannelLinking = (lobbyID: snowflake) =>
+  `lobbies/${lobbyID}/channel-linking` as const;
