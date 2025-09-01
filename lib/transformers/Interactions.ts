@@ -119,7 +119,28 @@ export class Interactions {
               components: interaction.data?.components?.map((component) => {
                 switch (component.type) {
                   case ComponentTypes.ActionRow:
-                    return Components.actionRowFromRaw(component);
+                    return {
+                      type: ComponentTypes.ActionRow,
+                      components: component.components.map((c) => {
+                        switch (c.type) {
+                          case ComponentTypes.StringSelect:
+                            return {
+                              type: c.type,
+                              componentType: c.component_type,
+                              id: c.id,
+                              customID: c.custom_id,
+                              values: c.values,
+                            };
+                          case ComponentTypes.TextInput:
+                            return {
+                              type: c.type,
+                              id: c.id,
+                              customID: c.custom_id,
+                              value: c.value,
+                            };
+                        }
+                      }),
+                    };
                   case ComponentTypes.TextDisplay:
                     return Components.textDisplayFromRaw(component);
                   case ComponentTypes.Label:
@@ -240,7 +261,28 @@ export class Interactions {
               components: interaction.data?.components?.map((component) => {
                 switch (component.type) {
                   case ComponentTypes.ActionRow:
-                    return Components.actionRowToRaw(component);
+                    return {
+                      type: ComponentTypes.ActionRow,
+                      components: component.components.map((c) => {
+                        switch (c.type) {
+                          case ComponentTypes.StringSelect:
+                            return {
+                              type: c.type,
+                              component_type: c.componentType,
+                              id: c.id,
+                              custom_id: c.customID,
+                              values: c.values,
+                            };
+                          case ComponentTypes.TextInput:
+                            return {
+                              type: c.type,
+                              id: c.id,
+                              custom_id: c.customID,
+                              value: c.value,
+                            };
+                        }
+                      }),
+                    };
                   case ComponentTypes.TextDisplay:
                     return Components.textDisplayToRaw(component);
                   case ComponentTypes.Label:

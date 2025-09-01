@@ -30,37 +30,25 @@ import type {
 } from "./message";
 import type {
   ActionRow,
-  Button,
-  ChannelSelect,
   Container,
   File,
   Label,
   MediaGallery,
-  MentionableSelect,
   RawActionRow,
-  RawButton,
-  RawChannelSelect,
   RawContainer,
   RawFile,
   RawLabel,
   RawMediaGallery,
-  RawMentionableSelect,
-  RawRoleSelect,
   RawSection,
   RawSeparator,
-  RawStringSelect,
+  RawStringSelectInteractionResponse,
   RawTextDisplay,
-  RawTextInput,
-  RawThumbnail,
-  RawUserSelect,
-  RoleSelect,
+  RawTextInputInteractionResponse,
   Section,
   Separator,
-  StringSelect,
+  StringSelectInteractionResponse,
   TextDisplay,
-  TextInput,
-  Thumbnail,
-  UserSelect,
+  TextInputInteractionResponse,
 } from "./message-components";
 import type { RawPollCreateParams, PollCreateParams } from "./poll";
 import type { RawRole, Role } from "./role";
@@ -113,7 +101,16 @@ export interface RawMessageComponentData {
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
 export interface RawModalSubmitData {
   custom_id: string;
-  components: Array<RawActionRow | RawTextDisplay | RawLabel>;
+  components: Array<
+    | {
+        type: ComponentTypes.ActionRow;
+        components: Array<
+          RawStringSelectInteractionResponse | RawTextInputInteractionResponse
+        >;
+      }
+    | RawTextDisplay
+    | RawLabel
+  >;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
@@ -244,7 +241,16 @@ export interface MessageComponentData {
 
 export interface ModalSubmitData {
   customID: string;
-  components: Array<ActionRow | TextDisplay | Label>;
+  components: Array<
+    | {
+        type: ComponentTypes.ActionRow;
+        components: Array<
+          StringSelectInteractionResponse | TextInputInteractionResponse
+        >;
+      }
+    | TextDisplay
+    | Label
+  >;
 }
 
 export interface ResolvedData {

@@ -7,6 +7,7 @@ import type {
 } from "../constants";
 import type { snowflake } from "./common";
 import type { RawEmoji, Emoji } from "./emoji";
+import type { RawResolvedData, ResolvedData } from "./interaction";
 
 /** https://discord.com/developers/docs/components/reference#action-row-action-row-structure */
 export interface RawActionRow {
@@ -49,6 +50,15 @@ export interface RawStringSelect {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#string-select-string-select-interaction-response-structure */
+export interface RawStringSelectInteractionResponse {
+  type: ComponentTypes.StringSelect;
+  component_type: ComponentTypes.StringSelect;
+  id: number;
+  custom_id: string;
+  values: Array<string>;
+}
+
 /** https://discord.com/developers/docs/components/reference#string-select-select-option-structure */
 export interface RawSelectOption {
   label: string;
@@ -72,6 +82,14 @@ export interface RawTextInput {
   label: string;
 }
 
+/** https://discord.com/developers/docs/components/reference#text-input-text-input-interaction-response-structure */
+export interface RawTextInputInteractionResponse {
+  type: ComponentTypes.TextInput;
+  id: number;
+  custom_id: string;
+  value: string;
+}
+
 /** https://discord.com/developers/docs/components/reference#user-select-user-select-structure */
 export interface RawUserSelect {
   type: ComponentTypes.UserSelect;
@@ -82,6 +100,15 @@ export interface RawUserSelect {
   min_values?: number;
   max_values?: number;
   disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#user-select-user-select-interaction-response-structure */
+export interface RawUserSelectInteractionResponse {
+  component_type: ComponentTypes.UserSelect;
+  id: number;
+  custom_id: string;
+  resolved: RawResolvedData;
+  values: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/components/reference#user-select-select-default-value-structure */
@@ -102,6 +129,15 @@ export interface RawRoleSelect {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#role-select-role-select-interaction-response-structure */
+export interface RawRoleSelectInteractionResponse {
+  component_type: ComponentTypes.RoleSelect;
+  id: number;
+  custom_id: string;
+  resolved: RawResolvedData;
+  values: Array<snowflake>;
+}
+
 /** https://discord.com/developers/docs/components/reference#mentionable-select-mentionable-select-structure */
 export interface RawMentionableSelect {
   type: ComponentTypes.MentionableSelect;
@@ -112,6 +148,15 @@ export interface RawMentionableSelect {
   min_values?: number;
   max_values?: number;
   disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#mentionable-select-mentionable-select-interaction-response-structure */
+export interface RawMentionableSelectInteractionResponse {
+  component_type: ComponentTypes.MentionableSelect;
+  id: number;
+  custom_id: string;
+  resolved: RawResolvedData;
+  values: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/components/reference#channel-select-channel-select-structure */
@@ -125,6 +170,15 @@ export interface RawChannelSelect {
   min_values?: number;
   max_values?: number;
   disabled?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#channel-select-channel-select-interaction-response-structure */
+export interface RawChannelSelectInteractionResponse {
+  component_type: ComponentTypes.ChannelSelect;
+  id: number;
+  custom_id: string;
+  resolved: RawResolvedData;
+  values: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/components/reference#section-section-structure */
@@ -256,6 +310,14 @@ export interface StringSelect {
   disabled?: boolean;
 }
 
+export interface StringSelectInteractionResponse {
+  type: ComponentTypes.StringSelect;
+  componentType: ComponentTypes.StringSelect;
+  id: number;
+  customID: string;
+  values: Array<string>;
+}
+
 export interface SelectOption {
   label: string;
   value: string;
@@ -277,6 +339,13 @@ export interface TextInput {
   label: string;
 }
 
+export interface TextInputInteractionResponse {
+  type: ComponentTypes.TextInput;
+  id: number;
+  customID: string;
+  value: string;
+}
+
 export interface UserSelect {
   type: ComponentTypes.UserSelect;
   id?: number;
@@ -286,6 +355,14 @@ export interface UserSelect {
   minValues?: number;
   maxValues?: number;
   disabled?: boolean;
+}
+
+export interface UserSelectInteractionResponse {
+  component_type: ComponentTypes.UserSelect;
+  id: number;
+  customID: string;
+  resolved: ResolvedData;
+  values: Array<snowflake>;
 }
 
 export interface DefaultValue {
@@ -304,6 +381,14 @@ export interface RoleSelect {
   disabled?: boolean;
 }
 
+export interface RoleSelectInteractionResponse {
+  componentType: ComponentTypes.RoleSelect;
+  id: number;
+  customID: string;
+  resolved: ResolvedData;
+  values: Array<snowflake>;
+}
+
 export interface MentionableSelect {
   type: ComponentTypes.MentionableSelect;
   id?: number;
@@ -313,6 +398,14 @@ export interface MentionableSelect {
   minValues?: number;
   maxValues?: number;
   disabled?: boolean;
+}
+
+export interface MentionableSelectInteractionResponse {
+  componentType: ComponentTypes.MentionableSelect;
+  id: number;
+  customID: string;
+  resolved: ResolvedData;
+  values: Array<snowflake>;
 }
 
 export interface ChannelSelect {
@@ -325,6 +418,14 @@ export interface ChannelSelect {
   minValues?: number;
   maxValues?: number;
   disabled?: boolean;
+}
+
+export interface ChannelSelectInteractionResponse {
+  componentType: ComponentTypes.ChannelSelect;
+  id: number;
+  customID: string;
+  resolved: ResolvedData;
+  values: Array<snowflake>;
 }
 
 export interface Section {
