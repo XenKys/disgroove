@@ -217,6 +217,7 @@ export class Interactions {
         "1": interaction.authorizing_integration_owners[1],
       },
       context: interaction.context,
+      attachmentSizeLimit: interaction.attachment_size_limit,
     };
   }
 
@@ -388,6 +389,7 @@ export class Interactions {
         "1": interaction.authorizingIntegrationOwners[1],
       },
       context: interaction.context,
+      attachment_size_limit: interaction.attachmentSizeLimit,
     };
   }
 

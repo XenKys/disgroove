@@ -77,6 +77,7 @@ export interface RawInteraction {
   entitlements: Array<RawEntitlement>;
   authorizing_integration_owners: Record<ApplicationIntegrationTypes, string>;
   context?: InteractionContextTypes;
+  attachment_size_limit: number;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
@@ -224,6 +225,7 @@ export interface Interaction {
   entitlements: Array<Entitlement>;
   authorizingIntegrationOwners: Record<ApplicationIntegrationTypes, string>;
   context?: InteractionContextTypes;
+  attachmentSizeLimit: number;
 }
 
 export interface ApplicationCommandData {
