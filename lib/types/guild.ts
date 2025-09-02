@@ -118,13 +118,14 @@ export interface RawGuildMember {
   banner?: string | null;
   roles: Array<snowflake>;
   joined_at: timestamp | null;
-  premium_since?: number | null;
+  premium_since?: timestamp | null;
   deaf: boolean;
   mute: boolean;
   flags: GuildMemberFlags;
   pending?: boolean;
   permissions?: string;
-  communication_disabled_until?: number | null;
+  communication_disabled_until?: timestamp | null;
+  unusual_dm_activity_until?: timestamp | null;
   avatar_decoration_data?: RawAvatarDecorationData | null;
 }
 
@@ -310,14 +311,15 @@ export interface GuildMember {
   avatar?: string | null;
   banner?: string | null;
   roles: Array<snowflake>;
-  joinedAt: string | null;
-  premiumSince?: number | null;
+  joinedAt: timestamp | null;
+  premiumSince?: timestamp | null;
   deaf: boolean;
   mute: boolean;
   flags: GuildMemberFlags;
   pending?: boolean;
   permissions?: string;
-  communicationDisabledUntil?: number | null;
+  communicationDisabledUntil?: timestamp | null;
+  unusualDMActivityUntil?: timestamp | null;
   avatarDecorationData?: AvatarDecorationData | null;
 }
 
