@@ -1281,6 +1281,7 @@ export enum JSONErrorCodes {
   MessageBlockedByHarmfulLinksFilter = 240000,
   CannotEnableOnboardingRequirementsAreNotMet = 350000,
   CannotUpdateOnboardingWhileBelowRequirements,
+  AccessToFileUploadsHasBeenLimitedForThisGuild = 400001,
   FailedToBanUsers = 500000,
   PollVotingBlocked = 520000,
   PollExpired,
