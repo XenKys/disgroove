@@ -64,5 +64,5 @@ export function email(username: string, domain: string) {
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
 export function phoneNumber(number: number) {
-  return `<+${phoneNumber}>`;
+  return `<+${number}>`;
 }
