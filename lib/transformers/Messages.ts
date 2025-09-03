@@ -18,33 +18,19 @@ import { Stickers } from "./Stickers";
 import { Users } from "./Users";
 import type {
   ActionRow,
-  Button,
-  ChannelSelect,
   Container,
   File,
   MediaGallery,
-  MentionableSelect,
   RawActionRow,
-  RawButton,
-  RawChannelSelect,
   RawContainer,
   RawFile,
   RawMediaGallery,
-  RawMentionableSelect,
-  RawRoleSelect,
   RawSection,
   RawSeparator,
-  RawStringSelect,
   RawTextDisplay,
-  RawThumbnail,
-  RawUserSelect,
-  RoleSelect,
   Section,
   Separator,
-  StringSelect,
   TextDisplay,
-  Thumbnail,
-  UserSelect,
 } from "../types/message-components";
 
 export class Messages {

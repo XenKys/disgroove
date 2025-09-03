@@ -1,4 +1,4 @@
-import { GuildNavigationTypes, TimestampStyles } from "../constants";
+import { GuildNavigationTypes, type TimestampStyles } from "../constants";
 import type { snowflake } from "../types/common";
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */

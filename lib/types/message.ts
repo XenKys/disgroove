@@ -27,33 +27,19 @@ import type {
 } from "./interaction";
 import type {
   ActionRow,
-  Button,
-  ChannelSelect,
   Container,
   File,
   MediaGallery,
-  MentionableSelect,
   RawActionRow,
-  RawButton,
-  RawChannelSelect,
   RawContainer,
   RawFile,
   RawMediaGallery,
-  RawMentionableSelect,
-  RawRoleSelect,
   RawSection,
   RawSeparator,
-  RawStringSelect,
   RawTextDisplay,
-  RawThumbnail,
-  RawUserSelect,
-  RoleSelect,
   Section,
   Separator,
-  StringSelect,
   TextDisplay,
-  Thumbnail,
-  UserSelect,
 } from "./message-components";
 import type { Poll, RawPoll } from "./poll";
 import type {
