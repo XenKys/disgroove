@@ -941,6 +941,11 @@ export class Client extends EventEmitter {
           name: options.name,
           permissions: options.permissions,
           color: options.color,
+          colors: {
+            primary_color: options.colors?.primaryColor,
+            secondary_color: options.colors?.secondaryColor,
+            tertiary_color: options.colors?.tertiaryColor,
+          },
           hoist: options.hoist,
           icon: options.icon,
           unicode_emoji: options.unicodeEmoji,
@@ -2557,6 +2562,11 @@ export class Client extends EventEmitter {
           name: options?.name,
           permissions: options?.permissions,
           color: options?.color,
+          colors: {
+            primary_color: options?.colors?.primaryColor,
+            secondary_color: options?.colors?.secondaryColor,
+            tertiary_color: options?.colors?.tertiaryColor,
+          },
           hoist: options?.hoist,
           icon: options?.icon,
           unicode_emoji: options?.unicodeEmoji,
