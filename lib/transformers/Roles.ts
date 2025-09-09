@@ -9,7 +9,7 @@ export class Roles {
       colors: {
         primaryColor: role.colors.primary_color,
         secondaryColor: role.colors.secondary_color,
-        tertiaryColors: role.colors.tertiary_colors,
+        tertiaryColor: role.colors.tertiary_color,
       },
       hoist: role.hoist,
       icon: role.icon,
@@ -41,7 +41,7 @@ export class Roles {
       colors: {
         primary_color: role.colors.primaryColor,
         secondary_color: role.colors.secondaryColor,
-        tertiary_colors: role.colors.tertiaryColors,
+        tertiary_color: role.colors.tertiaryColor,
       },
       hoist: role.hoist,
       icon: role.icon,

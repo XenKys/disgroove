@@ -32,7 +32,7 @@ export interface RawRoleTags {
 export interface RawRoleColors {
   primary_color: number;
   secondary_color: number | null;
-  tertiary_colors: number | null;
+  tertiary_color: number | null;
 }
 
 export interface Role {
@@ -63,5 +63,5 @@ export interface RoleTags {
 export interface RoleColors {
   primaryColor: number;
   secondaryColor: number | null;
-  tertiaryColors: number | null;
+  tertiaryColor: number | null;
 }
