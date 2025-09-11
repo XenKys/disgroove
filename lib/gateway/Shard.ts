@@ -530,6 +530,7 @@ export class Shard {
               : undefined,
           temporary: packet.d.temporary,
           uses: packet.d.uses,
+          expiresAt: packet.d.expires_at,
         });
         break;
       case GatewayEvents.InviteDelete:

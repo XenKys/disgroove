@@ -266,6 +266,7 @@ export interface RawInviteCreateEventFields {
   target_application?: RawApplication;
   temporary: boolean;
   uses: number;
+  expires_at: timestamp | null;
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#invite-delete-invite-delete-event-fields */
@@ -668,6 +669,7 @@ export interface InviteCreateEventFields {
   targetApplication?: Application;
   temporary: boolean;
   uses: number;
+  expiresAt: timestamp | null;
 }
 
 export interface InviteDeleteEventFields {
