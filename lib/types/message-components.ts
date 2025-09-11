@@ -104,6 +104,7 @@ export interface RawUserSelect {
 
 /** https://discord.com/developers/docs/components/reference#user-select-user-select-interaction-response-structure */
 export interface RawUserSelectInteractionResponse {
+  type: ComponentTypes.UserSelect;
   component_type: ComponentTypes.UserSelect;
   id: number;
   custom_id: string;
@@ -131,6 +132,7 @@ export interface RawRoleSelect {
 
 /** https://discord.com/developers/docs/components/reference#role-select-role-select-interaction-response-structure */
 export interface RawRoleSelectInteractionResponse {
+  type: ComponentTypes.RoleSelect;
   component_type: ComponentTypes.RoleSelect;
   id: number;
   custom_id: string;
@@ -152,6 +154,7 @@ export interface RawMentionableSelect {
 
 /** https://discord.com/developers/docs/components/reference#mentionable-select-mentionable-select-interaction-response-structure */
 export interface RawMentionableSelectInteractionResponse {
+  type: ComponentTypes.MentionableSelect;
   component_type: ComponentTypes.MentionableSelect;
   id: number;
   custom_id: string;
@@ -174,6 +177,7 @@ export interface RawChannelSelect {
 
 /** https://discord.com/developers/docs/components/reference#channel-select-channel-select-interaction-response-structure */
 export interface RawChannelSelectInteractionResponse {
+  type: ComponentTypes.ChannelSelect;
   component_type: ComponentTypes.ChannelSelect;
   id: number;
   custom_id: string;
@@ -358,6 +362,7 @@ export interface UserSelect {
 }
 
 export interface UserSelectInteractionResponse {
+  type: ComponentTypes.UserSelect;
   component_type: ComponentTypes.UserSelect;
   id: number;
   customID: string;
@@ -382,6 +387,7 @@ export interface RoleSelect {
 }
 
 export interface RoleSelectInteractionResponse {
+  type: ComponentTypes.RoleSelect;
   componentType: ComponentTypes.RoleSelect;
   id: number;
   customID: string;
@@ -401,6 +407,7 @@ export interface MentionableSelect {
 }
 
 export interface MentionableSelectInteractionResponse {
+  type: ComponentTypes.MentionableSelect;
   componentType: ComponentTypes.MentionableSelect;
   id: number;
   customID: string;
@@ -421,6 +428,7 @@ export interface ChannelSelect {
 }
 
 export interface ChannelSelectInteractionResponse {
+  type: ComponentTypes.ChannelSelect;
   componentType: ComponentTypes.ChannelSelect;
   id: number;
   customID: string;
