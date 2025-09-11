@@ -231,11 +231,23 @@ export class Components {
     let component;
 
     switch (label.component.type) {
+      case ComponentTypes.TextInput:
+        component = Components.textInputFromRaw(label.component);
+        break;
       case ComponentTypes.StringSelect:
         component = Components.stringSelectFromRaw(label.component);
         break;
-      case ComponentTypes.TextInput:
-        component = Components.textInputFromRaw(label.component);
+      case ComponentTypes.UserSelect:
+        component = Components.userSelectFromRaw(label.component);
+        break;
+      case ComponentTypes.RoleSelect:
+        component = Components.roleSelectFromRaw(label.component);
+        break;
+      case ComponentTypes.MentionableSelect:
+        component = Components.mentionableSelectFromRaw(label.component);
+        break;
+      case ComponentTypes.ChannelSelect:
+        component = Components.channelSelectFromRaw(label.component);
         break;
     }
 
@@ -252,11 +264,23 @@ export class Components {
     let component;
 
     switch (label.component.type) {
+      case ComponentTypes.TextInput:
+        component = Components.textInputToRaw(label.component);
+        break;
       case ComponentTypes.StringSelect:
         component = Components.stringSelectToRaw(label.component);
         break;
-      case ComponentTypes.TextInput:
-        component = Components.textInputToRaw(label.component);
+      case ComponentTypes.UserSelect:
+        component = Components.userSelectToRaw(label.component);
+        break;
+      case ComponentTypes.RoleSelect:
+        component = Components.roleSelectToRaw(label.component);
+        break;
+      case ComponentTypes.MentionableSelect:
+        component = Components.mentionableSelectToRaw(label.component);
+        break;
+      case ComponentTypes.ChannelSelect:
+        component = Components.channelSelectToRaw(label.component);
         break;
     }
 

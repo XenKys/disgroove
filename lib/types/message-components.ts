@@ -269,7 +269,13 @@ export interface RawLabel {
   id?: number;
   label: string;
   description?: string;
-  component: RawTextInput | RawStringSelect;
+  component:
+    | RawTextInput
+    | RawStringSelect
+    | RawUserSelect
+    | RawRoleSelect
+    | RawMentionableSelect
+    | RawChannelSelect;
 }
 
 /** https://discord.com/developers/docs/components/reference#label-label-interaction-response-structure */
@@ -524,7 +530,13 @@ export interface Label {
   id?: number;
   label: string;
   description?: string;
-  component: TextInput | StringSelect;
+  component:
+    | TextInput
+    | StringSelect
+    | UserSelect
+    | RoleSelect
+    | MentionableSelect
+    | ChannelSelect;
 }
 
 export interface LabelInteractionResponse {

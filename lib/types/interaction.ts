@@ -30,29 +30,37 @@ import type {
 } from "./message";
 import type {
   ActionRow,
+  ChannelSelectInteractionResponse,
   Container,
   File,
   Label,
   LabelInteractionResponse,
   MediaGallery,
+  MentionableSelectInteractionResponse,
   RawActionRow,
+  RawChannelSelectInteractionResponse,
   RawContainer,
   RawFile,
   RawLabel,
   RawLabelInteractionResponse,
   RawMediaGallery,
+  RawMentionableSelectInteractionResponse,
+  RawRoleSelectInteractionResponse,
   RawSection,
   RawSeparator,
   RawStringSelectInteractionResponse,
   RawTextDisplay,
   RawTextDisplayInteractionResponse,
   RawTextInputInteractionResponse,
+  RawUserSelectInteractionResponse,
+  RoleSelectInteractionResponse,
   Section,
   Separator,
   StringSelectInteractionResponse,
   TextDisplay,
   TextDisplayInteractionResponse,
   TextInputInteractionResponse,
+  UserSelectInteractionResponse,
 } from "./message-components";
 import type { RawPollCreateParams, PollCreateParams } from "./poll";
 import type { RawRole, Role } from "./role";
@@ -110,7 +118,12 @@ export interface RawModalSubmitData {
     | {
         type: ComponentTypes.ActionRow;
         components: Array<
-          RawStringSelectInteractionResponse | RawTextInputInteractionResponse
+          | RawTextInputInteractionResponse
+          | RawStringSelectInteractionResponse
+          | RawUserSelectInteractionResponse
+          | RawRoleSelectInteractionResponse
+          | RawMentionableSelectInteractionResponse
+          | RawChannelSelectInteractionResponse
         >;
       }
     | RawTextDisplayInteractionResponse
@@ -252,7 +265,12 @@ export interface ModalSubmitData {
     | {
         type: ComponentTypes.ActionRow;
         components: Array<
-          StringSelectInteractionResponse | TextInputInteractionResponse
+          | TextInputInteractionResponse
+          | StringSelectInteractionResponse
+          | UserSelectInteractionResponse
+          | RoleSelectInteractionResponse
+          | MentionableSelectInteractionResponse
+          | ChannelSelectInteractionResponse
         >;
       }
     | TextDisplayInteractionResponse
