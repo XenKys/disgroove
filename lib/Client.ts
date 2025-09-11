@@ -2190,6 +2190,9 @@ export class Client extends EventEmitter {
     guildID: snowflake,
     options: {
       nick?: string | null;
+      banner?: string | null;
+      avatar?: string | null;
+      bio?: string | null;
     },
     reason?: string
   ): Promise<GuildMember> {
@@ -2197,9 +2200,7 @@ export class Client extends EventEmitter {
       RESTMethods.Patch,
       Endpoints.guildMember(guildID),
       {
-        json: {
-          nick: options.nick,
-        },
+        json: options,
         reason,
       }
     );
