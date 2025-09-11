@@ -85,7 +85,7 @@ export interface RawRequestGuildMembers {
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#request-soundboard-sounds-request-soundboard-sounds-structure */
-export interface RequestSoundboardSounds {
+export interface RawRequestSoundboardSounds {
   guild_ids: Array<snowflake>;
 }
 
