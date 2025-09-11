@@ -33,11 +33,13 @@ import type {
   Container,
   File,
   Label,
+  LabelInteractionResponse,
   MediaGallery,
   RawActionRow,
   RawContainer,
   RawFile,
   RawLabel,
+  RawLabelInteractionResponse,
   RawMediaGallery,
   RawSection,
   RawSeparator,
@@ -112,11 +114,7 @@ export interface RawModalSubmitData {
         >;
       }
     | RawTextDisplayInteractionResponse
-    | (Omit<RawLabel, "component"> & {
-        component:
-          | RawStringSelectInteractionResponse
-          | RawTextInputInteractionResponse;
-      })
+    | RawLabelInteractionResponse
   >;
 }
 
@@ -257,11 +255,7 @@ export interface ModalSubmitData {
         >;
       }
     | TextDisplayInteractionResponse
-    | (Omit<Label, "component"> & {
-        component:
-          | StringSelectInteractionResponse
-          | TextInputInteractionResponse;
-      })
+    | LabelInteractionResponse
   >;
 }
 

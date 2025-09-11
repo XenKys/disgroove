@@ -272,6 +272,19 @@ export interface RawLabel {
   component: RawTextInput | RawStringSelect;
 }
 
+/** https://discord.com/developers/docs/components/reference#label-label-interaction-response-structure */
+export interface RawLabelInteractionResponse {
+  type: ComponentTypes.Label;
+  id: number;
+  component:
+    | RawTextInputInteractionResponse
+    | RawStringSelectInteractionResponse
+    | RawUserSelectInteractionResponse
+    | RawRoleSelectInteractionResponse
+    | RawMentionableSelectInteractionResponse
+    | RawChannelSelectInteractionResponse;
+}
+
 /** https://discord.com/developers/docs/components/reference#unfurled-media-item-unfurled-media-item-structure */
 export interface RawUnfurledMediaItem {
   url: string;
@@ -512,6 +525,18 @@ export interface Label {
   label: string;
   description?: string;
   component: TextInput | StringSelect;
+}
+
+export interface LabelInteractionResponse {
+  type: ComponentTypes.Label;
+  id: number;
+  component:
+    | TextInputInteractionResponse
+    | StringSelectInteractionResponse
+    | UserSelectInteractionResponse
+    | RoleSelectInteractionResponse
+    | MentionableSelectInteractionResponse
+    | ChannelSelectInteractionResponse;
 }
 
 export interface UnfurledMediaItem {

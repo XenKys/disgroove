@@ -150,6 +150,14 @@ export class Interactions {
                     let c;
 
                     switch (component.component.type) {
+                      case ComponentTypes.TextInput:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          customID: component.component.custom_id,
+                          value: component.component.value,
+                        };
+                        break;
                       case ComponentTypes.StringSelect:
                         c = {
                           type: component.component.type,
@@ -159,12 +167,52 @@ export class Interactions {
                           values: component.component.values,
                         };
                         break;
-                      case ComponentTypes.TextInput:
+                      case ComponentTypes.UserSelect:
                         c = {
                           type: component.component.type,
+                          componentType: component.component.component_type,
                           id: component.component.id,
                           customID: component.component.custom_id,
-                          value: component.component.value,
+                          resolved: this.resolvedDataFromRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.RoleSelect:
+                        c = {
+                          type: component.component.type,
+                          componentType: component.component.component_type,
+                          id: component.component.id,
+                          customID: component.component.custom_id,
+                          resolved: this.resolvedDataFromRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.MentionableSelect:
+                        c = {
+                          type: component.component.type,
+                          componentType: component.component.component_type,
+                          id: component.component.id,
+                          customID: component.component.custom_id,
+                          resolved: this.resolvedDataFromRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.ChannelSelect:
+                        c = {
+                          type: component.component.type,
+                          componentType: component.component.component_type,
+                          id: component.component.id,
+                          customID: component.component.custom_id,
+                          resolved: this.resolvedDataFromRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
                         };
                         break;
                     }
@@ -172,8 +220,6 @@ export class Interactions {
                     return {
                       type: component.type,
                       id: component.id,
-                      label: component.label,
-                      description: component.description,
                       component: c,
                     };
                   }
@@ -325,6 +371,14 @@ export class Interactions {
                     let c;
 
                     switch (component.component.type) {
+                      case ComponentTypes.TextInput:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          custom_id: component.component.customID,
+                          value: component.component.value,
+                        };
+                        break;
                       case ComponentTypes.StringSelect:
                         c = {
                           type: component.component.type,
@@ -334,12 +388,52 @@ export class Interactions {
                           values: component.component.values,
                         };
                         break;
-                      case ComponentTypes.TextInput:
+                      case ComponentTypes.UserSelect:
                         c = {
                           type: component.component.type,
+                          component_type: component.component.componentType,
                           id: component.component.id,
                           custom_id: component.component.customID,
-                          value: component.component.value,
+                          resolved: this.resolvedDataToRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.RoleSelect:
+                        c = {
+                          type: component.component.type,
+                          component_type: component.component.componentType,
+                          id: component.component.id,
+                          custom_id: component.component.customID,
+                          resolved: this.resolvedDataToRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.MentionableSelect:
+                        c = {
+                          type: component.component.type,
+                          component_type: component.component.componentType,
+                          id: component.component.id,
+                          custom_id: component.component.customID,
+                          resolved: this.resolvedDataToRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.ChannelSelect:
+                        c = {
+                          type: component.component.type,
+                          component_type: component.component.componentType,
+                          id: component.component.id,
+                          custom_id: component.component.customID,
+                          resolved: this.resolvedDataToRaw(
+                            component.component.resolved
+                          ),
+                          values: component.component.values,
                         };
                         break;
                     }
@@ -347,8 +441,6 @@ export class Interactions {
                     return {
                       type: component.type,
                       id: component.id,
-                      label: component.label,
-                      description: component.description,
                       component: c,
                     };
                   }
