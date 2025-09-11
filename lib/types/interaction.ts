@@ -116,6 +116,7 @@ export interface RawModalSubmitData {
     | RawTextDisplayInteractionResponse
     | RawLabelInteractionResponse
   >;
+  resolved?: RawResolvedData;
 }
 
 /** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
@@ -257,6 +258,7 @@ export interface ModalSubmitData {
     | TextDisplayInteractionResponse
     | LabelInteractionResponse
   >;
+  resolved?: ResolvedData;
 }
 
 export interface ResolvedData {
