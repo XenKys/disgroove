@@ -369,7 +369,7 @@ export interface UserSelect {
 
 export interface UserSelectInteractionResponse {
   type: ComponentTypes.UserSelect;
-  component_type: ComponentTypes.UserSelect;
+  componentType: ComponentTypes.UserSelect;
   id: number;
   customID: string;
   resolved: ResolvedData;
