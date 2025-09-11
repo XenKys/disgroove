@@ -200,6 +200,12 @@ export interface RawTextDisplay {
   content: string;
 }
 
+/** https://discord.com/developers/docs/components/reference#text-display-text-display-interaction-response-structure */
+export interface RawTextDisplayInteractionResponse {
+  type: ComponentTypes.TextDisplay;
+  id: number;
+}
+
 /** https://discord.com/developers/docs/components/reference#thumbnail-thumbnail-structure */
 export interface RawThumbnail {
   type: ComponentTypes.Thumbnail;
@@ -447,6 +453,11 @@ export interface TextDisplay {
   type: ComponentTypes.TextDisplay;
   id?: number;
   content: string;
+}
+
+export interface TextDisplayInteractionResponse {
+  type: ComponentTypes.TextDisplay;
+  id: number;
 }
 
 export interface Thumbnail {

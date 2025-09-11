@@ -43,11 +43,13 @@ import type {
   RawSeparator,
   RawStringSelectInteractionResponse,
   RawTextDisplay,
+  RawTextDisplayInteractionResponse,
   RawTextInputInteractionResponse,
   Section,
   Separator,
   StringSelectInteractionResponse,
   TextDisplay,
+  TextDisplayInteractionResponse,
   TextInputInteractionResponse,
 } from "./message-components";
 import type { RawPollCreateParams, PollCreateParams } from "./poll";
@@ -109,7 +111,7 @@ export interface RawModalSubmitData {
           RawStringSelectInteractionResponse | RawTextInputInteractionResponse
         >;
       }
-    | RawTextDisplay
+    | RawTextDisplayInteractionResponse
     | (Omit<RawLabel, "component"> & {
         component:
           | RawStringSelectInteractionResponse
@@ -254,7 +256,7 @@ export interface ModalSubmitData {
           StringSelectInteractionResponse | TextInputInteractionResponse
         >;
       }
-    | TextDisplay
+    | TextDisplayInteractionResponse
     | (Omit<Label, "component"> & {
         component:
           | StringSelectInteractionResponse

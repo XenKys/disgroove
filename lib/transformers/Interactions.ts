@@ -142,7 +142,10 @@ export class Interactions {
                       }),
                     };
                   case ComponentTypes.TextDisplay:
-                    return Components.textDisplayFromRaw(component);
+                    return {
+                      type: component.type,
+                      id: component.id,
+                    };
                   case ComponentTypes.Label: {
                     let c;
 
@@ -314,7 +317,10 @@ export class Interactions {
                       }),
                     };
                   case ComponentTypes.TextDisplay:
-                    return Components.textDisplayToRaw(component);
+                    return {
+                      type: component.type,
+                      id: component.id,
+                    };
                   case ComponentTypes.Label: {
                     let c;
 
