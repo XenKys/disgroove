@@ -28,22 +28,34 @@ client.on("interactionCreate", (interaction) => {
               components: [
                 {
                   customId: "green",
-                  label: "Green button",
+                  label: "Green",
                   style: ButtonStyles.Success,
+                  type: ComponentTypes.Button,
+                },
+                {
+                  customId: "red",
+                  disabled: true,
+                  label: "Red (Disabled)",
+                  style: ButtonStyles.Danger,
+                  type: ComponentTypes.Button,
+                },
+                {
+                  customId: "blurple",
+                  label: "Blurple",
+                  style: ButtonStyles.Primary,
+                  type: ComponentTypes.Button,
+                },
+                {
+                  customId: "gray",
+                  label: "Gray",
+                  style: ButtonStyles.Secondary,
                   type: ComponentTypes.Button,
                 },
                 {
                   label: "URL button",
                   style: ButtonStyles.Link,
                   type: ComponentTypes.Button,
-                  url: "https://github.com/XenKys/disgroove",
-                },
-                {
-                  customId: "red",
-                  disabled: true,
-                  label: "Disabled red button",
-                  style: ButtonStyles.Danger,
-                  type: ComponentTypes.Button,
+                  url: "https://discord.com",
                 },
               ],
             },
@@ -51,19 +63,18 @@ client.on("interactionCreate", (interaction) => {
         },
       });
     }
-  }
-
-  if (interaction.type === InteractionType.MessageComponent) {
+  } else if (interaction.type === InteractionType.MessageComponent) {
     if (interaction.data.componentType !== ComponentTypes.Button) return;
 
-    if (interaction.data.customId == "green") {
-      client.createInteractionResponse(interaction.id, interaction.token, {
-        type: InteractionCallbackType.ChannelMessageWithSource,
-        data: {
-          content: "Green button clicked",
-        },
-      });
-    }
+    client.createInteractionResponse(interaction.id, interaction.token, {
+      type: InteractionCallbackType.ChannelMessageWithSource,
+      data: {
+        content: `${
+          interaction.data.customId.charAt(0).toUpperCase() +
+          interaction.data.customId.slice(1)
+        } button clicked`,
+      },
+    });
   }
 });
 

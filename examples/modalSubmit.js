@@ -26,15 +26,22 @@ client.on("interactionCreate", (interaction) => {
           title: "Modal",
           components: [
             {
-              type: ComponentTypes.ActionRow,
-              components: [
-                {
-                  type: ComponentTypes.TextInput,
-                  customId: "text-input",
-                  style: TextInputStyles.Short,
-                  label: "Text input",
-                },
-              ],
+              type: ComponentTypes.Label,
+              label: "Short",
+              component: {
+                type: ComponentTypes.TextInput,
+                customId: "short",
+                style: TextInputStyles.Short,
+              },
+            },
+            {
+              type: ComponentTypes.Label,
+              label: "Paragraph",
+              component: {
+                type: ComponentTypes.TextInput,
+                customId: "paragraph",
+                style: TextInputStyles.Paragraph,
+              },
             },
           ],
         },
@@ -44,17 +51,21 @@ client.on("interactionCreate", (interaction) => {
 
   if (interaction.type === InteractionType.ModalSubmit) {
     if (interaction.data.customId === "modal-submit") {
-      const actionRow = interaction.data.components.find(
-        (component) => component.type === ComponentTypes.ActionRow
-      );
-      const textInput = actionRow.components.find(
-        (component) => component.customId === "text-input"
-      ).value;
+      const short = interaction.data.components.find(
+        (component) =>
+          component.type === ComponentTypes.Label &&
+          component.component.customId === "short"
+      ).component;
+      const paragraph = interaction.data.components.find(
+        (component) =>
+          component.type === ComponentTypes.Label &&
+          component.component.customId === "paragraph"
+      ).component;
 
       client.createInteractionResponse(interaction.id, interaction.token, {
         type: InteractionCallbackType.ChannelMessageWithSource,
         data: {
-          content: `Text input: ${textInput}`,
+          content: `Short: ${short.value}\n\nParagraph:\n${paragraph.value}`,
         },
       });
     }
