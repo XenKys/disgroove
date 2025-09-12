@@ -5,7 +5,7 @@ export class Polls {
     return {
       question: poll.question,
       answers: poll.answers.map((answer) => ({
-        answerID: answer.answer_id,
+        answerId: answer.answer_id,
         pollMedia: answer.poll_media,
       })),
       expiry: poll.expiry,
@@ -29,7 +29,7 @@ export class Polls {
     return {
       question: poll.question,
       answers: poll.answers.map((answer) => ({
-        answer_id: answer.answerID,
+        answer_id: answer.answerId,
         poll_media: answer.pollMedia,
       })),
       expiry: poll.expiry,

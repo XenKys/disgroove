@@ -9,8 +9,8 @@ export const cdnURL = (
 ) => `https://cdn.discordapp.com/${cdnEndpoint}.${imageFormat}` as const;
 
 export const achievementIcon = (
-  applicationID: snowflake,
-  achievementID: snowflake,
+  applicationId: snowflake,
+  achievementId: snowflake,
   iconHash: string,
   imageFormat:
     | ImageFormats.PNG
@@ -19,49 +19,49 @@ export const achievementIcon = (
     | ImageFormats.WebP = ImageFormats.PNG
 ) =>
   cdnURL(
-    `app-assets/${applicationID}/achievements/${achievementID}/icons/${iconHash}`,
+    `app-assets/${applicationId}/achievements/${achievementId}/icons/${iconHash}`,
     imageFormat
   );
 export const applicationAsset = (
-  applicationID: snowflake,
-  assetID: snowflake,
+  applicationId: snowflake,
+  assetId: snowflake,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`app-assets/${applicationID}/${assetID}`, imageFormat);
+) => cdnURL(`app-assets/${applicationId}/${assetId}`, imageFormat);
 export const applicationCover = (
-  applicationID: snowflake,
+  applicationId: snowflake,
   coverImage: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`app-icons/${applicationID}/${coverImage}`, imageFormat);
+) => cdnURL(`app-icons/${applicationId}/${coverImage}`, imageFormat);
 export const applicationIcon = (
-  applicationID: snowflake,
+  applicationId: snowflake,
   icon: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`app-icons/${applicationID}/${icon}`, imageFormat);
+) => cdnURL(`app-icons/${applicationId}/${icon}`, imageFormat);
 export const customEmoji = (
-  emojiID: snowflake,
+  emojiId: snowflake,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`emojis/${emojiID}`, imageFormat);
+) => cdnURL(`emojis/${emojiId}`, imageFormat);
 export const defaultUserAvatar = (index: string) =>
   cdnURL(`embed/avatars/${index}`);
 export const guildBanner = (
-  guildID: snowflake,
+  guildId: snowflake,
   banner: string,
   imageFormat:
     | ImageFormats.PNG
@@ -69,18 +69,18 @@ export const guildBanner = (
     | ImageFormats.JPG
     | ImageFormats.WebP
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`banners/${guildID}/${banner}`, imageFormat);
+) => cdnURL(`banners/${guildId}/${banner}`, imageFormat);
 export const guildDiscoverySplash = (
-  guildID: snowflake,
+  guildId: snowflake,
   splash: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`discovery-splashes/${guildID}/${splash}`, imageFormat);
+) => cdnURL(`discovery-splashes/${guildId}/${splash}`, imageFormat);
 export const guildIcon = (
-  guildID: snowflake,
+  guildId: snowflake,
   icon: string,
   imageFormat:
     | ImageFormats.PNG
@@ -88,10 +88,10 @@ export const guildIcon = (
     | ImageFormats.JPG
     | ImageFormats.WebP
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`icons/${guildID}/${icon}`, imageFormat);
+) => cdnURL(`icons/${guildId}/${icon}`, imageFormat);
 export const guildMemberAvatar = (
-  guildID: snowflake,
-  userID: snowflake,
+  guildId: snowflake,
+  userId: snowflake,
   avatar: string,
   imageFormat:
     | ImageFormats.PNG
@@ -99,10 +99,10 @@ export const guildMemberAvatar = (
     | ImageFormats.JPG
     | ImageFormats.WebP
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`guilds/${guildID}/users/${userID}/avatars/${avatar}`, imageFormat);
+) => cdnURL(`guilds/${guildId}/users/${userId}/avatars/${avatar}`, imageFormat);
 export const guildMemberBanner = (
-  guildID: snowflake,
-  userID: snowflake,
+  guildId: snowflake,
+  userId: snowflake,
   banner: string,
   imageFormat:
     | ImageFormats.PNG
@@ -110,80 +110,80 @@ export const guildMemberBanner = (
     | ImageFormats.JPG
     | ImageFormats.WebP
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`guilds/${guildID}/users/${userID}/banners/${banner}`, imageFormat);
+) => cdnURL(`guilds/${guildId}/users/${userId}/banners/${banner}`, imageFormat);
 export const guildScheduledEventCover = (
-  scheduledEventID: snowflake,
+  scheduledEventId: snowflake,
   coverImage: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`guild-events/${scheduledEventID}/${coverImage}`, imageFormat);
+) => cdnURL(`guild-events/${scheduledEventId}/${coverImage}`, imageFormat);
 export const guildSplash = (
-  guildID: snowflake,
+  guildId: snowflake,
   splash: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`splashes/${guildID}/${splash}`, imageFormat);
+) => cdnURL(`splashes/${guildId}/${splash}`, imageFormat);
 export const guildTagBadge = (
-  guildID: snowflake,
+  guildId: snowflake,
   hash: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`guild-tag-badges/${guildID}/${hash}`, imageFormat);
+) => cdnURL(`guild-tag-badges/${guildId}/${hash}`, imageFormat);
 export const roleIcon = (
-  roleID: snowflake,
+  roleId: snowflake,
   icon: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`role-icons/${roleID}/${icon}`, imageFormat);
+) => cdnURL(`role-icons/${roleId}/${icon}`, imageFormat);
 export const stickerPackBanner = (
-  assetID: snowflake,
+  assetId: snowflake,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`app-assets/710982414301790216/store/${assetID}`, imageFormat);
+) => cdnURL(`app-assets/710982414301790216/store/${assetId}`, imageFormat);
 export const sticker = (
-  stickerID: snowflake,
+  stickerId: snowflake,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.Lottie
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`stickers/${stickerID}`, imageFormat);
+) => cdnURL(`stickers/${stickerId}`, imageFormat);
 export const storePageAsset = (
-  applicationID: snowflake,
-  assetID: snowflake,
+  applicationId: snowflake,
+  assetId: snowflake,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`app-assets/${applicationID}/store/${assetID}`, imageFormat);
-export const soundboardSound = (soundID: snowflake) =>
-  cdnURL(`soundboard-sounds/${soundID}`);
+) => cdnURL(`app-assets/${applicationId}/store/${assetId}`, imageFormat);
+export const soundboardSound = (soundId: snowflake) =>
+  cdnURL(`soundboard-sounds/${soundId}`);
 export const teamIcon = (
-  teamID: snowflake,
+  teamId: snowflake,
   icon: string,
   imageFormat:
     | ImageFormats.PNG
     | ImageFormats.JPEG
     | ImageFormats.JPG
     | ImageFormats.WebP = ImageFormats.PNG
-) => cdnURL(`team-icons/${teamID}/${icon}`, imageFormat);
+) => cdnURL(`team-icons/${teamId}/${icon}`, imageFormat);
 export const userAvatar = (
-  userID: snowflake,
+  userId: snowflake,
   avatar: string,
   imageFormat:
     | ImageFormats.PNG
@@ -191,13 +191,13 @@ export const userAvatar = (
     | ImageFormats.JPG
     | ImageFormats.WebP
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`avatars/${userID}/${avatar}`, imageFormat);
+) => cdnURL(`avatars/${userId}/${avatar}`, imageFormat);
 export const userAvatarDecoration = (
-  userID: snowflake,
+  userId: snowflake,
   avatarDecoration: string
-) => cdnURL(`avatar-decorations/${userID}/${avatarDecoration}`);
+) => cdnURL(`avatar-decorations/${userId}/${avatarDecoration}`);
 export const userBanner = (
-  userID: snowflake,
+  userId: snowflake,
   banner: string,
   imageFormat:
     | ImageFormats.PNG
@@ -205,4 +205,4 @@ export const userBanner = (
     | ImageFormats.JPG
     | ImageFormats.WebP
     | ImageFormats.GIF = ImageFormats.PNG
-) => cdnURL(`banners/${userID}/${banner}`, imageFormat);
+) => cdnURL(`banners/${userId}/${banner}`, imageFormat);

@@ -107,22 +107,22 @@ export interface RawRoleSubscriptionData {
 export interface Channel {
   id: snowflake;
   type: ChannelTypes;
-  guildID?: snowflake;
+  guildId?: snowflake;
   position?: number;
   permissionOverwrites?: Array<Overwrite>;
   name?: string | null;
   topic?: string | null;
   nsfw?: boolean;
-  lastMessageID?: snowflake | null;
+  lastMessageId?: snowflake | null;
   bitrate?: number;
   userLimit?: number;
   rateLimitPerUser?: number;
   recipients?: Array<User>;
   icon?: string | null;
-  ownerID?: snowflake;
-  applicationID?: snowflake;
+  ownerId?: snowflake;
+  applicationId?: snowflake;
   managed?: boolean;
-  parentID?: snowflake | null;
+  parentId?: snowflake | null;
   lastPinTimestamp?: timestamp | null;
   rtcRegion?: string | null;
   videoQualityMode?: VideoQualityModes;
@@ -143,8 +143,8 @@ export interface Channel {
 }
 
 export interface FollowedChannel {
-  channelID: snowflake;
-  webhookID: snowflake;
+  channelId: snowflake;
+  webhookId: snowflake;
 }
 
 export interface Overwrite {
@@ -165,14 +165,14 @@ export interface ThreadMetadata {
 
 export interface ThreadMember {
   id?: snowflake;
-  userID?: snowflake;
+  userId?: snowflake;
   joinTimestamp: timestamp;
   flags: number;
   member?: GuildMember;
 }
 
 export interface DefaultReaction {
-  emojiID: snowflake | null;
+  emojiId: snowflake | null;
   emojiName: string | null;
 }
 
@@ -180,12 +180,12 @@ export interface ForumTag {
   id: snowflake;
   name: string;
   moderated: boolean;
-  emojiID?: snowflake;
+  emojiId?: snowflake;
   emojiName?: string;
 }
 
 export interface RoleSubscriptionData {
-  roleSubscriptionListingID: snowflake;
+  roleSubscriptionListingId: snowflake;
   tierName: string;
   totalMonthsSubscribed: number;
   isRenewal: boolean;

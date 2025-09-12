@@ -23,13 +23,13 @@ export interface RawWebhook {
 export interface Webhook {
   id: snowflake;
   type: WebhookTypes;
-  guildID?: snowflake | null;
-  channelID: snowflake | null;
+  guildId?: snowflake | null;
+  channelId: snowflake | null;
   user?: User;
   name: string | null;
   avatar: string | null;
   token?: string;
-  applicationID: snowflake | null;
+  applicationId: snowflake | null;
   sourceGuild?: Guild;
   sourceChannel?: Channel;
   url?: string;

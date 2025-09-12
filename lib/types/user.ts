@@ -105,7 +105,7 @@ export interface User {
 }
 
 export interface UserPrimaryGuild {
-  identityGuildID: snowflake | null;
+  identityGuildId: snowflake | null;
   identityEnabled: boolean | null;
   tag: string | null;
   badge: string | null;
@@ -113,7 +113,7 @@ export interface UserPrimaryGuild {
 
 export interface AvatarDecorationData {
   asset: string;
-  skuID: snowflake;
+  skuId: snowflake;
 }
 
 export interface Collectibles {
@@ -121,7 +121,7 @@ export interface Collectibles {
 }
 
 export interface Nameplate {
-  skuID: snowflake;
+  skuId: snowflake;
   asset: string;
   label: string;
   palette: string;

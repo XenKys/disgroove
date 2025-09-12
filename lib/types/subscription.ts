@@ -17,10 +17,10 @@ export interface RawSubscription {
 
 export interface Subscription {
   id: snowflake;
-  userID: snowflake;
-  skuIDs: Array<snowflake>;
-  entitlementIDs: Array<snowflake>;
-  renewalSKUIDs: Array<snowflake>;
+  userId: snowflake;
+  skuIds: Array<snowflake>;
+  entitlementIds: Array<snowflake>;
+  renewalSKUIds: Array<snowflake>;
   currentPeriodStart: timestamp;
   currentPeriodEnd: timestamp;
   status: SubscriptionStatuses;

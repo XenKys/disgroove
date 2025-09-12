@@ -5,7 +5,7 @@ export class SKUs {
     return {
       id: sku.id,
       type: sku.type,
-      applicationID: sku.application_id,
+      applicationId: sku.application_id,
       name: sku.name,
       slug: sku.slug,
       flags: sku.flags,
@@ -16,7 +16,7 @@ export class SKUs {
     return {
       id: sku.id,
       type: sku.type,
-      application_id: sku.applicationID,
+      application_id: sku.applicationId,
       name: sku.name,
       slug: sku.slug,
       flags: sku.flags,

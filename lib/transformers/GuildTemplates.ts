@@ -9,11 +9,11 @@ export class GuildTemplates {
       name: guildTemplate.name,
       description: guildTemplate.description,
       usageCount: guildTemplate.usage_count,
-      creatorID: guildTemplate.creator_id,
+      creatorId: guildTemplate.creator_id,
       creator: Users.userFromRaw(guildTemplate.creator),
       createdAt: guildTemplate.created_at,
       updatedAt: guildTemplate.updated_at,
-      sourceGuildID: guildTemplate.source_guild_id,
+      sourceGuildId: guildTemplate.source_guild_id,
       serializedSourceGuild: Guilds.guildFromRaw(
         guildTemplate.serialized_source_guild
       ),
@@ -27,11 +27,11 @@ export class GuildTemplates {
       name: guildTemplate.name,
       description: guildTemplate.description,
       usage_count: guildTemplate.usageCount,
-      creator_id: guildTemplate.creatorID,
+      creator_id: guildTemplate.creatorId,
       creator: Users.userToRaw(guildTemplate.creator),
       created_at: guildTemplate.createdAt,
       updated_at: guildTemplate.updatedAt,
-      source_guild_id: guildTemplate.sourceGuildID,
+      source_guild_id: guildTemplate.sourceGuildId,
       serialized_source_guild: Guilds.guildToRaw(
         guildTemplate.serializedSourceGuild
       ),

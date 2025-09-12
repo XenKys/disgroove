@@ -48,7 +48,7 @@ client.on("interactionCreate", (interaction) => {
                       type: ComponentTypes.Button,
                       style: ButtonStyles.Secondary,
                       label: "You can also include action rows here!",
-                      customID: "secondary",
+                      customId: "secondary",
                     },
                   ],
                 },

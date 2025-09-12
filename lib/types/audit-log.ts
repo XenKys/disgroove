@@ -75,9 +75,9 @@ export interface AuditLog {
 }
 
 export interface AuditLogEntry {
-  targetID: snowflake | null;
+  targetId: snowflake | null;
   changes?: Array<AuditLogChange>;
-  userID: snowflake | null;
+  userId: snowflake | null;
   id: snowflake;
   actionType: AuditLogEvents;
   options?: OptionalAuditLogEntryInfo;
@@ -85,15 +85,15 @@ export interface AuditLogEntry {
 }
 
 export interface OptionalAuditLogEntryInfo {
-  applicationID: snowflake;
+  applicationId: snowflake;
   autoModerationRuleName: string;
   autoModerationRuleTriggerType: string;
-  channelID: snowflake;
+  channelId: snowflake;
   count: string;
   deleteMemberDays: string;
   id: snowflake;
   membersRemoved: string;
-  messageID: snowflake;
+  messageId: snowflake;
   roleName: string;
   type: string;
   integrationType: string;

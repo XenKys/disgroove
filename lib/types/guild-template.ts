@@ -22,11 +22,11 @@ export interface GuildTemplate {
   name: string;
   description: string | null;
   usageCount: number;
-  creatorID: snowflake;
+  creatorId: snowflake;
   creator: User;
   createdAt: timestamp;
   updatedAt: timestamp;
-  sourceGuildID: snowflake;
+  sourceGuildId: snowflake;
   serializedSourceGuild: Guild;
   isDirty: boolean | null;
 }

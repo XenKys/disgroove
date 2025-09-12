@@ -27,7 +27,7 @@ client.on("interactionCreate", (interaction) => {
               type: ComponentTypes.ActionRow,
               components: [
                 {
-                  customID: "order",
+                  customId: "order",
                   options: [
                     {
                       label: "Pizza margherita",
@@ -57,7 +57,7 @@ client.on("interactionCreate", (interaction) => {
   }
 
   if (interaction.type === InteractionType.MessageComponent) {
-    if (interaction.data.customID === "order") {
+    if (interaction.data.customId === "order") {
       let orderedPizza;
 
       switch (interaction.data.values[0]) {

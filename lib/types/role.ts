@@ -52,10 +52,10 @@ export interface Role {
 }
 
 export interface RoleTags {
-  botID?: snowflake;
-  integrationID?: snowflake;
+  botId?: snowflake;
+  integrationId?: snowflake;
   premiumSubscriber?: null;
-  subscriptionListingID?: snowflake;
+  subscriptionListingId?: snowflake;
   availableForPurchase?: null;
   guildConnections?: null;
 }

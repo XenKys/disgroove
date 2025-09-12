@@ -8,12 +8,12 @@ export class Teams {
       id: team.id,
       members: team.members.map((teamMember) => ({
         membershipState: teamMember.membership_state,
-        teamID: teamMember.team_id,
+        teamId: teamMember.team_id,
         user: Users.userFromRaw(teamMember.user),
         role: teamMember.role,
       })),
       name: team.name,
-      ownerUserID: team.owner_user_id,
+      ownerUserId: team.owner_user_id,
     };
   }
 
@@ -23,12 +23,12 @@ export class Teams {
       id: team.id,
       members: team.members.map((teamMember) => ({
         membership_state: teamMember.membershipState,
-        team_id: teamMember.teamID,
+        team_id: teamMember.teamId,
         user: Users.userToRaw(teamMember.user),
         role: teamMember.role,
       })),
       name: team.name,
-      owner_user_id: team.ownerUserID,
+      owner_user_id: team.ownerUserId,
     };
   }
 }

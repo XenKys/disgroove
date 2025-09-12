@@ -233,13 +233,13 @@ export interface Guild {
   splash: string | null;
   discoverySplash: string | null;
   owner?: boolean;
-  ownerID: snowflake;
+  ownerId: snowflake;
   permissions?: string;
   region?: string | null;
-  afkChannelID: snowflake | null;
+  afkChannelId: snowflake | null;
   afkTimeout: number;
   widgetEnabled?: boolean;
-  widgetChannelID?: snowflake | null;
+  widgetChannelId?: snowflake | null;
   verificationLevel: VerificationLevel;
   defaultMessageNotifications: DefaultMessageNotificationLevel;
   explicitContentFilter: ExplicitContentFilterLevel;
@@ -247,10 +247,10 @@ export interface Guild {
   emojis: Array<Emoji>;
   features: Array<GuildFeatures>;
   mfaLevel: MFALevel;
-  applicationID: snowflake | null;
-  systemChannelID: snowflake | null;
+  applicationId: snowflake | null;
+  systemChannelId: snowflake | null;
   systemChannelFlags: SystemChannelFlags;
-  rulesChannelID: snowflake | null;
+  rulesChannelId: snowflake | null;
   maxPresences?: number | null;
   maxMembers?: number;
   vanityURLCode: string | null;
@@ -259,7 +259,7 @@ export interface Guild {
   premiumTier: PremiumTier;
   premiumSubscriptionCount?: number;
   preferredLocale: string;
-  publicUpdatesChannelID: snowflake | null;
+  publicUpdatesChannelId: snowflake | null;
   maxVideoChannelUsers?: number;
   maxStageVideoChannelUsers?: number;
   approximateMemberCount?: number;
@@ -268,7 +268,7 @@ export interface Guild {
   nsfwLevel: GuildNSFWLevel;
   stickers?: Array<Sticker>;
   premiumProgressBarEnabled: boolean;
-  safetyAlertsChannelID: snowflake | null;
+  safetyAlertsChannelId: snowflake | null;
   incidentsData: IncidentsData | null;
 }
 
@@ -293,7 +293,7 @@ export interface GuildPreview {
 
 export interface GuildWidgetSettings {
   enabled: boolean;
-  channelID: snowflake | null;
+  channelId: snowflake | null;
 }
 
 export interface GuildWidget {
@@ -329,7 +329,7 @@ export interface Integration {
   type: string;
   enabled: boolean;
   syncing?: boolean;
-  roleID?: snowflake;
+  roleId?: snowflake;
   enableEmoticons?: boolean;
   expireBehavior?: IntegrationExpireBehaviors;
   expireGracePeriod?: number;
@@ -366,16 +366,16 @@ export interface WelcomeScreen {
 }
 
 export interface WelcomeScreenChannel {
-  channelID: snowflake;
+  channelId: snowflake;
   description: string;
-  emojiID: snowflake | null;
+  emojiId: snowflake | null;
   emojiName: string | null;
 }
 
 export interface GuildOnboarding {
-  guildID: snowflake;
+  guildId: snowflake;
   prompts: Array<OnboardingPrompt>;
-  defaultChannelIDs: Array<snowflake>;
+  defaultChannelIds: Array<snowflake>;
   enabled: boolean;
   mode: OnboardingMode;
 }
@@ -392,10 +392,10 @@ export interface OnboardingPrompt {
 
 export interface PromptOption {
   id: snowflake;
-  channelIDs: Array<snowflake>;
-  roleIDs: Array<snowflake>;
+  channelIds: Array<snowflake>;
+  roleIds: Array<snowflake>;
   emoji?: Emoji;
-  emojiID?: snowflake;
+  emojiId?: snowflake;
   emojiName?: string;
   emojiAnimated?: boolean;
   title: string;

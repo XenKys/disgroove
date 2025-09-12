@@ -4,14 +4,14 @@ import { Guilds } from "./Guilds";
 export class Voice {
   static voiceStateFromRaw(voiceState: RawVoiceState): VoiceState {
     return {
-      guildID: voiceState.guild_id,
-      channelID: voiceState.channel_id,
-      userID: voiceState.user_id,
+      guildId: voiceState.guild_id,
+      channelId: voiceState.channel_id,
+      userId: voiceState.user_id,
       member:
         voiceState.member !== undefined
           ? Guilds.guildMemberFromRaw(voiceState.member)
           : undefined,
-      sessionID: voiceState.session_id,
+      sessionId: voiceState.session_id,
       deaf: voiceState.deaf,
       mute: voiceState.mute,
       selfDeaf: voiceState.self_deaf,
@@ -25,14 +25,14 @@ export class Voice {
 
   static voiceStateToRaw(voiceState: VoiceState): RawVoiceState {
     return {
-      guild_id: voiceState.guildID,
-      channel_id: voiceState.channelID,
-      user_id: voiceState.userID,
+      guild_id: voiceState.guildId,
+      channel_id: voiceState.channelId,
+      user_id: voiceState.userId,
       member:
         voiceState.member !== undefined
           ? Guilds.guildMemberToRaw(voiceState.member)
           : undefined,
-      session_id: voiceState.sessionID,
+      session_id: voiceState.sessionId,
       deaf: voiceState.deaf,
       mute: voiceState.mute,
       self_deaf: voiceState.selfDeaf,

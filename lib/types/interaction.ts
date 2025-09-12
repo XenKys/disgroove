@@ -221,13 +221,13 @@ export interface RawActivityInstanceResource {
 
 export interface Interaction {
   id: snowflake;
-  applicationID: snowflake;
+  applicationId: snowflake;
   type: InteractionType;
   data?: ApplicationCommandData & MessageComponentData & ModalSubmitData;
   guild?: { locale: Locales } & Pick<Guild, "id" | "features">;
-  guildID?: snowflake;
+  guildId?: snowflake;
   channel?: Channel;
-  channelID?: snowflake;
+  channelId?: snowflake;
   member?: GuildMember;
   user?: User;
   token: string;
@@ -248,19 +248,19 @@ export interface ApplicationCommandData {
   type: ApplicationCommandTypes;
   resolved?: ResolvedData;
   options?: Array<ApplicationCommandInteractionDataOption>;
-  guildID?: snowflake;
-  targetID?: snowflake;
+  guildId?: snowflake;
+  targetId?: snowflake;
 }
 
 export interface MessageComponentData {
-  customID: string;
+  customId: string;
   componentType: ComponentTypes;
   values?: Array<string>;
   resolved?: ResolvedData;
 }
 
 export interface ModalSubmitData {
-  customID: string;
+  customId: string;
   components: Array<
     | {
         type: ComponentTypes.ActionRow;
@@ -329,7 +329,7 @@ export interface InteractionCallbackData {
   poll?: PollCreateParams;
   files?: Array<FileData>;
   choices?: Array<ApplicationCommandOptionChoice>;
-  customID?: string;
+  customId?: string;
   title?: string;
 }
 
@@ -341,8 +341,8 @@ export interface InteractionCallbackResponse {
 export interface InteractionCallback {
   id: snowflake;
   type: InteractionType;
-  activityInstanceID?: string;
-  responseMessageID?: snowflake;
+  activityInstanceId?: string;
+  responseMessageId?: snowflake;
   responseMessageLoading?: boolean;
   responseMessageEphemeral?: boolean;
 }

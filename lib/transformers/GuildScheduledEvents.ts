@@ -46,9 +46,9 @@ export class GuildScheduledEvents {
   ): GuildScheduledEvent {
     return {
       id: guildScheduledEvent.id,
-      guildID: guildScheduledEvent.guild_id,
-      channelID: guildScheduledEvent.channel_id,
-      creatorID: guildScheduledEvent.creator_id,
+      guildId: guildScheduledEvent.guild_id,
+      channelId: guildScheduledEvent.channel_id,
+      creatorId: guildScheduledEvent.creator_id,
       name: guildScheduledEvent.name,
       description: guildScheduledEvent.description,
       scheduledStartTime: guildScheduledEvent.scheduled_start_time,
@@ -56,7 +56,7 @@ export class GuildScheduledEvents {
       privacyLevel: guildScheduledEvent.privacy_level,
       status: guildScheduledEvent.status,
       entityType: guildScheduledEvent.entity_type,
-      entityID: guildScheduledEvent.entity_id,
+      entityId: guildScheduledEvent.entity_id,
       entityMetadata: guildScheduledEvent.entity_metadata,
       creator:
         guildScheduledEvent.creator !== undefined
@@ -78,9 +78,9 @@ export class GuildScheduledEvents {
   ): RawGuildScheduledEvent {
     return {
       id: guildScheduledEvent.id,
-      guild_id: guildScheduledEvent.guildID,
-      channel_id: guildScheduledEvent.channelID,
-      creator_id: guildScheduledEvent.creatorID,
+      guild_id: guildScheduledEvent.guildId,
+      channel_id: guildScheduledEvent.channelId,
+      creator_id: guildScheduledEvent.creatorId,
       name: guildScheduledEvent.name,
       description: guildScheduledEvent.description,
       scheduled_start_time: guildScheduledEvent.scheduledStartTime,
@@ -88,7 +88,7 @@ export class GuildScheduledEvents {
       privacy_level: guildScheduledEvent.privacyLevel,
       status: guildScheduledEvent.status,
       entity_type: guildScheduledEvent.entityType,
-      entity_id: guildScheduledEvent.entityID,
+      entity_id: guildScheduledEvent.entityId,
       entity_metadata: guildScheduledEvent.entityMetadata,
       creator:
         guildScheduledEvent.creator !== undefined

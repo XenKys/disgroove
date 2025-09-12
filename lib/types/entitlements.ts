@@ -17,13 +17,13 @@ export interface RawEntitlement {
 
 export interface Entitlement {
   id: snowflake;
-  skuID: snowflake;
-  applicationID: snowflake;
-  userID?: snowflake;
+  skuId: snowflake;
+  applicationId: snowflake;
+  userId?: snowflake;
   type: EntitlementTypes;
   deleted: boolean;
   consumed?: boolean;
   startsAt: timestamp | null;
   endsAt: timestamp | null;
-  guildID?: snowflake;
+  guildId?: snowflake;
 }

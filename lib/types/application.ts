@@ -89,9 +89,9 @@ export interface Application {
   owner?: User;
   verifyKey: string;
   team: Team | null;
-  guildID?: snowflake;
+  guildId?: snowflake;
   guild?: Guild;
-  primarySKUID?: snowflake;
+  primarySKUId?: snowflake;
   slug?: string;
   coverImage?: string;
   flags?: ApplicationFlags;
@@ -123,9 +123,9 @@ export interface InstallParams {
 }
 
 export interface ActivityInstance {
-  applicationID: snowflake;
-  instanceID: string;
-  launchID: snowflake;
+  applicationId: snowflake;
+  instanceId: string;
+  launchId: snowflake;
   location: ActivityLocation;
   users: Array<snowflake>;
 }
@@ -133,6 +133,6 @@ export interface ActivityInstance {
 export interface ActivityLocation {
   id: string;
   kind: ActivityLocationKind;
-  channelID: snowflake;
-  guildID?: snowflake | null;
+  channelId: snowflake;
+  guildId?: snowflake | null;
 }

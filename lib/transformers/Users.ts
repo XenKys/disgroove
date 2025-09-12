@@ -3,7 +3,7 @@ import type { Nameplate, RawNameplate, RawUser, User } from "../types/user";
 export class Users {
   static nameplateFromRaw(nameplate: RawNameplate): Nameplate {
     return {
-      skuID: nameplate.sku_id,
+      skuId: nameplate.sku_id,
       asset: nameplate.asset,
       label: nameplate.label,
       palette: nameplate.palette,
@@ -12,7 +12,7 @@ export class Users {
 
   static nameplateToRaw(nameplate: Nameplate): RawNameplate {
     return {
-      sku_id: nameplate.skuID,
+      sku_id: nameplate.skuId,
       asset: nameplate.asset,
       label: nameplate.label,
       palette: nameplate.palette,
@@ -42,7 +42,7 @@ export class Users {
           ? user.avatar_decoration_data !== null
             ? {
                 asset: user.avatar_decoration_data.asset,
-                skuID: user.avatar_decoration_data.sku_id,
+                skuId: user.avatar_decoration_data.sku_id,
               }
             : null
           : undefined,
@@ -61,7 +61,7 @@ export class Users {
         user.primary_guild !== undefined
           ? user.primary_guild !== null
             ? {
-                identityGuildID: user.primary_guild.identity_guild_id,
+                identityGuildId: user.primary_guild.identity_guild_id,
                 identityEnabled: user.primary_guild.identity_enabled,
                 tag: user.primary_guild.tag,
                 badge: user.primary_guild.badge,
@@ -94,7 +94,7 @@ export class Users {
           ? user.avatarDecorationData !== null
             ? {
                 asset: user.avatarDecorationData.asset,
-                sku_id: user.avatarDecorationData.skuID,
+                sku_id: user.avatarDecorationData.skuId,
               }
             : null
           : undefined,
@@ -113,7 +113,7 @@ export class Users {
         user.primaryGuild !== undefined
           ? user.primaryGuild !== null
             ? {
-                identity_guild_id: user.primaryGuild.identityGuildID,
+                identity_guild_id: user.primaryGuild.identityGuildId,
                 identity_enabled: user.primaryGuild.identityEnabled,
                 tag: user.primaryGuild.tag,
                 badge: user.primaryGuild.badge,

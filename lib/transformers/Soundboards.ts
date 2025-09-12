@@ -5,11 +5,11 @@ export class Soundboards {
   static soundboardSoundFromRaw(sound: RawSoundboardSound): SoundboardSound {
     return {
       name: sound.name,
-      soundID: sound.sound_id,
+      soundId: sound.sound_id,
       volume: sound.volume,
-      emojiID: sound.emoji_id,
+      emojiId: sound.emoji_id,
       emojiName: sound.emoji_name,
-      guildID: sound.guild_id,
+      guildId: sound.guild_id,
       available: sound.available,
       user:
         sound.user !== undefined ? Users.userFromRaw(sound.user) : undefined,
@@ -19,11 +19,11 @@ export class Soundboards {
   static soundboardSoundToRaw(sound: SoundboardSound): RawSoundboardSound {
     return {
       name: sound.name,
-      sound_id: sound.soundID,
+      sound_id: sound.soundId,
       volume: sound.volume,
-      emoji_id: sound.emojiID,
+      emoji_id: sound.emojiId,
       emoji_name: sound.emojiName,
-      guild_id: sound.guildID,
+      guild_id: sound.guildId,
       available: sound.available,
       user: sound.user !== undefined ? Users.userToRaw(sound.user) : undefined,
     };

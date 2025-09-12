@@ -12,8 +12,8 @@ export class ApplicationCommands {
     return {
       id: command.id,
       type: command.type,
-      applicationID: command.application_id,
-      guildID: command.guild_id,
+      applicationId: command.application_id,
+      guildId: command.guild_id,
       name: command.name,
       nameLocalizations: command.name_localizations,
       description: command.description,
@@ -36,8 +36,8 @@ export class ApplicationCommands {
     return {
       id: command.id,
       type: command.type,
-      application_id: command.applicationID,
-      guild_id: command.guildID,
+      application_id: command.applicationId,
+      guild_id: command.guildId,
       name: command.name,
       name_localizations: command.nameLocalizations,
       description: command.description,

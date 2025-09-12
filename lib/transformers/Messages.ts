@@ -267,7 +267,7 @@ export class Messages {
   static messageFromRaw(message: RawMessage): Message {
     return {
       id: message.id,
-      channelID: message.channel_id,
+      channelId: message.channel_id,
       author: Users.userFromRaw(message.author),
       content: message.content,
       timestamp: message.timestamp,
@@ -278,7 +278,7 @@ export class Messages {
       mentionRoles: message.mention_roles,
       mentionChannels: message.mention_channels?.map((channelMention) => ({
         id: channelMention.id,
-        guildID: channelMention.guild_id,
+        guildId: channelMention.guild_id,
         type: channelMention.type,
         name: channelMention.name,
       })),
@@ -296,21 +296,21 @@ export class Messages {
       })),
       nonce: message.nonce,
       pinned: message.pinned,
-      webhookID: message.webhook_id,
+      webhookId: message.webhook_id,
       type: message.type,
       activity: message.activity,
       application:
         message.application !== undefined
           ? Applications.applicationFromRaw(message.application)
           : undefined,
-      applicationID: message.application_id,
+      applicationId: message.application_id,
       flags: message.flags,
       messageReference:
         message.message_reference !== undefined
           ? {
-              messageID: message.message_reference.message_id,
-              channelID: message.message_reference.channel_id,
-              guildID: message.message_reference.guild_id,
+              messageId: message.message_reference.message_id,
+              channelId: message.message_reference.channel_id,
+              guildId: message.message_reference.guild_id,
               failIfNotExists: message.message_reference.fail_if_not_exists,
             }
           : undefined,
@@ -378,7 +378,7 @@ export class Messages {
       roleSubscriptionData:
         message.role_subscription_data !== undefined
           ? {
-              roleSubscriptionListingID:
+              roleSubscriptionListingId:
                 message.role_subscription_data.role_subscription_listing_id,
               tierName: message.role_subscription_data.tier_name,
               totalMonthsSubscribed:
@@ -401,7 +401,7 @@ export class Messages {
   static messageToRaw(message: Message): RawMessage {
     return {
       id: message.id,
-      channel_id: message.channelID,
+      channel_id: message.channelId,
       author: Users.userToRaw(message.author),
       content: message.content,
       timestamp: message.timestamp,
@@ -412,7 +412,7 @@ export class Messages {
       mention_roles: message.mentionRoles,
       mention_channels: message.mentionChannels?.map((channelMention) => ({
         id: channelMention.id,
-        guild_id: channelMention.guildID,
+        guild_id: channelMention.guildId,
         type: channelMention.type,
         name: channelMention.name,
       })),
@@ -430,21 +430,21 @@ export class Messages {
       })),
       nonce: message.nonce,
       pinned: message.pinned,
-      webhook_id: message.webhookID,
+      webhook_id: message.webhookId,
       type: message.type,
       activity: message.activity,
       application:
         message.application !== undefined
           ? Applications.applicationToRaw(message.application)
           : undefined,
-      application_id: message.applicationID,
+      application_id: message.applicationId,
       flags: message.flags,
       message_reference:
         message.messageReference !== undefined
           ? {
-              message_id: message.messageReference.messageID,
-              channel_id: message.messageReference.channelID,
-              guild_id: message.messageReference.guildID,
+              message_id: message.messageReference.messageId,
+              channel_id: message.messageReference.channelId,
+              guild_id: message.messageReference.guildId,
               fail_if_not_exists: message.messageReference.failIfNotExists,
             }
           : undefined,
@@ -511,7 +511,7 @@ export class Messages {
         message.roleSubscriptionData !== undefined
           ? {
               role_subscription_listing_id:
-                message.roleSubscriptionData.roleSubscriptionListingID,
+                message.roleSubscriptionData.roleSubscriptionListingId,
               tier_name: message.roleSubscriptionData.tierName,
               total_months_subscribed:
                 message.roleSubscriptionData.totalMonthsSubscribed,

@@ -9,7 +9,7 @@ export class Lobbies {
   static lobbyFromRaw(lobby: RawLobby): Lobby {
     return {
       id: lobby.id,
-      applicationID: lobby.application_id,
+      applicationId: lobby.application_id,
       metadata: lobby.metadata,
       members: lobby.members,
       linkedChannel: lobby.linked_channel,
@@ -35,7 +35,7 @@ export class Lobbies {
   static lobbyToRaw(lobby: Lobby): RawLobby {
     return {
       id: lobby.id,
-      application_id: lobby.applicationID,
+      application_id: lobby.applicationId,
       metadata: lobby.metadata,
       members: lobby.members,
       linked_channel: lobby.linkedChannel,

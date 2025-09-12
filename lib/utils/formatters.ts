@@ -2,43 +2,43 @@ import { GuildNavigationTypes, type TimestampStyles } from "../constants";
 import type { snowflake } from "../types/common";
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
-export function userMention(userID: snowflake): string {
-  return `<@${userID}>`;
+export function userMention(userId: snowflake): string {
+  return `<@${userId}>`;
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
-export function channelMention(channelID: snowflake): string {
-  return `<#${channelID}>`;
+export function channelMention(channelId: snowflake): string {
+  return `<#${channelId}>`;
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
-export function roleMention(roleID: snowflake): string {
-  return `<@&${roleID}>`;
+export function roleMention(roleId: snowflake): string {
+  return `<@&${roleId}>`;
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
 export function slashCommandMention(
   commandName: string,
-  commandID: snowflake,
+  commandId: snowflake,
   subCommandName?: string,
   subCommandGroupName?: string
 ): string {
   return subCommandName
     ? subCommandGroupName
-      ? `</${commandName} ${subCommandGroupName} ${subCommandName}:${commandID}>`
-      : `</${commandName} ${subCommandName}:${commandID}>`
-    : `</${commandName}:${commandID}>`;
+      ? `</${commandName} ${subCommandGroupName} ${subCommandName}:${commandId}>`
+      : `</${commandName} ${subCommandName}:${commandId}>`
+    : `</${commandName}:${commandId}>`;
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
 export function customEmoji(
   emojiName: string,
-  emojiID: snowflake,
+  emojiId: snowflake,
   animated?: boolean
 ): string {
   return animated
-    ? `<a:${emojiName}:${emojiID}>`
-    : `<:${emojiName}:${emojiID}>`;
+    ? `<a:${emojiName}:${emojiId}>`
+    : `<:${emojiName}:${emojiId}>`;
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
@@ -48,13 +48,13 @@ export function unixTimestamp(time: number, style?: TimestampStyles): string {
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
 export function guildNavigation(
-  guildID: snowflake,
+  guildId: snowflake,
   type: GuildNavigationTypes,
-  roleID?: snowflake
+  roleId?: snowflake
 ): string {
-  return roleID && type === GuildNavigationTypes.LinkedRoles
-    ? `<${guildID}:${type}:${roleID}>`
-    : `<${guildID}:${type}>`;
+  return roleId && type === GuildNavigationTypes.LinkedRoles
+    ? `<${guildId}:${type}:${roleId}>`
+    : `<${guildId}:${type}>`;
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */

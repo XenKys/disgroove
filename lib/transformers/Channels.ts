@@ -12,7 +12,7 @@ export class Channels {
     return {
       id: channel.id,
       type: channel.type,
-      guildID: channel.guild_id,
+      guildId: channel.guild_id,
       position: channel.position,
       permissionOverwrites: channel.permission_overwrites?.map((overwrite) => ({
         id: overwrite.id,
@@ -23,7 +23,7 @@ export class Channels {
       name: channel.name,
       topic: channel.topic,
       nsfw: channel.nsfw,
-      lastMessageID: channel.last_message_id,
+      lastMessageId: channel.last_message_id,
       bitrate: channel.bitrate,
       userLimit: channel.user_limit,
       rateLimitPerUser: channel.rate_limit_per_user,
@@ -31,10 +31,10 @@ export class Channels {
         Users.userFromRaw(recipient)
       ),
       icon: channel.icon,
-      ownerID: channel.owner_id,
-      applicationID: channel.application_id,
+      ownerId: channel.owner_id,
+      applicationId: channel.application_id,
       managed: channel.managed,
-      parentID: channel.parent_id,
+      parentId: channel.parent_id,
       lastPinTimestamp: channel.last_pin_timestamp,
       rtcRegion: channel.rtc_region,
       videoQualityMode: channel.video_quality_mode,
@@ -64,7 +64,7 @@ export class Channels {
         id: availableTag.id,
         name: availableTag.name,
         moderated: availableTag.moderated,
-        emojiID: availableTag.emoji_id,
+        emojiId: availableTag.emoji_id,
         emojiName: availableTag.emoji_name,
       })),
       appliedTags: channel.applied_tags,
@@ -72,7 +72,7 @@ export class Channels {
         channel.default_reaction_emoji !== undefined
           ? channel.default_reaction_emoji !== null
             ? {
-                emojiID: channel.default_reaction_emoji.emoji_id,
+                emojiId: channel.default_reaction_emoji.emoji_id,
                 emojiName: channel.default_reaction_emoji.emoji_name,
               }
             : null
@@ -87,7 +87,7 @@ export class Channels {
     return {
       id: channel.id,
       type: channel.type,
-      guild_id: channel.guildID,
+      guild_id: channel.guildId,
       position: channel.position,
       permission_overwrites: channel.permissionOverwrites?.map((overwrite) => ({
         id: overwrite.id,
@@ -98,7 +98,7 @@ export class Channels {
       name: channel.name,
       topic: channel.topic,
       nsfw: channel.nsfw,
-      last_message_id: channel.lastMessageID,
+      last_message_id: channel.lastMessageId,
       bitrate: channel.bitrate,
       user_limit: channel.userLimit,
       rate_limit_per_user: channel.rateLimitPerUser,
@@ -106,10 +106,10 @@ export class Channels {
         Users.userToRaw(recipient)
       ),
       icon: channel.icon,
-      owner_id: channel.ownerID,
-      application_id: channel.applicationID,
+      owner_id: channel.ownerId,
+      application_id: channel.applicationId,
       managed: channel.managed,
-      parent_id: channel.parentID,
+      parent_id: channel.parentId,
       last_pin_timestamp: channel.lastPinTimestamp,
       rtc_region: channel.rtcRegion,
       video_quality_mode: channel.videoQualityMode,
@@ -139,7 +139,7 @@ export class Channels {
         id: availableTag.id,
         name: availableTag.name,
         moderated: availableTag.moderated,
-        emoji_id: availableTag.emojiID,
+        emoji_id: availableTag.emojiId,
         emoji_name: availableTag.emojiName,
       })),
       applied_tags: channel.appliedTags,
@@ -147,7 +147,7 @@ export class Channels {
         channel.defaultReactionEmoji !== undefined
           ? channel.defaultReactionEmoji !== null
             ? {
-                emoji_id: channel.defaultReactionEmoji.emojiID,
+                emoji_id: channel.defaultReactionEmoji.emojiId,
                 emoji_name: channel.defaultReactionEmoji.emojiName,
               }
             : null
@@ -161,7 +161,7 @@ export class Channels {
   static threadMemberFromRaw(threadMember: RawThreadMember): ThreadMember {
     return {
       id: threadMember.id,
-      userID: threadMember.user_id,
+      userId: threadMember.user_id,
       joinTimestamp: threadMember.join_timestamp,
       flags: threadMember.flags,
       member:
@@ -174,7 +174,7 @@ export class Channels {
   static threadMemberToRaw(threadMember: ThreadMember): RawThreadMember {
     return {
       id: threadMember.id,
-      user_id: threadMember.userID,
+      user_id: threadMember.userId,
       join_timestamp: threadMember.joinTimestamp,
       flags: threadMember.flags,
       member:

@@ -5,14 +5,14 @@ export class Stickers {
   static stickerFromRaw(sticker: RawSticker): Sticker {
     return {
       id: sticker.id,
-      packID: sticker.pack_id,
+      packId: sticker.pack_id,
       name: sticker.name,
       description: sticker.description,
       tags: sticker.tags,
       type: sticker.type,
       formatType: sticker.format_type,
       available: sticker.available,
-      guildID: sticker.id,
+      guildId: sticker.id,
       user:
         sticker.user !== undefined
           ? Users.userFromRaw(sticker.user)
@@ -24,7 +24,7 @@ export class Stickers {
   static stickerToRaw(sticker: Sticker): RawSticker {
     return {
       id: sticker.id,
-      pack_id: sticker.packID,
+      pack_id: sticker.packId,
       name: sticker.name,
       description: sticker.description,
       tags: sticker.tags,

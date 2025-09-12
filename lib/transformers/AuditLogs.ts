@@ -15,29 +15,29 @@ import { Webhooks } from "./Webhooks";
 export class AuditLogs {
   static auditLogEntryFromRaw(auditLogEntry: RawAuditLogEntry): AuditLogEntry {
     return {
-      targetID: auditLogEntry.target_id,
+      targetId: auditLogEntry.target_id,
       changes: auditLogEntry.changes?.map((auditLogChange) => ({
         newValue: auditLogChange.new_value,
         oldValue: auditLogChange.old_value,
         key: auditLogChange.key,
       })),
-      userID: auditLogEntry.user_id,
+      userId: auditLogEntry.user_id,
       id: auditLogEntry.id,
       actionType: auditLogEntry.action_type,
       options:
         auditLogEntry.options !== undefined
           ? {
-              applicationID: auditLogEntry.options.application_id,
+              applicationId: auditLogEntry.options.application_id,
               autoModerationRuleName:
                 auditLogEntry.options.auto_moderation_rule_name,
               autoModerationRuleTriggerType:
                 auditLogEntry.options.auto_moderation_rule_trigger_type,
-              channelID: auditLogEntry.options.channel_id,
+              channelId: auditLogEntry.options.channel_id,
               count: auditLogEntry.options.count,
               deleteMemberDays: auditLogEntry.options.delete_member_days,
               id: auditLogEntry.options.id,
               membersRemoved: auditLogEntry.options.members_removed,
-              messageID: auditLogEntry.options.message_id,
+              messageId: auditLogEntry.options.message_id,
               roleName: auditLogEntry.options.role_name,
               type: auditLogEntry.options.type,
               integrationType: auditLogEntry.options.integration_type,
@@ -49,29 +49,29 @@ export class AuditLogs {
 
   static auditLogEntryToRaw(auditLogEntry: AuditLogEntry): RawAuditLogEntry {
     return {
-      target_id: auditLogEntry.targetID,
+      target_id: auditLogEntry.targetId,
       changes: auditLogEntry.changes?.map((auditLogChange) => ({
         new_value: auditLogChange.newValue,
         old_value: auditLogChange.oldValue,
         key: auditLogChange.key,
       })),
-      user_id: auditLogEntry.userID,
+      user_id: auditLogEntry.userId,
       id: auditLogEntry.id,
       action_type: auditLogEntry.actionType,
       options:
         auditLogEntry.options !== undefined
           ? {
-              application_id: auditLogEntry.options.applicationID,
+              application_id: auditLogEntry.options.applicationId,
               auto_moderation_rule_name:
                 auditLogEntry.options.autoModerationRuleName,
               auto_moderation_rule_trigger_type:
                 auditLogEntry.options.autoModerationRuleTriggerType,
-              channel_id: auditLogEntry.options.channelID,
+              channel_id: auditLogEntry.options.channelId,
               count: auditLogEntry.options.count,
               delete_member_days: auditLogEntry.options.deleteMemberDays,
               id: auditLogEntry.options.id,
               members_removed: auditLogEntry.options.membersRemoved,
-              message_id: auditLogEntry.options.messageID,
+              message_id: auditLogEntry.options.messageId,
               role_name: auditLogEntry.options.roleName,
               type: auditLogEntry.options.type,
               integration_type: auditLogEntry.options.integrationType,

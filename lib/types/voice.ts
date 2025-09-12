@@ -28,11 +28,11 @@ export interface RawVoiceRegion {
 }
 
 export interface VoiceState {
-  guildID?: snowflake;
-  channelID: snowflake | null;
-  userID: snowflake;
+  guildId?: snowflake;
+  channelId: snowflake | null;
+  userId: snowflake;
   member?: GuildMember;
-  sessionID: string;
+  sessionId: string;
   deaf: boolean;
   mute: boolean;
   selfDeaf: boolean;

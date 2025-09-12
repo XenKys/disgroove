@@ -1,282 +1,282 @@
 import type { snowflake } from "../types/common";
 
 // Guilds
-export const guild = (guildID: snowflake) => `guilds/${guildID}` as const;
+export const guild = (guildId: snowflake) => `guilds/${guildId}` as const;
 export const guilds = () => "guilds" as const;
-export const guildActiveThreads = (guildID: snowflake) =>
-  `guilds/${guildID}/threads/active` as const;
-export const guildAuditLog = (guildID: snowflake) =>
-  `guilds/${guildID}/audit-logs` as const;
+export const guildActiveThreads = (guildId: snowflake) =>
+  `guilds/${guildId}/threads/active` as const;
+export const guildAuditLog = (guildId: snowflake) =>
+  `guilds/${guildId}/audit-logs` as const;
 export const guildAutoModerationRule = (
-  guildID: snowflake,
-  ruleID: snowflake
-) => `guilds/${guildID}/auto-moderation/rules/${ruleID}` as const;
-export const guildAutoModerationRules = (guildID: snowflake) =>
-  `guilds/${guildID}/auto-moderation/rules` as const;
-export const guildBan = (guildID: snowflake, userID: snowflake) =>
-  `guilds/${guildID}/bans/${userID}` as const;
-export const guildBans = (guildID: snowflake) =>
-  `guilds/${guildID}/bans` as const;
-export const guildBulkBan = (guildID: snowflake) =>
-  `guilds/${guildID}/bulk-ban` as const;
-export const guildChannels = (guildID: snowflake) =>
-  `guilds/${guildID}/channels` as const;
-export const guildMemberNickname = (guildID: snowflake) =>
-  `guilds/${guildID}/members/@me/nick` as const;
-export const guildEmoji = (guildID: snowflake, emojiID: snowflake) =>
-  `guilds/${guildID}/emojis/${emojiID}` as const;
-export const guildEmojis = (guildID: snowflake) =>
-  `guilds/${guildID}/emojis` as const;
-export const guildIncidentsActions = (guildID: snowflake) =>
-  `guilds/${guildID}/incidents-actions` as const;
+  guildId: snowflake,
+  ruleId: snowflake
+) => `guilds/${guildId}/auto-moderation/rules/${ruleId}` as const;
+export const guildAutoModerationRules = (guildId: snowflake) =>
+  `guilds/${guildId}/auto-moderation/rules` as const;
+export const guildBan = (guildId: snowflake, userId: snowflake) =>
+  `guilds/${guildId}/bans/${userId}` as const;
+export const guildBans = (guildId: snowflake) =>
+  `guilds/${guildId}/bans` as const;
+export const guildBulkBan = (guildId: snowflake) =>
+  `guilds/${guildId}/bulk-ban` as const;
+export const guildChannels = (guildId: snowflake) =>
+  `guilds/${guildId}/channels` as const;
+export const guildMemberNickname = (guildId: snowflake) =>
+  `guilds/${guildId}/members/@me/nick` as const;
+export const guildEmoji = (guildId: snowflake, emojiId: snowflake) =>
+  `guilds/${guildId}/emojis/${emojiId}` as const;
+export const guildEmojis = (guildId: snowflake) =>
+  `guilds/${guildId}/emojis` as const;
+export const guildIncidentsActions = (guildId: snowflake) =>
+  `guilds/${guildId}/incidents-actions` as const;
 export const guildIntegration = (
-  guildID: snowflake,
-  integrationID: snowflake
-) => `guilds/${guildID}/integrations/${integrationID}` as const;
-export const guildIntegrations = (guildID: snowflake) =>
-  `guilds/${guildID}/integrations` as const;
-export const guildInvites = (guildID: snowflake) =>
-  `guilds/${guildID}/invites` as const;
-export const guildMFA = (guildID: snowflake) =>
-  `guilds/${guildID}/mfa` as const;
+  guildId: snowflake,
+  integrationId: snowflake
+) => `guilds/${guildId}/integrations/${integrationId}` as const;
+export const guildIntegrations = (guildId: snowflake) =>
+  `guilds/${guildId}/integrations` as const;
+export const guildInvites = (guildId: snowflake) =>
+  `guilds/${guildId}/invites` as const;
+export const guildMFA = (guildId: snowflake) =>
+  `guilds/${guildId}/mfa` as const;
 export const guildMember = (
-  guildID: snowflake,
-  userID: snowflake | "@me" = "@me"
-) => `guilds/${guildID}/members/${userID}` as const;
+  guildId: snowflake,
+  userId: snowflake | "@me" = "@me"
+) => `guilds/${guildId}/members/${userId}` as const;
 export const guildMemberRole = (
-  guildID: snowflake,
-  memberID: snowflake,
-  roleID: snowflake
-) => `guilds/${guildID}/members/${memberID}/roles/${roleID}` as const;
-export const guildMembers = (guildID: snowflake) =>
-  `guilds/${guildID}/members` as const;
-export const guildMembersSearch = (guildID: snowflake) =>
-  `guilds/${guildID}/members/search` as const;
-export const guildMemberVerification = (guildID: snowflake) =>
-  `guilds/${guildID}/member-verification` as const;
-export const guildOnboarding = (guildID: snowflake) =>
-  `guilds/${guildID}/onboarding` as const;
-export const guildPreview = (guildID: snowflake) =>
-  `guilds/${guildID}/preview` as const;
-export const guildPrune = (guildID: snowflake) =>
-  `guilds/${guildID}/prune` as const;
-export const guildRole = (guildID: snowflake, roleID: snowflake) =>
-  `guilds/${guildID}/roles/${roleID}` as const;
-export const guildRoles = (guildID: snowflake) =>
-  `guilds/${guildID}/roles` as const;
+  guildId: snowflake,
+  memberId: snowflake,
+  roleId: snowflake
+) => `guilds/${guildId}/members/${memberId}/roles/${roleId}` as const;
+export const guildMembers = (guildId: snowflake) =>
+  `guilds/${guildId}/members` as const;
+export const guildMembersSearch = (guildId: snowflake) =>
+  `guilds/${guildId}/members/search` as const;
+export const guildMemberVerification = (guildId: snowflake) =>
+  `guilds/${guildId}/member-verification` as const;
+export const guildOnboarding = (guildId: snowflake) =>
+  `guilds/${guildId}/onboarding` as const;
+export const guildPreview = (guildId: snowflake) =>
+  `guilds/${guildId}/preview` as const;
+export const guildPrune = (guildId: snowflake) =>
+  `guilds/${guildId}/prune` as const;
+export const guildRole = (guildId: snowflake, roleId: snowflake) =>
+  `guilds/${guildId}/roles/${roleId}` as const;
+export const guildRoles = (guildId: snowflake) =>
+  `guilds/${guildId}/roles` as const;
 export const guildScheduledEvent = (
-  guildID: snowflake,
-  guildScheduledEventID: snowflake
-) => `guilds/${guildID}/scheduled-events/${guildScheduledEventID}` as const;
-export const guildScheduledEvents = (guildID: snowflake) =>
-  `guilds/${guildID}/scheduled-events` as const;
+  guildId: snowflake,
+  guildScheduledEventId: snowflake
+) => `guilds/${guildId}/scheduled-events/${guildScheduledEventId}` as const;
+export const guildScheduledEvents = (guildId: snowflake) =>
+  `guilds/${guildId}/scheduled-events` as const;
 export const guildScheduledEventUsers = (
-  guildID: snowflake,
-  guildScheduledEventID: snowflake
+  guildId: snowflake,
+  guildScheduledEventId: snowflake
 ) =>
-  `guilds/${guildID}/scheduled-events/${guildScheduledEventID}/users` as const;
-export const guildSoundboardSound = (guildID: snowflake, soundID: snowflake) =>
-  `guilds/${guildID}/soundboard-sounds/${soundID}` as const;
-export const guildSoundboardSounds = (guildID: snowflake) =>
-  `guilds/${guildID}/soundboard-sounds` as const;
-export const guildSticker = (guildID: snowflake, stickerID: snowflake) =>
-  `guilds/${guildID}/stickers/${stickerID}` as const;
-export const guildStickers = (guildID: snowflake) =>
-  `guilds/${guildID}/stickers` as const;
-export const guildTemplate = (guildID: snowflake, code: string) =>
-  `guilds/${guildID}/templates/${code}` as const;
-export const guildTemplates = (guildID: snowflake) =>
-  `guilds/${guildID}/templates` as const;
-export const guildVanityURL = (guildID: snowflake) =>
-  `guilds/${guildID}/vanity-url` as const;
-export const guildVoiceRegions = (guildID: snowflake) =>
-  `guilds/${guildID}/regions` as const;
+  `guilds/${guildId}/scheduled-events/${guildScheduledEventId}/users` as const;
+export const guildSoundboardSound = (guildId: snowflake, soundId: snowflake) =>
+  `guilds/${guildId}/soundboard-sounds/${soundId}` as const;
+export const guildSoundboardSounds = (guildId: snowflake) =>
+  `guilds/${guildId}/soundboard-sounds` as const;
+export const guildSticker = (guildId: snowflake, stickerId: snowflake) =>
+  `guilds/${guildId}/stickers/${stickerId}` as const;
+export const guildStickers = (guildId: snowflake) =>
+  `guilds/${guildId}/stickers` as const;
+export const guildTemplate = (guildId: snowflake, code: string) =>
+  `guilds/${guildId}/templates/${code}` as const;
+export const guildTemplates = (guildId: snowflake) =>
+  `guilds/${guildId}/templates` as const;
+export const guildVanityURL = (guildId: snowflake) =>
+  `guilds/${guildId}/vanity-url` as const;
+export const guildVoiceRegions = (guildId: snowflake) =>
+  `guilds/${guildId}/regions` as const;
 export const guildVoiceState = (
-  guildID: snowflake,
-  userID: snowflake | "@me" = "@me"
-) => `guilds/${guildID}/voice-states/${userID}` as const;
-export const guildWebhooks = (guildID: snowflake) =>
-  `guilds/${guildID}/webhooks` as const;
-export const guildWelcomeScreen = (guildID: snowflake) =>
-  `guilds/${guildID}/welcome-screen` as const;
-export const guildWidgetImage = (guildID: snowflake) =>
-  `guilds/${guildID}/widget.png` as const;
+  guildId: snowflake,
+  userId: snowflake | "@me" = "@me"
+) => `guilds/${guildId}/voice-states/${userId}` as const;
+export const guildWebhooks = (guildId: snowflake) =>
+  `guilds/${guildId}/webhooks` as const;
+export const guildWelcomeScreen = (guildId: snowflake) =>
+  `guilds/${guildId}/welcome-screen` as const;
+export const guildWidgetImage = (guildId: snowflake) =>
+  `guilds/${guildId}/widget.png` as const;
 
-export const guildWidgetJSON = (guildID: snowflake) =>
-  `guilds/${guildID}/widget.json` as const;
-export const guildWidgetSettings = (guildID: snowflake) =>
-  `guilds/${guildID}/widget` as const;
+export const guildWidgetJSON = (guildId: snowflake) =>
+  `guilds/${guildId}/widget.json` as const;
+export const guildWidgetSettings = (guildId: snowflake) =>
+  `guilds/${guildId}/widget` as const;
 export const template = (code: string) => `guilds/templates/${code}` as const;
 
 // Channels
-export const channel = (channelID: snowflake) =>
-  `channels/${channelID}` as const;
-export const channelBulkDelete = (channelID: snowflake) =>
-  `channels/${channelID}/messages/bulk-delete` as const;
-export const channelFollowers = (channelID: snowflake) =>
-  `channels/${channelID}/followers` as const;
-export const channelInvites = (channelID: snowflake) =>
-  `channels/${channelID}/invites` as const;
-export const channelMessage = (channelID: snowflake, messageID: snowflake) =>
-  `channels/${channelID}/messages/${messageID}` as const;
+export const channel = (channelId: snowflake) =>
+  `channels/${channelId}` as const;
+export const channelBulkDelete = (channelId: snowflake) =>
+  `channels/${channelId}/messages/bulk-delete` as const;
+export const channelFollowers = (channelId: snowflake) =>
+  `channels/${channelId}/followers` as const;
+export const channelInvites = (channelId: snowflake) =>
+  `channels/${channelId}/invites` as const;
+export const channelMessage = (channelId: snowflake, messageId: snowflake) =>
+  `channels/${channelId}/messages/${messageId}` as const;
 export const channelMessageAllReactions = (
-  channelID: snowflake,
-  messageID: snowflake,
+  channelId: snowflake,
+  messageId: snowflake,
   emoji?: string
 ) =>
   emoji
-    ? (`channels/${channelID}/messages/${messageID}/reactions/${emoji}` as const)
-    : (`channels/${channelID}/messages/${messageID}/reactions` as const);
+    ? (`channels/${channelId}/messages/${messageId}/reactions/${emoji}` as const)
+    : (`channels/${channelId}/messages/${messageId}/reactions` as const);
 export const channelMessageCrosspost = (
-  channelID: snowflake,
-  messageID: snowflake
-) => `channels/${channelID}/messages/${messageID}/crosspost` as const;
+  channelId: snowflake,
+  messageId: snowflake
+) => `channels/${channelId}/messages/${messageId}/crosspost` as const;
 export const channelMessageReaction = (
-  channelID: snowflake,
-  messageID: snowflake,
+  channelId: snowflake,
+  messageId: snowflake,
   emoji: string,
-  userID: snowflake | "@me" = "@me"
+  userId: snowflake | "@me" = "@me"
 ) =>
-  `channels/${channelID}/messages/${messageID}/reactions/${emoji}/${userID}` as const;
-export const channelMessages = (channelID: snowflake) =>
-  `channels/${channelID}/messages` as const;
+  `channels/${channelId}/messages/${messageId}/reactions/${emoji}/${userId}` as const;
+export const channelMessages = (channelId: snowflake) =>
+  `channels/${channelId}/messages` as const;
 export const channelPermission = (
-  channelID: snowflake,
-  overwriteID: snowflake
-) => `channels/${channelID}/permissions/${overwriteID}` as const;
-export const channelPin = (channelID: snowflake, messageID: snowflake) =>
-  `channels/${channelID}/messages/pins/${messageID}` as const;
-export const channelPins = (channelID: snowflake) =>
-  `channels/${channelID}/messages/pins` as const;
-export const channelRecipient = (channelID: snowflake, userID: snowflake) =>
-  `channels/${channelID}/recipients/${userID}` as const;
+  channelId: snowflake,
+  overwriteId: snowflake
+) => `channels/${channelId}/permissions/${overwriteId}` as const;
+export const channelPin = (channelId: snowflake, messageId: snowflake) =>
+  `channels/${channelId}/messages/pins/${messageId}` as const;
+export const channelPins = (channelId: snowflake) =>
+  `channels/${channelId}/messages/pins` as const;
+export const channelRecipient = (channelId: snowflake, userId: snowflake) =>
+  `channels/${channelId}/recipients/${userId}` as const;
 export const channelThreads = (
-  channelID: snowflake,
+  channelId: snowflake,
   archivedStatus: "public" | "private",
   joined: boolean
 ) =>
   joined
-    ? (`channels/${channelID}/users/@me/threads/archived/${archivedStatus}` as const)
-    : (`channels/${channelID}/threads/archived/${archivedStatus}` as const);
-export const channelTyping = (channelID: snowflake) =>
-  `channels/${channelID}/typing` as const;
-export const channelWebhooks = (channelID: snowflake) =>
-  `channels/${channelID}/webhooks` as const;
-export const threads = (channelID: snowflake, messageID?: snowflake) =>
-  messageID
-    ? (`channels/${channelID}/messages/${messageID}/threads` as const)
-    : (`channels/${channelID}/threads` as const);
+    ? (`channels/${channelId}/users/@me/threads/archived/${archivedStatus}` as const)
+    : (`channels/${channelId}/threads/archived/${archivedStatus}` as const);
+export const channelTyping = (channelId: snowflake) =>
+  `channels/${channelId}/typing` as const;
+export const channelWebhooks = (channelId: snowflake) =>
+  `channels/${channelId}/webhooks` as const;
+export const threads = (channelId: snowflake, messageId?: snowflake) =>
+  messageId
+    ? (`channels/${channelId}/messages/${messageId}/threads` as const)
+    : (`channels/${channelId}/threads` as const);
 export const threadMembers = (
-  threadID: snowflake,
-  userID?: snowflake | "@me"
+  threadId: snowflake,
+  userId?: snowflake | "@me"
 ) =>
-  userID
-    ? (`channels/${threadID}/thread-members` as const)
-    : (`channels/${threadID}/thread-members/${userID}` as const);
+  userId
+    ? (`channels/${threadId}/thread-members` as const)
+    : (`channels/${threadId}/thread-members/${userId}` as const);
 export const pollAnswerVoters = (
-  channelID: snowflake,
-  messageID: snowflake,
-  answerID: snowflake
-) => `channels/${channelID}/polls/${messageID}/answers/${answerID}` as const;
-export const pollExpire = (channelID: snowflake, messageID: snowflake) =>
-  `channels/${channelID}/polls/${messageID}/expire` as const;
+  channelId: snowflake,
+  messageId: snowflake,
+  answerId: snowflake
+) => `channels/${channelId}/polls/${messageId}/answers/${answerId}` as const;
+export const pollExpire = (channelId: snowflake, messageId: snowflake) =>
+  `channels/${channelId}/polls/${messageId}/expire` as const;
 
 // Users
-export const user = (userID: snowflake | "@me" = "@me") =>
-  `users/${userID}` as const;
-export const userApplicationRoleConnection = (applicationID: snowflake) =>
-  `users/@me/applications/${applicationID}/role-connection` as const;
+export const user = (userId: snowflake | "@me" = "@me") =>
+  `users/${userId}` as const;
+export const userApplicationRoleConnection = (applicationId: snowflake) =>
+  `users/@me/applications/${applicationId}/role-connection` as const;
 export const userChannels = () => "users/@me/channels" as const;
 export const userConnections = () => "users/@me/connections" as const;
-export const userGuild = (guildID: snowflake) =>
-  `users/@me/guilds/${guildID}` as const;
+export const userGuild = (guildId: snowflake) =>
+  `users/@me/guilds/${guildId}` as const;
 export const userGuilds = () => "users/@me/guilds" as const;
 
 // Applications
 export const applicationActivityInstance = (
-  applicationID: snowflake,
-  instanceID: string
-) => `applications/${applicationID}/activity-instances/${instanceID}`;
+  applicationId: snowflake,
+  instanceId: string
+) => `applications/${applicationId}/activity-instances/${instanceId}`;
 export const applicationCommand = (
-  applicationID: snowflake,
-  commandID: snowflake
-) => `applications/${applicationID}/commands/${commandID}` as const;
-export const applicationCommands = (applicationID: snowflake) =>
-  `applications/${applicationID}/commands` as const;
+  applicationId: snowflake,
+  commandId: snowflake
+) => `applications/${applicationId}/commands/${commandId}` as const;
+export const applicationCommands = (applicationId: snowflake) =>
+  `applications/${applicationId}/commands` as const;
 export const applicationCommandPermissions = (
-  applicationID: snowflake,
-  guildID: snowflake,
-  commandID: snowflake
+  applicationId: snowflake,
+  guildId: snowflake,
+  commandId: snowflake
 ) =>
-  `applications/${applicationID}/guilds/${guildID}/commands/${commandID}/permissions` as const;
+  `applications/${applicationId}/guilds/${guildId}/commands/${commandId}/permissions` as const;
 export const applicationUser = () => "applications/@me" as const;
 export const applicationEmoji = (
-  applicationID: snowflake,
-  emojiID: snowflake
-) => `applications/${applicationID}/emojis/${emojiID}` as const;
-export const applicationEmojis = (applicationID: snowflake) =>
-  `applications/${applicationID}/emojis` as const;
+  applicationId: snowflake,
+  emojiId: snowflake
+) => `applications/${applicationId}/emojis/${emojiId}` as const;
+export const applicationEmojis = (applicationId: snowflake) =>
+  `applications/${applicationId}/emojis` as const;
 export const applicationEntitlement = (
-  applicationID: snowflake,
-  entitlementID: snowflake
-) => `applications/${applicationID}/entitlements/${entitlementID}` as const;
+  applicationId: snowflake,
+  entitlementId: snowflake
+) => `applications/${applicationId}/entitlements/${entitlementId}` as const;
 export const applicationEntitlementConsume = (
-  applicationID: snowflake,
-  entitlementID: snowflake
+  applicationId: snowflake,
+  entitlementId: snowflake
 ) =>
-  `applications/${applicationID}/entitlements/${entitlementID}/consume` as const;
-export const applicationEntitlements = (applicationID: snowflake) =>
-  `applications/${applicationID}/entitlements` as const;
+  `applications/${applicationId}/entitlements/${entitlementId}/consume` as const;
+export const applicationEntitlements = (applicationId: snowflake) =>
+  `applications/${applicationId}/entitlements` as const;
 export const applicationGuildCommand = (
-  applicationID: snowflake,
-  guildID: snowflake,
-  commandID: snowflake
+  applicationId: snowflake,
+  guildId: snowflake,
+  commandId: snowflake
 ) =>
-  `applications/${applicationID}/guilds/${guildID}/commands/${commandID}` as const;
+  `applications/${applicationId}/guilds/${guildId}/commands/${commandId}` as const;
 export const applicationGuildCommands = (
-  applicationID: snowflake,
-  guildID: snowflake
-) => `applications/${applicationID}/guilds/${guildID}/commands` as const;
-export const applicationRoleConnectionMetadata = (applicationID: snowflake) =>
-  `applications/${applicationID}/role-connections/metadata` as const;
-export const applicationSKUs = (applicationID: snowflake) =>
-  `applications/${applicationID}/skus` as const;
+  applicationId: snowflake,
+  guildId: snowflake
+) => `applications/${applicationId}/guilds/${guildId}/commands` as const;
+export const applicationRoleConnectionMetadata = (applicationId: snowflake) =>
+  `applications/${applicationId}/role-connections/metadata` as const;
+export const applicationSKUs = (applicationId: snowflake) =>
+  `applications/${applicationId}/skus` as const;
 export const guildApplicationCommandsPermissions = (
-  applicationID: snowflake,
-  guildID: snowflake
+  applicationId: snowflake,
+  guildId: snowflake
 ) =>
-  `applications/${applicationID}/guilds/${guildID}/commands/permissions` as const;
+  `applications/${applicationId}/guilds/${guildId}/commands/permissions` as const;
 
 // Webhooks
-export const webhook = (webhookID: snowflake, webhookToken?: string) =>
+export const webhook = (webhookId: snowflake, webhookToken?: string) =>
   webhookToken
-    ? (`webhooks/${webhookID}/${webhookToken}` as const)
-    : (`webhooks/${webhookID}` as const);
+    ? (`webhooks/${webhookId}/${webhookToken}` as const)
+    : (`webhooks/${webhookId}` as const);
 export const webhookMessage = (
-  webhookID: snowflake,
+  webhookId: snowflake,
   webhookToken: string,
-  messageID: snowflake | "@original" = "@original"
-) => `webhooks/${webhookID}/${webhookToken}/messages/${messageID}` as const;
+  messageId: snowflake | "@original" = "@original"
+) => `webhooks/${webhookId}/${webhookToken}/messages/${messageId}` as const;
 export const webhookPlatform = (
-  webhookID: snowflake,
+  webhookId: snowflake,
   webhookToken: string,
   platform: "github" | "slack"
-) => `webhooks/${webhookID}/${webhookToken}/${platform}` as const;
+) => `webhooks/${webhookId}/${webhookToken}/${platform}` as const;
 
 // Sticker packs
-export const stickerPack = (packID: snowflake) =>
-  `sticker-packs/${packID}` as const;
+export const stickerPack = (packId: snowflake) =>
+  `sticker-packs/${packId}` as const;
 export const stickerPacks = () => "sticker-packs" as const;
 
 // Subscriptions
-export const skuSubscription = (skuID: snowflake, subscriptionID: snowflake) =>
-  `skus/${skuID}/subscriptions/${subscriptionID}` as const;
-export const skuSubscriptions = (skuID: snowflake) =>
-  `skus/${skuID}/subscriptions` as const;
+export const skuSubscription = (skuId: snowflake, subscriptionId: snowflake) =>
+  `skus/${skuId}/subscriptions/${subscriptionId}` as const;
+export const skuSubscriptions = (skuId: snowflake) =>
+  `skus/${skuId}/subscriptions` as const;
 
 // Soundboards
-export const sendSoundboardSound = (channelID: snowflake) =>
-  `channels/${channelID}/send-soundboard-sound` as const;
+export const sendSoundboardSound = (channelId: snowflake) =>
+  `channels/${channelId}/send-soundboard-sound` as const;
 export const soundboardDefaultSounds = () =>
   `soundboard-default-sounds` as const;
 
@@ -293,23 +293,23 @@ export const oauth2TokenRevocation = () => "oauth2/token/revoke" as const;
 
 // Misc
 export const interactionCallback = (
-  interactionID: snowflake,
+  interactionId: snowflake,
   interactionToken: string
-) => `interactions/${interactionID}/${interactionToken}/callback` as const;
+) => `interactions/${interactionId}/${interactionToken}/callback` as const;
 export const invite = (code: string) => `invites/${code}` as const;
-export const stageInstance = (channelID: snowflake) =>
-  `stage-instances/${channelID}` as const;
+export const stageInstance = (channelId: snowflake) =>
+  `stage-instances/${channelId}` as const;
 export const stageInstances = () => "stage-instances" as const;
-export const sticker = (stickerID: snowflake) =>
-  `stickers/${stickerID}` as const;
+export const sticker = (stickerId: snowflake) =>
+  `stickers/${stickerId}` as const;
 export const voiceRegions = () => "voice/regions" as const;
 
 // Lobbies
 export const lobbies = () => "lobbies" as const;
-export const lobby = (lobbyID: snowflake) => `lobbies/${lobbyID}` as const;
+export const lobby = (lobbyId: snowflake) => `lobbies/${lobbyId}` as const;
 export const lobbyMember = (
-  lobbyID: snowflake,
-  userID: snowflake | "@me" = "@me"
-) => `lobbies/${lobbyID}/members/${userID}` as const;
-export const lobbyChannelLinking = (lobbyID: snowflake) =>
-  `lobbies/${lobbyID}/channel-linking` as const;
+  lobbyId: snowflake,
+  userId: snowflake | "@me" = "@me"
+) => `lobbies/${lobbyId}/members/${userId}` as const;
+export const lobbyChannelLinking = (lobbyId: snowflake) =>
+  `lobbies/${lobbyId}/channel-linking` as const;

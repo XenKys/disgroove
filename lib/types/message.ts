@@ -288,7 +288,7 @@ export interface RawMessagePin {
 
 export interface Message {
   id: snowflake;
-  channelID: snowflake;
+  channelId: snowflake;
   author: User;
   content: string;
   timestamp: timestamp;
@@ -303,11 +303,11 @@ export interface Message {
   reactions?: Array<Reaction>;
   nonce?: number | string;
   pinned: boolean;
-  webhookID?: snowflake;
+  webhookId?: snowflake;
   type: MessageTypes;
   activity?: MessageActivity;
   application?: Application;
-  applicationID?: snowflake;
+  applicationId?: snowflake;
   flags?: MessageFlags;
   messageReference?: MessageReference;
   messageSnapshots?: Array<MessageSnapshot>;
@@ -335,7 +335,7 @@ export interface Message {
 
 export interface MessageActivity {
   type: MessageActivityTypes;
-  partyID?: string;
+  partyId?: string;
 }
 
 export interface MessageInteractionMetadata {
@@ -343,8 +343,8 @@ export interface MessageInteractionMetadata {
   type: InteractionType;
   user: User;
   authorizingIntegrationOwners: Record<ApplicationIntegrationTypes, string>;
-  originalResponseMessageID?: snowflake;
-  interactedMessageID?: snowflake;
+  originalResponseMessageId?: snowflake;
+  interactedMessageId?: snowflake;
   triggeringInteractionMetadata?: MessageInteractionMetadata;
 }
 
@@ -355,9 +355,9 @@ export interface MessageCall {
 
 export interface MessageReference {
   type?: MessageReferenceTypes;
-  messageID?: snowflake;
-  channelID?: snowflake;
-  guildID?: snowflake;
+  messageId?: snowflake;
+  channelId?: snowflake;
+  guildId?: snowflake;
   failIfNotExists?: boolean;
 }
 
@@ -458,9 +458,9 @@ export interface PollResultEmbedFields {
   pollQuestionText: string;
   victorAnswerVotes: Array<number>;
   totalVotes: number;
-  victorAnswerID?: snowflake;
+  victorAnswerId?: snowflake;
   victorAnswerText?: string;
-  victorAnswerEmojiID?: snowflake;
+  victorAnswerEmojiId?: snowflake;
   victorAnswerEmojiName?: string;
   victorAnswerEmojiAnimated?: boolean;
 }
@@ -484,7 +484,7 @@ export interface Attachment {
 
 export interface ChannelMention {
   id: snowflake;
-  guildID: snowflake;
+  guildId: snowflake;
   type: ChannelTypes;
   name: string;
 }

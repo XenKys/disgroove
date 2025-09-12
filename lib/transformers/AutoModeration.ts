@@ -12,7 +12,7 @@ export class AutoModeration {
     return {
       type: action.type,
       metadata: {
-        channelID: action.metadata.channel_id,
+        channelId: action.metadata.channel_id,
         durationSeconds: action.metadata.duration_seconds,
         customMessage: action.metadata.custom_message,
       },
@@ -23,7 +23,7 @@ export class AutoModeration {
     return {
       type: action.type,
       metadata: {
-        channel_id: action.metadata.channelID,
+        channel_id: action.metadata.channelId,
         duration_seconds: action.metadata.durationSeconds,
         custom_message: action.metadata.customMessage,
       },
@@ -35,9 +35,9 @@ export class AutoModeration {
   ): AutoModerationRule {
     return {
       id: autoModerationRule.id,
-      guildID: autoModerationRule.guild_id,
+      guildId: autoModerationRule.guild_id,
       name: autoModerationRule.name,
-      creatorID: autoModerationRule.creator_id,
+      creatorId: autoModerationRule.creator_id,
       eventType: autoModerationRule.event_type,
       triggerType: autoModerationRule.trigger_type,
       triggerMetadata: this.triggerMetadataFromRaw(
@@ -57,9 +57,9 @@ export class AutoModeration {
   ): RawAutoModerationRule {
     return {
       id: autoModerationRule.id,
-      guild_id: autoModerationRule.guildID,
+      guild_id: autoModerationRule.guildId,
       name: autoModerationRule.name,
-      creator_id: autoModerationRule.creatorID,
+      creator_id: autoModerationRule.creatorId,
       event_type: autoModerationRule.eventType,
       trigger_type: autoModerationRule.triggerType,
       trigger_metadata: this.triggerMetadataToRaw(

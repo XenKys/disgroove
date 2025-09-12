@@ -14,10 +14,10 @@ export interface RawStageInstance {
 
 export interface StageInstance {
   id: snowflake;
-  guildID: snowflake;
-  channelID: snowflake;
+  guildId: snowflake;
+  channelId: snowflake;
   topic: string;
   privacyLevel: PrivacyLevel;
   discoverableDisabled: boolean;
-  guildScheduledEventID: snowflake | null;
+  guildScheduledEventId: snowflake | null;
 }

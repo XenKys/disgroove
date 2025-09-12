@@ -36,9 +36,9 @@ export class Interactions {
       interaction: {
         id: interactionCallbackResponse.interaction.id,
         type: interactionCallbackResponse.interaction.type,
-        activityInstanceID:
+        activityInstanceId:
           interactionCallbackResponse.interaction.activity_instance_id,
-        responseMessageID:
+        responseMessageId:
           interactionCallbackResponse.interaction.response_message_id,
         responseMessageLoading:
           interactionCallbackResponse.interaction.response_message_loading,
@@ -70,9 +70,9 @@ export class Interactions {
         id: interactionCallbackResponse.interaction.id,
         type: interactionCallbackResponse.interaction.type,
         activity_instance_id:
-          interactionCallbackResponse.interaction.activityInstanceID,
+          interactionCallbackResponse.interaction.activityInstanceId,
         response_message_id:
-          interactionCallbackResponse.interaction.responseMessageID,
+          interactionCallbackResponse.interaction.responseMessageId,
         response_message_loading:
           interactionCallbackResponse.interaction.responseMessageLoading,
         response_message_ephemeral:
@@ -98,7 +98,7 @@ export class Interactions {
   static interactionFromRaw(interaction: RawInteraction): Interaction {
     return {
       id: interaction.id,
-      applicationID: interaction.application_id,
+      applicationId: interaction.application_id,
       type: interaction.type,
       data:
         interaction.data !== undefined
@@ -111,9 +111,9 @@ export class Interactions {
                   ? Interactions.resolvedDataFromRaw(interaction.data.resolved)
                   : undefined,
               options: interaction.data?.options,
-              guildID: interaction.data?.guild_id,
-              targetID: interaction.data?.target_id,
-              customID: interaction.data?.custom_id,
+              guildId: interaction.data?.guild_id,
+              targetId: interaction.data?.target_id,
+              customId: interaction.data?.custom_id,
               componentType: interaction.data?.component_type,
               values: interaction.data?.values,
               components: interaction.data?.components?.map((component) => {
@@ -127,7 +127,7 @@ export class Interactions {
                             return {
                               type: c.type,
                               id: c.id,
-                              customID: c.custom_id,
+                              customId: c.custom_id,
                               value: c.value,
                             };
                           case ComponentTypes.StringSelect:
@@ -135,7 +135,7 @@ export class Interactions {
                               type: c.type,
                               componentType: c.component_type,
                               id: c.id,
-                              customID: c.custom_id,
+                              customId: c.custom_id,
                               values: c.values,
                             };
                           case ComponentTypes.UserSelect:
@@ -143,7 +143,7 @@ export class Interactions {
                               type: c.type,
                               componentType: c.component_type,
                               id: c.id,
-                              customID: c.custom_id,
+                              customId: c.custom_id,
                               resolved: this.resolvedDataFromRaw(c.resolved),
                               values: c.values,
                             };
@@ -152,7 +152,7 @@ export class Interactions {
                               type: c.type,
                               componentType: c.component_type,
                               id: c.id,
-                              customID: c.custom_id,
+                              customId: c.custom_id,
                               resolved: this.resolvedDataFromRaw(c.resolved),
                               values: c.values,
                             };
@@ -161,7 +161,7 @@ export class Interactions {
                               type: c.type,
                               componentType: c.component_type,
                               id: c.id,
-                              customID: c.custom_id,
+                              customId: c.custom_id,
                               resolved: this.resolvedDataFromRaw(c.resolved),
                               values: c.values,
                             };
@@ -170,7 +170,7 @@ export class Interactions {
                               type: c.type,
                               componentType: c.component_type,
                               id: c.id,
-                              customID: c.custom_id,
+                              customId: c.custom_id,
                               resolved: this.resolvedDataFromRaw(c.resolved),
                               values: c.values,
                             };
@@ -190,7 +190,7 @@ export class Interactions {
                         c = {
                           type: component.component.type,
                           id: component.component.id,
-                          customID: component.component.custom_id,
+                          customId: component.component.custom_id,
                           value: component.component.value,
                         };
                         break;
@@ -199,7 +199,7 @@ export class Interactions {
                           type: component.component.type,
                           componentType: component.component.component_type,
                           id: component.component.id,
-                          customID: component.component.custom_id,
+                          customId: component.component.custom_id,
                           values: component.component.values,
                         };
                         break;
@@ -208,7 +208,7 @@ export class Interactions {
                           type: component.component.type,
                           componentType: component.component.component_type,
                           id: component.component.id,
-                          customID: component.component.custom_id,
+                          customId: component.component.custom_id,
                           resolved: this.resolvedDataFromRaw(
                             component.component.resolved
                           ),
@@ -220,7 +220,7 @@ export class Interactions {
                           type: component.component.type,
                           componentType: component.component.component_type,
                           id: component.component.id,
-                          customID: component.component.custom_id,
+                          customId: component.component.custom_id,
                           resolved: this.resolvedDataFromRaw(
                             component.component.resolved
                           ),
@@ -232,7 +232,7 @@ export class Interactions {
                           type: component.component.type,
                           componentType: component.component.component_type,
                           id: component.component.id,
-                          customID: component.component.custom_id,
+                          customId: component.component.custom_id,
                           resolved: this.resolvedDataFromRaw(
                             component.component.resolved
                           ),
@@ -244,7 +244,7 @@ export class Interactions {
                           type: component.component.type,
                           componentType: component.component.component_type,
                           id: component.component.id,
-                          customID: component.component.custom_id,
+                          customId: component.component.custom_id,
                           resolved: this.resolvedDataFromRaw(
                             component.component.resolved
                           ),
@@ -271,12 +271,12 @@ export class Interactions {
               features: interaction.guild.features,
             }
           : undefined,
-      guildID: interaction.guild_id,
+      guildId: interaction.guild_id,
       channel:
         interaction.channel !== undefined
           ? Channels.channelFromRaw(interaction.channel)
           : undefined,
-      channelID: interaction.channel_id,
+      channelId: interaction.channel_id,
       member:
         interaction.member !== undefined
           ? Guilds.guildMemberFromRaw(interaction.member)
@@ -317,9 +317,9 @@ export class Interactions {
         "0": interactionMetadata.authorizing_integration_owners[0],
         "1": interactionMetadata.authorizing_integration_owners[1],
       },
-      originalResponseMessageID:
+      originalResponseMessageId:
         interactionMetadata.original_response_message_id,
-      interactedMessageID: interactionMetadata.interacted_message_id,
+      interactedMessageId: interactionMetadata.interacted_message_id,
       triggeringInteractionMetadata:
         interactionMetadata.triggering_interaction_metadata !== undefined
           ? Interactions.interactionMetadataFromRaw(
@@ -341,8 +341,8 @@ export class Interactions {
         "1": interactionMetadata.authorizingIntegrationOwners[1],
       },
       original_response_message_id:
-        interactionMetadata.originalResponseMessageID,
-      interacted_message_id: interactionMetadata.interactedMessageID,
+        interactionMetadata.originalResponseMessageId,
+      interacted_message_id: interactionMetadata.interactedMessageId,
       triggering_interaction_metadata:
         interactionMetadata.triggeringInteractionMetadata !== undefined
           ? Interactions.interactionMetadataToRaw(
@@ -355,7 +355,7 @@ export class Interactions {
   static interactionToRaw(interaction: Interaction): RawInteraction {
     return {
       id: interaction.id,
-      application_id: interaction.applicationID,
+      application_id: interaction.applicationId,
       type: interaction.type,
       data:
         interaction.data !== undefined
@@ -368,9 +368,9 @@ export class Interactions {
                   ? Interactions.resolvedDataToRaw(interaction.data.resolved)
                   : undefined,
               options: interaction.data.options,
-              guild_id: interaction.data.guildID,
-              target_id: interaction.data.targetID,
-              custom_id: interaction.data.customID,
+              guild_id: interaction.data.guildId,
+              target_id: interaction.data.targetId,
+              custom_id: interaction.data.customId,
               component_type: interaction.data.componentType,
               values: interaction.data.values,
               components: interaction.data?.components?.map((component) => {
@@ -384,7 +384,7 @@ export class Interactions {
                             return {
                               type: c.type,
                               id: c.id,
-                              custom_id: c.customID,
+                              custom_id: c.customId,
                               value: c.value,
                             };
                           case ComponentTypes.StringSelect:
@@ -392,7 +392,7 @@ export class Interactions {
                               type: c.type,
                               component_type: c.componentType,
                               id: c.id,
-                              custom_id: c.customID,
+                              custom_id: c.customId,
                               values: c.values,
                             };
                           case ComponentTypes.UserSelect:
@@ -400,7 +400,7 @@ export class Interactions {
                               type: c.type,
                               component_type: c.componentType,
                               id: c.id,
-                              custom_id: c.customID,
+                              custom_id: c.customId,
                               resolved: this.resolvedDataToRaw(c.resolved),
                               values: c.values,
                             };
@@ -409,7 +409,7 @@ export class Interactions {
                               type: c.type,
                               component_type: c.componentType,
                               id: c.id,
-                              custom_id: c.customID,
+                              custom_id: c.customId,
                               resolved: this.resolvedDataToRaw(c.resolved),
                               values: c.values,
                             };
@@ -418,7 +418,7 @@ export class Interactions {
                               type: c.type,
                               component_type: c.componentType,
                               id: c.id,
-                              custom_id: c.customID,
+                              custom_id: c.customId,
                               resolved: this.resolvedDataToRaw(c.resolved),
                               values: c.values,
                             };
@@ -427,7 +427,7 @@ export class Interactions {
                               type: c.type,
                               component_type: c.componentType,
                               id: c.id,
-                              custom_id: c.customID,
+                              custom_id: c.customId,
                               resolved: this.resolvedDataToRaw(c.resolved),
                               values: c.values,
                             };
@@ -447,7 +447,7 @@ export class Interactions {
                         c = {
                           type: component.component.type,
                           id: component.component.id,
-                          custom_id: component.component.customID,
+                          custom_id: component.component.customId,
                           value: component.component.value,
                         };
                         break;
@@ -456,7 +456,7 @@ export class Interactions {
                           type: component.component.type,
                           component_type: component.component.componentType,
                           id: component.component.id,
-                          custom_id: component.component.customID,
+                          custom_id: component.component.customId,
                           values: component.component.values,
                         };
                         break;
@@ -465,7 +465,7 @@ export class Interactions {
                           type: component.component.type,
                           component_type: component.component.componentType,
                           id: component.component.id,
-                          custom_id: component.component.customID,
+                          custom_id: component.component.customId,
                           resolved: this.resolvedDataToRaw(
                             component.component.resolved
                           ),
@@ -477,7 +477,7 @@ export class Interactions {
                           type: component.component.type,
                           component_type: component.component.componentType,
                           id: component.component.id,
-                          custom_id: component.component.customID,
+                          custom_id: component.component.customId,
                           resolved: this.resolvedDataToRaw(
                             component.component.resolved
                           ),
@@ -489,7 +489,7 @@ export class Interactions {
                           type: component.component.type,
                           component_type: component.component.componentType,
                           id: component.component.id,
-                          custom_id: component.component.customID,
+                          custom_id: component.component.customId,
                           resolved: this.resolvedDataToRaw(
                             component.component.resolved
                           ),
@@ -501,7 +501,7 @@ export class Interactions {
                           type: component.component.type,
                           component_type: component.component.componentType,
                           id: component.component.id,
-                          custom_id: component.component.customID,
+                          custom_id: component.component.customId,
                           resolved: this.resolvedDataToRaw(
                             component.component.resolved
                           ),
@@ -528,12 +528,12 @@ export class Interactions {
               features: interaction.guild.features,
             }
           : undefined,
-      guild_id: interaction.guildID,
+      guild_id: interaction.guildId,
       channel:
         interaction.channel !== undefined
           ? Channels.channelToRaw(interaction.channel)
           : undefined,
-      channel_id: interaction.channelID,
+      channel_id: interaction.channelId,
       member:
         interaction.member !== undefined
           ? Guilds.guildMemberToRaw(interaction.member)

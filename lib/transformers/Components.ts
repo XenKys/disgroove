@@ -93,8 +93,8 @@ export class Components {
       style: button.style,
       label: button.label,
       emoji: button.emoji,
-      customID: button.custom_id,
-      skuID: button.sku_id,
+      customId: button.custom_id,
+      skuId: button.sku_id,
       url: button.url,
       disabled: button.disabled,
       id: button.id,
@@ -107,8 +107,8 @@ export class Components {
       style: button.style,
       label: button.label,
       emoji: button.emoji,
-      custom_id: button.customID,
-      sku_id: button.skuID,
+      custom_id: button.customId,
+      sku_id: button.skuId,
       url: button.url,
       disabled: button.disabled,
       id: button.id,
@@ -119,7 +119,7 @@ export class Components {
     return {
       type: channelSelect.type,
       id: channelSelect.id,
-      customID: channelSelect.custom_id,
+      customId: channelSelect.custom_id,
       channelTypes: channelSelect.channel_types,
       placeholder: channelSelect.placeholder,
       defaultValues: channelSelect.default_values,
@@ -133,7 +133,7 @@ export class Components {
     return {
       type: channelSelect.type,
       id: channelSelect.id,
-      custom_id: channelSelect.customID,
+      custom_id: channelSelect.customId,
       channel_types: channelSelect.channelTypes,
       placeholder: channelSelect.placeholder,
       default_values: channelSelect.defaultValues,
@@ -323,7 +323,7 @@ export class Components {
     return {
       type: mentionableSelect.type,
       id: mentionableSelect.id,
-      customID: mentionableSelect.custom_id,
+      customId: mentionableSelect.custom_id,
       placeholder: mentionableSelect.placeholder,
       defaultValues: mentionableSelect.default_values,
       minValues: mentionableSelect.min_values,
@@ -338,7 +338,7 @@ export class Components {
     return {
       type: mentionableSelect.type,
       id: mentionableSelect.id,
-      custom_id: mentionableSelect.customID,
+      custom_id: mentionableSelect.customId,
       placeholder: mentionableSelect.placeholder,
       default_values: mentionableSelect.defaultValues,
       min_values: mentionableSelect.minValues,
@@ -351,7 +351,7 @@ export class Components {
     return {
       type: roleSelect.type,
       id: roleSelect.id,
-      customID: roleSelect.custom_id,
+      customId: roleSelect.custom_id,
       placeholder: roleSelect.placeholder,
       defaultValues: roleSelect.default_values,
       minValues: roleSelect.min_values,
@@ -364,7 +364,7 @@ export class Components {
     return {
       type: roleSelect.type,
       id: roleSelect.id,
-      custom_id: roleSelect.customID,
+      custom_id: roleSelect.customId,
       placeholder: roleSelect.placeholder,
       default_values: roleSelect.defaultValues,
       min_values: roleSelect.minValues,
@@ -445,7 +445,7 @@ export class Components {
     return {
       type: stringSelect.type,
       id: stringSelect.id,
-      customID: stringSelect.custom_id,
+      customId: stringSelect.custom_id,
       placeholder: stringSelect.placeholder,
       options: stringSelect.options?.map((option) => ({
         label: option.label,
@@ -470,7 +470,7 @@ export class Components {
   static stringSelectToRaw(stringSelect: StringSelect): RawStringSelect {
     return {
       type: stringSelect.type,
-      custom_id: stringSelect.customID,
+      custom_id: stringSelect.customId,
       placeholder: stringSelect.placeholder,
       options: stringSelect.options?.map((option) => ({
         label: option.label,
@@ -511,7 +511,7 @@ export class Components {
   static textInputFromRaw(textInput: RawTextInput): TextInput {
     return {
       type: textInput.type,
-      customID: textInput.custom_id,
+      customId: textInput.custom_id,
       style: textInput.style,
       minLength: textInput.min_length,
       maxLength: textInput.max_length,
@@ -526,7 +526,7 @@ export class Components {
   static textInputToRaw(textInput: TextInput): RawTextInput {
     return {
       type: textInput.type,
-      custom_id: textInput.customID,
+      custom_id: textInput.customId,
       style: textInput.style,
       min_length: textInput.minLength,
       max_length: textInput.maxLength,
@@ -586,7 +586,7 @@ export class Components {
     return {
       type: userSelect.type,
       id: userSelect.id,
-      customID: userSelect.custom_id,
+      customId: userSelect.custom_id,
       placeholder: userSelect.placeholder,
       defaultValues: userSelect.default_values,
       minValues: userSelect.min_values,
@@ -599,7 +599,7 @@ export class Components {
     return {
       type: userSelect.type,
       id: userSelect.id,
-      custom_id: userSelect.customID,
+      custom_id: userSelect.customId,
       placeholder: userSelect.placeholder,
       default_values: userSelect.defaultValues,
       min_values: userSelect.minValues,

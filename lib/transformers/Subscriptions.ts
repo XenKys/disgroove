@@ -4,10 +4,10 @@ export class Subscriptions {
   static subscriptionFromRaw(subscription: RawSubscription): Subscription {
     return {
       id: subscription.id,
-      userID: subscription.user_id,
-      skuIDs: subscription.sku_ids,
-      entitlementIDs: subscription.entitlement_ids,
-      renewalSKUIDs: subscription.renewal_sku_ids,
+      userId: subscription.user_id,
+      skuIds: subscription.sku_ids,
+      entitlementIds: subscription.entitlement_ids,
+      renewalSKUIds: subscription.renewal_sku_ids,
       currentPeriodStart: subscription.current_period_start,
       currentPeriodEnd: subscription.current_period_end,
       status: subscription.status,
@@ -19,10 +19,10 @@ export class Subscriptions {
   static subscriptionToRaw(subscription: Subscription): RawSubscription {
     return {
       id: subscription.id,
-      user_id: subscription.userID,
-      sku_ids: subscription.skuIDs,
-      entitlement_ids: subscription.entitlementIDs,
-      renewal_sku_ids: subscription.renewalSKUIDs,
+      user_id: subscription.userId,
+      sku_ids: subscription.skuIds,
+      entitlement_ids: subscription.entitlementIds,
+      renewal_sku_ids: subscription.renewalSKUIds,
       current_period_start: subscription.currentPeriodStart,
       current_period_end: subscription.currentPeriodEnd,
       status: subscription.status,

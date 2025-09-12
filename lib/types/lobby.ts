@@ -20,7 +20,7 @@ export interface RawLobbyMember {
 
 export interface Lobby {
   id: snowflake;
-  applicationID: snowflake;
+  applicationId: snowflake;
   metadata: Record<string, string> | null;
   members: Array<LobbyMember>;
   linkedChannel: RawChannel;

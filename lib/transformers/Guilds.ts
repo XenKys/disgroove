@@ -21,8 +21,8 @@ export class Guilds {
   ): GuildApplicationCommandPermissions {
     return {
       id: guildApplicationCommandPermissions.id,
-      applicationID: guildApplicationCommandPermissions.application_id,
-      guildID: guildApplicationCommandPermissions.guild_id,
+      applicationId: guildApplicationCommandPermissions.application_id,
+      guildId: guildApplicationCommandPermissions.guild_id,
       permissions: guildApplicationCommandPermissions.permissions.map(
         (permission) => ({
           id: permission.id,
@@ -38,8 +38,8 @@ export class Guilds {
   ): RawGuildApplicationCommandPermissions {
     return {
       id: guildApplicationCommandPermissions.id,
-      application_id: guildApplicationCommandPermissions.applicationID,
-      guild_id: guildApplicationCommandPermissions.guildID,
+      application_id: guildApplicationCommandPermissions.applicationId,
+      guild_id: guildApplicationCommandPermissions.guildId,
       permissions: guildApplicationCommandPermissions.permissions.map(
         (permission) => ({
           id: permission.id,
@@ -59,13 +59,13 @@ export class Guilds {
       splash: guild.splash,
       discoverySplash: guild.discovery_splash,
       owner: guild.owner,
-      ownerID: guild.owner_id,
+      ownerId: guild.owner_id,
       permissions: guild.permissions,
       region: guild.region,
-      afkChannelID: guild.afk_channel_id,
+      afkChannelId: guild.afk_channel_id,
       afkTimeout: guild.afk_timeout,
       widgetEnabled: guild.widget_enabled,
-      widgetChannelID: guild.widget_channel_id,
+      widgetChannelId: guild.widget_channel_id,
       verificationLevel: guild.verification_level,
       defaultMessageNotifications: guild.default_message_notifications,
       explicitContentFilter: guild.explicit_content_filter,
@@ -73,10 +73,10 @@ export class Guilds {
       emojis: guild.emojis.map((emoji) => Emojis.emojiFromRaw(emoji)),
       features: guild.features,
       mfaLevel: guild.mfa_level,
-      applicationID: guild.application_id,
-      systemChannelID: guild.system_channel_id,
+      applicationId: guild.application_id,
+      systemChannelId: guild.system_channel_id,
       systemChannelFlags: guild.system_channel_flags,
-      rulesChannelID: guild.rules_channel_id,
+      rulesChannelId: guild.rules_channel_id,
       maxPresences: guild.max_presences,
       maxMembers: guild.max_members,
       vanityURLCode: guild.vanity_url_code,
@@ -85,7 +85,7 @@ export class Guilds {
       premiumTier: guild.premium_tier,
       premiumSubscriptionCount: guild.premium_subscription_count,
       preferredLocale: guild.preferred_locale,
-      publicUpdatesChannelID: guild.public_updates_channel_id,
+      publicUpdatesChannelId: guild.public_updates_channel_id,
       maxVideoChannelUsers: guild.max_video_channel_users,
       maxStageVideoChannelUsers: guild.max_stage_video_channel_users,
       approximateMemberCount: guild.approximate_member_count,
@@ -96,9 +96,9 @@ export class Guilds {
               description: guild.welcome_screen.description,
               welcomeChannels: guild.welcome_screen.welcome_channels.map(
                 (welcomeScreenChannel) => ({
-                  channelID: welcomeScreenChannel.channel_id,
+                  channelId: welcomeScreenChannel.channel_id,
                   description: welcomeScreenChannel.description,
-                  emojiID: welcomeScreenChannel.emoji_id,
+                  emojiId: welcomeScreenChannel.emoji_id,
                   emojiName: welcomeScreenChannel.emoji_name,
                 })
               ),
@@ -109,7 +109,7 @@ export class Guilds {
         Stickers.stickerFromRaw(sticker)
       ),
       premiumProgressBarEnabled: guild.premium_progress_bar_enabled,
-      safetyAlertsChannelID: guild.safety_alerts_channel_id,
+      safetyAlertsChannelId: guild.safety_alerts_channel_id,
       incidentsData:
         guild.incidents_data !== null
           ? {
@@ -144,7 +144,7 @@ export class Guilds {
           ? guildMember.avatar_decoration_data !== null
             ? {
                 asset: guildMember.avatar_decoration_data.asset,
-                skuID: guildMember.avatar_decoration_data.sku_id,
+                skuId: guildMember.avatar_decoration_data.sku_id,
               }
             : null
           : undefined,
@@ -173,7 +173,7 @@ export class Guilds {
           ? guildMember.avatarDecorationData !== null
             ? {
                 asset: guildMember.avatarDecorationData.asset,
-                sku_id: guildMember.avatarDecorationData.skuID,
+                sku_id: guildMember.avatarDecorationData.skuId,
               }
             : null
           : undefined,
@@ -189,13 +189,13 @@ export class Guilds {
       splash: guild.splash,
       discovery_splash: guild.discoverySplash,
       owner: guild.owner,
-      owner_id: guild.ownerID,
+      owner_id: guild.ownerId,
       permissions: guild.permissions,
       region: guild.region,
-      afk_channel_id: guild.afkChannelID,
+      afk_channel_id: guild.afkChannelId,
       afk_timeout: guild.afkTimeout,
       widget_enabled: guild.widgetEnabled,
-      widget_channel_id: guild.widgetChannelID,
+      widget_channel_id: guild.widgetChannelId,
       verification_level: guild.verificationLevel,
       default_message_notifications: guild.defaultMessageNotifications,
       explicit_content_filter: guild.explicitContentFilter,
@@ -203,10 +203,10 @@ export class Guilds {
       emojis: guild.emojis.map((emoji) => Emojis.emojiToRaw(emoji)),
       features: guild.features,
       mfa_level: guild.mfaLevel,
-      application_id: guild.applicationID,
-      system_channel_id: guild.systemChannelID,
+      application_id: guild.applicationId,
+      system_channel_id: guild.systemChannelId,
       system_channel_flags: guild.systemChannelFlags,
-      rules_channel_id: guild.rulesChannelID,
+      rules_channel_id: guild.rulesChannelId,
       max_presences: guild.maxPresences,
       max_members: guild.maxMembers,
       vanity_url_code: guild.vanityURLCode,
@@ -215,7 +215,7 @@ export class Guilds {
       premium_tier: guild.premiumTier,
       premium_subscription_count: guild.premiumSubscriptionCount,
       preferred_locale: guild.preferredLocale,
-      public_updates_channel_id: guild.publicUpdatesChannelID,
+      public_updates_channel_id: guild.publicUpdatesChannelId,
       max_video_channel_users: guild.maxVideoChannelUsers,
       max_stage_video_channel_users: guild.maxStageVideoChannelUsers,
       approximate_member_count: guild.approximateMemberCount,
@@ -226,9 +226,9 @@ export class Guilds {
               description: guild.welcomeScreen.description,
               welcome_channels: guild.welcomeScreen.welcomeChannels.map(
                 (welcomeScreenChannel) => ({
-                  channel_id: welcomeScreenChannel.channelID,
+                  channel_id: welcomeScreenChannel.channelId,
                   description: welcomeScreenChannel.description,
-                  emoji_id: welcomeScreenChannel.emojiID,
+                  emoji_id: welcomeScreenChannel.emojiId,
                   emoji_name: welcomeScreenChannel.emojiName,
                 })
               ),
@@ -239,7 +239,7 @@ export class Guilds {
         Stickers.stickerToRaw(sticker)
       ),
       premium_progress_bar_enabled: guild.premiumProgressBarEnabled,
-      safety_alerts_channel_id: guild.safetyAlertsChannelID,
+      safety_alerts_channel_id: guild.safetyAlertsChannelId,
       incidents_data:
         guild.incidentsData !== null
           ? {
@@ -259,7 +259,7 @@ export class Guilds {
       type: integration.type,
       enabled: integration.enabled,
       syncing: integration.syncing,
-      roleID: integration.role_id,
+      roleId: integration.role_id,
       enableEmoticons: integration.enable_emoticons,
       expireBehavior: integration.expire_behavior,
       expireGracePeriod: integration.expire_grace_period,
@@ -295,7 +295,7 @@ export class Guilds {
       type: integration.type,
       enabled: integration.enabled,
       syncing: integration.syncing,
-      role_id: integration.roleID,
+      role_id: integration.roleId,
       enable_emoticons: integration.enableEmoticons,
       expire_behavior: integration.expireBehavior,
       expire_grace_period: integration.expireGracePeriod,

@@ -65,9 +65,9 @@ export interface RawGuildScheduledEventRecurrenceRuleNWeekday {
 
 export interface GuildScheduledEvent {
   id: snowflake;
-  guildID: snowflake;
-  channelID: snowflake | null;
-  creatorID?: snowflake | null;
+  guildId: snowflake;
+  channelId: snowflake | null;
+  creatorId?: snowflake | null;
   name: string;
   description?: string | null;
   scheduledStartTime: timestamp;
@@ -75,7 +75,7 @@ export interface GuildScheduledEvent {
   privacyLevel: GuildScheduledEventPrivacyLevel;
   status: GuildScheduledEventStatus;
   entityType: GuildScheduledEventEntityTypes;
-  entityID: snowflake | null;
+  entityId: snowflake | null;
   entityMetadata: GuildScheduledEventEntityMetadata | null;
   creator?: User;
   userCount?: number;
@@ -88,7 +88,7 @@ export interface GuildScheduledEventEntityMetadata {
 }
 
 export interface GuildScheduledEventUser {
-  guildScheduledEventID: snowflake;
+  guildScheduledEventId: snowflake;
   user: User;
   member?: GuildMember;
 }

@@ -37,14 +37,14 @@ export interface RawStickerPack {
 
 export interface Sticker {
   id: snowflake;
-  packID?: snowflake;
+  packId?: snowflake;
   name: string;
   description: string | null;
   tags: string;
   type: StickerTypes;
   formatType: StickerFormatTypes;
   available?: boolean;
-  guildID?: snowflake;
+  guildId?: snowflake;
   user?: User;
   sortValue?: number;
 }
@@ -59,8 +59,8 @@ export interface StickerPack {
   id: snowflake;
   stickers: Array<Sticker>;
   name: string;
-  skuID: snowflake;
-  coverStickerID?: snowflake;
+  skuId: snowflake;
+  coverStickerId?: snowflake;
   description: string;
-  bannerAssetID?: snowflake;
+  bannerAssetId?: snowflake;
 }

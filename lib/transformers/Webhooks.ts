@@ -8,8 +8,8 @@ export class Webhooks {
     return {
       id: webhook.id,
       type: webhook.type,
-      guildID: webhook.guild_id,
-      channelID: webhook.channel_id,
+      guildId: webhook.guild_id,
+      channelId: webhook.channel_id,
       user:
         webhook.user !== undefined
           ? Users.userFromRaw(webhook.user)
@@ -17,7 +17,7 @@ export class Webhooks {
       name: webhook.name,
       avatar: webhook.avatar,
       token: webhook.token,
-      applicationID: webhook.application_id,
+      applicationId: webhook.application_id,
       sourceGuild:
         webhook.source_guild !== undefined
           ? Guilds.guildFromRaw(webhook.source_guild)
@@ -34,14 +34,14 @@ export class Webhooks {
     return {
       id: webhook.id,
       type: webhook.type,
-      guild_id: webhook.guildID,
-      channel_id: webhook.channelID,
+      guild_id: webhook.guildId,
+      channel_id: webhook.channelId,
       user:
         webhook.user !== undefined ? Users.userToRaw(webhook.user) : undefined,
       name: webhook.name,
       avatar: webhook.avatar,
       token: webhook.token,
-      application_id: webhook.applicationID,
+      application_id: webhook.applicationId,
       source_guild:
         webhook.sourceGuild !== undefined
           ? Guilds.guildToRaw(webhook.sourceGuild)

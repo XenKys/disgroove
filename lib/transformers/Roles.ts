@@ -21,10 +21,10 @@ export class Roles {
       tags:
         role.tags !== undefined
           ? {
-              botID: role.tags.bot_id,
-              integrationID: role.tags.integration_id,
+              botId: role.tags.bot_id,
+              integrationId: role.tags.integration_id,
               premiumSubscriber: role.tags.premium_subscriber,
-              subscriptionListingID: role.tags.subscription_listing_id,
+              subscriptionListingId: role.tags.subscription_listing_id,
               availableForPurchase: role.tags.available_for_purchase,
               guildConnections: role.tags.guild_connections,
             }
@@ -53,10 +53,10 @@ export class Roles {
       tags:
         role.tags !== undefined
           ? {
-              bot_id: role.tags.botID,
-              integration_id: role.tags.integrationID,
+              bot_id: role.tags.botId,
+              integration_id: role.tags.integrationId,
               premium_subscriber: role.tags.premiumSubscriber,
-              subscription_listing_id: role.tags.subscriptionListingID,
+              subscription_listing_id: role.tags.subscriptionListingId,
               available_for_purchase: role.tags.availableForPurchase,
               guild_connections: role.tags.guildConnections,
             }

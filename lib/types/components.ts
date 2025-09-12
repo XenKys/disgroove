@@ -321,8 +321,8 @@ export interface Button {
   style: ButtonStyles;
   label?: string;
   emoji?: Pick<Emoji, "name" | "id" | "animated">;
-  customID: string;
-  skuID?: snowflake;
+  customId: string;
+  skuId?: snowflake;
   url?: string;
   disabled?: boolean;
 }
@@ -330,7 +330,7 @@ export interface Button {
 export interface StringSelect {
   type: ComponentTypes.StringSelect;
   id?: number;
-  customID: string;
+  customId: string;
   options: Array<SelectOption>;
   placeholder?: string;
   minValues?: number;
@@ -343,7 +343,7 @@ export interface StringSelectInteractionResponse {
   type: ComponentTypes.StringSelect;
   componentType: ComponentTypes.StringSelect;
   id: number;
-  customID: string;
+  customId: string;
   values: Array<string>;
 }
 
@@ -358,7 +358,7 @@ export interface SelectOption {
 export interface TextInput {
   type: ComponentTypes.TextInput;
   id?: number;
-  customID: string;
+  customId: string;
   style: TextInputStyles;
   minLength?: number;
   maxLength?: number;
@@ -371,14 +371,14 @@ export interface TextInput {
 export interface TextInputInteractionResponse {
   type: ComponentTypes.TextInput;
   id: number;
-  customID: string;
+  customId: string;
   value: string;
 }
 
 export interface UserSelect {
   type: ComponentTypes.UserSelect;
   id?: number;
-  customID: string;
+  customId: string;
   placeholder?: string;
   defaultValues?: Array<DefaultValue>;
   minValues?: number;
@@ -390,7 +390,7 @@ export interface UserSelectInteractionResponse {
   type: ComponentTypes.UserSelect;
   componentType: ComponentTypes.UserSelect;
   id: number;
-  customID: string;
+  customId: string;
   resolved: ResolvedData;
   values: Array<snowflake>;
 }
@@ -403,7 +403,7 @@ export interface DefaultValue {
 export interface RoleSelect {
   type: ComponentTypes.RoleSelect;
   id?: number;
-  customID: string;
+  customId: string;
   placeholder?: string;
   defaultValues?: Array<DefaultValue>;
   minValues?: number;
@@ -415,7 +415,7 @@ export interface RoleSelectInteractionResponse {
   type: ComponentTypes.RoleSelect;
   componentType: ComponentTypes.RoleSelect;
   id: number;
-  customID: string;
+  customId: string;
   resolved: ResolvedData;
   values: Array<snowflake>;
 }
@@ -423,7 +423,7 @@ export interface RoleSelectInteractionResponse {
 export interface MentionableSelect {
   type: ComponentTypes.MentionableSelect;
   id?: number;
-  customID: string;
+  customId: string;
   placeholder?: string;
   defaultValues?: Array<DefaultValue>;
   minValues?: number;
@@ -435,7 +435,7 @@ export interface MentionableSelectInteractionResponse {
   type: ComponentTypes.MentionableSelect;
   componentType: ComponentTypes.MentionableSelect;
   id: number;
-  customID: string;
+  customId: string;
   resolved: ResolvedData;
   values: Array<snowflake>;
 }
@@ -443,7 +443,7 @@ export interface MentionableSelectInteractionResponse {
 export interface ChannelSelect {
   type: ComponentTypes.ChannelSelect;
   id?: number;
-  customID: string;
+  customId: string;
   channelTypes?: Array<ChannelTypes>;
   placeholder?: string;
   defaultValues?: Array<DefaultValue>;
@@ -456,7 +456,7 @@ export interface ChannelSelectInteractionResponse {
   type: ComponentTypes.ChannelSelect;
   componentType: ComponentTypes.ChannelSelect;
   id: number;
-  customID: string;
+  customId: string;
   resolved: ResolvedData;
   values: Array<snowflake>;
 }
@@ -557,5 +557,5 @@ export interface UnfurledMediaItem {
   height?: number | null;
   width?: number | null;
   contentType?: string;
-  attachmentID?: snowflake;
+  attachmentId?: snowflake;
 }

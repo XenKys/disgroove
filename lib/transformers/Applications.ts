@@ -22,12 +22,12 @@ export class Applications {
       verifyKey: application.verify_key,
       team:
         application.team !== null ? Teams.teamFromRaw(application.team) : null,
-      guildID: application.guild_id,
+      guildId: application.guild_id,
       guild:
         application.guild !== undefined
           ? Guilds.guildFromRaw(application.guild)
           : undefined,
-      primarySKUID: application.primary_sku_id,
+      primarySKUId: application.primary_sku_id,
       slug: application.slug,
       coverImage: application.cover_image,
       flags: application.flags,
@@ -81,12 +81,12 @@ export class Applications {
       verify_key: application.verifyKey,
       team:
         application.team !== null ? Teams.teamToRaw(application.team) : null,
-      guild_id: application.guildID,
+      guild_id: application.guildId,
       guild:
         application.guild !== undefined
           ? Guilds.guildToRaw(application.guild)
           : undefined,
-      primary_sku_id: application.primarySKUID,
+      primary_sku_id: application.primarySKUId,
       slug: application.slug,
       cover_image: application.coverImage,
       flags: application.flags,

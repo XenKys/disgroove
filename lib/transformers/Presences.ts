@@ -30,12 +30,12 @@ export class Presences {
             ? presence.user.avatar_decoration_data !== null
               ? {
                   asset: presence.user.avatar_decoration_data.asset,
-                  skuID: presence.user.avatar_decoration_data.sku_id,
+                  skuId: presence.user.avatar_decoration_data.sku_id,
                 }
               : null
             : undefined,
       },
-      guildID: presence.guild_id,
+      guildId: presence.guild_id,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
         name: activity.name,
@@ -43,7 +43,7 @@ export class Presences {
         url: activity.url,
         createdAt: activity.created_at,
         timestamps: activity.timestamps,
-        applicationID: activity.application_id,
+        applicationId: activity.application_id,
         details: activity.details,
         state: activity.state,
         emoji: activity.emoji,
@@ -89,12 +89,12 @@ export class Presences {
             ? presence.user.avatarDecorationData !== null
               ? {
                   asset: presence.user.avatarDecorationData.asset,
-                  sku_id: presence.user.avatarDecorationData.skuID,
+                  sku_id: presence.user.avatarDecorationData.skuId,
                 }
               : null
             : undefined,
       },
-      guild_id: presence.guildID,
+      guild_id: presence.guildId,
       status: presence.status,
       activities: presence.activities.map((activity) => ({
         name: activity.name,
@@ -102,7 +102,7 @@ export class Presences {
         url: activity.url,
         created_at: activity.createdAt,
         timestamps: activity.timestamps,
-        application_id: activity.applicationID,
+        application_id: activity.applicationId,
         details: activity.details,
         state: activity.state,
         emoji: activity.emoji,

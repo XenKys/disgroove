@@ -14,7 +14,7 @@ export interface RawSKU {
 export interface SKU {
   id: snowflake;
   type: SKUTypes;
-  applicationID: snowflake;
+  applicationId: snowflake;
   name: string;
   slug: string;
   flags: SKUFlags;

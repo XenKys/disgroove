@@ -15,11 +15,11 @@ export interface RawSoundboardSound {
 
 export interface SoundboardSound {
   name: string;
-  soundID: snowflake;
+  soundId: snowflake;
   volume: number;
-  emojiID: snowflake | null;
+  emojiId: snowflake | null;
   emojiName: string | null;
-  guildID?: snowflake;
+  guildId?: snowflake;
   available: boolean;
   user?: User;
 }
