@@ -1,4 +1,4 @@
-import { ComponentTypes } from "../constants.js";
+import { ComponentTypes } from "../constants";
 import {
   ActionRow,
   Button,
@@ -34,7 +34,7 @@ import {
   ChannelSelect,
   RawLabel,
   Label,
-} from "../types/message-components.js";
+} from "../types/components";
 
 export class Components {
   static actionRowFromRaw(actionRow: RawActionRow): ActionRow {

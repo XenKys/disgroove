@@ -61,7 +61,7 @@ import type {
   TextDisplayInteractionResponse,
   TextInputInteractionResponse,
   UserSelectInteractionResponse,
-} from "./message-components";
+} from "./components";
 import type { RawPollCreateParams, PollCreateParams } from "./poll";
 import type { RawRole, Role } from "./role";
 import type { RawUser, User } from "./user";

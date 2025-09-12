@@ -40,7 +40,7 @@ import type {
   Section,
   Separator,
   TextDisplay,
-} from "./message-components";
+} from "./components";
 import type { Poll, RawPoll } from "./poll";
 import type {
   RawStickerItem,

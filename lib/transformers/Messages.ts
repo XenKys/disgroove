@@ -31,7 +31,7 @@ import type {
   Section,
   Separator,
   TextDisplay,
-} from "../types/message-components";
+} from "../types/components";
 
 export class Messages {
   static attachmentFromRaw(attachment: RawAttachment): Attachment {

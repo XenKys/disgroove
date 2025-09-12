@@ -235,7 +235,7 @@ import type {
   TextDisplay,
   Thumbnail,
   UserSelect,
-} from "./types/message-components";
+} from "./types/components";
 import type {
   Lobby,
   LobbyMember,
