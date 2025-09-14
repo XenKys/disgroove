@@ -20,6 +20,7 @@ export interface RawWebhook {
   url?: string;
 }
 
+/** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-structure */
 export interface Webhook {
   id: snowflake;
   type: WebhookTypes;

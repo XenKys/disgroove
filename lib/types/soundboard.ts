@@ -13,6 +13,8 @@ export interface RawSoundboardSound {
   user?: RawUser;
 }
 
+/** https://discord.com/developers/docs/resources/soundboard#soundboard-sound-structure */
+
 export interface SoundboardSound {
   name: string;
   soundId: snowflake;

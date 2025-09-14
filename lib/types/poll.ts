@@ -45,6 +45,7 @@ export interface RawPollAnswerCount {
   me_voted: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/poll#poll-object-poll-object-structure */
 export interface Poll {
   question: PollMedia;
   answers: Array<PollAnswer>;
@@ -54,6 +55,7 @@ export interface Poll {
   results?: PollResults;
 }
 
+/** https://discord.com/developers/docs/resources/poll#poll-create-request-object-poll-create-request-object-structure */
 export interface PollCreateParams {
   question: PollMedia;
   answers: Array<PollAnswer>;
@@ -62,21 +64,25 @@ export interface PollCreateParams {
   layoutType?: LayoutType;
 }
 
+/** https://discord.com/developers/docs/resources/poll#poll-media-object-poll-media-object-structure */
 export interface PollMedia {
   text?: string;
   emoji?: Pick<Emoji, "id" | "name">;
 }
 
+/** https://discord.com/developers/docs/resources/poll#poll-answer-object-poll-answer-object-structure */
 export interface PollAnswer {
   answerId: number;
   pollMedia: PollMedia;
 }
 
+/** https://discord.com/developers/docs/resources/poll#poll-results-object-poll-results-object-structure */
 export interface PollResults {
   isFinalized: boolean;
   answerCounts: Array<PollAnswerCount>;
 }
 
+/** https://discord.com/developers/docs/resources/poll#poll-results-object-poll-answer-count-object-structure */
 export interface PollAnswerCount {
   id: number;
   count: number;

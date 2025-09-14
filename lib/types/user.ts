@@ -82,6 +82,7 @@ export interface RawApplicationRoleConnection {
   metadata: RawApplicationRoleConnectionMetadata;
 }
 
+/** https://discord.com/developers/docs/resources/user#user-object-user-structure */
 export interface User {
   id: snowflake;
   username: string;
@@ -104,6 +105,7 @@ export interface User {
   primaryGuild?: UserPrimaryGuild | null;
 }
 
+/** https://discord.com/developers/docs/resources/user#user-object-user-primary-guild */
 export interface UserPrimaryGuild {
   identityGuildId: snowflake | null;
   identityEnabled: boolean | null;
@@ -111,15 +113,18 @@ export interface UserPrimaryGuild {
   badge: string | null;
 }
 
+/** https://discord.com/developers/docs/resources/user#avatar-decoration-data-object-avatar-decoration-data-structure */
 export interface AvatarDecorationData {
   asset: string;
   skuId: snowflake;
 }
 
+/** https://discord.com/developers/docs/resources/user#collectibles-object-collectibles-structure */
 export interface Collectibles {
   nameplate?: Nameplate;
 }
 
+/** https://discord.com/developers/docs/resources/user#nameplate-object-nameplate-structure */
 export interface Nameplate {
   skuId: snowflake;
   asset: string;
@@ -127,6 +132,7 @@ export interface Nameplate {
   palette: string;
 }
 
+/** https://discord.com/developers/docs/resources/user#connection-object-connection-structure */
 export interface Connection {
   id: snowflake;
   name: string;
@@ -140,6 +146,7 @@ export interface Connection {
   visibility: VisibilityTypes;
 }
 
+/** https://discord.com/developers/docs/resources/user#application-role-connection-object-application-role-connection-structure */
 export interface ApplicationRoleConnection {
   platformName: string | null;
   platformUsername: string | null;

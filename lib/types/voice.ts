@@ -27,6 +27,7 @@ export interface RawVoiceRegion {
   custom: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/voice#voice-state-object-voice-state-structure */
 export interface VoiceState {
   guildId?: snowflake;
   channelId: snowflake | null;
@@ -43,6 +44,7 @@ export interface VoiceState {
   requestToSpeakTimestamp: timestamp | null;
 }
 
+/** https://discord.com/developers/docs/resources/voice#voice-region-object-voice-region-structure */
 export interface VoiceRegion {
   id: snowflake;
   name: string;

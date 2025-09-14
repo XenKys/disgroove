@@ -219,6 +219,7 @@ export interface RawActivityInstanceResource {
   id: string;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-structure */
 export interface Interaction {
   id: snowflake;
   applicationId: snowflake;
@@ -242,6 +243,7 @@ export interface Interaction {
   attachmentSizeLimit: number;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-data-structure */
 export interface ApplicationCommandData {
   id: snowflake;
   name: string;
@@ -252,6 +254,7 @@ export interface ApplicationCommandData {
   targetId?: snowflake;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-message-component-data-structure */
 export interface MessageComponentData {
   customId: string;
   componentType: ComponentTypes;
@@ -259,6 +262,7 @@ export interface MessageComponentData {
   resolved?: ResolvedData;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-modal-submit-data-structure */
 export interface ModalSubmitData {
   customId: string;
   components: Array<
@@ -279,6 +283,7 @@ export interface ModalSubmitData {
   resolved?: ResolvedData;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure */
 export interface ResolvedData {
   users?: Record<snowflake, User>;
   members?: Record<snowflake, GuildMember>;
@@ -288,6 +293,7 @@ export interface ResolvedData {
   attachments?: Record<snowflake, Attachment>;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-application-command-interaction-data-option-structure */
 export interface ApplicationCommandInteractionDataOption {
   name: string;
   type: ApplicationCommandOptionType;
@@ -296,6 +302,7 @@ export interface ApplicationCommandInteractionDataOption {
   focused?: boolean;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object-message-interaction-structure */
 export interface MessageInteraction {
   id: snowflake;
   type: InteractionType;
@@ -304,11 +311,13 @@ export interface MessageInteraction {
   member?: GuildMember;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-response-structure */
 export interface InteractionResponse {
   type: InteractionCallbackType;
   data?: InteractionCallbackData;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-response-object-interaction-callback-data-structure */
 export interface InteractionCallbackData {
   tts?: boolean;
   content?: string;
@@ -333,11 +342,13 @@ export interface InteractionCallbackData {
   title?: string;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-response-object */
 export interface InteractionCallbackResponse {
   interaction: InteractionCallback;
   resource?: InteractionResource;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-object */
 export interface InteractionCallback {
   id: snowflake;
   type: InteractionType;
@@ -347,12 +358,14 @@ export interface InteractionCallback {
   responseMessageEphemeral?: boolean;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-resource-object */
 export interface InteractionResource {
   type: InteractionCallbackType;
   activityInstance?: ActivityInstanceResource;
   message?: Message;
 }
 
+/** https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-callback-interaction-callback-activity-instance-resource */
 export interface ActivityInstanceResource {
   id: string;
 }

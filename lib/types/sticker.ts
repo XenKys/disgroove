@@ -35,6 +35,7 @@ export interface RawStickerPack {
   banner_asset_id?: snowflake;
 }
 
+/** https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure */
 export interface Sticker {
   id: snowflake;
   packId?: snowflake;
@@ -49,12 +50,14 @@ export interface Sticker {
   sortValue?: number;
 }
 
+/** https://discord.com/developers/docs/resources/sticker#sticker-item-object-sticker-item-structure */
 export interface StickerItem {
   id: snowflake;
   name: string;
   formatType: StickerFormatTypes;
 }
 
+/** https://discord.com/developers/docs/resources/sticker#sticker-pack-object-sticker-pack-structure */
 export interface StickerPack {
   id: snowflake;
   stickers: Array<Sticker>;

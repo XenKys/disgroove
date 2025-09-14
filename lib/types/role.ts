@@ -35,6 +35,7 @@ export interface RawRoleColors {
   tertiary_color: number | null;
 }
 
+/** https://discord.com/developers/docs/topics/permissions#role-object-role-structure */
 export interface Role {
   id: snowflake;
   name: string;
@@ -51,6 +52,7 @@ export interface Role {
   flags: RoleFlags;
 }
 
+/** https://discord.com/developers/docs/topics/permissions#role-object-role-tags-structure */
 export interface RoleTags {
   botId?: snowflake;
   integrationId?: snowflake;
@@ -60,6 +62,7 @@ export interface RoleTags {
   guildConnections?: null;
 }
 
+/** https://discord.com/developers/docs/topics/permissions#role-object-role-colors-object */
 export interface RoleColors {
   primaryColor: number;
   secondaryColor: number | null;

@@ -11,6 +11,7 @@ export interface RawSKU {
   flags: SKUFlags;
 }
 
+/** https://discord.com/developers/docs/resources/sku#sku-object-sku-structure */
 export interface SKU {
   id: snowflake;
   type: SKUTypes;

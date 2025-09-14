@@ -63,6 +63,7 @@ export interface RawGuildScheduledEventRecurrenceRuleNWeekday {
   day: GuildScheduledEventRecurrenceRuleWeekday;
 }
 
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-structure */
 export interface GuildScheduledEvent {
   id: snowflake;
   guildId: snowflake;
@@ -83,16 +84,19 @@ export interface GuildScheduledEvent {
   recurrenceRule: GuildScheduledEventRecurrenceRule | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-object-guild-scheduled-event-entity-metadata */
 export interface GuildScheduledEventEntityMetadata {
   location?: string;
 }
 
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-user-object-guild-scheduled-event-user-structure */
 export interface GuildScheduledEventUser {
   guildScheduledEventId: snowflake;
   user: User;
   member?: GuildMember;
 }
 
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-structure */
 export interface GuildScheduledEventRecurrenceRule {
   start: timestamp;
   end: timestamp | null;
@@ -106,6 +110,7 @@ export interface GuildScheduledEventRecurrenceRule {
   count: number | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild-scheduled-event#guild-scheduled-event-recurrence-rule-object-guild-scheduled-event-recurrence-rule-nweekday-structure */
 export interface GuildScheduledEventRecurrenceRuleNWeekday {
   n: number;
   day: GuildScheduledEventRecurrenceRuleWeekday;

@@ -11,12 +11,7 @@ import type {
   EmbedTypes,
 } from "../constants";
 import type { Application, RawApplication } from "./application";
-import type {
-  Channel,
-  RawChannel,
-  RawRoleSubscriptionData,
-  RoleSubscriptionData,
-} from "./channel";
+import type { Channel, RawChannel } from "./channel";
 import type { snowflake, timestamp } from "./common";
 import type { Emoji, RawEmoji } from "./emoji";
 import type {
@@ -280,6 +275,14 @@ export interface RawAllowedMentions {
   replied_user?: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/message#role-subscription-data-object-role-subscription-data-object-structure */
+export interface RawRoleSubscriptionData {
+  role_subscription_listing_id: snowflake;
+  tier_name: string;
+  total_months_subscribed: number;
+  is_renewal: boolean;
+}
+
 /** https://discord.com/developers/docs/resources/message#message-pin-object-message-pin-structure */
 export interface RawMessagePin {
   pinnet_at: timestamp;
@@ -494,6 +497,14 @@ export interface AllowedMentions {
   roles?: Array<snowflake>;
   users?: Array<snowflake>;
   repliedUser?: boolean;
+}
+
+/** https://discord.com/developers/docs/resources/message#role-subscription-data-object-role-subscription-data-object-structure */
+export interface RoleSubscriptionData {
+  roleSubscriptionListingId: snowflake;
+  tierName: string;
+  totalMonthsSubscribed: number;
+  isRenewal: boolean;
 }
 
 export interface MessagePin {

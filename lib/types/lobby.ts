@@ -18,6 +18,7 @@ export interface RawLobbyMember {
   flags?: LobbyMemberFlags;
 }
 
+/** https://discord.com/developers/docs/resources/lobby#lobby-object */
 export interface Lobby {
   id: snowflake;
   applicationId: snowflake;
@@ -26,6 +27,7 @@ export interface Lobby {
   linkedChannel: RawChannel;
 }
 
+/** https://discord.com/developers/docs/resources/lobby#lobby-member-object-lobby-member-structure */
 export interface LobbyMember {
   id: snowflake;
   metadata?: Record<string, string> | null;

@@ -15,6 +15,7 @@ export interface RawSubscription {
   country?: string;
 }
 
+/** https://discord.com/developers/docs/resources/subscription#subscription-object */
 export interface Subscription {
   id: snowflake;
   userId: snowflake;

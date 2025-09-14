@@ -44,6 +44,7 @@ export interface RawActionMetadata {
   custom_message?: string;
 }
 
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-auto-moderation-rule-structure */
 export interface AutoModerationRule {
   id: snowflake;
   guildId: snowflake;
@@ -58,6 +59,7 @@ export interface AutoModerationRule {
   exemptChannels: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-metadata */
 export interface TriggerMetadata {
   keywordFilter: Array<string>;
   regexPatterns: Array<string>;
@@ -67,11 +69,13 @@ export interface TriggerMetadata {
   mentionRaidProtection: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-auto-moderation-action-structure */
 export interface AutoModerationAction {
   type: ActionTypes;
   metadata: ActionMetadata;
 }
 
+/** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object-action-metadata */
 export interface ActionMetadata {
   channelId: snowflake;
   durationSeconds: number;

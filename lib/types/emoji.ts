@@ -13,6 +13,7 @@ export interface RawEmoji {
   available?: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/emoji#emoji-object-emoji-structure */
 export interface Emoji {
   id: snowflake | null;
   name: string | null;

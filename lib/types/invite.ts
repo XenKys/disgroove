@@ -48,6 +48,7 @@ export interface RawInviteStageInstance {
   topic: string;
 }
 
+/** https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
 export interface Invite {
   type: InviteTypes;
   code: string;
@@ -65,6 +66,7 @@ export interface Invite {
   flags?: GuildInviteFlags;
 }
 
+/** https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */
 export interface InviteMetadata {
   uses: number;
   maxUses: number;
@@ -73,6 +75,7 @@ export interface InviteMetadata {
   createdAt: string;
 }
 
+/** https://discord.com/developers/docs/resources/invite#invite-stage-instance-object-invite-stage-instance-structure */
 export interface InviteStageInstance {
   members: Array<GuildMember>;
   participantCount: number;

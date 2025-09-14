@@ -17,6 +17,7 @@ export interface RawGuildTemplate {
   is_dirty: boolean | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild-template#guild-template-object-guild-template-structure */
 export interface GuildTemplate {
   code: string;
   name: string;

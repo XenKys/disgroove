@@ -225,6 +225,7 @@ export interface RawIncidentsData {
   raid_detected_at?: timestamp | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-object-guild-structure */
 export interface Guild {
   id: snowflake;
   name: string;
@@ -272,11 +273,13 @@ export interface Guild {
   incidentsData: IncidentsData | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#unavailable-guild-object */
 export interface UnavailableGuild {
   id: snowflake;
   unavailable: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-preview-object-guild-preview-structure */
 export interface GuildPreview {
   id: snowflake;
   name: string;
@@ -291,11 +294,13 @@ export interface GuildPreview {
   stickers?: Array<Sticker>;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-widget-settings-object-guild-widget-settings-structure */
 export interface GuildWidgetSettings {
   enabled: boolean;
   channelId: snowflake | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-widget-object-guild-widget-structure */
 export interface GuildWidget {
   id: snowflake;
   name: string;
@@ -305,6 +310,7 @@ export interface GuildWidget {
   presenceCount: number;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-member-object-guild-member-structure */
 export interface GuildMember {
   user?: User;
   nick?: string | null;
@@ -323,6 +329,7 @@ export interface GuildMember {
   avatarDecorationData?: AvatarDecorationData | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
 export interface Integration {
   id: snowflake;
   name: string;
@@ -342,11 +349,13 @@ export interface Integration {
   scopes?: Array<OAuth2Scopes>;
 }
 
+/** https://discord.com/developers/docs/resources/guild#integration-account-object-integration-account-structure */
 export interface IntegrationAccount {
   id: snowflake;
   name: string;
 }
 
+/** https://discord.com/developers/docs/resources/guild#integration-application-object-integration-application-structure */
 export interface IntegrationApplication {
   id: snowflake;
   name: string;
@@ -355,16 +364,19 @@ export interface IntegrationApplication {
   bot?: User;
 }
 
+/** https://discord.com/developers/docs/resources/guild#ban-object-ban-structure */
 export interface Ban {
   reason: string | null;
   user: User;
 }
 
+/** https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure */
 export interface WelcomeScreen {
   description: string | null;
   welcomeChannels: Array<WelcomeScreenChannel>;
 }
 
+/** https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure */
 export interface WelcomeScreenChannel {
   channelId: snowflake;
   description: string;
@@ -372,6 +384,7 @@ export interface WelcomeScreenChannel {
   emojiName: string | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-guild-onboarding-structure */
 export interface GuildOnboarding {
   guildId: snowflake;
   prompts: Array<OnboardingPrompt>;
@@ -380,6 +393,7 @@ export interface GuildOnboarding {
   mode: OnboardingMode;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-onboarding-prompt-structure */
 export interface OnboardingPrompt {
   id: snowflake;
   type: PromptTypes;
@@ -390,6 +404,7 @@ export interface OnboardingPrompt {
   inOnboarding: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/guild#guild-onboarding-object-prompt-option-structure */
 export interface PromptOption {
   id: snowflake;
   channelIds: Array<snowflake>;
@@ -402,6 +417,7 @@ export interface PromptOption {
   description: string | null;
 }
 
+/** https://discord.com/developers/docs/resources/guild#incidents-data-object-incidents-data-structure */
 export interface IncidentsData {
   invitesDisabledUntil: timestamp | null;
   dmsDisabledUntil: timestamp | null;

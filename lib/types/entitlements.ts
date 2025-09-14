@@ -15,6 +15,7 @@ export interface RawEntitlement {
   guild_id?: snowflake;
 }
 
+/** https://discord.com/developers/docs/resources/entitlement#entitlement-object-entitlement-structure */
 export interface Entitlement {
   id: snowflake;
   skuId: snowflake;

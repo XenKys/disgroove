@@ -70,6 +70,7 @@ export interface RawApplicationCommandPermission {
   permission: boolean;
 }
 
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure */
 export interface ApplicationCommand {
   id: snowflake;
   type?: ApplicationCommandTypes;
@@ -90,6 +91,7 @@ export interface ApplicationCommand {
   handler?: EntryPointCommandHandlerTypes;
 }
 
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure */
 export interface ApplicationCommandOption {
   type: ApplicationCommandOptionType;
   name: string;
@@ -107,12 +109,14 @@ export interface ApplicationCommandOption {
   autocomplete?: boolean;
 }
 
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure */
 export interface ApplicationCommandOptionChoice {
   name: string;
   nameLocalizations?: LocaleMap | null;
   value: string;
 }
 
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure */
 export interface GuildApplicationCommandPermissions {
   id: snowflake;
   applicationId: snowflake;
@@ -120,6 +124,7 @@ export interface GuildApplicationCommandPermissions {
   permissions: Array<ApplicationCommandPermission>;
 }
 
+/** https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure */
 export interface ApplicationCommandPermission {
   id: snowflake;
   type: ApplicationCommandPermissionType;

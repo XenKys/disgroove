@@ -63,6 +63,7 @@ export interface RawAuditLogChange {
   key: string;
 }
 
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-object-audit-log-structure */
 export interface AuditLog {
   applicationCommands: Array<ApplicationCommand>;
   auditLogEntries: Array<AuditLogEntry>;
@@ -74,6 +75,7 @@ export interface AuditLog {
   webhooks: Array<Webhook>;
 }
 
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-audit-log-entry-structure */
 export interface AuditLogEntry {
   targetId: snowflake | null;
   changes?: Array<AuditLogChange>;
@@ -84,6 +86,7 @@ export interface AuditLogEntry {
   reason?: string;
 }
 
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info */
 export interface OptionalAuditLogEntryInfo {
   applicationId: snowflake;
   autoModerationRuleName: string;
@@ -99,6 +102,7 @@ export interface OptionalAuditLogEntryInfo {
   integrationType: string;
 }
 
+/** https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure */
 export interface AuditLogChange {
   newValue?: any;
   oldValue?: any;

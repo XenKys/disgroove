@@ -301,6 +301,7 @@ export interface RawUnfurledMediaItem {
   attachment_id?: snowflake;
 }
 
+/** https://discord.com/developers/docs/components/reference#action-row-action-row-structure */
 export interface ActionRow {
   type: ComponentTypes.ActionRow;
   components: Array<
@@ -315,6 +316,7 @@ export interface ActionRow {
   id?: number;
 }
 
+/** https://discord.com/developers/docs/components/reference#button-button-structure */
 export interface Button {
   type: ComponentTypes.Button;
   id?: number;
@@ -327,6 +329,7 @@ export interface Button {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#string-select-string-select-structure */
 export interface StringSelect {
   type: ComponentTypes.StringSelect;
   id?: number;
@@ -339,6 +342,7 @@ export interface StringSelect {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#string-select-string-select-interaction-response-structure */
 export interface StringSelectInteractionResponse {
   type: ComponentTypes.StringSelect;
   componentType: ComponentTypes.StringSelect;
@@ -347,6 +351,7 @@ export interface StringSelectInteractionResponse {
   values: Array<string>;
 }
 
+/** https://discord.com/developers/docs/components/reference#string-select-select-option-structure */
 export interface SelectOption {
   label: string;
   value: string;
@@ -355,6 +360,7 @@ export interface SelectOption {
   default?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#text-input-text-input-structure */
 export interface TextInput {
   type: ComponentTypes.TextInput;
   id?: number;
@@ -368,6 +374,7 @@ export interface TextInput {
   label: string;
 }
 
+/** https://discord.com/developers/docs/components/reference#text-input-text-input-interaction-response-structure */
 export interface TextInputInteractionResponse {
   type: ComponentTypes.TextInput;
   id: number;
@@ -375,6 +382,7 @@ export interface TextInputInteractionResponse {
   value: string;
 }
 
+/** https://discord.com/developers/docs/components/reference#user-select-user-select-structure */
 export interface UserSelect {
   type: ComponentTypes.UserSelect;
   id?: number;
@@ -386,6 +394,7 @@ export interface UserSelect {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#user-select-user-select-interaction-response-structure */
 export interface UserSelectInteractionResponse {
   type: ComponentTypes.UserSelect;
   componentType: ComponentTypes.UserSelect;
@@ -395,11 +404,13 @@ export interface UserSelectInteractionResponse {
   values: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/components/reference#user-select-select-default-value-structure */
 export interface DefaultValue {
   id: snowflake;
   type: "user" | "role" | "channel";
 }
 
+/** https://discord.com/developers/docs/components/reference#role-select-role-select-structure */
 export interface RoleSelect {
   type: ComponentTypes.RoleSelect;
   id?: number;
@@ -411,6 +422,7 @@ export interface RoleSelect {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#role-select-role-select-interaction-response-structure */
 export interface RoleSelectInteractionResponse {
   type: ComponentTypes.RoleSelect;
   componentType: ComponentTypes.RoleSelect;
@@ -420,6 +432,7 @@ export interface RoleSelectInteractionResponse {
   values: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/components/reference#mentionable-select-mentionable-select-structure */
 export interface MentionableSelect {
   type: ComponentTypes.MentionableSelect;
   id?: number;
@@ -431,6 +444,7 @@ export interface MentionableSelect {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#mentionable-select-mentionable-select-interaction-response-structure */
 export interface MentionableSelectInteractionResponse {
   type: ComponentTypes.MentionableSelect;
   componentType: ComponentTypes.MentionableSelect;
@@ -440,6 +454,7 @@ export interface MentionableSelectInteractionResponse {
   values: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/components/reference#channel-select-channel-select-structure */
 export interface ChannelSelect {
   type: ComponentTypes.ChannelSelect;
   id?: number;
@@ -452,6 +467,7 @@ export interface ChannelSelect {
   disabled?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#channel-select-channel-select-interaction-response-structure */
 export interface ChannelSelectInteractionResponse {
   type: ComponentTypes.ChannelSelect;
   componentType: ComponentTypes.ChannelSelect;
@@ -461,6 +477,7 @@ export interface ChannelSelectInteractionResponse {
   values: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/components/reference#section-section-structure */
 export interface Section {
   type: ComponentTypes.Section;
   id?: number;
@@ -468,17 +485,20 @@ export interface Section {
   accessory: Button | Thumbnail;
 }
 
+/** https://discord.com/developers/docs/components/reference#text-display-text-display-structure */
 export interface TextDisplay {
   type: ComponentTypes.TextDisplay;
   id?: number;
   content: string;
 }
 
+/** https://discord.com/developers/docs/components/reference#text-display-text-display-interaction-response-structure */
 export interface TextDisplayInteractionResponse {
   type: ComponentTypes.TextDisplay;
   id: number;
 }
 
+/** https://discord.com/developers/docs/components/reference#thumbnail-thumbnail-structure */
 export interface Thumbnail {
   type: ComponentTypes.Thumbnail;
   id?: number;
@@ -487,18 +507,21 @@ export interface Thumbnail {
   spoiler?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-structure */
 export interface MediaGallery {
   type: ComponentTypes.MediaGallery;
   id?: number;
   items: Array<MediaGalleryItem>;
 }
 
+/** https://discord.com/developers/docs/components/reference#media-gallery-media-gallery-item-structure */
 export interface MediaGalleryItem {
   media: UnfurledMediaItem;
   description?: string;
   spoiler?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#file-file-structure */
 export interface File {
   type: ComponentTypes.File;
   id?: number;
@@ -508,6 +531,7 @@ export interface File {
   size: number;
 }
 
+/** https://discord.com/developers/docs/components/reference#separator-separator-structure */
 export interface Separator {
   type: ComponentTypes.Separator;
   id?: number;
@@ -515,6 +539,7 @@ export interface Separator {
   spacing?: SeparatorSpacing;
 }
 
+/** https://discord.com/developers/docs/components/reference#container-container-structure */
 export interface Container {
   type: ComponentTypes.Container;
   id?: number;
@@ -525,6 +550,7 @@ export interface Container {
   spoiler?: boolean;
 }
 
+/** https://discord.com/developers/docs/components/reference#label-label-structure */
 export interface Label {
   type: ComponentTypes.Label;
   id?: number;
@@ -539,6 +565,7 @@ export interface Label {
     | ChannelSelect;
 }
 
+/** https://discord.com/developers/docs/components/reference#label-label-interaction-response-structure */
 export interface LabelInteractionResponse {
   type: ComponentTypes.Label;
   id: number;
@@ -551,6 +578,7 @@ export interface LabelInteractionResponse {
     | ChannelSelectInteractionResponse;
 }
 
+/** https://discord.com/developers/docs/components/reference#unfurled-media-item-unfurled-media-item-structure */
 export interface UnfurledMediaItem {
   url: string;
   proxyURL?: string;

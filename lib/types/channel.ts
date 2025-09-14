@@ -96,14 +96,7 @@ export interface RawForumTag {
   emoji_name?: string;
 }
 
-/** https://discord.com/developers/docs/resources/channel#role-subscription-data-object-role-subscription-data-object-structure */
-export interface RawRoleSubscriptionData {
-  role_subscription_listing_id: snowflake;
-  tier_name: string;
-  total_months_subscribed: number;
-  is_renewal: boolean;
-}
-
+/** https://discord.com/developers/docs/resources/channel#channel-object-channel-structure */
 export interface Channel {
   id: snowflake;
   type: ChannelTypes;
@@ -142,11 +135,13 @@ export interface Channel {
   defaultForumLayout?: ForumLayoutTypes;
 }
 
+/** https://discord.com/developers/docs/resources/channel#followed-channel-object-followed-channel-structure */
 export interface FollowedChannel {
   channelId: snowflake;
   webhookId: snowflake;
 }
 
+/** https://discord.com/developers/docs/resources/channel#overwrite-object-overwrite-structure */
 export interface Overwrite {
   id: snowflake;
   type: number;
@@ -154,6 +149,7 @@ export interface Overwrite {
   deny: string;
 }
 
+/** https://discord.com/developers/docs/resources/channel#thread-metadata-object-thread-metadata-structure */
 export interface ThreadMetadata {
   archived: boolean;
   autoArchiveDuration: number;
@@ -163,6 +159,7 @@ export interface ThreadMetadata {
   createTimestamp?: timestamp | null;
 }
 
+/** https://discord.com/developers/docs/resources/channel#thread-member-object-thread-member-structure */
 export interface ThreadMember {
   id?: snowflake;
   userId?: snowflake;
@@ -171,22 +168,17 @@ export interface ThreadMember {
   member?: GuildMember;
 }
 
+/** https://discord.com/developers/docs/resources/channel#default-reaction-object-default-reaction-structure */
 export interface DefaultReaction {
   emojiId: snowflake | null;
   emojiName: string | null;
 }
 
+/** https://discord.com/developers/docs/resources/channel#forum-tag-object-forum-tag-structure */
 export interface ForumTag {
   id: snowflake;
   name: string;
   moderated: boolean;
   emojiId?: snowflake;
   emojiName?: string;
-}
-
-export interface RoleSubscriptionData {
-  roleSubscriptionListingId: snowflake;
-  tierName: string;
-  totalMonthsSubscribed: number;
-  isRenewal: boolean;
 }

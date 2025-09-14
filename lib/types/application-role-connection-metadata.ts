@@ -11,6 +11,7 @@ export interface RawApplicationRoleConnectionMetadata {
   description_localizations?: LocaleMap | null;
 }
 
+/** https://discord.com/developers/docs/resources/application-role-connection-metadata#application-role-connection-metadata-object-application-role-connection-metadata-structure */
 export interface ApplicationRoleConnectionMetadata {
   type: ApplicationRoleConnectionMetadataType;
   key: string;

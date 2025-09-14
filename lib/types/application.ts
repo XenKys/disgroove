@@ -76,6 +76,7 @@ export interface RawActivityLocation {
   guild_id?: snowflake | null;
 }
 
+/** https://discord.com/developers/docs/resources/application#application-object-application-structure */
 export interface Application {
   id: snowflake;
   name: string;
@@ -113,15 +114,18 @@ export interface Application {
   customInstallURL?: string;
 }
 
+/** https://discord.com/developers/docs/resources/application#application-object-application-integration-type-configuration-object */
 export interface ApplicationIntegrationTypeConfiguration {
   oauth2InstallParams: InstallParams;
 }
 
+/** https://discord.com/developers/docs/resources/application#install-params-object-install-params-structure */
 export interface InstallParams {
   scopes: Array<OAuth2Scopes>;
   permissions: string;
 }
 
+/** https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-instance-object */
 export interface ActivityInstance {
   applicationId: snowflake;
   instanceId: string;
@@ -130,6 +134,7 @@ export interface ActivityInstance {
   users: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/resources/application#get-application-activity-instance-activity-location-object */
 export interface ActivityLocation {
   id: string;
   kind: ActivityLocationKind;
