@@ -59,7 +59,7 @@ export function guildNavigation(
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
 export function email(username: string, domain: string) {
-  return `<${username}:${domain}>`;
+  return `<${username}@${domain}>`;
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
