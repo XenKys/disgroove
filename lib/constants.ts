@@ -1274,8 +1274,8 @@ export enum JSONErrorCodes {
   FailedToCreateStageNeededForStageEvent = 180002,
   MessageWasBlockedByAutomaticModeration = 200000,
   TitleWasBlockedByAutomaticModeration,
-  WebhooksPostedToForumChannelsMustHaveAThreadNameOrThreadId = 220001,
-  WebhooksPostedToForumChannelsCannotHaveBothAThreadNameAndThreadId,
+  WebhooksPostedToForumChannelsMustHaveAThreadNameOrThreadID = 220001,
+  WebhooksPostedToForumChannelsCannotHaveBothAThreadNameAndThreadID,
   WebhooksCanOnlyCreateThreadsInForumChannels,
   WebhookServicesCannotBeUsedInForumChannels,
   MessageBlockedByHarmfulLinksFilter = 240000,
@@ -1301,7 +1301,7 @@ export enum RPCErrorCodes {
   InvalidEvent,
   InvalidChannel,
   InvalidPermissions,
-  InvalidClientId,
+  InvalidClientID,
   InvalidOrigin,
   InvalidToken,
   InvalidUser,
@@ -1314,7 +1314,7 @@ export enum RPCErrorCodes {
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#rpc-rpc-close-event-codes */
 export enum RPCCloseEventCodes {
-  InvalidClientId = 4000,
+  InvalidClientID = 4000,
   InvalidOrigin,
   RateLimited,
   TokenRevoked,
