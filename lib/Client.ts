@@ -1946,6 +1946,7 @@ export class Client extends EventEmitter {
     );
   }
 
+  /** https://discord.com/developers/docs/events/gateway#initiating-a-disconnect */
   disconnect(): void {
     this.shards.forEach((shard) => shard.disconnect());
   }

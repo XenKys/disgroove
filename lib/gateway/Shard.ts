@@ -73,13 +73,15 @@ export class Shard {
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
   }
 
-  /** https://discord.com/developers/docs/topics/gateway#connections */
+  /** https://discord.com/developers/docs/events/gateway#initiating-a-disconnect */
   disconnect(): void {
     if (this.heartbeatInterval) {
       clearInterval(this.heartbeatInterval);
 
       this.heartbeatInterval = null;
     }
+
+    this.ws.close(1000);
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#heartbeat */
