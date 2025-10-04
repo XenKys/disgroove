@@ -566,7 +566,7 @@ export class Client extends EventEmitter {
     for (let i = 0; i < this.shardsCount; i++)
       this.shards.set(i, new Shard(i, this));
 
-    this.shards.forEach((shard) => shard.connect());
+    this.shards.forEach((shard) => shard.connect(false));
   }
 
   /** https://discord.com/developers/docs/resources/entitlement#consume-an-entitlement */

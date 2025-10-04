@@ -1,6 +1,7 @@
 import WebSocket, { type RawData } from "ws";
 import {
   ActivityType,
+  GatewayCloseEventCodes,
   GatewayEvents,
   GatewayOPCodes,
   StatusTypes,
@@ -52,6 +53,7 @@ export class Shard {
   ws: WebSocket;
   sessionId: string | null;
   resumeGatewayURL: string | null;
+  sequence: number | null;
 
   constructor(id: number, client: Client) {
     this.id = id;
@@ -63,11 +65,12 @@ export class Shard {
     );
     this.sessionId = null;
     this.resumeGatewayURL = null;
+    this.sequence = null;
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
-  connect(): void {
-    this.ws.on("open", () => this.onWebSocketOpen());
+  connect(reconnect: boolean): void {
+    this.ws.on("open", () => this.onWebSocketOpen(reconnect));
     this.ws.on("message", (data) => this.onWebSocketMessage(data));
     this.ws.on("error", (err) => this.onWebSocketError(err));
     this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
@@ -81,7 +84,21 @@ export class Shard {
       this.heartbeatInterval = null;
     }
 
-    this.ws.close(1000);
+    this.ws.close(1000, "Session Invalidated - Disconnect");
+  }
+
+  reconnect(): void {
+    if (
+      this.resumeGatewayURL !== null &&
+      this.sessionId !== null &&
+      this.sequence !== null
+    ) {
+      this.ws.close(1000, "Resume Attempt - Reconnect");
+
+      this.ws = new WebSocket(this.resumeGatewayURL, this.client.ws);
+
+      this.connect(true);
+    }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#heartbeat */
@@ -117,13 +134,15 @@ export class Shard {
   }
 
   private onDispatch(packet: RawPayload): void {
+    this.sequence = packet.s;
+
     this.client.emit("dispatch", packet, this.id);
 
     switch (packet.t) {
       case GatewayEvents.Ready:
         {
           this.sessionId = packet.d.session_id;
-          this.resumeGatewayURL = packet.d.resume_gateway_url;
+          this.resumeGatewayURL = `${packet.d.resume_gateway_url}?v=10&encoding=json`;
           this.client.user = Users.userFromRaw(packet.d.user);
           this.client.application = packet.d.application;
 
@@ -725,39 +744,49 @@ export class Shard {
     }
   }
 
-  private onWebSocketOpen(): void {
-    this.identify({
-      token: this.client.token,
-      properties: {
-        os: this.client.properties?.os ?? process.platform,
-        browser: this.client.properties?.browser ?? pkg.name,
-        device: this.client.properties?.device ?? pkg.name,
-      },
-      compress: this.client.compress,
-      largeThreshold: this.client.largeThreshold,
-      shard: [this.id, this.client.shardsCount as number],
-      presence:
-        this.client.presence !== undefined
-          ? {
-              since:
-                this.client.presence.status === StatusTypes.Idle
-                  ? Date.now()
-                  : null,
-              activities: this.client.presence.activities?.map((activity) => ({
-                name:
-                  activity.type === ActivityType.Custom
-                    ? "Custom Status"
-                    : activity.name,
-                type: activity.type,
-                url: activity.url,
-                state: activity.state,
-              })),
-              status: this.client.presence.status ?? StatusTypes.Online,
-              afk: !!this.client.presence.afk,
-            }
-          : undefined,
-      intents: this.client.intents,
-    });
+  private onWebSocketOpen(reconnect: boolean): void {
+    if (reconnect) {
+      this.resume({
+        token: this.client.token,
+        sessionId: this.sessionId!,
+        seq: this.sequence!,
+      });
+    } else {
+      this.identify({
+        token: this.client.token,
+        properties: {
+          os: this.client.properties?.os ?? process.platform,
+          browser: this.client.properties?.browser ?? pkg.name,
+          device: this.client.properties?.device ?? pkg.name,
+        },
+        compress: this.client.compress,
+        largeThreshold: this.client.largeThreshold,
+        shard: [this.id, this.client.shardsCount as number],
+        presence:
+          this.client.presence !== undefined
+            ? {
+                since:
+                  this.client.presence.status === StatusTypes.Idle
+                    ? Date.now()
+                    : null,
+                activities: this.client.presence.activities?.map(
+                  (activity) => ({
+                    name:
+                      activity.type === ActivityType.Custom
+                        ? "Custom Status"
+                        : activity.name,
+                    type: activity.type,
+                    url: activity.url,
+                    state: activity.state,
+                  })
+                ),
+                status: this.client.presence.status ?? StatusTypes.Online,
+                afk: !!this.client.presence.afk,
+              }
+            : undefined,
+        intents: this.client.intents,
+      });
+    }
   }
 
   private onWebSocketMessage(data: RawData): void {
@@ -768,10 +797,29 @@ export class Shard {
         this.onDispatch(packet);
         break;
       case GatewayOPCodes.Reconnect:
-        this.client.emit("reconnect");
+        {
+          this.client.emit("reconnect");
+
+          this.reconnect();
+        }
         break;
       case GatewayOPCodes.InvalidSession:
-        this.client.emit("invalidSession");
+        {
+          this.client.emit("invalidSession");
+
+          if (packet.d) {
+            this.reconnect();
+          } else {
+            this.ws.close(1000, "Invalid Session - Identify required");
+
+            this.ws = new WebSocket(
+              "wss://gateway.discord.gg/?v=10&encoding=json",
+              this.client.ws
+            );
+
+            this.connect(false);
+          }
+        }
         break;
       case GatewayOPCodes.Hello:
         {
@@ -794,9 +842,22 @@ export class Shard {
   }
 
   private onWebSocketClose(code: number, reason: Buffer): void {
-    if (code === 1000) return;
-
-    throw new GatewayError(code, reason.toString());
+    switch (code) {
+      case 1000:
+        break;
+      case GatewayCloseEventCodes.UnknownError:
+      case GatewayCloseEventCodes.UnknownOPCode:
+      case GatewayCloseEventCodes.DecodeError:
+      case GatewayCloseEventCodes.NotAuthenticated:
+      case GatewayCloseEventCodes.AlreadyAuthenticated:
+      case GatewayCloseEventCodes.InvalidSequence:
+      case GatewayCloseEventCodes.RateLimited:
+      case GatewayCloseEventCodes.SessionTimedOut:
+        this.reconnect();
+        break;
+      default:
+        throw new GatewayError(code, reason.toString());
+    }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#request-guild-members */
