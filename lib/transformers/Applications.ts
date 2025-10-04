@@ -21,7 +21,11 @@ export class Applications {
           : undefined,
       verifyKey: application.verify_key,
       team:
-        application.team !== null ? Teams.teamFromRaw(application.team) : null,
+        application.team !== undefined
+          ? application.team !== null
+            ? Teams.teamFromRaw(application.team)
+            : null
+          : undefined,
       guildId: application.guild_id,
       guild:
         application.guild !== undefined
@@ -80,7 +84,11 @@ export class Applications {
           : undefined,
       verify_key: application.verifyKey,
       team:
-        application.team !== null ? Teams.teamToRaw(application.team) : null,
+        application.team !== undefined
+          ? application.team !== null
+            ? Teams.teamToRaw(application.team)
+            : null
+          : undefined,
       guild_id: application.guildId,
       guild:
         application.guild !== undefined

@@ -23,7 +23,7 @@ export interface RawApplication {
   privacy_policy_url?: string;
   owner?: RawUser;
   verify_key: string;
-  team: RawTeam | null;
+  team?: RawTeam | null;
   guild_id?: snowflake;
   guild?: RawGuild;
   primary_sku_id?: snowflake;
@@ -89,7 +89,7 @@ export interface Application {
   privacyPolicyURL?: string;
   owner?: User;
   verifyKey: string;
-  team: Team | null;
+  team?: Team | null;
   guildId?: snowflake;
   guild?: Guild;
   primarySKUId?: snowflake;
