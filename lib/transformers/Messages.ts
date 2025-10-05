@@ -301,7 +301,7 @@ export class Messages {
       activity: message.activity,
       application:
         message.application !== undefined
-          ? Applications.applicationFromRaw(message.application)
+          ? Applications.partialApplicationFromRaw(message.application)
           : undefined,
       applicationId: message.application_id,
       flags: message.flags,
@@ -435,7 +435,7 @@ export class Messages {
       activity: message.activity,
       application:
         message.application !== undefined
-          ? Applications.applicationToRaw(message.application)
+          ? Applications.partialApplicationToRaw(message.application)
           : undefined,
       application_id: message.applicationId,
       flags: message.flags,

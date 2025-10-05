@@ -66,7 +66,7 @@ export interface RawMessage {
   webhook_id?: snowflake;
   type: MessageTypes;
   activity?: RawMessageActivity;
-  application?: RawApplication;
+  application?: Partial<RawApplication>;
   application_id?: snowflake;
   flags?: MessageFlags;
   message_reference?: RawMessageReference;
@@ -309,7 +309,7 @@ export interface Message {
   webhookId?: snowflake;
   type: MessageTypes;
   activity?: MessageActivity;
-  application?: Application;
+  application?: Partial<Application>;
   applicationId?: snowflake;
   flags?: MessageFlags;
   messageReference?: MessageReference;
