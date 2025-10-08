@@ -50,7 +50,7 @@ export class Shard {
   id: number;
   private heartbeatInterval: NodeJS.Timeout | null;
   client: Client;
-  ws: WebSocket;
+  ws: WebSocket | null;
   sessionId: string | null;
   resumeGatewayURL: string | null;
   sequence: number | null;
@@ -61,7 +61,7 @@ export class Shard {
     this.client = client;
     this.ws = new WebSocket(
       "wss://gateway.discord.gg/?v=10&encoding=json",
-      client.ws
+      this.client.ws
     );
     this.sessionId = null;
     this.resumeGatewayURL = null;
@@ -70,6 +70,8 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
   connect(reconnect: boolean): void {
+    if (!this.ws) return;
+
     this.ws.on("open", () => this.onWebSocketOpen(reconnect));
     this.ws.on("message", (data) => this.onWebSocketMessage(data));
     this.ws.on("error", (err) => this.onWebSocketError(err));
@@ -78,22 +80,26 @@ export class Shard {
 
   /** https://discord.com/developers/docs/events/gateway#initiating-a-disconnect */
   disconnect(): void {
+    if (!this.ws) return;
+
     if (this.heartbeatInterval) {
       clearInterval(this.heartbeatInterval);
 
       this.heartbeatInterval = null;
     }
 
-    this.ws.close(1000, "Session Invalidated - Disconnect");
+    if (this.ws.readyState !== WebSocket.CLOSED) {
+      this.ws.removeAllListeners();
+
+      this.ws.close(1000, "Session Invalidated - Disconnect");
+
+      this.ws = null;
+    }
   }
 
   /** https://discord.com/developers/docs/events/gateway#resuming */
   reconnect(): void {
-    if (
-      this.resumeGatewayURL !== null &&
-      this.sessionId !== null &&
-      this.sequence !== null
-    ) {
+    if (this.ws && this.resumeGatewayURL && this.sessionId && this.sequence) {
       this.ws.close(1000, "Resume Attempt - Reconnect");
 
       this.ws = new WebSocket(this.resumeGatewayURL, this.client.ws);
@@ -104,6 +110,8 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#heartbeat */
   heartbeat(lastSequence: number | null): void {
+    if (!this.ws) return;
+
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.Heartbeat,
@@ -114,6 +122,8 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#identify */
   identify(options: Identify): void {
+    if (!this.ws) return;
+
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.Identify,
@@ -810,7 +820,7 @@ export class Shard {
 
           if (packet.d) {
             this.reconnect();
-          } else {
+          } else if (this.ws) {
             this.ws.close(1000, "Invalid Session - Identify required");
 
             this.ws = new WebSocket(
@@ -863,6 +873,8 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#request-guild-members */
   requestGuildMembers(options: RequestGuildMembers): void {
+    if (!this.ws) return;
+
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.RequestGuildMembers,
@@ -880,6 +892,8 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#request-soundboard-sounds */
   requestSoundboardSounds(options: RequestSoundboardSounds): void {
+    if (!this.ws) return;
+
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.RequestSoundboardSounds,
@@ -892,6 +906,8 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#resume */
   resume(options: Resume): void {
+    if (!this.ws) return;
+
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.Resume,
@@ -910,6 +926,8 @@ export class Shard {
       Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
     >
   ): void {
+    if (!this.ws) return;
+
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.PresenceUpdate,
@@ -933,6 +951,8 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   updateVoiceState(options: GatewayVoiceStateUpdate): void {
+    if (!this.ws) return;
+
     this.ws.send(
       JSON.stringify({
         op: GatewayOPCodes.VoiceStateUpdate,
