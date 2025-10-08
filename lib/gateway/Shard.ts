@@ -97,17 +97,6 @@ export class Shard {
     }
   }
 
-  /** https://discord.com/developers/docs/events/gateway#resuming */
-  reconnect(): void {
-    if (this.ws && this.resumeGatewayURL && this.sessionId && this.sequence) {
-      this.ws.close(1000, "Resume Attempt - Reconnect");
-
-      this.ws = new WebSocket(this.resumeGatewayURL, this.client.ws);
-
-      this.connect(true);
-    }
-  }
-
   /** https://discord.com/developers/docs/topics/gateway-events#heartbeat */
   heartbeat(lastSequence: number | null): void {
     if (!this.ws) return;
@@ -868,6 +857,17 @@ export class Shard {
         break;
       default:
         throw new GatewayError(code, reason.toString());
+    }
+  }
+
+  /** https://discord.com/developers/docs/events/gateway#resuming */
+  reconnect(): void {
+    if (this.ws && this.resumeGatewayURL && this.sessionId && this.sequence) {
+      this.ws.close(1000, "Resume Attempt - Reconnect");
+
+      this.ws = new WebSocket(this.resumeGatewayURL, this.client.ws);
+
+      this.connect(true);
     }
   }
 
