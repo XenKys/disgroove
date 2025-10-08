@@ -87,6 +87,7 @@ export class Shard {
     this.ws.close(1000, "Session Invalidated - Disconnect");
   }
 
+  /** https://discord.com/developers/docs/events/gateway#resuming */
   reconnect(): void {
     if (
       this.resumeGatewayURL !== null &&
