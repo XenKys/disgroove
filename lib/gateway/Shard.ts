@@ -70,67 +70,69 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
   connect(reconnect: boolean): void {
-    if (!this.ws) return;
-
-    this.ws.on("open", () => this.onWebSocketOpen(reconnect));
-    this.ws.on("message", (data) => this.onWebSocketMessage(data));
-    this.ws.on("error", (err) => this.onWebSocketError(err));
-    this.ws.on("close", (code, reason) => this.onWebSocketClose(code, reason));
+    if (this.ws) {
+      this.ws.on("open", () => this.onWebSocketOpen(reconnect));
+      this.ws.on("message", (data) => this.onWebSocketMessage(data));
+      this.ws.on("error", (err) => this.onWebSocketError(err));
+      this.ws.on("close", (code, reason) =>
+        this.onWebSocketClose(code, reason)
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/events/gateway#initiating-a-disconnect */
   disconnect(): void {
-    if (!this.ws) return;
+    if (this.ws) {
+      if (this.heartbeatInterval) {
+        clearInterval(this.heartbeatInterval);
 
-    if (this.heartbeatInterval) {
-      clearInterval(this.heartbeatInterval);
+        this.heartbeatInterval = null;
+      }
 
-      this.heartbeatInterval = null;
-    }
+      if (this.ws.readyState !== WebSocket.CLOSED) {
+        this.ws.removeAllListeners();
 
-    if (this.ws.readyState !== WebSocket.CLOSED) {
-      this.ws.removeAllListeners();
+        this.ws.close(1000, "Session Invalidated - Disconnect");
 
-      this.ws.close(1000, "Session Invalidated - Disconnect");
-
-      this.ws = null;
+        this.ws = null;
+      }
     }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#heartbeat */
   heartbeat(lastSequence: number | null): void {
-    if (!this.ws) return;
-
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.Heartbeat,
-        d: lastSequence,
-      })
-    );
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.Heartbeat,
+          d: lastSequence,
+        })
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#identify */
   identify(options: Identify): void {
-    if (!this.ws) return;
-
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.Identify,
-        d: {
-          token: options.token,
-          properties: {
-            os: options.properties.os,
-            browser: options.properties.browser,
-            device: options.properties.device,
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.Identify,
+          d: {
+            token: options.token,
+            properties: {
+              os: options.properties.os,
+              browser: options.properties.browser,
+              device: options.properties.device,
+            },
+            compress: options.compress,
+            large_threshold: options.largeThreshold,
+            shard: options.shard,
+            presence: options.presence,
+            intents: options.intents,
           },
-          compress: options.compress,
-          large_threshold: options.largeThreshold,
-          shard: options.shard,
-          presence: options.presence,
-          intents: options.intents,
-        },
-      })
-    );
+        })
+      );
+    }
   }
 
   private onDispatch(packet: RawPayload): void {
@@ -873,51 +875,51 @@ export class Shard {
 
   /** https://discord.com/developers/docs/topics/gateway-events#request-guild-members */
   requestGuildMembers(options: RequestGuildMembers): void {
-    if (!this.ws) return;
-
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.RequestGuildMembers,
-        d: {
-          guild_id: options.guildId,
-          query: options.query,
-          limit: options.limit,
-          presences: options.presences,
-          user_ids: options.userIds,
-          nonce: options.nonce,
-        },
-      })
-    );
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.RequestGuildMembers,
+          d: {
+            guild_id: options.guildId,
+            query: options.query,
+            limit: options.limit,
+            presences: options.presences,
+            user_ids: options.userIds,
+            nonce: options.nonce,
+          },
+        })
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#request-soundboard-sounds */
   requestSoundboardSounds(options: RequestSoundboardSounds): void {
-    if (!this.ws) return;
-
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.RequestSoundboardSounds,
-        d: {
-          guild_ids: options.guildIds,
-        },
-      })
-    );
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.RequestSoundboardSounds,
+          d: {
+            guild_ids: options.guildIds,
+          },
+        })
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#resume */
   resume(options: Resume): void {
-    if (!this.ws) return;
-
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.Resume,
-        d: {
-          token: options.token,
-          session_id: options.sessionId,
-          seq: options.seq,
-        },
-      })
-    );
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.Resume,
+          d: {
+            token: options.token,
+            session_id: options.sessionId,
+            seq: options.seq,
+          },
+        })
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
@@ -926,43 +928,43 @@ export class Shard {
       Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
     >
   ): void {
-    if (!this.ws) return;
-
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.PresenceUpdate,
-        d: {
-          since: options.status === StatusTypes.Idle ? Date.now() : null,
-          activities: options.activities?.map((activity) => ({
-            name:
-              activity.type === ActivityType.Custom
-                ? "Custom Status"
-                : activity.name,
-            type: activity.type,
-            url: activity.url,
-            state: activity.state,
-          })),
-          status: options.status ?? StatusTypes.Online,
-          afk: !!options.afk,
-        },
-      })
-    );
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.PresenceUpdate,
+          d: {
+            since: options.status === StatusTypes.Idle ? Date.now() : null,
+            activities: options.activities?.map((activity) => ({
+              name:
+                activity.type === ActivityType.Custom
+                  ? "Custom Status"
+                  : activity.name,
+              type: activity.type,
+              url: activity.url,
+              state: activity.state,
+            })),
+            status: options.status ?? StatusTypes.Online,
+            afk: !!options.afk,
+          },
+        })
+      );
+    }
   }
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   updateVoiceState(options: GatewayVoiceStateUpdate): void {
-    if (!this.ws) return;
-
-    this.ws.send(
-      JSON.stringify({
-        op: GatewayOPCodes.VoiceStateUpdate,
-        d: {
-          guild_id: options.guildId,
-          channel_id: options.channelId,
-          self_mute: options.selfMute,
-          self_deaf: options.selfDeaf,
-        },
-      })
-    );
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      this.ws.send(
+        JSON.stringify({
+          op: GatewayOPCodes.VoiceStateUpdate,
+          d: {
+            guild_id: options.guildId,
+            channel_id: options.channelId,
+            self_mute: options.selfMute,
+            self_deaf: options.selfDeaf,
+          },
+        })
+      );
+    }
   }
 }
