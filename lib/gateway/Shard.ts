@@ -858,6 +858,7 @@ export class Shard {
         this.reconnect();
         break;
       default:
+        this.disconnect();
         throw new GatewayError(code, reason.toString());
     }
   }
