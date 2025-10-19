@@ -275,7 +275,8 @@ export interface RawLabel {
     | RawUserSelect
     | RawRoleSelect
     | RawMentionableSelect
-    | RawChannelSelect;
+    | RawChannelSelect
+    | RawFileUpload;
 }
 
 /** https://discord.com/developers/docs/components/reference#label-label-interaction-response-structure */
@@ -288,7 +289,26 @@ export interface RawLabelInteractionResponse {
     | RawUserSelectInteractionResponse
     | RawRoleSelectInteractionResponse
     | RawMentionableSelectInteractionResponse
-    | RawChannelSelectInteractionResponse;
+    | RawChannelSelectInteractionResponse
+    | RawFileUploadInteractionResponse;
+}
+
+/** https://discord.com/developers/docs/components/reference#file-upload-file-upload-structure */
+export interface RawFileUpload {
+  type: ComponentTypes.FileUpload;
+  id?: number;
+  custom_id: string;
+  min_values?: number;
+  max_values?: number;
+  required?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#file-upload-file-upload-interaction-response-structure */
+export interface RawFileUploadInteractionResponse {
+  type: ComponentTypes.FileUpload;
+  id: number;
+  custom_id: string;
+  values: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/components/reference#unfurled-media-item-unfurled-media-item-structure */
@@ -562,7 +582,8 @@ export interface Label {
     | UserSelect
     | RoleSelect
     | MentionableSelect
-    | ChannelSelect;
+    | ChannelSelect
+    | FileUpload;
 }
 
 /** https://discord.com/developers/docs/components/reference#label-label-interaction-response-structure */
@@ -575,7 +596,26 @@ export interface LabelInteractionResponse {
     | UserSelectInteractionResponse
     | RoleSelectInteractionResponse
     | MentionableSelectInteractionResponse
-    | ChannelSelectInteractionResponse;
+    | ChannelSelectInteractionResponse
+    | FileUploadInteractionResponse;
+}
+
+/** https://discord.com/developers/docs/components/reference#file-upload-file-upload-structure */
+export interface FileUpload {
+  type: ComponentTypes.FileUpload;
+  id?: number;
+  customId: string;
+  minValues?: number;
+  maxValues?: number;
+  required?: boolean;
+}
+
+/** https://discord.com/developers/docs/components/reference#file-upload-file-upload-interaction-response-structure */
+export interface FileUploadInteractionResponse {
+  type: ComponentTypes.FileUpload;
+  id: number;
+  customId: string;
+  values: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/components/reference#unfurled-media-item-unfurled-media-item-structure */

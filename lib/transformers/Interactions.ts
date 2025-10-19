@@ -174,6 +174,13 @@ export class Interactions {
                               resolved: this.resolvedDataFromRaw(c.resolved),
                               values: c.values,
                             };
+                          case ComponentTypes.FileUpload:
+                            return {
+                              type: c.type,
+                              id: c.id,
+                              customId: c.custom_id,
+                              values: c.values,
+                            };
                         }
                       }),
                     };
@@ -248,6 +255,14 @@ export class Interactions {
                           resolved: this.resolvedDataFromRaw(
                             component.component.resolved
                           ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.FileUpload:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          customId: component.component.custom_id,
                           values: component.component.values,
                         };
                         break;
@@ -431,6 +446,13 @@ export class Interactions {
                               resolved: this.resolvedDataToRaw(c.resolved),
                               values: c.values,
                             };
+                          case ComponentTypes.FileUpload:
+                            return {
+                              type: c.type,
+                              id: c.id,
+                              custom_id: c.customId,
+                              values: c.values,
+                            };
                         }
                       }),
                     };
@@ -505,6 +527,14 @@ export class Interactions {
                           resolved: this.resolvedDataToRaw(
                             component.component.resolved
                           ),
+                          values: component.component.values,
+                        };
+                        break;
+                      case ComponentTypes.FileUpload:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          custom_id: component.component.customId,
                           values: component.component.values,
                         };
                         break;

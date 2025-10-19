@@ -33,6 +33,7 @@ import type {
   ChannelSelectInteractionResponse,
   Container,
   File,
+  FileUploadInteractionResponse,
   Label,
   LabelInteractionResponse,
   MediaGallery,
@@ -41,6 +42,7 @@ import type {
   RawChannelSelectInteractionResponse,
   RawContainer,
   RawFile,
+  RawFileUploadInteractionResponse,
   RawLabel,
   RawLabelInteractionResponse,
   RawMediaGallery,
@@ -124,6 +126,7 @@ export interface RawModalSubmitData {
           | RawRoleSelectInteractionResponse
           | RawMentionableSelectInteractionResponse
           | RawChannelSelectInteractionResponse
+          | RawFileUploadInteractionResponse
         >;
       }
     | RawTextDisplayInteractionResponse
@@ -275,6 +278,7 @@ export interface ModalSubmitData {
           | RoleSelectInteractionResponse
           | MentionableSelectInteractionResponse
           | ChannelSelectInteractionResponse
+          | FileUploadInteractionResponse
         >;
       }
     | TextDisplayInteractionResponse

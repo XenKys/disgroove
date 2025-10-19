@@ -147,6 +147,7 @@ export enum ComponentTypes {
   Separator,
   Container = 17,
   Label,
+  FileUpload,
 }
 
 /** https://discord.com/developers/docs/components/reference#button-button-styles */

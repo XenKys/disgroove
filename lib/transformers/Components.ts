@@ -34,6 +34,8 @@ import {
   ChannelSelect,
   RawLabel,
   Label,
+  RawFileUpload,
+  FileUpload,
 } from "../types/components";
 
 export class Components {
@@ -227,6 +229,28 @@ export class Components {
     };
   }
 
+  static fileUploadFromRaw(fileUpload: RawFileUpload): FileUpload {
+    return {
+      type: fileUpload.type,
+      id: fileUpload.id,
+      customId: fileUpload.custom_id,
+      minValues: fileUpload.min_values,
+      maxValues: fileUpload.max_values,
+      required: fileUpload.required,
+    };
+  }
+
+  static fileUploadToRaw(fileUpload: FileUpload): RawFileUpload {
+    return {
+      type: fileUpload.type,
+      id: fileUpload.id,
+      custom_id: fileUpload.customId,
+      min_values: fileUpload.minValues,
+      max_values: fileUpload.maxValues,
+      required: fileUpload.required,
+    };
+  }
+
   static labelFromRaw(label: RawLabel): Label {
     let component;
 
@@ -248,6 +272,9 @@ export class Components {
         break;
       case ComponentTypes.ChannelSelect:
         component = Components.channelSelectFromRaw(label.component);
+        break;
+      case ComponentTypes.FileUpload:
+        component = Components.fileUploadFromRaw(label.component);
         break;
     }
 
@@ -281,6 +308,9 @@ export class Components {
         break;
       case ComponentTypes.ChannelSelect:
         component = Components.channelSelectToRaw(label.component);
+        break;
+      case ComponentTypes.FileUpload:
+        component = Components.fileUploadToRaw(label.component);
         break;
     }
 
