@@ -846,6 +846,7 @@ export class Shard {
   private onWebSocketClose(code: number, reason: Buffer): void {
     switch (code) {
       case 1000:
+        this.disconnect();
         break;
       case GatewayCloseEventCodes.UnknownError:
       case GatewayCloseEventCodes.UnknownOPCode:
