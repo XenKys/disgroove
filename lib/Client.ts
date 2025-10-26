@@ -273,7 +273,7 @@ export class Client extends EventEmitter {
   auth: "Bot" | "Bearer";
   shards: Map<number, Shard>;
   rest: RequestManager;
-  guildShardMap: Record<string, number>;
+  guildShardMap: Map<string, number>;
   user: User | null;
   guilds: Map<string, Guild>;
   application: Pick<Application, "id" | "flags"> | null;
@@ -297,7 +297,7 @@ export class Client extends EventEmitter {
     this.auth = options?.auth ?? "Bot";
     this.shards = new Map();
     this.rest = new RequestManager(token, this.auth);
-    this.guildShardMap = {};
+    this.guildShardMap = new Map();
     this.user = null;
     this.guilds = new Map();
     this.application = null;
@@ -4939,7 +4939,7 @@ export class Client extends EventEmitter {
       selfDeaf?: boolean;
     }
   ): void {
-    this.shards.get(this.guildShardMap[guildId])!.updateVoiceState({
+    this.shards.get(this.guildShardMap.get(guildId)!)!.updateVoiceState({
       guildId,
       channelId,
       selfMute: !!options?.selfMute,
@@ -4967,7 +4967,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   leaveVoiceChannel(guildId: snowflake): void {
-    this.shards.get(this.guildShardMap[guildId])!.updateVoiceState({
+    this.shards.get(this.guildShardMap.get(guildId)!)!.updateVoiceState({
       guildId,
       channelId: null,
       selfMute: false,

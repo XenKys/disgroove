@@ -296,7 +296,7 @@ export class Shard {
         break;
       case GatewayEvents.GuildCreate:
         {
-          this.client.guildShardMap[packet.d.id] = this.id;
+          this.client.guildShardMap.set(packet.d.id, this.id);
 
           this.client.guilds.set(packet.d.id, Guilds.guildFromRaw(packet.d));
 
@@ -311,7 +311,7 @@ export class Shard {
         break;
       case GatewayEvents.GuildDelete:
         {
-          delete this.client.guildShardMap[packet.d.id];
+          this.client.guildShardMap.delete(packet.d.id);
 
           this.client.guilds.delete(packet.d.id);
 
