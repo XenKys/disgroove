@@ -3,6 +3,7 @@ const {
   InteractionType,
   InteractionCallbackType,
   BitwisePermissionFlags,
+  hasPermission
 } = require("disgroove");
 const client = new Client("B0t.T0k3N");
 
@@ -35,8 +36,3 @@ client.on("interactionCreate", (interaction) => {
 });
 
 client.connect();
-
-/** https://discord.com/developers/docs/topics/permissions */
-function hasPermission(userPermissions, permission) {
-  return (BigInt(userPermissions) & permission) === permission;
-}
