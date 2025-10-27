@@ -800,7 +800,7 @@ export class Shard {
       case GatewayOPCodes.Hello:
         {
           this.heartbeatInterval = setInterval(
-            () => this.manager.heartbeat(null),
+            () => this.manager.heartbeat(this.sequence),
             packet.d.heartbeat_interval
           );
 
