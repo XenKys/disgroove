@@ -619,9 +619,9 @@ export class Shard {
       case GatewayEvents.MessageReactionAdd:
         this.client.emit("messageReactionAdd", {
           userId: packet.d.user_id,
-          channelId: packet.d.user_id,
-          messageId: packet.d.user_id,
-          guildId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
           member:
             packet.d.member !== undefined
               ? Guilds.guildMemberFromRaw(packet.d.member)
@@ -636,9 +636,9 @@ export class Shard {
       case GatewayEvents.MessageReactionRemove:
         this.client.emit("messageReactionRemove", {
           userId: packet.d.user_id,
-          channelId: packet.d.user_id,
-          messageId: packet.d.user_id,
-          guildId: packet.d.user_id,
+          channelId: packet.d.channel_id,
+          messageId: packet.d.message_id,
+          guildId: packet.d.guild_id,
           emoji: Emojis.emojiFromRaw(packet.d.emoji),
           burst: packet.d.burst,
           type: packet.d.type,
