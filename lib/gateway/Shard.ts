@@ -105,6 +105,7 @@ export class Shard {
         }
 
         this.ws = null;
+        this.manager = new WebSocketManager(this.ws);
       }
 
       if (
