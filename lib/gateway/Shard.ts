@@ -781,7 +781,7 @@ export class Shard {
         {
           this.client.emit("reconnect");
 
-          this.disconnect(true);
+          this.disconnect(this.client.reconnect);
         }
         break;
       case GatewayOPCodes.InvalidSession:
@@ -838,7 +838,7 @@ export class Shard {
       case GatewayCloseEventCodes.InvalidSequence:
       case GatewayCloseEventCodes.RateLimited:
       case GatewayCloseEventCodes.SessionTimedOut:
-        reconnect = true;
+        reconnect = this.client.reconnect;
         break;
       default:
         throw new GatewayError(code, reason.toString());

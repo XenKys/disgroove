@@ -256,6 +256,7 @@ export interface GatewayOptions {
 export interface ClientOptions {
   shardsCount?: number | "auto";
   auth?: "Bot" | "Bearer";
+  reconnect?: boolean
   gateway?: GatewayOptions;
   ws?: WebSocketOptions;
 }
@@ -271,6 +272,7 @@ export class Client extends EventEmitter {
   intents: GatewayIntents | number;
   shardsCount: number | "auto";
   auth: "Bot" | "Bearer";
+  reconnect: boolean
   shards: Map<number, Shard>;
   rest: RequestManager;
   guildShardMap: Map<string, number>;
@@ -295,6 +297,7 @@ export class Client extends EventEmitter {
         : 0;
     this.shardsCount = options?.shardsCount ?? "auto";
     this.auth = options?.auth ?? "Bot";
+    this.reconnect = options?.reconnect ?? true;
     this.shards = new Map();
     this.rest = new RequestManager(token, this.auth);
     this.guildShardMap = new Map();
@@ -1948,7 +1951,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/events/gateway#initiating-a-disconnect */
   disconnect(): void {
-    this.shards.forEach((shard) => shard.disconnect(true));
+    this.shards.forEach((shard) => shard.disconnect(false));
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
