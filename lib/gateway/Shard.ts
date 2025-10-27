@@ -12,14 +12,8 @@ import * as pkg from "../../package.json";
 import type { RawChannel, RawThreadMember } from "../types/channel";
 import type { RawEmoji } from "../types/emoji";
 import type {
-  GatewayPresenceUpdate,
-  GatewayVoiceStateUpdate,
-  Identify,
   RawPayload,
   RawPresenceUpdateEventFields,
-  RequestGuildMembers,
-  RequestSoundboardSounds,
-  Resume,
 } from "../types/gateway-events";
 import type { RawGuildMember } from "../types/guild";
 import type { RawSticker } from "../types/sticker";
@@ -45,12 +39,14 @@ import {
   Voice,
 } from "../transformers";
 import type { RawSoundboardSound } from "../types/soundboard";
+import { WebSocketManager } from "./WebSocketManager";
 
 export class Shard {
   id: number;
   private heartbeatInterval: NodeJS.Timeout | null;
   client: Client;
   ws: WebSocket | null;
+  manager: WebSocketManager;
   sessionId: string | null;
   resumeGatewayURL: string | null;
   sequence: number | null;
@@ -63,15 +59,16 @@ export class Shard {
       "wss://gateway.discord.gg/?v=10&encoding=json",
       this.client.ws
     );
+    this.manager = new WebSocketManager(this.ws);
     this.sessionId = null;
     this.resumeGatewayURL = null;
     this.sequence = null;
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
-  connect(reconnect: boolean): void {
+  connect(): void {
     if (this.ws) {
-      this.ws.on("open", () => this.onWebSocketOpen(reconnect));
+      this.ws.on("open", () => this.onWebSocketOpen());
       this.ws.on("message", (data) => this.onWebSocketMessage(data));
       this.ws.on("error", (err) => this.onWebSocketError(err));
       this.ws.on("close", (code, reason) =>
@@ -81,58 +78,82 @@ export class Shard {
   }
 
   /** https://discord.com/developers/docs/events/gateway#initiating-a-disconnect */
-  disconnect(): void {
+  disconnect(reconnect: boolean): void {
+    if (this.heartbeatInterval) {
+      clearInterval(this.heartbeatInterval);
+
+      this.heartbeatInterval = null;
+    }
+
     if (this.ws) {
-      if (this.heartbeatInterval) {
-        clearInterval(this.heartbeatInterval);
-
-        this.heartbeatInterval = null;
-      }
-
       if (this.ws.readyState !== WebSocket.CLOSED) {
         this.ws.removeAllListeners();
 
-        this.ws.close(1000, "Session Invalidated - Disconnect");
+        if (
+          reconnect &&
+          this.sessionId &&
+          this.sequence &&
+          this.resumeGatewayURL
+        ) {
+          if (this.ws.readyState === WebSocket.OPEN) {
+            this.ws.terminate();
+          } else {
+            this.ws.close(1000, "Resume Attempt - Reconnect");
+          }
+        } else {
+          this.ws.close(1000, "Session Invalidated - Disconnect");
+        }
 
         this.ws = null;
+      }
+
+      if (
+        reconnect &&
+        this.sessionId &&
+        this.sequence &&
+        this.resumeGatewayURL
+      ) {
+        this.ws = new WebSocket(this.resumeGatewayURL, this.client.ws);
+        this.manager = new WebSocketManager(this.ws);
+
+        this.connect();
       }
     }
   }
 
-  /** https://discord.com/developers/docs/topics/gateway-events#heartbeat */
-  heartbeat(lastSequence: number | null): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          op: GatewayOPCodes.Heartbeat,
-          d: lastSequence,
-        })
-      );
-    }
-  }
-
-  /** https://discord.com/developers/docs/topics/gateway-events#identify */
-  identify(options: Identify): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          op: GatewayOPCodes.Identify,
-          d: {
-            token: options.token,
-            properties: {
-              os: options.properties.os,
-              browser: options.properties.browser,
-              device: options.properties.device,
-            },
-            compress: options.compress,
-            large_threshold: options.largeThreshold,
-            shard: options.shard,
-            presence: options.presence,
-            intents: options.intents,
-          },
-        })
-      );
-    }
+  identify(): void {
+    this.manager.identify({
+      token: this.client.token,
+      properties: {
+        os: this.client.properties?.os ?? process.platform,
+        browser: this.client.properties?.browser ?? pkg.name,
+        device: this.client.properties?.device ?? pkg.name,
+      },
+      compress: this.client.compress,
+      largeThreshold: this.client.largeThreshold,
+      shard: [this.id, this.client.shardsCount as number],
+      presence:
+        this.client.presence !== undefined
+          ? {
+              since:
+                this.client.presence.status === StatusTypes.Idle
+                  ? Date.now()
+                  : null,
+              activities: this.client.presence.activities?.map((activity) => ({
+                name:
+                  activity.type === ActivityType.Custom
+                    ? "Custom Status"
+                    : activity.name,
+                type: activity.type,
+                url: activity.url,
+                state: activity.state,
+              })),
+              status: this.client.presence.status ?? StatusTypes.Online,
+              afk: !!this.client.presence.afk,
+            }
+          : undefined,
+      intents: this.client.intents,
+    });
   }
 
   private onDispatch(packet: RawPayload): void {
@@ -746,50 +767,7 @@ export class Shard {
     }
   }
 
-  private onWebSocketOpen(reconnect: boolean): void {
-    if (reconnect) {
-      this.resume({
-        token: this.client.token,
-        sessionId: this.sessionId!,
-        seq: this.sequence!,
-      });
-    } else {
-      this.identify({
-        token: this.client.token,
-        properties: {
-          os: this.client.properties?.os ?? process.platform,
-          browser: this.client.properties?.browser ?? pkg.name,
-          device: this.client.properties?.device ?? pkg.name,
-        },
-        compress: this.client.compress,
-        largeThreshold: this.client.largeThreshold,
-        shard: [this.id, this.client.shardsCount as number],
-        presence:
-          this.client.presence !== undefined
-            ? {
-                since:
-                  this.client.presence.status === StatusTypes.Idle
-                    ? Date.now()
-                    : null,
-                activities: this.client.presence.activities?.map(
-                  (activity) => ({
-                    name:
-                      activity.type === ActivityType.Custom
-                        ? "Custom Status"
-                        : activity.name,
-                    type: activity.type,
-                    url: activity.url,
-                    state: activity.state,
-                  })
-                ),
-                status: this.client.presence.status ?? StatusTypes.Online,
-                afk: !!this.client.presence.afk,
-              }
-            : undefined,
-        intents: this.client.intents,
-      });
-    }
-  }
+  private onWebSocketOpen(): void {}
 
   private onWebSocketMessage(data: RawData): void {
     const packet: RawPayload = JSON.parse(data.toString());
@@ -802,7 +780,7 @@ export class Shard {
         {
           this.client.emit("reconnect");
 
-          this.reconnect();
+          this.disconnect(true);
         }
         break;
       case GatewayOPCodes.InvalidSession:
@@ -810,25 +788,27 @@ export class Shard {
           this.client.emit("invalidSession");
 
           if (packet.d) {
-            this.reconnect();
-          } else if (this.ws) {
-            this.ws.close(1000, "Invalid Session - Identify required");
+            this.resume();
+          } else {
+            this.sequence = null;
+            this.sessionId = null;
 
-            this.ws = new WebSocket(
-              "wss://gateway.discord.gg/?v=10&encoding=json",
-              this.client.ws
-            );
-
-            this.connect(false);
+            this.identify();
           }
         }
         break;
       case GatewayOPCodes.Hello:
         {
           this.heartbeatInterval = setInterval(
-            () => this.heartbeat(null),
+            () => this.manager.heartbeat(null),
             packet.d.heartbeat_interval
           );
+
+          if (this.sessionId && this.sequence && this.resumeGatewayURL) {
+            this.resume();
+          } else {
+            this.identify();
+          }
 
           this.client.emit("hello", packet.d.heartbeat_interval, this.id);
         }
@@ -844,9 +824,10 @@ export class Shard {
   }
 
   private onWebSocketClose(code: number, reason: Buffer): void {
+    let reconnect: boolean = false;
+
     switch (code) {
       case 1000:
-        this.disconnect();
         break;
       case GatewayCloseEventCodes.UnknownError:
       case GatewayCloseEventCodes.UnknownOPCode:
@@ -856,117 +837,20 @@ export class Shard {
       case GatewayCloseEventCodes.InvalidSequence:
       case GatewayCloseEventCodes.RateLimited:
       case GatewayCloseEventCodes.SessionTimedOut:
-        this.reconnect();
+        reconnect = true;
         break;
       default:
-        this.disconnect();
         throw new GatewayError(code, reason.toString());
     }
+
+    this.disconnect(reconnect);
   }
 
-  /** https://discord.com/developers/docs/events/gateway#resuming */
-  reconnect(): void {
-    if (this.ws && this.resumeGatewayURL && this.sessionId && this.sequence) {
-      this.ws.close(1000, "Resume Attempt - Reconnect");
-
-      this.ws = new WebSocket(this.resumeGatewayURL, this.client.ws);
-
-      this.connect(true);
-    }
-  }
-
-  /** https://discord.com/developers/docs/topics/gateway-events#request-guild-members */
-  requestGuildMembers(options: RequestGuildMembers): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          op: GatewayOPCodes.RequestGuildMembers,
-          d: {
-            guild_id: options.guildId,
-            query: options.query,
-            limit: options.limit,
-            presences: options.presences,
-            user_ids: options.userIds,
-            nonce: options.nonce,
-          },
-        })
-      );
-    }
-  }
-
-  /** https://discord.com/developers/docs/topics/gateway-events#request-soundboard-sounds */
-  requestSoundboardSounds(options: RequestSoundboardSounds): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          op: GatewayOPCodes.RequestSoundboardSounds,
-          d: {
-            guild_ids: options.guildIds,
-          },
-        })
-      );
-    }
-  }
-
-  /** https://discord.com/developers/docs/topics/gateway-events#resume */
-  resume(options: Resume): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          op: GatewayOPCodes.Resume,
-          d: {
-            token: options.token,
-            session_id: options.sessionId,
-            seq: options.seq,
-          },
-        })
-      );
-    }
-  }
-
-  /** https://discord.com/developers/docs/topics/gateway-events#update-presence */
-  updatePresence(
-    options: Partial<
-      Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
-    >
-  ): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          op: GatewayOPCodes.PresenceUpdate,
-          d: {
-            since: options.status === StatusTypes.Idle ? Date.now() : null,
-            activities: options.activities?.map((activity) => ({
-              name:
-                activity.type === ActivityType.Custom
-                  ? "Custom Status"
-                  : activity.name,
-              type: activity.type,
-              url: activity.url,
-              state: activity.state,
-            })),
-            status: options.status ?? StatusTypes.Online,
-            afk: !!options.afk,
-          },
-        })
-      );
-    }
-  }
-
-  /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
-  updateVoiceState(options: GatewayVoiceStateUpdate): void {
-    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
-      this.ws.send(
-        JSON.stringify({
-          op: GatewayOPCodes.VoiceStateUpdate,
-          d: {
-            guild_id: options.guildId,
-            channel_id: options.channelId,
-            self_mute: options.selfMute,
-            self_deaf: options.selfDeaf,
-          },
-        })
-      );
-    }
+  resume(): void {
+    this.manager.resume({
+      token: this.client.token,
+      sessionId: this.sessionId!,
+      seq: this.sequence!,
+    });
   }
 }

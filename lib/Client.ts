@@ -566,7 +566,7 @@ export class Client extends EventEmitter {
     for (let i = 0; i < this.shardsCount; i++)
       this.shards.set(i, new Shard(i, this));
 
-    this.shards.forEach((shard) => shard.connect(false));
+    this.shards.forEach((shard) => shard.connect());
   }
 
   /** https://discord.com/developers/docs/resources/entitlement#consume-an-entitlement */
@@ -1948,7 +1948,7 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/events/gateway#initiating-a-disconnect */
   disconnect(): void {
-    this.shards.forEach((shard) => shard.disconnect());
+    this.shards.forEach((shard) => shard.disconnect(true));
   }
 
   /** https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule */
@@ -4939,12 +4939,14 @@ export class Client extends EventEmitter {
       selfDeaf?: boolean;
     }
   ): void {
-    this.shards.get(this.guildShardMap.get(guildId)!)!.updateVoiceState({
-      guildId,
-      channelId,
-      selfMute: !!options?.selfMute,
-      selfDeaf: !!options?.selfDeaf,
-    });
+    this.shards
+      .get(this.guildShardMap.get(guildId)!)!
+      .manager.updateVoiceState({
+        guildId,
+        channelId,
+        selfMute: !!options?.selfMute,
+        selfDeaf: !!options?.selfDeaf,
+      });
   }
 
   /** https://discord.com/developers/docs/resources/user#leave-guild */
@@ -4967,12 +4969,14 @@ export class Client extends EventEmitter {
 
   /** https://discord.com/developers/docs/topics/gateway-events#update-voice-state */
   leaveVoiceChannel(guildId: snowflake): void {
-    this.shards.get(this.guildShardMap.get(guildId)!)!.updateVoiceState({
-      guildId,
-      channelId: null,
-      selfMute: false,
-      selfDeaf: false,
-    });
+    this.shards
+      .get(this.guildShardMap.get(guildId)!)!
+      .manager.updateVoiceState({
+        guildId,
+        channelId: null,
+        selfMute: false,
+        selfDeaf: false,
+      });
   }
 
   /** discord.com/developers/docs/resources/lobby#link-channel-to-lobby */
@@ -5122,7 +5126,7 @@ export class Client extends EventEmitter {
       Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
     >
   ): void {
-    this.shards.forEach((shard) => shard.updatePresence(options));
+    this.shards.forEach((shard) => shard.manager.updatePresence(options));
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
