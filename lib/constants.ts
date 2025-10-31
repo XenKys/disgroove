@@ -1,11 +1,13 @@
 /** https://discord.com/developers/docs/reference#message-formatting-timestamp-styles */
 export enum TimestampStyles {
   ShortTime = "t",
-  LongTime = "T",
+  MediumTime = "T",
   ShortDate = "d",
   LongDate = "D",
-  ShortDateTime = "f",
-  LongDateTime = "F",
+  LongDateShortTime = "f",
+  FullDateShortTime = "F",
+  ShortDateShortTime = "s",
+  ShortDateMediumTime = "S",
   RelativeTime = "R",
 }
 
