@@ -39,14 +39,14 @@ import {
   Voice,
 } from "../transformers";
 import type { RawSoundboardSound } from "../types/soundboard";
-import { WebSocketManager } from "./WebSocketManager";
+import { Transmitter } from "./Transmitter";
 
 export class Shard {
   id: number;
   private heartbeatInterval: NodeJS.Timeout | null;
   client: Client;
   ws: WebSocket | null;
-  manager: WebSocketManager;
+  transmitter: Transmitter;
   sessionId: string | null;
   resumeGatewayURL: string | null;
   sequence: number | null;
@@ -59,7 +59,7 @@ export class Shard {
       "wss://gateway.discord.gg/?v=10&encoding=json",
       this.client.ws
     );
-    this.manager = new WebSocketManager(this.ws);
+    this.transmitter = new Transmitter(this.ws);
     this.sessionId = null;
     this.resumeGatewayURL = null;
     this.sequence = null;
@@ -105,7 +105,7 @@ export class Shard {
         }
 
         this.ws = null;
-        this.manager = new WebSocketManager(this.ws);
+        this.transmitter = new Transmitter(this.ws);
       }
 
       if (
@@ -115,7 +115,7 @@ export class Shard {
         this.resumeGatewayURL
       ) {
         this.ws = new WebSocket(this.resumeGatewayURL, this.client.ws);
-        this.manager = new WebSocketManager(this.ws);
+        this.transmitter = new Transmitter(this.ws);
 
         this.connect();
       }
@@ -123,7 +123,7 @@ export class Shard {
   }
 
   identify(): void {
-    this.manager.identify({
+    this.transmitter.identify({
       token: this.client.token,
       properties: {
         os: this.client.properties?.os ?? process.platform,
@@ -801,7 +801,7 @@ export class Shard {
       case GatewayOPCodes.Hello:
         {
           this.heartbeatInterval = setInterval(
-            () => this.manager.heartbeat(this.sequence),
+            () => this.transmitter.heartbeat(this.sequence),
             packet.d.heartbeat_interval
           );
 
@@ -848,7 +848,7 @@ export class Shard {
   }
 
   resume(): void {
-    this.manager.resume({
+    this.transmitter.resume({
       token: this.client.token,
       sessionId: this.sessionId!,
       seq: this.sequence!,

@@ -9,7 +9,7 @@ import {
   Resume,
 } from "../types/gateway-events";
 
-export class WebSocketManager {
+export class Transmitter {
   private ws: WebSocket | null;
 
   constructor(ws: WebSocket | null) {
