@@ -1,6 +1,6 @@
 import WebSocket from "ws";
 import { ActivityType, GatewayOPCodes, StatusTypes } from "../constants";
-import {
+import type {
   GatewayPresenceUpdate,
   GatewayVoiceStateUpdate,
   Identify,

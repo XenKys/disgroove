@@ -256,7 +256,7 @@ export interface GatewayOptions {
 export interface ClientOptions {
   shardsCount?: number | "auto";
   auth?: "Bot" | "Bearer";
-  reconnect?: boolean
+  reconnect?: boolean;
   gateway?: GatewayOptions;
   ws?: WebSocketOptions;
 }
@@ -272,7 +272,7 @@ export class Client extends EventEmitter {
   intents: GatewayIntents | number;
   shardsCount: number | "auto";
   auth: "Bot" | "Bearer";
-  reconnect: boolean
+  reconnect: boolean;
   shards: Map<number, Shard>;
   rest: RequestManager;
   guildShardMap: Map<string, number>;
@@ -4944,7 +4944,7 @@ export class Client extends EventEmitter {
   ): void {
     this.shards
       .get(this.guildShardMap.get(guildId)!)!
-      .manager.updateVoiceState({
+      .transmitter.updateVoiceState({
         guildId,
         channelId,
         selfMute: !!options?.selfMute,
@@ -4974,7 +4974,7 @@ export class Client extends EventEmitter {
   leaveVoiceChannel(guildId: snowflake): void {
     this.shards
       .get(this.guildShardMap.get(guildId)!)!
-      .manager.updateVoiceState({
+      .transmitter.updateVoiceState({
         guildId,
         channelId: null,
         selfMute: false,
@@ -5129,7 +5129,7 @@ export class Client extends EventEmitter {
       Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
     >
   ): void {
-    this.shards.forEach((shard) => shard.manager.updatePresence(options));
+    this.shards.forEach((shard) => shard.transmitter.updatePresence(options));
   }
 
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
