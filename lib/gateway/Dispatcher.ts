@@ -115,21 +115,25 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
 
     shard.client.user = Users.userFromRaw(data.user);
     shard.client.application = data.application;
-    shard.client.emit("ready");
+    shard.client.emit("ready", shard.id);
   },
   [GatewayEvents.Resumed]: (shard) => {
-    shard.client.emit("resumed");
+    shard.client.emit("resumed", shard.id);
   },
   [GatewayEvents.RateLimited]: (shard, data) => {
     if (data.opcode === GatewayOPCodes.RequestGuildMembers) {
-      shard.client.emit("rateLimited", {
-        opcode: GatewayOPCodes.RequestGuildMembers,
-        retryAfter: data.retry_after,
-        meta: {
-          guildId: data.meta.guild_id,
-          nonce: data.meta.nonce,
+      shard.client.emit(
+        "rateLimited",
+        {
+          opcode: GatewayOPCodes.RequestGuildMembers,
+          retryAfter: data.retry_after,
+          meta: {
+            guildId: data.meta.guild_id,
+            nonce: data.meta.nonce,
+          },
         },
-      });
+        shard.id
+      );
     }
   },
   [GatewayEvents.ApplicationCommandPermissionsUpdate]: (shard, data) => {

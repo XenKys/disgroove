@@ -5271,13 +5271,14 @@ export declare interface Client extends EventEmitter {
 
 export interface ClientEvents {
   dispatch: [packet: RawPayload, shard: number];
-  heartbeatACK: [shard: number];
+  reconnect: [shard: number];
+  invalidSession: [shard: number];
   hello: [interval: number, shard: number];
-  ready: [];
-  resumed: [];
-  rateLimited: [rateLimit: RateLimitedFields];
-  reconnect: [];
-  invalidSession: [];
+  heartbeatACK: [shard: number];
+
+  ready: [shard: number];
+  resumed: [shard: Number];
+  rateLimited: [rateLimit: RateLimitedFields, shard: number];
   applicationCommandPermissionsUpdate: [
     applicationCommandPermissions: GuildApplicationCommandPermissions
   ];

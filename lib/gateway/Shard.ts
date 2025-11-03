@@ -145,14 +145,14 @@ export class Shard {
         break;
       case GatewayOPCodes.Reconnect:
         {
-          this.client.emit("reconnect");
+          this.client.emit("reconnect", this.id);
 
           this.disconnect(this.client.reconnect);
         }
         break;
       case GatewayOPCodes.InvalidSession:
         {
-          this.client.emit("invalidSession");
+          this.client.emit("invalidSession", this.id);
 
           if (packet.d) {
             this.resume();
