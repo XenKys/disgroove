@@ -24,7 +24,7 @@ import type { RawGuildApplicationCommandPermissions } from "../types/application
 import type { RawAuditLogEntry } from "../types/audit-log";
 import type { RawAutoModerationRule } from "../types/auto-moderation";
 import type { RawChannel, RawThreadMember } from "../types/channel";
-import { RawEmoji } from "../types/emoji";
+import type { RawEmoji } from "../types/emoji";
 import type { RawEntitlement } from "../types/entitlements";
 import type {
   RawRateLimitedFields,
@@ -84,7 +84,7 @@ import type { RawInteraction } from "../types/interaction";
 import type { RawMessage } from "../types/message";
 import type { RawSoundboardSound } from "../types/soundboard";
 import type { RawStageInstance } from "../types/stage-instance";
-import { RawSticker } from "../types/sticker";
+import type { RawSticker } from "../types/sticker";
 import type { RawSubscription } from "../types/subscription";
 import type { RawUser } from "../types/user";
 import type { RawVoiceState } from "../types/voice";
