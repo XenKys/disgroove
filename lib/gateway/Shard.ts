@@ -14,28 +14,28 @@ import { Dispatcher } from "./Dispatcher";
 
 export class Shard {
   id: number;
-  private heartbeatInterval: NodeJS.Timeout | null;
   client: Client;
-  ws: WebSocket | null;
-  transmitter: Transmitter;
-  dispatcher: Dispatcher;
+  private heartbeatInterval: NodeJS.Timeout | null;
   sessionId: string | null;
   resumeGatewayURL: string | null;
   sequence: number | null;
+  ws: WebSocket | null;
+  transmitter: Transmitter;
+  dispatcher: Dispatcher;
 
   constructor(id: number, client: Client) {
     this.id = id;
-    this.heartbeatInterval = null;
     this.client = client;
+    this.heartbeatInterval = null;
+    this.sessionId = null;
+    this.resumeGatewayURL = null;
+    this.sequence = null;
     this.ws = new WebSocket(
       "wss://gateway.discord.gg/?v=10&encoding=json",
       this.client.ws
     );
     this.transmitter = new Transmitter(this.ws);
     this.dispatcher = new Dispatcher(this.client);
-    this.sessionId = null;
-    this.resumeGatewayURL = null;
-    this.sequence = null;
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
@@ -78,7 +78,7 @@ export class Shard {
         }
 
         this.ws = null;
-        this.transmitter = new Transmitter(this.ws);
+        this.transmitter = new Transmitter(null);
       }
 
       if (
