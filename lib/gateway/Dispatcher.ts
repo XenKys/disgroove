@@ -1,4 +1,3 @@
-import type { Client } from "../Client";
 import { GatewayEvents, GatewayOPCodes } from "../constants";
 import {
   Users,
@@ -91,46 +90,39 @@ import type { RawVoiceState } from "../types/voice";
 import { Shard } from "./Shard";
 
 export type DispatchHandler<T extends GatewayEvents> = (
-  client: Client,
-  data: DispatchEvents[T],
-  shardId: number
+  shard: Shard,
+  data: DispatchEvents[T]
 ) => void;
 
 export class Dispatcher {
-  private client: Client;
+  private shard: Shard;
 
-  constructor(client: Client) {
-    this.client = client;
+  constructor(shard: Shard) {
+    this.shard = shard;
   }
 
-  dispatch<T extends GatewayEvents>(
-    event: T,
-    data: DispatchEvents[T],
-    shardId: number
-  ) {
+  dispatch<T extends GatewayEvents>(event: T, data: DispatchEvents[T]) {
     const handler = Handlers[event] as DispatchHandler<T> | undefined;
 
-    if (handler) handler(this.client, data, shardId);
+    if (handler) handler(this.shard, data);
   }
 }
 
 export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
-  [GatewayEvents.Ready]: (client, data, shardId) => {
-    const shard = new Shard(shardId, client);
+  [GatewayEvents.Ready]: (shard, data) => {
     shard.sessionId = data.session_id;
     shard.resumeGatewayURL = `${data.resume_gateway_url}?v=10&encoding=json`;
 
-    client.shards.set(shardId, shard);
-    client.user = Users.userFromRaw(data.user);
-    client.application = data.application;
-    client.emit("ready");
+    shard.client.user = Users.userFromRaw(data.user);
+    shard.client.application = data.application;
+    shard.client.emit("ready");
   },
-  [GatewayEvents.Resumed]: (client) => {
-    client.emit("resumed");
+  [GatewayEvents.Resumed]: (shard) => {
+    shard.client.emit("resumed");
   },
-  [GatewayEvents.RateLimited]: (client, data) => {
+  [GatewayEvents.RateLimited]: (shard, data) => {
     if (data.opcode === GatewayOPCodes.RequestGuildMembers) {
-      client.emit("rateLimited", {
+      shard.client.emit("rateLimited", {
         opcode: GatewayOPCodes.RequestGuildMembers,
         retryAfter: data.retry_after,
         meta: {
@@ -140,29 +132,29 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       });
     }
   },
-  [GatewayEvents.ApplicationCommandPermissionsUpdate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.ApplicationCommandPermissionsUpdate]: (shard, data) => {
+    shard.client.emit(
       "applicationCommandPermissionsUpdate",
       Guilds.guildApplicationCommandPermissionsFromRaw(data)
     );
   },
-  [GatewayEvents.AutoModerationRuleCreate]: (client, data) =>
-    client.emit(
+  [GatewayEvents.AutoModerationRuleCreate]: (shard, data) =>
+    shard.client.emit(
       "autoModerationRuleCreate",
       AutoModeration.autoModerationRuleFromRaw(data)
     ),
-  [GatewayEvents.AutoModerationRuleUpdate]: (client, data) =>
-    client.emit(
+  [GatewayEvents.AutoModerationRuleUpdate]: (shard, data) =>
+    shard.client.emit(
       "autoModerationRuleUpdate",
       AutoModeration.autoModerationRuleFromRaw(data)
     ),
-  [GatewayEvents.AutoModerationRuleDelete]: (client, data) =>
-    client.emit(
+  [GatewayEvents.AutoModerationRuleDelete]: (shard, data) =>
+    shard.client.emit(
       "autoModerationRuleDelete",
       AutoModeration.autoModerationRuleFromRaw(data)
     ),
-  [GatewayEvents.AutoModerationActionExecution]: (client, data) =>
-    client.emit("autoModerationActionExecution", {
+  [GatewayEvents.AutoModerationActionExecution]: (shard, data) =>
+    shard.client.emit("autoModerationActionExecution", {
       guildId: data.guild_id,
       action: {
         type: data.action.type,
@@ -182,26 +174,26 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       matchedKeyword: data.matched_keyword,
       matchedContent: data.matched_content,
     }),
-  [GatewayEvents.ChannelCreate]: (client, data) =>
-    client.emit("channelCreate", Channels.channelFromRaw(data)),
-  [GatewayEvents.ChannelUpdate]: (client, data) =>
-    client.emit("channelUpdate", Channels.channelFromRaw(data)),
-  [GatewayEvents.ChannelDelete]: (client, data) =>
-    client.emit("channelDelete", Channels.channelFromRaw(data)),
-  [GatewayEvents.ChannelPinsUpdate]: (client, data) =>
-    client.emit("channelPinsUpdate", {
+  [GatewayEvents.ChannelCreate]: (shard, data) =>
+    shard.client.emit("channelCreate", Channels.channelFromRaw(data)),
+  [GatewayEvents.ChannelUpdate]: (shard, data) =>
+    shard.client.emit("channelUpdate", Channels.channelFromRaw(data)),
+  [GatewayEvents.ChannelDelete]: (shard, data) =>
+    shard.client.emit("channelDelete", Channels.channelFromRaw(data)),
+  [GatewayEvents.ChannelPinsUpdate]: (shard, data) =>
+    shard.client.emit("channelPinsUpdate", {
       guildId: data.guild_id,
       channelId: data.channel_id,
       lastPinTimestamp: data.last_pin_timestamp,
     }),
-  [GatewayEvents.ThreadCreate]: (client, data) =>
-    client.emit("threadCreate", Channels.channelFromRaw(data)),
-  [GatewayEvents.ThreadUpdate]: (client, data) =>
-    client.emit("threadUpdate", Channels.channelFromRaw(data)),
-  [GatewayEvents.ThreadDelete]: (client, data) =>
-    client.emit("threadDelete", Channels.channelFromRaw(data)),
-  [GatewayEvents.ThreadListSync]: (client, data) =>
-    client.emit("threadListSync", {
+  [GatewayEvents.ThreadCreate]: (shard, data) =>
+    shard.client.emit("threadCreate", Channels.channelFromRaw(data)),
+  [GatewayEvents.ThreadUpdate]: (shard, data) =>
+    shard.client.emit("threadUpdate", Channels.channelFromRaw(data)),
+  [GatewayEvents.ThreadDelete]: (shard, data) =>
+    shard.client.emit("threadDelete", Channels.channelFromRaw(data)),
+  [GatewayEvents.ThreadListSync]: (shard, data) =>
+    shard.client.emit("threadListSync", {
       guildId: data.guild_id,
       channelIds: data.channel_ids,
       threads: data.threads.map((thread) => Channels.channelFromRaw(thread)),
@@ -209,8 +201,8 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
         Channels.threadMemberFromRaw(threadMember)
       ),
     }),
-  [GatewayEvents.ThreadMemberUpdate]: (client, data) => {
-    client.emit("threadMemberUpdate", {
+  [GatewayEvents.ThreadMemberUpdate]: (shard, data) => {
+    shard.client.emit("threadMemberUpdate", {
       id: data.id,
       userId: data.user_id,
       joinTimestamp: data.join_timestamp,
@@ -223,8 +215,8 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.ThreadMembersUpdate]: (client, data) => {
-    client.emit("threadMembersUpdate", {
+  [GatewayEvents.ThreadMembersUpdate]: (shard, data) => {
+    shard.client.emit("threadMembersUpdate", {
       id: data.id,
       guildId: data.guild_id,
       memberCount: data.member_count,
@@ -234,26 +226,35 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       removedMemberIds: data.removed_member_ids,
     });
   },
-  [GatewayEvents.EntitlementCreate]: (client, data) => {
-    client.emit("entitlementCreate", Entitlements.entitlementFromRaw(data));
+  [GatewayEvents.EntitlementCreate]: (shard, data) => {
+    shard.client.emit(
+      "entitlementCreate",
+      Entitlements.entitlementFromRaw(data)
+    );
   },
-  [GatewayEvents.EntitlementUpdate]: (client, data) => {
-    client.emit("entitlementUpdate", Entitlements.entitlementFromRaw(data));
+  [GatewayEvents.EntitlementUpdate]: (shard, data) => {
+    shard.client.emit(
+      "entitlementUpdate",
+      Entitlements.entitlementFromRaw(data)
+    );
   },
-  [GatewayEvents.EntitlementDelete]: (client, data) => {
-    client.emit("entitlementDelete", Entitlements.entitlementFromRaw(data));
+  [GatewayEvents.EntitlementDelete]: (shard, data) => {
+    shard.client.emit(
+      "entitlementDelete",
+      Entitlements.entitlementFromRaw(data)
+    );
   },
-  [GatewayEvents.GuildCreate]: (client, data, shardId) => {
-    client.guildShardMap.set(data.id, shardId);
+  [GatewayEvents.GuildCreate]: (shard, data) => {
+    shard.client.guildShardMap.set(data.id, shard.id);
 
     if (data.unavailable) {
       const unavailableGuild = data as RawUnavailableGuild;
 
-      client.emit("guildCreate", unavailableGuild);
+      shard.client.emit("guildCreate", unavailableGuild);
     } else {
       const guild = data as RawGuild & RawGuildCreateEventExtraFields;
 
-      client.emit("guildCreate", {
+      shard.client.emit("guildCreate", {
         ...Guilds.guildFromRaw(guild),
 
         joinedAt: guild.joined_at,
@@ -287,46 +288,46 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
         ),
       });
 
-      client.guilds.set(data.id, Guilds.guildFromRaw(<RawGuild>data));
+      shard.client.guilds.set(data.id, Guilds.guildFromRaw(<RawGuild>data));
     }
   },
-  [GatewayEvents.GuildUpdate]: (client, data) => {
-    client.guilds.set(data.id, Guilds.guildFromRaw(data));
-    client.emit("guildUpdate", Guilds.guildFromRaw(data));
+  [GatewayEvents.GuildUpdate]: (shard, data) => {
+    shard.client.guilds.set(data.id, Guilds.guildFromRaw(data));
+    shard.client.emit("guildUpdate", Guilds.guildFromRaw(data));
   },
-  [GatewayEvents.GuildDelete]: (client, data) => {
-    client.guildShardMap.delete(data.id);
-    client.guilds.delete(data.id);
-    client.emit("guildDelete", data);
+  [GatewayEvents.GuildDelete]: (shard, data) => {
+    shard.client.guildShardMap.delete(data.id);
+    shard.client.guilds.delete(data.id);
+    shard.client.emit("guildDelete", data);
   },
-  [GatewayEvents.GuildAuditLogEntryCreate]: (client, data) => {
-    client.emit("guildAuditLogEntryCreate", {
+  [GatewayEvents.GuildAuditLogEntryCreate]: (shard, data) => {
+    shard.client.emit("guildAuditLogEntryCreate", {
       ...AuditLogs.auditLogEntryFromRaw(data),
 
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.GuildBanAdd]: (client, data) => {
-    client.emit("guildBanAdd", {
+  [GatewayEvents.GuildBanAdd]: (shard, data) => {
+    shard.client.emit("guildBanAdd", {
       guildId: data.guild_id,
       user: Users.userFromRaw(data.user),
     });
   },
-  [GatewayEvents.GuildBanRemove]: (client, data) => {
-    client.emit("guildBanRemove", {
+  [GatewayEvents.GuildBanRemove]: (shard, data) => {
+    shard.client.emit("guildBanRemove", {
       guildId: data.guild_id,
       user: Users.userFromRaw(data.user),
     });
   },
-  [GatewayEvents.GuildEmojisUpdate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildEmojisUpdate]: (shard, data) => {
+    shard.client.emit(
       "guildEmojisUpdate",
       data.emojis.map((emoji: RawEmoji) => Emojis.emojiFromRaw(emoji)),
       data.guild_id
     );
   },
-  [GatewayEvents.GuildStickersUpdate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildStickersUpdate]: (shard, data) => {
+    shard.client.emit(
       "guildStickersUpdate",
       data.stickers.map((sticker: RawSticker) =>
         Stickers.stickerFromRaw(sticker)
@@ -334,24 +335,24 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       data.guild_id
     );
   },
-  [GatewayEvents.GuildIntegrationsUpdate]: (client, data) => {
-    client.emit("guildIntegrationsUpdate", data.guild_id);
+  [GatewayEvents.GuildIntegrationsUpdate]: (shard, data) => {
+    shard.client.emit("guildIntegrationsUpdate", data.guild_id);
   },
-  [GatewayEvents.GuildMemberAdd]: (client, data) => {
-    client.emit("guildMemberAdd", {
+  [GatewayEvents.GuildMemberAdd]: (shard, data) => {
+    shard.client.emit("guildMemberAdd", {
       ...Guilds.guildMemberFromRaw(data),
 
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.GuildMemberRemove]: (client, data) => {
-    client.emit("guildMemberRemove", {
+  [GatewayEvents.GuildMemberRemove]: (shard, data) => {
+    shard.client.emit("guildMemberRemove", {
       guildId: data.guild_id,
       user: Users.userFromRaw(data.user),
     });
   },
-  [GatewayEvents.GuildMemberUpdate]: (client, data) => {
-    client.emit("guildMemberUpdate", {
+  [GatewayEvents.GuildMemberUpdate]: (shard, data) => {
+    shard.client.emit("guildMemberUpdate", {
       guildId: data.guild_id,
       roles: data.roles,
       user: Users.userFromRaw(data.user),
@@ -376,8 +377,8 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
           : undefined,
     });
   },
-  [GatewayEvents.GuildMembersChunk]: (client, data) => {
-    client.emit("guildMembersChunk", {
+  [GatewayEvents.GuildMembersChunk]: (shard, data) => {
+    shard.client.emit("guildMembersChunk", {
       guildId: data.guild_id,
       members: data.members.map((guildMember: RawGuildMember) =>
         Guilds.guildMemberFromRaw(guildMember)
@@ -391,69 +392,77 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       nonce: data.nonce,
     });
   },
-  [GatewayEvents.GuildRoleCreate]: (client, data) => {
-    client.emit("guildRoleCreate", Roles.roleFromRaw(data.role), data.guild_id);
+  [GatewayEvents.GuildRoleCreate]: (shard, data) => {
+    shard.client.emit(
+      "guildRoleCreate",
+      Roles.roleFromRaw(data.role),
+      data.guild_id
+    );
   },
-  [GatewayEvents.GuildRoleUpdate]: (client, data) => {
-    client.emit("guildRoleUpdate", Roles.roleFromRaw(data.role), data.guild_id);
+  [GatewayEvents.GuildRoleUpdate]: (shard, data) => {
+    shard.client.emit(
+      "guildRoleUpdate",
+      Roles.roleFromRaw(data.role),
+      data.guild_id
+    );
   },
-  [GatewayEvents.GuildRoleDelete]: (client, data) => {
-    client.emit("guildRoleDelete", data.role_id, data.guild_id);
+  [GatewayEvents.GuildRoleDelete]: (shard, data) => {
+    shard.client.emit("guildRoleDelete", data.role_id, data.guild_id);
   },
-  [GatewayEvents.GuildScheduledEventCreate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildScheduledEventCreate]: (shard, data) => {
+    shard.client.emit(
       "guildScheduledEventCreate",
       GuildScheduledEvents.guildScheduledEventFromRaw(data)
     );
   },
-  [GatewayEvents.GuildScheduledEventUpdate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildScheduledEventUpdate]: (shard, data) => {
+    shard.client.emit(
       "guildScheduledEventUpdate",
       GuildScheduledEvents.guildScheduledEventFromRaw(data)
     );
   },
-  [GatewayEvents.GuildScheduledEventDelete]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildScheduledEventDelete]: (shard, data) => {
+    shard.client.emit(
       "guildScheduledEventDelete",
       GuildScheduledEvents.guildScheduledEventFromRaw(data)
     );
   },
-  [GatewayEvents.GuildScheduledEventUserAdd]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildScheduledEventUserAdd]: (shard, data) => {
+    shard.client.emit(
       "guildScheduledEventUserAdd",
       data.user_id,
       data.guild_scheduled_event_id,
       data.guild_id
     );
   },
-  [GatewayEvents.GuildScheduledEventUserRemove]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildScheduledEventUserRemove]: (shard, data) => {
+    shard.client.emit(
       "guildScheduledEventUserRemove",
       data.user_id,
       data.guild_scheduled_event_id,
       data.guild_id
     );
   },
-  [GatewayEvents.GuildSoundboardSoundCreate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildSoundboardSoundCreate]: (shard, data) => {
+    shard.client.emit(
       "guildSoundboardSoundCreate",
       Soundboards.soundboardSoundFromRaw(data)
     );
   },
-  [GatewayEvents.GuildSoundboardSoundUpdate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildSoundboardSoundUpdate]: (shard, data) => {
+    shard.client.emit(
       "guildSoundboardSoundUpdate",
       Soundboards.soundboardSoundFromRaw(data)
     );
   },
-  [GatewayEvents.GuildSoundboardSoundDelete]: (client, data) => {
-    client.emit("guildSoundboardSoundDelete", {
+  [GatewayEvents.GuildSoundboardSoundDelete]: (shard, data) => {
+    shard.client.emit("guildSoundboardSoundDelete", {
       soundId: data.sound_id,
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.GuildSoundboardSoundsUpdate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.GuildSoundboardSoundsUpdate]: (shard, data) => {
+    shard.client.emit(
       "guildSoundboardSoundsUpdate",
       data.soundboard_sounds.map((sound: RawSoundboardSound) =>
         Soundboards.soundboardSoundFromRaw(sound)
@@ -461,8 +470,8 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       data.guild_id
     );
   },
-  [GatewayEvents.SoundboardSounds]: (client, data) => {
-    client.emit(
+  [GatewayEvents.SoundboardSounds]: (shard, data) => {
+    shard.client.emit(
       "soundboardSounds",
       data.soundboard_sounds.map((sound: RawSoundboardSound) =>
         Soundboards.soundboardSoundFromRaw(sound)
@@ -470,32 +479,35 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       data.guild_id
     );
   },
-  [GatewayEvents.IntegrationCreate]: (client, data) => {
-    client.emit("integrationCreate", {
+  [GatewayEvents.IntegrationCreate]: (shard, data) => {
+    shard.client.emit("integrationCreate", {
       ...Guilds.integrationFromRaw(data),
 
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.IntegrationUpdate]: (client, data) => {
-    client.emit("integrationUpdate", {
+  [GatewayEvents.IntegrationUpdate]: (shard, data) => {
+    shard.client.emit("integrationUpdate", {
       ...Guilds.integrationFromRaw(data),
 
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.IntegrationDelete]: (client, data) => {
-    client.emit("integrationDelete", {
+  [GatewayEvents.IntegrationDelete]: (shard, data) => {
+    shard.client.emit("integrationDelete", {
       id: data.id,
       guildId: data.guild_id,
       applicationId: data.application_id,
     });
   },
-  [GatewayEvents.InteractionCreate]: (client, data) => {
-    client.emit("interactionCreate", Interactions.interactionFromRaw(data));
+  [GatewayEvents.InteractionCreate]: (shard, data) => {
+    shard.client.emit(
+      "interactionCreate",
+      Interactions.interactionFromRaw(data)
+    );
   },
-  [GatewayEvents.InviteCreate]: (client, data) => {
-    client.emit("inviteCreate", {
+  [GatewayEvents.InviteCreate]: (shard, data) => {
+    shard.client.emit("inviteCreate", {
       channelId: data.channel_id,
       code: data.code,
       createdAt: data.created_at,
@@ -520,15 +532,15 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       expiresAt: data.expires_at,
     });
   },
-  [GatewayEvents.InviteDelete]: (client, data) => {
-    client.emit("inviteDelete", {
+  [GatewayEvents.InviteDelete]: (shard, data) => {
+    shard.client.emit("inviteDelete", {
       channelId: data.channel_id,
       guildId: data.guild_id,
       code: data.code,
     });
   },
-  [GatewayEvents.MessageCreate]: (client, data) => {
-    client.emit("messageCreate", {
+  [GatewayEvents.MessageCreate]: (shard, data) => {
+    shard.client.emit("messageCreate", {
       ...Messages.messageFromRaw(data),
 
       guildId: data.guild_id,
@@ -541,25 +553,25 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       ),
     });
   },
-  [GatewayEvents.MessageUpdate]: (client, data) => {
-    client.emit("messageUpdate", Messages.messageFromRaw(data));
+  [GatewayEvents.MessageUpdate]: (shard, data) => {
+    shard.client.emit("messageUpdate", Messages.messageFromRaw(data));
   },
-  [GatewayEvents.MessageDelete]: (client, data) => {
-    client.emit("messageDelete", {
+  [GatewayEvents.MessageDelete]: (shard, data) => {
+    shard.client.emit("messageDelete", {
       id: data.id,
       channelId: data.channel_id,
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.MessageDeleteBulk]: (client, data) => {
-    client.emit("messageDeleteBulk", {
+  [GatewayEvents.MessageDeleteBulk]: (shard, data) => {
+    shard.client.emit("messageDeleteBulk", {
       ids: data.ids,
       channelId: data.channel_id,
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.MessageReactionAdd]: (client, data) => {
-    client.emit("messageReactionAdd", {
+  [GatewayEvents.MessageReactionAdd]: (shard, data) => {
+    shard.client.emit("messageReactionAdd", {
       userId: data.user_id,
       channelId: data.channel_id,
       messageId: data.message_id,
@@ -575,8 +587,8 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       type: data.type,
     });
   },
-  [GatewayEvents.MessageReactionRemove]: (client, data) => {
-    client.emit("messageReactionRemove", {
+  [GatewayEvents.MessageReactionRemove]: (shard, data) => {
+    shard.client.emit("messageReactionRemove", {
       userId: data.user_id,
       channelId: data.channel_id,
       messageId: data.message_id,
@@ -586,44 +598,44 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       type: data.type,
     });
   },
-  [GatewayEvents.MessageReactionRemoveAll]: (client, data) => {
-    client.emit("messageReactionRemoveAll", {
+  [GatewayEvents.MessageReactionRemoveAll]: (shard, data) => {
+    shard.client.emit("messageReactionRemoveAll", {
       channelId: data.channel_id,
       messageId: data.message_id,
       guildId: data.guild_id,
     });
   },
-  [GatewayEvents.MessageReactionRemoveEmoji]: (client, data) => {
-    client.emit("messageReactionRemoveEmoji", {
+  [GatewayEvents.MessageReactionRemoveEmoji]: (shard, data) => {
+    shard.client.emit("messageReactionRemoveEmoji", {
       channelId: data.channel_id,
       guildId: data.guild_id,
       messageId: data.message_id,
       emoji: Emojis.emojiFromRaw(data.emoji),
     });
   },
-  [GatewayEvents.PresenceUpdate]: (client, data) => {
-    client.emit("presenceUpdate", Presences.presenceFromRaw(data));
+  [GatewayEvents.PresenceUpdate]: (shard, data) => {
+    shard.client.emit("presenceUpdate", Presences.presenceFromRaw(data));
   },
-  [GatewayEvents.StageInstanceCreate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.StageInstanceCreate]: (shard, data) => {
+    shard.client.emit(
       "stageInstanceCreate",
       StageInstances.stageInstanceFromRaw(data)
     );
   },
-  [GatewayEvents.StageInstanceUpdate]: (client, data) => {
-    client.emit(
+  [GatewayEvents.StageInstanceUpdate]: (shard, data) => {
+    shard.client.emit(
       "stageInstanceUpdate",
       StageInstances.stageInstanceFromRaw(data)
     );
   },
-  [GatewayEvents.StageInstanceDelete]: (client, data) => {
-    client.emit(
+  [GatewayEvents.StageInstanceDelete]: (shard, data) => {
+    shard.client.emit(
       "stageInstanceDelete",
       StageInstances.stageInstanceFromRaw(data)
     );
   },
-  [GatewayEvents.TypingStart]: (client, data) => {
-    client.emit("typingStart", {
+  [GatewayEvents.TypingStart]: (shard, data) => {
+    shard.client.emit("typingStart", {
       channelId: data.channel_id,
       guildId: data.guild_id,
       userId: data.user_id,
@@ -634,11 +646,11 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
           : undefined,
     });
   },
-  [GatewayEvents.UserUpdate]: (client, data) => {
-    client.emit("userUpdate", Users.userFromRaw(data));
+  [GatewayEvents.UserUpdate]: (shard, data) => {
+    shard.client.emit("userUpdate", Users.userFromRaw(data));
   },
-  [GatewayEvents.VoiceChannelEffectSend]: (client, data) => {
-    client.emit("voiceChannelEffectSend", {
+  [GatewayEvents.VoiceChannelEffectSend]: (shard, data) => {
+    shard.client.emit("voiceChannelEffectSend", {
       channelId: data.channel_id,
       guildId: data.guild_id,
       userId: data.user_id,
@@ -654,32 +666,41 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       soundVolume: data.sound_volume,
     });
   },
-  [GatewayEvents.VoiceStateUpdate]: (client, data) => {
-    client.emit("voiceStateUpdate", Voice.voiceStateFromRaw(data));
+  [GatewayEvents.VoiceStateUpdate]: (shard, data) => {
+    shard.client.emit("voiceStateUpdate", Voice.voiceStateFromRaw(data));
   },
-  [GatewayEvents.VoiceServerUpdate]: (client, data) => {
+  [GatewayEvents.VoiceServerUpdate]: (shard, data) => {
     {
-      client.emit("voiceServerUpdate", {
+      shard.client.emit("voiceServerUpdate", {
         token: data.token,
         guildId: data.guild_id,
         endpoint: data.endpoint,
       });
     }
   },
-  [GatewayEvents.WebhooksUpdate]: (client, data) => {
-    client.emit("webhooksUpdate", data.channel_id, data.guild_id);
+  [GatewayEvents.WebhooksUpdate]: (shard, data) => {
+    shard.client.emit("webhooksUpdate", data.channel_id, data.guild_id);
   },
-  [GatewayEvents.SubscriptionCreate]: (client, data) => {
-    client.emit("subscriptionCreate", Subscriptions.subscriptionFromRaw(data));
+  [GatewayEvents.SubscriptionCreate]: (shard, data) => {
+    shard.client.emit(
+      "subscriptionCreate",
+      Subscriptions.subscriptionFromRaw(data)
+    );
   },
-  [GatewayEvents.SubscriptionUpdate]: (client, data) => {
-    client.emit("subscriptionUpdate", Subscriptions.subscriptionFromRaw(data));
+  [GatewayEvents.SubscriptionUpdate]: (shard, data) => {
+    shard.client.emit(
+      "subscriptionUpdate",
+      Subscriptions.subscriptionFromRaw(data)
+    );
   },
-  [GatewayEvents.SubscriptionDelete]: (client, data) => {
-    client.emit("subscriptionDelete", Subscriptions.subscriptionFromRaw(data));
+  [GatewayEvents.SubscriptionDelete]: (shard, data) => {
+    shard.client.emit(
+      "subscriptionDelete",
+      Subscriptions.subscriptionFromRaw(data)
+    );
   },
-  [GatewayEvents.MessagePollVoteAdd]: (client, data) => {
-    client.emit("messagePollVoteAdd", {
+  [GatewayEvents.MessagePollVoteAdd]: (shard, data) => {
+    shard.client.emit("messagePollVoteAdd", {
       userId: data.user_id,
       channelId: data.channel_id,
       messageId: data.message_id,
@@ -687,8 +708,8 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       answerId: data.answer_id,
     });
   },
-  [GatewayEvents.MessagePollVoteRemove]: (client, data) => {
-    client.emit("messagePollVoteRemove", {
+  [GatewayEvents.MessagePollVoteRemove]: (shard, data) => {
+    shard.client.emit("messagePollVoteRemove", {
       userId: data.user_id,
       channelId: data.channel_id,
       messageId: data.message_id,

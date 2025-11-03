@@ -35,7 +35,7 @@ export class Shard {
       this.client.ws
     );
     this.transmitter = new Transmitter(this.ws);
-    this.dispatcher = new Dispatcher(this.client);
+    this.dispatcher = new Dispatcher(this);
   }
 
   /** https://discord.com/developers/docs/topics/gateway#connections */
@@ -141,7 +141,7 @@ export class Shard {
 
         this.client.emit("dispatch", packet, this.id);
 
-        this.dispatcher.dispatch(packet.t!, packet.d, this.id);
+        this.dispatcher.dispatch(packet.t!, packet.d);
         break;
       case GatewayOPCodes.Reconnect:
         {
