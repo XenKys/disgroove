@@ -24,13 +24,20 @@ import type {
 } from "./channel";
 import type { snowflake, timestamp } from "./common";
 import type { RawEmoji, Emoji } from "./emoji";
-import type { RawGuildMember, GuildMember } from "./guild";
+import type {
+  RawGuildMember,
+  GuildMember,
+  RawUnavailableGuild,
+  UnavailableGuild,
+} from "./guild";
 import type {
   RawGuildScheduledEvent,
   GuildScheduledEvent,
 } from "./guild-scheduled-event";
+import { RawRole, Role } from "./role";
 import type { RawSoundboardSound, SoundboardSound } from "./soundboard";
 import type { RawStageInstance, StageInstance } from "./stage-instance";
+import { RawSticker, Sticker } from "./sticker";
 import type {
   RawUser,
   RawAvatarDecorationData,
@@ -105,6 +112,17 @@ export interface RawGatewayVoiceStateUpdate {
   channel_id: snowflake | null;
   self_mute: boolean;
   self_deaf: boolean;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#ready-ready-event-fields */
+export interface RawReadyEventFields {
+  v: number;
+  user: RawUser;
+  guilds: Array<RawUnavailableGuild>;
+  session_id: string;
+  resume_gateway_url: string;
+  shard?: [number, number];
+  application: Pick<RawApplication, "id" | "flags">;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
@@ -184,6 +202,18 @@ export interface RawGuildBanRemoveEventFields {
   user: RawUser;
 }
 
+/** https://discord.com/developers/docs/events/gateway-events#guild-emojis-update */
+export interface RawGuildEmojisUpdateEventFields {
+  guild_id: snowflake;
+  emojis: Array<RawEmoji>;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-stickers-update */
+export interface RawGuildStickersUpdateEventFields {
+  guild_id: snowflake;
+  stickers: Array<RawSticker>;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#guild-integrations-update-guild-integrations-update-event-fields */
 export interface RawGuildIntegrationsUpdateEventFields {
   guild_id: snowflake;
@@ -229,10 +259,54 @@ export interface RawGuildMembersChunkEventFields {
   nonce?: string;
 }
 
+/** https://discord.com/developers/docs/events/gateway-events#guild-role-create-guild-role-create-event-fields */
+export interface RawGuildRoleCreateEventFields {
+  guild_id: snowflake;
+  role: RawRole;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-role-update-guild-role-update-event-fields */
+export interface RawGuildRoleUpdateEventFields {
+  guild_id: snowflake;
+  role: RawRole;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-role-delete-guild-role-delete-event-fields */
+export interface RawGuildRoleDeleteEventFields {
+  guild_id: snowflake;
+  role_id: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-scheduled-event-user-add-guild-scheduled-event-user-add-event-fields */
+export interface RawGuildScheduledEventUserAddEventFields {
+  guild_scheduled_event_id: snowflake;
+  user_id: snowflake;
+  guild_id: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-scheduled-event-user-remove-guild-scheduled-event-user-remove-event-fields */
+export interface RawGuildScheduledEventUserRemoveEventFields {
+  guild_scheduled_event_id: snowflake;
+  user_id: snowflake;
+  guild_id: snowflake;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sound-delete-guild-soundboard-sound-delete-event-fields */
 export interface RawGuildSoundboardSoundDeleteEventFields {
-  soundId: snowflake;
-  guildId: snowflake;
+  sound_id: snowflake;
+  guild_id: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sounds-update-guild-soundboard-sounds-update-event-fields */
+export interface RawGuildSoundboardSoundsUpdateEventFields {
+  soundboard_sounds: Array<RawSoundboardSound>;
+  guild_id: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#soundboard-sounds-soundboard-sounds-event-fields */
+export interface RawGuildSoundboardSoundsEventFields {
+  soundboard_sounds: Array<RawSoundboardSound>;
+  guild_id: snowflake;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#integration-create-integration-create-event-additional-fields */
@@ -440,6 +514,12 @@ export interface RawVoiceServerUpdateEventFields {
   endpoint: string | null;
 }
 
+/** https://discord.com/developers/docs/events/gateway-events#webhooks-update-webhooks-update-event-fields */
+export interface RawWebhooksUpdateEventFields {
+  guild_id: snowflake;
+  channel_id: snowflake;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#message-poll-vote-add-message-poll-vote-add-fields */
 export interface RawMessagePollVoteAddFields {
   user_id: snowflake;
@@ -537,6 +617,17 @@ export interface GatewayVoiceStateUpdate {
   selfDeaf: boolean;
 }
 
+/** https://discord.com/developers/docs/events/gateway-events#ready-ready-event-fields */
+export interface ReadyEventFields {
+  v: number;
+  user: User;
+  guilds: Array<UnavailableGuild>;
+  sessionId: string;
+  resumeGatewayURL: string;
+  shard?: [number, number];
+  application: Pick<Application, "id" | "flags">;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
 export interface AutoModerationActionExecutionEventFields {
   guildId: snowflake;
@@ -614,6 +705,18 @@ export interface GuildBanRemoveEventFields {
   user: User;
 }
 
+/** https://discord.com/developers/docs/events/gateway-events#guild-emojis-update */
+export interface GuildEmojisUpdateEventFields {
+  guildId: snowflake;
+  emojis: Array<Emoji>;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-stickers-update */
+export interface GuildStickersUpdateEventFields {
+  guildId: snowflake;
+  stickers: Array<Sticker>;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#guild-integrations-update-guild-integrations-update-event-fields */
 export interface GuildIntegrationsUpdateEventFields {
   guildId: snowflake;
@@ -659,9 +762,53 @@ export interface GuildMembersChunkEventFields {
   nonce?: string;
 }
 
+/** https://discord.com/developers/docs/events/gateway-events#guild-role-create-guild-role-create-event-fields */
+export interface GuildRoleCreateEventFields {
+  guildId: snowflake;
+  role: Role;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-role-update-guild-role-update-event-fields */
+export interface GuildRoleUpdateEventFields {
+  guildId: snowflake;
+  role: Role;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-role-delete-guild-role-delete-event-fields */
+export interface GuildRoleDeleteEventFields {
+  guildId: snowflake;
+  roleId: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-scheduled-event-user-add-guild-scheduled-event-user-add-event-fields */
+export interface GuildScheduledEventUserAddEventFields {
+  guildScheduledEventId: snowflake;
+  userId: snowflake;
+  guildId: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-scheduled-event-user-remove-guild-scheduled-event-user-remove-event-fields */
+export interface GuildScheduledEventUserRemoveEventFields {
+  guildScheduledEventId: snowflake;
+  userId: snowflake;
+  guildId: snowflake;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sound-delete-guild-soundboard-sound-delete-event-fields */
 export interface GuildSoundboardSoundDeleteEventFields {
   soundId: snowflake;
+  guildId: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#guild-soundboard-sounds-update-guild-soundboard-sounds-update-event-fields */
+export interface GuildSoundboardSoundsUpdateEventFields {
+  soundboardSounds: Array<SoundboardSound>;
+  guildId: snowflake;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#soundboard-sounds-soundboard-sounds-event-fields */
+export interface GuildSoundboardSoundsEventFields {
+  soundboardSounds: Array<SoundboardSound>;
   guildId: snowflake;
 }
 
@@ -868,6 +1015,12 @@ export interface VoiceServerUpdateEventFields {
   token: string;
   guildId: snowflake;
   endpoint: string | null;
+}
+
+/** https://discord.com/developers/docs/events/gateway-events#webhooks-update-webhooks-update-event-fields */
+export interface WebhooksUpdateEventFields {
+  guildId: snowflake;
+  channelId: snowflake;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#message-poll-vote-add-message-poll-vote-add-fields */
