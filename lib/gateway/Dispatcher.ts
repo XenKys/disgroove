@@ -26,51 +26,51 @@ import type { RawChannel, RawThreadMember } from "../types/channel";
 import type { RawEmoji } from "../types/emoji";
 import type { RawEntitlement } from "../types/entitlements";
 import type {
-  RawRateLimitedFields,
-  RawAutoModerationActionExecutionEventFields,
-  RawChannelPinsUpdateEventFields,
-  RawThreadListSyncEventFields,
-  RawThreadMemberUpdateEventExtraFields,
-  RawThreadMembersUpdateEventFields,
-  RawGuildCreateEventExtraFields,
-  RawGuildAuditLogEntryCreateExtraFields,
-  RawGuildBanAddEventFields,
-  RawGuildBanRemoveEventFields,
-  RawGuildEmojisUpdateEventFields,
-  RawGuildStickersUpdateEventFields,
-  RawGuildIntegrationsUpdateEventFields,
-  RawGuildMemberAddEventExtraFields,
-  RawGuildMemberRemoveEventFields,
-  RawGuildMemberUpdateEventFields,
-  RawGuildMembersChunkEventFields,
-  RawGuildRoleCreateEventFields,
-  RawGuildRoleUpdateEventFields,
-  RawGuildRoleDeleteEventFields,
-  RawGuildScheduledEventUserAddEventFields,
-  RawGuildScheduledEventUserRemoveEventFields,
-  RawGuildSoundboardSoundDeleteEventFields,
-  RawGuildSoundboardSoundsUpdateEventFields,
-  RawGuildSoundboardSoundsEventFields,
-  RawIntegrationCreateEventExtraFields,
-  RawIntegrationUpdateEventExtraFields,
-  RawIntegrationDeleteEventFields,
-  RawInviteCreateEventFields,
-  RawInviteDeleteEventFields,
-  RawMessageCreateEventExtraFields,
-  RawMessageDeleteEventFields,
-  RawMessageDeleteBulkEventFields,
-  RawMessageReactionAddEventFields,
-  RawMessageReactionRemoveEventFields,
-  RawMessageReactionRemoveAllEventFields,
-  RawMessageReactionRemoveEmojiEventFields,
-  RawPresenceUpdateEventFields,
-  RawTypingStartEventFields,
-  RawVoiceChannelEffectSendEventFields,
-  RawVoiceServerUpdateEventFields,
-  RawWebhooksUpdateEventFields,
-  RawMessagePollVoteAddFields,
-  RawMessagePollVoteRemoveFields,
-  RawReadyEventFields,
+  RawRateLimitedEvent,
+  RawAutoModerationActionExecutionEvent,
+  RawChannelPinsUpdateEvent,
+  RawThreadListSyncEvent,
+  RawThreadMemberUpdateEventExtra,
+  RawThreadMembersUpdateEvent,
+  RawGuildCreateEventExtra,
+  RawGuildAuditLogEntryCreateExtra,
+  RawGuildBanAddEvent,
+  RawGuildBanRemoveEvent,
+  RawGuildEmojisUpdateEvent,
+  RawGuildStickersUpdateEvent,
+  RawGuildIntegrationsUpdateEvent,
+  RawGuildMemberAddEventExtra,
+  RawGuildMemberRemoveEvent,
+  RawGuildMemberUpdateEvent,
+  RawGuildMembersChunkEvent,
+  RawGuildRoleCreateEvent,
+  RawGuildRoleUpdateEvent,
+  RawGuildRoleDeleteEvent,
+  RawGuildScheduledEventUserAddEvent,
+  RawGuildScheduledEventUserRemoveEvent,
+  RawGuildSoundboardSoundDeleteEvent,
+  RawGuildSoundboardSoundsUpdateEvent,
+  RawGuildSoundboardSoundsEvent,
+  RawIntegrationCreateEventExtra,
+  RawIntegrationUpdateEventExtra,
+  RawIntegrationDeleteEvent,
+  RawInviteCreateEvent,
+  RawInviteDeleteEvent,
+  RawMessageCreateEventExtra,
+  RawMessageDeleteEvent,
+  RawMessageDeleteBulkEvent,
+  RawMessageReactionAddEvent,
+  RawMessageReactionRemoveEvent,
+  RawMessageReactionRemoveAllEvent,
+  RawMessageReactionRemoveEmojiEvent,
+  RawPresenceUpdateEvent,
+  RawTypingStartEvent,
+  RawVoiceChannelEffectSendEvent,
+  RawVoiceServerUpdateEvent,
+  RawWebhooksUpdateEvent,
+  RawMessagePollVoteAddEvent,
+  RawMessagePollVoteRemoveEvent,
+  RawReadyEvent,
 } from "../types/gateway-events";
 import type {
   RawGuild,
@@ -256,7 +256,7 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
 
       shard.client.emit("guildCreate", unavailableGuild);
     } else {
-      const guild = data as RawGuild & RawGuildCreateEventExtraFields;
+      const guild = data as RawGuild & RawGuildCreateEventExtra;
 
       shard.client.emit("guildCreate", {
         ...Guilds.guildFromRaw(guild),
@@ -390,7 +390,7 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       chunkIndex: data.chunk_index,
       chunkCount: data.chunk_count,
       notFound: data.not_found,
-      presences: data.presences?.map((presence: RawPresenceUpdateEventFields) =>
+      presences: data.presences?.map((presence: RawPresenceUpdateEvent) =>
         Presences.presenceFromRaw(presence)
       ),
       nonce: data.nonce,
@@ -724,87 +724,86 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
 };
 
 export interface DispatchEvents {
-  [GatewayEvents.Ready]: RawReadyEventFields;
+  [GatewayEvents.Ready]: RawReadyEvent;
   [GatewayEvents.Resumed]: [];
-  [GatewayEvents.RateLimited]: RawRateLimitedFields;
+  [GatewayEvents.RateLimited]: RawRateLimitedEvent;
   [GatewayEvents.ApplicationCommandPermissionsUpdate]: RawGuildApplicationCommandPermissions;
   [GatewayEvents.AutoModerationRuleCreate]: RawAutoModerationRule;
   [GatewayEvents.AutoModerationRuleUpdate]: RawAutoModerationRule;
   [GatewayEvents.AutoModerationRuleDelete]: RawAutoModerationRule;
-  [GatewayEvents.AutoModerationActionExecution]: RawAutoModerationActionExecutionEventFields;
+  [GatewayEvents.AutoModerationActionExecution]: RawAutoModerationActionExecutionEvent;
   [GatewayEvents.ChannelCreate]: RawChannel;
   [GatewayEvents.ChannelUpdate]: RawChannel;
   [GatewayEvents.ChannelDelete]: RawChannel;
-  [GatewayEvents.ChannelPinsUpdate]: RawChannelPinsUpdateEventFields;
+  [GatewayEvents.ChannelPinsUpdate]: RawChannelPinsUpdateEvent;
   [GatewayEvents.ThreadCreate]: RawChannel;
   [GatewayEvents.ThreadUpdate]: RawChannel;
   [GatewayEvents.ThreadDelete]: RawChannel;
-  [GatewayEvents.ThreadListSync]: RawThreadListSyncEventFields;
+  [GatewayEvents.ThreadListSync]: RawThreadListSyncEvent;
   [GatewayEvents.ThreadMemberUpdate]: RawThreadMember &
-    RawThreadMemberUpdateEventExtraFields;
-  [GatewayEvents.ThreadMembersUpdate]: RawThreadMembersUpdateEventFields;
+    RawThreadMemberUpdateEventExtra;
+  [GatewayEvents.ThreadMembersUpdate]: RawThreadMembersUpdateEvent;
   [GatewayEvents.EntitlementCreate]: RawEntitlement;
   [GatewayEvents.EntitlementUpdate]: RawEntitlement;
   [GatewayEvents.EntitlementDelete]: RawEntitlement;
   [GatewayEvents.GuildCreate]:
-    | (RawGuild & RawGuildCreateEventExtraFields)
+    | (RawGuild & RawGuildCreateEventExtra)
     | RawUnavailableGuild;
   [GatewayEvents.GuildUpdate]: RawGuild;
   [GatewayEvents.GuildDelete]: RawUnavailableGuild;
   [GatewayEvents.GuildAuditLogEntryCreate]: RawAuditLogEntry &
-    RawGuildAuditLogEntryCreateExtraFields;
-  [GatewayEvents.GuildBanAdd]: RawGuildBanAddEventFields;
-  [GatewayEvents.GuildBanRemove]: RawGuildBanRemoveEventFields;
-  [GatewayEvents.GuildEmojisUpdate]: RawGuildEmojisUpdateEventFields;
-  [GatewayEvents.GuildStickersUpdate]: RawGuildStickersUpdateEventFields;
-  [GatewayEvents.GuildIntegrationsUpdate]: RawGuildIntegrationsUpdateEventFields;
-  [GatewayEvents.GuildMemberAdd]: RawGuildMember &
-    RawGuildMemberAddEventExtraFields;
-  [GatewayEvents.GuildMemberRemove]: RawGuildMemberRemoveEventFields;
-  [GatewayEvents.GuildMemberUpdate]: RawGuildMemberUpdateEventFields;
-  [GatewayEvents.GuildMembersChunk]: RawGuildMembersChunkEventFields;
-  [GatewayEvents.GuildRoleCreate]: RawGuildRoleCreateEventFields;
-  [GatewayEvents.GuildRoleUpdate]: RawGuildRoleUpdateEventFields;
-  [GatewayEvents.GuildRoleDelete]: RawGuildRoleDeleteEventFields;
+    RawGuildAuditLogEntryCreateExtra;
+  [GatewayEvents.GuildBanAdd]: RawGuildBanAddEvent;
+  [GatewayEvents.GuildBanRemove]: RawGuildBanRemoveEvent;
+  [GatewayEvents.GuildEmojisUpdate]: RawGuildEmojisUpdateEvent;
+  [GatewayEvents.GuildStickersUpdate]: RawGuildStickersUpdateEvent;
+  [GatewayEvents.GuildIntegrationsUpdate]: RawGuildIntegrationsUpdateEvent;
+  [GatewayEvents.GuildMemberAdd]: RawGuildMember & RawGuildMemberAddEventExtra;
+  [GatewayEvents.GuildMemberRemove]: RawGuildMemberRemoveEvent;
+  [GatewayEvents.GuildMemberUpdate]: RawGuildMemberUpdateEvent;
+  [GatewayEvents.GuildMembersChunk]: RawGuildMembersChunkEvent;
+  [GatewayEvents.GuildRoleCreate]: RawGuildRoleCreateEvent;
+  [GatewayEvents.GuildRoleUpdate]: RawGuildRoleUpdateEvent;
+  [GatewayEvents.GuildRoleDelete]: RawGuildRoleDeleteEvent;
   [GatewayEvents.GuildScheduledEventCreate]: RawGuildScheduledEvent;
   [GatewayEvents.GuildScheduledEventUpdate]: RawGuildScheduledEvent;
   [GatewayEvents.GuildScheduledEventDelete]: RawGuildScheduledEvent;
-  [GatewayEvents.GuildScheduledEventUserAdd]: RawGuildScheduledEventUserAddEventFields;
-  [GatewayEvents.GuildScheduledEventUserRemove]: RawGuildScheduledEventUserRemoveEventFields;
+  [GatewayEvents.GuildScheduledEventUserAdd]: RawGuildScheduledEventUserAddEvent;
+  [GatewayEvents.GuildScheduledEventUserRemove]: RawGuildScheduledEventUserRemoveEvent;
   [GatewayEvents.GuildSoundboardSoundCreate]: RawSoundboardSound;
   [GatewayEvents.GuildSoundboardSoundUpdate]: RawSoundboardSound;
-  [GatewayEvents.GuildSoundboardSoundDelete]: RawGuildSoundboardSoundDeleteEventFields;
-  [GatewayEvents.GuildSoundboardSoundsUpdate]: RawGuildSoundboardSoundsUpdateEventFields;
-  [GatewayEvents.SoundboardSounds]: RawGuildSoundboardSoundsEventFields;
+  [GatewayEvents.GuildSoundboardSoundDelete]: RawGuildSoundboardSoundDeleteEvent;
+  [GatewayEvents.GuildSoundboardSoundsUpdate]: RawGuildSoundboardSoundsUpdateEvent;
+  [GatewayEvents.SoundboardSounds]: RawGuildSoundboardSoundsEvent;
   [GatewayEvents.IntegrationCreate]: RawIntegration &
-    RawIntegrationCreateEventExtraFields;
+    RawIntegrationCreateEventExtra;
   [GatewayEvents.IntegrationUpdate]: RawIntegration &
-    RawIntegrationUpdateEventExtraFields;
-  [GatewayEvents.IntegrationDelete]: RawIntegrationDeleteEventFields;
+    RawIntegrationUpdateEventExtra;
+  [GatewayEvents.IntegrationDelete]: RawIntegrationDeleteEvent;
   [GatewayEvents.InteractionCreate]: RawInteraction;
-  [GatewayEvents.InviteCreate]: RawInviteCreateEventFields;
-  [GatewayEvents.InviteDelete]: RawInviteDeleteEventFields;
-  [GatewayEvents.MessageCreate]: RawMessage & RawMessageCreateEventExtraFields;
+  [GatewayEvents.InviteCreate]: RawInviteCreateEvent;
+  [GatewayEvents.InviteDelete]: RawInviteDeleteEvent;
+  [GatewayEvents.MessageCreate]: RawMessage & RawMessageCreateEventExtra;
   [GatewayEvents.MessageUpdate]: RawMessage;
-  [GatewayEvents.MessageDelete]: RawMessageDeleteEventFields;
-  [GatewayEvents.MessageDeleteBulk]: RawMessageDeleteBulkEventFields;
-  [GatewayEvents.MessageReactionAdd]: RawMessageReactionAddEventFields;
-  [GatewayEvents.MessageReactionRemove]: RawMessageReactionRemoveEventFields;
-  [GatewayEvents.MessageReactionRemoveAll]: RawMessageReactionRemoveAllEventFields;
-  [GatewayEvents.MessageReactionRemoveEmoji]: RawMessageReactionRemoveEmojiEventFields;
-  [GatewayEvents.PresenceUpdate]: RawPresenceUpdateEventFields;
+  [GatewayEvents.MessageDelete]: RawMessageDeleteEvent;
+  [GatewayEvents.MessageDeleteBulk]: RawMessageDeleteBulkEvent;
+  [GatewayEvents.MessageReactionAdd]: RawMessageReactionAddEvent;
+  [GatewayEvents.MessageReactionRemove]: RawMessageReactionRemoveEvent;
+  [GatewayEvents.MessageReactionRemoveAll]: RawMessageReactionRemoveAllEvent;
+  [GatewayEvents.MessageReactionRemoveEmoji]: RawMessageReactionRemoveEmojiEvent;
+  [GatewayEvents.PresenceUpdate]: RawPresenceUpdateEvent;
   [GatewayEvents.StageInstanceCreate]: RawStageInstance;
   [GatewayEvents.StageInstanceUpdate]: RawStageInstance;
   [GatewayEvents.StageInstanceDelete]: RawStageInstance;
   [GatewayEvents.SubscriptionCreate]: RawSubscription;
   [GatewayEvents.SubscriptionUpdate]: RawSubscription;
   [GatewayEvents.SubscriptionDelete]: RawSubscription;
-  [GatewayEvents.TypingStart]: RawTypingStartEventFields;
+  [GatewayEvents.TypingStart]: RawTypingStartEvent;
   [GatewayEvents.UserUpdate]: RawUser;
-  [GatewayEvents.VoiceChannelEffectSend]: RawVoiceChannelEffectSendEventFields;
+  [GatewayEvents.VoiceChannelEffectSend]: RawVoiceChannelEffectSendEvent;
   [GatewayEvents.VoiceStateUpdate]: RawVoiceState;
-  [GatewayEvents.VoiceServerUpdate]: RawVoiceServerUpdateEventFields;
-  [GatewayEvents.WebhooksUpdate]: RawWebhooksUpdateEventFields;
-  [GatewayEvents.MessagePollVoteAdd]: RawMessagePollVoteAddFields;
-  [GatewayEvents.MessagePollVoteRemove]: RawMessagePollVoteRemoveFields;
+  [GatewayEvents.VoiceServerUpdate]: RawVoiceServerUpdateEvent;
+  [GatewayEvents.WebhooksUpdate]: RawWebhooksUpdateEvent;
+  [GatewayEvents.MessagePollVoteAdd]: RawMessagePollVoteAddEvent;
+  [GatewayEvents.MessagePollVoteRemove]: RawMessagePollVoteRemoveEvent;
 }

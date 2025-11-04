@@ -77,42 +77,42 @@ import type { LocaleMap, snowflake, timestamp } from "./types/common";
 import type { Emoji, RawEmoji } from "./types/emoji";
 import type { Entitlement, RawEntitlement } from "./types/entitlements";
 import type {
-  AutoModerationActionExecutionEventFields,
-  ChannelPinsUpdateEventFields,
-  ThreadListSyncEventFields,
-  ThreadMemberUpdateEventExtraFields,
-  ThreadMembersUpdateEventFields,
-  GuildCreateEventExtraFields,
-  GuildAuditLogEntryCreateExtraFields,
-  GuildBanAddEventFields,
-  GuildBanRemoveEventFields,
-  GuildMemberAddEventExtraFields,
-  GuildMemberRemoveEventFields,
-  GuildMemberUpdateEventFields,
-  GuildMembersChunkEventFields,
-  IntegrationCreateEventExtraFields,
-  IntegrationUpdateEventExtraFields,
-  IntegrationDeleteEventFields,
-  InviteCreateEventFields,
-  InviteDeleteEventFields,
-  MessageCreateEventExtraFields,
-  MessageDeleteEventFields,
-  MessageDeleteBulkEventFields,
-  MessageReactionAddEventFields,
-  MessageReactionRemoveEventFields,
-  MessageReactionRemoveAllEventFields,
-  MessageReactionRemoveEmojiEventFields,
-  PresenceUpdateEventFields,
-  TypingStartEventFields,
-  VoiceServerUpdateEventFields,
-  MessagePollVoteAddFields,
-  MessagePollVoteRemoveFields,
+  AutoModerationActionExecutionEvent,
+  ChannelPinsUpdateEvent,
+  ThreadListSyncEvent,
+  ThreadMemberUpdateEventExtra,
+  ThreadMembersUpdateEvent,
+  GuildCreateEventExtra,
+  GuildAuditLogEntryCreateExtra,
+  GuildBanAddEvent,
+  GuildBanRemoveEvent,
+  GuildMemberAddEventExtra,
+  GuildMemberRemoveEvent,
+  GuildMemberUpdateEvent,
+  GuildMembersChunkEvent,
+  IntegrationCreateEventExtra,
+  IntegrationUpdateEventExtra,
+  IntegrationDeleteEvent,
+  InviteCreateEvent,
+  InviteDeleteEvent,
+  MessageCreateEventExtra,
+  MessageDeleteEvent,
+  MessageDeleteBulkEvent,
+  MessageReactionAddEvent,
+  MessageReactionRemoveEvent,
+  MessageReactionRemoveAllEvent,
+  MessageReactionRemoveEmojiEvent,
+  PresenceUpdateEvent,
+  TypingStartEvent,
+  VoiceServerUpdateEvent,
+  MessagePollVoteAddEvent,
+  MessagePollVoteRemoveEvent,
   GatewayPresenceUpdate,
   RawPayload,
   IdentifyConnectionProperties,
-  VoiceChannelEffectSendEventFields,
-  GuildSoundboardSoundDeleteEventFields,
-  RateLimitedFields,
+  VoiceChannelEffectSendEvent,
+  GuildSoundboardSoundDeleteEvent,
+  RateLimitedEvent,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -5276,10 +5276,9 @@ export interface ClientEvents {
   invalidSession: [shard: number];
   hello: [interval: number, shard: number];
   heartbeatACK: [shard: number];
-
   ready: [shard: number];
   resumed: [shard: Number];
-  rateLimited: [rateLimit: RateLimitedFields, shard: number];
+  rateLimited: [rateLimit: RateLimitedEvent, shard: number];
   applicationCommandPermissionsUpdate: [
     applicationCommandPermissions: GuildApplicationCommandPermissions
   ];
@@ -5287,40 +5286,38 @@ export interface ClientEvents {
   autoModerationRuleUpdate: [autoModerationRule: AutoModerationRule];
   autoModerationRuleDelete: [autoModerationRule: AutoModerationRule];
   autoModerationActionExecution: [
-    autoModerationExecution: AutoModerationActionExecutionEventFields
+    autoModerationExecution: AutoModerationActionExecutionEvent
   ];
   channelCreate: [channel: Channel];
   channelUpdate: [channel: Channel];
   channelDelete: [channel: Channel];
-  channelPinsUpdate: [pins: ChannelPinsUpdateEventFields];
+  channelPinsUpdate: [pins: ChannelPinsUpdateEvent];
   threadCreate: [thread: Channel];
   threadUpdate: [thread: Channel];
   threadDelete: [thread: Channel];
-  threadListSync: [sync: ThreadListSyncEventFields];
+  threadListSync: [sync: ThreadListSyncEvent];
   threadMemberUpdate: [
-    threadMember: ThreadMember & ThreadMemberUpdateEventExtraFields
+    threadMember: ThreadMember & ThreadMemberUpdateEventExtra
   ];
-  threadMembersUpdate: [thread: ThreadMembersUpdateEventFields];
+  threadMembersUpdate: [thread: ThreadMembersUpdateEvent];
   entitlementCreate: [entitlement: Entitlement];
   entitlementUpdate: [entitlement: Entitlement];
   entitlementDelete: [entitlement: Entitlement];
-  guildCreate: [
-    guild: (Guild & GuildCreateEventExtraFields) | UnavailableGuild
-  ];
+  guildCreate: [guild: (Guild & GuildCreateEventExtra) | UnavailableGuild];
   guildUpdate: [guild: Guild];
   guildDelete: [guild: UnavailableGuild];
   guildAuditLogEntryCreate: [
-    auditLogEntry: AuditLogEntry & GuildAuditLogEntryCreateExtraFields
+    auditLogEntry: AuditLogEntry & GuildAuditLogEntryCreateExtra
   ];
-  guildBanAdd: [ban: GuildBanAddEventFields];
-  guildBanRemove: [ban: GuildBanRemoveEventFields];
+  guildBanAdd: [ban: GuildBanAddEvent];
+  guildBanRemove: [ban: GuildBanRemoveEvent];
   guildEmojisUpdate: [emojis: Array<Emoji>, guildId: snowflake];
   guildStickersUpdate: [stickers: Array<Sticker>, guildId: snowflake];
   guildIntegrationsUpdate: [guildId: snowflake];
-  guildMemberAdd: [guildMember: GuildMember & GuildMemberAddEventExtraFields];
-  guildMemberRemove: [guildMember: GuildMemberRemoveEventFields];
-  guildMemberUpdate: [guildMember: GuildMemberUpdateEventFields];
-  guildMembersChunk: [request: GuildMembersChunkEventFields];
+  guildMemberAdd: [guildMember: GuildMember & GuildMemberAddEventExtra];
+  guildMemberRemove: [guildMember: GuildMemberRemoveEvent];
+  guildMemberUpdate: [guildMember: GuildMemberUpdateEvent];
+  guildMembersChunk: [request: GuildMembersChunkEvent];
   guildRoleCreate: [role: Role, guildId: snowflake];
   guildRoleUpdate: [role: Role, guildId: snowflake];
   guildRoleDelete: [roleId: snowflake, guildId: snowflake];
@@ -5339,43 +5336,39 @@ export interface ClientEvents {
   ];
   guildSoundboardSoundCreate: [sound: SoundboardSound];
   guildSoundboardSoundUpdate: [sound: SoundboardSound];
-  guildSoundboardSoundDelete: [sound: GuildSoundboardSoundDeleteEventFields];
+  guildSoundboardSoundDelete: [sound: GuildSoundboardSoundDeleteEvent];
   guildSoundboardSoundsUpdate: [
     sounds: Array<SoundboardSound>,
     guildId: snowflake
   ];
   soundboardSounds: [sounds: Array<SoundboardSound>, guildId: snowflake];
-  integrationCreate: [
-    integration: Integration & IntegrationCreateEventExtraFields
-  ];
-  integrationUpdate: [
-    integration: Integration & IntegrationUpdateEventExtraFields
-  ];
-  integrationDelete: [integration: IntegrationDeleteEventFields];
+  integrationCreate: [integration: Integration & IntegrationCreateEventExtra];
+  integrationUpdate: [integration: Integration & IntegrationUpdateEventExtra];
+  integrationDelete: [integration: IntegrationDeleteEvent];
   interactionCreate: [interaction: Interaction];
-  inviteCreate: [invite: InviteCreateEventFields];
-  inviteDelete: [invite: InviteDeleteEventFields];
-  messageCreate: [message: Message & MessageCreateEventExtraFields];
+  inviteCreate: [invite: InviteCreateEvent];
+  inviteDelete: [invite: InviteDeleteEvent];
+  messageCreate: [message: Message & MessageCreateEventExtra];
   messageUpdate: [message: Message];
-  messageDelete: [message: MessageDeleteEventFields];
-  messageDeleteBulk: [bulk: MessageDeleteBulkEventFields];
-  messageReactionAdd: [reaction: MessageReactionAddEventFields];
-  messageReactionRemove: [reaction: MessageReactionRemoveEventFields];
-  messageReactionRemoveAll: [reaction: MessageReactionRemoveAllEventFields];
-  messageReactionRemoveEmoji: [reaction: MessageReactionRemoveEmojiEventFields];
-  presenceUpdate: [presence: PresenceUpdateEventFields];
+  messageDelete: [message: MessageDeleteEvent];
+  messageDeleteBulk: [bulk: MessageDeleteBulkEvent];
+  messageReactionAdd: [reaction: MessageReactionAddEvent];
+  messageReactionRemove: [reaction: MessageReactionRemoveEvent];
+  messageReactionRemoveAll: [reaction: MessageReactionRemoveAllEvent];
+  messageReactionRemoveEmoji: [reaction: MessageReactionRemoveEmojiEvent];
+  presenceUpdate: [presence: PresenceUpdateEvent];
   stageInstanceCreate: [stageInstance: StageInstance];
   stageInstanceUpdate: [stageInstance: StageInstance];
   stageInstanceDelete: [stageInstance: StageInstance];
   subscriptionCreate: [subscription: Subscription];
   subscriptionUpdate: [subscription: Subscription];
   subscriptionDelete: [subscription: Subscription];
-  typingStart: [typing: TypingStartEventFields];
+  typingStart: [typing: TypingStartEvent];
   userUpdate: [user: User];
-  voiceChannelEffectSend: [voiceEffect: VoiceChannelEffectSendEventFields];
+  voiceChannelEffectSend: [voiceEffect: VoiceChannelEffectSendEvent];
   voiceStateUpdate: [voiceState: VoiceState];
-  voiceServerUpdate: [voiceServer: VoiceServerUpdateEventFields];
+  voiceServerUpdate: [voiceServer: VoiceServerUpdateEvent];
   webhooksUpdate: [channelId: snowflake, guildId: snowflake];
-  messagePollVoteAdd: [vote: MessagePollVoteAddFields];
-  messagePollVoteRemove: [vote: MessagePollVoteRemoveFields];
+  messagePollVoteAdd: [vote: MessagePollVoteAddEvent];
+  messagePollVoteRemove: [vote: MessagePollVoteRemoveEvent];
 }

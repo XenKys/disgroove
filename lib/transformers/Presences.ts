@@ -1,12 +1,12 @@
 import type {
-  RawPresenceUpdateEventFields,
-  PresenceUpdateEventFields,
+  RawPresenceUpdateEvent,
+  PresenceUpdateEvent,
 } from "../types/gateway-events";
 
 export class Presences {
   static presenceFromRaw(
-    presence: RawPresenceUpdateEventFields
-  ): PresenceUpdateEventFields {
+    presence: RawPresenceUpdateEvent
+  ): PresenceUpdateEvent {
     return {
       user: {
         id: presence.user.id,
@@ -64,8 +64,8 @@ export class Presences {
   }
 
   static presenceToRaw(
-    presence: PresenceUpdateEventFields
-  ): RawPresenceUpdateEventFields {
+    presence: PresenceUpdateEvent
+  ): RawPresenceUpdateEvent {
     return {
       user: {
         id: presence.user.id,
