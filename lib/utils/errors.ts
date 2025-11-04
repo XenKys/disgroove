@@ -1,4 +1,8 @@
-import type { JSONErrorCodes } from "../constants";
+import {
+  GatewayCloseEventCodes,
+  GatewayOPCodes,
+  type JSONErrorCodes,
+} from "../constants";
 
 export class RESTError extends Error {
   override name: string = "RESTError";
@@ -74,8 +78,13 @@ export class HTTPError extends Error {
 
 export class GatewayError extends Error {
   override name: string = "GatewayError";
+  code: GatewayOPCodes | number;
+  reason: string;
 
   constructor(code: number, reason: string) {
     super(`[${code}] ${reason}`);
+
+    this.code = code;
+    this.reason = reason;
   }
 }
