@@ -5271,6 +5271,7 @@ export declare interface Client extends EventEmitter {
 
 export interface ClientEvents {
   dispatch: [packet: RawPayload, shard: number];
+  heartbeat: [shard: number];
   reconnect: [shard: number];
   invalidSession: [shard: number];
   hello: [interval: number, shard: number];

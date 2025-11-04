@@ -143,6 +143,10 @@ export class Shard {
 
         this.dispatcher.dispatch(packet.t!, packet.d);
         break;
+      case GatewayOPCodes.Heartbeat:
+        this.client.emit("heartbeat", this.id);
+
+        this.transmitter.heartbeat(this.sequence);
       case GatewayOPCodes.Reconnect:
         {
           this.client.emit("reconnect", this.id);
