@@ -1377,6 +1377,7 @@ export const BitwisePermissionFlags = {
   SendPolls: 1n << 49n,
   UseExternalApps: 1n << 50n,
   PinMessages: 1n << 51n,
+  BypassSlowmode: 1n << 52n,
 } as const;
 
 /** https://discord.com/developers/docs/topics/permissions#role-object-role-flags */
