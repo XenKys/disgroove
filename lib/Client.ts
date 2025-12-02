@@ -377,7 +377,7 @@ export class Client extends EventEmitter {
   async addLobbyMember(
     lobbyId: snowflake,
     userId: snowflake,
-    options: {
+    options?: {
       metadata?: Record<string, string> | null;
       flags?: LobbyMemberFlags;
     }
@@ -1326,7 +1326,7 @@ export class Client extends EventEmitter {
   }
 
   /** https://discord.com/developers/docs/resources/lobby#create-lobby */
-  async createLobby(options: {
+  async createLobby(options?: {
     metadata?: Record<string, string> | null;
     members?: Array<Pick<LobbyMember, "id" | "metadata" | "flags">>;
     idleTimeoutSeconds?: number;
@@ -1336,9 +1336,9 @@ export class Client extends EventEmitter {
       Endpoints.lobbies(),
       {
         json: {
-          metadata: options.metadata,
-          members: options.members,
-          idle_timeout_seconds: options.idleTimeoutSeconds,
+          metadata: options?.metadata,
+          members: options?.members,
+          idle_timeout_seconds: options?.idleTimeoutSeconds,
         },
       }
     );
@@ -3843,7 +3843,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/interactions/application-commands#get-global-application-commands */
   async getGlobalApplicationCommands(
     applicationId: snowflake,
-    options: {
+    options?: {
       withLocalizations?: boolean;
     }
   ): Promise<Array<ApplicationCommand>> {
@@ -3852,7 +3852,7 @@ export class Client extends EventEmitter {
       Endpoints.applicationCommands(applicationId),
       {
         query: {
-          with_localizations: options.withLocalizations,
+          with_localizations: options?.withLocalizations,
         },
       }
     );
@@ -4090,7 +4090,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/guild#list-guild-members */
   async getGuildMembers(
     guildId: snowflake,
-    options: {
+    options?: {
       limit?: number;
       after?: snowflake;
     }
@@ -4100,8 +4100,8 @@ export class Client extends EventEmitter {
       Endpoints.guildMembers(guildId),
       {
         query: {
-          limit: options.limit,
-          after: options.after,
+          limit: options?.limit,
+          after: options?.after,
         },
       }
     );
@@ -4591,7 +4591,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/message#get-channel-messages */
   async getMessages(
     channelId: snowflake,
-    options: {
+    options?: {
       around?: snowflake;
       before?: snowflake;
       after?: snowflake;
@@ -4603,10 +4603,10 @@ export class Client extends EventEmitter {
       Endpoints.channelMessages(channelId),
       {
         query: {
-          around: options.around,
-          before: options.before,
-          after: options.after,
-          limit: options.limit,
+          around: options?.around,
+          before: options?.before,
+          after: options?.after,
+          limit: options?.limit,
         },
       }
     );
@@ -4652,7 +4652,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/channel#get-pinned-messages */
   async getPinnedMessages(
     channelId: snowflake,
-    options: {
+    options?: {
       before?: timestamp;
       limit?: number;
     }
@@ -4732,7 +4732,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/subscription#list-sku-subscriptions */
   async getSKUSubscriptions(
     skuId: snowflake,
-    options: {
+    options?: {
       before?: snowflake;
       after?: snowflake;
       limit?: number;
@@ -4744,10 +4744,10 @@ export class Client extends EventEmitter {
       Endpoints.skuSubscriptions(skuId),
       {
         query: {
-          before: options.before,
-          after: options.after,
-          limit: options.limit,
-          user_id: options.userId,
+          before: options?.before,
+          after: options?.after,
+          limit: options?.limit,
+          user_id: options?.userId,
         },
       }
     );
@@ -5181,7 +5181,7 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/user#update-current-user-application-role-connection */
   async updateCurrentApplicationRoleConnection(
     applicationId: snowflake,
-    options: {
+    options?: {
       platformName?: string;
       platformUsername?: string;
       metadata?: ApplicationRoleConnectionMetadata;
@@ -5192,10 +5192,10 @@ export class Client extends EventEmitter {
       Endpoints.userApplicationRoleConnection(applicationId),
       {
         json: {
-          platform_name: options.platformName,
-          platform_username: options.platformUsername,
+          platform_name: options?.platformName,
+          platform_username: options?.platformUsername,
           metadata:
-            options.metadata !== undefined
+            options?.metadata !== undefined
               ? ApplicationRoleConnectionMetadatas.applicationRoleConnectionMetadataToRaw(
                   options.metadata
                 )
