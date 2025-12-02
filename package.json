@@ -1,6 +1,6 @@
 {
   "name": "disgroove",
-  "version": "3.0.0-dev.feb5dab",
+  "version": "2.2.7",
   "description": "A module to interface with Discord",
   "main": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
