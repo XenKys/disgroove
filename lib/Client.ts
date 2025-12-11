@@ -4202,6 +4202,18 @@ export class Client extends EventEmitter {
     return Roles.roleFromRaw(response);
   }
 
+  /** https://discord.com/developers/docs/resources/guild#get-guild-role-member-counts */
+  async getGuildRoleMemberCounts(
+    guildId: snowflake
+  ): Promise<Record<snowflake, number>> {
+    const response = await this.rest.request<Record<snowflake, number>>(
+      RESTMethods.Get,
+      Endpoints.guildRoleMemberCounts(guildId)
+    );
+
+    return response;
+  }
+
   /** https://discord.com/developers/docs/resources/guild#get-guild-roles */
   async getGuildRoles(guildId: snowflake): Promise<Array<Role>> {
     const response = await this.rest.request<Array<RawRole>>(

@@ -62,6 +62,8 @@ export const guildPrune = (guildId: snowflake) =>
   `guilds/${guildId}/prune` as const;
 export const guildRole = (guildId: snowflake, roleId: snowflake) =>
   `guilds/${guildId}/roles/${roleId}` as const;
+export const guildRoleMemberCounts = (guildId: snowflake) =>
+  `guilds/${guildId}/roles/member-counts` as const;
 export const guildRoles = (guildId: snowflake) =>
   `guilds/${guildId}/roles` as const;
 export const guildScheduledEvent = (
