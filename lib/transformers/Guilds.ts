@@ -323,4 +323,154 @@ export class Guilds {
       scopes: integration.scopes,
     };
   }
+
+  static partialGuildFromRaw(guild: Partial<RawGuild>): Partial<Guild> {
+    return {
+      id: guild.id,
+      name: guild.name,
+      icon: guild.icon,
+      iconHash: guild.icon,
+      splash: guild.splash,
+      discoverySplash: guild.discovery_splash,
+      owner: guild.owner,
+      ownerId: guild.owner_id,
+      permissions: guild.permissions,
+      region: guild.region,
+      afkChannelId: guild.afk_channel_id,
+      afkTimeout: guild.afk_timeout,
+      widgetEnabled: guild.widget_enabled,
+      widgetChannelId: guild.widget_channel_id,
+      verificationLevel: guild.verification_level,
+      defaultMessageNotifications: guild.default_message_notifications,
+      explicitContentFilter: guild.explicit_content_filter,
+      roles: guild.roles?.map((role) => Roles.roleFromRaw(role)),
+      emojis: guild.emojis?.map((emoji) => Emojis.emojiFromRaw(emoji)),
+      features: guild.features,
+      mfaLevel: guild.mfa_level,
+      applicationId: guild.application_id,
+      systemChannelId: guild.system_channel_id,
+      systemChannelFlags: guild.system_channel_flags,
+      rulesChannelId: guild.rules_channel_id,
+      maxPresences: guild.max_presences,
+      maxMembers: guild.max_members,
+      vanityURLCode: guild.vanity_url_code,
+      description: guild.description,
+      banner: guild.banner,
+      premiumTier: guild.premium_tier,
+      premiumSubscriptionCount: guild.premium_subscription_count,
+      preferredLocale: guild.preferred_locale,
+      publicUpdatesChannelId: guild.public_updates_channel_id,
+      maxVideoChannelUsers: guild.max_video_channel_users,
+      maxStageVideoChannelUsers: guild.max_stage_video_channel_users,
+      approximateMemberCount: guild.approximate_member_count,
+      approximatePresenceCount: guild.approximate_presence_count,
+      welcomeScreen:
+        guild.welcome_screen !== undefined
+          ? {
+              description: guild.welcome_screen.description,
+              welcomeChannels: guild.welcome_screen.welcome_channels.map(
+                (welcomeScreenChannel) => ({
+                  channelId: welcomeScreenChannel.channel_id,
+                  description: welcomeScreenChannel.description,
+                  emojiId: welcomeScreenChannel.emoji_id,
+                  emojiName: welcomeScreenChannel.emoji_name,
+                })
+              ),
+            }
+          : undefined,
+      nsfwLevel: guild.nsfw_level,
+      stickers: guild.stickers?.map((sticker) =>
+        Stickers.stickerFromRaw(sticker)
+      ),
+      premiumProgressBarEnabled: guild.premium_progress_bar_enabled,
+      safetyAlertsChannelId: guild.safety_alerts_channel_id,
+      incidentsData:
+        guild.incidents_data !== undefined
+          ? guild.incidents_data !== null
+            ? {
+                invitesDisabledUntil:
+                  guild.incidents_data.invites_disabled_until,
+                dmsDisabledUntil: guild.incidents_data.dms_disabled_until,
+                dmSpamDetectedAt: guild.incidents_data.dm_spam_detected_at,
+                raidDetectedAt: guild.incidents_data.raid_detected_at,
+              }
+            : null
+          : undefined,
+    };
+  }
+
+  static partialGuildToRaw(guild: Partial<Guild>): Partial<RawGuild> {
+    return {
+      id: guild.id,
+      name: guild.name,
+      icon: guild.icon,
+      icon_hash: guild.icon,
+      splash: guild.splash,
+      discovery_splash: guild.discoverySplash,
+      owner: guild.owner,
+      owner_id: guild.ownerId,
+      permissions: guild.permissions,
+      region: guild.region,
+      afk_channel_id: guild.afkChannelId,
+      afk_timeout: guild.afkTimeout,
+      widget_enabled: guild.widgetEnabled,
+      widget_channel_id: guild.widgetChannelId,
+      verification_level: guild.verificationLevel,
+      default_message_notifications: guild.defaultMessageNotifications,
+      explicit_content_filter: guild.explicitContentFilter,
+      roles: guild.roles?.map((role) => Roles.roleToRaw(role)),
+      emojis: guild.emojis?.map((emoji) => Emojis.emojiToRaw(emoji)),
+      features: guild.features,
+      mfa_level: guild.mfaLevel,
+      application_id: guild.applicationId,
+      system_channel_id: guild.systemChannelId,
+      system_channel_flags: guild.systemChannelFlags,
+      rules_channel_id: guild.rulesChannelId,
+      max_presences: guild.maxPresences,
+      max_members: guild.maxMembers,
+      vanity_url_code: guild.vanityURLCode,
+      description: guild.description,
+      banner: guild.banner,
+      premium_tier: guild.premiumTier,
+      premium_subscription_count: guild.premiumSubscriptionCount,
+      preferred_locale: guild.preferredLocale,
+      public_updates_channel_id: guild.publicUpdatesChannelId,
+      max_video_channel_users: guild.maxVideoChannelUsers,
+      max_stage_video_channel_users: guild.maxStageVideoChannelUsers,
+      approximate_member_count: guild.approximateMemberCount,
+      approximate_presence_count: guild.approximatePresenceCount,
+      welcome_screen:
+        guild.welcomeScreen !== undefined
+          ? {
+              description: guild.welcomeScreen.description,
+              welcome_channels: guild.welcomeScreen.welcomeChannels.map(
+                (welcomeScreenChannel) => ({
+                  channel_id: welcomeScreenChannel.channelId,
+                  description: welcomeScreenChannel.description,
+                  emoji_id: welcomeScreenChannel.emojiId,
+                  emoji_name: welcomeScreenChannel.emojiName,
+                })
+              ),
+            }
+          : undefined,
+      nsfw_level: guild.nsfwLevel,
+      stickers: guild.stickers?.map((sticker) =>
+        Stickers.stickerToRaw(sticker)
+      ),
+      premium_progress_bar_enabled: guild.premiumProgressBarEnabled,
+      safety_alerts_channel_id: guild.safetyAlertsChannelId,
+      incidents_data:
+        guild.incidentsData !== undefined
+          ? guild.incidentsData !== null
+            ? {
+                invites_disabled_until:
+                  guild.incidentsData.invitesDisabledUntil,
+                dms_disabled_until: guild.incidentsData.dmsDisabledUntil,
+                dm_spam_detected_at: guild.incidentsData.dmSpamDetectedAt,
+                raid_detected_at: guild.incidentsData.raidDetectedAt,
+              }
+            : null
+          : undefined,
+    };
+  }
 }

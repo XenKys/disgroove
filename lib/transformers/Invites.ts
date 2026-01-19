@@ -12,7 +12,7 @@ export class Invites {
       code: invite.code,
       guild:
         invite.guild !== undefined
-          ? Guilds.guildFromRaw(invite.guild)
+          ? Guilds.partialGuildFromRaw(invite.guild)
           : undefined,
       channel: Channels.channelFromRaw(invite.channel),
       inviter:
@@ -58,7 +58,7 @@ export class Invites {
       code: invite.code,
       guild:
         invite.guild !== undefined
-          ? Guilds.guildToRaw(invite.guild)
+          ? Guilds.partialGuildToRaw(invite.guild)
           : undefined,
       channel: Channels.channelToRaw(invite.channel),
       inviter:
