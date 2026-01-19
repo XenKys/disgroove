@@ -1122,6 +1122,8 @@ export enum JSONErrorCodes {
   UnknownGuildScheduledEventUser,
   UnknownTag = 10087,
   UnknownSound = 10091,
+  UnknownInviteTargetUsersJob = 10124,
+  UnknownInviteTargetUsers = 10129,
   BotsCannotUseThisEndpoint = 20001,
   OnlyBotsCanUseThisEndpoint,
   ExplicitContentCannotBeSentToTheDesiredRecipient = 20009,
