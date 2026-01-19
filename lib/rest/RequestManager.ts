@@ -103,9 +103,12 @@ export class RequestManager {
         if (response.headers.has("X-RateLimit-Global")) {
           this.globalBlock = true;
 
-          setTimeout(() => {
-            this.globalBlock = false;
-          }, Number(response.headers.get("Retry-After")) * 1000);
+          setTimeout(
+            () => {
+              this.globalBlock = false;
+            },
+            Number(response.headers.get("Retry-After")) * 1000
+          );
         }
 
         if (response.status >= HTTPResponseCodes.NotModified) {
@@ -149,6 +152,12 @@ export class RequestManager {
         } else if (response.status === HTTPResponseCodes.NoContent) {
           resolve(null as T);
         } else {
+          let blob: Blob = await response.blob();
+
+          if (blob) {
+            resolve(blob as T);
+          }
+
           resolve((await response.json()) as T);
         }
       } catch (err) {

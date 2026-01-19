@@ -575,6 +575,14 @@ export enum GuildInviteFlags {
   IsGuestInvite = 1 << 0,
 }
 
+/** https://discord.com/developers/docs/resources/invite#get-target-users-job-status-error-codes */
+export enum InviteTargetUsersJobStatusErrorCodes {
+  Unspecified,
+  Processing,
+  Completed,
+  Failed,
+}
+
 /** https://discord.com/developers/docs/resources/lobby#lobby-member-object-lobby-member-flags */
 export enum LobbyMemberFlags {
   CanLinkLobby = 1 << 0,

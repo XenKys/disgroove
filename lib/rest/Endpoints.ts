@@ -315,3 +315,9 @@ export const lobbyMember = (
 ) => `lobbies/${lobbyId}/members/${userId}` as const;
 export const lobbyChannelLinking = (lobbyId: snowflake) =>
   `lobbies/${lobbyId}/channel-linking` as const;
+
+// Invites
+export const inviteTargetUsers = (inviteCode: string) =>
+  `invites/${inviteCode}/target-users` as const;
+export const inviteTargetUsersJobStatus = (inviteCode: string) =>
+  `invites/${inviteCode}/target-users/job-status` as const;

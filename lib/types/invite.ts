@@ -11,13 +11,14 @@ import type {
   RawGuildScheduledEvent,
   GuildScheduledEvent,
 } from "./guild-scheduled-event";
+import type { RawRole, Role } from "./role";
 import type { RawUser, User } from "./user";
 
 /** https://discord.com/developers/docs/resources/invite#invite-object-invite-structure */
 export interface RawInvite {
   type: InviteTypes;
   code: string;
-  guild?: RawGuild;
+  guild?: Partial<RawGuild>;
   channel: RawChannel;
   inviter?: RawUser;
   target_type?: InviteTargetTypes;
@@ -29,6 +30,7 @@ export interface RawInvite {
   stage_instance?: RawInviteStageInstance;
   guild_scheduled_event?: RawGuildScheduledEvent;
   flags?: GuildInviteFlags;
+  roles?: Array<RawRole>;
 }
 
 /** https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */
@@ -52,7 +54,7 @@ export interface RawInviteStageInstance {
 export interface Invite {
   type: InviteTypes;
   code: string;
-  guild?: Guild;
+  guild?: Partial<Guild>;
   channel: Channel;
   inviter?: User;
   targetType?: InviteTargetTypes;
@@ -64,6 +66,7 @@ export interface Invite {
   stageInstance?: InviteStageInstance;
   guildScheduledEvent?: GuildScheduledEvent;
   flags?: GuildInviteFlags;
+  roles?: Array<Role>;
 }
 
 /** https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */

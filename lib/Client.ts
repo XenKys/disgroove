@@ -31,6 +31,7 @@ import {
   type InteractionContextTypes,
   ComponentTypes,
   type LobbyMemberFlags,
+  InviteTargetUsersJobStatusErrorCodes,
 } from "./constants";
 import { Endpoints, RequestManager, RESTMethods, type FileData } from "./rest";
 import EventEmitter from "node:events";
@@ -718,6 +719,8 @@ export class Client extends EventEmitter {
       targetType?: InviteTargetTypes;
       targetUserId?: snowflake;
       targetApplicationId?: snowflake;
+      targetUsersFile?: FileData;
+      rolesIds?: Array<snowflake>;
     },
     reason?: string
   ): Promise<Invite> {
@@ -733,7 +736,12 @@ export class Client extends EventEmitter {
           target_type: options.targetType,
           target_user_id: options.targetUserId,
           target_application_id: options.targetApplicationId,
+          roles_ids: options.rolesIds,
         },
+        files:
+          options.targetUsersFile !== undefined
+            ? [options.targetUsersFile]
+            : undefined,
         reason,
       }
     );
@@ -4517,6 +4525,41 @@ export class Client extends EventEmitter {
     return Invites.inviteFromRaw(response);
   }
 
+  /** https://discord.com/developers/docs/resources/invite#get-target-users */
+  getInviteTargetUser(inviteCode: string): Promise<Blob> {
+    return this.rest.request<Blob>(
+      RESTMethods.Get,
+      Endpoints.inviteTargetUsers(inviteCode)
+    );
+  }
+
+  async getInviteTargetUserJobStatus(inviteCode: string): Promise<{
+    status: InviteTargetUsersJobStatusErrorCodes;
+    totalUsers: number;
+    processedUsers: number;
+    createdAt: timestamp;
+    completedAt: timestamp | null;
+    errorMessage: string | null;
+  }> {
+    const response = await this.rest.request<{
+      status: InviteTargetUsersJobStatusErrorCodes;
+      total_users: number;
+      processed_users: number;
+      created_at: timestamp;
+      completed_at: timestamp | null;
+      error_message: string | null;
+    }>(RESTMethods.Get, Endpoints.inviteTargetUsersJobStatus(inviteCode));
+
+    return {
+      status: response.status,
+      totalUsers: response.total_users,
+      processedUsers: response.processed_users,
+      createdAt: response.created_at,
+      completedAt: response.completed_at,
+      errorMessage: response.error_message,
+    };
+  }
+
   /** https://discord.com/developers/docs/resources/channel#list-joined-private-archived-threads */
   async getJoinedPrivateArchivedThreads(
     channelId: snowflake,
@@ -5226,6 +5269,17 @@ export class Client extends EventEmitter {
     };
   }
 
+  /** https://discord.com/developers/docs/resources/invite#update-target-users */
+  updateInviteTargetUser(inviteCode: string, targetUsersFile: FileData): void {
+    this.rest.request<Blob>(
+      RESTMethods.Put,
+      Endpoints.inviteTargetUsers(inviteCode),
+      {
+        files: [targetUsersFile],
+      }
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
   unpinMessage(
     channelId: snowflake,
@@ -5292,13 +5346,13 @@ export interface ClientEvents {
   resumed: [shard: Number];
   rateLimited: [rateLimit: RateLimitedEvent, shard: number];
   applicationCommandPermissionsUpdate: [
-    applicationCommandPermissions: GuildApplicationCommandPermissions
+    applicationCommandPermissions: GuildApplicationCommandPermissions,
   ];
   autoModerationRuleCreate: [autoModerationRule: AutoModerationRule];
   autoModerationRuleUpdate: [autoModerationRule: AutoModerationRule];
   autoModerationRuleDelete: [autoModerationRule: AutoModerationRule];
   autoModerationActionExecution: [
-    autoModerationExecution: AutoModerationActionExecutionEvent
+    autoModerationExecution: AutoModerationActionExecutionEvent,
   ];
   channelCreate: [channel: Channel];
   channelUpdate: [channel: Channel];
@@ -5309,7 +5363,7 @@ export interface ClientEvents {
   threadDelete: [thread: Channel];
   threadListSync: [sync: ThreadListSyncEvent];
   threadMemberUpdate: [
-    threadMember: ThreadMember & ThreadMemberUpdateEventExtra
+    threadMember: ThreadMember & ThreadMemberUpdateEventExtra,
   ];
   threadMembersUpdate: [thread: ThreadMembersUpdateEvent];
   entitlementCreate: [entitlement: Entitlement];
@@ -5319,7 +5373,7 @@ export interface ClientEvents {
   guildUpdate: [guild: Guild];
   guildDelete: [guild: UnavailableGuild];
   guildAuditLogEntryCreate: [
-    auditLogEntry: AuditLogEntry & GuildAuditLogEntryCreateExtra
+    auditLogEntry: AuditLogEntry & GuildAuditLogEntryCreateExtra,
   ];
   guildBanAdd: [ban: GuildBanAddEvent];
   guildBanRemove: [ban: GuildBanRemoveEvent];
@@ -5339,19 +5393,19 @@ export interface ClientEvents {
   guildScheduledEventUserAdd: [
     userId: snowflake,
     guildScheduledEventId: snowflake,
-    guildId: snowflake
+    guildId: snowflake,
   ];
   guildScheduledEventUserRemove: [
     userId: snowflake,
     guildScheduledEventId: snowflake,
-    guildId: snowflake
+    guildId: snowflake,
   ];
   guildSoundboardSoundCreate: [sound: SoundboardSound];
   guildSoundboardSoundUpdate: [sound: SoundboardSound];
   guildSoundboardSoundDelete: [sound: GuildSoundboardSoundDeleteEvent];
   guildSoundboardSoundsUpdate: [
     sounds: Array<SoundboardSound>,
-    guildId: snowflake
+    guildId: snowflake,
   ];
   soundboardSounds: [sounds: Array<SoundboardSound>, guildId: snowflake];
   integrationCreate: [integration: Integration & IntegrationCreateEventExtra];
