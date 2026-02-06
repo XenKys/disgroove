@@ -341,6 +341,7 @@ export interface RawInviteCreateEvent {
   temporary: boolean;
   uses: number;
   expires_at: timestamp | null;
+  roles_ids?: Array<snowflake>
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields */
@@ -844,6 +845,7 @@ export interface InviteCreateEvent {
   temporary: boolean;
   uses: number;
   expiresAt: timestamp | null;
+  roleIds?: Array<snowflake>
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields */
