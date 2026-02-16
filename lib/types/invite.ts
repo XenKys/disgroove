@@ -30,7 +30,7 @@ export interface RawInvite {
   stage_instance?: RawInviteStageInstance;
   guild_scheduled_event?: RawGuildScheduledEvent;
   flags?: GuildInviteFlags;
-  roles?: Array<RawRole>;
+  roles?: Array<Pick<RawRole, "id" | "name" | "position" | "color" | "colors" | "icon" | "unicode_emoji">>;
 }
 
 /** https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */
@@ -66,7 +66,7 @@ export interface Invite {
   stageInstance?: InviteStageInstance;
   guildScheduledEvent?: GuildScheduledEvent;
   flags?: GuildInviteFlags;
-  roles?: Array<Role>;
+  roles?: Array<Pick<Role, "id" | "name" | "position" | "color" | "colors" | "icon" | "unicodeEmoji">>;
 }
 
 /** https://discord.com/developers/docs/resources/invite#invite-metadata-object-invite-metadata-structure */
