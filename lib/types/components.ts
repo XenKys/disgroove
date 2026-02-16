@@ -276,7 +276,10 @@ export interface RawLabel {
     | RawRoleSelect
     | RawMentionableSelect
     | RawChannelSelect
-    | RawFileUpload;
+    | RawFileUpload
+    | RawRadioGroup
+    | RawCheckboxGroup
+    | RawCheckbox;
 }
 
 /** https://discord.com/developers/docs/components/reference#label-label-interaction-response-structure */
@@ -290,7 +293,10 @@ export interface RawLabelInteractionResponse {
     | RawRoleSelectInteractionResponse
     | RawMentionableSelectInteractionResponse
     | RawChannelSelectInteractionResponse
-    | RawFileUploadInteractionResponse;
+    | RawFileUploadInteractionResponse
+    | RawRadioGroupInteractionResponse
+    | RawCheckboxGroupInteractionResponse
+    | RawCheckboxInteractionResponse;
 }
 
 /** https://discord.com/developers/docs/components/reference#file-upload-file-upload-structure */
@@ -319,6 +325,74 @@ export interface RawUnfurledMediaItem {
   width?: number | null;
   content_type?: string;
   attachment_id?: snowflake;
+}
+
+/** https://docs.discord.com/developers/components/reference#radio-group-structure */
+export interface RawRadioGroup {
+  type: ComponentTypes.RadioGroup;
+  id?: number;
+  custom_id: string;
+  options: Array<RawRadioGroupOptions>;
+  required?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#radio-group-option-structure */
+export interface RawRadioGroupOptions {
+  value: string;
+  label: string;
+  description?: string;
+  default?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#radio-group-interaction-response-structure */
+export interface RawRadioGroupInteractionResponse {
+  type: ComponentTypes.RadioGroup;
+  id: number;
+  custom_id: string;
+  value: string | null;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-group-structure */
+export interface RawCheckboxGroup {
+  type: ComponentTypes.CheckboxGroup;
+  id?: number;
+  custom_id: string;
+  options: Array<RawCheckboxGroupOptions>;
+  min_values?: number;
+  max_values?: number;
+  required?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-group-option-structure */
+export interface RawCheckboxGroupOptions {
+  value: string;
+  label: string;
+  description?: string;
+  default?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-group-interaction-response-structure */
+export interface RawCheckboxGroupInteractionResponse {
+  type: ComponentTypes.CheckboxGroup;
+  id: number;
+  custom_id: string;
+  values: Array<string>;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-structure */
+export interface RawCheckbox {
+  type: ComponentTypes.Checkbox;
+  id?: number;
+  custom_id: string;
+  default?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-interaction-response-structure */
+export interface RawCheckboxInteractionResponse {
+  type: ComponentTypes.Checkbox;
+  id: number;
+  custom_id: string;
+  value: boolean;
 }
 
 /** https://discord.com/developers/docs/components/reference#action-row-action-row-structure */
@@ -583,7 +657,10 @@ export interface Label {
     | RoleSelect
     | MentionableSelect
     | ChannelSelect
-    | FileUpload;
+    | FileUpload
+    | RadioGroup
+    | CheckboxGroup
+    | Checkbox;
 }
 
 /** https://discord.com/developers/docs/components/reference#label-label-interaction-response-structure */
@@ -597,7 +674,10 @@ export interface LabelInteractionResponse {
     | RoleSelectInteractionResponse
     | MentionableSelectInteractionResponse
     | ChannelSelectInteractionResponse
-    | FileUploadInteractionResponse;
+    | FileUploadInteractionResponse
+    | RadioGroupInteractionResponse
+    | CheckboxGroupInteractionResponse
+    | CheckboxInteractionResponse;
 }
 
 /** https://discord.com/developers/docs/components/reference#file-upload-file-upload-structure */
@@ -626,4 +706,72 @@ export interface UnfurledMediaItem {
   width?: number | null;
   contentType?: string;
   attachmentId?: snowflake;
+}
+
+/** https://docs.discord.com/developers/components/reference#radio-group-structure */
+export interface RadioGroup {
+  type: ComponentTypes.RadioGroup;
+  id?: number;
+  customId: string;
+  options: Array<RadioGroupOptions>;
+  required?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#radio-group-option-structure */
+export interface RadioGroupOptions {
+  value: string;
+  label: string;
+  description?: string;
+  default?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#radio-group-interaction-response-structure */
+export interface RadioGroupInteractionResponse {
+  type: ComponentTypes.RadioGroup;
+  id: number;
+  customId: string;
+  value: string | null;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-group-structure */
+export interface CheckboxGroup {
+  type: ComponentTypes.CheckboxGroup;
+  id?: number;
+  customId: string;
+  options: Array<CheckboxGroupOptions>;
+  minValues?: number;
+  maxValues?: number;
+  required?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-group-option-structure */
+export interface CheckboxGroupOptions {
+  value: string;
+  label: string;
+  description?: string;
+  default?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-group-interaction-response-structure */
+export interface CheckboxGroupInteractionResponse {
+  type: ComponentTypes.CheckboxGroup;
+  id: number;
+  customId: string;
+  values: Array<string>;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-structure */
+export interface Checkbox {
+  type: ComponentTypes.Checkbox;
+  id?: number;
+  customId: string;
+  default?: boolean;
+}
+
+/** https://docs.discord.com/developers/components/reference#checkbox-interaction-response-structure */
+export interface CheckboxInteractionResponse {
+  type: ComponentTypes.Checkbox;
+  id: number;
+  customId: string;
+  value: boolean;
 }

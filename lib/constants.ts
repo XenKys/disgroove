@@ -150,6 +150,9 @@ export enum ComponentTypes {
   Container = 17,
   Label,
   FileUpload,
+  RadioGroup = 21,
+  CheckboxGroup,
+  Checkbox
 }
 
 /** https://discord.com/developers/docs/components/reference#button-button-styles */

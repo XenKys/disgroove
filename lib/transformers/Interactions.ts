@@ -27,6 +27,7 @@ import type {
 } from "../types/message";
 import { ComponentTypes } from "../constants";
 import { Components } from "./Components";
+import { StringSelectInteractionResponse, TextInputInteractionResponse, UserSelect, UserSelectInteractionResponse } from "../types/components";
 
 export class Interactions {
   static interactionCallbackResponseFromRaw(
@@ -266,6 +267,29 @@ export class Interactions {
                           values: component.component.values,
                         };
                         break;
+                      case ComponentTypes.RadioGroup:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          customId: component.component.custom_id,
+                          value: component.component.value
+                        }
+                        break;
+                      case ComponentTypes.CheckboxGroup:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          customId: component.component.custom_id,
+                          values: component.component.values,
+                        }
+                        break;
+                      case ComponentTypes.Checkbox:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          customId: component.component.custom_id,
+                          value: component.component.value
+                        }
                     }
 
                     return {
@@ -538,6 +562,29 @@ export class Interactions {
                           values: component.component.values,
                         };
                         break;
+                      case ComponentTypes.RadioGroup:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          custom_id: component.component.customId,
+                          value: component.component.value
+                        }
+                        break;
+                      case ComponentTypes.CheckboxGroup:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          custom_id: component.component.customId,
+                          values: component.component.values,
+                        }
+                        break;
+                      case ComponentTypes.Checkbox:
+                        c = {
+                          type: component.component.type,
+                          id: component.component.id,
+                          custom_id: component.component.customId,
+                          value: component.component.value
+                        }
                     }
 
                     return {

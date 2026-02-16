@@ -36,6 +36,12 @@ import {
   Label,
   RawFileUpload,
   FileUpload,
+  RawRadioGroup,
+  RadioGroup,
+  RawCheckbox,
+  Checkbox,
+  RawCheckboxGroup,
+  CheckboxGroup,
 } from "../types/components";
 
 export class Components {
@@ -142,6 +148,48 @@ export class Components {
       min_values: channelSelect.minValues,
       max_values: channelSelect.maxValues,
       disabled: channelSelect.disabled,
+    };
+  }
+
+  static checkboxFromRaw(checkbox: RawCheckbox): Checkbox {
+    return {
+      type: checkbox.type,
+      id: checkbox.id,
+      customId: checkbox.custom_id,
+      default: checkbox.default,
+    };
+  }
+
+  static checkboxToRaw(checkbox: Checkbox): RawCheckbox {
+    return {
+      type: checkbox.type,
+      id: checkbox.id,
+      custom_id: checkbox.customId,
+      default: checkbox.default,
+    };
+  }
+
+  static checkboxGroupFromRaw(checkboxGroup: RawCheckboxGroup): CheckboxGroup {
+    return {
+      type: checkboxGroup.type,
+      id: checkboxGroup.id,
+      customId: checkboxGroup.custom_id,
+      options: checkboxGroup.options,
+      minValues: checkboxGroup.min_values,
+      maxValues: checkboxGroup.max_values,
+      required: checkboxGroup.required,
+    };
+  }
+
+  static checkboxGroupToRaw(checkboxGroup: CheckboxGroup): RawCheckboxGroup {
+    return {
+      type: checkboxGroup.type,
+      id: checkboxGroup.id,
+      custom_id: checkboxGroup.customId,
+      options: checkboxGroup.options,
+      min_values: checkboxGroup.minValues,
+      max_values: checkboxGroup.maxValues,
+      required: checkboxGroup.required,
     };
   }
 
@@ -276,6 +324,14 @@ export class Components {
       case ComponentTypes.FileUpload:
         component = Components.fileUploadFromRaw(label.component);
         break;
+      case ComponentTypes.RadioGroup:
+        component = Components.radioGroupFromRaw(label.component);
+        break;
+      case ComponentTypes.CheckboxGroup:
+        component = Components.checkboxGroupFromRaw(label.component);
+        break;
+      case ComponentTypes.Checkbox:
+        component = Components.checkboxFromRaw(label.component);
     }
 
     return {
@@ -312,6 +368,14 @@ export class Components {
       case ComponentTypes.FileUpload:
         component = Components.fileUploadToRaw(label.component);
         break;
+      case ComponentTypes.RadioGroup:
+        component = Components.radioGroupToRaw(label.component);
+        break;
+      case ComponentTypes.CheckboxGroup:
+        component = Components.checkboxGroupToRaw(label.component);
+        break;
+      case ComponentTypes.Checkbox:
+        component = Components.checkboxToRaw(label.component);
     }
 
     return {
@@ -374,6 +438,26 @@ export class Components {
       min_values: mentionableSelect.minValues,
       max_values: mentionableSelect.maxValues,
       disabled: mentionableSelect.disabled,
+    };
+  }
+
+  static radioGroupFromRaw(radioGroup: RawRadioGroup): RadioGroup {
+    return {
+      type: radioGroup.type,
+      id: radioGroup.id,
+      customId: radioGroup.custom_id,
+      options: radioGroup.options,
+      required: radioGroup.required,
+    };
+  }
+
+  static radioGroupToRaw(radioGroup: RadioGroup): RawRadioGroup {
+    return {
+      type: radioGroup.type,
+      id: radioGroup.id,
+      custom_id: radioGroup.customId,
+      options: radioGroup.options,
+      required: radioGroup.required,
     };
   }
 
