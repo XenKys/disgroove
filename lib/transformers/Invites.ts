@@ -1,4 +1,5 @@
 import type { RawInvite, Invite } from "../types/invite";
+import { RawRole, Role } from "../types/role";
 import { Applications } from "./Applications";
 import { Channels } from "./Channels";
 import { Guilds } from "./Guilds";
@@ -49,6 +50,7 @@ export class Invites {
             )
           : undefined,
       flags: invite.flags,
+      roles: invite.roles?.map((role) => Invites.partialRoleFromRaw(role))
     };
   }
 
@@ -95,6 +97,39 @@ export class Invites {
             )
           : undefined,
       flags: invite.flags,
+      roles: invite.roles?.map((role) => Invites.partialRoleToRaw(role))
     };
+  }
+
+  static partialRoleFromRaw(role: Pick<RawRole, "id" | "name" | "position" | "color" | "colors" | "icon" | "unicode_emoji">): Pick<Role, "id" | "name" | "position" | "color" | "colors" | "icon" | "unicodeEmoji"> {
+    return {
+        id: role.id,
+        name: role.name,
+        position: role.position,
+        color: role.color,
+        colors: {
+          primaryColor: role.colors.primary_color,
+          secondaryColor: role.colors.secondary_color,
+          tertiaryColor: role.colors.tertiary_color
+        },
+        icon: role.icon,
+        unicodeEmoji: role.unicode_emoji
+      }
+  }
+
+  static partialRoleToRaw(role: Pick<Role, "id" | "name" | "position" | "color" | "colors" | "icon" | "unicodeEmoji">): Pick<RawRole, "id" | "name" | "position" | "color" | "colors" | "icon" | "unicode_emoji"> {
+    return {
+        id: role.id,
+        name: role.name,
+        position: role.position,
+        color: role.color,
+        colors: {
+          primary_color: role.colors.primaryColor,
+          secondary_color: role.colors.secondaryColor,
+          tertiary_color: role.colors.tertiaryColor
+        },
+        icon: role.icon,
+        unicode_emoji: role.unicodeEmoji
+      }
   }
 }
