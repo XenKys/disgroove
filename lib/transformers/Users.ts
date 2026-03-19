@@ -1,6 +1,31 @@
-import type { Nameplate, RawNameplate, RawUser, User } from "../types/user";
+import type {
+  Collectibles,
+  Nameplate,
+  RawCollectibles,
+  RawNameplate,
+  RawUser,
+  User,
+} from "../types/user";
 
 export class Users {
+  static collectiblesFromRaw(collectibles: RawCollectibles): Collectibles {
+    return {
+      nameplate:
+        collectibles.nameplate !== undefined
+          ? this.nameplateFromRaw(collectibles.nameplate)
+          : undefined,
+    };
+  }
+
+  static collectiblesToRaw(collectibles: Collectibles): RawCollectibles {
+    return {
+      nameplate:
+        collectibles.nameplate !== undefined
+          ? this.nameplateToRaw(collectibles.nameplate)
+          : undefined,
+    };
+  }
+
   static nameplateFromRaw(nameplate: RawNameplate): Nameplate {
     return {
       skuId: nameplate.sku_id,
@@ -49,12 +74,7 @@ export class Users {
       collectibles:
         user.collectibles !== undefined
           ? user.collectibles !== null
-            ? {
-                nameplate:
-                  user.collectibles.nameplate !== undefined
-                    ? this.nameplateFromRaw(user.collectibles.nameplate)
-                    : undefined,
-              }
+            ? this.collectiblesFromRaw(user.collectibles)
             : null
           : undefined,
       primaryGuild:
@@ -101,12 +121,7 @@ export class Users {
       collectibles:
         user.collectibles !== undefined
           ? user.collectibles !== null
-            ? {
-                nameplate:
-                  user.collectibles.nameplate !== undefined
-                    ? this.nameplateToRaw(user.collectibles.nameplate)
-                    : undefined,
-              }
+            ? this.collectiblesToRaw(user.collectibles)
             : null
           : undefined,
       primary_guild:

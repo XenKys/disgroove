@@ -20,7 +20,9 @@ import type { RawRole, Role } from "./role";
 import type { RawSticker, Sticker } from "./sticker";
 import type {
   AvatarDecorationData,
+  Collectibles,
   RawAvatarDecorationData,
+  RawCollectibles,
   RawUser,
   User,
 } from "./user";
@@ -127,6 +129,7 @@ export interface RawGuildMember {
   communication_disabled_until?: timestamp | null;
   unusual_dm_activity_until?: timestamp | null;
   avatar_decoration_data?: RawAvatarDecorationData | null;
+  collectibles?: RawCollectibles | null;
 }
 
 /** https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */
@@ -327,6 +330,7 @@ export interface GuildMember {
   communicationDisabledUntil?: timestamp | null;
   unusualDMActivityUntil?: timestamp | null;
   avatarDecorationData?: AvatarDecorationData | null;
+  collectibles?: Collectibles | null;
 }
 
 /** https://discord.com/developers/docs/resources/guild#integration-object-integration-structure */

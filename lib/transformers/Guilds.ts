@@ -148,6 +148,12 @@ export class Guilds {
               }
             : null
           : undefined,
+      collectibles:
+        guildMember.collectibles !== undefined
+          ? guildMember.collectibles !== null
+            ? Users.collectiblesFromRaw(guildMember.collectibles)
+            : null
+          : undefined,
     };
   }
 
@@ -175,6 +181,12 @@ export class Guilds {
                 asset: guildMember.avatarDecorationData.asset,
                 sku_id: guildMember.avatarDecorationData.skuId,
               }
+            : null
+          : undefined,
+      collectibles:
+        guildMember.collectibles !== undefined
+          ? guildMember.collectibles !== null
+            ? Users.collectiblesToRaw(guildMember.collectibles)
             : null
           : undefined,
     };

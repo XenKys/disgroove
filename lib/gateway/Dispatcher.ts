@@ -379,6 +379,12 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
               }
             : null
           : undefined,
+      collectibles:
+        data.collectibles !== undefined
+          ? data.collectibles !== null
+            ? Users.collectiblesFromRaw(data.collectibles)
+            : null
+          : undefined,
     });
   },
   [GatewayEvents.GuildMembersChunk]: (shard, data) => {
@@ -534,7 +540,7 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       temporary: data.temporary,
       uses: data.uses,
       expiresAt: data.expires_at,
-      roleIds: data.roles_ids
+      roleIds: data.roles_ids,
     });
   },
   [GatewayEvents.InviteDelete]: (shard, data) => {

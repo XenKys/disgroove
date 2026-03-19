@@ -43,6 +43,8 @@ import type {
   RawAvatarDecorationData,
   User,
   AvatarDecorationData,
+  Collectibles,
+  RawCollectibles,
 } from "./user";
 import type { RawVoiceState, VoiceState } from "./voice";
 
@@ -246,6 +248,7 @@ export interface RawGuildMemberUpdateEvent {
   communication_disabled_until?: number | null;
   flags?: GuildMemberFlags;
   avatar_decoration_data?: RawAvatarDecorationData | null;
+  collectibles?: RawCollectibles | null;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#guild-members-chunk-guild-members-chunk-event-fields */
@@ -341,7 +344,7 @@ export interface RawInviteCreateEvent {
   temporary: boolean;
   uses: number;
   expires_at: timestamp | null;
-  roles_ids?: Array<snowflake>
+  roles_ids?: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields */
@@ -750,6 +753,7 @@ export interface GuildMemberUpdateEvent {
   communicationDisabledUntil?: number | null;
   flags?: GuildMemberFlags;
   avatarDecorationData?: AvatarDecorationData | null;
+  collectibles?: Collectibles | null;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#guild-members-chunk-guild-members-chunk-event-fields */
@@ -845,7 +849,7 @@ export interface InviteCreateEvent {
   temporary: boolean;
   uses: number;
   expiresAt: timestamp | null;
-  roleIds?: Array<snowflake>
+  roleIds?: Array<snowflake>;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#invite-delete-invite-delete-event-fields */
