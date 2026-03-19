@@ -152,7 +152,7 @@ export enum ComponentTypes {
   FileUpload,
   RadioGroup = 21,
   CheckboxGroup,
-  Checkbox
+  Checkbox,
 }
 
 /** https://discord.com/developers/docs/components/reference#button-button-styles */
@@ -1059,7 +1059,10 @@ export enum VoiceCloseEventCodes {
   Disconnect = 4014,
   VoiceServerCrashed,
   UnknownEncryptionMode,
+  ProtocolRequired,
   BadRequest = 4020,
+  RateLimited,
+  CallTerminated,
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#http-http-response-codes */
