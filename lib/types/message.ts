@@ -9,6 +9,7 @@ import type {
   ChannelTypes,
   AllowedMentionTypes,
   EmbedTypes,
+  BaseThemeTypes,
 } from "../constants";
 import type { Application, RawApplication } from "./application";
 import type { Channel, RawChannel } from "./channel";
@@ -91,6 +92,7 @@ export interface RawMessage {
   resolved?: RawResolvedData;
   poll?: RawPoll;
   call?: RawMessageCall;
+  shared_client_theme?: RawSharedClientTheme;
 }
 
 /** https://discord.com/developers/docs/resources/message#message-object-message-activity-structure */
@@ -289,6 +291,15 @@ export interface RawMessagePin {
   message: RawMessage;
 }
 
+/** https://docs.discord.com/developers/resources/message#shared-client-theme-object */
+export interface RawSharedClientTheme {
+  colors: Array<string>;
+  gradient_angle: number;
+  base_mix: number;
+  base_theme?: BaseThemeTypes | null;
+}
+
+/** https://discord.com/developers/docs/resources/message#message-object-message-structure */
 export interface Message {
   id: snowflake;
   channelId: snowflake;
@@ -334,13 +345,16 @@ export interface Message {
   resolved?: ResolvedData;
   poll?: Poll;
   call?: MessageCall;
+  sharedClientTheme?: SharedClientTheme;
 }
 
+/** https://discord.com/developers/docs/resources/message#message-object-message-activity-structure */
 export interface MessageActivity {
   type: MessageActivityTypes;
   partyId?: string;
 }
 
+/** https://discord.com/developers/docs/resources/message#message-interaction-metadata-object-message-interaction-metadata-structure */
 export interface MessageInteractionMetadata {
   id: snowflake;
   type: InteractionType;
@@ -351,11 +365,13 @@ export interface MessageInteractionMetadata {
   triggeringInteractionMetadata?: MessageInteractionMetadata;
 }
 
+/** https://discord.com/developers/docs/resources/message#message-call-object-message-call-object-structure */
 export interface MessageCall {
   partecipants: Array<snowflake>;
   endedTimestamp?: timestamp | null;
 }
 
+/** https://discord.com/developers/docs/resources/message#message-reference-object-message-reference-structure */
 export interface MessageReference {
   type?: MessageReferenceTypes;
   messageId?: snowflake;
@@ -364,6 +380,7 @@ export interface MessageReference {
   failIfNotExists?: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/message#message-snapshot-object-message-snapshot-structure */
 export interface MessageSnapshot {
   message: Pick<
     Message,
@@ -382,6 +399,7 @@ export interface MessageSnapshot {
   >;
 }
 
+/** https://discord.com/developers/docs/resources/message#reaction-object-reaction-structure */
 export interface Reaction {
   count: number;
   countDetails: ReactionCountDetails;
@@ -391,11 +409,13 @@ export interface Reaction {
   burstColors: Array<string>;
 }
 
+/** https://discord.com/developers/docs/resources/message#reaction-count-details-object-reaction-count-details-structure */
 export interface ReactionCountDetails {
   burst: number;
   normal: number;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-structure */
 export interface Embed {
   title?: string;
   type?: EmbedTypes;
@@ -412,6 +432,7 @@ export interface Embed {
   fields?: Array<EmbedField>;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure */
 export interface EmbedThumbnail {
   url: string;
   proxyURL?: string;
@@ -419,6 +440,7 @@ export interface EmbedThumbnail {
   width?: number;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-video-structure */
 export interface EmbedVideo {
   url?: string;
   proxyURL?: string;
@@ -426,6 +448,7 @@ export interface EmbedVideo {
   width?: number;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-image-structure */
 export interface EmbedImage {
   url: string;
   proxyURL?: string;
@@ -433,11 +456,13 @@ export interface EmbedImage {
   width?: number;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-provider-structure */
 export interface EmbedProvider {
   name?: string;
   url?: string;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-author-structure */
 export interface EmbedAuthor {
   name: string;
   url?: string;
@@ -445,18 +470,21 @@ export interface EmbedAuthor {
   proxyIconURL?: string;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-footer-structure */
 export interface EmbedFooter {
   text: string;
   iconURL?: string;
   proxyIconURL?: string;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-object-embed-field-structure */
 export interface EmbedField {
   name: string;
   value: string;
   inline?: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/message#embed-fields-by-embed-type-poll-result-embed-fields */
 export interface PollResultEmbedFields {
   pollQuestionText: string;
   victorAnswerVotes: Array<number>;
@@ -468,6 +496,7 @@ export interface PollResultEmbedFields {
   victorAnswerEmojiAnimated?: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/message#attachment-object-attachment-structure */
 export interface Attachment {
   id: snowflake;
   filename: string;
@@ -485,6 +514,7 @@ export interface Attachment {
   flags?: AttachmentFlags;
 }
 
+/** https://discord.com/developers/docs/resources/message#channel-mention-object-channel-mention-structure */
 export interface ChannelMention {
   id: snowflake;
   guildId: snowflake;
@@ -492,6 +522,7 @@ export interface ChannelMention {
   name: string;
 }
 
+/** https://discord.com/developers/docs/resources/message#allowed-mentions-object-allowed-mentions-structure */
 export interface AllowedMentions {
   parse?: Array<AllowedMentionTypes>;
   roles?: Array<snowflake>;
@@ -507,7 +538,16 @@ export interface RoleSubscriptionData {
   isRenewal: boolean;
 }
 
+/** https://discord.com/developers/docs/resources/message#message-pin-object-message-pin-structure */
 export interface MessagePin {
   pinnetAt: timestamp;
   message: Message;
+}
+
+/** https://docs.discord.com/developers/resources/message#shared-client-theme-object */
+export interface SharedClientTheme {
+  colors: Array<string>;
+  gradientAngle: number;
+  baseMix: number;
+  baseTheme?: BaseThemeTypes | null;
 }

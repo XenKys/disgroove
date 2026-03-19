@@ -686,6 +686,14 @@ export enum AllowedMentionTypes {
   EveryoneMentions = "everyone",
 }
 
+/** https://docs.discord.com/developers/resources/message#base-theme-types */
+export enum BaseThemeTypes {
+  Dark = 1,
+  Light,
+  Darker,
+  Midnight,
+}
+
 /** https://discord.com/developers/docs/resources/message#get-reactions-reaction-types */
 export enum ReactionTypes {
   Normal,

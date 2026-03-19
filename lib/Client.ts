@@ -218,6 +218,7 @@ import type {
   MessageReference,
   MessagePin,
   RawMessagePin,
+  SharedClientTheme,
 } from "./types/message";
 import type { RawSubscription, Subscription } from "./types/subscription";
 import type { RawSoundboardSound, SoundboardSound } from "./types/soundboard";
@@ -1379,6 +1380,7 @@ export class Client extends EventEmitter {
       flags?: MessageFlags;
       enforceNonce?: boolean;
       poll?: PollCreateParams;
+      sharedClientTheme?: SharedClientTheme;
     }
   ): Promise<Message> {
     const response = await this.rest.request<RawMessage>(
@@ -1427,6 +1429,15 @@ export class Client extends EventEmitter {
                   duration: options.poll.duration,
                   allow_multiselect: options.poll.allowMultiselect,
                   layout_type: options.poll.layoutType,
+                }
+              : undefined,
+          shared_client_theme:
+            options.sharedClientTheme !== undefined
+              ? {
+                  colors: options.sharedClientTheme.colors,
+                  gradient_angle: options.sharedClientTheme.gradientAngle,
+                  base_mix: options.sharedClientTheme.baseMix,
+                  base_theme: options.sharedClientTheme.baseTheme,
                 }
               : undefined,
         },

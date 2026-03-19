@@ -395,6 +395,15 @@ export class Messages {
           ? Polls.pollFromRaw(message.poll)
           : undefined,
       call: message.call,
+      sharedClientTheme:
+        message.shared_client_theme !== undefined
+          ? {
+              colors: message.shared_client_theme.colors,
+              gradientAngle: message.shared_client_theme.gradient_angle,
+              baseMix: message.shared_client_theme.base_mix,
+              baseTheme: message.shared_client_theme.base_theme,
+            }
+          : undefined,
     };
   }
 
@@ -525,6 +534,15 @@ export class Messages {
       poll:
         message.poll !== undefined ? Polls.pollToRaw(message.poll) : undefined,
       call: message.call,
+      shared_client_theme:
+        message.sharedClientTheme !== undefined
+          ? {
+              colors: message.sharedClientTheme.colors,
+              gradient_angle: message.sharedClientTheme.gradientAngle,
+              base_mix: message.sharedClientTheme.baseMix,
+              base_theme: message.sharedClientTheme.baseTheme,
+            }
+          : undefined,
     };
   }
 }
