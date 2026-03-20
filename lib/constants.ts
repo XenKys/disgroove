@@ -688,7 +688,8 @@ export enum AllowedMentionTypes {
 
 /** https://docs.discord.com/developers/resources/message#base-theme-types */
 export enum BaseThemeTypes {
-  Dark = 1,
+  Unset,
+  Dark,
   Light,
   Darker,
   Midnight,
