@@ -695,6 +695,41 @@ export enum BaseThemeTypes {
   Midnight,
 }
 
+/** https://docs.discord.com/developers/resources/message#search-guild-messages-author-types */
+export enum AuthorTypes {
+  User = "user",
+  Bot = "bot",
+  Webhook = "webhook",
+}
+
+/** https://docs.discord.com/developers/resources/message#search-guild-messages-search-has-types */
+export enum SearchHasTypes {
+  Image = "image",
+  Sound = "sound",
+  Video = "video",
+  File = "file",
+  Sticker = "sticker",
+  Embed = "embed",
+  Link = "link",
+  Poll = "poll",
+  Snapshot = "snapshot",
+}
+
+/** https://docs.discord.com/developers/resources/message#search-guild-messages-search-embed-types */
+export enum SearchEmbedTypes {
+  Image = "image",
+  Video = "video",
+  GIF = "gif",
+  Sound = "sound",
+  Article = "article",
+}
+
+/** https://docs.discord.com/developers/resources/message#search-guild-messages-search-sort-modes */
+export enum SearchSortModes {
+  Timestamp = "timestamp",
+  Relevance = "relevance",
+}
+
 /** https://discord.com/developers/docs/resources/message#get-reactions-reaction-types */
 export enum ReactionTypes {
   Normal,
@@ -1283,7 +1318,9 @@ export enum JSONErrorCodes {
   TwoFactorAuthenticationIsRequired = 60003,
   NoUsersWithDiscordTagExist = 80004,
   ReactionWasBlocked = 90001,
-  ApplicationNotYetAvailable = 110001,
+  UserCannotUseBurstReactions,
+  IndexNotYetAvailable = 110000,
+  ApplicationNotYetAvailable,
   APIResourceOverloaded = 130000,
   TheStageIsAlreadyOpen = 150006,
   CannotReplyWithoutPermissionToReadMessageHistory = 160002,

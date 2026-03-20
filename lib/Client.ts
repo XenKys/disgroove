@@ -31,7 +31,11 @@ import {
   type InteractionContextTypes,
   ComponentTypes,
   type LobbyMemberFlags,
-  InviteTargetUsersJobStatusErrorCodes,
+  type InviteTargetUsersJobStatusErrorCodes,
+  type AuthorTypes,
+  type SearchHasTypes,
+  type SearchEmbedTypes,
+  type SearchSortModes,
 } from "./constants";
 import { Endpoints, RequestManager, RESTMethods, type FileData } from "./rest";
 import EventEmitter from "node:events";
@@ -5167,6 +5171,95 @@ export class Client extends EventEmitter {
     return response.map((guildMember) =>
       Guilds.guildMemberFromRaw(guildMember)
     );
+  }
+
+  /** https://docs.discord.com/developers/resources/message#search-guild-messages */
+  async searchGuildMessages(
+    guildId: snowflake,
+    options?: {
+      limit?: number;
+      offset?: number;
+      maxId?: snowflake;
+      minId?: snowflake;
+      slop?: number;
+      content?: string;
+      channelId?: snowflake;
+      authorType?: Array<AuthorTypes>;
+      authorId?: Array<snowflake>;
+      mentions?: Array<snowflake>;
+      mentionsRolesId?: Array<snowflake>;
+      mentionEveryone?: boolean;
+      repliedToUserId?: Array<snowflake>;
+      repliedToMessageId?: Array<snowflake>;
+      pinned?: boolean;
+      has?: Array<SearchHasTypes>;
+      embedType?: Array<SearchEmbedTypes>;
+      embedProvider?: Array<string>;
+      linkHostname?: Array<string>;
+      attachmentFilename?: Array<string>;
+      attachmentExtension?: Array<string>;
+      sortBy?: SearchSortModes;
+      sortOrder?: string;
+      includeNfsw?: boolean;
+    }
+  ): Promise<{
+    doingDeepHistoricalIndex: boolean;
+    documentsIndexed?: number;
+    totalResults: number;
+    messages: Array<Message>;
+    threads?: Array<Channel>;
+    members?: Array<ThreadMember>;
+  }> {
+    const response = await this.rest.request<{
+      doing_deep_historical_index: boolean;
+      documents_indexed?: number;
+      total_results: number;
+      messages: Array<RawMessage>;
+      threads?: Array<RawChannel>;
+      members?: Array<RawThreadMember>;
+    }>(RESTMethods.Get, Endpoints.guildMessagesSearch(guildId), {
+      query: {
+        limit: options?.limit,
+        offset: options?.offset,
+        max_id: options?.maxId,
+        min_id: options?.minId,
+        slop: options?.slop,
+        content: options?.content,
+        channel_id: options?.channelId,
+        author_type: options?.authorType,
+        author_id: options?.authorId,
+        mentions: options?.mentions,
+        mentions_roles_id: options?.mentionsRolesId,
+        mention_everyone: options?.mentionEveryone,
+        replied_to_user_id: options?.repliedToUserId,
+        replied_to_message_id: options?.repliedToMessageId,
+        pinned: options?.pinned,
+        has: options?.has,
+        embed_type: options?.embedType,
+        embed_provider: options?.embedProvider,
+        link_hostname: options?.linkHostname,
+        attachment_filename: options?.attachmentFilename,
+        attachment_extension: options?.attachmentExtension,
+        sort_by: options?.sortBy,
+        sort_order: options?.sortOrder,
+        include_nsfw: options?.includeNfsw,
+      },
+    });
+
+    return {
+      doingDeepHistoricalIndex: response.doing_deep_historical_index,
+      documentsIndexed: response.documents_indexed,
+      totalResults: response.total_results,
+      messages: response.messages.map((message) =>
+        Messages.messageFromRaw(message)
+      ),
+      threads: response.threads?.map((thread) =>
+        Channels.channelFromRaw(thread)
+      ),
+      members: response.members?.map((member) =>
+        Channels.threadMemberFromRaw(member)
+      ),
+    };
   }
 
   /** https://discord.com/developers/docs/resources/soundboard#send-soundboard-sound */

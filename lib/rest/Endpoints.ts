@@ -54,6 +54,8 @@ export const guildMembersSearch = (guildId: snowflake) =>
   `guilds/${guildId}/members/search` as const;
 export const guildMemberVerification = (guildId: snowflake) =>
   `guilds/${guildId}/member-verification` as const;
+export const guildMessagesSearch = (guildId: snowflake) =>
+  `guilds/${guildId}/messages/search` as const;
 export const guildOnboarding = (guildId: snowflake) =>
   `guilds/${guildId}/onboarding` as const;
 export const guildPreview = (guildId: snowflake) =>
