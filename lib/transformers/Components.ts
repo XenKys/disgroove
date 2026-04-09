@@ -1,5 +1,5 @@
 import { ComponentTypes } from "../constants";
-import {
+import type {
   ActionRow,
   Button,
   Container,
@@ -680,7 +680,11 @@ export class Components {
       proxyURL: unfurledMediaItem.proxy_url,
       height: unfurledMediaItem.height,
       width: unfurledMediaItem.width,
+      placeholder: unfurledMediaItem.placeholder,
+      placeholderVersion: unfurledMediaItem.placeholder_version,
       contentType: unfurledMediaItem.content_type,
+      flags: unfurledMediaItem.flags,
+      attachmentId: unfurledMediaItem.attachment_id,
     };
   }
 
@@ -692,7 +696,11 @@ export class Components {
       proxy_url: unfurledMediaItem.proxyURL,
       height: unfurledMediaItem.height,
       width: unfurledMediaItem.width,
+      placeholder: unfurledMediaItem.placeholder,
+      placeholder_version: unfurledMediaItem.placeholderVersion,
       content_type: unfurledMediaItem.contentType,
+      flags: unfurledMediaItem.flags,
+      attachment_id: unfurledMediaItem.attachmentId,
     };
   }
 

@@ -1,5 +1,5 @@
 import { ComponentTypes } from "../constants";
-import {
+import type {
   RawAttachment,
   Attachment,
   RawEmbed,
@@ -50,6 +50,16 @@ export class Messages {
       durationSecs: attachment.duration_secs,
       waveform: attachment.waveform,
       flags: attachment.flags,
+      clipParticipants: attachment.clip_participants?.map((user) =>
+        Users.userFromRaw(user)
+      ),
+      clipCreatedAt: attachment.clip_created_at,
+      application:
+        attachment.application !== undefined
+          ? attachment.application !== null
+            ? Applications.applicationFromRaw(attachment.application)
+            : null
+          : undefined,
     };
   }
 
@@ -69,6 +79,16 @@ export class Messages {
       duration_secs: attachment.durationSecs,
       waveform: attachment.waveform,
       flags: attachment.flags,
+      clip_participants: attachment.clipParticipants?.map((user) =>
+        Users.userToRaw(user)
+      ),
+      clip_created_at: attachment.clipCreatedAt,
+      application:
+        attachment.application !== undefined
+          ? attachment.application !== null
+            ? Applications.applicationToRaw(attachment.application)
+            : null
+          : undefined,
     };
   }
 
@@ -173,6 +193,11 @@ export class Messages {
               proxyURL: embed.image.proxy_url,
               height: embed.image.height,
               width: embed.image.width,
+              contentType: embed.image.content_type,
+              placeholder: embed.image.placeholder,
+              placeholderVersion: embed.image.placeholder_version,
+              description: embed.image.description,
+              flags: embed.image.flags,
             }
           : undefined,
       thumbnail:
@@ -184,16 +209,27 @@ export class Messages {
               width: embed.thumbnail.width,
             }
           : undefined,
-      video: {
-        url: embed.video?.url,
-        proxyURL: embed.video?.proxy_url,
-        height: embed.video?.height,
-        width: embed.video?.width,
-      },
-      provider: {
-        name: embed.provider?.name,
-        url: embed.provider?.url,
-      },
+      video:
+        embed.video !== undefined
+          ? {
+              url: embed.video.url,
+              proxyURL: embed.video.proxy_url,
+              height: embed.video.height,
+              width: embed.video.width,
+              contentType: embed.video.content_type,
+              placeholder: embed.video.placeholder,
+              placeholderVersion: embed.video.placeholder_version,
+              description: embed.video.description,
+              flags: embed.video.flags,
+            }
+          : undefined,
+      provider:
+        embed.provider !== undefined
+          ? {
+              name: embed.provider.name,
+              url: embed.provider.url,
+            }
+          : undefined,
       author:
         embed.author !== undefined
           ? {
@@ -230,6 +266,11 @@ export class Messages {
               proxy_url: embed.image.proxyURL,
               height: embed.image.height,
               width: embed.image.width,
+              content_type: embed.image.contentType,
+              placeholder: embed.image.placeholder,
+              placeholder_version: embed.image.placeholderVersion,
+              description: embed.image.description,
+              flags: embed.image.flags,
             }
           : undefined,
       thumbnail:
@@ -241,16 +282,27 @@ export class Messages {
               width: embed.thumbnail.width,
             }
           : undefined,
-      video: {
-        url: embed.video?.url,
-        proxy_url: embed.video?.proxyURL,
-        height: embed.video?.height,
-        width: embed.video?.width,
-      },
-      provider: {
-        name: embed.provider?.name,
-        url: embed.provider?.url,
-      },
+      video:
+        embed.video !== undefined
+          ? {
+              url: embed.video.url,
+              proxy_url: embed.video.proxyURL,
+              height: embed.video.height,
+              width: embed.video.width,
+              content_type: embed.video.contentType,
+              placeholder: embed.video.placeholder,
+              placeholder_version: embed.video.placeholderVersion,
+              description: embed.video.description,
+              flags: embed.video.flags,
+            }
+          : undefined,
+      provider:
+        embed.provider !== undefined
+          ? {
+              name: embed.provider.name,
+              url: embed.provider.url,
+            }
+          : undefined,
       author:
         embed.author !== undefined
           ? {

@@ -10,6 +10,8 @@ import type {
   AllowedMentionTypes,
   EmbedTypes,
   BaseThemeTypes,
+  EmbedFlags,
+  EmbedMediaFlags,
 } from "../constants";
 import type { Application, RawApplication } from "./application";
 import type { Channel, RawChannel } from "./channel";
@@ -177,6 +179,7 @@ export interface RawEmbed {
   provider?: RawEmbedProvider;
   author?: RawEmbedAuthor;
   fields?: Array<RawEmbedField>;
+  flags?: EmbedFlags;
 }
 
 /** https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure */
@@ -193,6 +196,11 @@ export interface RawEmbedVideo {
   proxy_url?: string;
   height?: number;
   width?: number;
+  content_type?: string;
+  placeholder?: string;
+  placeholder_version?: number;
+  description?: string;
+  flags?: EmbedMediaFlags;
 }
 
 /** https://discord.com/developers/docs/resources/message#embed-object-embed-image-structure */
@@ -201,6 +209,11 @@ export interface RawEmbedImage {
   proxy_url?: string;
   height?: number;
   width?: number;
+  content_type?: string;
+  placeholder?: string;
+  placeholder_version?: number;
+  description?: string;
+  flags?: EmbedMediaFlags;
 }
 
 /** https://discord.com/developers/docs/resources/message#embed-object-embed-provider-structure */
@@ -259,6 +272,9 @@ export interface RawAttachment {
   duration_secs?: number;
   waveform?: boolean;
   flags?: AttachmentFlags;
+  clip_participants?: Array<RawUser>;
+  clip_created_at?: timestamp;
+  application?: RawApplication | null;
 }
 
 /** https://discord.com/developers/docs/resources/message#channel-mention-object-channel-mention-structure */
@@ -430,6 +446,7 @@ export interface Embed {
   provider?: EmbedProvider;
   author?: EmbedAuthor;
   fields?: Array<EmbedField>;
+  flags?: EmbedFlags;
 }
 
 /** https://discord.com/developers/docs/resources/message#embed-object-embed-thumbnail-structure */
@@ -446,6 +463,11 @@ export interface EmbedVideo {
   proxyURL?: string;
   height?: number;
   width?: number;
+  contentType?: string;
+  placeholder?: string;
+  placeholderVersion?: number;
+  description?: string;
+  flags?: EmbedMediaFlags;
 }
 
 /** https://discord.com/developers/docs/resources/message#embed-object-embed-image-structure */
@@ -454,6 +476,11 @@ export interface EmbedImage {
   proxyURL?: string;
   height?: number;
   width?: number;
+  contentType?: string;
+  placeholder?: string;
+  placeholderVersion?: number;
+  description?: string;
+  flags?: EmbedMediaFlags;
 }
 
 /** https://discord.com/developers/docs/resources/message#embed-object-embed-provider-structure */
@@ -512,6 +539,9 @@ export interface Attachment {
   durationSecs?: number;
   waveform?: boolean;
   flags?: AttachmentFlags;
+  clipParticipants?: Array<User>;
+  clipCreatedAt?: timestamp;
+  application?: Application | null;
 }
 
 /** https://discord.com/developers/docs/resources/message#channel-mention-object-channel-mention-structure */

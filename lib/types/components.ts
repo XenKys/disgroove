@@ -4,6 +4,7 @@ import type {
   ComponentTypes,
   SeparatorSpacing,
   TextInputStyles,
+  UnfurledMediaItemFlags,
 } from "../constants";
 import type { snowflake } from "./common";
 import type { RawEmoji, Emoji } from "./emoji";
@@ -323,7 +324,10 @@ export interface RawUnfurledMediaItem {
   proxy_url?: string;
   height?: number | null;
   width?: number | null;
+  placeholder?: string;
+  placeholder_version?: number;
   content_type?: string;
+  flags?: UnfurledMediaItemFlags;
   attachment_id?: snowflake;
 }
 
@@ -704,7 +708,10 @@ export interface UnfurledMediaItem {
   proxyURL?: string;
   height?: number | null;
   width?: number | null;
+  placeholder?: string;
+  placeholderVersion?: number;
   contentType?: string;
+  flags?: UnfurledMediaItemFlags;
   attachmentId?: snowflake;
 }
 

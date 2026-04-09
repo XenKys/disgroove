@@ -177,6 +177,11 @@ export enum SeparatorSpacing {
   Large,
 }
 
+/** https://docs.discord.com/developers/components/reference#unfurled-media-item-unfurled-media-item-flags */
+export enum UnfurledMediaItemFlags {
+  IsAnimated = 1 << 0,
+}
+
 /** https://discord.com/developers/docs/resources/application#application-object-application-integration-types */
 export enum ApplicationIntegrationTypes {
   GuildInstall,
@@ -674,9 +679,23 @@ export enum EmbedTypes {
   PollResult = "poll_result",
 }
 
+/** https://docs.discord.com/developers/resources/message#embed-object-embed-flags */
+export enum EmbedFlags {
+  IsContentInventoryEntry = 1 << 5,
+}
+
+/** https://docs.discord.com/developers/resources/message#embed-object-embed-media-flags */
+export enum EmbedMediaFlags {
+  IsAnimated = 1 << 5,
+}
+
 /** https://discord.com/developers/docs/resources/message#attachment-object-attachment-flags */
 export enum AttachmentFlags {
+  IsClip = 1 << 0,
+  IsThumbnail = 1 << 1,
   IsRemix = 1 << 2,
+  IsSpoiler = 1 << 3,
+  IsAnimated = 1 << 5,
 }
 
 /** https://discord.com/developers/docs/resources/message#allowed-mentions-object-allowed-mention-types */
