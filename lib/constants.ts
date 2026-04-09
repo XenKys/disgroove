@@ -1314,7 +1314,7 @@ export enum JSONErrorCodes {
   YouCannotSendVoiceMessagesInThisChannel = 50173,
   TheUserAccountMustFirstBeVerified = 50178,
   TheProvidedFileDoesNotHaveAValidDuration = 50192,
-  CannotSendMessagesToThisUser2 = 50278,
+  CannotSendMessagesToThisUserDueToHavingNoMutualGuilds = 50278,
   YouDoNotHavePermissionToSendThisSticker = 50600,
   TwoFactorAuthenticationIsRequired = 60003,
   NoUsersWithDiscordTagExist = 80004,
