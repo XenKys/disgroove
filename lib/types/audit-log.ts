@@ -54,6 +54,7 @@ export interface RawOptionalAuditLogEntryInfo {
   role_name: string;
   type: string;
   integration_type: string;
+  status: string;
 }
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure */
@@ -100,6 +101,7 @@ export interface OptionalAuditLogEntryInfo {
   roleName: string;
   type: string;
   integrationType: string;
+  status: string;
 }
 
 /** https://discord.com/developers/docs/resources/audit-log#audit-log-change-object-audit-log-change-structure */

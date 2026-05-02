@@ -98,6 +98,12 @@ export interface RawRequestSoundboardSounds {
   guild_ids: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#request-channel-info */
+export interface RawRequestChannelInfo {
+  guild_id: snowflake;
+  fields: Array<string>;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#update-presence-gateway-presence-update-structure */
 export interface RawGatewayPresenceUpdate {
   since: number | null;
@@ -140,6 +146,33 @@ export interface RawAutoModerationActionExecutionEvent {
   content: string;
   matched_keyword: string | null;
   matched_content: string | null;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#channel-info-channel-info-structure */
+export interface RawChannelInfoEvent {
+  guild_id: snowflake;
+  channels: Array<RawChannelInfoChannel>;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#channel-info-channel-info-channel-structure */
+export interface RawChannelInfoChannel {
+  id: snowflake;
+  status?: string | null;
+  voice_start_time?: number | null;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#voice-channel-status-update */
+export interface RawVoiceChannelStatusUpdateEvent {
+  id: snowflake;
+  guild_id: snowflake;
+  status: string | null;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#voice-channel-start-time-update */
+export interface RawVoiceChannelStartTimeUpdateEvent {
+  id: snowflake;
+  guild_id: snowflake;
+  voice_start_time?: number | null;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#thread-list-sync-thread-list-sync-event-fields */
@@ -605,6 +638,12 @@ export interface RequestSoundboardSounds {
   guildIds: Array<snowflake>;
 }
 
+/** https://discord.com/developers/docs/topics/gateway-events#request-channel-info */
+export interface RequestChannelInfo {
+  guildId: snowflake;
+  fields: Array<string>;
+}
+
 /** https://discord.com/developers/docs/events/gateway-events#update-presence-gateway-presence-update-structure */
 export interface GatewayPresenceUpdate {
   since: number | null;
@@ -645,6 +684,33 @@ export interface AutoModerationActionExecutionEvent {
   content: string;
   matchedKeyword: string | null;
   matchedContent: string | null;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#channel-info-channel-info-structure */
+export interface ChannelInfoEvent {
+  guildId: snowflake;
+  channels: Array<RawChannelInfoChannel>;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#channel-info-channel-info-channel-structure */
+export interface ChannelInfoChannel {
+  id: snowflake;
+  status?: string | null;
+  voiceStartTime?: number | null;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#voice-channel-status-update */
+export interface VoiceChannelStatusUpdateEvent {
+  id: snowflake;
+  guildId: snowflake;
+  status: string | null;
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#voice-channel-start-time-update */
+export interface VoiceChannelStartTimeUpdateEvent {
+  id: snowflake;
+  guildId: snowflake;
+  voiceStartTime?: number | null;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#thread-list-sync-thread-list-sync-event-fields */

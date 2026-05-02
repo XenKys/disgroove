@@ -71,6 +71,9 @@ import type {
   RawMessagePollVoteAddEvent,
   RawMessagePollVoteRemoveEvent,
   RawReadyEvent,
+  RawChannelInfoEvent,
+  RawVoiceChannelStatusUpdateEvent,
+  RawVoiceChannelStartTimeUpdateEvent,
 } from "../types/gateway-events";
 import type {
   RawGuild,
@@ -184,6 +187,15 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
     shard.client.emit("channelUpdate", Channels.channelFromRaw(data)),
   [GatewayEvents.ChannelDelete]: (shard, data) =>
     shard.client.emit("channelDelete", Channels.channelFromRaw(data)),
+  [GatewayEvents.ChannelInfo]: (shard, data) =>
+    shard.client.emit("channelInfo", {
+      guildId: data.guild_id,
+      channels: data.channels.map((channel) => ({
+        id: channel.id,
+        status: channel.status,
+        voiceStartTime: channel.voice_start_time,
+      })),
+    }),
   [GatewayEvents.ChannelPinsUpdate]: (shard, data) =>
     shard.client.emit("channelPinsUpdate", {
       guildId: data.guild_id,
@@ -677,6 +689,18 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       soundVolume: data.sound_volume,
     });
   },
+  [GatewayEvents.VoiceChannelStatusUpdate]: (shard, data) =>
+    shard.client.emit("voiceChannelStatusUpdate", {
+      id: data.id,
+      guildId: data.guild_id,
+      status: data.status,
+    }),
+  [GatewayEvents.VoiceChannelStartTimeUpdate]: (shard, data) =>
+    shard.client.emit("voiceChannelStartTimeUpdate", {
+      id: data.id,
+      guildId: data.guild_id,
+      voiceStartTime: data.voice_start_time,
+    }),
   [GatewayEvents.VoiceStateUpdate]: (shard, data) => {
     shard.client.emit("voiceStateUpdate", Voice.voiceStateFromRaw(data));
   },
@@ -742,6 +766,7 @@ export interface DispatchEvents {
   [GatewayEvents.ChannelCreate]: RawChannel;
   [GatewayEvents.ChannelUpdate]: RawChannel;
   [GatewayEvents.ChannelDelete]: RawChannel;
+  [GatewayEvents.ChannelInfo]: RawChannelInfoEvent;
   [GatewayEvents.ChannelPinsUpdate]: RawChannelPinsUpdateEvent;
   [GatewayEvents.ThreadCreate]: RawChannel;
   [GatewayEvents.ThreadUpdate]: RawChannel;
@@ -808,6 +833,8 @@ export interface DispatchEvents {
   [GatewayEvents.TypingStart]: RawTypingStartEvent;
   [GatewayEvents.UserUpdate]: RawUser;
   [GatewayEvents.VoiceChannelEffectSend]: RawVoiceChannelEffectSendEvent;
+  [GatewayEvents.VoiceChannelStatusUpdate]: RawVoiceChannelStatusUpdateEvent;
+  [GatewayEvents.VoiceChannelStartTimeUpdate]: RawVoiceChannelStartTimeUpdateEvent;
   [GatewayEvents.VoiceStateUpdate]: RawVoiceState;
   [GatewayEvents.VoiceServerUpdate]: RawVoiceServerUpdateEvent;
   [GatewayEvents.WebhooksUpdate]: RawWebhooksUpdateEvent;

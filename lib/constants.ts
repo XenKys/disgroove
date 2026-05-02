@@ -296,6 +296,8 @@ export enum AuditLogEvents {
   OnboardingUpdate,
   HomeSettingsCreate = 190,
   HomeSettingsUpdate,
+  VoiceChannelStatusUpdate,
+  VoiceChannelStatusDelete
 }
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types */
@@ -931,6 +933,7 @@ export enum GatewayEvents {
   ChannelCreate = "CHANNEL_CREATE",
   ChannelUpdate = "CHANNEL_UPDATE",
   ChannelDelete = "CHANNEL_DELETE",
+  ChannelInfo = "CHANNEL_INFO",
   ChannelPinsUpdate = "CHANNEL_PINS_UPDATE",
   ThreadCreate = "THREAD_CREATE",
   ThreadUpdate = "THREAD_UPDATE",
@@ -991,6 +994,8 @@ export enum GatewayEvents {
   TypingStart = "TYPING_START",
   UserUpdate = "USER_UPDATE",
   VoiceChannelEffectSend = "VOICE_CHANNEL_EFFECT_SEND",
+  VoiceChannelStartTimeUpdate = "VOICE_CHANNEL_START_TIME_UPDATE",
+  VoiceChannelStatusUpdate = "VOICE_CHANNEL_STATUS_UPDATE",
   VoiceStateUpdate = "VOICE_STATE_UPDATE",
   VoiceServerUpdate = "VOICE_SERVER_UPDATE",
   WebhooksUpdate = "WEBHOOKS_UPDATE",
@@ -1073,6 +1078,7 @@ export enum GatewayOPCodes {
   Hello,
   HeartbeatACK,
   RequestSoundboardSounds = 31,
+  RequestChannelInfo = 43,
 }
 
 /** https://discord.com/developers/docs/topics/opcodes-and-status-codes#gateway-gateway-close-event-codes */
@@ -1457,6 +1463,7 @@ export const BitwisePermissionFlags = {
   CreateEvents: 1n << 44n,
   UseExternalSounds: 1n << 45n,
   SendVoiceMessages: 1n << 46n,
+  SetVoiceChannelStatus: 1n << 48n,
   SendPolls: 1n << 49n,
   UseExternalApps: 1n << 50n,
   PinMessages: 1n << 51n,

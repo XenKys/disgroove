@@ -184,6 +184,8 @@ export const pollAnswerVoters = (
 ) => `channels/${channelId}/polls/${messageId}/answers/${answerId}` as const;
 export const pollExpire = (channelId: snowflake, messageId: snowflake) =>
   `channels/${channelId}/polls/${messageId}/expire` as const;
+export const channelVoiceStatus = (channelId: snowflake) =>
+  `channels/${channelId}/voice-status` as const;
 
 // Users
 export const user = (userId: snowflake | "@me" = "@me") =>

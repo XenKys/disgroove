@@ -118,6 +118,9 @@ import type {
   VoiceChannelEffectSendEvent,
   GuildSoundboardSoundDeleteEvent,
   RateLimitedEvent,
+  ChannelInfoEvent,
+  VoiceChannelStatusUpdateEvent,
+  VoiceChannelStartTimeUpdateEvent,
 } from "./types/gateway-events";
 import type {
   Guild,
@@ -5291,6 +5294,24 @@ export class Client extends EventEmitter {
     this.shards.forEach((shard) => shard.transmitter.updatePresence(options));
   }
 
+  /** https://docs.discord.com/developers/resources/channel#set-voice-channel-status */
+  setVoiceChannelStatus(
+    channelId: snowflake,
+    options: {
+      status: string | null;
+    },
+    reason?: string
+  ) {
+    this.rest.request(
+      RESTMethods.Put,
+      Endpoints.channelVoiceStatus(channelId),
+      {
+        json: options,
+        reason,
+      }
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/guild-template#sync-guild-template */
   async syncGuildTemplate(
     guildId: snowflake,
@@ -5461,6 +5482,7 @@ export interface ClientEvents {
   channelCreate: [channel: Channel];
   channelUpdate: [channel: Channel];
   channelDelete: [channel: Channel];
+  channelInfo: [info: ChannelInfoEvent];
   channelPinsUpdate: [pins: ChannelPinsUpdateEvent];
   threadCreate: [thread: Channel];
   threadUpdate: [thread: Channel];
@@ -5536,6 +5558,8 @@ export interface ClientEvents {
   typingStart: [typing: TypingStartEvent];
   userUpdate: [user: User];
   voiceChannelEffectSend: [voiceEffect: VoiceChannelEffectSendEvent];
+  voiceChannelStatusUpdate: [voiceChannel: VoiceChannelStatusUpdateEvent];
+  voiceChannelStartTimeUpdate: [voiceChannel: VoiceChannelStartTimeUpdateEvent];
   voiceStateUpdate: [voiceState: VoiceState];
   voiceServerUpdate: [voiceServer: VoiceServerUpdateEvent];
   webhooksUpdate: [channelId: snowflake, guildId: snowflake];

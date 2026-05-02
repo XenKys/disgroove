@@ -41,6 +41,7 @@ export class AuditLogs {
               roleName: auditLogEntry.options.role_name,
               type: auditLogEntry.options.type,
               integrationType: auditLogEntry.options.integration_type,
+              status: auditLogEntry.options.status
             }
           : undefined,
       reason: auditLogEntry.reason,
@@ -75,6 +76,7 @@ export class AuditLogs {
               role_name: auditLogEntry.options.roleName,
               type: auditLogEntry.options.type,
               integration_type: auditLogEntry.options.integrationType,
+              status: auditLogEntry.options.status
             }
           : undefined,
       reason: auditLogEntry.reason,

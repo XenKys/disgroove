@@ -4,6 +4,7 @@ import type {
   GatewayPresenceUpdate,
   GatewayVoiceStateUpdate,
   Identify,
+  RequestChannelInfo,
   RequestGuildMembers,
   RequestSoundboardSounds,
   Resume,
@@ -65,6 +66,14 @@ export class Transmitter {
   requestSoundboardSounds(options: RequestSoundboardSounds): void {
     this.send(GatewayOPCodes.RequestSoundboardSounds, {
       guild_ids: options.guildIds,
+    });
+  }
+
+  /** https://discord.com/developers/docs/topics/gateway-events#request-channel-info */
+  requestChannelInfo(options: RequestChannelInfo): void {
+    this.send(GatewayOPCodes.RequestChannelInfo, {
+      guild_id: options.guildId,
+      fields: options.fields
     });
   }
 
