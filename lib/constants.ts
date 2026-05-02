@@ -1348,6 +1348,7 @@ export enum JSONErrorCodes {
   ThreadLocked,
   MaximumActiveThreads,
   MaximumActiveAnnouncementThreads,
+  YouCannotForwardAMessageWhoseContentYouCannotRead = 160014,
   InvalidJSONForUploadedLottieFile = 170001,
   UploadedLottiesCannotContainRasterizedImages,
   StickerMaximumFramerateExceeded,
