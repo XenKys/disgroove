@@ -297,7 +297,7 @@ export enum AuditLogEvents {
   HomeSettingsCreate = 190,
   HomeSettingsUpdate,
   VoiceChannelStatusUpdate,
-  VoiceChannelStatusDelete
+  VoiceChannelStatusDelete,
 }
 
 /** https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object-trigger-types */
@@ -1052,6 +1052,7 @@ export enum OAuth2Scopes {
   GuildsJoin = "guilds.join",
   GuildsMembersRead = "guilds.members.read",
   Identify = "identify",
+  IdentifyPremium = "identify.premium",
   MessagesRead = "messages.read",
   RelationShipsRead = "relationships.read",
   RoleConnectionsWrite = "role_connections.write",
