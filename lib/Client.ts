@@ -568,6 +568,29 @@ export class Client extends EventEmitter {
     );
   }
 
+  /** https://docs.discord.com/developers/resources/lobby#bulk-update-lobby-members */
+  async bulkUpdateLobbyMembers(
+    lobbyId: snowflake,
+    options: {
+      id: snowflake;
+      metadata?: Record<string, string> | null;
+      flags?: LobbyMemberFlags;
+      removeMember?: boolean;
+    }
+  ): Promise<Array<LobbyMember>> {
+    const response = await this.rest.request<Array<RawLobbyMember>>(
+      RESTMethods.Post,
+      Endpoints.lobbyMembersBulk(lobbyId),
+      {
+        json: options,
+      }
+    );
+
+    return response.map((lobbyMember) =>
+      Lobbies.lobbyMemberFromRaw(lobbyMember)
+    );
+  }
+
   /** https://discord.com/developers/docs/topics/gateway#connections */
   async connect(): Promise<void> {
     this.shardsCount =
@@ -5301,7 +5324,7 @@ export class Client extends EventEmitter {
       status: string | null;
     },
     reason?: string
-  ) {
+  ): void {
     this.rest.request(
       RESTMethods.Put,
       Endpoints.channelVoiceStatus(channelId),
