@@ -1746,6 +1746,14 @@ export class Client extends EventEmitter {
     );
   }
 
+  /** https://docs.discord.com/developers/resources/user#delete-current-user-application-role-connection */
+  deleteCurrentUserApplicationRoleConnection(applicationId: snowflake): void {
+    this.rest.request(
+      RESTMethods.Delete,
+      Endpoints.userApplicationRoleConnection(applicationId)
+    );
+  }
+
   /** https://discord.com/developers/docs/interactions/application-commands#delete-global-application-command */
   deleteGlobalApplicationCommand(
     applicationId: snowflake,
