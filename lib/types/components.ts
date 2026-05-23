@@ -32,7 +32,7 @@ export interface RawButton {
   style: ButtonStyles;
   label?: string;
   emoji?: Pick<RawEmoji, "name" | "id" | "animated">;
-  custom_id: string;
+  custom_id?: string;
   sku_id?: snowflake;
   url?: string;
   disabled?: boolean;
@@ -421,7 +421,7 @@ export interface Button {
   style: ButtonStyles;
   label?: string;
   emoji?: Pick<Emoji, "name" | "id" | "animated">;
-  customId: string;
+  customId?: string;
   skuId?: snowflake;
   url?: string;
   disabled?: boolean;
