@@ -5428,6 +5428,21 @@ export class Client extends EventEmitter {
     );
   }
 
+  /** https://docs.discord.com/developers/resources/lobby#update-lobby-message-moderation-metadata */
+  updateLobbyMessageModerationMetadata(
+    lobbyId: snowflake,
+    messageId: snowflake,
+    metadata: Record<string, string>
+  ): void {
+    this.rest.request(
+      RESTMethods.Put,
+      Endpoints.lobbyMessageModerationMetadata(lobbyId, messageId),
+      {
+        json: metadata,
+      }
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/channel#unpin-message */
   unpinMessage(
     channelId: snowflake,

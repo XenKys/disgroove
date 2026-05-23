@@ -321,6 +321,10 @@ export const lobbyChannelLinking = (lobbyId: snowflake) =>
   `lobbies/${lobbyId}/channel-linking` as const;
 export const lobbyMembersBulk = (lobbyId: snowflake) =>
   `lobbies/${lobbyId}/members/bulk` as const;
+export const lobbyMessageModerationMetadata = (
+  lobbyId: snowflake,
+  messageId: snowflake
+) => `lobbies/${lobbyId}/messages/${messageId}/moderation-metadata` as const;
 
 // Invites
 export const inviteTargetUsers = (inviteCode: string) =>
