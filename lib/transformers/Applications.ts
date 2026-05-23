@@ -31,6 +31,7 @@ export class Applications {
       slug: application.slug,
       coverImage: application.cover_image,
       flags: application.flags,
+      flagsNew: application.flags_new,
       approximateGuildCount: application.approximate_guild_count,
       approximateUserInstallCount: application.approximate_user_install_count,
       approximateUserAuthorizationCount:
@@ -90,6 +91,7 @@ export class Applications {
       slug: application.slug,
       cover_image: application.coverImage,
       flags: application.flags,
+      flags_new: application.flagsNew,
       approximate_guild_count: application.approximateGuildCount,
       approximate_user_install_count: application.approximateUserInstallCount,
       approximate_user_authorization_count:

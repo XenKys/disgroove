@@ -30,6 +30,7 @@ export interface RawApplication {
   slug?: string;
   cover_image?: string;
   flags?: ApplicationFlags;
+  flags_new?: string;
   approximate_guild_count?: number;
   approximate_user_install_count?: number;
   approximate_user_authorization_count?: number;
@@ -96,6 +97,7 @@ export interface Application {
   slug?: string;
   coverImage?: string;
   flags?: ApplicationFlags;
+  flagsNew?: string;
   approximateGuildCount?: number;
   approximateUserInstallCount?: number;
   approximateUserAuthorizationCount?: number;
