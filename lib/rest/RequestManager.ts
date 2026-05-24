@@ -17,6 +17,7 @@ export interface RequestData {
   reason?: string;
   query?: Record<string, any>;
   authorization?: boolean;
+  returnsBlob?: boolean;
 }
 
 /** https://discord.com/developers/docs/reference#error-messages */
@@ -152,10 +153,8 @@ export class RequestManager {
         } else if (response.status === HTTPResponseCodes.NoContent) {
           resolve(null as T);
         } else {
-          let blob: Blob = await response.blob();
-
-          if (blob) {
-            resolve(blob as T);
+          if (data?.returnsBlob) {
+            resolve((await response.blob) as T);
           }
 
           resolve((await response.json()) as T);

@@ -4578,7 +4578,10 @@ export class Client extends EventEmitter {
   getInviteTargetUser(inviteCode: string): Promise<Blob> {
     return this.rest.request<Blob>(
       RESTMethods.Get,
-      Endpoints.inviteTargetUsers(inviteCode)
+      Endpoints.inviteTargetUsers(inviteCode),
+      {
+        returnsBlob: true,
+      }
     );
   }
 
