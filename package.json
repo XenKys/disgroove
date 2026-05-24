@@ -28,11 +28,9 @@
     "@types/node": "^22.19.3",
     "@types/ws": "^8.18.1",
     "typescript": "^5.9.3",
-    "undici-types": "^7.18.2",
-    "@types/bun": "latest"
+    "undici-types": "^7.18.2"
   },
   "dependencies": {
     "ws": "^8.19.0"
-  },
-  "private": true
+  }
 }
