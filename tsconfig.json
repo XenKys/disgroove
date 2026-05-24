@@ -6,12 +6,9 @@
     "declaration": true,
     "strict": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "lib"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["lib"],
+  "exclude": ["node_modules"]
 }
