@@ -574,6 +574,7 @@ export const Handlers: { [K in GatewayEvents]?: DispatchHandler<K> } = {
       mentions: data.mentions.map((mention: RawUser) =>
         Users.userFromRaw(mention)
       ),
+      channelType: data.channel_type,
     });
   },
   [GatewayEvents.MessageUpdate]: (shard, data) => {

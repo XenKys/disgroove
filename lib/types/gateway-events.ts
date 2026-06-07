@@ -2,6 +2,7 @@ import type {
   ActivityFlags,
   ActivityType,
   AnimationTypes,
+  ChannelTypes,
   GatewayEvents,
   GatewayIntents,
   GatewayOPCodes,
@@ -392,6 +393,7 @@ export interface RawMessageCreateEventExtra {
   guild_id?: snowflake;
   member?: RawGuildMember;
   mentions: Array<RawUser>;
+  channel_type?: ChannelTypes;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#message-delete-message-delete-event-fields */
@@ -930,6 +932,7 @@ export interface MessageCreateEventExtra {
   guildId?: snowflake;
   member?: GuildMember;
   mentions: Array<User>;
+  channelType?: ChannelTypes;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#message-delete-message-delete-event-fields */
