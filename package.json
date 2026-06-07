@@ -1,6 +1,6 @@
 {
   "name": "disgroove",
-  "version": "3.0.0",
+  "version": "3.0.1-dev.253f2a0",
   "description": "A module to interface with Discord",
   "main": "./dist/lib/index.js",
   "types": "./dist/lib/index.d.ts",
@@ -33,6 +33,5 @@
   },
   "dependencies": {
     "ws": "^8.19.0"
-  },
-  "private": true
+  }
 }
