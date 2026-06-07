@@ -1,9 +1,12 @@
 import type {
   Lobby,
   LobbyMember,
+  LobbyMessage,
   RawLobby,
   RawLobbyMember,
+  RawLobbyMessage,
 } from "../types/lobby";
+import { Users } from "./Users";
 
 export class Lobbies {
   static lobbyFromRaw(lobby: RawLobby): Lobby {
@@ -29,6 +32,36 @@ export class Lobbies {
       id: lobbyMember.id,
       metadata: lobbyMember.metadata,
       flags: lobbyMember.flags,
+    };
+  }
+
+  static lobbyMessageFromRaw(lobbyMessage: RawLobbyMessage): LobbyMessage {
+    return {
+      id: lobbyMessage.id,
+      type: lobbyMessage.type,
+      content: lobbyMessage.content,
+      lobbyId: lobbyMessage.lobby_id,
+      channelId: lobbyMessage.channel_id,
+      author: Users.userFromRaw(lobbyMessage.author),
+      metadata: lobbyMessage.metadata,
+      moderationMetadata: lobbyMessage.moderation_metadata,
+      flags: lobbyMessage.flags,
+      applicationId: lobbyMessage.application_id,
+    };
+  }
+
+  static lobbyMessageToRaw(lobbyMessage: LobbyMessage): RawLobbyMessage {
+    return {
+      id: lobbyMessage.id,
+      type: lobbyMessage.type,
+      content: lobbyMessage.content,
+      lobby_id: lobbyMessage.lobbyId,
+      channel_id: lobbyMessage.channelId,
+      author: Users.userToRaw(lobbyMessage.author),
+      metadata: lobbyMessage.metadata,
+      moderation_metadata: lobbyMessage.moderationMetadata,
+      flags: lobbyMessage.flags,
+      application_id: lobbyMessage.applicationId,
     };
   }
 

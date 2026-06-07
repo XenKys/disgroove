@@ -313,10 +313,16 @@ export const voiceRegions = () => "voice/regions" as const;
 // Lobbies
 export const lobbies = () => "lobbies" as const;
 export const lobby = (lobbyId: snowflake) => `lobbies/${lobbyId}` as const;
+export const lobbyMessages = (lobbyId: snowflake) =>
+  `lobbies/${lobbyId}/messages` as const;
 export const lobbyMember = (
   lobbyId: snowflake,
   userId: snowflake | "@me" = "@me"
 ) => `lobbies/${lobbyId}/members/${userId}` as const;
+export const lobbyChannelInvite = (
+  lobbyId: snowflake,
+  userId: snowflake | "@me" = "@me"
+) => `lobbies/${lobbyId}/members/${userId}/invites` as const;
 export const lobbyChannelLinking = (lobbyId: snowflake) =>
   `lobbies/${lobbyId}/channel-linking` as const;
 export const lobbyMembersBulk = (lobbyId: snowflake) =>

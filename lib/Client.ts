@@ -245,11 +245,15 @@ import type {
   Thumbnail,
   UserSelect,
 } from "./types/components";
-import type {
-  Lobby,
-  LobbyMember,
-  RawLobby,
-  RawLobbyMember,
+import {
+  LobbyInvite,
+  RawLobbyInvite,
+  RawLobbyMessage,
+  type Lobby,
+  type LobbyMember,
+  type LobbyMessage,
+  type RawLobby,
+  type RawLobbyMember,
 } from "./types/lobby";
 
 export interface GatewayOptions {
@@ -1383,6 +1387,29 @@ export class Client extends EventEmitter {
     );
 
     return Lobbies.lobbyFromRaw(response);
+  }
+
+  /** https://docs.discord.com/developers/resources/lobby#create-lobby-channel-invite-for-self */
+  async createLobbyChannelSelfInvite(lobbyId: snowflake): Promise<LobbyInvite> {
+    const response = await this.rest.request<RawLobbyInvite>(
+      RESTMethods.Post,
+      Endpoints.lobbyChannelInvite(lobbyId)
+    );
+
+    return response;
+  }
+
+  /** https://docs.discord.com/developers/resources/lobby#create-lobby-channel-invite-for-user */
+  async createLobbyChannelUserInvite(
+    lobbyId: snowflake,
+    userId: snowflake
+  ): Promise<LobbyInvite> {
+    const response = await this.rest.request<RawLobbyInvite>(
+      RESTMethods.Post,
+      Endpoints.lobbyChannelInvite(lobbyId, userId)
+    );
+
+    return response;
   }
 
   /** https://discord.com/developers/docs/resources/message#create-message */
@@ -4656,6 +4683,26 @@ export class Client extends EventEmitter {
     return Lobbies.lobbyFromRaw(response);
   }
 
+  /** https://docs.discord.com/developers/resources/lobby#get-lobby-messages */
+  async getLobbyMessages(
+    lobbyId: snowflake,
+    options?: {
+      limit?: number;
+    }
+  ): Promise<Array<LobbyMessage>> {
+    const response = await this.rest.request<Array<RawLobbyMessage>>(
+      RESTMethods.Get,
+      Endpoints.lobbyMessages(lobbyId),
+      {
+        query: options,
+      }
+    );
+
+    return response.map((lobbyMessage) =>
+      Lobbies.lobbyMessageFromRaw(lobbyMessage)
+    );
+  }
+
   /** https://discord.com/developers/docs/resources/message#get-channel-message */
   async getMessage(
     channelId: snowflake,
@@ -5035,6 +5082,29 @@ export class Client extends EventEmitter {
     return response.map((webhook) => Webhooks.webhookFromRaw(webhook));
   }
 
+  /** https://docs.discord.com/developers/resources/lobby#create-or-join-lobby */
+  async joinLobby(options: {
+    secret: string;
+    idleTimeoutSeconds?: number;
+    lobbyMetadata?: Record<string, string> | null;
+    memberMetadata?: Record<string, string> | null;
+  }): Promise<Lobby> {
+    const response = await this.rest.request<RawLobby>(
+      RESTMethods.Put,
+      Endpoints.lobbies(),
+      {
+        json: {
+          secret: options.secret,
+          idle_timeout_seconds: options.idleTimeoutSeconds,
+          lobby_metadata: options.lobbyMetadata,
+          member_metadata: options.memberMetadata,
+        },
+      }
+    );
+
+    return Lobbies.lobbyFromRaw(response);
+  }
+
   /** https://discord.com/developers/docs/resources/channel#join-thread */
   joinThread(channelId: snowflake): void {
     this.rest.request(RESTMethods.Put, Endpoints.threadMembers(channelId));
@@ -5297,6 +5367,26 @@ export class Client extends EventEmitter {
         Channels.threadMemberFromRaw(member)
       ),
     };
+  }
+
+  /** https://docs.discord.com/developers/resources/lobby#send-lobby-message */
+  async sendLobbyMessage(
+    lobbyId: snowflake,
+    options: {
+      content: string;
+      metadata?: Record<string, string> | null;
+      flags?: MessageFlags;
+    }
+  ): Promise<LobbyMessage> {
+    const response = await this.rest.request<RawLobbyMessage>(
+      RESTMethods.Post,
+      Endpoints.lobbyMessages(lobbyId),
+      {
+        json: options,
+      }
+    );
+
+    return Lobbies.lobbyMessageFromRaw(response);
   }
 
   /** https://discord.com/developers/docs/resources/soundboard#send-soundboard-sound */
