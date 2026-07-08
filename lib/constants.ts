@@ -1372,6 +1372,7 @@ export enum JSONErrorCodes {
   WebhooksCanOnlyCreateThreadsInForumChannels,
   WebhookServicesCannotBeUsedInForumChannels,
   MessageBlockedByHarmfulLinksFilter = 240000,
+  AccessToJoiningNewServersHasBeenLimitedForTheUser = 340015,
   CannotEnableOnboardingRequirementsAreNotMet = 350000,
   CannotUpdateOnboardingWhileBelowRequirements,
   AccessToFileUploadsHasBeenLimitedForThisGuild = 400001,
