@@ -36,6 +36,7 @@ import {
   type SearchHasTypes,
   type SearchEmbedTypes,
   type SearchSortModes,
+  EntryPointCommandHandlerTypes,
 } from "./constants";
 import { Endpoints, RequestManager, RESTMethods, type FileData } from "./rest";
 import EventEmitter from "node:events";
@@ -837,6 +838,7 @@ export class Client extends EventEmitter {
       contexts?: Array<InteractionContextTypes>;
       type?: ApplicationCommandTypes;
       nsfw?: boolean;
+      handler?: EntryPointCommandHandlerTypes;
     }
   ): Promise<ApplicationCommand> {
     const response = await this.rest.request<RawApplicationCommand>(
@@ -856,6 +858,7 @@ export class Client extends EventEmitter {
           contexts: options.contexts,
           type: options.type,
           nsfw: options.nsfw,
+          handler: options.handler,
         },
       }
     );
@@ -2379,6 +2382,7 @@ export class Client extends EventEmitter {
       integrationTypes?: Array<ApplicationIntegrationTypes>;
       contexts?: Array<InteractionContextTypes>;
       nsfw?: boolean;
+      handler?: EntryPointCommandHandlerTypes;
     }
   ): Promise<ApplicationCommand> {
     const response = await this.rest.request<RawApplicationCommand>(
@@ -2397,6 +2401,7 @@ export class Client extends EventEmitter {
           integration_types: options.integrationTypes,
           contexts: options.contexts,
           nsfw: options.nsfw,
+          handler: options.handler,
         },
       }
     );
