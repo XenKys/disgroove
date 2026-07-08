@@ -848,8 +848,8 @@ export enum VisibilityTypes {
 /** https://discord.com/developers/docs/resources/subscription#subscription-statuses */
 export enum SubscriptionStatuses {
   Active,
-  Ending,
   Inactive,
+  Ending,
 }
 
 /** https://discord.com/developers/docs/resources/webhook#webhook-object-webhook-types */
