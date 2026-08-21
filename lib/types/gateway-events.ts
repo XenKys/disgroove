@@ -3,6 +3,7 @@ import type {
   ActivityType,
   AnimationTypes,
   ChannelTypes,
+  GatewayCapabilities,
   GatewayEvents,
   GatewayIntents,
   GatewayOPCodes,
@@ -68,6 +69,7 @@ export interface RawIdentify {
     Pick<RawGatewayPresenceUpdate, "since" | "activities" | "status" | "afk">
   >;
   intents: GatewayIntents;
+  capabilities?: GatewayCapabilities;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#identify-identify-connection-properties */
@@ -610,6 +612,7 @@ export interface Identify {
     Pick<GatewayPresenceUpdate, "since" | "activities" | "status" | "afk">
   >;
   intents: GatewayIntents;
+  capabilities?: GatewayCapabilities;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#identify-identify-connection-properties */

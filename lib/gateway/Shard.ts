@@ -127,6 +127,7 @@ export class Shard {
             }
           : undefined,
       intents: this.client.intents,
+      capabilities: this.client.capabilities,
     });
   }
 

@@ -47,6 +47,7 @@ export class Transmitter {
       shard: options.shard,
       presence: options.presence,
       intents: options.intents,
+      capabilities: options.capabilities,
     });
   }
 
@@ -73,7 +74,7 @@ export class Transmitter {
   requestChannelInfo(options: RequestChannelInfo): void {
     this.send(GatewayOPCodes.RequestChannelInfo, {
       guild_id: options.guildId,
-      fields: options.fields
+      fields: options.fields,
     });
   }
 

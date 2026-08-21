@@ -358,6 +358,7 @@ export enum ChannelFlags {
   Pinned = 1 << 1,
   RequiredTag = 1 << 4,
   HideMediaDownloadOptions = 1 << 15,
+  ChannelObfuscated = 1 << 17,
   IsSpoilerChannel = 1 << 21,
 }
 
@@ -920,6 +921,11 @@ export enum StatusTypes {
   Idle = "idle",
   Invisible = "invisible",
   Offline = "offline",
+}
+
+/** https://docs.discord.com/developers/events/gateway-events#identify-gateway-capabilities */
+export enum GatewayCapabilities {
+  ChannelObfuscation = 1 << 15,
 }
 
 /** https://discord.com/developers/docs/topics/gateway-events#receive-events */

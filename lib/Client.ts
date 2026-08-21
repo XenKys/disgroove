@@ -37,6 +37,7 @@ import {
   type SearchEmbedTypes,
   type SearchSortModes,
   EntryPointCommandHandlerTypes,
+  GatewayCapabilities,
 } from "./constants";
 import { Endpoints, RequestManager, RESTMethods, type FileData } from "./rest";
 import EventEmitter from "node:events";
@@ -266,6 +267,7 @@ export interface GatewayOptions {
     Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
   >;
   intents?: number | Array<number>;
+  capabilities?: GatewayCapabilities;
 }
 
 export interface ClientOptions {
@@ -285,6 +287,7 @@ export class Client extends EventEmitter {
     Pick<GatewayPresenceUpdate, "activities" | "status" | "afk">
   >;
   intents: GatewayIntents | number;
+  capabilities?: GatewayCapabilities;
   shardsCount: number | "auto";
   auth: "Bot" | "Bearer";
   reconnect: boolean;
@@ -310,6 +313,7 @@ export class Client extends EventEmitter {
           ? options.gateway.intents.reduce((sum, num) => sum + num, 0)
           : options.gateway.intents
         : 0;
+    this.capabilities = options?.gateway?.capabilities;
     this.shardsCount = options?.shardsCount ?? "auto";
     this.auth = options?.auth ?? "Bot";
     this.reconnect = options?.reconnect ?? true;
