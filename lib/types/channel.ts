@@ -26,7 +26,7 @@ export interface RawChannel {
   recipients?: Array<RawUser>;
   icon?: string | null;
   owner_id?: snowflake;
-  application_id?: snowflake;
+  application_id?: snowflake | null;
   managed?: boolean;
   parent_id?: snowflake | null;
   last_pin_timestamp?: timestamp | null;
@@ -114,7 +114,7 @@ export interface Channel {
   recipients?: Array<User>;
   icon?: string | null;
   ownerId?: snowflake;
-  applicationId?: snowflake;
+  applicationId?: snowflake | null;
   managed?: boolean;
   parentId?: snowflake | null;
   lastPinTimestamp?: timestamp | null;
