@@ -308,6 +308,7 @@ export interface RawFileUpload {
   min_values?: number;
   max_values?: number;
   required?: boolean;
+  file_types?: Array<"image" | "video" | "audio" | string>;
 }
 
 /** https://discord.com/developers/docs/components/reference#file-upload-file-upload-interaction-response-structure */
@@ -692,6 +693,7 @@ export interface FileUpload {
   minValues?: number;
   maxValues?: number;
   required?: boolean;
+  fileTypes?: Array<"image" | "video" | "audio" | string>;
 }
 
 /** https://discord.com/developers/docs/components/reference#file-upload-file-upload-interaction-response-structure */

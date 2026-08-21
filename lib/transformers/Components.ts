@@ -285,6 +285,7 @@ export class Components {
       minValues: fileUpload.min_values,
       maxValues: fileUpload.max_values,
       required: fileUpload.required,
+      fileTypes: fileUpload.file_types,
     };
   }
 
@@ -296,6 +297,7 @@ export class Components {
       min_values: fileUpload.minValues,
       max_values: fileUpload.maxValues,
       required: fileUpload.required,
+      file_types: fileUpload.fileTypes,
     };
   }
 

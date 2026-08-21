@@ -46,6 +46,7 @@ export interface RawApplicationCommandOption {
   min_length?: number;
   max_length?: number;
   autocomplete?: boolean;
+  file_types?: Array<"image" | "video" | "audio" | string>;
 }
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure */
@@ -107,6 +108,7 @@ export interface ApplicationCommandOption {
   minLength?: number;
   maxLength?: number;
   autocomplete?: boolean;
+  fileTypes?: Array<"image" | "video" | "audio" | string>;
 }
 
 /** https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure */

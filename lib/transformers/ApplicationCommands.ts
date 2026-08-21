@@ -76,6 +76,7 @@ export class ApplicationCommands {
       min_length: option.minLength,
       max_length: option.maxLength,
       autocomplete: option.autocomplete,
+      file_types: option.fileTypes,
     };
   }
 
@@ -101,6 +102,7 @@ export class ApplicationCommands {
       minLength: option.min_length,
       maxLength: option.max_length,
       autocomplete: option.autocomplete,
+      fileTypes: option.file_types,
     };
   }
 }
