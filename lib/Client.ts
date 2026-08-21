@@ -1377,7 +1377,11 @@ export class Client extends EventEmitter {
   /** https://discord.com/developers/docs/resources/lobby#create-lobby */
   async createLobby(options?: {
     metadata?: Record<string, string> | null;
-    members?: Array<Pick<LobbyMember, "id" | "metadata" | "flags">>;
+    members?: Array<
+      Pick<LobbyMember, "id" | "metadata" | "flags"> & {
+        additionalName?: string | null;
+      }
+    >;
     idleTimeoutSeconds?: number;
   }): Promise<Lobby> {
     const response = await this.rest.request<RawLobby>(
@@ -1386,7 +1390,12 @@ export class Client extends EventEmitter {
       {
         json: {
           metadata: options?.metadata,
-          members: options?.members,
+          members: options?.members?.map((member) => ({
+            id: member.id,
+            metadata: member.metadata,
+            flags: member.flags,
+            additional_name: member.additionalName,
+          })),
           idle_timeout_seconds: options?.idleTimeoutSeconds,
         },
       }
@@ -2906,7 +2915,11 @@ export class Client extends EventEmitter {
     lobbyId: snowflake,
     options: {
       metadata?: Record<string, string> | null;
-      members?: Array<Pick<LobbyMember, "id" | "metadata" | "flags">>;
+      members?: Array<
+        Pick<LobbyMember, "id" | "metadata" | "flags"> & {
+          additionalName?: string | null;
+        }
+      >;
       idleTimeoutSeconds?: number;
     }
   ): Promise<Lobby> {
@@ -2916,7 +2929,12 @@ export class Client extends EventEmitter {
       {
         json: {
           metadata: options.metadata,
-          members: options.members,
+          members: options.members?.map((member) => ({
+            id: member.id,
+            metadata: member.metadata,
+            flags: member.flags,
+            additional_name: member.additionalName,
+          })),
           idle_timeout_seconds: options.idleTimeoutSeconds,
         },
       }

@@ -21,6 +21,7 @@ export interface RawLobbyMember {
   id: snowflake;
   metadata?: Record<string, string> | null;
   flags?: LobbyMemberFlags;
+  additional_name?: string;
 }
 
 /** https://docs.discord.com/developers/resources/lobby#lobby-message-object */
@@ -56,6 +57,7 @@ export interface LobbyMember {
   id: snowflake;
   metadata?: Record<string, string> | null;
   flags?: LobbyMemberFlags;
+  additionalName?: string;
 }
 
 /** https://docs.discord.com/developers/resources/lobby#lobby-message-object */

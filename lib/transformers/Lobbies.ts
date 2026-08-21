@@ -24,6 +24,7 @@ export class Lobbies {
       id: lobbyMember.id,
       metadata: lobbyMember.metadata,
       flags: lobbyMember.flags,
+      additionalName: lobbyMember.additional_name,
     };
   }
 
@@ -32,6 +33,7 @@ export class Lobbies {
       id: lobbyMember.id,
       metadata: lobbyMember.metadata,
       flags: lobbyMember.flags,
+      additional_name: lobbyMember.additionalName,
     };
   }
 
