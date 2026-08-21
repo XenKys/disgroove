@@ -702,6 +702,7 @@ export class Client extends EventEmitter {
       defaultSortOrder?: SortOrderTypes | null;
       defaultForumLayout?: ForumLayoutTypes | null;
       defaultThreadRateLimitPerUser?: number | null;
+      flags?: ChannelFlags;
     },
     reason?: string
   ): Promise<Channel> {
@@ -737,6 +738,7 @@ export class Client extends EventEmitter {
           default_forum_layout: options.defaultForumLayout,
           default_thread_rate_limit_per_user:
             options.defaultThreadRateLimitPerUser,
+          flags: options.flags,
         },
         reason,
       }
@@ -2248,6 +2250,7 @@ export class Client extends EventEmitter {
       position?: number | null;
       lockPermissions?: boolean | null;
       parentId?: snowflake | null;
+      flags?: ChannelFlags;
     }>
   ): void {
     this.rest.request(RESTMethods.Patch, Endpoints.guildChannels(guildId), {
@@ -2256,6 +2259,7 @@ export class Client extends EventEmitter {
         position: data.position,
         lock_permissions: data.lockPermissions,
         parent_id: data.parentId,
+        flags: data.flags,
       })),
     });
   }
