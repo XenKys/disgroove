@@ -38,6 +38,7 @@ export interface RawChannel {
   member?: RawThreadMember;
   default_auto_archive_duration?: number;
   permissions?: string;
+  app_permissions?: string;
   flags?: ChannelFlags;
   total_message_sent?: number;
   available_tags?: Array<RawForumTag>;
@@ -125,6 +126,7 @@ export interface Channel {
   member?: ThreadMember;
   defaultAutoArchiveDuration?: number;
   permissions?: string;
+  appPermissions?: string;
   flags?: ChannelFlags;
   totalMessageSent?: number;
   availableTags?: Array<ForumTag>;

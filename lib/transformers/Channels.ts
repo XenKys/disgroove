@@ -59,6 +59,7 @@ export class Channels {
           : undefined,
       defaultAutoArchiveDuration: channel.default_auto_archive_duration,
       permissions: channel.permissions,
+      appPermissions: channel.app_permissions,
       flags: channel.flags,
       totalMessageSent: channel.total_message_sent,
       availableTags: channel.available_tags?.map((availableTag) => ({
@@ -134,6 +135,7 @@ export class Channels {
           : undefined,
       default_auto_archive_duration: channel.defaultAutoArchiveDuration,
       permissions: channel.permissions,
+      app_permissions: channel.appPermissions,
       flags: channel.flags,
       total_message_sent: channel.totalMessageSent,
       available_tags: channel.availableTags?.map((availableTag) => ({
