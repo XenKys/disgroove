@@ -1255,6 +1255,7 @@ export enum JSONErrorCodes {
   RequestEntityTooLarge,
   FeatureTemporarilyDisabledServerSide,
   UserBannedFromThisGuild,
+  OnlyOneChannelCanHaveAParentIdModifiedAtATime = 40009,
   ConnectionHasBeenRevoked = 40012,
   OnlyConsumableSKUsCanBeConsumed = 40018,
   YouCanOnlyDeleteSandboxEntitlements,
