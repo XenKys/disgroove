@@ -277,6 +277,17 @@ export interface RawAttachment {
   application?: RawApplication | null;
 }
 
+/** https://docs.discord.com/developers/resources/message#attachment-object-attachment-request-structure */
+export interface RawAttachmentRequest {
+  id: snowflake | number;
+  filename?: string;
+  title?: string;
+  description?: string;
+  duration_secs?: number;
+  waveform?: string;
+  is_spoiler?: boolean;
+}
+
 /** https://discord.com/developers/docs/resources/message#channel-mention-object-channel-mention-structure */
 export interface RawChannelMention {
   id: snowflake;
@@ -542,6 +553,17 @@ export interface Attachment {
   clipParticipants?: Array<User>;
   clipCreatedAt?: timestamp;
   application?: Application | null;
+}
+
+/** https://docs.discord.com/developers/resources/message#attachment-object-attachment-request-structure */
+export interface AttachmentRequest {
+  id: snowflake | number;
+  filename?: string;
+  title?: string;
+  description?: string;
+  durationSecs?: number;
+  waveform?: string;
+  isSpoiler?: boolean;
 }
 
 /** https://discord.com/developers/docs/resources/message#channel-mention-object-channel-mention-structure */

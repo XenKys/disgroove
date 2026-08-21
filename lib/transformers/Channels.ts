@@ -4,6 +4,7 @@ import type {
   RawThreadMember,
   ThreadMember,
 } from "../types/channel";
+import { AttachmentRequest, RawAttachmentRequest } from "../types/message";
 import { Guilds } from "./Guilds";
 import { Users } from "./Users";
 
@@ -181,6 +182,34 @@ export class Channels {
         threadMember.member !== undefined
           ? Guilds.guildMemberToRaw(threadMember.member)
           : undefined,
+    };
+  }
+
+  static attachmentRequestFromRaw(
+    attachmentRequest: RawAttachmentRequest
+  ): AttachmentRequest {
+    return {
+      id: attachmentRequest.id,
+      filename: attachmentRequest.filename,
+      title: attachmentRequest.title,
+      description: attachmentRequest.description,
+      durationSecs: attachmentRequest.duration_secs,
+      waveform: attachmentRequest.waveform,
+      isSpoiler: attachmentRequest.is_spoiler,
+    };
+  }
+
+  static attachmentRequestToRaw(
+    attachmentRequest: AttachmentRequest
+  ): RawAttachmentRequest {
+    return {
+      id: attachmentRequest.id,
+      filename: attachmentRequest.filename,
+      title: attachmentRequest.title,
+      description: attachmentRequest.description,
+      duration_secs: attachmentRequest.durationSecs,
+      waveform: attachmentRequest.waveform,
+      is_spoiler: attachmentRequest.isSpoiler,
     };
   }
 }

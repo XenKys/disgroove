@@ -227,6 +227,7 @@ import type {
   MessagePin,
   RawMessagePin,
   SharedClientTheme,
+  AttachmentRequest,
 } from "./types/message";
 import type { RawSubscription, Subscription } from "./types/subscription";
 import type { RawSoundboardSound, SoundboardSound } from "./types/soundboard";
@@ -1436,7 +1437,7 @@ export class Client extends EventEmitter {
       >;
       stickersIds?: Array<snowflake>;
       files?: Array<FileData>;
-      attachments?: Array<Pick<Attachment, "filename" | "description">>;
+      attachments?: Array<AttachmentRequest>;
       flags?: MessageFlags;
       enforceNonce?: boolean;
       poll?: PollCreateParams;
@@ -1475,7 +1476,9 @@ export class Client extends EventEmitter {
               ? Messages.componentsToRaw(options.components)
               : undefined,
           stickers_ids: options.stickersIds,
-          attachments: options.attachments,
+          attachments: options.attachments?.map((attachment) =>
+            Channels.attachmentRequestToRaw(attachment)
+          ),
           flags: options.flags,
           enforce_nonce: options.enforceNonce,
           poll:
@@ -1599,7 +1602,7 @@ export class Client extends EventEmitter {
           | Container
         >;
         stickerIds?: Array<snowflake>;
-        attachments?: Array<Pick<Attachment, "filename" | "description">>;
+        attachments?: Array<AttachmentRequest>;
         flags?: MessageFlags;
         files?: Array<FileData>;
       };
@@ -1630,7 +1633,9 @@ export class Client extends EventEmitter {
                   }
                 : undefined,
             sticker_ids: options.message.stickerIds,
-            attachments: options.message.attachments,
+            attachments: options.message.attachments?.map((attachment) =>
+              Channels.attachmentRequestToRaw(attachment)
+            ),
             flags: options.message.flags,
           },
           applied_tags: options.appliedTags,
@@ -2935,7 +2940,7 @@ export class Client extends EventEmitter {
         | Container
       > | null;
       files?: Array<FileData> | null;
-      attachments?: Array<Attachment> | null;
+      attachments?: Array<AttachmentRequest> | null;
     }
   ): Promise<Message> {
     const response = await this.rest.request<RawMessage>(
@@ -2966,7 +2971,7 @@ export class Client extends EventEmitter {
                 : null
               : undefined,
           attachments: options.attachments?.map((attachment) =>
-            Messages.attachmentToRaw(attachment)
+            Channels.attachmentRequestToRaw(attachment)
           ),
           flags: options.flags,
         },
@@ -3252,7 +3257,7 @@ export class Client extends EventEmitter {
         | Container
       > | null;
       files?: Array<FileData> | null;
-      attachments?: Array<Partial<Attachment>> | null;
+      attachments?: Array<AttachmentRequest> | null;
       poll?: PollCreateParams | null;
       threadId?: snowflake;
       withComponents?: boolean;
@@ -3285,22 +3290,9 @@ export class Client extends EventEmitter {
                 ? Messages.componentsToRaw(options.components)
                 : null
               : undefined,
-          attachments: options.attachments?.map((attachment) => ({
-            id: attachment.id,
-            filename: attachment.filename,
-            title: attachment.title,
-            description: attachment.description,
-            content_type: attachment.contentType,
-            size: attachment.size,
-            url: attachment.url,
-            proxy_url: attachment.proxyURL,
-            height: attachment.height,
-            width: attachment.width,
-            ephemeral: attachment.ephemeral,
-            duration_secs: attachment.durationSecs,
-            waveform: attachment.waveform,
-            flags: attachment.flags,
-          })),
+          attachments: options.attachments?.map((attachment) =>
+            Channels.attachmentRequestToRaw(attachment)
+          ),
           poll:
             options.poll !== undefined
               ? options.poll !== null
@@ -3385,7 +3377,7 @@ export class Client extends EventEmitter {
         | Container
       >;
       files?: Array<FileData>;
-      attachments?: Array<Pick<Attachment, "filename" | "description">>;
+      attachments?: Array<AttachmentRequest>;
       flags?: MessageFlags;
       threadName?: string;
       appliedTags?: Array<snowflake>;
@@ -3418,7 +3410,9 @@ export class Client extends EventEmitter {
             options.components !== undefined
               ? Messages.componentsToRaw(options.components)
               : undefined,
-          attachments: options.attachments,
+          attachments: options.attachments?.map((attachment) =>
+            Channels.attachmentRequestToRaw(attachment)
+          ),
           flags: options.flags,
           thread_name: options.threadName,
           applied_tags: options.appliedTags,
