@@ -464,6 +464,7 @@ export interface RawClientStatus {
   desktop?: string;
   mobile?: string;
   web?: string;
+  vr?: string;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#activity-object-activity-structure */
@@ -1003,6 +1004,7 @@ export interface ClientStatus {
   desktop?: string;
   mobile?: string;
   web?: string;
+  vr?: string;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#activity-object-activity-structure */
