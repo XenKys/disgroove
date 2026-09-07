@@ -441,7 +441,10 @@ export enum GuildFeatures {
   CreatorStorePage = "CREATOR_STORE_PAGE",
   DeveloperSupportServer = "DEVELOPER_SUPPORT_SERVER",
   Discoverable = "DISCOVERABLE",
+  EnhancedRoleColors = "ENHANCED_ROLE_COLORS",
   Featurable = "FEATURABLE",
+  GuildTags = "GUILD_TAGS",
+  GuestsEnabled = "GUESTS_ENABLED",
   InvitesDisabled = "INVITES_DISABLED",
   InviteSplash = "INVITE_SPLASH",
   MemberVerificationGateEnabled = "MEMBER_VERIFICATION_GATE_ENABLED",
@@ -450,6 +453,7 @@ export enum GuildFeatures {
   News = "NEWS",
   Partnered = "PARTNERED",
   PreviewEnabled = "PREVIEW_ENABLED",
+  PruneRequiresAdmin = "PRUNE_REQUIRES_ADMIN",
   RaidAlertsDisabled = "RAID_ALERTS_DISABLED",
   RoleIcons = "ROLE_ICONS",
   RoleSubscriptionsAvailableForPurchase = "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE",
@@ -460,9 +464,6 @@ export enum GuildFeatures {
   Verified = "VERIFIED",
   VipRegions = "VIP_REGIONS",
   WelcomeScreenEnabled = "WELCOME_SCREEN_ENABLED",
-  GuestsEnabled = "GUESTS_ENABLED",
-  GuildTags = "GUILD_TAGS",
-  EnhancedRoleColors = "ENHANCED_ROLE_COLORS",
 }
 
 /** https://discord.com/developers/docs/resources/guild#guild-object-mutable-guild-features */
