@@ -17,6 +17,11 @@ export function roleMention(roleId: snowflake): string {
 }
 
 /** https://discord.com/developers/docs/reference#message-formatting-formats */
+export function gameProfile(gameId: snowflake) {
+  return `<@$${gameId}>`;
+}
+
+/** https://discord.com/developers/docs/reference#message-formatting-formats */
 export function slashCommandMention(
   commandName: string,
   commandId: snowflake,
