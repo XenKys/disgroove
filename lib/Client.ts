@@ -296,7 +296,7 @@ export class Client extends EventEmitter {
   guildShardMap: Map<string, number>;
   user: User | null;
   guilds: Map<string, Guild>;
-  application: Pick<Application, "id" | "flags"> | null;
+  application: Pick<Application, "id" | "flags" | "flagsNew"> | null;
   ws?: WebSocketOptions;
 
   constructor(token: string, options?: ClientOptions) {

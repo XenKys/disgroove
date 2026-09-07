@@ -133,7 +133,7 @@ export interface RawReadyEvent {
   session_id: string;
   resume_gateway_url: string;
   shard?: [number, number];
-  application: Pick<RawApplication, "id" | "flags">;
+  application: Pick<RawApplication, "id" | "flags" | "flags_new">;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
@@ -674,7 +674,7 @@ export interface ReadyEvent {
   sessionId: string;
   resumeGatewayURL: string;
   shard?: [number, number];
-  application: Pick<Application, "id" | "flags">;
+  application: Pick<Application, "id" | "flags" | "flagsNew">;
 }
 
 /** https://discord.com/developers/docs/events/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields */
